@@ -1,20 +1,22 @@
-// theme.ts
-import { DefaultTheme } from 'styled-components'
+export const theme = {
+  colors: {
+    primary: 'primary',
+    secondary: 'secondary',
 
-export const theme: DefaultTheme = {
-  borderRadius: '4px',
-  palette: {
-    common: {
-      black: '#222831',
-      white: '#ffffff'
-    },
-    primary: {
-      main: '#726a95',
-      contrastText: '#ffffff'
-    },
-    secondary: {
-      main: '#709fb0',
-      contrastText: '#ffffff'
-    }
-  }
+    success: 'success',
+    error: 'error',
+    warning: 'warning',
+  },
+  media: {
+    mobile: '@media screen and (max-width: 768px)',
+    smallScreen: '@media screen and (max-width: 400px)',
+    largeScreen: '@media screen and (max-width: 1600px)',
+  },
+
+  resetButton: `
+  appearance: none;
+  background: none;
+  border: none;
+  outline: none;
+`,
 }

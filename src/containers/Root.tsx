@@ -1,13 +1,17 @@
 import { ThemeProvider } from 'styled-components'
 import {theme} from 'theme'
 import MainLayout from './MainLayout'
+import { ApolloProvider } from '@apollo/client/react'
+import client from 'apollo-setup'
 
 function Root() {
   return (
-    <ThemeProvider theme={theme}>
-      <MainLayout />
-    </ThemeProvider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <MainLayout />
+      </ThemeProvider>
+    </ApolloProvider>
   )
 }
 
-export default Root;
+export default Root
