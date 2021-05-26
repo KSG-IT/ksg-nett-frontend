@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
-
+import { useQuery } from '@apollo/client'
+import { ME_QUERY } from 'modules/users/queries'
 interface WrapperProps {
   sidebarOpen: boolean
 }
@@ -37,6 +38,15 @@ const SidebarWrapper = styled.div`
 `
 
 const MainLayout: React.FC = () => {
+  const {loading, error, data } = useQuery(ME_QUERY)
+
+  if (loading) return <span>Loading</span>
+
+  if (error) return <span>Error {error.message}</span>
+
+
+  console.log(data)
+
   return (
     <Wrapper sidebarOpen={true}>
       <SidebarWrapper>

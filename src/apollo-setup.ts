@@ -29,7 +29,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   });
   
   const uploadLink = createUploadLink({
-    uri: API_URL + "/graphql"
+    uri: API_URL + "/graphql/"
   })
   
   
