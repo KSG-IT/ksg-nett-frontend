@@ -1,10 +1,10 @@
 export const BASE_URL =
-  process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8008'
+  process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000'
 
 export const STAGE = isLocal() ? 'local' : process.env.REACT_APP_STAGE
 
 export const API_URLS = {
-  local: 'http://localhost:8008',
+  local: 'http://localhost:8000',
   development: 'https://api-dev.ksg-nett.no',
   production: 'https://api.ksg-nett.no',
 }
