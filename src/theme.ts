@@ -20,3 +20,4 @@ export const theme = {
   outline: none;
 `,
 }
+// https://www.petarstefanov.com/blog/2020-03-10-react-styled-components-mobile-first-aproach/
