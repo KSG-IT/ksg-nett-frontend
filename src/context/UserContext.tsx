@@ -1,18 +1,21 @@
 import React from 'react'
-
-
-interface UserNode {
-    id: string
-    firstName: string
-    lastName: string
-    username: string
-}
+import { UserNode } from 'modules/users/types'
 
 const USER_PLACEHOLDER = {
     id: "",
     firstName: "",
     lastName: "",
     username: "",
+    fullName: "",
+    phoneNumber: "",
+    initials: "",
+    email: "",
+    isStaff: false,
+    isSuperuser: false,
+    isActive: false,
+    needsPasswordChange: false,
+    profilePicture: "",
+    isAdministrator: false,
 }
 
 export const UserContext = React.createContext<UserNode>(USER_PLACEHOLDER)

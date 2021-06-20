@@ -2,11 +2,11 @@ import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import { ME_QUERY } from 'modules/users/queries'
+import { AuthRoutes } from 'containers//AuthRoutes'
+
 interface WrapperProps {
   sidebarOpen: boolean
 }
-
-const Routes = styled.div``
 
 const Wrapper = styled.div<WrapperProps>`
   display: grid;
@@ -20,7 +20,6 @@ const Wrapper = styled.div<WrapperProps>`
 const ContentWrapper = styled.div`
   grid-area: main;
   background-color: lightblue;
-
 `
 
 const Sidebar = styled.div`
@@ -38,14 +37,11 @@ const SidebarWrapper = styled.div`
 `
 
 const MainLayout: React.FC = () => {
-  const {loading, error, data } = useQuery(ME_QUERY)
+  const { loading, error, data } = useQuery(ME_QUERY)
 
   if (loading) return <span>Loading</span>
 
   if (error) return <span>Error {error.message}</span>
-
-
-  console.log(data)
 
   return (
     <Wrapper sidebarOpen={true}>
@@ -54,12 +50,8 @@ const MainLayout: React.FC = () => {
       </SidebarWrapper>
       <ContentWrapper>
         <HeaderWrapper>Header</HeaderWrapper>
-        <Routes>
-            <Button color="default" >Click on me</Button>
-            
-        </Routes>
+        <AuthRoutes />
       </ContentWrapper>
-      {/* <FontAwesomeIcon icon={faMoneyBill} size='1x' color="green"/> */}
     </Wrapper>
   )
 }
