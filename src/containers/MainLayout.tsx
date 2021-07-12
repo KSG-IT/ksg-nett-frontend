@@ -3,17 +3,18 @@ import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import { ME_QUERY } from 'modules/users/queries'
 import { AuthRoutes } from 'containers//AuthRoutes'
-
+import { Sidebar } from 'modules/sidebar'
+import { useUser } from 'util/hooks'
 interface WrapperProps {
   sidebarOpen: boolean
 }
 
 const Wrapper = styled.div<WrapperProps>`
   display: grid;
-  grid-template-columns: clamp(230px, 15.1vw, 360px) 1fr;
-  grid-template-rows: 1fr;
+  grid-template-columns: 300px auto;
+  grid-template-rows: 80px auto;
   grid-template-areas:
-    'sidebar main'
+    'sidebar header'
     'sidebar main';
 `
 
@@ -22,12 +23,8 @@ const ContentWrapper = styled.div`
   background-color: lightblue;
 `
 
-const Sidebar = styled.div`
-  width: 100%;
-  height: 100vh;
-`
-
 const HeaderWrapper = styled.div`
+  grid-area: header;
   background-color: blue;
 `
 
@@ -38,18 +35,19 @@ const SidebarWrapper = styled.div`
 
 const MainLayout: React.FC = () => {
   const { loading, error, data } = useQuery(ME_QUERY)
-
+  const user = useUser()
   if (loading) return <span>Loading</span>
 
   if (error) return <span>Error {error.message}</span>
-
+  console.log(user)
+  console.log()
   return (
     <Wrapper sidebarOpen={true}>
       <SidebarWrapper>
-        <Sidebar>Sidebar</Sidebar>
+        <Sidebar />
       </SidebarWrapper>
+        <HeaderWrapper>Hello {user.firstName}!</HeaderWrapper>
       <ContentWrapper>
-        <HeaderWrapper>Header</HeaderWrapper>
         <AuthRoutes />
       </ContentWrapper>
     </Wrapper>

@@ -1,15 +1,32 @@
 import { Switch, Redirect } from 'react-router-dom'
+import { useState } from 'react'
 import { PrivateRoute } from 'containers/PrivateRoute'
 
 const PlaceholderComponent: React.FC = () => {
-  return <span>PLACEHOLDER</span>
+  const [sidebar, setSidebar] = useState(false)
+  console.log(sidebar)
+
+  const toggleSidebar = () => {
+    setSidebar(!sidebar)
+  }
+  return (
+    <div>
+      <span>Sidebar is {sidebar ? 'open' : 'closed'}</span>
+      <br />
+      <button onClick={toggleSidebar}>Toggle</button>
+    </div>
+  )
 }
 
 export const AuthRoutes: React.FC = () => {
   return (
     <Switch>
       {/* Module routes */}
-      <PrivateRoute exact path="/admissions" component={PlaceholderComponent} />
+      <PrivateRoute
+        exact
+        path="/admissiosns"
+        component={PlaceholderComponent}
+      />
       <PrivateRoute exact path="/dashboard" component={PlaceholderComponent} />
       <PrivateRoute exact path="/quotes" component={PlaceholderComponent} />
       <PrivateRoute exact path="/schedules" component={PlaceholderComponent} />

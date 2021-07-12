@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components'
-import {theme} from 'theme'
+import { theme } from 'theme'
 import { ApolloProvider } from '@apollo/client/react'
 import client from 'apollo-setup'
 import Bootstrap from './BootStrap'
