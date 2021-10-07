@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -26,29 +26,10 @@ const LoginContainer = styled.div`
 `
 const StyledInput = styled.input``
 
-const LoginInput = styled.input`
-  width: 100%;
-  height: 75px;
-  border-radius: 10px;
-  color: red;
-`
-
 const LoginTitle = styled.h2`
   color: green;
 `
-const AuthenticateButton = styled.button`
-  background-color: ${props => props.theme.colors.primary};
-  cursor: pointer;
-  color: white;
-  width: 110px;
-  height: 45px;
-  border: 0;
-  border-radius: 10px;
 
-  &:hover {
-    filter: brightness(0.9);
-  }
-`
 const Form = styled.form`
   background-color: red;
 `

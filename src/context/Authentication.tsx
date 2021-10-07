@@ -1,22 +1,22 @@
-import React, { createContext, useContext, FC } from 'react'
+import { createContext, useContext, FC } from 'react'
 import { UserNode } from 'modules/users/types'
 
-const USER_PLACEHOLDER = {
-  id: '',
-  firstName: '',
-  lastName: '',
-  username: '',
-  fullName: '',
-  phoneNumber: '',
-  initials: '',
-  email: '',
-  isStaff: false,
-  isSuperuser: false,
-  isActive: false,
-  needsPasswordChange: false,
-  profilePicture: '',
-  isAdministrator: false,
-}
+// const USER_PLACEHOLDER = {
+//   id: '',
+//   firstName: '',
+//   lastName: '',
+//   username: '',
+//   fullName: '',
+//   phoneNumber: '',
+//   initials: '',
+//   email: '',
+//   isStaff: false,
+//   isSuperuser: false,
+//   isActive: false,
+//   needsPasswordChange: false,
+//   profilePicture: '',
+//   isAdministrator: false,
+// }
 
 const AuthContext = createContext<UserNode | null>(null)
 

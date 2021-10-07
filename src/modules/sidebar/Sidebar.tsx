@@ -12,7 +12,7 @@ const Wrapper = styled.div<WrapperProps>`
 `
 
 export const Sidebar = () => {
-  const [sidebar, setSidebar] = useState(false)
+  const [sidebar] = useState(false)
 
   return <Wrapper open={sidebar}></Wrapper>
 }
