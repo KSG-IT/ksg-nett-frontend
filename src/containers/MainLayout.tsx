@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client'
 import { ME_QUERY } from 'modules/users/queries'
 import { AuthRoutes } from 'containers//AuthRoutes'
 import { Sidebar } from 'modules/sidebar'
-import { useUser } from 'util/hooks'
+import { useAuth } from '../context/Authentication'
 interface WrapperProps {
   sidebarOpen: boolean
 }
@@ -35,7 +35,7 @@ const SidebarWrapper = styled.div`
 
 const MainLayout: React.FC = () => {
   const { loading, error, data } = useQuery(ME_QUERY)
-  const user = useUser()
+  const user = useAuth()
   if (loading) return <span>Loading</span>
 
   if (error) return <span>Error {error.message}</span>
@@ -46,7 +46,7 @@ const MainLayout: React.FC = () => {
       <SidebarWrapper>
         <Sidebar />
       </SidebarWrapper>
-        <HeaderWrapper>Hello {user.firstName}!</HeaderWrapper>
+      <HeaderWrapper>Hello {user.firstName}!</HeaderWrapper>
       <ContentWrapper>
         <AuthRoutes />
       </ContentWrapper>
