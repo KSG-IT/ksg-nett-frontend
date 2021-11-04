@@ -1,18 +1,23 @@
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { useRenderMobile } from 'util/isMobile'
+import { SidebarContext } from 'context/SidebarContext'
+import { ZIndexRange } from 'types/enums'
 
-interface WrapperProps {
-  open: boolean
-}
-
-const Wrapper = styled.div<WrapperProps>`
+const Wrapper = styled.div`
   height: 100vh;
-  width: ${props => (props.open ? '360px' : 0)};
-  background-color: red;
+  width: 100%;
+  background-color: hotpink;
+  z-index: ${ZIndexRange.Sidebar};
 `
 
 export const Sidebar = () => {
-  const [sidebar] = useState(false)
+  const isMobile = useRenderMobile()
+  const { open } = useContext(SidebarContext)
 
-  return <Wrapper open={sidebar}></Wrapper>
+  const shouldRenderSidebar = isMobile && open
+  console.log('sidebar')
+  console.log(shouldRenderSidebar)
+
+  return <Wrapper>Hi there</Wrapper>
 }

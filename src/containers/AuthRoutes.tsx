@@ -4,7 +4,7 @@ import { PrivateRoute } from 'containers/PrivateRoute'
 
 const PlaceholderComponent: React.FC = () => {
   const [sidebar, setSidebar] = useState(false)
-  console.log(sidebar)
+
 
   const toggleSidebar = () => {
     setSidebar(!sidebar)

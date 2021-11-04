@@ -4,6 +4,8 @@ import { ME_QUERY } from 'modules/users/queries'
 import { AuthRoutes } from 'containers//AuthRoutes'
 import { Sidebar } from 'modules/sidebar'
 import { useAuth } from '../context/Authentication'
+import { useMobile, useRenderMobile, useViewport } from 'util/isMobile'
+import { SidebarProvider } from 'context/SidebarContext'
 interface WrapperProps {
   sidebarOpen: boolean
 }
@@ -35,15 +37,19 @@ const SidebarWrapper = styled.div`
 const MainLayout: React.FC = () => {
   const { loading, error } = useQuery(ME_QUERY)
   const user = useAuth()
+  const isMobile = useRenderMobile()
+
   if (loading) return <span>Loading</span>
 
   if (error) return <span>Error {error.message}</span>
 
   return (
     <Wrapper sidebarOpen={true}>
-      <SidebarWrapper>
-        <Sidebar />
-      </SidebarWrapper>
+      <SidebarProvider>
+        <SidebarWrapper>
+          <Sidebar />
+        </SidebarWrapper>
+      </SidebarProvider>
       <HeaderWrapper>Hello {user.firstName}!</HeaderWrapper>
       <ContentWrapper>
         <AuthRoutes />
