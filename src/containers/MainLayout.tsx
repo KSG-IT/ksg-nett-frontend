@@ -1,9 +1,11 @@
 import styled from 'styled-components'
+import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { ME_QUERY } from 'modules/users/queries'
 import { AuthRoutes } from 'containers//AuthRoutes'
 import { Sidebar } from 'modules/sidebar'
 import { useAuth } from '../context/Authentication'
+import { Header } from 'modules/header'
 import { useMobile, useRenderMobile, useViewport } from 'util/isMobile'
 import { SidebarProvider } from 'context/SidebarContext'
 interface WrapperProps {
@@ -37,7 +39,12 @@ const SidebarWrapper = styled.div`
 const MainLayout: React.FC = () => {
   const { loading, error } = useQuery(ME_QUERY)
   const user = useAuth()
+  const [sidebarOpen, setSidebarOpen] = useState(true)
   const isMobile = useRenderMobile()
+
+  const toggleSidebarCallback = () => {
+    setSidebarOpen(!sidebarOpen)
+  }
 
   if (loading) return <span>Loading</span>
 
@@ -45,12 +52,15 @@ const MainLayout: React.FC = () => {
 
   return (
     <Wrapper sidebarOpen={true}>
-      <SidebarProvider>
-        <SidebarWrapper>
-          <Sidebar />
-        </SidebarWrapper>
-      </SidebarProvider>
-      <HeaderWrapper>Hello {user.firstName}!</HeaderWrapper>
+      <SidebarWrapper>
+        <Sidebar
+          sidebarOpen={sidebarOpen}
+          toggleSidebarCallback={toggleSidebarCallback}
+        />
+      </SidebarWrapper>
+      <HeaderWrapper>
+        <Header toggleSidebar={toggleSidebarCallback}></Header>
+      </HeaderWrapper>
       <ContentWrapper>
         <AuthRoutes />
       </ContentWrapper>

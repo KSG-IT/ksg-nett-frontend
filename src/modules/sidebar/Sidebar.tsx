@@ -11,13 +11,20 @@ const Wrapper = styled.div`
   z-index: ${ZIndexRange.Sidebar};
 `
 
-export const Sidebar = () => {
-  const isMobile = useRenderMobile()
-  const { open } = useContext(SidebarContext)
+interface SidebarProps {
+  sidebarOpen: boolean
+  toggleSidebarCallback: () => void
+}
 
-  const shouldRenderSidebar = isMobile && open
+export const Sidebar = ({
+  sidebarOpen,
+  toggleSidebarCallback,
+}: SidebarProps) => {
+  const isMobile = useRenderMobile()
+
+  const shouldRenderSidebar = !isMobile || sidebarOpen
   console.log('sidebar')
   console.log(shouldRenderSidebar)
 
-  return <Wrapper>Hi there</Wrapper>
+  return <div>{shouldRenderSidebar && <Wrapper>Hi there</Wrapper>}</div>
 }
