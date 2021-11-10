@@ -4,6 +4,7 @@ import Root from './containers/Root';
 import reportWebVitals from './reportWebVitals';
 import 'fontsource-roboto'
 import './normalize.css'
+import './index.css'
 
 ReactDOM.render(
   <React.StrictMode>

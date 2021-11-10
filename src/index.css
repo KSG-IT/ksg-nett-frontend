@@ -1,0 +1,3 @@
+* {
+  box-sizing: border-box; /* figure out how to do this correctly, I think normalize doesnt do the job*/
+}
