@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-import { Icon } from 'components/Icon'
-import { useAuth } from 'context/Authentication'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -44,9 +42,6 @@ const TransactionSpan = styled.div`
 `
 
 export const Dashboard = () => {
-
-  const user = useAuth()
-
   return (
     <Wrapper>
       <CardRow>
@@ -57,42 +52,42 @@ export const Dashboard = () => {
             <span>Tuborg</span>
             <span>6</span>
             <span>25 kr</span>
-            <span>150  kr</span>
+            <span>150 kr</span>
           </TransactionSpan>
           <TransactionSpan>
             <span>29.11</span>
             <span>Tuborg</span>
             <span>6</span>
             <span>25 kr</span>
-            <span>150  kr</span>
+            <span>150 kr</span>
           </TransactionSpan>{' '}
           <TransactionSpan>
             <span>29.11</span>
             <span>Tuborg</span>
             <span>6</span>
             <span>25 kr</span>
-            <span>150  kr</span>
+            <span>150 kr</span>
           </TransactionSpan>{' '}
           <TransactionSpan>
             <span>29.11</span>
             <span>Tuborg</span>
             <span>6</span>
             <span>25 kr</span>
-            <span>150  kr</span>
+            <span>150 kr</span>
           </TransactionSpan>{' '}
           <TransactionSpan>
             <span>29.11</span>
             <span>Tuborg</span>
             <span>6</span>
             <span>25 kr</span>
-            <span>150  kr</span>
+            <span>150 kr</span>
           </TransactionSpan>{' '}
           <TransactionSpan>
             <span>29.11</span>
             <span>Tuborg</span>
             <span>6</span>
             <span>25 kr</span>
-            <span>150  kr</span>
+            <span>150 kr</span>
           </TransactionSpan>
         </Card>
         <Card width="450px" height="300px">

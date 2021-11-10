@@ -1,7 +1,5 @@
 import styled, { css } from 'styled-components'
 import { useState } from 'react'
-import { useQuery } from '@apollo/client'
-import { ME_QUERY } from 'modules/users/queries'
 import { AuthRoutes } from 'containers//AuthRoutes'
 import { Sidebar } from 'modules/sidebar'
 import { Header } from 'modules/header'

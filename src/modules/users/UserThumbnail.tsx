@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { UserNode } from '.'
-import { url } from 'inspector'
 
 type ThumbnailSizes = 'small' | 'medium' | 'large' | 'huge'
 

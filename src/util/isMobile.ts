@@ -15,7 +15,7 @@ export function useMobile() {
     }
     media.addEventListener('change', listener)
     return () => media.removeEventListener('change', listener)
-  }, [matches, window])
+  }, [matches])
 
   return [matches]
 }
