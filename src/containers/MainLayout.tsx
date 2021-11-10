@@ -1,34 +1,49 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { ME_QUERY } from 'modules/users/queries'
 import { AuthRoutes } from 'containers//AuthRoutes'
 import { Sidebar } from 'modules/sidebar'
-import { useAuth } from '../context/Authentication'
 import { Header } from 'modules/header'
-import { useMobile, useRenderMobile, useViewport } from 'util/isMobile'
-import { SidebarProvider } from 'context/SidebarContext'
+import { useRenderMobile } from 'util/isMobile'
 interface WrapperProps {
   sidebarOpen: boolean
 }
 
 const Wrapper = styled.div<WrapperProps>`
   display: grid;
+  width: 100%;
   grid-template-columns: 300px auto;
   grid-template-rows: 80px auto;
   grid-template-areas:
     'sidebar header'
     'sidebar main';
+
+  ${props => props.theme.media.mobile} {
+    display: flex;
+    flex-direction: column;
+    ${props =>
+      props.sidebarOpen &&
+      css`
+        overflow-y: auto;
+      `};
+  }
 `
 
-const ContentWrapper = styled.div`
+interface ContentWrapperProps {
+  visible: boolean
+}
+
+const ContentWrapper = styled.div<ContentWrapperProps>`
   grid-area: main;
-  background-color: lightblue;
+  display: ${props => (props.visible ? 'none' : 'flex')};
+  background-color: ${props => props.theme.colors.background};
 `
 
 const HeaderWrapper = styled.div`
   grid-area: header;
-  background-color: blue;
+  width: 100%;
+  height: 100%;
 `
 
 const SidebarWrapper = styled.div`
@@ -37,31 +52,27 @@ const SidebarWrapper = styled.div`
 `
 
 const MainLayout: React.FC = () => {
-  const { loading, error } = useQuery(ME_QUERY)
-  const user = useAuth()
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const isMobile = useRenderMobile()
+
+  const shouldNotRenderContent = isMobile && sidebarOpen
 
   const toggleSidebarCallback = () => {
     setSidebarOpen(!sidebarOpen)
   }
 
-  if (loading) return <span>Loading</span>
-
-  if (error) return <span>Error {error.message}</span>
-
   return (
     <Wrapper sidebarOpen={true}>
+      <HeaderWrapper>
+        <Header toggleSidebar={toggleSidebarCallback}></Header>
+      </HeaderWrapper>
       <SidebarWrapper>
         <Sidebar
           sidebarOpen={sidebarOpen}
           toggleSidebarCallback={toggleSidebarCallback}
         />
       </SidebarWrapper>
-      <HeaderWrapper>
-        <Header toggleSidebar={toggleSidebarCallback}></Header>
-      </HeaderWrapper>
-      <ContentWrapper>
+      <ContentWrapper visible={shouldNotRenderContent}>
         <AuthRoutes />
       </ContentWrapper>
     </Wrapper>

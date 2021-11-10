@@ -3,14 +3,26 @@ export type UserNode = {
   firstName: string
   lastName: string
   fullName: string
-  phoneNumber: string
+  phone: string
+  biography: string
   initials: string
   username: string
+  balance: number
   email: string
+  profilePicture: string
   isStaff: boolean
   isSuperuser: boolean
   isActive: boolean
   needsPasswordChange: boolean
-  profilePicture: string | null
+  profileImage: string | null
   isAdministrator: boolean
+}
+
+
+export interface UserQuery {
+  user: UserNode
+}
+
+export interface UserQueryVariables {
+  id: string
 }

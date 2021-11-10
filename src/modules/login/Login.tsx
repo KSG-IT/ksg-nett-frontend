@@ -67,8 +67,6 @@ export const Login: FC = () => {
         const { token } = login
         setLoginToken(token)
         client.resetStore()
-        console.log(token)
-        console.log(getLoginToken())
         history.push('/dashboard')
       },
       onError(error) {
