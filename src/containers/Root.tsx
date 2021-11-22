@@ -5,7 +5,6 @@ import client from 'apollo-setup'
 import Bootstrap from './BootStrap'
 
 function Root() {
-  console.log('ENV:', process.env.REACT_APP_NODE_ENV + ' 🚀')
   console.log('URI:', process.env.REACT_APP_API_URL)
 
   return (

@@ -27,8 +27,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-// const API_URL = process.env.NODE_ENV == 'production' ? 'https://api.ksg-nett.no' : process.env.NODE_ENV == 'development' ? 'https://ksg-nett.no' : 'http://localhost:8000'
-
 const uploadLink = createUploadLink({
   uri: process.env.REACT_APP_API_URL
 })
