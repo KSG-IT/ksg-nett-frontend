@@ -47,7 +47,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:development": "REACT_APP_STAGE=development npm run build",
+    "build:development": "REACT_APP_STAGE=development yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
