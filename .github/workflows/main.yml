@@ -29,11 +29,13 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
       - name: Yarn Install
+        env:
+          REACT_APP_NODE_ENV: 'development'
         run: |
           yarn install
       - name: Production Build
         run: |
-          yarn build
+          REACT_APP_STAGE=development npm run build
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
@@ -45,4 +47,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: "build"
-          NODE_ENV: 'development'
+          REACT_APP_NODE_ENV: 'development'
