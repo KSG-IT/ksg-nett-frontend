@@ -1,10 +1,11 @@
 import { Switch, Redirect } from 'react-router-dom'
 import { useState } from 'react'
 import { PrivateRoute } from 'containers/PrivateRoute'
+import { Dashboard } from 'modules/dashboard'
+import { UserProfile } from 'modules/users'
 
 const PlaceholderComponent: React.FC = () => {
   const [sidebar, setSidebar] = useState(false)
-  console.log(sidebar)
 
   const toggleSidebar = () => {
     setSidebar(!sidebar)
@@ -27,13 +28,14 @@ export const AuthRoutes: React.FC = () => {
         path="/admissiosns"
         component={PlaceholderComponent}
       />
-      <PrivateRoute exact path="/dashboard" component={PlaceholderComponent} />
+      <PrivateRoute exact path="/dashboard" component={Dashboard} />
       <PrivateRoute exact path="/quotes" component={PlaceholderComponent} />
       <PrivateRoute exact path="/schedules" component={PlaceholderComponent} />
       <PrivateRoute exact path="/economy" component={PlaceholderComponent} />
       <PrivateRoute exact path="/summaries" component={PlaceholderComponent} />
       <PrivateRoute exact path="/chat" component={PlaceholderComponent} />
       <PrivateRoute exact path="/users" component={PlaceholderComponent} />
+      <PrivateRoute exact path="/users/:userId" component={UserProfile} />
 
       <Redirect from="/" to="/dashboard" />
       <Redirect exact from="/" to="/dashboard" />

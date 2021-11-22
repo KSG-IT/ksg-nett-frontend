@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -7,7 +7,7 @@ import { LOGIN_MUTATION } from './mutations'
 import { LoginMutationReturn, LoginMutationVariables } from './types'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
-import { setLoginToken, getLoginToken } from 'util/auth'
+import { setLoginToken } from 'util/auth'
 
 const Button = styled.button``
 
@@ -26,29 +26,10 @@ const LoginContainer = styled.div`
 `
 const StyledInput = styled.input``
 
-const LoginInput = styled.input`
-  width: 100%;
-  height: 75px;
-  border-radius: 10px;
-  color: red;
-`
-
 const LoginTitle = styled.h2`
   color: green;
 `
-const AuthenticateButton = styled.button`
-  background-color: ${props => props.theme.colors.primary};
-  cursor: pointer;
-  color: white;
-  width: 110px;
-  height: 45px;
-  border: 0;
-  border-radius: 10px;
 
-  &:hover {
-    filter: brightness(0.9);
-  }
-`
 const Form = styled.form`
   background-color: red;
 `
@@ -86,8 +67,6 @@ export const Login: FC = () => {
         const { token } = login
         setLoginToken(token)
         client.resetStore()
-        console.log(token)
-        console.log(getLoginToken())
         history.push('/dashboard')
       },
       onError(error) {

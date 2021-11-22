@@ -1,31 +1,47 @@
-import Button from '@material-ui/core/Button'
-import styled from 'styled-components'
-import { useQuery } from '@apollo/client'
-import { ME_QUERY } from 'modules/users/queries'
+import styled, { css } from 'styled-components'
+import { useState } from 'react'
 import { AuthRoutes } from 'containers//AuthRoutes'
 import { Sidebar } from 'modules/sidebar'
-import { useUser } from 'util/hooks'
+import { Header } from 'modules/header'
+import { useRenderMobile } from 'util/isMobile'
 interface WrapperProps {
   sidebarOpen: boolean
 }
 
 const Wrapper = styled.div<WrapperProps>`
   display: grid;
+  width: 100%;
   grid-template-columns: 300px auto;
   grid-template-rows: 80px auto;
   grid-template-areas:
     'sidebar header'
     'sidebar main';
+
+  ${props => props.theme.media.mobile} {
+    display: flex;
+    flex-direction: column;
+    ${props =>
+      props.sidebarOpen &&
+      css`
+        overflow-y: auto;
+      `};
+  }
 `
 
-const ContentWrapper = styled.div`
+interface ContentWrapperProps {
+  visible: boolean
+}
+
+const ContentWrapper = styled.div<ContentWrapperProps>`
   grid-area: main;
-  background-color: lightblue;
+  display: ${props => (props.visible ? 'none' : 'flex')};
+  background-color: ${props => props.theme.colors.background};
 `
 
 const HeaderWrapper = styled.div`
   grid-area: header;
-  background-color: blue;
+  width: 100%;
+  height: 100%;
 `
 
 const SidebarWrapper = styled.div`
@@ -34,20 +50,27 @@ const SidebarWrapper = styled.div`
 `
 
 const MainLayout: React.FC = () => {
-  const { loading, error, data } = useQuery(ME_QUERY)
-  const user = useUser()
-  if (loading) return <span>Loading</span>
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const isMobile = useRenderMobile()
 
-  if (error) return <span>Error {error.message}</span>
-  console.log(user)
-  console.log()
+  const shouldNotRenderContent = isMobile && sidebarOpen
+
+  const toggleSidebarCallback = () => {
+    setSidebarOpen(!sidebarOpen)
+  }
+
   return (
     <Wrapper sidebarOpen={true}>
+      <HeaderWrapper>
+        <Header toggleSidebar={toggleSidebarCallback}></Header>
+      </HeaderWrapper>
       <SidebarWrapper>
-        <Sidebar />
+        <Sidebar
+          sidebarOpen={sidebarOpen}
+          toggleSidebarCallback={toggleSidebarCallback}
+        />
       </SidebarWrapper>
-        <HeaderWrapper>Hello {user.firstName}!</HeaderWrapper>
-      <ContentWrapper>
+      <ContentWrapper visible={shouldNotRenderContent}>
         <AuthRoutes />
       </ContentWrapper>
     </Wrapper>
