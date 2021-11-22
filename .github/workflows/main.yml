@@ -33,7 +33,7 @@ jobs:
           yarn install
       - name: Production Build
         run: |
-          yarn build
+          REACT_APP_STAGE=dev npm run build
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
@@ -45,4 +45,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: "build"
-          NODE_ENV: 'development'
+          REACT_APP_NODE_ENV: 'development'
