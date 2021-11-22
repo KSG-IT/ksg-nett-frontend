@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { Icon } from 'components/Icon'
-import { useAuth } from 'context/Authentication'
 import { ZIndexRange } from 'types/enums'
 import { Link } from 'react-router-dom'
 
@@ -17,7 +16,6 @@ const Wrapper = styled.header`
 
   ${props => props.theme.media.mobile} {
     background-color: ${props => props.theme.colors.purple};
-
   }
 `
 
@@ -50,11 +48,10 @@ interface HeaderProps {
 }
 
 export const Header = ({ toggleSidebar }: HeaderProps) => {
-  const user = useAuth()
   return (
     <Wrapper>
       <MobileLogo to="/dashboard">KSG</MobileLogo>
-      <input placeholder="Søk etter bruker..."/>
+      <input placeholder="Søk etter bruker..." />
       <ToggleSidebarButton onClick={toggleSidebar}>
         <Icon icon="bars" size="32px" color="black" />
       </ToggleSidebarButton>
