@@ -31,9 +31,9 @@ jobs:
       - name: Yarn Install
         run: |
           yarn install
-      - name: Development Build
+      - name: Staging Build
         run: |
-          yarn build:development
+          yarn build:staging
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
