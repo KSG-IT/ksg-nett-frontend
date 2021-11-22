@@ -10,11 +10,10 @@ const Wrapper = styled(NavLink)`
   align-items: center;
   border-radius: 10px;
   text-decoration: none;
-  color: black;
-  font-size: 16px;
+  font-size: 18px;
 
   &:hover {
-    background-color: ${props => props.theme.colors.primary};
+    background-color: ${props => props.theme.colors.purpleHover};
     color: ${props => props.theme.colors.white};
     cursor: pointer;
     font-weight: 600;
@@ -30,7 +29,7 @@ export interface NavItemProps {
 export const NavItem: React.FC<NavItemProps> = ({ icon, link, label }) => {
   return (
     <Wrapper to={link}>
-      <Icon icon={icon} color="black" margin="0 12px 0 0" />
+      <Icon icon={icon} color="white" margin="0 12px 0 0" size="20px"/>
       <span>{label}</span>
     </Wrapper>
   )

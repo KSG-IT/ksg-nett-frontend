@@ -41,6 +41,10 @@ const TransactionSpan = styled.div`
   margin-top: 10px;
 `
 
+// open events on top
+// area for messages if need be
+//
+
 export const Dashboard = () => {
   return (
     <Wrapper>

@@ -1,17 +1,19 @@
 export const theme = {
   colors: {
-    primary: '#E87644',
+    primary: '#E87644',  // primary color has not been determined yet?
     secondary: 'secondary',
 
     gray1: '#333333',
     gray2: '#BBBBBB',
     gray3: 'CCCCCC',
     gray4: 'DDDDDD',
-    gray5: 'EEEEEE',
 
-    background: '#f6f7fb',
+    background: '#EEEEEE',
 
     white: '#FFFFFF',
+    purple: '#1D1D39',  // potential primary color
+    purpleHover: '#121022',
+
 
     success: 'success',
     error: 'error',

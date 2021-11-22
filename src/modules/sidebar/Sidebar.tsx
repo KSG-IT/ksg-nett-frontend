@@ -9,8 +9,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  padding: 20px;
-  background-color: ${props => props.theme.colors.white};
+
+  color: ${props => props.theme.colors.white};;
+  background-color: ${props => props.theme.colors.purple};
   z-index: ${ZIndexRange.Sidebar};
   overflow-y: scroll;
 `
@@ -18,9 +19,14 @@ const Wrapper = styled.div`
 const SidebarTop = styled.div`
   display: flex;
   flex-direction: row;
+  background-color: ${props => props.theme.colors.purple};
   width: 100%;
+  height: 80px;
   align-items: center;
-  margin-bottom: 32px;
+
+  ${props => props.theme.media.mobile} {
+    display: none;
+  }
 `
 
 const SidebarLogo = styled.div`
@@ -41,6 +47,7 @@ const SidebarNavSection = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding: 20px;
 `
 
 interface SidebarProps {
