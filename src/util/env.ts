@@ -5,7 +5,7 @@ export const STAGE = isLocal() ? 'local' : process.env.REACT_APP_STAGE
 
 export const API_URLS = {
   local: 'http://localhost:8000',
-  development: 'https://api-dev.ksg-nett.no',
+  development: 'https://ksg-nett.no',
   production: 'https://api.ksg-nett.no',
 }
 

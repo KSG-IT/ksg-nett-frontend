@@ -7,7 +7,7 @@ import { LOGIN_MUTATION } from './mutations'
 import { LoginMutationReturn, LoginMutationVariables } from './types'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
-import { setLoginToken, getLoginToken } from 'util/auth'
+import { setLoginToken } from 'util/auth'
 
 const Button = styled.button``
 
@@ -67,8 +67,6 @@ export const Login: FC = () => {
         const { token } = login
         setLoginToken(token)
         client.resetStore()
-        console.log(token)
-        console.log(getLoginToken())
         history.push('/dashboard')
       },
       onError(error) {
