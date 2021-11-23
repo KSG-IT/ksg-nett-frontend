@@ -1,6 +1,7 @@
 import styled from 'styled-components'
-import { Icon } from 'components/Icon'
 import { NavLink } from 'react-router-dom'
+import { IconName } from '@fortawesome/fontawesome-common-types'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Wrapper = styled(NavLink)`
   display: flex;
@@ -21,7 +22,7 @@ const Wrapper = styled(NavLink)`
 `
 
 export interface NavItemProps {
-  icon: string
+  icon: IconName
   link: string
   label: string
 }
@@ -29,8 +30,8 @@ export interface NavItemProps {
 export const NavItem: React.FC<NavItemProps> = ({ icon, link, label }) => {
   return (
     <Wrapper to={link}>
-      <Icon icon={icon} color="white" margin="0 12px 0 0" size="20px"/>
-      <span>{label}</span>
+      <FontAwesomeIcon icon={['fas', icon]} color="inherit" size="sm" type='regular' cursor='inherit' />
+      <span style={{ margin: "0 0 0 12px" }}>{label}</span>
     </Wrapper>
   )
 }

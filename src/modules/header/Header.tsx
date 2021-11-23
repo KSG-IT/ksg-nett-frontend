@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { Icon } from 'components/Icon'
 import { ZIndexRange } from 'types/enums'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Wrapper = styled.header`
   width: 100%;
@@ -53,7 +53,7 @@ export const Header = ({ toggleSidebar }: HeaderProps) => {
       <MobileLogo to="/dashboard">KSG</MobileLogo>
       <input placeholder="Søk etter bruker..." />
       <ToggleSidebarButton onClick={toggleSidebar}>
-        <Icon icon="bars" size="32px" color="black" />
+        <FontAwesomeIcon icon={['fas', 'bars']} size="lg" color="black" />
       </ToggleSidebarButton>
     </Wrapper>
   )
