@@ -8,6 +8,7 @@ export const ME_QUERY = gql`
       firstName
       lastName
       profilePicture
+      fullName
       initials
       email
       balance

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { UserNode } from '.'
 
-type ThumbnailSizes = 'small' | 'medium' | 'large' | 'huge'
+type ThumbnailSizes = 'small' | 'medium' | 'large' | 'huge' | 'fullwidth'
 
 interface WrapperProps {
   size: ThumbnailSizes
@@ -14,6 +14,7 @@ const thumbnailSize = {
   medium: '45px',
   large: '65px',
   huge: '80px',
+  fullwidth: '100%',
 }
 
 const Wrapper = styled.div<WrapperProps>`
