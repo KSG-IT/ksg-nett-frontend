@@ -10,7 +10,6 @@ import { getLiquidity } from 'modules/economy/utils'
 import { Liquidity } from 'modules/economy/types'
 import { NavItem } from './NavItem'
 import { removeLoginToken } from 'util/auth'
-import { useHistory, useLocation } from 'react-router'
 
 const Wrapper = styled.div`
   display: flex;
