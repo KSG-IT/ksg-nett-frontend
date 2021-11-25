@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100%;
-
+  padding: 10px;
   color: ${props => props.theme.colors.white};
   background-color: ${props => props.theme.colors.purple};
   z-index: ${ZIndexRange.Sidebar};
@@ -42,6 +42,9 @@ const SidebarUserprofile = styled.div`
   width: 100%;
   height: auto;
   padding: 20px 20px 0 20px;
+  ${props => props.theme.media.mobile} {
+    padding: 0 20px;
+  }
 `
 
 const UserInfoWrapper = styled.div`
@@ -137,7 +140,7 @@ export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
   }
 
   return (
-    <div>
+    <>
       {shouldRenderSidebar && (
         <Wrapper>
           <SidebarTop>
@@ -162,6 +165,16 @@ export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
               label="Min profil"
               link={`/users/${user.id}`}
             />
+            <NavItem
+              icon="money-bill-wave"
+              label="Min økonomi"
+              link={'/economy/me'}
+            />
+            <NavItem
+              icon="calendar-alt"
+              label="Min vaktplan"
+              link={'/schedules/me'}
+            />
             <NavItem icon="sign-out-alt" label="Logg ut" onClick={logout} />
           </SidebarUserprofile>
           <SidebarNavSection>
@@ -169,6 +182,6 @@ export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
           </SidebarNavSection>
         </Wrapper>
       )}
-    </div>
+    </>
   )
 }

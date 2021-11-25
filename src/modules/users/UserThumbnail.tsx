@@ -24,7 +24,7 @@ const Wrapper = styled.div<WrapperProps>`
   width: ${props => thumbnailSize[props.size]};
   height: ${props => thumbnailSize[props.size]};
   border-radius: 100%;
-  background-color: ${props => props.theme.colors.primary};
+  background-color: ${props => props.theme.colors.purpleAction};
   color: white;
   text-transform: capitalize;
   font-weight: 600;

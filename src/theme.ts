@@ -1,6 +1,6 @@
 export const theme = {
   colors: {
-    primary: '#E87644',  // primary color has not been determined yet?
+    primary: '#E87644', // primary color has not been determined yet?
     secondary: 'secondary',
 
     gray1: '#333333',
@@ -8,16 +8,22 @@ export const theme = {
     gray3: 'CCCCCC',
     gray4: 'DDDDDD',
 
+    // from https://anice.red/#1D1D39
+    lightGray: '#F2F2F3',
+    midGray: '#C8CDD0',
+    darkGray: '#415058',
+    black: '#1F292E',
+
     background: '#EEEEEE',
 
     white: '#FFFFFF',
-    purple: '#1D1D39',  // potential primary color
+    purple: '#1D1D39', // potential primary color
     purpleHover: '#121022',
+    purpleAction: '#701fea',
 
-
-    success: 'success',
-    error: 'error',
-    warning: 'warning',
+    success: '#5EB234',
+    error: '#C91D2B',
+    warning: '#E8B130',
   },
   media: {
     mobile: '@media screen and (max-width: 768px)',
