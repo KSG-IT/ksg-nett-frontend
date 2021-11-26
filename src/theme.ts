@@ -17,9 +17,18 @@ export const theme = {
     background: '#EEEEEE',
 
     white: '#FFFFFF',
+    // shortcut color scheme copy
     purple: '#1D1D39', // potential primary color
     purpleHover: '#121022',
     purpleAction: '#701fea',
+    blue: '#2A4CBA',
+    blueHover: '#2C50C3',
+    cancelGray: '#E9E9E9',
+    cancelGrayHover: '#D6D6D6',
+    warningRed: '#B84546',
+    warningRedHover: '#750600',
+    successGreen: '#149136',
+    successGreenLight: '#CDE5D5',
 
     success: '#5EB234',
     error: '#C91D2B',
