@@ -2,7 +2,13 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { UserNode } from '.'
 
-type ThumbnailSizes = 'small' | 'medium' | 'large' | 'huge' | 'fullwidth'
+type ThumbnailSizes =
+  | 'tiny'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'huge'
+  | 'fullwidth'
 
 interface WrapperProps {
   size: ThumbnailSizes
@@ -10,7 +16,8 @@ interface WrapperProps {
 }
 
 const thumbnailSize = {
-  small: '18px',
+  tiny: '18px',
+  small: '30px',
   medium: '45px',
   large: '65px',
   huge: '80px',
@@ -41,7 +48,7 @@ const StyledLink = styled(Link)`
 
 interface UserThumbnailProps {
   size: ThumbnailSizes
-  user: UserNode
+  user: Pick<UserNode, 'id' | 'profilePicture' | 'initials'>
 }
 
 export const UserThumbnail: React.FC<UserThumbnailProps> = ({ size, user }) => {
