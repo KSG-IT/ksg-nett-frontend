@@ -58,7 +58,7 @@ const StyledInput = styled.input`
 const LoginTitle = styled.h1`
   font-size: 46px;
   margin-bottom: 15px;
-  color: #701fea;; //${props => props.theme.colors.purple};
+  color: ${props => props.theme.colors.purpleAction};
   font-weight: 600;
 `
 
