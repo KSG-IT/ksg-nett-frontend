@@ -4,10 +4,26 @@ import { RelayEdges } from 'types/graphql'
 // General typing
 export type SociSessionType = 'stilletime' | 'krysseliste' | 'societeten'
 
+// balance typing
+export type Liquidity =
+  | 'negative' // < 0
+  | 'neutral' // <= 0, <1 00
+  | 'positive' // <= 100, <1000
+  | 'loaded' // <= 1000
+
+// Could be this is not something we want to use
 export type TransactionHistoryType =
   | ProductOrderNode
   | TransferNode
   | DepositNode
+
+// Should this be a node? Node is reserved for Relay type queries aren't they?
+export interface BankAccountActivity {
+  name: string
+  amount: number
+  quantity: number
+  timestamp: Date
+}
 
 export interface SociProductNode {
   skuNumber: string

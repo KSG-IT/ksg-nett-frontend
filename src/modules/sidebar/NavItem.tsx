@@ -23,15 +23,27 @@ const Wrapper = styled(NavLink)`
 
 export interface NavItemProps {
   icon: IconName
-  link: string
+  link?: string
   label: string
+  onClick?: () => void
 }
 
-export const NavItem: React.FC<NavItemProps> = ({ icon, link, label }) => {
+export const NavItem: React.FC<NavItemProps> = ({
+  icon,
+  link = '',
+  label,
+  onClick,
+}) => {
   return (
-    <Wrapper to={link}>
-      <FontAwesomeIcon icon={['fas', icon]} color="inherit" size="sm" type='regular' cursor='inherit' />
-      <span style={{ margin: "0 0 0 12px" }}>{label}</span>
+    <Wrapper to={link} onClick={onClick}>
+      <FontAwesomeIcon
+        icon={['fas', icon]}
+        color="inherit"
+        size="sm"
+        type="regular"
+        cursor="inherit"
+      />
+      <span style={{ margin: '0 0 0 12px' }}>{label}</span>
     </Wrapper>
   )
 }

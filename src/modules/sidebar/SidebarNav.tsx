@@ -15,8 +15,6 @@ export const SidebarNav = () => {
         navItems={[
           { icon: 'home', link: '/dashboard', label: 'Kontrollpanel' },
           { icon: 'diagnoses', link: '/events', label: 'Arrangement' },
-          { icon: 'money-bill', link: '/my-economy', label: 'Min økonomi' },
-          { icon: 'calendar-alt', link: '/my-schedule', label: 'Min vaktplan' },
           { icon: 'edit', link: '/summaries', label: 'Møtereferater' },
           {
             icon: 'project-diagram',

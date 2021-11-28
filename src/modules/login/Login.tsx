@@ -9,29 +9,65 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import { setLoginToken } from 'util/auth'
 
-const Button = styled.button``
-
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
   justify-content: center;
-  align-items: center;
+  background-color: ${props => props.theme.colors.background};
+  padding-top: 20%;
+  ${props => props.theme.media.mobile} {
+    padding-top: 50%;
+  }
+`
+
+const Button = styled.button`
+  width: 100%;
+  height: 48px;
+  font-size: 20px;
+  font-weight: 700;
+  background-color: #701fea; //${props => props.theme.colors.purple};
+  color: ${props => props.theme.colors.white};
+  box-shadow: ${props => props.theme.shadow.default};
+  border-radius: 5px;
+  border: 0;
 `
 
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 450px;
-`
-const StyledInput = styled.input``
+  width: 330px;
 
-const LoginTitle = styled.h2`
-  color: green;
+  ${props => props.theme.media.mobile} {
+    width: 90%;
+  }
+`
+const StyledInput = styled.input`
+  width: 100%;
+  height: 45px;
+  margin-bottom: 15px;
+  border-radius: 2px;
+  font-size: 18px;
+  box-shadow: ${props => props.theme.shadow.default};
+  border: 0;
+  padding: 0 4px;
+  &:focus {
+  }
+`
+
+const LoginTitle = styled.h1`
+  font-size: 46px;
+  margin-bottom: 15px;
+  color: ${props => props.theme.colors.purpleAction};
+  font-weight: 600;
 `
 
 const Form = styled.form`
-  background-color: red;
+  width: 330px;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
 `
 
 type Inputs = {
@@ -82,14 +118,18 @@ export const Login: FC = () => {
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <LoginContainer>
           <LoginTitle>KSG-nett</LoginTitle>
-          <StyledInput {...register('username', { required: true })} />
+          <StyledInput
+            placeholder="name@example.com"
+            {...register('username', { required: true })}
+          />
           {errors.username && <span>This field is required</span>}
           <StyledInput
             type="password"
+            placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
             {...register('password', { required: true })}
           />
           {errors.password && <span>This field is required</span>}
-          <Button type="submit">Authenticate</Button>
+          <Button type="submit">Log in</Button>
         </LoginContainer>
       </Form>
     </Wrapper>
