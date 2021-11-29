@@ -4,7 +4,6 @@ import { IS_LOGGED_IN_QUERY } from 'modules/login/queries'
 import { IsLoggedInQueryReturn } from 'modules/login/types'
 import { useQuery } from '@apollo/client'
 
-
 // Extend this to also accept permission checks?
 export const PrivateRoute: React.FC<RouteProps> = ({
   component: Component,

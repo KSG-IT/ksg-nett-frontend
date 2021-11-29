@@ -1,4 +1,4 @@
-import { BankAccountActivity } from "modules/economy/types"
+import { BankAccountActivity } from 'modules/economy/types'
 
 export type UserNode = {
   id: string
@@ -21,7 +21,6 @@ export type UserNode = {
   bankAccountActivity: BankAccountActivity[]
   lastTransactions: BankAccountActivity[]
 }
-
 
 export interface UserQuery {
   user: UserNode
