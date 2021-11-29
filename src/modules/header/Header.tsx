@@ -38,6 +38,7 @@ const ToggleSidebarButton = styled.div`
 const MobileLogo = styled(Link)`
   display: none;
   font-size: 32px;
+
   font-weight: 600;
   color: white;
   ${props => props.theme.media.mobile} {
@@ -55,19 +56,9 @@ export const Header = ({ toggleSidebar }: HeaderProps) => {
       <MobileLogo to="/dashboard">KSG</MobileLogo>
       <input placeholder="Søk etter bruker..." />
 
-
-
-
       <ToggleSidebarButton onClick={toggleSidebar}>
-
-
         <FontAwesomeIcon icon={['fas', 'bars']} size="lg" color="black" />
-
-
-
       </ToggleSidebarButton>
-
-      
     </Wrapper>
   )
 }
