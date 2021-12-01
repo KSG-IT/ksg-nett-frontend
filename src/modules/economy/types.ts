@@ -4,6 +4,13 @@ import { RelayEdges } from 'types/graphql'
 // General typing
 export type SociSessionType = 'stilletime' | 'krysseliste' | 'societeten'
 
+// balance typing
+export type Liquidity =
+  | 'negative'     // balance < 0 
+  | 'neutral'       // 0 < balance < 100
+  | 'positive'     // 100 < balance < 1000
+  | 'loaded'      // 1000 < balance 
+
 export type TransactionHistoryType =
   | ProductOrderNode
   | TransferNode
