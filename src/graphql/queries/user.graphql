@@ -27,3 +27,7 @@ query User($id: ID!) {
     profilePicture
   }
 }
+
+query IsLoggedIn {
+  isLoggedIn
+}
