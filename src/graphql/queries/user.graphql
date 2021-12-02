@@ -1,0 +1,29 @@
+query Me {
+  me {
+    id
+    username
+    firstName
+    lastName
+    profilePicture
+    fullName
+    initials
+    email
+    balance
+    biography
+    studyAddress
+    homeAddress
+    phone
+  }
+}
+
+query User($id: ID!) {
+  user(id: $id) {
+    fullName
+    biography
+    homeAddress
+    studyAddress
+    phone
+    initials
+    profilePicture
+  }
+}

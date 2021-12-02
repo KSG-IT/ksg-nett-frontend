@@ -1,5 +1,5 @@
 import { createContext, useContext, FC } from 'react'
-import { UserNode } from 'modules/users/types'
+import { UserNode } from '__generated__/graphql'
 
 // const USER_PLACEHOLDER = {
 //   id: '',

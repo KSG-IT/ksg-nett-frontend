@@ -28,7 +28,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const uploadLink = createUploadLink({
-  uri: process.env.REACT_APP_API_URL
+  uri: process.env.REACT_APP_API_URL,
 })
 
 const client = new ApolloClient({

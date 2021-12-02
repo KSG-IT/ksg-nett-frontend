@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { UserNode } from '.'
+import { UserNode } from '__generated__/graphql'
 
 type ThumbnailSizes = 'small' | 'medium' | 'large' | 'huge' | 'fullwidth'
 
@@ -49,7 +49,7 @@ export const UserThumbnail: React.FC<UserThumbnailProps> = ({ size, user }) => {
     // Todo render image and use initials as fallback
     // Doesn't really matter since we have matt damon as a fallback
     <StyledLink to={`/users/${user.id}`}>
-      <Wrapper size={size} src={user.profilePicture}>
+      <Wrapper size={size} src={user.profilePicture!}>
         {user.initials}
       </Wrapper>
     </StyledLink>
