@@ -10,6 +10,7 @@ import { getLiquidity } from 'modules/economy/utils'
 import { Liquidity } from 'modules/economy/types'
 import { NavItem } from './NavItem'
 import { removeLoginToken } from 'util/auth'
+import { numberWithSpaces } from 'util/parsing'
 
 const Wrapper = styled.div`
   display: flex;
@@ -156,7 +157,7 @@ export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
               <UserBalanceWrapper>
                 <Icon icon="coins" size="1x" />
                 <UserBalance liquidity={liquidity}>
-                  {user.balance},- NOK
+                  {numberWithSpaces(user.balance)},- NOK
                 </UserBalance>
               </UserBalanceWrapper>
             </UserInfoWrapper>

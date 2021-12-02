@@ -11,7 +11,7 @@ const Wrapper = styled(NavLink)`
   align-items: center;
   border-radius: 10px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px;
 
   &:hover {
     background-color: ${props => props.theme.colors.purpleHover};
@@ -21,10 +21,24 @@ const Wrapper = styled(NavLink)`
   }
 `
 
+const Badge = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+  background-color: ${props => props.theme.colors.purpleAction};
+`
+
 export interface NavItemProps {
   icon: IconName
   link?: string
   label: string
+  notificationsCounter?: number
   onClick?: () => void
 }
 
@@ -32,6 +46,7 @@ export const NavItem: React.FC<NavItemProps> = ({
   icon,
   link = '',
   label,
+  notificationsCounter = 0,
   onClick,
 }) => {
   return (
@@ -43,7 +58,8 @@ export const NavItem: React.FC<NavItemProps> = ({
         type="regular"
         cursor="inherit"
       />
-      <span style={{ margin: '0 0 0 12px' }}>{label}</span>
+      <span style={{ margin: '0 0 0 12px' }}>{label}</span>{' '}
+      {notificationsCounter > 0 ? <Badge>{notificationsCounter}</Badge> : null}
     </Wrapper>
   )
 }
