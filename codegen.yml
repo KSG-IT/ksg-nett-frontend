@@ -1,0 +1,9 @@
+overwrite: true
+schema: "https://ksg-nett.no/graphql/"
+documents: "src/**/*.graphql"
+generates:
+  src/__generated__/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
