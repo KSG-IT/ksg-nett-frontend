@@ -99,7 +99,7 @@ export const Dashboard = () => {
 
   return (
     <Wrapper>
-      {wantedList && (
+      {wantedList.length > 0 && (
         <>
           <h1>Wanted</h1>
           {wantedList.map(user => (
@@ -110,18 +110,19 @@ export const Dashboard = () => {
           ))}
         </>
       )}
-      <CardRow></CardRow>
+
       <CardRow>
         <Card width="450px" height="auto">
           <CardTitle>Siste transaksjoner</CardTitle>
           <TransactionSpan>
             <span>Date</span>
+
             <span>Type</span>
             <span>Quantity</span>
             <span>Total amount</span>
           </TransactionSpan>
-          {lastTransactions.map(activity => (
-            <TransactionSpan>
+          {lastTransactions.map((activity, i) => (
+            <TransactionSpan key={i}>
               <span>{format(new Date(activity.timestamp), 'd.M')}</span>
               <span>{activity.name}</span>
               <span>{activity.quantity}</span>
@@ -131,8 +132,8 @@ export const Dashboard = () => {
         </Card>
         <Card width="450px" height="300px">
           <h3>Last summaries</h3>
-          {lastSummaries.map(summary => (
-            <TransactionSpan>
+          {lastSummaries.map((summary, i) => (
+            <TransactionSpan key={i}>
               <a href={`/summaries/${summary.id}`}>{summary.summaryType}</a>
               <span>{format(new Date(summary.date), 'd.M')}</span>
             </TransactionSpan>
@@ -140,8 +141,8 @@ export const Dashboard = () => {
         </Card>
       </CardRow>
       <QuoteSpan>
-        {lastQuotes.map(quote => (
-          <QuoteQard>
+        {lastQuotes.map((quote, i) => (
+          <QuoteQard key={i}>
             {' '}
             <QuoteText>{quote.text}</QuoteText>
             <QuoteContext>{quote.context}</QuoteContext>
