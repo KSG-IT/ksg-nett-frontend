@@ -17,16 +17,16 @@ export const QuotesList = () => {
   const debouncedQuery = useDebounce(query)
   const [quotes, setQuotes] = useState<QuoteNode[]>([])
 
-  const { data, loading, error } = useQuery<
-    ApprovedQuotesReturns,
-    ApprovedQuotesVariables
-  >(APPROVED_QUOTES_QUERY, {
-    variables: { q: debouncedQuery },
-    onCompleted(data) {
-      const { approvedQuotes } = data
-      setQuotes(approvedQuotes.edges.map(edge => edge.node))
-    },
-  })
+  useQuery<ApprovedQuotesReturns, ApprovedQuotesVariables>(
+    APPROVED_QUOTES_QUERY,
+    {
+      variables: { q: debouncedQuery },
+      onCompleted(data) {
+        const { approvedQuotes } = data
+        setQuotes(approvedQuotes.edges.map(edge => edge.node))
+      },
+    }
+  )
 
   console.log(debouncedQuery)
   return (
