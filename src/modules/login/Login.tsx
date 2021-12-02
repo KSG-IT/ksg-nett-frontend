@@ -26,7 +26,7 @@ const Button = styled.button`
   height: 48px;
   font-size: 20px;
   font-weight: 700;
-  background-color: #701fea; //${props => props.theme.colors.purple};
+  background-color:${props => props.theme.colors.purpleAction};
   color: ${props => props.theme.colors.white};
   box-shadow: ${props => props.theme.shadow.default};
   border-radius: 5px;
