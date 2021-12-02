@@ -1,8 +1,6 @@
-import styled from 'styled-components'
-import { USER_QUERY } from 'modules/users/queries'
-import { useQuery } from '@apollo/client'
-import { UserQuery, UserQueryVariables } from 'modules/users/types'
 import { useParams } from 'react-router'
+import styled from 'styled-components'
+import { useUserQuery } from '__generated__/graphql'
 
 const Wrapper = styled.div`
   display: grid;
@@ -66,10 +64,8 @@ interface UserProfileParams {
 
 export const UserProfile = () => {
   const { userId } = useParams<UserProfileParams>()
-  const { data, loading, error } = useQuery<UserQuery, UserQueryVariables>(
-    USER_QUERY,
-    { variables: { id: userId } }
-  )
+
+  const { data, loading, error } = useUserQuery({ variables: { id: userId } })
 
   if (loading) return <span>Loading</span>
 
@@ -82,13 +78,13 @@ export const UserProfile = () => {
 
   return (
     <Wrapper>
-      <ProfileName>{user.fullName}</ProfileName>
+      <ProfileName>{user!.fullName}</ProfileName>
       <ImageWrapper>
-        <ProfileImage src={user.profilePicture} />
+        <ProfileImage src={user!.profilePicture!} />
       </ImageWrapper>
       <DetailsWrapper>
-        <DetailsFullname>{user.fullName}</DetailsFullname>
-        <DetailsPhone>{user.phone}</DetailsPhone>
+        <DetailsFullname>{user!.fullName}</DetailsFullname>
+        <DetailsPhone>{user!.phone}</DetailsPhone>
       </DetailsWrapper>
     </Wrapper>
   )
