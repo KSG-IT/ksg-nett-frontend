@@ -5,7 +5,7 @@ import { CREATE_DEPOSIT } from './mutations'
 import { useMutation, useQuery } from '@apollo/client'
 import { numberWithSpaces } from 'util/parsing'
 import format from 'date-fns/format'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,20 +60,47 @@ const AccountBalance = styled.div`
   font-weight: 500;
 `
 
+const CreateDepositArea = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 600px;
+  height: 35px;
+`
+
 export const MyEconomy = () => {
   const user = useAuth()
-  const { data } = useQuery(MY_BANK_ACCOUNT_QUERY) // Consider just doing everything in the user query?
+  const [depositReceipt, setDepositReceipt] = useState<File | null>(null)
+  const [depositDescription, setDepositDescription] = useState('')
   const [depositAmount, setDepositAmount] = useState(0)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+
+  const { data } = useQuery(MY_BANK_ACCOUNT_QUERY) // Consider just doing everything in the user query?
   const [createDeposit] = useMutation(CREATE_DEPOSIT, {
-    refetchQueries: ['Me', 'MyBankAccount'],
     variables: {
       input: {
-        description: '',
+        description: depositDescription,
         amount: depositAmount,
         account: data?.myBankAccount?.id,
+        receipt: depositReceipt,
       },
+      refetchQueries: ['Me', 'MyBankAccount'],
     },
   })
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return
+    const file = e.target.files[0]
+    if (!file) return
+    setDepositReceipt(file)
+  }
+
+  const submitHandler = () => {
+    createDeposit()
+    setDepositReceipt(null)
+    setDepositDescription('')
+    setDepositAmount(0)
+    fileInputRef.current = null
+  }
 
   return (
     <Wrapper>
@@ -111,20 +138,21 @@ export const MyEconomy = () => {
             </AccountActivityEntry>
           )
         )}
+      </AccountActivityCard>
+      <CreateDepositArea>
         <input
           value={depositAmount}
           onChange={evt => {
             setDepositAmount(parseInt(evt.target.value))
           }}
         />
-        <button
-          onClick={() => {
-            createDeposit()
-          }}
-        >
-          Lag innskudd
-        </button>
-      </AccountActivityCard>
+        <textarea
+          value={depositDescription}
+          onChange={e => setDepositDescription(e.target.value)}
+        />
+        <input type="file" onChange={handleFileChange} ref={fileInputRef} />
+        <button onClick={submitHandler}>Lag innskudd</button>
+      </CreateDepositArea>
     </Wrapper>
   )
 }
