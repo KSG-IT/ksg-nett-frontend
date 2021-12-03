@@ -6,10 +6,10 @@ export type SociSessionType = 'stilletime' | 'krysseliste' | 'societeten'
 
 // balance typing
 export type Liquidity =
-  | 'negative'     // balance < 0 
-  | 'neutral'       // 0 < balance < 100
-  | 'positive'     // 100 < balance < 1000
-  | 'loaded'      // 1000 < balance 
+  | 'negative' // balance < 0
+  | 'neutral' // 0 < balance < 100
+  | 'positive' // 100 < balance < 1000
+  | 'loaded' // 1000 < balance
 
 // Could be this is not something we want to use
 export type TransactionHistoryType =
@@ -67,6 +67,7 @@ export interface DepositNode {
   receipt: string // string with image url
   signOffBy: UserNode
   signedOffTime: Date
+  approved: boolean
   comments: DepositCommentNode[]
 }
 
@@ -88,4 +89,11 @@ export interface AllProductOrdersQuery {
 
 export interface AllProductOrdersQueryVariables {
   user?: string
+}
+
+export interface MyBankAccountReturns {
+  id: string
+  balance: number
+  cardUuid: string
+  deposits: DepositNode[]
 }
