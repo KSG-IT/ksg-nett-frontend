@@ -11,8 +11,8 @@ interface WrapperProps {
 const Wrapper = styled.div<WrapperProps>`
   display: grid;
   width: 100%;
-  grid-template-columns: 300px auto;
-  grid-template-rows: 80px auto;
+  grid-template-columns: 300px calc(100vw - 300px);
+  grid-template-rows: 70px calc(100vh - 70px);
   grid-template-areas:
     'sidebar header'
     'sidebar main';
@@ -46,7 +46,6 @@ const HeaderWrapper = styled.div`
 
 const SidebarWrapper = styled.div`
   grid-area: sidebar;
-  background-color: green;
 `
 
 const MainLayout: React.FC = () => {

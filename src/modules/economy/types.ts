@@ -11,10 +11,19 @@ export type Liquidity =
   | 'positive'     // 100 < balance < 1000
   | 'loaded'      // 1000 < balance 
 
+// Could be this is not something we want to use
 export type TransactionHistoryType =
   | ProductOrderNode
   | TransferNode
   | DepositNode
+
+// Should this be a node? Node is reserved for Relay type queries aren't they?
+export interface BankAccountActivity {
+  name: string
+  amount: number
+  quantity: number
+  timestamp: Date
+}
 
 export interface SociProductNode {
   skuNumber: string
