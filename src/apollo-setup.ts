@@ -3,6 +3,7 @@ import { createUploadLink } from 'apollo-upload-client'
 import { onError } from '@apollo/client/link/error'
 import { setContext } from '@apollo/client/link/context'
 import { getLoginToken } from 'util/auth'
+import { API_URL } from 'util/env'
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists

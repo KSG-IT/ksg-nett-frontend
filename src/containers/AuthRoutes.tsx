@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { PrivateRoute } from 'containers/PrivateRoute'
 import { Dashboard } from 'modules/dashboard'
 import { UserProfile } from 'modules/users'
+import { Summaries } from 'modules/summaries'
+import { QuotesList } from 'modules/quotes'
 
 const PlaceholderComponent: React.FC = () => {
   const [sidebar, setSidebar] = useState(false)
@@ -29,10 +31,11 @@ export const AuthRoutes: React.FC = () => {
         component={PlaceholderComponent}
       />
       <PrivateRoute exact path="/dashboard" component={Dashboard} />
-      <PrivateRoute exact path="/quotes" component={PlaceholderComponent} />
+      <PrivateRoute exact path="/quotes" component={QuotesList} />
       <PrivateRoute exact path="/schedules" component={PlaceholderComponent} />
       <PrivateRoute exact path="/economy" component={PlaceholderComponent} />
-      <PrivateRoute exact path="/summaries" component={PlaceholderComponent} />
+      <PrivateRoute exact path="/summaries" component={Summaries} />
+
       <PrivateRoute exact path="/chat" component={PlaceholderComponent} />
       <PrivateRoute exact path="/users" component={PlaceholderComponent} />
       <PrivateRoute exact path="/users/:userId" component={UserProfile} />

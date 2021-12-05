@@ -1,4 +1,10 @@
 import styled from 'styled-components'
+import { format } from 'date-fns'
+import { useAuth } from 'context/Authentication'
+import { DASHBOARD_DATA_QUERY } from './queries'
+import { DashboardDataQuery } from './types'
+import { useQuery } from '@apollo/client'
+import { UserThumbnail } from 'modules/users'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -20,6 +26,39 @@ interface CardProps {
   height: string
 }
 
+const QuoteSpan = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const QuoteQard = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 200px;
+  height: 100px;
+  background-color: ${props => props.theme.colors.white};
+  border-radius: 10px;
+  box-shadow: ${props => props.theme.shadow.default};
+  margin-right: 15px;
+`
+
+const QuoteText = styled.span`
+  font-size: 16px;
+  font-weight: 600;
+`
+
+const QuoteContext = styled.span`
+  font-size: 14px;
+  font-style: italic;
+  color: ${props => props.theme.colors.darkGray};
+`
+
+const QuoteTaggedWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
 const Card = styled.div<CardProps>`
   display: flex;
   flex-direction: column;
@@ -30,6 +69,10 @@ const Card = styled.div<CardProps>`
   background-color: ${props => props.theme.colors.white};
   border-radius: 10px;
   box-shadow: ${props => props.theme.shadow.default};
+
+  &:first-child > span {
+    font-weight: 500;
+  }
 `
 const CardTitle = styled.h3`
   margin: 0;
@@ -41,63 +84,75 @@ const TransactionSpan = styled.div`
   margin-top: 10px;
 `
 
-// open events on top
-// area for messages if need be
-//
-
 export const Dashboard = () => {
+  const user = useAuth()
+  const { lastTransactions } = user
+  const { data, loading, error } =
+    useQuery<DashboardDataQuery>(DASHBOARD_DATA_QUERY)
+
+  if (loading || data === undefined) return <span>Loading</span>
+
+  if (error) return <span>En feil opstod</span>
+
+  const { dashboardData } = data
+  const { lastQuotes, wantedList, lastSummaries } = dashboardData
+
   return (
     <Wrapper>
+      {wantedList && (
+        <>
+          <h1>Wanted</h1>
+          {wantedList.map(user => (
+            <Card width="200px" height="auto">
+              <b>{user.fullName}</b>
+              <span>Skylder: {user.balance},- NOK</span>
+            </Card>
+          ))}
+        </>
+      )}
+      <CardRow></CardRow>
       <CardRow>
-        <Card width="450px" height="300px">
+        <Card width="450px" height="auto">
           <CardTitle>Siste transaksjoner</CardTitle>
           <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
+            <span>Date</span>
+            <span>Type</span>
+            <span>Quantity</span>
+            <span>Total amount</span>
           </TransactionSpan>
-          <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
-          </TransactionSpan>{' '}
-          <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
-          </TransactionSpan>{' '}
-          <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
-          </TransactionSpan>{' '}
-          <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
-          </TransactionSpan>{' '}
-          <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
-          </TransactionSpan>
+          {lastTransactions.map(activity => (
+            <TransactionSpan>
+              <span>{format(new Date(activity.timestamp), 'd.M')}</span>
+              <span>{activity.name}</span>
+              <span>{activity.quantity}</span>
+              <span>{activity.amount},- NOK</span>
+            </TransactionSpan>
+          ))}
         </Card>
         <Card width="450px" height="300px">
-          test
+          <h3>Last summaries</h3>
+          {lastSummaries.map(summary => (
+            <TransactionSpan>
+              <a href={`/summaries/${summary.id}`}>{summary.summaryType}</a>
+              <span>{format(new Date(summary.date), 'd.M')}</span>
+            </TransactionSpan>
+          ))}
         </Card>
       </CardRow>
+      <QuoteSpan>
+        {lastQuotes.map(quote => (
+          <QuoteQard>
+            {' '}
+            <QuoteText>{quote.text}</QuoteText>
+            <QuoteContext>{quote.context}</QuoteContext>
+            <QuoteTaggedWrapper>
+              {quote.tagged.map(user => (
+                <UserThumbnail size="small" user={user} />
+              ))}
+            </QuoteTaggedWrapper>
+          </QuoteQard>
+        ))}
+      </QuoteSpan>
     </Wrapper>
   )
 }

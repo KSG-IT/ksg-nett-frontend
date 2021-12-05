@@ -1,3 +1,5 @@
+import { BankAccountActivity } from 'modules/economy/types'
+
 export type UserNode = {
   id: string
   firstName: string
@@ -16,8 +18,9 @@ export type UserNode = {
   needsPasswordChange: boolean
   profileImage: string | null
   isAdministrator: boolean
+  bankAccountActivity: BankAccountActivity[]
+  lastTransactions: BankAccountActivity[]
 }
-
 
 export interface UserQuery {
   user: UserNode

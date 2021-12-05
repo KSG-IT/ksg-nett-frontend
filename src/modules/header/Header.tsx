@@ -5,14 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Wrapper = styled.header`
   width: 100%;
-  height: 80px;
+  height: 70px;
   display: flex;
   flex-direction: row;
   padding: 0 12px;
   align-items: center;
   justify-content: space-between;
-  background-color: ${props => props.theme.colors.gray2};
+  background-color: ${props => props.theme.colors.white};
   z-index: ${ZIndexRange.Header};
+  box-shadow: ${props =>
+    props.theme.shadow.default}; //0px 0px 2px rgb(0 0 0 / 20%);
 
   ${props => props.theme.media.mobile} {
     background-color: ${props => props.theme.colors.purple};
@@ -36,6 +38,7 @@ const ToggleSidebarButton = styled.div`
 const MobileLogo = styled(Link)`
   display: none;
   font-size: 32px;
+
   font-weight: 600;
   color: white;
   ${props => props.theme.media.mobile} {
@@ -52,6 +55,7 @@ export const Header = ({ toggleSidebar }: HeaderProps) => {
     <Wrapper>
       <MobileLogo to="/dashboard">KSG</MobileLogo>
       <input placeholder="Søk etter bruker..." />
+
       <ToggleSidebarButton onClick={toggleSidebar}>
         <FontAwesomeIcon icon={['fas', 'bars']} size="lg" color="black" />
       </ToggleSidebarButton>
