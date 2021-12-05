@@ -1,4 +1,5 @@
 import { UserNode } from 'modules/users'
+import { RelayEdgesWithPageInfo } from 'types/graphql'
 
 type SummaryType =
   | 'DRIFT'
@@ -17,6 +18,25 @@ export interface SummaryNode {
   contents: string
   participants: UserNode[]
   date: Date
-  updated_at: Date
+  updatedAt: Date
   summaryType: SummaryType
+}
+
+export type SummaryNodeShallow = Omit<SummaryNode, 'contents'>
+
+/* === QUERY TYPES === */
+export interface SummaryQueryVariables {
+  id: string
+}
+
+export interface SummaryQueryReturns {
+  summary: SummaryNode
+}
+
+export interface AllSummariesQueryReturns {
+  allSummaries: RelayEdgesWithPageInfo<SummaryNodeShallow>
+}
+
+export interface AllSummariesQueryVariables {
+  q: string
 }
