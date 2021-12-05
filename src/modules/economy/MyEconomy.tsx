@@ -83,7 +83,7 @@ export const MyEconomy = () => {
         account: data?.myBankAccount?.id,
         receipt: depositReceipt,
       },
-      refetchQueries: ['Me', 'MyBankAccount'],
+      refetchQueries: ['Me', 'MyBankAccount', 'SidebarQuery'],
     },
   })
 
