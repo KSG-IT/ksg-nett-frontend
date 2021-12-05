@@ -9,8 +9,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
 
 function Root() {
-  console.log('URI:', process.env.REACT_APP_API_URL)
-
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>

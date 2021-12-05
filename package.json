@@ -8,8 +8,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
     "@hookform/resolvers": "^2.6.0",
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -28,7 +26,7 @@
     "graphql": "^15.5.0",
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
-    "prettier": "^2.2.1",
+    "prettier": "^2.5.0",
     "quill": "^1.3.7",
     "react": "^17.0.2",
     "react-apollo": "^3.1.5",
@@ -48,7 +46,16 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "lint-staged": {
+    "*": "prettier --write"
   },
   "eslintConfig": {
     "extends": [
@@ -67,5 +74,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "husky": "^7.0.0",
+    "pretty-quick": "^2.0.1"
   }
 }

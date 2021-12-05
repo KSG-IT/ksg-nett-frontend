@@ -11,7 +11,6 @@ interface ButtonProps {
 
 const StyledButton = styled.button<ButtonProps>``
 
-
 export const PrimaryButton: React.FC<ButtonProps> = ({
   width = '100%',
   height = '35px',

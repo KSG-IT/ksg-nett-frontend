@@ -87,9 +87,8 @@ const TransactionSpan = styled.div`
 export const Dashboard = () => {
   const user = useAuth()
   const { lastTransactions } = user
-  const { data, loading, error } = useQuery<DashboardDataQuery>(
-    DASHBOARD_DATA_QUERY
-  )
+  const { data, loading, error } =
+    useQuery<DashboardDataQuery>(DASHBOARD_DATA_QUERY)
 
   if (loading || data === undefined) return <span>Loading</span>
 

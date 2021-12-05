@@ -3,6 +3,7 @@ import { createUploadLink } from 'apollo-upload-client'
 import { onError } from '@apollo/client/link/error'
 import { setContext } from '@apollo/client/link/context'
 import { getLoginToken } from 'util/auth'
+import { API_URL } from 'util/env'
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -16,6 +17,8 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
+console.log(API_URL)
+
 // Log any GraphQL errors or network error that occurred
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
@@ -28,7 +31,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const uploadLink = createUploadLink({
-  uri: process.env.REACT_APP_API_URL
+  uri: API_URL + '/graphql/',
 })
 
 const client = new ApolloClient({

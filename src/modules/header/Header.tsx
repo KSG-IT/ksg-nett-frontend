@@ -13,7 +13,8 @@ const Wrapper = styled.header`
   justify-content: space-between;
   background-color: ${props => props.theme.colors.white};
   z-index: ${ZIndexRange.Header};
-  box-shadow: ${props => props.theme.shadow.default}; //0px 0px 2px rgb(0 0 0 / 20%);
+  box-shadow: ${props =>
+    props.theme.shadow.default}; //0px 0px 2px rgb(0 0 0 / 20%);
 
   ${props => props.theme.media.mobile} {
     background-color: ${props => props.theme.colors.purple};
@@ -37,6 +38,7 @@ const ToggleSidebarButton = styled.div`
 const MobileLogo = styled(Link)`
   display: none;
   font-size: 32px;
+
   font-weight: 600;
   color: white;
   ${props => props.theme.media.mobile} {
@@ -53,6 +55,7 @@ export const Header = ({ toggleSidebar }: HeaderProps) => {
     <Wrapper>
       <MobileLogo to="/dashboard">KSG</MobileLogo>
       <input placeholder="Søk etter bruker..." />
+
       <ToggleSidebarButton onClick={toggleSidebar}>
         <FontAwesomeIcon icon={['fas', 'bars']} size="lg" color="black" />
       </ToggleSidebarButton>

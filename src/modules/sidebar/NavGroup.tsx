@@ -25,7 +25,7 @@ export const NavGroup: React.FC<NavGroupProps> = ({
     <Wrapper>
       <NavGroupTitle>{navGroupTitle}</NavGroupTitle>
       {navItems.map((item, i) => (
-        <NavItem {...item} key={i}/>
+        <NavItem {...item} key={i} />
       ))}
     </Wrapper>
   )
