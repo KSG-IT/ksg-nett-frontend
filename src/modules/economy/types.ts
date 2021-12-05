@@ -61,12 +61,13 @@ export interface TransferNode {
 }
 
 export interface DepositNode {
+  id: string
   account: SociBankAccountNode
   description: string
   amount: number
   receipt: string // string with image url
-  signOffBy: UserNode
-  signedOffTime: Date
+  signedOffBy: UserNode | null
+  signedOffTime: Date | null
   approved: boolean
   comments: DepositCommentNode[]
 }
