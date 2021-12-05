@@ -6,10 +6,10 @@ export type SociSessionType = 'stilletime' | 'krysseliste' | 'societeten'
 
 // balance typing
 export type Liquidity =
-  | 'negative' // < 0
-  | 'neutral' // <= 0, <1 00
-  | 'positive' // <= 100, <1000
-  | 'loaded' // <= 1000
+  | 'negative'     // balance < 0 
+  | 'neutral'       // 0 < balance < 100
+  | 'positive'     // 100 < balance < 1000
+  | 'loaded'      // 1000 < balance 
 
 // Could be this is not something we want to use
 export type TransactionHistoryType =

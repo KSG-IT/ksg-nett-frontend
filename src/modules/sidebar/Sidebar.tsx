@@ -10,6 +10,7 @@ import { getLiquidity } from 'modules/economy/utils'
 import { Liquidity } from 'modules/economy/types'
 import { NavItem } from './NavItem'
 import { removeLoginToken } from 'util/auth'
+import { useHistory } from 'react-router'
 
 const Wrapper = styled.div`
   display: flex;
@@ -129,6 +130,7 @@ interface SidebarProps {
 
 export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
   const isMobile = useRenderMobile()
+  const history = useHistory()
   const user = useAuth()
   const shouldRenderSidebar = !isMobile || sidebarOpen
 
@@ -136,7 +138,7 @@ export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
 
   const logout = () => {
     removeLoginToken()
-    window.location.href = '/login'
+    history.push('/login')
   }
 
   return (
