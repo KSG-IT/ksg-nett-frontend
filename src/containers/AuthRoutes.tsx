@@ -35,6 +35,11 @@ export const AuthRoutes: React.FC = () => {
       <PrivateRoute exact path="/schedules" component={PlaceholderComponent} />
       <PrivateRoute exact path="/economy" component={PlaceholderComponent} />
       <PrivateRoute exact path="/summaries" component={Summaries} />
+      {/* <PrivateRoute
+        exact
+        path="/summaries/:summaryId"
+        component={SummaryDetail}
+      /> */}
 
       <PrivateRoute exact path="/chat" component={PlaceholderComponent} />
       <PrivateRoute exact path="/users" component={PlaceholderComponent} />
