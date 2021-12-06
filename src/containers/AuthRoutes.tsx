@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { PrivateRoute } from 'containers/PrivateRoute'
 import { Dashboard } from 'modules/dashboard'
 import { UserProfile } from 'modules/users'
-import { Summaries } from 'modules/summaries'
+import { Summaries, SummaryDetail } from 'modules/summaries'
 import { QuotesList } from 'modules/quotes'
 import { Deposits, MyEconomy } from 'modules/economy'
 
@@ -38,11 +38,11 @@ export const AuthRoutes: React.FC = () => {
       <PrivateRoute exact path="/economy/me" component={MyEconomy} />
       <PrivateRoute exact path="/economy/deposits" component={Deposits} />
       <PrivateRoute exact path="/summaries" component={Summaries} />
-      {/* <PrivateRoute
+      <PrivateRoute
         exact
         path="/summaries/:summaryId"
         component={SummaryDetail}
-      /> */}
+      />
 
       <PrivateRoute exact path="/chat" component={PlaceholderComponent} />
       <PrivateRoute exact path="/users" component={PlaceholderComponent} />
