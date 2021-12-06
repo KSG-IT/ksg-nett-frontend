@@ -97,3 +97,18 @@ export interface MyBankAccountReturns {
   cardUuid: string
   deposits: DepositNode[]
 }
+
+// Mutation
+
+interface CreateDepositInput {
+  amount: number
+  description: string
+  receipt: File | null
+}
+export interface CreateDepositMutationVariables {
+  input: CreateDepositInput
+}
+
+export interface CreateDepositMutationReturns {
+  depposit: DepositNode
+}
