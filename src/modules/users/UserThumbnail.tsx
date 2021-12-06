@@ -48,7 +48,7 @@ const StyledLink = styled(Link)`
 
 interface UserThumbnailProps {
   size: ThumbnailSizes
-  user: Pick<UserNode, 'id' | 'profilePicture' | 'initials'>
+  user: Partial<UserNode>
 }
 
 export const UserThumbnail: React.FC<UserThumbnailProps> = ({ size, user }) => {

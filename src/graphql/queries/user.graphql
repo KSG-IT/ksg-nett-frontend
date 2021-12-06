@@ -13,6 +13,12 @@ query Me {
     studyAddress
     homeAddress
     phone
+    lastTransactions {
+      name
+      amount
+      quantity
+      timestamp
+    }
   }
 }
 
