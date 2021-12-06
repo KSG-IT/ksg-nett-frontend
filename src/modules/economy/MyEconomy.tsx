@@ -1,17 +1,27 @@
 import styled from 'styled-components'
 import { useAuth } from 'context/Authentication'
-import { BankAccountActivity, DepositNode, MY_BANK_ACCOUNT_QUERY } from '.'
+import {
+  BankAccountActivity,
+  CreateDepositMutationReturns,
+  CreateDepositMutationVariables,
+  DepositNode,
+  MY_BANK_ACCOUNT_QUERY,
+} from '.'
 import { CREATE_DEPOSIT } from './mutations'
 import { useMutation, useQuery } from '@apollo/client'
 import { numberWithSpaces } from 'util/parsing'
 import format from 'date-fns/format'
 import { useRef, useState } from 'react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
 `
 
 const AccountActivityCard = styled.div`
@@ -67,39 +77,55 @@ const CreateDepositArea = styled.div`
   height: 35px;
 `
 
+type DepositFormInput = {
+  amount: number
+  description: string
+  receipt: FileList
+}
+
 export const MyEconomy = () => {
   const user = useAuth()
-  const [depositReceipt, setDepositReceipt] = useState<File | null>(null)
-  const [depositDescription, setDepositDescription] = useState('')
-  const [depositAmount, setDepositAmount] = useState(0)
-  const fileInputRef = useRef<HTMLInputElement | null>(null)
 
-  const { data } = useQuery(MY_BANK_ACCOUNT_QUERY) // Consider just doing everything in the user query?
-  const [createDeposit] = useMutation(CREATE_DEPOSIT, {
-    variables: {
-      input: {
-        description: depositDescription,
-        amount: depositAmount,
-        account: data?.myBankAccount?.id,
-        receipt: depositReceipt,
-      },
-      refetchQueries: ['Me', 'MyBankAccount'],
-    },
+  let schema = yup.object().shape({
+    amount: yup.number().required().min(1, 'Må være et positivt tall'),
+    description: yup.string().notRequired(),
+    receipt: yup.mixed().notRequired(), // see https://stackoverflow.com/questions/52427095/validating-file-presence-with-yup for validation
   })
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return
-    const file = e.target.files[0]
-    if (!file) return
-    setDepositReceipt(file)
-  }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors: formErrors },
+  } = useForm<DepositFormInput>({ resolver: yupResolver(schema) })
 
-  const submitHandler = () => {
-    createDeposit()
-    setDepositReceipt(null)
-    setDepositDescription('')
-    setDepositAmount(0)
-    fileInputRef.current = null
+  const { data, loading, error } = useQuery(MY_BANK_ACCOUNT_QUERY)
+
+  const [createDeposit] = useMutation<
+    CreateDepositMutationReturns,
+    CreateDepositMutationVariables
+  >(CREATE_DEPOSIT, {
+    refetchQueries: ['Me', 'MyBankAccount'],
+  })
+
+  if (error) return <span>En feil oppstod...</span>
+
+  if (loading || !data) return <span>Loading...</span>
+
+  const onSubmit: SubmitHandler<DepositFormInput> = data => {
+    const fileList: FileList = data.receipt
+    const file = fileList[0]
+
+    createDeposit({
+      variables: {
+        input: {
+          amount: data.amount,
+          description: data.description,
+          receipt: file,
+        },
+      },
+    })
+    reset({ amount: 0, description: '', receipt: '' })
   }
 
   return (
@@ -107,7 +133,7 @@ export const MyEconomy = () => {
       Hei, {user.fullName}
       <AccountCard>
         <Cardnumber>
-          Kortnummer: {numberWithSpaces(data?.myBankAccount?.cardUuid)}
+          Kortnummer: {numberWithSpaces(data.myBankAccount.cardUuid)}
         </Cardnumber>
         <AccountBalance>
           Balanse: {numberWithSpaces(user.balance)},- NOK
@@ -115,7 +141,7 @@ export const MyEconomy = () => {
       </AccountCard>
       <AccountActivityCard>
         Kontoaktivitet
-        {data?.myBankAccount?.user?.bankAccountActivity.map(
+        {data.myBankAccount.user.bankAccountActivity.map(
           (activity: BankAccountActivity, i: number) => (
             <AccountActivityEntry key={i}>
               <span>{activity.name} </span>
@@ -130,28 +156,24 @@ export const MyEconomy = () => {
       </AccountActivityCard>
       <AccountActivityCard>
         Innskudd
-        {data?.myBankAccount?.deposits.map(
-          (deposit: DepositNode, i: number) => (
-            <AccountActivityEntry key={i}>
-              <span>{deposit.amount},- NOK </span>
-              <span>{deposit.approved ? 'Godkjent' : 'Ikke godkjent'}</span>
-            </AccountActivityEntry>
-          )
-        )}
+        {data.myBankAccount.deposits.map((deposit: DepositNode, i: number) => (
+          <AccountActivityEntry key={i}>
+            <span>{deposit.amount},- NOK </span>
+            <span>{deposit.approved ? 'Godkjent' : 'Ikke godkjent'}</span>
+          </AccountActivityEntry>
+        ))}
       </AccountActivityCard>
       <CreateDepositArea>
-        <input
-          value={depositAmount}
-          onChange={evt => {
-            setDepositAmount(parseInt(evt.target.value))
-          }}
-        />
-        <textarea
-          value={depositDescription}
-          onChange={e => setDepositDescription(e.target.value)}
-        />
-        <input type="file" onChange={handleFileChange} ref={fileInputRef} />
-        <button onClick={submitHandler}>Lag innskudd</button>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <input {...register('amount')} />
+          <textarea {...register('description')} />
+          <input
+            type="file"
+            accept="image/png, image/jpeg"
+            {...register('receipt')}
+          />
+          <button type="submit">Lag innskudd</button>
+        </form>
       </CreateDepositArea>
     </Wrapper>
   )
