@@ -166,6 +166,7 @@ export const MyEconomy = () => {
       <CreateDepositArea>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <input {...register('amount')} />
+          <p>{formErrors.amount?.message}</p>
           <textarea {...register('description')} />
           <input
             type="file"
