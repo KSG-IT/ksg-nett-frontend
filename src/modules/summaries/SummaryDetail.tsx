@@ -64,6 +64,7 @@ export const SummaryDetail = () => {
   const [contents, setContents] = useState<string>('')
   const [summaryTitle, setSummaryTitle] = useState('')
   const [participants, setParticipants] = useState<UserNode[]>([])
+  const [reporter, setReporter] = useState<UserNode | null>(null)
 
   const [patchSummary] = useMutation(PATCH_SUMMARY, {
     variables: {
@@ -88,6 +89,7 @@ export const SummaryDetail = () => {
           )}`
         )
         setParticipants(summary.participants)
+        setReporter(summary.reporter)
       },
     }
   )
@@ -121,10 +123,13 @@ export const SummaryDetail = () => {
       <ParticipantsRow>
         Tilestede:
         {participants.map((user, i) => (
-          <UserThumbnail user={user} size="small" key={i}/>
+          <UserThumbnail user={user} size="small" key={i} />
         ))}
       </ParticipantsRow>
-
+      <ParticipantsRow>
+        Referent:
+        {reporter !== null && <UserThumbnail user={reporter} size="small" />}
+      </ParticipantsRow>
       {editing ? (
         <TextArea
           value={contents}

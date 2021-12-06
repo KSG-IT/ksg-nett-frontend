@@ -61,7 +61,7 @@ export const Summaries = () => {
           {summaries.map((summary, i) => (
             <SummaryWrapper key={i}>
               <SummaryLink to={`summaries/${summary.id}`}>
-                {format(new Date(summary.date), 'dd.MM.yyyy')}{' '}
+                {format(new Date(summary.date), 'dd.MM.yyyy')}
                 {summary.summaryType}
               </SummaryLink>
               {summary.participants.map(user => (

@@ -13,6 +13,11 @@ export const SUMMARY_QUERY = gql`
       summaryType
       date
       updatedAt
+      reporter {
+        id
+        profilePicture
+        initials
+      }
     }
   }
 `

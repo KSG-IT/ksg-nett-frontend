@@ -18,6 +18,7 @@ export interface SummaryNode {
   contents: string
   participants: UserNode[]
   date: Date
+  reporter: UserNode
   updatedAt: Date
   summaryType: SummaryType
 }
