@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import 'react-quill/dist/quill.snow.css'
 import styled from 'styled-components'
 import ReactMarkdown from 'react-markdown'
 import { UserNode, UserThumbnail } from 'modules/users'
