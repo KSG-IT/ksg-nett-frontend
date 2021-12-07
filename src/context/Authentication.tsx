@@ -1,23 +1,6 @@
 import { createContext, useContext, FC } from 'react'
 import { UserNode } from '__generated__/graphql'
 
-// const USER_PLACEHOLDER = {
-//   id: '',
-//   firstName: '',
-//   lastName: '',
-//   username: '',
-//   fullName: '',
-//   phoneNumber: '',
-//   initials: '',
-//   email: '',
-//   isStaff: false,
-//   isSuperuser: false,
-//   isActive: false,
-//   needsPasswordChange: false,
-//   profilePicture: '',
-//   isAdministrator: false,
-// }
-
 const AuthContext = createContext<UserNode | null>(null)
 
 export const useAuth = () => useContext(AuthContext)!

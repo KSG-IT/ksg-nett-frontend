@@ -72,19 +72,22 @@ export const UserProfile = () => {
   if (!data || error) return <span>Something went wrong</span>
 
   const { user } = data
+
+  if (user === null || user === undefined)
+    return <span>Bruker eksisterer ikke</span>
   // Permission checks for either if they are allowed to edit
   // - The user is the same as the authenticated user
   // - The user has edit permissions on user
 
   return (
     <Wrapper>
-      <ProfileName>{user!.fullName}</ProfileName>
+      <ProfileName>{user.fullName}</ProfileName>
       <ImageWrapper>
-        <ProfileImage src={user!.profilePicture!} />
+        <ProfileImage src={user.profilePicture!} />
       </ImageWrapper>
       <DetailsWrapper>
-        <DetailsFullname>{user!.fullName}</DetailsFullname>
-        <DetailsPhone>{user!.phone}</DetailsPhone>
+        <DetailsFullname>{user.fullName}</DetailsFullname>
+        <DetailsPhone>{user.phone}</DetailsPhone>
       </DetailsWrapper>
     </Wrapper>
   )

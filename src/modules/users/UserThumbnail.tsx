@@ -12,7 +12,7 @@ type ThumbnailSizes =
 
 interface WrapperProps {
   size: ThumbnailSizes
-  src: string
+  src?: string
 }
 
 const thumbnailSize = {
@@ -52,13 +52,16 @@ interface UserThumbnailProps {
 }
 
 export const UserThumbnail: React.FC<UserThumbnailProps> = ({ size, user }) => {
+  const { profilePicture } = user
+  const hasProfilePicture =
+    !(profilePicture === undefined) || !(profilePicture === undefined)
   return (
-    // Todo render image and use initials as fallback
-    // Doesn't really matter since we have matt damon as a fallback
     <StyledLink to={`/users/${user.id}`}>
-      <Wrapper size={size} src={user.profilePicture!}>
-        {user.initials}
-      </Wrapper>
+      {hasProfilePicture ? (
+        <Wrapper size={size} src={profilePicture!}></Wrapper>
+      ) : (
+        <Wrapper size={size}>{user.initials}</Wrapper>
+      )}
     </StyledLink>
   )
 }

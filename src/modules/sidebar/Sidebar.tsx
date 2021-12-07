@@ -134,7 +134,7 @@ export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
   const user = useAuth()
   const shouldRenderSidebar = !isMobile || sidebarOpen
 
-  const liquidity = getLiquidity(user.balance!)
+  const liquidity = getLiquidity(user.balance)
 
   const logout = () => {
     removeLoginToken()
