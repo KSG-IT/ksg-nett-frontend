@@ -1,8 +1,6 @@
-import styled from 'styled-components'
-import { USER_QUERY } from 'modules/users/queries'
-import { useQuery } from '@apollo/client'
-import { UserQuery, UserQueryVariables } from 'modules/users/types'
 import { useParams } from 'react-router'
+import styled from 'styled-components'
+import { useUserQuery } from '__generated__/graphql'
 
 const Wrapper = styled.div`
   display: grid;
@@ -66,16 +64,17 @@ interface UserProfileParams {
 
 export const UserProfile = () => {
   const { userId } = useParams<UserProfileParams>()
-  const { data, loading, error } = useQuery<UserQuery, UserQueryVariables>(
-    USER_QUERY,
-    { variables: { id: userId } }
-  )
+
+  const { data, loading, error } = useUserQuery({ variables: { id: userId } })
 
   if (loading) return <span>Loading</span>
 
   if (!data || error) return <span>Something went wrong</span>
 
   const { user } = data
+
+  if (user === null || user === undefined)
+    return <span>Bruker eksisterer ikke</span>
   // Permission checks for either if they are allowed to edit
   // - The user is the same as the authenticated user
   // - The user has edit permissions on user
@@ -84,7 +83,7 @@ export const UserProfile = () => {
     <Wrapper>
       <ProfileName>{user.fullName}</ProfileName>
       <ImageWrapper>
-        <ProfileImage src={user.profilePicture} />
+        <ProfileImage src={user.profilePicture!} />
       </ImageWrapper>
       <DetailsWrapper>
         <DetailsFullname>{user.fullName}</DetailsFullname>
