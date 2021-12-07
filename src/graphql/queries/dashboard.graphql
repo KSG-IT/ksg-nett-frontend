@@ -1,0 +1,24 @@
+query Dashboard {
+  dashboardData {
+    wantedList {
+      id
+      balance
+      fullName
+    }
+    lastSummaries {
+      id
+      date
+      summaryType
+    }
+    lastQuotes {
+      id
+      text
+      context
+      tagged {
+        id
+        profilePicture
+        initials
+      }
+    }
+  }
+}
