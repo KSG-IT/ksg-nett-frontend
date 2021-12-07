@@ -1,4 +1,5 @@
-export function numberWithSpaces(x: number | string) {
+export function numberWithSpaces(x: number | string | null | undefined) {
+  if (x === undefined || x === null) return ''
   var parts
   if (typeof x === 'number') {
     parts = x.toString().split('.')
