@@ -15,3 +15,13 @@ export const CREATE_DEPOSIT = gql`
     }
   }
 `
+
+export const PATCH_DEPOSIT = gql`
+  mutation PatchDeposit($id: ID!, $input: PatchDepositInput!) {
+    patchDeposit(id: $id, input: $input) {
+      deposit {
+        id
+      }
+    }
+  }
+`

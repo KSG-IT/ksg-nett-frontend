@@ -1,6 +1,9 @@
 export const BASE_URL =
   process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000'
 
+export const MEDIA_URL =
+  process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000/media/'
+
 export const STAGE = isLocal() ? 'local' : process.env.REACT_APP_STAGE
 
 export const API_URLS = {

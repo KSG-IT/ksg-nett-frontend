@@ -22,3 +22,33 @@ export const MY_BANK_ACCOUNT_QUERY = gql`
     }
   }
 `
+
+export const ALL_DEPOSITS = gql`
+  query AllDeposits {
+    allDeposits {
+      edges {
+        node {
+          id
+          description
+          amount
+          receipt
+          approved
+          createdAt
+          account {
+            id
+            user {
+              id
+              fullName
+              profilePicture
+            }
+          }
+          signedOffBy {
+            id
+            initials
+            profilePicture
+          }
+        }
+      }
+    }
+  }
+`

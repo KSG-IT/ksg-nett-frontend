@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import { NavGroup } from './NavGroup'
 import { useQuery, gql } from '@apollo/client'
@@ -9,7 +8,7 @@ const Wrapper = styled.div`
   width: 100%;
 `
 
-const SIDEBAR_QUERY = gql`
+export const SIDEBAR_QUERY = gql`
   query SidebarQuery {
     sidebarData {
       pendingQuotes
@@ -19,20 +18,11 @@ const SIDEBAR_QUERY = gql`
 `
 
 export const SidebarNav = () => {
-  const [pendingQuotes, setPendingQuotes] = useState(0)
-  const [pendingDeposits, setPendingDeposits] = useState(0)
+  const { data } = useQuery(SIDEBAR_QUERY)
 
-  useQuery(SIDEBAR_QUERY, {
-    onCompleted(data) {
-      console.log(data)
-      const { sidebarData } = data
-      const { pendingQuotes, pendingDeposits } = sidebarData
-      setPendingDeposits(pendingDeposits)
-      setPendingQuotes(pendingQuotes)
-    },
-  })
+  const pendingQuotes = data?.sidebarData.pendingQuotes ?? 0
+  const pendingDeposits = data?.sidebarData.pendingDeposits ?? 0
 
-  console.log(pendingDeposits, pendingQuotes)
   return (
     <Wrapper>
       <NavGroup
