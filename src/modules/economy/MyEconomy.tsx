@@ -5,6 +5,7 @@ import {
   CreateDepositMutationReturns,
   CreateDepositMutationVariables,
   DepositNode,
+  MyBankAccountReturns,
   MY_BANK_ACCOUNT_QUERY,
 } from '.'
 import { CREATE_DEPOSIT } from './mutations'
@@ -88,7 +89,8 @@ export const MyEconomy = () => {
   let schema = yup.object().shape({
     amount: yup.number().required().min(1, 'Må være et positivt tall'),
     description: yup.string().notRequired(),
-    receipt: yup.mixed().notRequired(), // see https://stackoverflow.com/questions/52427095/validating-file-presence-with-yup for validation
+    receipt: yup.mixed().notRequired(),
+    // see https://stackoverflow.com/questions/52427095/validating-file-presence-with-yup for validation
   })
 
   const {
@@ -98,7 +100,9 @@ export const MyEconomy = () => {
     formState: { errors: formErrors },
   } = useForm<DepositFormInput>({ resolver: yupResolver(schema) })
 
-  const { data, loading, error } = useQuery(MY_BANK_ACCOUNT_QUERY)
+  const { data, loading, error } = useQuery<MyBankAccountReturns>(
+    MY_BANK_ACCOUNT_QUERY
+  )
 
   const [createDeposit] = useMutation<
     CreateDepositMutationReturns,
@@ -112,7 +116,7 @@ export const MyEconomy = () => {
   if (loading || !data) return <span>Loading...</span>
 
   const onSubmit: SubmitHandler<DepositFormInput> = data => {
-    const fileList: FileList = data.receipt
+    const fileList = data.receipt
     const file = fileList[0]
 
     createDeposit({
@@ -165,7 +169,7 @@ export const MyEconomy = () => {
       <CreateDepositArea>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <input {...register('amount')} />
-          <p>{formErrors.amount?.message}</p>
+          <div>{formErrors.amount?.message}</div>
           <textarea {...register('description')} />
           <input
             type="file"

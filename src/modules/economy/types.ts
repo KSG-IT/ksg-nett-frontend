@@ -92,10 +92,15 @@ export interface AllProductOrdersQueryVariables {
 }
 
 export interface MyBankAccountReturns {
-  id: string
-  balance: number
-  cardUuid: string
-  deposits: DepositNode[]
+  myBankAccount: {
+    id: string
+    balance: number
+    cardUuid: string
+    deposits: DepositNode[]
+    user: {
+      bankAccountActivity: BankAccountActivity[]
+    }
+  }
 }
 
 // Mutation
