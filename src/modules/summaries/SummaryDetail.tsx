@@ -26,10 +26,7 @@ const ParticipantsRow = styled.div`
   flex-direction: row;
   width: 100%;
   flex-wrap: wrap;
-
-  > a {
-    margin-left: 5px;
-  }
+  gap: 5px;
   ${props => props.theme.media.mobile} {
     margin: 15px 0;
   }
