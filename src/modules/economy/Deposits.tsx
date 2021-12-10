@@ -18,9 +18,8 @@ const Wrapper = styled.div`
     'toolbar toolbar button1 button2'
     'table table table table';
   grid-template-rows: 75px 75px auto;
-  grid-template-columns:
-    repeat(4, 1fr)
-    ${props => props.theme.media.mobile} {
+  grid-template-columns: repeat(4, 1fr);
+  ${props => props.theme.media.mobile} {
     display: flex;
     flex-direction: column;
     padding: 16px 32px 0 16px;
