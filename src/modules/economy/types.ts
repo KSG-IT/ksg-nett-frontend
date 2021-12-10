@@ -67,6 +67,7 @@ export interface DepositNode {
   receipt: string // string with image url
   signOffBy: UserNode
   signedOffTime: Date
+  approved: boolean
   comments: DepositCommentNode[]
 }
 
@@ -88,4 +89,31 @@ export interface AllProductOrdersQuery {
 
 export interface AllProductOrdersQueryVariables {
   user?: string
+}
+
+export interface MyBankAccountReturns {
+  myBankAccount: {
+    id: string
+    balance: number
+    cardUuid: string
+    deposits: DepositNode[]
+    user: {
+      bankAccountActivity: BankAccountActivity[]
+    }
+  }
+}
+
+// Mutation
+
+interface CreateDepositInput {
+  amount: number
+  description: string
+  receipt: File | null
+}
+export interface CreateDepositMutationVariables {
+  input: CreateDepositInput
+}
+
+export interface CreateDepositMutationReturns {
+  depposit: DepositNode
 }
