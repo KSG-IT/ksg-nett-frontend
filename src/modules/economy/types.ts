@@ -65,7 +65,7 @@ export interface DepositNode {
   account: SociBankAccountNode
   description: string
   amount: number
-  receipt: string // string with image url
+  receipt: string | null // string with image url
   signedOffBy: UserNode | null
   signedOffTime: Date | null
   approved: boolean

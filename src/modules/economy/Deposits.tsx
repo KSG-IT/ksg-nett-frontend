@@ -214,13 +214,17 @@ export const Deposits = () => {
                   {deposit.amount},- NOK
                 </DepositTableCell>
                 <DepositTableCell shouldHide={false}>
-                  <a
-                    href={`${MEDIA_URL}${deposit.receipt}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Kvittering
-                  </a>
+                  {deposit.receipt ? (
+                    <a
+                      href={`${MEDIA_URL}${deposit.receipt}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Kvittering
+                    </a>
+                  ) : (
+                    'Ingen kvittering'
+                  )}
                 </DepositTableCell>
                 <DepositTableCell shouldHide={true}>
                   <StatusPill approved={deposit.approved}>
