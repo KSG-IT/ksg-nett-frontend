@@ -1,10 +1,8 @@
-import styled from 'styled-components'
-import { format } from 'date-fns'
 import { useAuth } from 'context/Authentication'
-import { DASHBOARD_DATA_QUERY } from './queries'
-import { DashboardDataQuery } from './types'
-import { useQuery } from '@apollo/client'
+import { format } from 'date-fns'
 import { UserThumbnail } from 'modules/users'
+import styled from 'styled-components'
+import { useDashboardQuery } from '__generated__/graphql'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -87,15 +85,16 @@ const TransactionSpan = styled.div`
 export const Dashboard = () => {
   const user = useAuth()
   const { lastTransactions } = user
-  const { data, loading, error } =
-    useQuery<DashboardDataQuery>(DASHBOARD_DATA_QUERY)
+
+  const { data, loading, error } = useDashboardQuery()
 
   if (loading || data === undefined) return <span>Loading</span>
 
   if (error) return <span>En feil opstod</span>
 
-  const { dashboardData } = data
-  const { lastQuotes, wantedList, lastSummaries } = dashboardData
+  const {
+    dashboardData: { wantedList, lastSummaries, lastQuotes },
+  } = data
 
   return (
     <Wrapper>
@@ -147,8 +146,8 @@ export const Dashboard = () => {
             <QuoteText>{quote.text}</QuoteText>
             <QuoteContext>{quote.context}</QuoteContext>
             <QuoteTaggedWrapper>
-              {quote.tagged.map(user => (
-                <UserThumbnail size="small" user={user} />
+              {quote.tagged.map(taggedUser => (
+                <UserThumbnail size="small" user={taggedUser} />
               ))}
             </QuoteTaggedWrapper>
           </QuoteQard>

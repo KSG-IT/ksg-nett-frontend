@@ -1,13 +1,12 @@
-import { FC } from 'react'
-import styled from 'styled-components'
-import * as yup from 'yup'
+import { useApolloClient } from '@apollo/client'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useMutation, useApolloClient } from '@apollo/client'
-import { LOGIN_MUTATION } from './mutations'
-import { LoginMutationReturn, LoginMutationVariables } from './types'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { FC } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
+import styled from 'styled-components'
 import { setLoginToken } from 'util/auth'
+import * as yup from 'yup'
+import { useSignInMutation } from '__generated__/graphql'
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,7 +25,7 @@ const Button = styled.button`
   height: 48px;
   font-size: 20px;
   font-weight: 700;
-  background-color:${props => props.theme.colors.purpleAction};
+  background-color: ${props => props.theme.colors.purpleAction};
   color: ${props => props.theme.colors.white};
   box-shadow: ${props => props.theme.shadow.default};
   border-radius: 5px;
@@ -90,26 +89,23 @@ export const Login: FC = () => {
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) })
 
-  const [login] = useMutation<LoginMutationReturn, LoginMutationVariables>(
-    LOGIN_MUTATION,
-    {
-      onCompleted(data) {
-        const { login } = data
-        const { ok } = login
+  const [login] = useSignInMutation({
+    onCompleted: data => {
+      const { ok } = data.login!
 
-        if (!ok) {
-          return
-        }
-        const { token } = login
-        setLoginToken(token)
-        client.resetStore()
-        history.push('/dashboard')
-      },
-      onError(error) {
-        console.error(error)
-      },
-    }
-  )
+      if (!ok) {
+        return
+      }
+
+      const { token } = data.login!
+
+      setLoginToken(token!)
+      client.resetStore()
+      history.push('/dashboard')
+    },
+
+    onError: error => console.error(error),
+  })
 
   const onSubmit: SubmitHandler<Inputs> = data => login({ variables: data })
 

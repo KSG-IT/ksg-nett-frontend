@@ -1,0 +1,14 @@
+query QuoteShallow($id: ID!) {
+  quote(id: $id) {
+    id
+    text
+  }
+}
+
+query Quote($id: ID!) {
+  quote(id: $id) {
+    id
+    text
+    context
+  }
+}

@@ -65,7 +65,7 @@ export interface DepositNode {
   account: SociBankAccountNode
   description: string
   amount: number
-  receipt: string // string with image url
+  receipt: string | null // string with image url
   signedOffBy: UserNode | null
   signedOffTime: Date | null
   approved: boolean
@@ -93,8 +93,28 @@ export interface AllProductOrdersQueryVariables {
 }
 
 export interface MyBankAccountReturns {
-  id: string
-  balance: number
-  cardUuid: string
-  deposits: DepositNode[]
+  myBankAccount: {
+    id: string
+    balance: number
+    cardUuid: string
+    deposits: DepositNode[]
+    user: {
+      bankAccountActivity: BankAccountActivity[]
+    }
+  }
+}
+
+// Mutation
+
+interface CreateDepositInput {
+  amount: number
+  description: string
+  receipt: File | null
+}
+export interface CreateDepositMutationVariables {
+  input: CreateDepositInput
+}
+
+export interface CreateDepositMutationReturns {
+  depposit: DepositNode
 }
