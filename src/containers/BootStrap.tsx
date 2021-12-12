@@ -1,5 +1,6 @@
 import MainLayout from 'containers/MainLayout'
 import AuthProvider from 'context/Authentication'
+import { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ME_QUERY } from 'modules/users'
 import { PublicRoutes } from './PublicRoutes'
@@ -22,6 +23,7 @@ const Bootstrap: React.FC = () => {
     <AuthProvider user={me}>
       <Router>
         <MainLayout />
+        <Toaster />
       </Router>
     </AuthProvider>
   )
