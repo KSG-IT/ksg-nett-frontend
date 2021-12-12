@@ -5,11 +5,12 @@ export interface QuoteNode {
   id: string
   text: string
   reportedBy: UserNode
-  tagged: Pick<UserNode, 'id' | 'profilePicture' | 'initials'>[]
+  tagged: Pick<UserNode, 'id' | 'profileImage' | 'initials'>[]
   verifiedBy: UserNode | null
   context: string
   sum: number
   semester: `${'H' | 'V'}${number}`
+  createdAt: Date
 }
 
 /* ==== QUERY TYPING === */

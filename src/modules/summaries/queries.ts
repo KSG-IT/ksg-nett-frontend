@@ -7,7 +7,7 @@ export const SUMMARY_QUERY = gql`
       contents
       participants {
         id
-        profilePicture
+        profileImage
         initials
       }
       summaryType
@@ -15,7 +15,7 @@ export const SUMMARY_QUERY = gql`
       updatedAt
       reporter {
         id
-        profilePicture
+        profileImage
         initials
       }
     }
@@ -30,7 +30,7 @@ export const ALL_SUMMARIES = gql`
           id
           participants {
             id
-            profilePicture
+            profileImage
             initials
           }
           summaryType

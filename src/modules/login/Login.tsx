@@ -1,4 +1,4 @@
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, useMutation } from '@apollo/client'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -6,7 +6,8 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { setLoginToken } from 'util/auth'
 import * as yup from 'yup'
-import { useSignInMutation } from '__generated__/graphql'
+import { LOGIN_MUTATION } from './mutations'
+import { LoginMutationReturns, LoginMutationVariables } from './types'
 
 const Wrapper = styled.div`
   display: flex;
@@ -89,23 +90,26 @@ export const Login: FC = () => {
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) })
 
-  const [login] = useSignInMutation({
-    onCompleted: data => {
-      const { ok } = data.login!
+  const [login] = useMutation<LoginMutationReturns, LoginMutationVariables>(
+    LOGIN_MUTATION,
+    {
+      onCompleted: data => {
+        const { ok } = data.login
 
-      if (!ok) {
-        return
-      }
+        if (!ok) {
+          return
+        }
 
-      const { token } = data.login!
+        const { token } = data.login
 
-      setLoginToken(token!)
-      client.resetStore()
-      history.push('/dashboard')
-    },
+        setLoginToken(token!)
+        client.resetStore()
+        history.push('/dashboard')
+      },
 
-    onError: error => console.error(error),
-  })
+      onError: error => console.error(error),
+    }
+  )
 
   const onSubmit: SubmitHandler<Inputs> = data => login({ variables: data })
 
