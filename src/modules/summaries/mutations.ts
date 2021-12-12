@@ -9,3 +9,13 @@ export const PATCH_SUMMARY = gql`
     }
   }
 `
+
+export const CREATE_SUMMARY = gql`
+  mutation CreateSumary($input: CreateSummaryInput!) {
+    createSummary(input: $input) {
+      summary {
+        id
+      }
+    }
+  }
+`

@@ -1,7 +1,7 @@
 import { UserNode } from 'modules/users'
 import { RelayEdgesWithPageInfo } from 'types/graphql'
 
-type SummaryType =
+export type SummaryType =
   | 'DRIFT'
   | 'BARSJEF'
   | 'STYRET'
@@ -40,4 +40,25 @@ export interface AllSummariesQueryReturns {
 
 export interface AllSummariesQueryVariables {
   q: string
+}
+
+/* === MUTATION TYPES === */
+
+type CreateSummaryInput = {
+  contents: String
+  participants: String[]
+  reporter: String
+  summaryType: SummaryType
+  date: String
+}
+export interface CreateSummaryMutationVariables {
+  input: CreateSummaryInput
+}
+
+export interface CreateSummaryMutationReturns {
+  createSummary: {
+    summary: {
+      id: String
+    }
+  }
 }
