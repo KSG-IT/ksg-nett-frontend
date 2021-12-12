@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components'
 import { format } from 'date-fns'
 import { UserThumbnail } from 'modules/users'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useDebounce } from 'util/hooks/useDebounce'
 
 const Wrapper = styled.div`
@@ -20,9 +20,19 @@ const Wrapper = styled.div`
   margin: 0 auto;
 `
 
+const NewSummaryButton = styled.button`
+  width: 100px;
+  height: 35px;
+  background-color: ${props => props.theme.colors.purpleAction};
+  color: ${props => props.theme.colors.white};
+  border-radius: 10px;
+  border: none;
+  box-shadow: ${props => props.theme.shadow.default};
+`
+
 const SummaryWrapper = styled.div`
   display: inline-flex;
-  justify-content: space-between;
+  gap: 10px;
 `
 
 const SummaryLink = styled(Link)`
@@ -33,6 +43,7 @@ export const Summaries = () => {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query)
   const [summaries, setSummaries] = useState<SummaryNodeShallow[]>([])
+  const history = useHistory()
 
   const { loading, error } = useQuery<
     AllSummariesQueryReturns,
@@ -49,17 +60,26 @@ export const Summaries = () => {
 
   return (
     <Wrapper>
-      <input
-        value={query}
-        onChange={evt => setQuery(evt.target.value)}
-        placeholder="Search for content"
-      />
+      <div>
+        <input
+          value={query}
+          onChange={evt => setQuery(evt.target.value)}
+          placeholder="Search for content"
+        />
+        <NewSummaryButton
+          onClick={() => {
+            history.push('/summaries/create')
+          }}
+        >
+          Nytt referat
+        </NewSummaryButton>
+      </div>
       {loading ? (
         <span>loading</span>
       ) : (
         <>
-          {summaries.map((summary, i) => (
-            <SummaryWrapper key={i}>
+          {summaries.map(summary => (
+            <SummaryWrapper key={summary.id}>
               <SummaryLink to={`summaries/${summary.id}`}>
                 {format(new Date(summary.date), 'dd.MM.yyyy')}
                 {summary.summaryType}
