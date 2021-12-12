@@ -32,6 +32,7 @@
     "react-apollo": "^3.1.5",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.8.8",
+    "react-hot-toast": "^2.1.1",
     "react-intl": "^5.16.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -79,8 +80,8 @@
   "devDependencies": {
     "@graphql-codegen/cli": "2.3.0",
     "@graphql-codegen/typescript": "2.4.1",
-    "@graphql-codegen/typescript-react-apollo": "3.2.2",
     "@graphql-codegen/typescript-operations": "2.2.1",
+    "@graphql-codegen/typescript-react-apollo": "3.2.2",
     "husky": "^7.0.0",
     "pretty-quick": "^2.0.1"
   }
