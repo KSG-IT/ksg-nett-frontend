@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { ZIndexRange } from 'types/enums'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { UserSearch } from './UserSearch'
 
 const Wrapper = styled.header`
   width: 100%;
@@ -54,7 +55,7 @@ export const Header = ({ toggleSidebar }: HeaderProps) => {
   return (
     <Wrapper>
       <MobileLogo to="/dashboard">KSG</MobileLogo>
-      <input placeholder="Søk etter bruker..." />
+      <UserSearch />
 
       <ToggleSidebarButton onClick={toggleSidebar}>
         <FontAwesomeIcon icon={['fas', 'bars']} size="lg" color="black" />
