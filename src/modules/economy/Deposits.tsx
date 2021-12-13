@@ -123,26 +123,6 @@ const DepositActionButton = styled.button<DepositActionButtonProps>`
   cursor: pointer;
 `
 
-interface StatusPillProps {
-  approved: boolean
-}
-
-const StatusPill = styled.div<StatusPillProps>`
-  display: inline-flex;
-  width: 80px;
-  height: 100%;
-  border-radius: 10px;
-  color: white;
-  font-size: 11px;
-  font-weight: 600;
-  align-items: center;
-  justify-content: center;
-  background-color: ${props =>
-    props.approved
-      ? props.theme.colors.success
-      : props.theme.colors.warningRed};
-`
-
 export const Deposits = () => {
   const [patchDeposit] = useMutation(PATCH_DEPOSIT, {
     refetchQueries: [
