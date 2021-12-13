@@ -39,7 +39,7 @@ export interface AllUsersShallowQueryVariables {
 }
 
 export interface AllUsersShallowQueryReturns {
-  allUsers: RelayEdges<
+  allActiveUsers: RelayEdges<
     Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>
   >
 }

@@ -5,7 +5,7 @@ import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
 } from 'modules/users/types'
-import { ALL_USERS_SHALLOW_QUERY } from 'modules/users/queries'
+import { ALL_ACTIVE_USERS_SHALLOW_QUERY } from 'modules/users/queries'
 import { useDebounce } from 'util/hooks'
 import { UserNode } from 'modules/users/types'
 import { UserThumbnail } from 'modules/users'
@@ -103,7 +103,7 @@ export const UserSearch: React.VFC = () => {
   const { loading, data } = useQuery<
     AllUsersShallowQueryReturns,
     AllUsersShallowQueryVariables
-  >(ALL_USERS_SHALLOW_QUERY, { variables: { q: debouncedQuery } })
+  >(ALL_ACTIVE_USERS_SHALLOW_QUERY, { variables: { q: debouncedQuery } })
 
   const handleSelectUser = useCallback(
     (userId: string) => {
@@ -161,7 +161,7 @@ export const UserSearch: React.VFC = () => {
   useEffect(() => {
     if (data === undefined) return
 
-    const users = data.allUsers.edges.map(user => user.node)
+    const users = data.allActiveUsers.edges.map(user => user.node)
     setSearchResults(users)
   }, [data, setSearchResults])
 
