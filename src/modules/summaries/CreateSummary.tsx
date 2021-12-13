@@ -39,10 +39,10 @@ export const CreateSummary = () => {
     CreateSummaryMutationVariables
   >(CREATE_SUMMARY, {
     refetchQueries: ['AllSummaries'],
+    awaitRefetchQueries: true,
     onCompleted({ createSummary }) {
       const { summary } = createSummary
-
-      //history.push(`/summaries/${summary.id}`)
+      history.push(`/summaries/${summary.id}`)
     },
   })
   const history = useHistory()
@@ -57,7 +57,6 @@ export const CreateSummary = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors: formErrors },
   } = useForm<SummaryInput>({ resolver: yupResolver(schema) })
 
@@ -72,11 +71,6 @@ export const CreateSummary = () => {
           date: formatISO(new Date()),
         },
       },
-    }).then(res => {
-      const { data } = res
-      if (!data) return
-      const { summary } = data.createSummary
-      history.push(`/summaries/${summary.id}`)
     })
   }
   return (
