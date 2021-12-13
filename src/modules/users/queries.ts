@@ -41,3 +41,19 @@ export const USER_QUERY = gql`
     }
   }
 `
+
+export const ALL_USERS_SHALLOW_QUERY = gql`
+  query User($q: String) {
+    allUsers(q: $q) {
+      edges {
+        node {
+          id
+          fullName
+          profileImage
+          initials
+          phone
+        }
+      }
+    }
+  }
+`
