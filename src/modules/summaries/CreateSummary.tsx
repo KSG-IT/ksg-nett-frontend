@@ -54,11 +54,9 @@ export const CreateSummary = () => {
     //summaryType: yup.string(),
   })
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors: formErrors },
-  } = useForm<SummaryInput>({ resolver: yupResolver(schema) })
+  const { register, handleSubmit } = useForm<SummaryInput>({
+    resolver: yupResolver(schema),
+  })
 
   const onSubmit: SubmitHandler<SummaryInput> = async data => {
     await createSummary({
