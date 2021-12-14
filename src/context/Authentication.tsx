@@ -1,5 +1,5 @@
 import { createContext, useContext, FC } from 'react'
-import { UserNode } from '__generated__/graphql'
+import { UserNode } from 'modules/users/types'
 
 const AuthContext = createContext<UserNode | null>(null)
 

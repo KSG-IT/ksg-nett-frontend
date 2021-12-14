@@ -2,7 +2,9 @@ import { useAuth } from 'context/Authentication'
 import { format } from 'date-fns'
 import { UserThumbnail } from 'modules/users'
 import styled from 'styled-components'
-import { useDashboardQuery } from '__generated__/graphql'
+import { DashboardDataQueryReturns } from './types'
+import { useQuery } from '@apollo/client'
+import { DASHBOARD_DATA_QUERY } from './queries'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -86,7 +88,8 @@ export const Dashboard = () => {
   const user = useAuth()
   const { lastTransactions } = user
 
-  const { data, loading, error } = useDashboardQuery()
+  const { data, loading, error } =
+    useQuery<DashboardDataQueryReturns>(DASHBOARD_DATA_QUERY)
 
   if (loading || data === undefined) return <span>Loading</span>
 

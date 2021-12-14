@@ -3,7 +3,7 @@ import { SummaryNode } from 'modules/summaries'
 import { UserNode } from 'modules/users'
 
 /* QUERIES */
-export interface DashboardDataQuery {
+export interface DashboardDataQueryReturns {
   dashboardData: {
     lastSummaries: Pick<SummaryNode, 'date' | 'summaryType' | 'id'>[]
     lastQuotes: Pick<QuoteNode, 'text' | 'tagged' | 'id' | 'context'>[]

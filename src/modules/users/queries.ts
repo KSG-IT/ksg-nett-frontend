@@ -7,7 +7,7 @@ export const ME_QUERY = gql`
       username
       firstName
       lastName
-      profilePicture
+      profileImage
       fullName
       initials
       email
@@ -37,7 +37,7 @@ export const USER_QUERY = gql`
       studyAddress
       phone
       initials
-      profilePicture
+      profileImage
     }
   }
 `

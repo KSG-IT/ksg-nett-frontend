@@ -11,12 +11,11 @@ export type UserNode = {
   username: string
   balance: number
   email: string
-  profilePicture: string
+  profileImage: string | null
   isStaff: boolean
   isSuperuser: boolean
   isActive: boolean
   needsPasswordChange: boolean
-  profileImage: string | null
   isAdministrator: boolean
   bankAccountActivity: BankAccountActivity[]
   lastTransactions: BankAccountActivity[]
@@ -28,4 +27,8 @@ export interface UserQuery {
 
 export interface UserQueryVariables {
   id: string
+}
+
+export interface MeQueryReturns {
+  me: UserNode | null
 }

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { UserNode } from '__generated__/graphql'
+import { UserNode } from 'modules/users/types'
 
 type ThumbnailSizes =
   | 'tiny'
@@ -48,17 +48,16 @@ const StyledLink = styled(Link)`
 
 interface UserThumbnailProps {
   size: ThumbnailSizes
-  user: Pick<UserNode, 'id' | 'profilePicture' | 'initials'>
+  user: Pick<UserNode, 'id' | 'profileImage' | 'initials'>
 }
 
 export const UserThumbnail: React.FC<UserThumbnailProps> = ({ size, user }) => {
-  const { profilePicture } = user
-  const hasProfilePicture =
-    !(profilePicture === undefined) || !(profilePicture === undefined)
+  const { profileImage } = user
+  const hasprofileImage = profileImage !== null
   return (
     <StyledLink to={`/users/${user.id}`}>
-      {hasProfilePicture ? (
-        <Wrapper size={size} src={profilePicture!}></Wrapper>
+      {hasprofileImage ? (
+        <Wrapper size={size} src={profileImage!}></Wrapper>
       ) : (
         <Wrapper size={size}>{user.initials}</Wrapper>
       )}

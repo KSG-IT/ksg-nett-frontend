@@ -19,7 +19,7 @@ export const DASHBOARD_DATA_QUERY = gql`
         context
         tagged {
           id
-          profilePicture
+          profileImage
           initials
         }
       }

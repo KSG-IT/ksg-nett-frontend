@@ -13,7 +13,7 @@ export const APPROVED_QUOTES_QUERY = gql`
           tagged {
             id
             initials
-            profilePicture
+            profileImage
           }
         }
       }
@@ -31,7 +31,7 @@ export const PNEDING_QUOTES_QUERY = gql`
       tagged {
         id
         initials
-        profilePicture
+        profileImage
       }
     }
   }
