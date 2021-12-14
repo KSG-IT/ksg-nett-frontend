@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import styled from 'styled-components'
-import { useQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHistory } from 'react-router-dom'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { Spinner } from 'components/Loading'
+import { clamp } from 'util/arithmetic'
 
 const Wrapper = styled.div`
   height: 35px;
@@ -83,13 +84,6 @@ type UserShallowSearchNode = Pick<
 >
 
 export const UserSearch: React.VFC = () => {
-  /*
-    - On mobile we can move this component to the Sidebar instead? On top of the sidebar.
-    - If we combine the typing and query loading state the component would probably appear
-    to be more reactive
-    - Detect click outside has a "disabled prop" -> combine and mount this state toghter with
-    whether or not we should be rendering the display box? Is that possible even?
-  */
   const inputRef = useRef<HTMLInputElement>(null)
   const [userQuery, setUserQuery] = useState('')
   const history = useHistory()
@@ -100,11 +94,36 @@ export const UserSearch: React.VFC = () => {
   const [searchResults, setSearchResults] = useState<UserShallowSearchNode[]>(
     []
   )
-  const { loading, data } = useQuery<
+  const [execute, { loading, data }] = useLazyQuery<
     AllUsersShallowQueryReturns,
     AllUsersShallowQueryVariables
   >(ALL_ACTIVE_USERS_SHALLOW_QUERY, { variables: { q: debouncedQuery } })
 
+  // === Side effects of component ===
+  // executes query if debouncedQuery is not empty and has changed
+  useEffect(() => {
+    if (debouncedQuery === '') return
+    execute()
+  }, [debouncedQuery, execute])
+
+  // handles if we render the suggestions or not
+  useEffect(() => {
+    if (userQuery === '') {
+      setDisplaySuggestions(false)
+      return
+    }
+    setDisplaySuggestions(true)
+  }, [userQuery, setDisplaySuggestions])
+
+  // Handles data normalization
+  useEffect(() => {
+    if (data === undefined) return
+
+    const users = data.allActiveUsers.edges.map(user => user.node)
+    setSearchResults(users)
+  }, [data, setSearchResults])
+
+  // === Handlers ===
   const handleSelectUser = useCallback(
     (userId: string) => {
       setCursor(null)
@@ -123,7 +142,13 @@ export const UserSearch: React.VFC = () => {
     setDisplaySuggestions(false)
   }, [setDisplaySuggestions])
 
-  // Handles movement of cursor and selection with keys
+  const handleIncrement = useCallback(
+    (value: number, inc: -1 | 1) => {
+      return clamp(value + inc, 0, searchResults.length - 1)
+    },
+    [searchResults]
+  )
+
   const handleKeyDown = useCallback(
     (evt: React.KeyboardEvent<HTMLInputElement>) => {
       if (searchResults.length === 0) return
@@ -132,38 +157,19 @@ export const UserSearch: React.VFC = () => {
 
       switch (code) {
         case 'ArrowUp':
-          setCursor((sanitizedCursor - 1) % searchResults.length)
+          setCursor(handleIncrement(sanitizedCursor, -1))
           break
         case 'ArrowDown':
-          setCursor((sanitizedCursor + 1) % searchResults.length)
+          setCursor(handleIncrement(sanitizedCursor, +1))
           break
         case 'Enter':
           const { id } = searchResults[sanitizedCursor]
           handleSelectUser(id)
           break
-        default:
-          return
       }
     },
-    [searchResults, cursor, handleSelectUser]
+    [searchResults, cursor, handleSelectUser, handleIncrement]
   )
-
-  // handles if we render the suggestions or not
-  useEffect(() => {
-    if (userQuery === '') {
-      setDisplaySuggestions(false)
-      return
-    }
-    setDisplaySuggestions(true)
-  }, [userQuery, setDisplaySuggestions])
-
-  // Handles data normalization
-  useEffect(() => {
-    if (data === undefined) return
-
-    const users = data.allActiveUsers.edges.map(user => user.node)
-    setSearchResults(users)
-  }, [data, setSearchResults])
 
   return (
     <OutsideClickHandler onOutsideClick={handleClickOutside}>
@@ -199,7 +205,7 @@ export const UserSearch: React.VFC = () => {
                   )}
                   <UserThumbnail user={user} size="small" />
                 </AutoCompleteRow>
-              ))
+              )) ?? <span>Lol nothing here</span>
             )}
           </AutoCompleteBox>
         )}
