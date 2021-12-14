@@ -205,7 +205,7 @@ export const UserSearch: React.VFC = () => {
                   )}
                   <UserThumbnail user={user} size="small" />
                 </AutoCompleteRow>
-              )) ?? <span>Lol nothing here</span>
+              ))
             )}
           </AutoCompleteBox>
         )}
