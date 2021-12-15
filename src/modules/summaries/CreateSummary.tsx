@@ -11,10 +11,12 @@ import {
 } from './types'
 import { formatISO } from 'date-fns'
 import { useHistory } from 'react-router-dom'
+import { UserSelect } from 'components/Select'
+import { ErrorMessage } from '@hookform/error-message'
 
 type SummaryInput = {
   participants: String[]
-  referrer: String
+  reporter: String
   contents: String
   summarType: SummaryType
 }
@@ -48,40 +50,66 @@ export const CreateSummary = () => {
   const history = useHistory()
 
   let schema = yup.object({
-    // participants: yup.number().required().min(1, 'Må være et positivt tall'),
-    // referrer: yup.string().notRequired(),
-    contents: yup.string(),
+    //participants: yup.array().required().min(1, 'Må være et positivt tall'),
+    reporter: yup.string().required('Må ha en referent'),
+    contents: yup.string().required('Må ha innhold'),
     //summaryType: yup.string(),
   })
 
-  const { register, handleSubmit } = useForm<SummaryInput>({
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useForm<SummaryInput>({
     resolver: yupResolver(schema),
   })
 
+  const handleUpdateReporter = (input: string) => {
+    setValue('reporter', input)
+  }
+
   const onSubmit: SubmitHandler<SummaryInput> = async data => {
+    console.log(data)
+
     await createSummary({
       variables: {
         input: {
           contents: data.contents,
           participants: ['1'],
-          reporter: '1',
+          reporter: data.reporter,
           summaryType: 'STYRET',
           date: formatISO(new Date()),
         },
       },
     })
   }
+
   return (
     <Wrapper>
       <Title>Nytt referat</Title>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        Referent:
+        <UserSelect
+          reporter={getValues('reporter')}
+          setReporterCallback={handleUpdateReporter}
+        />
+        <ErrorMessage
+          errors={errors}
+          name="reporter"
+          render={({ message }) => <p>{message}</p>}
+        />
         {/*
       ToDo:
-        - User search select to select referrerr
         - user multiselect for participants
       */}
-
         <TextArea {...register('contents')} />
+        <ErrorMessage
+          errors={errors}
+          name="contents"
+          render={({ message }) => <p>{message}</p>}
+        />
         <button type="submit">Lagre referat</button>
       </form>
     </Wrapper>
