@@ -2,23 +2,25 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import styled from 'styled-components'
-import { SummaryType } from '.'
 import { CREATE_SUMMARY } from './mutations'
 import { useMutation } from '@apollo/client'
 import {
   CreateSummaryMutationReturns,
   CreateSummaryMutationVariables,
+  SummaryTypeEnum,
 } from './types'
-import { formatISO } from 'date-fns'
 import { useHistory } from 'react-router-dom'
-import { UserSelect } from 'components/Select'
+import { UserSelect, UserMultiSelect } from 'components/Select'
 import { ErrorMessage } from '@hookform/error-message'
+import { summaryTypeChoices } from './conts'
 
 type SummaryInput = {
-  participants: String[]
-  reporter: String
-  contents: String
-  summarType: SummaryType
+  participants: string[]
+  reporter: string
+  contents: string
+  grouping: string
+  date: string
+  type: SummaryTypeEnum
 }
 
 const Wrapper = styled.div`
@@ -50,16 +52,19 @@ export const CreateSummary = () => {
   const history = useHistory()
 
   let schema = yup.object({
-    //participants: yup.array().required().min(1, 'Må være et positivt tall'),
+    participants: yup
+      .array()
+      .of(yup.string())
+      .required('Noen må være tilstede'),
     reporter: yup.string().required('Må ha en referent'),
     contents: yup.string().required('Må ha innhold'),
-    //summaryType: yup.string(),
+    type: yup.string(),
+    date: yup.date().required('Referat må ha en dato'),
   })
 
   const {
     register,
     handleSubmit,
-    getValues,
     setValue,
     formState: { errors },
   } = useForm<SummaryInput>({
@@ -70,6 +75,10 @@ export const CreateSummary = () => {
     setValue('reporter', input)
   }
 
+  const handleUpdateParticipants = (input: string[]) => {
+    setValue('participants', input)
+  }
+
   const onSubmit: SubmitHandler<SummaryInput> = async data => {
     console.log(data)
 
@@ -77,10 +86,10 @@ export const CreateSummary = () => {
       variables: {
         input: {
           contents: data.contents,
-          participants: ['1'],
+          participants: data.participants,
           reporter: data.reporter,
-          summaryType: 'STYRET',
-          date: formatISO(new Date()),
+          type: data.type,
+          date: data.date,
         },
       },
     })
@@ -91,19 +100,21 @@ export const CreateSummary = () => {
       <Title>Nytt referat</Title>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         Referent:
-        <UserSelect
-          reporter={getValues('reporter')}
-          setReporterCallback={handleUpdateReporter}
-        />
+        <UserSelect setUserCallback={handleUpdateReporter} />
+        <UserMultiSelect setUsersCallback={handleUpdateParticipants} />
         <ErrorMessage
           errors={errors}
           name="reporter"
           render={({ message }) => <p>{message}</p>}
         />
-        {/*
-      ToDo:
-        - user multiselect for participants
-      */}
+        <select {...register('type')}>
+          {summaryTypeChoices.map((choice, i) => (
+            <option value={choice.value} key={i}>
+              {choice.label}
+            </option>
+          ))}
+        </select>
+        <input placeholder="YYYY-MM-DD" {...register('date')} />
         <TextArea {...register('contents')} />
         <ErrorMessage
           errors={errors}

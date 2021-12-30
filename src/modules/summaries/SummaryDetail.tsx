@@ -1,15 +1,13 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import ReactMarkdown from 'react-markdown'
-import { UserNode, UserThumbnail } from 'modules/users'
+import { UserThumbnail } from 'modules/users'
 import { SUMMARY_QUERY } from './queries'
-import { useQuery, useMutation } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useParams } from 'react-router'
-import { SummaryQueryReturns, SummaryQueryVariables } from '.'
-import format from 'date-fns/format'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { PATCH_SUMMARY } from './mutations'
+import { SummaryQueryReturns, SummaryQueryVariables } from '.'
 import remarkGfm from 'remark-gfm'
+import { useHistory } from 'react-router-dom'
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,91 +47,50 @@ interface ParamProps {
   summaryId: string
 }
 
-const TextArea = styled.textarea`
-  width: 100%;
-  height: 900px;
-`
-
 export const SummaryDetail = () => {
   const params = useParams<ParamProps>()
-  const [editing, setEditing] = useState(false)
-  const [contents, setContents] = useState<string>('')
-  const [summaryTitle, setSummaryTitle] = useState('')
-  const [participants, setParticipants] = useState<UserNode[]>([])
-  const [reporter, setReporter] = useState<UserNode | null>(null)
+  const history = useHistory()
 
-  const [patchSummary] = useMutation(PATCH_SUMMARY, {
-    variables: {
-      id: params.summaryId,
-      input: {
-        contents: contents,
-      },
-    },
+  const { error, loading, data } = useQuery<
+    SummaryQueryReturns,
+    SummaryQueryVariables
+  >(SUMMARY_QUERY, {
+    variables: { id: params.summaryId },
   })
 
-  const { loading } = useQuery<SummaryQueryReturns, SummaryQueryVariables>(
-    SUMMARY_QUERY,
-    {
-      variables: { id: params.summaryId },
-      onCompleted(data) {
-        const { summary } = data
-        setContents(summary.contents)
-        setSummaryTitle(
-          `Referat: ${summary.summaryType} - ${format(
-            new Date(summary.date),
-            'dd.M.yyyy'
-          )}`
-        )
-        setParticipants(summary.participants)
-        setReporter(summary.reporter)
-      },
-    }
-  )
+  if (error) {
+    return <h2>Ops noe gikk galt</h2>
+  }
 
-  if (loading) return <span>Loading lol</span>
-
+  if (loading || data === undefined) {
+    return <span>Loading...</span>
+  }
+  const { summary } = data
   return (
     <Wrapper>
       <TitleSection>
-        <SummaryTitle>{summaryTitle}</SummaryTitle>
-        {editing ? (
-          <button
-            onClick={() => {
-              patchSummary()
-              setEditing(!editing)
-            }}
-          >
-            Lagre
-          </button>
-        ) : (
-          <FontAwesomeIcon
-            icon="edit"
-            cursor="pointer"
-            size="lg"
-            onClick={() => {
-              setEditing(!editing)
-            }}
-          />
-        )}
+        <SummaryTitle>{summary.type}</SummaryTitle>
+        <FontAwesomeIcon
+          icon="edit"
+          cursor="pointer"
+          size="lg"
+          onClick={() => {
+            history.push(`/summaries/${summary.id}/edit`)
+          }}
+        />
       </TitleSection>
       <ParticipantsRow>
         Tilestede:
-        {participants.map((user, i) => (
+        {summary.participants.map((user, i) => (
           <UserThumbnail user={user} size="small" key={i} />
         ))}
       </ParticipantsRow>
       <ParticipantsRow>
-        Referent:
-        {reporter !== null && <UserThumbnail user={reporter} size="small" />}
+        Referent
+        <UserThumbnail user={summary.reporter} size="small" />
       </ParticipantsRow>
-      {editing ? (
-        <TextArea
-          value={contents}
-          onChange={evt => setContents(evt.target.value)}
-        />
-      ) : (
-        <ReactMarkdown plugins={[remarkGfm]}>{contents}</ReactMarkdown>
-      )}
+
+      <ReactMarkdown plugins={[remarkGfm]}>{summary.contents}</ReactMarkdown>
     </Wrapper>
   )
 }
