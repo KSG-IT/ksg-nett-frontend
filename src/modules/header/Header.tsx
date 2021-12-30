@@ -47,6 +47,21 @@ const MobileLogo = styled(Link)`
   }
 `
 
+const BreadCrumbs = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  ${props => props.theme.media.mobile} {
+    display: none;
+  }
+`
+
+const Crumb = styled.div`
+  color: ${props => props.theme.colors.darkGray};
+  font-weight: 600;
+`
+
 interface HeaderProps {
   toggleSidebar: () => void
 }
@@ -55,6 +70,14 @@ export const Header = ({ toggleSidebar }: HeaderProps) => {
   return (
     <Wrapper>
       <MobileLogo to="/dashboard">KSG</MobileLogo>
+      <BreadCrumbs>
+        <Crumb>Referater</Crumb>
+        <Crumb>
+          {' '}
+          <FontAwesomeIcon size="sm" icon="chevron-right" />{' '}
+        </Crumb>
+        <Crumb> Styret 11.11.2020</Crumb>
+      </BreadCrumbs>
       <UserSearch />
 
       <ToggleSidebarButton onClick={toggleSidebar}>
