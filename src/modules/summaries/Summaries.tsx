@@ -40,11 +40,6 @@ const NewSummaryButton = styled.button`
   font-size: 14px;
 `
 
-const SummaryWrapper = styled.div`
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-`
 const SummariesTable = styled.div`
   width: 100%;
   display: flex;

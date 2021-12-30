@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useLayoutEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
 import styled from 'styled-components'
 import { v4 } from 'uuid'
 import OutsideClickHandler from 'react-outside-click-handler'
