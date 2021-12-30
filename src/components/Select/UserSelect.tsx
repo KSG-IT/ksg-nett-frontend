@@ -19,7 +19,6 @@ const Wrapper = styled.div`
   border-radius: 10px;
   box-shadow: ${props => props.theme.shadow.default};
   margin: 0;
-  z-index: ${ZIndexRange.Dropdowns};
 `
 const SelectedUser = styled.span`
   font-size: 18px;
@@ -49,6 +48,7 @@ const DropdownContainer = styled.div<OpenProps>`
   border-radius: 0 0 10px 10px;
   box-shadow: ${props => props.theme.shadow.default};
   top: 45px;
+  z-index: ${ZIndexRange.Dropdowns};
 `
 
 const UserSearchContainer = styled.div`
@@ -104,8 +104,8 @@ const Chevron = styled(FontAwesomeIcon)<OpenProps>`
   transition: transform 250ms ease-in-out;
 `
 interface UserSelectProps {
-  reporter: String
-  setReporterCallback: (slectedId: string) => void
+  userId?: string
+  setUserCallback: (slectedId: string) => void
 }
 
 type ShallowUser = Pick<
@@ -114,8 +114,8 @@ type ShallowUser = Pick<
 >
 
 export const UserSelect: React.VFC<UserSelectProps> = ({
-  reporter,
-  setReporterCallback,
+  userId = '',
+  setUserCallback,
 }) => {
   /*
    * Improvements:
@@ -135,6 +135,10 @@ export const UserSelect: React.VFC<UserSelectProps> = ({
         const flattenedUsers = allActiveUsers.edges.map(edge => edge.node)
         setUsers(flattenedUsers)
         setFilteredUsers(flattenedUsers)
+        if (userId !== '') {
+          const index = flattenedUsers.findIndex(user => user.id === userId)
+          setSelectDisplayName(flattenedUsers[index].fullName)
+        }
       },
     }
   )
@@ -150,12 +154,12 @@ export const UserSelect: React.VFC<UserSelectProps> = ({
 
   const handleSelectUser = useCallback(
     user => {
-      setReporterCallback(user.id)
+      setUserCallback(user.id)
       setSelectDisplayName(user.fullName)
       setOpen(false)
       setSearch('')
     },
-    [setSearch, setOpen, setSelectDisplayName, setReporterCallback]
+    [setSearch, setOpen, setSelectDisplayName, setUserCallback]
   )
 
   const handleToggleSelect = useCallback(() => {
