@@ -1,1 +1,1 @@
-export const DEFAULT_PAGINATION_SIZE = 10
+export const DEFAULT_PAGINATION_SIZE = 50
