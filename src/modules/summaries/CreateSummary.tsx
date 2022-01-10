@@ -1,18 +1,18 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import styled from 'styled-components'
-import { CREATE_SUMMARY } from './mutations'
 import { useMutation } from '@apollo/client'
+import { ErrorMessage } from '@hookform/error-message'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { UserMultiSelect, UserSelect } from 'components/Select'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useHistory } from 'react-router-dom'
+import styled from 'styled-components'
+import * as yup from 'yup'
+import { summaryTypeChoices } from './conts'
+import { CREATE_SUMMARY } from './mutations'
 import {
   CreateSummaryMutationReturns,
   CreateSummaryMutationVariables,
-  SummaryTypeEnum,
+  SummaryType,
 } from './types'
-import { useHistory } from 'react-router-dom'
-import { UserSelect, UserMultiSelect } from 'components/Select'
-import { ErrorMessage } from '@hookform/error-message'
-import { summaryTypeChoices } from './conts'
 
 type SummaryInput = {
   participants: string[]
@@ -20,7 +20,7 @@ type SummaryInput = {
   contents: string
   grouping: string
   date: string
-  type: SummaryTypeEnum
+  type: SummaryType
 }
 
 const Wrapper = styled.div`
@@ -80,8 +80,6 @@ export const CreateSummary = () => {
   }
 
   const onSubmit: SubmitHandler<SummaryInput> = async data => {
-    console.log(data)
-
     await createSummary({
       variables: {
         input: {
