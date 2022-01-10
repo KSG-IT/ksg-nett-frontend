@@ -5,7 +5,7 @@ import { SUMMARY_QUERY } from './queries'
 import { useQuery } from '@apollo/client'
 import { useParams } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { SummaryQueryReturns, SummaryQueryVariables } from '.'
+import { SummaryDetailsQueryReturns, SummaryDetailQueryVariables } from '.'
 import remarkGfm from 'remark-gfm'
 import { useHistory } from 'react-router-dom'
 
@@ -52,8 +52,8 @@ export const SummaryDetail = () => {
   const history = useHistory()
 
   const { error, loading, data } = useQuery<
-    SummaryQueryReturns,
-    SummaryQueryVariables
+    SummaryDetailsQueryReturns,
+    SummaryDetailQueryVariables
   >(SUMMARY_QUERY, {
     variables: { id: params.summaryId },
   })

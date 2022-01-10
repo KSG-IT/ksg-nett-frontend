@@ -39,11 +39,11 @@ export interface SummaryNode {
 export type SummaryNodeShallow = Omit<SummaryNode, 'contents'>
 
 /* === QUERY TYPES === */
-export interface SummaryQueryVariables {
+export interface SummaryDetailQueryVariables {
   id: string
 }
 
-export interface SummaryQueryReturns {
+export interface SummaryDetailsQueryReturns {
   summary: SummaryNode
 }
 
