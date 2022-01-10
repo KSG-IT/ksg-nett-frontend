@@ -1,15 +1,16 @@
-import { UserNode, UserThumbnail } from 'modules/users'
-import { useState, useEffect, useCallback } from 'react'
-import styled from 'styled-components'
+import { useQuery } from '@apollo/client'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  ALL_ACTIVE_USERS_SHALLOW_QUERY,
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
+  ALL_ACTIVE_USERS_SHALLOW_QUERY,
+  UserNode,
+  UserThumbnail,
 } from 'modules/users'
-import { useQuery } from '@apollo/client'
+import { useCallback, useEffect, useState } from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
+import styled from 'styled-components'
 import { ZIndexRange } from 'types/enums'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,6 +20,10 @@ const Wrapper = styled.div`
   border-radius: 10px;
   box-shadow: ${props => props.theme.shadow.default};
   margin: 0;
+
+  ${props => props.theme.media.mobile} {
+    width: 100%;
+  }
 `
 const SelectedUser = styled.span`
   font-size: 18px;
