@@ -1,4 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useLayoutEffect,
+} from 'react'
 import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/client'
 import {
@@ -116,7 +122,7 @@ export const UserSearch: React.VFC = () => {
   }, [userQuery, setDisplaySuggestions])
 
   // Handles data normalization
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (data === undefined) return
 
     const users = data.allActiveUsers.edges.map(user => user.node)
