@@ -1,16 +1,16 @@
-import { useState } from 'react'
 import { useQuery } from '@apollo/client'
-import { ALL_SUMMARIES } from './queries'
+import { format } from 'date-fns'
+import { UserThumbnail } from 'modules/users'
+import { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import styled from 'styled-components'
+import { useDebounce } from 'util/hooks/useDebounce'
 import {
   AllSummariesQueryReturns,
   AllSummariesQueryVariables,
   SummaryNodeShallow,
 } from '.'
-import styled from 'styled-components'
-import { format } from 'date-fns'
-import { UserThumbnail } from 'modules/users'
-import { Link, useHistory } from 'react-router-dom'
-import { useDebounce } from 'util/hooks/useDebounce'
+import { ALL_SUMMARIES } from './queries'
 
 const Wrapper = styled.div`
   display: flex;
@@ -82,7 +82,7 @@ export const Summaries = () => {
             <SummaryWrapper key={summary.id}>
               <SummaryLink to={`summaries/${summary.id}`}>
                 {format(new Date(summary.date), 'dd.MM.yyyy')}
-                {summary.summaryType}
+                {summary.type}
               </SummaryLink>
               {summary.participants.map(user => (
                 <UserThumbnail user={user} size="small" />
