@@ -1,11 +1,16 @@
-import { Switch, Redirect } from 'react-router-dom'
-import { useState } from 'react'
 import { PrivateRoute } from 'containers/PrivateRoute'
 import { Dashboard } from 'modules/dashboard'
-import { UserProfile } from 'modules/users'
-import { CreateSummary, Summaries, SummaryDetail } from 'modules/summaries'
-import { QuotesList } from 'modules/quotes'
 import { Deposits, MyEconomy } from 'modules/economy'
+import { QuotesList } from 'modules/quotes'
+import {
+  CreateSummary,
+  EditSummary,
+  Summaries,
+  SummaryDetail,
+} from 'modules/summaries'
+import { UserProfile } from 'modules/users'
+import { useState } from 'react'
+import { Redirect, Switch } from 'react-router-dom'
 
 const PlaceholderComponent: React.FC = () => {
   const [sidebar, setSidebar] = useState(false)
@@ -43,6 +48,11 @@ export const AuthRoutes: React.FC = () => {
         exact
         path="/summaries/:summaryId"
         component={SummaryDetail}
+      />
+      <PrivateRoute
+        exact
+        path="/summaries/:summaryId/edit"
+        component={EditSummary}
       />
 
       <PrivateRoute exact path="/chat" component={PlaceholderComponent} />
