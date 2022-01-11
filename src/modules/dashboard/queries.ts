@@ -11,7 +11,7 @@ export const DASHBOARD_DATA_QUERY = gql`
       lastSummaries {
         id
         date
-        summaryType
+        type
       }
       lastQuotes {
         id

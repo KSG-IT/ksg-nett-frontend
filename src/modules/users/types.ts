@@ -35,7 +35,7 @@ export interface MeQueryReturns {
 }
 
 export interface AllUsersShallowQueryVariables {
-  q: string
+  q?: string
 }
 
 export interface AllUsersShallowQueryReturns {

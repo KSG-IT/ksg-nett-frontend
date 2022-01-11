@@ -5,7 +5,7 @@ import { UserNode } from 'modules/users'
 /* QUERIES */
 export interface DashboardDataQueryReturns {
   dashboardData: {
-    lastSummaries: Pick<SummaryNode, 'date' | 'summaryType' | 'id'>[]
+    lastSummaries: Pick<SummaryNode, 'date' | 'type' | 'id'>[]
     lastQuotes: Pick<QuoteNode, 'text' | 'tagged' | 'id' | 'context'>[]
     wantedList: Pick<UserNode, 'balance' | 'fullName' | 'id'>[]
   }

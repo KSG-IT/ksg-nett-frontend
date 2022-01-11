@@ -1,4 +1,9 @@
-import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client'
+import {
+  ApolloClient,
+  ApolloLink,
+  InMemoryCache,
+  RequestHandler,
+} from '@apollo/client'
 import { createUploadLink } from 'apollo-upload-client'
 import { onError } from '@apollo/client/link/error'
 import { setContext } from '@apollo/client/link/context'
@@ -32,7 +37,10 @@ const uploadLink = createUploadLink({
 })
 
 const client = new ApolloClient({
-  link: ApolloLink.from([errorLink, authLink.concat(uploadLink)]),
+  link: ApolloLink.from([
+    errorLink,
+    authLink.concat(uploadLink as unknown as ApolloLink | RequestHandler),
+  ]),
   cache: new InMemoryCache(),
 })
 
