@@ -1,4 +1,5 @@
 import { BankAccountActivity } from 'modules/economy/types'
+import { RelayEdges } from 'types/graphql'
 
 export type UserNode = {
   id: string
@@ -21,7 +22,7 @@ export type UserNode = {
   lastTransactions: BankAccountActivity[]
 }
 
-export interface UserQuery {
+export interface UserQueryReturns {
   user: UserNode
 }
 
@@ -31,4 +32,14 @@ export interface UserQueryVariables {
 
 export interface MeQueryReturns {
   me: UserNode | null
+}
+
+export interface AllUsersShallowQueryVariables {
+  q?: string
+}
+
+export interface AllUsersShallowQueryReturns {
+  allActiveUsers: RelayEdges<
+    Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>
+  >
 }

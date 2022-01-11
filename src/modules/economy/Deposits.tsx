@@ -3,8 +3,10 @@ import { useQuery, useMutation } from '@apollo/client'
 import { SIDEBAR_QUERY } from 'modules/sidebar/SidebarNav'
 import { AllDepositsQuery, ALL_DEPOSITS, DepositNode, PATCH_DEPOSIT } from '.'
 import { useAuth } from 'context/Authentication'
-import { ME_QUERY } from 'modules/users'
+import { ME_QUERY, UserThumbnail } from 'modules/users'
 import { MEDIA_URL } from 'util/env'
+import { format } from 'date-fns'
+import { UserNode } from 'modules/users/types'
 
 const Wrapper = styled.div`
   display: grid;
@@ -121,26 +123,6 @@ const DepositActionButton = styled.button<DepositActionButtonProps>`
   cursor: pointer;
 `
 
-interface StatusPillProps {
-  approved: boolean
-}
-
-const StatusPill = styled.div<StatusPillProps>`
-  display: inline-flex;
-  width: 80px;
-  height: 100%;
-  border-radius: 10px;
-  color: white;
-  font-size: 11px;
-  font-weight: 600;
-  align-items: center;
-  justify-content: center;
-  background-color: ${props =>
-    props.approved
-      ? props.theme.colors.success
-      : props.theme.colors.warningRed};
-`
-
 export const Deposits = () => {
   const [patchDeposit] = useMutation(PATCH_DEPOSIT, {
     refetchQueries: [
@@ -195,18 +177,22 @@ export const Deposits = () => {
       <DepositTableArea>
         <DepositTable>
           <DepositTableHeader>
-            <DepositTableHeaderCell>Navn</DepositTableHeaderCell>
-            <DepositTableHeaderCell>Mengde</DepositTableHeaderCell>
+            <DepositTableHeaderCell>Dato</DepositTableHeaderCell>
+            <DepositTableHeaderCell>Person</DepositTableHeaderCell>
+            <DepositTableHeaderCell>Beløp</DepositTableHeaderCell>
             <DepositTableHeaderCell shouldHide>
               Kvittering
             </DepositTableHeaderCell>
-            <DepositTableHeaderCell>Status</DepositTableHeaderCell>
+            <DepositTableHeaderCell>Godkjent av</DepositTableHeaderCell>
             <DepositTableHeaderCell>Handling</DepositTableHeaderCell>
           </DepositTableHeader>
 
           <DepositTableBody>
             {deposits.map((deposit, i) => (
               <DepositTableRow key={i}>
+                <DepositTableCell shouldHide>
+                  {format(new Date(deposit.createdAt), 'dd.MM')}
+                </DepositTableCell>
                 <DepositTableCell shouldHide={false}>
                   {deposit.account.user.fullName}
                 </DepositTableCell>
@@ -227,9 +213,17 @@ export const Deposits = () => {
                   )}
                 </DepositTableCell>
                 <DepositTableCell shouldHide={true}>
-                  <StatusPill approved={deposit.approved}>
-                    {deposit.approved ? 'Godkjent' : 'Ikke godkjent'}
-                  </StatusPill>
+                  {deposit.approved ? (
+                    <UserThumbnail
+                      size="small"
+                      user={
+                        deposit.signedOffBy as Pick<
+                          UserNode,
+                          'id' | 'profileImage' | 'initials'
+                        >
+                      }
+                    />
+                  ) : null}
                 </DepositTableCell>
                 <DepositTableCell shouldHide={false}>
                   <DepositActionButton

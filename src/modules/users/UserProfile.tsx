@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
-import { USER_QUERY } from '.'
+import { UserQueryVariables, USER_QUERY, UserQueryReturns } from '.'
+import { useParams } from 'react-router-dom'
 
 const Wrapper = styled.div`
   display: grid;
@@ -57,8 +58,20 @@ const ProfileImage = styled.div<ProfileImageProps>`
   background-repeat: no-repeat;
   background-position: 50% 50%;
 `
+
+interface UserProfileParams {
+  userId: string
+}
+
 export const UserProfile = () => {
-  const { data, loading, error } = useQuery(USER_QUERY)
+  const { userId } = useParams<UserProfileParams>()
+
+  const { data, loading, error } = useQuery<
+    UserQueryReturns,
+    UserQueryVariables
+  >(USER_QUERY, {
+    variables: { id: userId },
+  })
 
   if (loading) return <span>Loading</span>
 
@@ -76,7 +89,7 @@ export const UserProfile = () => {
     <Wrapper>
       <ProfileName>{user.fullName}</ProfileName>
       <ImageWrapper>
-        <ProfileImage src={user.profileImage} />
+        <ProfileImage src={user.profileImage ?? ''} />
       </ImageWrapper>
       <DetailsWrapper>
         <DetailsFullname>{user.fullName}</DetailsFullname>

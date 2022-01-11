@@ -70,6 +70,7 @@ export interface DepositNode {
   signedOffTime: Date | null
   approved: boolean
   comments: DepositCommentNode[]
+  createdAt: Date
 }
 
 export interface DepositCommentNode {

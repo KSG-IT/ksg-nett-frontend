@@ -10,7 +10,7 @@ export const SUMMARY_QUERY = gql`
         profileImage
         initials
       }
-      summaryType
+      type
       date
       updatedAt
       reporter {
@@ -23,17 +23,26 @@ export const SUMMARY_QUERY = gql`
 `
 
 export const ALL_SUMMARIES = gql`
-  query AllSummaries($q: String) {
-    allSummaries(q: $q) {
+  query AllSummaries($q: String, $first: Int, $after: String) {
+    allSummaries(q: $q, first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
       edges {
         node {
           id
+          reporter {
+            id
+            profileImage
+            initials
+          }
           participants {
             id
             profileImage
             initials
           }
-          summaryType
+          type
           date
           updatedAt
         }

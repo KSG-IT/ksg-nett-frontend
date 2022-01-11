@@ -1,12 +1,12 @@
 import { UserNode } from 'modules/users'
 import { RelayEdgesWithPageInfo } from 'types/graphql'
 
-type SummaryType =
+export type SummaryType =
   | 'DRIFT'
   | 'BARSJEF'
   | 'STYRET'
   | 'SPRITBARSJEF'
-  | 'OTHER'
+  | 'ANNET'
   | 'HOVMESTER'
   | 'KAFEANSVARLIG'
   | 'SOUSCHEF'
@@ -20,18 +20,18 @@ export interface SummaryNode {
   date: Date
   reporter: UserNode
   updatedAt: Date
-  summaryType: SummaryType
+  type: SummaryType
 }
 
 export type SummaryNodeShallow = Omit<SummaryNode, 'contents'>
 
 /* === QUERY TYPES === */
-export interface SummaryQueryVariables {
+export interface SummaryDetailsQueryVariables {
   id: string
 }
 
-export interface SummaryQueryReturns {
-  summary: SummaryNode
+export interface SummaryDetailsQueryReturns {
+  summary: SummaryNode | null
 }
 
 export interface AllSummariesQueryReturns {
@@ -40,4 +40,53 @@ export interface AllSummariesQueryReturns {
 
 export interface AllSummariesQueryVariables {
   q: string
+  first?: number
+  after?: string
+}
+
+/* === MUTATION TYPES === */
+
+type CreateSummaryInput = {
+  contents: string
+  participants: String[]
+  reporter: string
+  type: SummaryType
+  date: string
+}
+
+export type PatchSummaryInput = {
+  contents: string
+  participants: string[]
+  reporter: string
+  type: SummaryType
+  date: string
+}
+export interface CreateSummaryMutationVariables {
+  input: CreateSummaryInput
+}
+
+export interface CreateSummaryMutationReturns {
+  createSummary: {
+    summary: {
+      id: String
+    }
+  }
+}
+
+export interface PatchSummaryMutationVariables {
+  id: string
+  input: PatchSummaryInput
+}
+
+export interface PatchSummaryMutationReturns {
+  patchSummary: {
+    summary: {
+      id: string
+      contents: string
+      participants: string[]
+      report: string[]
+      date: Date
+      type: SummaryType
+    }
+  }
 }

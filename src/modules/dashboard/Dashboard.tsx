@@ -91,9 +91,9 @@ export const Dashboard = () => {
   const { data, loading, error } =
     useQuery<DashboardDataQueryReturns>(DASHBOARD_DATA_QUERY)
 
-  if (loading || data === undefined) return <span>Loading</span>
-
   if (error) return <span>En feil opstod</span>
+
+  if (loading || data === undefined) return <span>Loading</span>
 
   const {
     dashboardData: { wantedList, lastSummaries, lastQuotes },
@@ -136,7 +136,7 @@ export const Dashboard = () => {
           <h3>Last summaries</h3>
           {lastSummaries.map((summary, i) => (
             <TransactionSpan key={i}>
-              <a href={`/summaries/${summary.id}`}>{summary.summaryType}</a>
+              <a href={`/summaries/${summary.id}`}>{summary.type}</a>
               <span>{format(new Date(summary.date), 'd.M')}</span>
             </TransactionSpan>
           ))}
