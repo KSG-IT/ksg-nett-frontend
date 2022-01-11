@@ -192,10 +192,9 @@ return (
   <button onClick={handlePatchUser}>Create user</button>
 )
 ```
-This is a very simple mutation, in most cases we want do this in tandem with form handling which is covered in the next section (someday).
+This is a very simple mutation, in most cases we want do this in tandem with form handling which is covered in the next section (someday). Another thing to note is that triggering mutations also requries us to update the local state of data. This is done with the `refetchQueries` option in `useMutation`.
 
 ### Form handling
-
-`TODO`
+`ToDo`
 
 
