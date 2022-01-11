@@ -1,13 +1,15 @@
-import styled from 'styled-components'
-import ReactMarkdown from 'react-markdown'
-import { UserThumbnail } from 'modules/users'
-import { SUMMARY_QUERY } from './queries'
 import { useQuery } from '@apollo/client'
-import { useParams } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { SummaryDetailsQueryReturns, SummaryDetailQueryVariables } from '.'
-import remarkGfm from 'remark-gfm'
+import { FullPage404, FullPageError } from 'components/FullPageErrorComponents'
+import { FullContentLoader } from 'components/Loading'
+import { UserThumbnail } from 'modules/users'
+import ReactMarkdown from 'react-markdown'
+import { useParams } from 'react-router'
 import { useHistory } from 'react-router-dom'
+import remarkGfm from 'remark-gfm'
+import styled from 'styled-components'
+import { SummaryDetailQueryVariables, SummaryDetailsQueryReturns } from '.'
+import { SUMMARY_QUERY } from './queries'
 
 const Wrapper = styled.div`
   display: flex;
@@ -58,14 +60,14 @@ export const SummaryDetail = () => {
     variables: { id: params.summaryId },
   })
 
-  if (error) {
-    return <h2>Ops noe gikk galt</h2>
-  }
+  if (error) return <FullPageError />
 
-  if (loading || data === undefined) {
-    return <span>Loading...</span>
-  }
+  if (loading || !data) return <FullContentLoader />
+
   const { summary } = data
+
+  if (summary === null) return <FullPage404 />
+
   return (
     <Wrapper>
       <TitleSection>
