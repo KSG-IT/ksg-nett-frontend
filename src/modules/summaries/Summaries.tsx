@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { ALL_SUMMARIES } from './queries'
 import { AllSummariesQueryReturns, AllSummariesQueryVariables } from '.'
@@ -9,6 +8,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { useDebounce } from 'util/hooks/useDebounce'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
+import { useState } from 'react'
 
 const Wrapper = styled.div`
   display: flex;

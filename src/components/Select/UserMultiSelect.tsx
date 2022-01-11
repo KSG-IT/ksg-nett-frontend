@@ -1,16 +1,16 @@
-import { useState, useEffect, useLayoutEffect } from 'react'
-import styled from 'styled-components'
-import { v4 } from 'uuid'
-import OutsideClickHandler from 'react-outside-click-handler'
+import { useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { UserNode } from 'modules/users'
 import {
-  ALL_ACTIVE_USERS_SHALLOW_QUERY,
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
+  ALL_ACTIVE_USERS_SHALLOW_QUERY,
+  UserNode,
 } from 'modules/users'
-import { useQuery } from '@apollo/client'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import OutsideClickHandler from 'react-outside-click-handler'
+import styled from 'styled-components'
 import { ZIndexRange } from 'types/enums'
+import { v4 } from 'uuid'
 
 const Wrapper = styled.div`
   display: flex;

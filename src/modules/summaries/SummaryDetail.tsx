@@ -1,13 +1,13 @@
-import styled from 'styled-components'
-import ReactMarkdown from 'react-markdown'
-import { UserThumbnail } from 'modules/users'
-import { SUMMARY_QUERY } from './queries'
 import { useQuery } from '@apollo/client'
-import { useParams } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { SummaryQueryReturns, SummaryQueryVariables } from '.'
-import remarkGfm from 'remark-gfm'
+import { UserThumbnail } from 'modules/users'
+import ReactMarkdown from 'react-markdown'
+import { useParams } from 'react-router'
 import { useHistory } from 'react-router-dom'
+import remarkGfm from 'remark-gfm'
+import styled from 'styled-components'
+import { SummaryDetailsQueryReturns, SummaryDetailsQueryVariables } from '.'
+import { SUMMARY_QUERY } from './queries'
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,8 +52,8 @@ export const SummaryDetail = () => {
   const history = useHistory()
 
   const { error, loading, data } = useQuery<
-    SummaryQueryReturns,
-    SummaryQueryVariables
+    SummaryDetailsQueryReturns,
+    SummaryDetailsQueryVariables
   >(SUMMARY_QUERY, {
     variables: { id: params.summaryId },
   })
@@ -66,6 +66,8 @@ export const SummaryDetail = () => {
     return <span>Loading...</span>
   }
   const { summary } = data
+
+  if (summary === null) return <span>Not here</span>
   return (
     <Wrapper>
       <TitleSection>

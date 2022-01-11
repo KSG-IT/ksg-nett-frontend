@@ -13,19 +13,6 @@ export type SummaryType =
   | 'ARRANGEMENT'
   | 'OKONOMI'
 
-export enum SummaryTypeEnum {
-  drift = 'drift',
-  barsjef = 'barsjef',
-  styret = 'styret',
-  spritbarsjef = 'spritbarsjef',
-  annet = 'annet',
-  arrangement = 'arrangement',
-  okonomi = 'okonomi',
-  kafeansvarlig = 'kafeansvarlig',
-  hovmester = 'hovmester',
-  souschef = 'souschef',
-}
-
 export interface SummaryNode {
   id: string
   contents: string
@@ -39,12 +26,12 @@ export interface SummaryNode {
 export type SummaryNodeShallow = Omit<SummaryNode, 'contents'>
 
 /* === QUERY TYPES === */
-export interface SummaryQueryVariables {
+export interface SummaryDetailsQueryVariables {
   id: string
 }
 
-export interface SummaryQueryReturns {
-  summary: SummaryNode
+export interface SummaryDetailsQueryReturns {
+  summary: SummaryNode | null
 }
 
 export interface AllSummariesQueryReturns {
@@ -60,17 +47,17 @@ export interface AllSummariesQueryVariables {
 /* === MUTATION TYPES === */
 
 type CreateSummaryInput = {
-  contents: String
+  contents: string
   participants: String[]
-  reporter: String
-  type: SummaryTypeEnum
+  reporter: string
+  type: SummaryType
   date: string
 }
 
-type PatchSummaryInput = {
-  contents: String
-  participants: String[]
-  reporter: String
+export type PatchSummaryInput = {
+  contents: string
+  participants: string[]
+  reporter: string
   type: SummaryType
   date: string
 }
@@ -99,7 +86,7 @@ export interface PatchSummaryMutationReturns {
       participants: string[]
       report: string[]
       date: Date
-      type: SummaryTypeEnum
+      type: SummaryType
     }
   }
 }
