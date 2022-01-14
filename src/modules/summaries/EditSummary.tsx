@@ -19,6 +19,7 @@ import {
   PatchSummaryMutationVariables,
   SummaryDetailQueryVariables,
   SummaryDetailsQueryReturns,
+  SummaryType,
 } from './types'
 
 const Wrapper = styled.div`
@@ -100,7 +101,7 @@ export const EditSummary: React.VFC = () => {
         }
 
         setValue('contents', summary.contents)
-        setValue('type', summary.type)
+        setValue('type', `${summary.type}`.toUpperCase() as SummaryType)
         setValue(
           'participants',
           summary.participants.map(user => user.id)
