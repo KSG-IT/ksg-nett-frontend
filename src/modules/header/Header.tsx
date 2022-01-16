@@ -1,8 +1,8 @@
+import { Col, Row } from 'antd'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { ZIndexRange } from 'types/enums'
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { UserSearch } from './UserSearch'
+import { AntUserSearch } from '.'
 
 const Wrapper = styled.header`
   width: 100%;
@@ -66,23 +66,13 @@ interface HeaderProps {
   toggleSidebar: () => void
 }
 
-export const Header = ({ toggleSidebar }: HeaderProps) => {
+export const Header: React.VFC<HeaderProps> = ({ toggleSidebar }) => {
   return (
-    <Wrapper>
-      <MobileLogo to="/dashboard">KSG</MobileLogo>
-      <BreadCrumbs>
-        <Crumb>Referater</Crumb>
-        <Crumb>
-          {' '}
-          <FontAwesomeIcon size="sm" icon="chevron-right" />{' '}
-        </Crumb>
-        <Crumb> Styret 11.11.2020</Crumb>
-      </BreadCrumbs>
-      <UserSearch />
-
-      <ToggleSidebarButton onClick={toggleSidebar}>
-        <FontAwesomeIcon icon={['fas', 'bars']} size="lg" color="black" />
-      </ToggleSidebarButton>
-    </Wrapper>
+    <Row justify="end">
+      <button onClick={toggleSidebar}>toggle</button>
+      <Col xs={24} sm={12} md={8} xl={4}>
+        <AntUserSearch />
+      </Col>
+    </Row>
   )
 }
