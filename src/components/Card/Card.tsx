@@ -6,7 +6,6 @@ interface WrapperProps {
 
 const Wrapper = styled.div<WrapperProps>`
   display: flex;
-  flex-direction: row;
   border-radius: 10px;
   padding: 10px;
   background-color: ${props => props.theme.colors.white};
