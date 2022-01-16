@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Search } from 'components/Input'
 import { format } from 'date-fns'
 import { UserThumbnail } from 'modules/users'
 import { useState } from 'react'
@@ -18,6 +19,9 @@ const Wrapper = styled.div`
   height: 100%;
   padding: 32px 72px;
   overflow-y: scroll;
+  ${props => props.theme.media.mobile} {
+    padding: 12px;
+  }
 `
 
 const HeaderSection = styled.div`
@@ -147,10 +151,11 @@ export const Summaries = () => {
           Nytt referat
         </NewSummaryButton>
       </HeaderSection>
-      <input
+      <Search
         value={query}
-        onChange={evt => setQuery(evt.target.value)}
         placeholder="Search for content"
+        fullwidth
+        onChange={setQuery}
       />
       <SummariesTable>
         <SummariesTableHeader>
