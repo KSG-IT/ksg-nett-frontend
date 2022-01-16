@@ -12,13 +12,20 @@ import styled from 'styled-components'
 import { ZIndexRange } from 'types/enums'
 import { v4 } from 'uuid'
 
-const Wrapper = styled.div`
+interface WrapperProps {
+  fullwidth: boolean
+  width: string
+}
+
+const Wrapper = styled.div<WrapperProps>`
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 400px;
-  background-color: white;
+  width: ${props => (props.fullwidth ? '100%' : props.width)};
+  background-color: ${props => props.theme.colors.lightGray};
+  border-radius: 10px;
 
+  box-shadow: ${props => props.theme.shadow.default};
   ${props => props.theme.media.mobile} {
     width: 100%;
   }
@@ -39,6 +46,22 @@ const SelectedUsersWorkspace = styled.div`
   flex-wrap: wrap;
 `
 
+const ChevronContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+interface OpenProps {
+  open: boolean
+}
+
+const Chevron = styled(FontAwesomeIcon)<OpenProps>`
+  transform: ${props => (props.open ? 'rotate(180deg)' : 'rotate(0deg)')};
+  transition: transform 250ms ease-in-out;
+`
+
 interface DropdownContainerProps {
   open: boolean
 }
@@ -50,7 +73,9 @@ const DropdownContainer = styled.div<DropdownContainerProps>`
   top: 90%;
   max-height: 300px;
   width: 100%;
+  border-radius: 10px;
   z-index: ${ZIndexRange.Dropdowns};
+  box-shadow: ${props => props.theme.shadow.default};
 `
 
 interface DropdownContainerRowProps {
@@ -83,6 +108,7 @@ const UserSearchContainer = styled.div`
   width: 100%;
   height: 50px;
   padding: 10px;
+  background-color: ${props => props.theme.colors.lightGray};
 `
 const UserSearch = styled.div`
   display: flex;
@@ -131,10 +157,14 @@ type UserMultiSelectNode = Pick<UserNode, 'id' | 'fullName'> & {
 
 interface UserMultiSelectProps {
   users?: string[]
+  width?: string
+  fullwidth?: boolean
   setUsersCallback: (users: string[]) => void
 }
 export const UserMultiSelect: React.VFC<UserMultiSelectProps> = ({
   users = [],
+  width = '400px',
+  fullwidth = false,
   setUsersCallback,
 }) => {
   const [selected, setSelected] = useState<UserMultiSelectNode[]>([])
@@ -203,21 +233,26 @@ export const UserMultiSelect: React.VFC<UserMultiSelectProps> = ({
         setOpen(false)
       }}
     >
-      <Wrapper>
+      <Wrapper fullwidth={fullwidth} width={width}>
         <SelectedUsersContainer>
           <SelectedUsersWorkspace>
             {selected.map(user => (
               <Badge
                 key={user.localId}
-                onClick={() => {
-                  handleToggleSelectedUser(user.localId)
-                }}
+                onClick={() => handleToggleSelectedUser(user.localId)}
               >
                 {user.fullName}
               </Badge>
             ))}
           </SelectedUsersWorkspace>
-          <FontAwesomeIcon icon="chevron-down" size="sm" onClick={toggleOpen} />
+          <ChevronContainer>
+            <Chevron
+              icon="chevron-down"
+              size="sm"
+              open={open}
+              onClick={toggleOpen}
+            />
+          </ChevronContainer>
         </SelectedUsersContainer>
         <DropdownContainer open={open}>
           <UserSearchContainer>

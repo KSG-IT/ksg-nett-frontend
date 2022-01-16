@@ -12,9 +12,14 @@ import OutsideClickHandler from 'react-outside-click-handler'
 import styled from 'styled-components'
 import { ZIndexRange } from 'types/enums'
 
-const Wrapper = styled.div`
+interface WrapperProps {
+  fullwidth: boolean
+  width: string
+}
+
+const Wrapper = styled.div<WrapperProps>`
   display: flex;
-  width: 400px;
+  width: ${props => (props.fullwidth ? '100%' : props.width)};
   position: relative;
   background-color: ${props => props.theme.colors.lightGray};
   border-radius: 10px;
@@ -110,6 +115,8 @@ const Chevron = styled(FontAwesomeIcon)<OpenProps>`
 `
 interface UserSelectProps {
   userId?: string
+  fullwidth?: boolean
+  width?: string
   setUserCallback: (slectedId: string) => void
 }
 
@@ -120,6 +127,8 @@ type ShallowUser = Pick<
 
 export const UserSelect: React.VFC<UserSelectProps> = ({
   userId = '',
+  width = '400px',
+  fullwidth = false,
   setUserCallback,
 }) => {
   /*
@@ -176,7 +185,7 @@ export const UserSelect: React.VFC<UserSelectProps> = ({
   }
   return (
     <OutsideClickHandler onOutsideClick={handleClickOutside}>
-      <Wrapper>
+      <Wrapper fullwidth={fullwidth} width={width}>
         <SelectWrapper onClick={handleToggleSelect}>
           <SelectedUser>{selectDisplayName}</SelectedUser>
           <Chevron icon="chevron-down" size="sm" open={open} />
