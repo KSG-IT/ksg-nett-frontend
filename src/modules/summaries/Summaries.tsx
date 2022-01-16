@@ -1,14 +1,14 @@
 import { useQuery } from '@apollo/client'
-import { ALL_SUMMARIES } from './queries'
-import { AllSummariesQueryReturns, AllSummariesQueryVariables } from '.'
-import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { format } from 'date-fns'
 import { UserThumbnail } from 'modules/users'
-import { Link, useHistory } from 'react-router-dom'
-import { useDebounce } from 'util/hooks/useDebounce'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import styled from 'styled-components'
+import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
+import { useDebounce } from 'util/hooks/useDebounce'
+import { AllSummariesQueryReturns, AllSummariesQueryVariables } from '.'
+import { ALL_SUMMARIES } from './queries'
 
 const Wrapper = styled.div`
   display: flex;
@@ -41,9 +41,9 @@ const NewSummaryButton = styled.button`
 `
 
 const SummariesTable = styled.div`
+  flex-direction: column;
   width: 100%;
   display: flex;
-  flex-direction: column;
   background-color: white;
   border-radius: 10px;
   box-shadow: ${props => props.theme.shadow.default};
@@ -52,11 +52,12 @@ const SummariesTable = styled.div`
 const SummariesTableHeader = styled.div`
   display: flex;
   flex-direction: row;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 10px 5px;
 `
 
 const SummariesTableHeaderCell = styled.div`
-  font-size: 16px;
-  font-weight: 500;
   width: 350px;
 `
 
@@ -64,6 +65,8 @@ const SummariesTableRow = styled(Link)`
   display: flex;
   flex-direction: row;
   margin-bottom: 5px;
+  align-items: center;
+  padding: 0 5px;
 
   :hover {
     cursor: pointer;
@@ -76,6 +79,7 @@ const SummariesTableCell = styled.div`
   display: flex;
   flex-direction: row;
   gap: 5px;
+  font-size: 14px;
 `
 
 export const Summaries = () => {
@@ -153,7 +157,7 @@ export const Summaries = () => {
           <SummariesTableHeaderCell>Dato</SummariesTableHeaderCell>
           <SummariesTableHeaderCell>Type</SummariesTableHeaderCell>
           <SummariesTableHeaderCell>Deltakere</SummariesTableHeaderCell>
-          <SummariesTableHeaderCell>Referernt</SummariesTableHeaderCell>
+          <SummariesTableHeaderCell>Referent</SummariesTableHeaderCell>
         </SummariesTableHeader>
         {loading ? (
           <span>loading</span>
