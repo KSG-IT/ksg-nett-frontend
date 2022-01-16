@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   display: flex;
   width: 400px;
   position: relative;
-  background-color: ${props => props.theme.colors.white};
+  background-color: ${props => props.theme.colors.lightGray};
   border-radius: 10px;
   box-shadow: ${props => props.theme.shadow.default};
   margin: 0;
@@ -48,7 +48,7 @@ const DropdownContainer = styled.div<OpenProps>`
   flex-direction: column;
   width: 100%;
   max-height: 400px;
-  background-color: ${props => props.theme.colors.white};
+  background-color: ${props => props.theme.colors.lightGray};
   position: absolute;
   border-radius: 0 0 10px 10px;
   box-shadow: ${props => props.theme.shadow.default};
