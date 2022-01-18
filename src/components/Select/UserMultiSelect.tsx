@@ -143,7 +143,7 @@ const Badge = styled.div`
   background-color: ${props => props.theme.colors.purpleAction};
   color: ${props => props.theme.colors.white};
   font-weight: 500;
-  font-size: 10px;
+  font-size: 12px;
   font-family: 'monospace';
   padding: 5px;
   border-radius: 5px;
