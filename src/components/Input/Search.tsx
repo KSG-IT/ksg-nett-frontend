@@ -17,6 +17,10 @@ const Wrapper = styled.div<WrapperProps>`
   padding: 0 5px;
   box-shadow: ${props => props.theme.shadow.default};
   overflow: clip;
+
+  &:focus-within {
+    outline: 2px solid ${props => props.theme.colors.purple};
+  }
 `
 
 const Input = styled.input`
