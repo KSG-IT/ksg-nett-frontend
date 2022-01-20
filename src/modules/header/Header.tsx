@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { ZIndexRange } from 'types/enums'
-import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { UserSearch } from './UserSearch'
 
@@ -31,17 +30,6 @@ const ToggleSidebarButton = styled.div`
   background-color: ${props => props.theme.colors.white};
   border-radius: 10px;
 
-  ${props => props.theme.media.mobile} {
-    display: flex;
-  }
-`
-
-const MobileLogo = styled(Link)`
-  display: none;
-  font-size: 32px;
-
-  font-weight: 600;
-  color: white;
   ${props => props.theme.media.mobile} {
     display: flex;
   }
