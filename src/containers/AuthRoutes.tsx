@@ -1,7 +1,7 @@
 import { PrivateRoute } from 'containers/PrivateRoute'
 import { Dashboard } from 'modules/dashboard'
 import { Deposits, MyEconomy } from 'modules/economy'
-import { QuotesList } from 'modules/quotes'
+import { QuotesList, ReviewQuotes } from 'modules/quotes'
 import {
   CreateSummary,
   EditSummary,
@@ -9,40 +9,42 @@ import {
   SummaryDetail,
 } from 'modules/summaries'
 import { UserProfile } from 'modules/users'
-import { useState } from 'react'
 import { Redirect, Switch } from 'react-router-dom'
-import { FullPageRestricted } from 'components/FullPageComponents'
-
-const PlaceholderComponent: React.FC = () => {
-  const [sidebar, setSidebar] = useState(false)
-
-  const toggleSidebar = () => {
-    setSidebar(!sidebar)
-  }
-  return (
-    <div>
-      <span>Sidebar is {sidebar ? 'open' : 'closed'}</span>
-      <br />
-      <button onClick={toggleSidebar}>Toggle</button>
-    </div>
-  )
-}
+import { FullPage404 } from 'components/FullPageComponents'
 
 export const AuthRoutes: React.FC = () => {
   return (
     <Switch>
       {/* Module routes */}
+      <PrivateRoute exact path="/admissions" component={FullPage404} />
+      <PrivateRoute exact path="/dashboard" component={Dashboard} />
+
+      {/* Events module */}
+      <PrivateRoute exact path="/events" component={FullPage404} />
+      <PrivateRoute exact path="/events/eventId" component={FullPage404} />
+
+      {/* Quotes module */}
+      <PrivateRoute exact path="/quotes" component={QuotesList} />
+      <PrivateRoute exact path="/quotes/create" component={FullPage404} />
+      <PrivateRoute exact path="/quotes/review" component={ReviewQuotes} />
+
+      {/* Internal groups module */}
+      <PrivateRoute exact path="/internal-groups" component={FullPage404} />
       <PrivateRoute
         exact
-        path="/admissiosns"
-        component={PlaceholderComponent}
+        path="/internal-groups/:internalGroupId"
+        component={FullPage404}
       />
-      <PrivateRoute exact path="/dashboard" component={Dashboard} />
-      <PrivateRoute exact path="/quotes" component={QuotesList} />
-      <PrivateRoute exact path="/schedules" component={PlaceholderComponent} />
-      <PrivateRoute exact path="/economy" component={PlaceholderComponent} />
+
+      {/* Schedules module */}
+      <PrivateRoute exact path="/schedules" component={FullPage404} />
+
+      {/* Economy module */}
+      <PrivateRoute exact path="/economy" component={FullPage404} />
       <PrivateRoute exact path="/economy/me" component={MyEconomy} />
       <PrivateRoute exact path="/economy/deposits" component={Deposits} />
+
+      {/* Summaries module */}
       <PrivateRoute exact path="/summaries" component={Summaries} />
       <PrivateRoute exact path="/summaries/create" component={CreateSummary} />
       <PrivateRoute
@@ -56,10 +58,16 @@ export const AuthRoutes: React.FC = () => {
         component={EditSummary}
       />
 
-      <PrivateRoute exact path="/chat" component={PlaceholderComponent} />
-      <PrivateRoute exact path="/users" component={PlaceholderComponent} />
+      {/* Users module */}
+      <PrivateRoute exact path="/users" component={FullPage404} />
       <PrivateRoute exact path="/users/:userId" component={UserProfile} />
-      <PrivateRoute exact path="/admissions" component={FullPageRestricted} />
+      {/* Admissions module */}
+      <PrivateRoute exact path="/admissions" component={FullPage404} />
+      <PrivateRoute
+        exact
+        path="/admissions/:admissionId"
+        component={FullPage404}
+      />
 
       <Redirect from="/" to="/dashboard" />
       <Redirect exact from="/" to="/dashboard" />
