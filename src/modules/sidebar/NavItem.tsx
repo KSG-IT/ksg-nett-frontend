@@ -7,11 +7,16 @@ const Wrapper = styled(NavLink)`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 30px;
+  height: 35px;
   align-items: center;
-  border-radius: 10px;
   text-decoration: none;
   font-size: 16px;
+  padding-left: 15px;
+
+  ${props =>
+    props.isActive
+      ? `background-color: ${props.theme.colors.purpleAction}`
+      : ''}
 
   &:hover {
     background-color: ${props => props.theme.colors.purpleHover};
@@ -28,8 +33,8 @@ const Badge = styled.div`
   font-size: 14px;
   font-weight: 500;
 
-  width: 28px;
-  height: 28px;
+  width: 20px;
+  height: 20px;
   border-radius: 100%;
   background-color: ${props => props.theme.colors.purpleAction};
 `
@@ -54,11 +59,11 @@ export const NavItem: React.FC<NavItemProps> = ({
       <FontAwesomeIcon
         icon={['fas', icon]}
         color="inherit"
-        size="sm"
+        size="1x"
         type="regular"
         cursor="inherit"
       />
-      <span style={{ margin: '0 0 0 12px' }}>{label}</span>{' '}
+      <span style={{ margin: '0 5px 0 12px' }}>{label}</span>{' '}
       {notificationsCounter > 0 ? <Badge>{notificationsCounter}</Badge> : null}
     </Wrapper>
   )

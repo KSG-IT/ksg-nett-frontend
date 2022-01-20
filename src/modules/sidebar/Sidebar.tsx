@@ -1,24 +1,23 @@
-import styled from 'styled-components'
-import { useRenderMobile } from 'util/isMobile'
-import { ZIndexRange } from 'types/enums'
-import kitLogo from 'assets/images/kit_logo.png'
-import { SidebarNav } from './SidebarNav'
-import { UserThumbnail } from 'modules/users'
-import { useAuth } from 'context/Authentication'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { getLiquidity } from 'modules/economy/utils'
+import kitLogo from 'assets/images/kit_logo.png'
+import { useAuth } from 'context/Authentication'
 import { Liquidity } from 'modules/economy/types'
-import { NavItem } from './NavItem'
+import { getLiquidity } from 'modules/economy/utils'
+import { UserThumbnail } from 'modules/users'
+import styled from 'styled-components'
+import { ZIndexRange } from 'types/enums'
 import { removeLoginToken } from 'util/auth'
+import { useRenderMobile } from 'util/isMobile'
 import { numberWithSpaces } from 'util/parsing'
-import { useHistory } from 'react-router'
+import { NavItem } from './NavItem'
+import { SidebarNav } from './SidebarNav'
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  padding: 10px;
+  padding: 10px 0;
   color: ${props => props.theme.colors.white};
   background-color: ${props => props.theme.colors.purple};
   z-index: ${ZIndexRange.Sidebar};
@@ -43,7 +42,7 @@ const SidebarUserprofile = styled.div`
   flex-direction: column;
   width: 100%;
   height: auto;
-  padding: 20px 20px 0 20px;
+  padding: 20px 0;
   ${props => props.theme.media.mobile} {
     padding: 0 20px;
   }
@@ -53,6 +52,7 @@ const UserInfoWrapper = styled.div`
   display: grid;
   width: 100%;
   height: 60px;
+  padding: 0 15px;
   grid-template-areas:
     'thumbnail name'
     'thumbnail balance';
@@ -116,7 +116,6 @@ const SidebarNavSection = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 20px;
 `
 
 const Icon = styled(FontAwesomeIcon)`
@@ -131,7 +130,6 @@ interface SidebarProps {
 
 export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
   const isMobile = useRenderMobile()
-  const history = useHistory()
   const user = useAuth()
   const shouldRenderSidebar = !isMobile || sidebarOpen
 
@@ -139,52 +137,42 @@ export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
 
   const logout = () => {
     removeLoginToken()
-    history.push('/login')
+    window.location.reload()
   }
 
+  if (!shouldRenderSidebar) return null
+
   return (
-    <>
-      {shouldRenderSidebar && (
-        <Wrapper>
-          <SidebarTop>
-            <SidebarLogo />
-            <SidebarTopText>Kafé- og Serveringsgjengen</SidebarTopText>
-          </SidebarTop>
-          <SidebarUserprofile>
-            <UserInfoWrapper>
-              <ThumbnailWrapper>
-                <UserThumbnail user={user} size="medium" />
-              </ThumbnailWrapper>
-              <UserFullname>{user.fullName}</UserFullname>
-              <UserBalanceWrapper>
-                <Icon icon="coins" size="1x" />
-                <UserBalance liquidity={liquidity}>
-                  {numberWithSpaces(user.balance)},- NOK
-                </UserBalance>
-              </UserBalanceWrapper>
-            </UserInfoWrapper>
-            <NavItem
-              icon="user"
-              label="Min profil"
-              link={`/users/${user.id}`}
-            />
-            <NavItem
-              icon="money-bill-wave"
-              label="Min økonomi"
-              link={'/economy/me'}
-            />
-            <NavItem
-              icon="calendar-alt"
-              label="Min vaktplan"
-              link={'/schedules/me'}
-            />
-            <NavItem icon="sign-out-alt" label="Logg ut" onClick={logout} />
-          </SidebarUserprofile>
-          <SidebarNavSection>
-            <SidebarNav />
-          </SidebarNavSection>
-        </Wrapper>
-      )}
-    </>
+    <Wrapper>
+      <SidebarTop>
+        <SidebarLogo />
+        <SidebarTopText>Kafé- og Serveringsgjengen</SidebarTopText>
+      </SidebarTop>
+      <SidebarUserprofile>
+        <UserInfoWrapper>
+          <ThumbnailWrapper>
+            <UserThumbnail user={user} size="medium" />
+          </ThumbnailWrapper>
+          <UserFullname>{user.fullName}</UserFullname>
+          <UserBalanceWrapper>
+            <Icon icon="coins" size="1x" />
+            <UserBalance liquidity={liquidity}>
+              {numberWithSpaces(user.balance)},- NOK
+            </UserBalance>
+          </UserBalanceWrapper>
+        </UserInfoWrapper>
+        <NavItem icon="user" label="Min profil" link={`/users/${user.id}`} />
+        <NavItem icon="wallet" label="Min økonomi" link={'/economy/me'} />
+        <NavItem
+          icon="calendar-alt"
+          label="Min vaktplan"
+          link={'/schedules/me'}
+        />
+        <NavItem icon="sign-out-alt" label="Logg ut" onClick={logout} />
+      </SidebarUserprofile>
+      <SidebarNavSection>
+        <SidebarNav />
+      </SidebarNavSection>
+    </Wrapper>
   )
 }
