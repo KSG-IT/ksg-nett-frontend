@@ -11,6 +11,7 @@ import {
 import { UserProfile } from 'modules/users'
 import { useState } from 'react'
 import { Redirect, Switch } from 'react-router-dom'
+import { FullPageRestricted } from 'components/FullPageComponents'
 
 const PlaceholderComponent: React.FC = () => {
   const [sidebar, setSidebar] = useState(false)
@@ -58,6 +59,7 @@ export const AuthRoutes: React.FC = () => {
       <PrivateRoute exact path="/chat" component={PlaceholderComponent} />
       <PrivateRoute exact path="/users" component={PlaceholderComponent} />
       <PrivateRoute exact path="/users/:userId" component={UserProfile} />
+      <PrivateRoute exact path="/admissions" component={FullPageRestricted} />
 
       <Redirect from="/" to="/dashboard" />
       <Redirect exact from="/" to="/dashboard" />

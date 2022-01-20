@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { FullPage404, FullPageError } from 'components/FullPageErrorComponents'
+import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { UserThumbnail } from 'modules/users'
 import ReactMarkdown from 'react-markdown'

@@ -58,7 +58,7 @@ export const SidebarNav = () => {
         navItems={[
           { icon: 'car', link: '/schedules', label: 'Vaktlister' },
           { icon: 'address-book', link: '/users', label: 'Personal' },
-          { icon: 'user-plus', link: '/admission', label: 'Opptak' },
+          { icon: 'user-plus', link: '/admissions', label: 'Opptak' },
           {
             icon: 'credit-card',
             link: '/economy/deposits',
