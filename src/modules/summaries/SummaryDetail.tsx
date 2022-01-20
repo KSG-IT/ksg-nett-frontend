@@ -1,12 +1,14 @@
 import { useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FullPage404, FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
 import { UserThumbnail } from 'modules/users'
 import ReactMarkdown from 'react-markdown'
 import { useParams } from 'react-router'
 import { useHistory } from 'react-router-dom'
 import remarkGfm from 'remark-gfm'
 import styled from 'styled-components'
-import { SummaryDetailsQueryReturns, SummaryDetailsQueryVariables } from '.'
+import { SummaryDetailQueryVariables, SummaryDetailsQueryReturns } from '.'
 import { SUMMARY_QUERY } from './queries'
 
 const Wrapper = styled.div`
@@ -53,21 +55,19 @@ export const SummaryDetail = () => {
 
   const { error, loading, data } = useQuery<
     SummaryDetailsQueryReturns,
-    SummaryDetailsQueryVariables
+    SummaryDetailQueryVariables
   >(SUMMARY_QUERY, {
     variables: { id: params.summaryId },
   })
 
-  if (error) {
-    return <h2>Ops noe gikk galt</h2>
-  }
+  if (error) return <FullPageError />
 
-  if (loading || data === undefined) {
-    return <span>Loading...</span>
-  }
+  if (loading || !data) return <FullContentLoader />
+
   const { summary } = data
 
-  if (summary === null) return <span>Not here</span>
+  if (summary === null) return <FullPage404 />
+
   return (
     <Wrapper>
       <TitleSection>

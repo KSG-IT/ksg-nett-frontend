@@ -1,24 +1,34 @@
-import { UserNode, UserThumbnail } from 'modules/users'
-import { useState, useEffect, useCallback } from 'react'
-import styled from 'styled-components'
+import { useQuery } from '@apollo/client'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  ALL_ACTIVE_USERS_SHALLOW_QUERY,
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
+  ALL_ACTIVE_USERS_SHALLOW_QUERY,
+  UserNode,
+  UserThumbnail,
 } from 'modules/users'
-import { useQuery } from '@apollo/client'
+import { useCallback, useEffect, useState } from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
+import styled from 'styled-components'
 import { ZIndexRange } from 'types/enums'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Wrapper = styled.div`
+interface WrapperProps {
+  fullwidth: boolean
+  width: string
+}
+
+const Wrapper = styled.div<WrapperProps>`
   display: flex;
-  width: 400px;
+  width: ${props => (props.fullwidth ? '100%' : props.width)};
   position: relative;
-  background-color: ${props => props.theme.colors.white};
+  background-color: ${props => props.theme.colors.lightGray};
   border-radius: 10px;
   box-shadow: ${props => props.theme.shadow.default};
   margin: 0;
+
+  ${props => props.theme.media.mobile} {
+    width: 100%;
+  }
 `
 const SelectedUser = styled.span`
   font-size: 18px;
@@ -43,7 +53,7 @@ const DropdownContainer = styled.div<OpenProps>`
   flex-direction: column;
   width: 100%;
   max-height: 400px;
-  background-color: ${props => props.theme.colors.white};
+  background-color: ${props => props.theme.colors.lightGray};
   position: absolute;
   border-radius: 0 0 10px 10px;
   box-shadow: ${props => props.theme.shadow.default};
@@ -105,6 +115,8 @@ const Chevron = styled(FontAwesomeIcon)<OpenProps>`
 `
 interface UserSelectProps {
   userId?: string
+  fullwidth?: boolean
+  width?: string
   setUserCallback: (slectedId: string) => void
 }
 
@@ -115,6 +127,8 @@ type ShallowUser = Pick<
 
 export const UserSelect: React.VFC<UserSelectProps> = ({
   userId = '',
+  width = '400px',
+  fullwidth = false,
   setUserCallback,
 }) => {
   /*
@@ -171,7 +185,7 @@ export const UserSelect: React.VFC<UserSelectProps> = ({
   }
   return (
     <OutsideClickHandler onOutsideClick={handleClickOutside}>
-      <Wrapper>
+      <Wrapper fullwidth={fullwidth} width={width}>
         <SelectWrapper onClick={handleToggleSelect}>
           <SelectedUser>{selectDisplayName}</SelectedUser>
           <Chevron icon="chevron-down" size="sm" open={open} />
