@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { ZIndexRange } from 'types/enums'
-import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { UserSearch } from './UserSearch'
 
