@@ -32,7 +32,7 @@ const StyledButton = styled.button<ButtonProps>`
   width: ${props => props.width};
   height: ${props => props.height};
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   border-radius: ${props => props.borderRadius};
   border: none;
   box-shadow: ${props => props.theme.shadow.default};
