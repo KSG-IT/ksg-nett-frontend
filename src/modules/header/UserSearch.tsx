@@ -31,6 +31,8 @@ const Wrapper = styled.div`
   position: relative;
   align-items: center;
   padding: 5px;
+  background-color: ${props => props.theme.colors.white};
+  overflow: clip;
 
   &:focus-within {
     outline: 2px solid ${props => props.theme.colors.purple};
