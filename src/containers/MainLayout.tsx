@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components'
-import { useState } from 'react'
 import { AuthRoutes } from 'containers//AuthRoutes'
-import { Sidebar } from 'modules/sidebar'
 import { Header } from 'modules/header'
+import { Sidebar } from 'modules/sidebar'
+import { useState } from 'react'
+import styled, { css } from 'styled-components'
 import { useRenderMobile } from 'util/isMobile'
 interface WrapperProps {
   sidebarOpen: boolean
@@ -11,7 +11,7 @@ interface WrapperProps {
 const Wrapper = styled.div<WrapperProps>`
   display: grid;
   width: 100%;
-  grid-template-columns: 300px calc(100vw - 300px);
+  grid-template-columns: 250px calc(100vw - 250px);
   grid-template-rows: 70px calc(100vh - 70px);
   grid-template-areas:
     'sidebar header'
@@ -36,6 +36,7 @@ const ContentWrapper = styled.div<ContentWrapperProps>`
   grid-area: main;
   display: ${props => (props.visible ? 'none' : 'flex')};
   background-color: ${props => props.theme.colors.background};
+  height: calc(100vh - 70px);
 `
 
 const HeaderWrapper = styled.div`
