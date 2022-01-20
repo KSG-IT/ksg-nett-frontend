@@ -1,7 +1,7 @@
 import { PrivateRoute } from 'containers/PrivateRoute'
 import { Dashboard } from 'modules/dashboard'
 import { Deposits, MyEconomy } from 'modules/economy'
-import { QuotesList, ReviewQuotes } from 'modules/quotes'
+import { QuotesList } from 'modules/quotes'
 import {
   CreateSummary,
   EditSummary,
@@ -26,7 +26,7 @@ export const AuthRoutes: React.FC = () => {
       {/* Quotes module */}
       <PrivateRoute exact path="/quotes" component={QuotesList} />
       <PrivateRoute exact path="/quotes/create" component={FullPage404} />
-      <PrivateRoute exact path="/quotes/review" component={ReviewQuotes} />
+      <PrivateRoute exact path="/quotes/review" component={FullPage404} />
 
       {/* Internal groups module */}
       <PrivateRoute exact path="/internal-groups" component={FullPage404} />
