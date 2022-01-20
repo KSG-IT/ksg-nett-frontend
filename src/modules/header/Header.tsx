@@ -69,17 +69,14 @@ interface HeaderProps {
 export const Header = ({ toggleSidebar }: HeaderProps) => {
   return (
     <Wrapper>
-      <MobileLogo to="/dashboard">KSG</MobileLogo>
       <BreadCrumbs>
         <Crumb>Referater</Crumb>
         <Crumb>
-          {' '}
-          <FontAwesomeIcon size="sm" icon="chevron-right" />{' '}
+          <FontAwesomeIcon size="sm" icon="chevron-right" />
         </Crumb>
         <Crumb> Styret 11.11.2020</Crumb>
       </BreadCrumbs>
       <UserSearch />
-
       <ToggleSidebarButton onClick={toggleSidebar}>
         <FontAwesomeIcon icon={['fas', 'bars']} size="lg" color="black" />
       </ToggleSidebarButton>
