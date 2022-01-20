@@ -36,17 +36,6 @@ const ToggleSidebarButton = styled.div`
   }
 `
 
-const MobileLogo = styled(Link)`
-  display: none;
-  font-size: 32px;
-
-  font-weight: 600;
-  color: white;
-  ${props => props.theme.media.mobile} {
-    display: flex;
-  }
-`
-
 const BreadCrumbs = styled.div`
   display: flex;
   flex-direction: row;
