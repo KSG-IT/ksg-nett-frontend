@@ -22,7 +22,7 @@ const getButtonStyle = (buttonType: 'primary' | 'cancel' | undefined) => {
       `
     case 'cancel':
       return css`
-        background-color: ${props => props.theme.colors.gray1};
+        background-color: ${props => props.theme.colors.gray2};
         color: ${props => props.theme.colors.white};
       `
   }
@@ -37,6 +37,10 @@ const StyledButton = styled.button<ButtonProps>`
   border: none;
   box-shadow: ${props => props.theme.shadow.default};
   ${props => getButtonStyle(props.buttonStyle)};
+
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 export const Button: React.FC<ButtonProps> = ({
