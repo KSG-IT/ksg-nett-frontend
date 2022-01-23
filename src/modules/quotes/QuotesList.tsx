@@ -46,6 +46,9 @@ export const QuotesList = () => {
   return (
     <Wrapper>
       <h1>Sitater</h1>
+      <button onClick={() => history.push('/quotes/review')}>
+        Godkjenn sitater
+      </button>
       <button onClick={() => history.push('/quotes/create')}>
         Send inn sitat
       </button>

@@ -34,6 +34,21 @@ export type CreateQuoteInput = {
   tagged: string[]
 }
 
+export type PatchQuoteInput = {
+  text?: string
+  context?: string
+  reportedBy?: string
+  tagged?: Pick<UserNode, 'id' | 'profileImage' | 'initials'>[]
+  verifiedBy?: string | null
+}
+
+export interface PatchQuoteVariables {
+  id: string
+  input: PatchQuoteInput
+}
+
+export interface PatchQuoteReturns {}
+
 export interface CreateQuoteVariables {
   input: CreateQuoteInput
 }
