@@ -10,6 +10,14 @@ export const CREATE_QUOTE = gql`
   }
 `
 
+export const DELETE_USER_QUOTE_VOTE = gql`
+  mutation DeleteUserQuoteVote($quoteId: ID!) {
+    deleteUserQuoteVote(quoteId: $quoteId) {
+      found
+    }
+  }
+`
+
 export const PATCH_QUOTE = gql`
   mutation PatchQuote($id: ID!, $input: PatchQuoteInput!) {
     patchQuote(id: $id, input: $input) {

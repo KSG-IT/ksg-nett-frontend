@@ -28,6 +28,14 @@ export interface PendingQuotesReturns {
 
 /* ==== Mutation TYPING === */
 
+export interface DeleteUserQuoteVoteVariables {
+  quoteId: string
+}
+
+export interface DeleteUserQuoteVoteReturns {
+  found: boolean
+}
+
 export type CreateQuoteInput = {
   text: string
   context: string | null
@@ -70,7 +78,6 @@ export interface DeleteQuoteVoteReturns {
 export type CreateQuoteVoteInput = {
   quote: string
   value: number
-  caster: string
 }
 export interface CreateQuoteVoteVariables {
   input: CreateQuoteVoteInput
