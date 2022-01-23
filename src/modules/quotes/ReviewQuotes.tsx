@@ -33,6 +33,7 @@ const QuoteReviewCard = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   grid-row-gap: 5px;
+  ${props => props.theme.shadow.default};
 `
 
 const QutoeText = styled.div`
