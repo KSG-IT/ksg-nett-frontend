@@ -58,11 +58,12 @@ const VoteContainer = styled.div`
 `
 
 interface VoteIconProps {
-  upvoted: boolean
+  $upvoted: boolean
 }
 
 const UpvoteIcon = styled(FontAwesomeIcon)<VoteIconProps>`
-  color: ${props => (props.upvoted ? props.theme.colors.success : 'black')};
+  // Transient prop forwarding
+  color: ${props => (props.$upvoted ? props.theme.colors.success : 'black')};
   :hover {
     cursor: pointer;
   }
@@ -110,7 +111,7 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({ quote }) => {
         })
         .then(res => {
           const { data } = res
-          const quoteSum = data?.quoteSum
+          const quoteSum = data?.deleteUserQuoteVote.quoteSum
           setUpvoted(false)
           setVoteSum(quoteSum ?? voteSum)
         })
@@ -124,7 +125,7 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({ quote }) => {
       <QuoteFooter>
         <TaggedContainer>
           {quote.tagged.map(user => (
-            <UserThumbnail user={user} size="small" />
+            <UserThumbnail user={user} size="small" key={user.id} />
           ))}
         </TaggedContainer>
         <VoteContainer>
@@ -132,7 +133,7 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({ quote }) => {
           <span>
             <UpvoteIcon
               icon="thumbs-up"
-              upvoted={upvoted}
+              $upvoted={upvoted}
               onClick={handleUpvote}
             />
           </span>

@@ -33,8 +33,10 @@ export interface DeleteUserQuoteVoteVariables {
 }
 
 export interface DeleteUserQuoteVoteReturns {
-  found: boolean
-  quoteSum: number
+  deleteUserQuoteVote: {
+    found: boolean
+    quoteSum: number
+  }
 }
 
 export type CreateQuoteInput = {
