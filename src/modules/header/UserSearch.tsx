@@ -1,25 +1,25 @@
-import {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useLayoutEffect,
-} from 'react'
-import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/client'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Spinner } from 'components/Loading'
+import { UserThumbnail } from 'modules/users'
+import { ALL_ACTIVE_USERS_SHALLOW_QUERY } from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
+  UserNode,
 } from 'modules/users/types'
-import { ALL_ACTIVE_USERS_SHALLOW_QUERY } from 'modules/users/queries'
-import { useDebounce } from 'util/hooks'
-import { UserNode } from 'modules/users/types'
-import { UserThumbnail } from 'modules/users'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useHistory } from 'react-router-dom'
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
-import { Spinner } from 'components/Loading'
+import { useHistory } from 'react-router-dom'
+import styled from 'styled-components'
 import { clamp } from 'util/arithmetic'
+import { useDebounce } from 'util/hooks'
 
 const Wrapper = styled.div`
   height: 35px;
@@ -32,7 +32,6 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 5px;
   background-color: ${props => props.theme.colors.white};
-  overflow: clip;
 
   &:focus-within {
     outline: 2px solid ${props => props.theme.colors.purple};
