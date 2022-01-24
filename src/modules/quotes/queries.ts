@@ -1,8 +1,12 @@
 import { gql } from '@apollo/client'
 
 export const APPROVED_QUOTES_QUERY = gql`
-  query ApprovedQuotes($q: String) {
-    approvedQuotes(q: $q) {
+  query ApprovedQuotes($q: String, $first: Int, $after: String) {
+    approvedQuotes(q: $q, first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
       edges {
         node {
           id

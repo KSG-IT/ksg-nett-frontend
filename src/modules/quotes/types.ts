@@ -20,6 +20,8 @@ export interface ApprovedQuotesReturns {
 
 export interface ApprovedQuotesVariables {
   q: string
+  first: number
+  after?: string
 }
 
 export interface PendingQuotesReturns {
