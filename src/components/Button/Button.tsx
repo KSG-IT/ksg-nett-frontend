@@ -7,6 +7,7 @@ interface ButtonProps {
   backgroundColor?: string
   type?: 'submit' | 'text' | 'reset'
   buttonStyle?: 'primary' | 'cancel'
+  hide?: boolean
 
   className?: string
   onClick?: () => void
@@ -29,6 +30,7 @@ const getButtonStyle = (buttonType: 'primary' | 'cancel' | undefined) => {
 }
 
 const StyledButton = styled.button<ButtonProps>`
+  display: ${props => (props.hide ? 'none' : 'inline-block')};
   width: ${props => props.width};
   height: ${props => props.height};
   font-weight: 500;
@@ -49,6 +51,7 @@ export const Button: React.FC<ButtonProps> = ({
   borderRadius = '4px',
   backgroundColor = 'purple',
   buttonStyle = 'primary',
+  hide = false,
   type,
   className,
   children,
@@ -64,6 +67,7 @@ export const Button: React.FC<ButtonProps> = ({
       className={className}
       onClick={onClick}
       buttonStyle={buttonStyle}
+      hide={hide}
       // type={type}
     >
       {children}
