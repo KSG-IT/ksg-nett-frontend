@@ -162,7 +162,7 @@ export const ReviewQuotes = () => {
           <QuoteContext>{quote.context}</QuoteContext>
           <QuoteTagged>
             {quote.tagged.map(user => (
-              <UserThumbnail user={user} size="small" />
+              <UserThumbnail user={user} size="small" key={user.id} />
             ))}
           </QuoteTagged>
           <QuoteSentBy>{quote.reportedBy}</QuoteSentBy>
