@@ -10,29 +10,63 @@ import { ApprovedQuotesReturns, ApprovedQuotesVariables } from '.'
 import { APPROVED_QUOTES_QUERY } from './queries'
 import { QuoteCard } from './QuoteCard'
 const Wrapper = styled.div`
+  display: grid;
+  grid-template-areas:
+    'title . approve send'
+    'search search search search'
+    'quotes quotes quotes quotes'
+    'fetchmore fetchmore fetchmore fetchmore';
+  grid-template-rows: 40px 40px auto 40px;
+  gap: 10px;
   width: 100%;
   height: 100%;
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
   padding: 32px 16px;
   overflow-y: scroll;
   ${props => props.theme.media.mobile} {
     padding: 0;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
   }
 `
 
-const QuotesContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  gap: 15px;
+const Title = styled.h1`
+  grid-area: title;
+  margin: 0;
 `
+
+const QuotesContainer = styled.div`
+  grid-area: quotes;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-content: flex-start;
+`
+
+const SendInQuoteContainer = styled.div`
+  grid-area: send;
+`
+
+const ApproveQuotesContainer = styled.div`
+  grid-area: approve;
+`
+
+const QuoteSearchArea = styled.div`
+  grid-area: search;
+`
+const FetchMoreArea = styled.div`
+  grid-area: fetchmore;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 export const QuotesList = () => {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query)
   const history = useHistory()
-  const { data, loading, error, fetchMore } = useQuery<
+  const { data, fetchMore } = useQuery<
     ApprovedQuotesReturns,
     ApprovedQuotesVariables
   >(APPROVED_QUOTES_QUERY, {
@@ -77,27 +111,35 @@ export const QuotesList = () => {
 
   return (
     <Wrapper>
-      <h1>Sitater</h1>
-      <button onClick={() => history.push('/quotes/review')}>
-        Godkjenn sitater
-      </button>
-      <button onClick={() => history.push('/quotes/create')}>
-        Send inn sitat
-      </button>
-      <Search
-        fullwidth
-        placeholder="Søkt etter innhold..."
-        value={query}
-        onChange={setQuery}
-      />
+      <Title>Sitater</Title>
+      <ApproveQuotesContainer>
+        <Button onClick={() => history.push('/quotes/review')}>
+          Godkjenn sitater
+        </Button>
+      </ApproveQuotesContainer>
+      <SendInQuoteContainer>
+        <Button onClick={() => history.push('/quotes/create')}>
+          Send inn sitat
+        </Button>
+      </SendInQuoteContainer>
+      <QuoteSearchArea>
+        <Search
+          fullwidth
+          placeholder="Søkt etter innhold..."
+          value={query}
+          onChange={setQuery}
+        />
+      </QuoteSearchArea>
       <QuotesContainer>
         {quotes.map(quote => (
           <QuoteCard quote={quote} key={quote.id} />
         ))}
       </QuotesContainer>
-      <Button hide={!hasNextPage} onClick={handleFetchMore}>
-        Hent flere sitater
-      </Button>
+      <FetchMoreArea>
+        <Button hide={!hasNextPage} onClick={handleFetchMore}>
+          Hent flere sitater
+        </Button>
+      </FetchMoreArea>
     </Wrapper>
   )
 }

@@ -23,6 +23,7 @@ const Wrapper = styled.div`
   gap: 5px;
   min-width: 150px;
   max-width: 300px;
+  height: fit-content;
 `
 
 const QuoteText = styled.span`
