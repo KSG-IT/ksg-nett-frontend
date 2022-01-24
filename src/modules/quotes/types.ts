@@ -34,6 +34,7 @@ export interface DeleteUserQuoteVoteVariables {
 
 export interface DeleteUserQuoteVoteReturns {
   found: boolean
+  quoteSum: number
 }
 
 export type CreateQuoteInput = {
@@ -84,5 +85,12 @@ export interface CreateQuoteVoteVariables {
 }
 
 export interface CreateQuoteVoteReturns {
-  quote: Pick<QuoteNode, 'id'>
+  createQuoteVote: {
+    quoteVote: {
+      id: string
+      quote: {
+        sum: number
+      }
+    }
+  }
 }

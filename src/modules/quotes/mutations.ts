@@ -14,6 +14,7 @@ export const DELETE_USER_QUOTE_VOTE = gql`
   mutation DeleteUserQuoteVote($quoteId: ID!) {
     deleteUserQuoteVote(quoteId: $quoteId) {
       found
+      quoteSum
     }
   }
 `
@@ -56,16 +57,21 @@ export const CREATE_QUOTE_VOTE = gql`
     createQuoteVote(input: $input) {
       quoteVote {
         id
+        quote {
+          id
+          sum
+        }
       }
     }
   }
 `
 
 export const DELETE_QUOTE_VOTE = gql`
-  mutation DeleteQUoteVote($id: ID!) {
+  mutation DeleteQuoteVote($id: ID!) {
     deleteQuoteVote(id: $id) {
       quoteVote {
         found
+        quote_sum
       }
     }
   }

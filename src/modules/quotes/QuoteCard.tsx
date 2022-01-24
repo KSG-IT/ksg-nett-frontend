@@ -58,11 +58,11 @@ const VoteContainer = styled.div`
 `
 
 interface VoteIconProps {
-  active: boolean
+  upvoted: boolean
 }
 
 const UpvoteIcon = styled(FontAwesomeIcon)<VoteIconProps>`
-  color: ${props => (props.active ? props.theme.colors.success : 'black')};
+  color: ${props => (props.upvoted ? props.theme.colors.success : 'black')};
   :hover {
     cursor: pointer;
   }
@@ -96,9 +96,10 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({ quote }) => {
             success: 'Sitat oppstemt!',
           }
         )
-        .then(() => {
+        .then(res => {
+          const quoteSum = res.data?.createQuoteVote.quoteVote.quote.sum
           setUpvoted(true)
-          setVoteSum(voteSum + 1)
+          setVoteSum(quoteSum ?? voteSum)
         })
     } else {
       toast
@@ -107,9 +108,11 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({ quote }) => {
           error: 'Kunne ikke slette stemme',
           success: 'Stemme slettet!',
         })
-        .then(() => {
+        .then(res => {
+          const { data } = res
+          const quoteSum = data?.quoteSum
           setUpvoted(false)
-          setVoteSum(voteSum - 1)
+          setVoteSum(quoteSum ?? voteSum)
         })
     }
   }
@@ -129,7 +132,7 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({ quote }) => {
           <span>
             <UpvoteIcon
               icon="thumbs-up"
-              active={upvoted}
+              upvoted={upvoted}
               onClick={handleUpvote}
             />
           </span>
