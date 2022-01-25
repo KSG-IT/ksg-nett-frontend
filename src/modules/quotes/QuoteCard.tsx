@@ -65,8 +65,9 @@ interface VoteIconProps {
 const UpvoteIcon = styled(FontAwesomeIcon)<VoteIconProps>`
   // Transient prop forwarding
   color: ${props => (props.$upvoted ? props.theme.colors.success : 'black')};
-  :hover 
+  :hover {
     cursor: pointer;
+    color: ${props => (props.$upvoted ? 'black' : props.theme.colors.success)};
   }
 `
 
