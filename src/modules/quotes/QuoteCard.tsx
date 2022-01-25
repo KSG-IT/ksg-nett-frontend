@@ -58,6 +58,17 @@ const VoteContainer = styled.div`
   align-items: center;
 `
 
+const SemesterLabel = styled.span`
+  margin: 0;
+  color: ${props => props.theme.colors.gray1};
+  border: 1px solid ${props => props.theme.colors.gray1};
+  display: flex;
+  padding: 1px;
+  font-size: 14px;
+  align-items: center;
+  justify-content: center;
+`
+
 interface VoteIconProps {
   $upvoted: boolean
 }
@@ -72,9 +83,16 @@ const UpvoteIcon = styled(FontAwesomeIcon)<VoteIconProps>`
 `
 
 interface QuoteCardProps {
-  quote: Pick<QuoteNode, 'text' | 'id' | 'tagged' | 'context' | 'sum'>
+  quote: Pick<
+    QuoteNode,
+    'text' | 'id' | 'tagged' | 'context' | 'sum' | 'semester'
+  >
+  displaySemester?: boolean
 }
-export const QuoteCard: React.VFC<QuoteCardProps> = ({ quote }) => {
+export const QuoteCard: React.VFC<QuoteCardProps> = ({
+  quote,
+  displaySemester = false,
+}) => {
   const me = useAuth()
   const [upvoted, setUpvoted] = useState(me.upvotedQuoteIds.includes(quote.id))
   const [voteSum, setVoteSum] = useState(quote.sum)
@@ -130,6 +148,7 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({ quote }) => {
           ))}
         </TaggedContainer>
         <VoteContainer>
+          {displaySemester && <SemesterLabel>{quote.semester}</SemesterLabel>}
           <span>{voteSum}</span>
           <span>
             <UpvoteIcon
