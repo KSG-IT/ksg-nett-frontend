@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useAuth } from 'context/Authentication'
 import { QuoteNode } from 'modules/quotes/types'
 import { UserThumbnail } from 'modules/users'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
 import {
@@ -65,7 +65,7 @@ interface VoteIconProps {
 const UpvoteIcon = styled(FontAwesomeIcon)<VoteIconProps>`
   // Transient prop forwarding
   color: ${props => (props.$upvoted ? props.theme.colors.success : 'black')};
-  :hover {
+  :hover 
     cursor: pointer;
   }
 `
@@ -80,42 +80,41 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({ quote }) => {
   const [upvote] = useMutation<
     CreateQuoteVoteReturns,
     CreateQuoteVoteVariables
-  >(CREATE_QUOTE_VOTE)
+  >(CREATE_QUOTE_VOTE, { refetchQueries: ['PopularQuotes', 'Me'] })
   const [deleteUpvote] = useMutation<
     DeleteUserQuoteVoteReturns,
     DeleteUserQuoteVoteVariables
-  >(DELETE_USER_QUOTE_VOTE)
+  >(DELETE_USER_QUOTE_VOTE, {
+    refetchQueries: ['PopularQuotes', 'Me'],
+  })
+
+  useEffect(() => {
+    const isUpvoted = me.upvotedQuoteIds.includes(quote.id)
+    setUpvoted(isUpvoted)
+  }, [me.upvotedQuoteIds, quote.id, setUpvoted])
+
+  useEffect(() => {
+    setVoteSum(quote.sum)
+  }, [quote.sum])
+
   const handleUpvote = () => {
     if (!upvoted) {
-      toast
-        .promise(
-          upvote({
-            variables: { input: { quote: quote.id, value: 1 } },
-          }),
-          {
-            loading: 'Oppstemmer sitat...',
-            error: 'Kunne ikke oppstemme sitat!',
-            success: 'Sitat oppstemt!',
-          }
-        )
-        .then(res => {
-          const quoteSum = res.data?.createQuoteVote.quoteVote.quote.sum
-          setUpvoted(true)
-          setVoteSum(quoteSum ?? voteSum)
-        })
+      toast.promise(
+        upvote({
+          variables: { input: { quote: quote.id, value: 1 } },
+        }),
+        {
+          loading: 'Oppstemmer sitat...',
+          error: 'Kunne ikke oppstemme sitat!',
+          success: 'Sitat oppstemt!',
+        }
+      )
     } else {
-      toast
-        .promise(deleteUpvote({ variables: { quoteId: quote.id } }), {
-          loading: 'Sletter stemme...',
-          error: 'Kunne ikke slette stemme',
-          success: 'Stemme slettet!',
-        })
-        .then(res => {
-          const { data } = res
-          const quoteSum = data?.deleteUserQuoteVote.quoteSum
-          setUpvoted(false)
-          setVoteSum(quoteSum ?? voteSum)
-        })
+      toast.promise(deleteUpvote({ variables: { quoteId: quote.id } }), {
+        loading: 'Sletter stemme...',
+        error: 'Kunne ikke slette stemme',
+        success: 'Stemme slettet!',
+      })
     }
   }
 
