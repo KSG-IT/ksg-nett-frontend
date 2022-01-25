@@ -12,11 +12,12 @@ import { QuoteCard } from './QuoteCard'
 const Wrapper = styled.div`
   display: grid;
   grid-template-areas:
-    'title . approve send'
+    'title popular approve send'
     'search search search search'
     'quotes quotes quotes quotes'
     'fetchmore fetchmore fetchmore fetchmore';
   grid-template-rows: 40px 40px auto 40px;
+  grid-template-columns: 3fr 1fr 1fr 1fr;
   gap: 10px;
   width: 100%;
   height: 100%;
@@ -42,6 +43,10 @@ const QuotesContainer = styled.div`
   flex-wrap: wrap;
   gap: 15px;
   align-content: flex-start;
+`
+
+const PopularQuotesContainer = styled.div`
+  grid-area: popular;
 `
 
 const SendInQuoteContainer = styled.div`
@@ -112,6 +117,11 @@ export const QuotesList = () => {
   return (
     <Wrapper>
       <Title>Sitater</Title>
+      <PopularQuotesContainer>
+        <Button onClick={() => history.push('/quotes/popular')}>
+          Populære sitater
+        </Button>
+      </PopularQuotesContainer>
       <ApproveQuotesContainer>
         <Button onClick={() => history.push('/quotes/review')}>
           Godkjenn sitater

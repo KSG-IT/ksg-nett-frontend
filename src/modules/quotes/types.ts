@@ -28,6 +28,12 @@ export interface PendingQuotesReturns {
   pendingQuotes: QuoteNode[]
 }
 
+export interface PopularQuotesReturns {
+  popularQuotesCurrentSemester: QuoteNode[]
+  popularQuotesAllTime: QuoteNode[]
+  currentSemesterShorthand: `${'H' | 'V'}${number}`
+}
+
 /* ==== Mutation TYPING === */
 
 export interface DeleteUserQuoteVoteVariables {

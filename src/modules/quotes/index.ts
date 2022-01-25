@@ -1,4 +1,5 @@
 export * from './CreateQuote'
+export * from './PopularQuotes'
 export * from './QuoteCard'
 export * from './QuotesList'
 export * from './ReviewQuotes'
