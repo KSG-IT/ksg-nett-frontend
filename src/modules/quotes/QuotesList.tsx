@@ -142,7 +142,7 @@ export const QuotesList = () => {
       </QuoteSearchArea>
       <QuotesContainer>
         {quotes.map(quote => (
-          <QuoteCard quote={quote} key={quote.id} />
+          <QuoteCard quote={quote} key={quote.id} displaySemester />
         ))}
       </QuotesContainer>
       <FetchMoreArea>
