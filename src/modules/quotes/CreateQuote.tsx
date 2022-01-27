@@ -51,13 +51,6 @@ const quoteTextPlaceholder =
 
 const quoteContextPlaceholder = ' Fulle Elias som blir leid til do'
 export const CreateQuote: React.VFC = () => {
-  /* ToDo
-   *	Need to convert this with using reac thook form
-   * Need to make styling not absolute shit
-   * Add responsive layout to this
-   * This updates sidebar data query, should that be split into two
-   * chained queries? Seeing as they can shortcircuit?
-   */
   const [text, setText] = useState('')
   const [context, setContext] = useState('')
   const history = useHistory()
