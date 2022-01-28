@@ -58,7 +58,6 @@ export type PatchQuoteInput = {
   context?: string
   reportedBy?: string
   tagged?: Pick<UserNode, 'id' | 'profileImage' | 'initials'>[]
-  verifiedBy?: string | null
 }
 
 export interface PatchQuoteVariables {

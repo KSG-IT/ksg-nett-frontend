@@ -121,9 +121,7 @@ export const ReviewQuotes = () => {
       patchQuote({
         variables: {
           id: quoteId,
-          input: {
-            verifiedBy: me.id,
-          },
+          input: {},
         },
       }),
       {
