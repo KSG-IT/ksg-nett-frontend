@@ -99,12 +99,14 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({
   const [upvote] = useMutation<
     CreateQuoteVoteReturns,
     CreateQuoteVoteVariables
-  >(CREATE_QUOTE_VOTE, { refetchQueries: ['PopularQuotes', 'Me'] })
+  >(CREATE_QUOTE_VOTE, {
+    refetchQueries: ['PopularQuotes', 'ApprovedQuotes', 'Me'],
+  })
   const [deleteUpvote] = useMutation<
     DeleteUserQuoteVoteReturns,
     DeleteUserQuoteVoteVariables
   >(DELETE_USER_QUOTE_VOTE, {
-    refetchQueries: ['PopularQuotes', 'Me'],
+    refetchQueries: ['PopularQuotes', 'ApprovedQuotes', 'Me'],
   })
 
   useEffect(() => {
