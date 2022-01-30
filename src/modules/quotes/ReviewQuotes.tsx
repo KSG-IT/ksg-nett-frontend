@@ -99,7 +99,7 @@ export const ReviewQuotes = () => {
   const { data, loading, error } =
     useQuery<PendingQuotesReturns>(PNEDING_QUOTES_QUERY)
 
-  const [patchQuote] = useMutation<PatchQuoteReturns, PatchQuoteVariables>(
+  const [approveQuote] = useMutation<PatchQuoteReturns, PatchQuoteVariables>(
     PATCH_QUOTE,
     { refetchQueries: ['PendingQuotes', 'ApprovedQuotes', 'SidebarQuery'] }
   )
@@ -118,7 +118,7 @@ export const ReviewQuotes = () => {
 
   const handleApproveQuote = (quoteId: string) => {
     toast.promise(
-      patchQuote({
+      approveQuote({
         variables: {
           id: quoteId,
           input: {},
