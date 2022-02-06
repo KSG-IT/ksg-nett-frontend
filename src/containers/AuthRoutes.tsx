@@ -1,5 +1,6 @@
 import { FullPage404 } from 'components/FullPageComponents'
 import { PrivateRoute } from 'containers/PrivateRoute'
+import { AdmissionDashboard } from 'modules/admissions'
 import { Dashboard } from 'modules/dashboard'
 import { Deposits, MyEconomy } from 'modules/economy'
 import {
@@ -21,7 +22,6 @@ export const AuthRoutes: React.FC = () => {
   return (
     <Switch>
       {/* Module routes */}
-      <PrivateRoute exact path="/admissions" component={FullPage404} />
       <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
       {/* Events module */}
@@ -67,8 +67,9 @@ export const AuthRoutes: React.FC = () => {
       {/* Users module */}
       <PrivateRoute exact path="/users" component={FullPage404} />
       <PrivateRoute exact path="/users/:userId" component={UserProfile} />
+
       {/* Admissions module */}
-      <PrivateRoute exact path="/admissions" component={FullPage404} />
+      <PrivateRoute exact path="/admissions" component={AdmissionDashboard} />
       <PrivateRoute
         exact
         path="/admissions/:admissionId"
