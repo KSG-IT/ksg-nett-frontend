@@ -65,14 +65,3 @@ export const CREATE_QUOTE_VOTE = gql`
     }
   }
 `
-
-export const DELETE_QUOTE_VOTE = gql`
-  mutation DeleteQuoteVote($id: ID!) {
-    deleteQuoteVote(id: $id) {
-      quoteVote {
-        found
-        quote_sum
-      }
-    }
-  }
-`
