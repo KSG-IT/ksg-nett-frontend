@@ -16,8 +16,6 @@ import {
 
 const Wrapper = styled.div``
 
-const ApplicantsTable = styled.div``
-
 const AddApplicantArea = styled.textarea``
 
 export const AdmissionDashboard: React.VFC = () => {

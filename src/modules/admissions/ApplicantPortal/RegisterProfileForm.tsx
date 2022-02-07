@@ -87,12 +87,9 @@ export const RegisterProfileForm: React.VFC<RegisterProfileFormProps> = ({
     image: yup.mixed().required(),
   })
 
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { errors: formErrors },
-  } = useForm<RegisterProfileFormInput>({ resolver: yupResolver(schema) })
+  const { register, handleSubmit } = useForm<RegisterProfileFormInput>({
+    resolver: yupResolver(schema),
+  })
 
   const onSubmit: SubmitHandler<RegisterProfileFormInput> = data => {
     const fileList = data.image
