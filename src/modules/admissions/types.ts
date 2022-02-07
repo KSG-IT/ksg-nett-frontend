@@ -24,10 +24,6 @@ export type ApplicantNode = {
   fullName: string
   firstName: string
   lastName: string
-  // nulll implies priorities not set
-  // firstChoice: Pick<InternalGroupPositionNode, 'id' | 'name'> | null
-  // secondChoice: Pick<InternalGroupPositionNode, 'id' | 'name'> | null
-  // thirdChoice: Pick<InternalGroupPositionNode, 'id' | 'name'> | null
 }
 
 export type AdmissionNode = {

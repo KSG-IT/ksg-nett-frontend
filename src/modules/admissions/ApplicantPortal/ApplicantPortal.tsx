@@ -45,7 +45,6 @@ export const ApplicantPortal: React.VFC = () => {
       </Wrapper>
     )
 
-  console.log(applicant)
   if (applicant.status !== 'HAS_REGISTERED_PROFILE')
     return (
       <Wrapper>
