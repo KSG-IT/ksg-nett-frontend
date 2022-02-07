@@ -105,7 +105,7 @@ export const ReviewQuotes = () => {
   )
 
   const [deleteQuote] = useMutation(DELETE_QUOTE, {
-    refetchQueries: ['PendingQuotes', 'ApprovedQuotes', 'SidebarQuery'],
+    refetchQueries: ['PendingQuotes', 'SidebarQuery'],
   })
 
   const handleDeleteQuote = (quoteId: string) => {
