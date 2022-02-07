@@ -16,6 +16,8 @@ export const ME_QUERY = gql`
       studyAddress
       homeAddress
       phone
+      upvotedQuoteIds
+
       lastTransactions {
         # Is this an issue if we cache the activity?
         # This will become large at some point

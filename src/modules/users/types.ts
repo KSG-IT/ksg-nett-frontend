@@ -20,6 +20,7 @@ export type UserNode = {
   isAdministrator: boolean
   bankAccountActivity: BankAccountActivity[]
   lastTransactions: BankAccountActivity[]
+  upvotedQuoteIds: string[]
 }
 
 export interface UserQueryReturns {

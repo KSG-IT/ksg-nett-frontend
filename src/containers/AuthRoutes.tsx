@@ -1,7 +1,13 @@
+import { FullPage404 } from 'components/FullPageComponents'
 import { PrivateRoute } from 'containers/PrivateRoute'
 import { Dashboard } from 'modules/dashboard'
 import { Deposits, MyEconomy } from 'modules/economy'
-import { QuotesList } from 'modules/quotes'
+import {
+  CreateQuote,
+  PopularQuotes,
+  QuotesList,
+  ReviewQuotes,
+} from 'modules/quotes'
 import {
   CreateSummary,
   EditSummary,
@@ -10,7 +16,6 @@ import {
 } from 'modules/summaries'
 import { UserProfile } from 'modules/users'
 import { Redirect, Switch } from 'react-router-dom'
-import { FullPage404 } from 'components/FullPageComponents'
 
 export const AuthRoutes: React.FC = () => {
   return (
@@ -25,8 +30,9 @@ export const AuthRoutes: React.FC = () => {
 
       {/* Quotes module */}
       <PrivateRoute exact path="/quotes" component={QuotesList} />
-      <PrivateRoute exact path="/quotes/create" component={FullPage404} />
-      <PrivateRoute exact path="/quotes/review" component={FullPage404} />
+      <PrivateRoute exact path="/quotes/create" component={CreateQuote} />
+      <PrivateRoute exact path="/quotes/review" component={ReviewQuotes} />
+      <PrivateRoute exact path="/quotes/popular" component={PopularQuotes} />
 
       {/* Internal groups module */}
       <PrivateRoute exact path="/internal-groups" component={FullPage404} />

@@ -43,6 +43,17 @@ export const theme = {
     default: '0 2px 6px 0 rgba(0, 0, 0, 0.2);',
   },
 
+  layout: {
+    default: `
+    width: 100%;
+    padding: 32px 52px 52px;
+    box-sizing: border-box;
+    @media screen and (max-width: 768px){
+      padding: 1rem;
+    }
+  `,
+  },
+
   resetButton: `
   appearance: none;
   background: none;
