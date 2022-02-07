@@ -45,9 +45,7 @@ export const theme = {
 
   layout: {
     default: `
-    display: flex;
     width: 100%;
-    flex-direction: column;
     padding: 32px 52px 52px;
     box-sizing: border-box;
     @media screen and (max-width: 768px){

@@ -77,14 +77,6 @@ export interface CreateQuoteReturns {
   }
 }
 
-export interface DeleteQuoteVoteVariables {
-  id: string
-}
-
-export interface DeleteQuoteVoteReturns {
-  found: boolean
-}
-
 export type CreateQuoteVoteInput = {
   quote: string
   value: number
