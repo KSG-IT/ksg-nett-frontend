@@ -26,10 +26,17 @@ export type ApplicantNode = {
   lastName: string
 }
 
+export type AdmissionStatus =
+  | 'INITIALIZATION'
+  | 'OPEN'
+  | 'CLOSED'
+  | 'IN_SESSION'
+  | 'FINALIZATION'
+
 export type AdmissionNode = {
   date: Date
   semester: `${'H' | 'V'}${number}`
-  status: 'OPEN' | 'CLOSED' | 'IN_SESSION'
+  status: AdmissionStatus
   availableInternalGroupPositions: AdmissionAvailableInternalGroupPositionData[]
   applicants: ApplicantNode[]
 }
