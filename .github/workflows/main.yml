@@ -31,8 +31,7 @@ jobs:
           yarn install
       - name: Production Build
         run: |
-					yarn build:dev
-
+          yarn install
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
