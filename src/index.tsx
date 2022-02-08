@@ -1,9 +1,9 @@
+import 'fontsource-roboto'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Root from './containers/Root'
-import reportWebVitals from './reportWebVitals'
-import 'fontsource-roboto'
 import './index.css'
+import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(
   <React.StrictMode>
