@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from 'components/Button'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { useAuth } from 'context/Authentication'
 import { format } from 'date-fns'
 import { UserThumbnail } from 'modules/users/UserThumbnail'
 import toast from 'react-hot-toast'
@@ -95,7 +94,6 @@ export const ReviewQuotes = () => {
   // be able to see more details for sent in quotes. Who sent in. Who approved etc.?
   // Ability to delete quotes or review them
   // Maybe everyone should be able to report a quote?
-  const me = useAuth()
   const { data, loading, error } =
     useQuery<PendingQuotesReturns>(PNEDING_QUOTES_QUERY)
 
