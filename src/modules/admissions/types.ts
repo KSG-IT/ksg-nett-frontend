@@ -1,4 +1,27 @@
 import { InternalGroupPositionNode } from 'modules/organization/types'
+import { UserNode } from 'modules/users'
+
+export type InterviewLocationNode = {
+  id: string
+  name: string
+  availability: InterviewLocationAvailabilityNode[]
+}
+
+export type InterviewLocationAvailabilityNode = {
+  id: string
+  datetimeFrom: Date
+  datetimeTo: Date
+}
+
+export type InterviewNode = {
+  id: string
+  interviewStart: Date
+  interviewEnd: Date
+  interviewers: Pick<UserNode, 'id' | 'initials' | 'profileImage'>[]
+  location: Pick<InterviewLocationNode, 'id' | 'name'>
+}
+
+export type InterviewNodeShallow = Pick<InterviewNode, 'id'>
 
 export type ApplicantStatus =
   | 'EMAIL_SENT'
@@ -15,6 +38,7 @@ export type AdmissionAvailableInternalGroupPositionData = {
   id: string
   internalGroupPosition: Pick<InternalGroupPositionNode, 'id' | 'name'>
   availablePositions: number
+  __typename: string
 }
 
 export type ApplicantNode = {
@@ -24,21 +48,36 @@ export type ApplicantNode = {
   fullName: string
   firstName: string
   lastName: string
+  image: string | File
+  dateOfBirth: Date | string
 }
 
 export type AdmissionStatus =
-  | 'INITIALIZATION'
+  | 'CONFIGURATION'
+  | 'INTERVIEW_OVERVIEW'
   | 'OPEN'
   | 'CLOSED'
   | 'IN_SESSION'
   | 'FINALIZATION'
 
 export type AdmissionNode = {
+  id: string
   date: Date
   semester: `${'H' | 'V'}${number}`
   status: AdmissionStatus
-  availableInternalGroupPositions: AdmissionAvailableInternalGroupPositionData[]
+  availableInternalGroupPositionsData: AdmissionAvailableInternalGroupPositionData[]
   applicants: ApplicantNode[]
+}
+
+export type InterviewScheduleTemplateNode = {
+  id: string
+  interviewPeriodStartDate: Date
+  defaultInterviewDayStart: string
+  interviewPeriodEndDate: Date
+  defaultInterviewDayEnd: string
+  defaultInterviewDuration: string
+  defaultBlockSize: number
+  defaultPauseDuration: string
 }
 
 /* === QUERY TYPING === */
@@ -54,14 +93,35 @@ export interface GeApplicantFromTokenReturns {
   getApplicantFromToken: ApplicantNode
 }
 
+export interface InterviewConfigQueryReturns {
+  allInterviewScheduleTemplates: InterviewScheduleTemplateNode[]
+  allInterviewLocations: InterviewLocationNode[]
+}
+
+export interface AllInterviewLocationsReturns {
+  allInterviewLocations: InterviewLocationNode[]
+}
+
 /* === MUTATION TYPING === */
 
 export interface CreateAdmissionReturns {
   admission: AdmissionNode
 }
 
+export type CreateAdmissionInput = {
+  status?: AdmissionStatus
+  availableInternalGroupPositions?: any[]
+}
 export interface CreateAdmissionVariables {
-  supplementaryAdmission: boolean
+  input: CreateAdmissionInput
+}
+
+export type PatchAdmissionInput = Partial<Omit<AdmissionNode, 'id'>>
+
+export interface PatchAdmissionReturns {
+  patchAdmission: {
+    admission: Pick<AdmissionNode, 'id'>
+  }
 }
 
 export interface CreateApplicationsReturns {
@@ -81,17 +141,7 @@ export interface ReSendApplicationTokenVariables {
   email: string
 }
 
-export type PatchApplicantInput = {
-  firstName?: string
-  lastName?: string
-  phone?: string
-  study?: string
-  dateOfBirth?: string
-  address?: string
-  hometown?: string
-  image?: File
-  status?: ApplicantStatus
-}
+export type PatchApplicantInput = Partial<Omit<ApplicantNode, 'id'>>
 
 export interface PatchApplicantReturns {
   applicant: Pick<ApplicantNode, 'id'>
@@ -100,3 +150,7 @@ export interface PatchApplicantVariables {
   id: string
   input: PatchApplicantInput
 }
+
+export type PatchInterviewScheduleTemplateInput = Partial<
+  Omit<InterviewScheduleTemplateNode, 'id'>
+>

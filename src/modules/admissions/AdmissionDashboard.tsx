@@ -5,9 +5,9 @@ import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import styled from 'styled-components'
 import { ActiveAdmissionTable } from './ActiveAdmissionTable'
-import { CREATE_APPLICATIONS } from './mutation'
+import { ConfigurationWizard } from './ConfigureAdmission/ConfigurationWizard'
+import { CREATE_APPLICATIONS } from './mutations'
 import { ACTIVE_ADMISSION_QUERY } from './queries'
-import { StartAdmissionProcessCard } from './StartAdmissionProcessCard'
 import {
   ActiveAdmissioneturns,
   CreateApplicationsReturns,
@@ -40,25 +40,19 @@ export const AdmissionDashboard: React.VFC = () => {
   if (loading || !data) return <FullContentLoader />
 
   const handleCreateApplications = () => {
-    console.log(emails)
     const parsedEmails = emails.split('\n')
-    console.log(parsedEmails)
-    toast.promise(
-      createApplications({ variables: { emails: parsedEmails } }).then(res => {
-        console.log(res)
-      }),
-      {
-        loading: 'Oppretter søknader',
-        error: 'Noe gikk galt',
-        success: 'søknader opprettet',
-      }
-    )
+    toast.promise(createApplications({ variables: { emails: parsedEmails } }), {
+      loading: 'Oppretter søknader',
+      error: 'Noe gikk galt',
+      success: 'søknader opprettet',
+    })
     setEmails('')
   }
 
   const { activeAdmission } = data
 
-  if (activeAdmission === null) return <StartAdmissionProcessCard />
+  if (activeAdmission === null || activeAdmission.status === 'CONFIGURATION')
+    return <ConfigurationWizard />
 
   return (
     <Wrapper>

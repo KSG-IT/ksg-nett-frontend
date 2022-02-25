@@ -6,7 +6,7 @@ import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import * as yup from 'yup'
-import { PATCH_APPLICANT } from '../mutation'
+import { PATCH_APPLICANT } from '../mutations'
 import {
   ApplicantNode,
   PatchApplicantInput,
@@ -94,18 +94,16 @@ export const RegisterProfileForm: React.VFC<RegisterProfileFormProps> = ({
   const onSubmit: SubmitHandler<RegisterProfileFormInput> = data => {
     const fileList = data.image
     const file = fileList[0]
-    console.log(file)
     const input: PatchApplicantInput = {
       ...data,
       image: file,
       dateOfBirth: format(new Date(data.dateOfBirth), 'yyyy-MM-dd'),
       status: 'HAS_REGISTERED_PROFILE',
     }
-    console.log(input)
 
     registerProfile({
       variables: { id: applicant.id, input: { ...input } },
-    }).then(res => console.log(res))
+    })
   }
 
   return (

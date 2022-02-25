@@ -1,6 +1,8 @@
 import { FullPage404 } from 'components/FullPageComponents'
 import { PrivateRoute } from 'containers/PrivateRoute'
 import { AdmissionDashboard } from 'modules/admissions'
+import { ConfigurationWizard } from 'modules/admissions/ConfigureAdmission'
+import { InterviewOverview } from 'modules/admissions/ConfigureAdmission/InterviewOverview'
 import { Dashboard } from 'modules/dashboard'
 import { Deposits, MyEconomy } from 'modules/economy'
 import {
@@ -18,7 +20,7 @@ import {
 import { UserProfile } from 'modules/users'
 import { Redirect, Switch } from 'react-router-dom'
 
-export const AuthRoutes: React.FC = () => {
+export const AuthRoutes: React.VFC = () => {
   return (
     <Switch>
       {/* Module routes */}
@@ -70,6 +72,26 @@ export const AuthRoutes: React.FC = () => {
 
       {/* Admissions module */}
       <PrivateRoute exact path="/admissions" component={AdmissionDashboard} />
+      <PrivateRoute
+        exact
+        path="/admissions/config"
+        component={ConfigurationWizard}
+      />
+      <PrivateRoute
+        exact
+        path="/admissions/config/interview-schedule"
+        component={FullPage404}
+      />
+      <PrivateRoute
+        exact
+        path="/admissions/config/interview-location-availability"
+        component={FullPage404}
+      />
+      <PrivateRoute
+        exact
+        path="/admissions/config/interview-overview"
+        component={InterviewOverview}
+      />
       <PrivateRoute
         exact
         path="/admissions/:admissionId"

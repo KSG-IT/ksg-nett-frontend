@@ -1,6 +1,5 @@
 import { ApplicantPortal } from 'modules/admissions/ApplicantPortal'
 import { Login } from 'modules/login'
-import { FC } from 'react'
 import {
   BrowserRouter as Router,
   Redirect,
@@ -8,7 +7,7 @@ import {
   Switch,
 } from 'react-router-dom'
 
-export const PublicRoutes: FC = () => {
+export const PublicRoutes: React.VFC = () => {
   return (
     <Router>
       <Switch>
