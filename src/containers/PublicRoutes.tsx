@@ -1,5 +1,7 @@
 import { ApplicantPortal } from 'modules/admissions/ApplicantPortal'
+import { ReSendApplicantTokenForm } from 'modules/admissions/ApplicantPortal/ReSendApplicantTokenForm'
 import { Login } from 'modules/login'
+import { Toaster } from 'react-hot-toast'
 import {
   BrowserRouter as Router,
   Redirect,
@@ -14,11 +16,17 @@ export const PublicRoutes: React.VFC = () => {
         <Route exact path="/login" component={Login} />
         <Route
           exact
+          path="/applicant-portal"
+          component={ReSendApplicantTokenForm}
+        />
+        <Route
+          exact
           path="/applicant-portal/:applicantToken"
           component={ApplicantPortal}
         />
         <Redirect from="" to="/login" />
       </Switch>
+      <Toaster />
     </Router>
   )
 }

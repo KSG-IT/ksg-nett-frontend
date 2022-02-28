@@ -1,6 +1,7 @@
 import { FullPage404 } from 'components/FullPageComponents'
 import { PrivateRoute } from 'containers/PrivateRoute'
-import { AdmissionDashboard } from 'modules/admissions'
+import { ApplicantDetails } from 'modules/admissions'
+import { AdmissionDashboard } from 'modules/admissions/AdmissionDashboard'
 import { ConfigurationWizard } from 'modules/admissions/ConfigureAdmission'
 import { InterviewOverview } from 'modules/admissions/ConfigureAdmission/InterviewOverview'
 import { Dashboard } from 'modules/dashboard'
@@ -72,6 +73,11 @@ export const AuthRoutes: React.VFC = () => {
 
       {/* Admissions module */}
       <PrivateRoute exact path="/admissions" component={AdmissionDashboard} />
+      <PrivateRoute
+        exact
+        path="/admissions/applicants/:applicantId"
+        component={ApplicantDetails}
+      />
       <PrivateRoute
         exact
         path="/admissions/config"
