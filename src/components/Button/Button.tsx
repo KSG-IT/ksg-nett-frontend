@@ -42,6 +42,7 @@ const StyledButton = styled.button<ButtonProps>`
 
   &:hover {
     cursor: pointer;
+    opacity: 0.8;
   }
 `
 
