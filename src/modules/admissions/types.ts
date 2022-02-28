@@ -13,12 +13,20 @@ export type InterviewLocationAvailabilityNode = {
   datetimeTo: Date
 }
 
+export type BooleanEvaluationAnswer = {
+  statement: string
+  answer: boolean
+}
+
 export type InterviewNode = {
   id: string
   interviewStart: Date
   interviewEnd: Date
   interviewers: Pick<UserNode, 'id' | 'initials' | 'profileImage'>[]
   location: Pick<InterviewLocationNode, 'id' | 'name'>
+  notes: string
+  discussion: string
+  booleanEvaluationAnswers: BooleanEvaluationAnswer[]
 }
 
 export type InterviewNodeShallow = Pick<InterviewNode, 'id'>
@@ -41,6 +49,24 @@ export type AdmissionAvailableInternalGroupPositionData = {
   __typename: string
 }
 
+export type ApplicantPriority = 'FIRST' | 'SECOND' | 'THIRD'
+
+export type InternalGroupPriority =
+  | 'WANT'
+  | 'DO_NOT_WANT'
+  | 'RERSERVE'
+  | 'SHOULD_BE_ADMITTED'
+
+export type InternalGroupPositionPriorityNode = {
+  id: string
+  internalGroupPosition: Pick<InternalGroupPositionNode, 'id' | 'name'>
+  applicantPriority: ApplicantPriority
+  internalGroupPriority: InternalGroupPriority
+}
+
+export type InternalGroupPositionPriorityArray =
+  InternalGroupPositionPriorityNode | null
+
 export type ApplicantNode = {
   id: string
   status: ApplicantStatus
@@ -50,6 +76,9 @@ export type ApplicantNode = {
   lastName: string
   image: string | File
   dateOfBirth: Date | string
+  priorities: InternalGroupPositionPriorityArray[]
+  interview: InterviewNode
+  interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials'>
 }
 
 export type AdmissionStatus =
@@ -100,6 +129,14 @@ export interface InterviewConfigQueryReturns {
 
 export interface AllInterviewLocationsReturns {
   allInterviewLocations: InterviewLocationNode[]
+}
+
+export interface ApplicantQueryReturns {
+  applicant: ApplicantNode | null
+}
+
+export interface ApplicantQueryVariables {
+  id: string
 }
 
 /* === MUTATION TYPING === */

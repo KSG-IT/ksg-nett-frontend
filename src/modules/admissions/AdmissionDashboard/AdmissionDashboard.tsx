@@ -4,17 +4,21 @@ import { FullContentLoader } from 'components/Loading'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import styled from 'styled-components'
-import { ActiveAdmissionTable } from './ActiveAdmissionTable'
-import { ConfigurationWizard } from './ConfigureAdmission/ConfigurationWizard'
-import { CREATE_APPLICATIONS } from './mutations'
-import { ACTIVE_ADMISSION_QUERY } from './queries'
+import { ConfigurationWizard } from '../ConfigureAdmission/ConfigurationWizard'
+import { CREATE_APPLICATIONS } from '../mutations'
+import { ACTIVE_ADMISSION_QUERY } from '../queries'
 import {
   ActiveAdmissioneturns,
   CreateApplicationsReturns,
   CreateApplicationsVariables,
-} from './types'
+} from '../types'
+import { ActiveAdmissionTable } from './ActiveAdmissionTable'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  ${props => props.theme.layout.default};
+
+  overflow-y: scroll;
+`
 
 const AddApplicantArea = styled.textarea``
 
@@ -62,6 +66,7 @@ export const AdmissionDashboard: React.VFC = () => {
         onChange={evt => setEmails(evt.target.value)}
       />
       <button onClick={handleCreateApplications}>Legg til nye søkere</button>
+
       <ActiveAdmissionTable admission={activeAdmission} />
     </Wrapper>
   )

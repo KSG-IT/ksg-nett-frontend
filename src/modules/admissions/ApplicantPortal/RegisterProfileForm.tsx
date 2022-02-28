@@ -131,7 +131,7 @@ export const RegisterProfileForm: React.VFC<RegisterProfileFormProps> = ({
         </FormInputArea>
         <FormInputArea>
           <FormInputLabel>Fødselsdato</FormInputLabel>
-          <FormInput {...register('dateOfBirth')} />
+          <FormInput placeholder="YYYY-MM-DD" {...register('dateOfBirth')} />
         </FormInputArea>
         <FormInputArea>
           <FormInputLabel>Telefon</FormInputLabel>

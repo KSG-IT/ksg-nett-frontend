@@ -17,6 +17,13 @@ export const ACTIVE_ADMISSION_QUERY = gql`
         email
         status
         fullName
+        priorities {
+          id
+          internalGroupPosition {
+            id
+            name
+          }
+        }
       }
     }
   }
@@ -33,23 +40,6 @@ export const INTERVIEW_SCHEDULE_TEMPLATE = gql`
       defaultInterviewDuration
       defaultBlockSize
       defaultPauseDuration
-    }
-  }
-`
-
-export const GET_APPLICATION_FROM_TOKEN = gql`
-  query GetApplicantFromToken($token: String!) {
-    getApplicantFromToken(token: $token) {
-      id
-      email
-      status
-      firstName
-      lastName
-      image
-      phone
-      study
-      hometown
-      address
     }
   }
 `
@@ -131,6 +121,49 @@ export const INTERVIEW_OVERVIEW_QUERY = gql`
       defaultInterviewDuration
       defaultBlockSize
       defaultPauseDuration
+    }
+  }
+`
+
+export const APPLICANT_QUERY = gql`
+  query ApplicantQuery($id: ID!) {
+    applicant(id: $id) {
+      id
+      email
+      status
+      firstName
+      lastName
+      fullName
+      image
+      phone
+      study
+      hometown
+      address
+      priorities {
+        internalGroupPosition {
+          id
+          name
+        }
+      }
+      interview {
+        id
+        interviewStart
+        notes
+        discussion
+        location {
+          id
+          name
+        }
+        booleanEvaluationAnswers {
+          statement
+          answer
+        }
+        interviewers {
+          id
+          initials
+          profileImage
+        }
+      }
     }
   }
 `
