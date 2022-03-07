@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 const TableHeaderRow = styled.div`
   display: flex;
   flex-direction: row;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
   gap: 10px;
 `
@@ -22,13 +22,14 @@ const TableHeaderCell = styled.div``
 const TableRow = styled.div`
   display: flex;
   flex-direction: row;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 400;
   gap: 10px;
 
   &:hover {
     cursor: pointer;
-    opacity: 0.7;
+    background-color: ${props => props.theme.colors.background};
+    font-weight: 500;
   }
 `
 

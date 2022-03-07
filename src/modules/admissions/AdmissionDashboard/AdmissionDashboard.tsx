@@ -4,15 +4,20 @@ import { FullContentLoader } from 'components/Loading'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import styled from 'styled-components'
+import { PatchMutationVariables } from 'types/graphql'
 import { ConfigurationWizard } from '../ConfigureAdmission/ConfigurationWizard'
-import { CREATE_APPLICATIONS } from '../mutations'
+import { CREATE_APPLICATIONS, PATCH_ADMISSION } from '../mutations'
 import { ACTIVE_ADMISSION_QUERY } from '../queries'
 import {
   ActiveAdmissioneturns,
   CreateApplicationsReturns,
   CreateApplicationsVariables,
+  PatchAdmissionInput,
+  PatchAdmissionReturns,
 } from '../types'
 import { ActiveAdmissionTable } from './ActiveAdmissionTable'
+import { CloseAdmission } from './CloseAdmission'
+import { InternalGroupsNav } from './InternalGroupsNav'
 
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};
@@ -30,9 +35,14 @@ export const AdmissionDashboard: React.VFC = () => {
   const { data, loading, error } = useQuery<ActiveAdmissioneturns>(
     ACTIVE_ADMISSION_QUERY,
     {
-      pollInterval: 1000 * 60,
+      pollInterval: 1000 * 30,
     }
   )
+
+  const [admissionNextPhase] = useMutation<
+    PatchAdmissionReturns,
+    PatchMutationVariables<PatchAdmissionInput>
+  >(PATCH_ADMISSION)
 
   const [createApplications] = useMutation<
     CreateApplicationsReturns,
@@ -53,13 +63,35 @@ export const AdmissionDashboard: React.VFC = () => {
     setEmails('')
   }
 
+  const handleAdmissionNextPhase = (admissionId: string) => {
+    admissionNextPhase({
+      variables: { id: admissionId, input: { status: 'IN_SESSION' } },
+    })
+  }
+
   const { activeAdmission } = data
 
   if (activeAdmission === null || activeAdmission.status === 'CONFIGURATION')
     return <ConfigurationWizard />
 
+  if (activeAdmission.status === 'FINALIZATION') {
+    return (
+      <Wrapper>
+        <CloseAdmission />
+      </Wrapper>
+    )
+  }
+
   return (
     <Wrapper>
+      <button
+        onClick={() => {
+          handleAdmissionNextPhase(activeAdmission.id)
+        }}
+      >
+        Intervjuperioden er over
+      </button>
+      <InternalGroupsNav />
       <label>Legg til epostadrersse</label>
       <AddApplicantArea
         value={emails}

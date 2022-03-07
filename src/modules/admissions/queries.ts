@@ -153,6 +153,7 @@ export const APPLICANT_QUERY = gql`
         location {
           id
           name
+          locationDescription
         }
         booleanEvaluationAnswers {
           statement

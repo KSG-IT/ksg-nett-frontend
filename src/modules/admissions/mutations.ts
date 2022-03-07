@@ -46,3 +46,13 @@ export const PATCH_APPLICANT = gql`
     }
   }
 `
+
+export const PATCH_INTERVIEW = gql`
+  mutation PatchInterview($id: ID!, $input: PatchInterviewInput!) {
+    patchInterview(id: $id, input: $input) {
+      interview {
+        id
+      }
+    }
+  }
+`

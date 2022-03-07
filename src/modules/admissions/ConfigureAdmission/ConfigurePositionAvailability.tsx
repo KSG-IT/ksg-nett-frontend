@@ -33,7 +33,7 @@ const Title = styled.h1`
 `
 
 interface ExternallyAvailableInternalGroupPositionsReturns {
-  currentlyAdmissionInternalGroupPositionData: AdmissionAvailableInternalGroupPositionData[]
+  currentAdmissionInternalGroupPositionData: AdmissionAvailableInternalGroupPositionData[]
   externallyAvailableInternalGroupPositions: InternalGroupPositionNode[]
 }
 
@@ -62,13 +62,12 @@ export const ConfigurePosistionAvailability: React.VFC<
     if (!data) return
     const {
       externallyAvailableInternalGroupPositions,
-      currentlyAdmissionInternalGroupPositionData,
+      currentAdmissionInternalGroupPositionData,
     } = data
 
-    const availablePositionsIds =
-      currentlyAdmissionInternalGroupPositionData.map(
-        position => position.internalGroupPosition.id
-      )
+    const availablePositionsIds = currentAdmissionInternalGroupPositionData.map(
+      position => position.internalGroupPosition.id
+    )
 
     const filteredPositions = externallyAvailableInternalGroupPositions.filter(
       position => {
@@ -91,12 +90,12 @@ export const ConfigurePosistionAvailability: React.VFC<
 
   if (loading || !data) return <FullContentLoader />
 
-  const { currentlyAdmissionInternalGroupPositionData } = data
+  const { currentAdmissionInternalGroupPositionData } = data
 
   return (
     <Wrapper>
       <Title>Tilgjengelige verv</Title>
-      {currentlyAdmissionInternalGroupPositionData.map(position => (
+      {currentAdmissionInternalGroupPositionData.map(position => (
         <PositionAvailabilityInput
           availablePosition={position}
           key={position.id}

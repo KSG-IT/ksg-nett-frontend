@@ -5,6 +5,7 @@ export type InterviewLocationNode = {
   id: string
   name: string
   availability: InterviewLocationAvailabilityNode[]
+  locationDescription: string
 }
 
 export type InterviewLocationAvailabilityNode = {
@@ -23,7 +24,7 @@ export type InterviewNode = {
   interviewStart: Date
   interviewEnd: Date
   interviewers: Pick<UserNode, 'id' | 'initials' | 'profileImage'>[]
-  location: Pick<InterviewLocationNode, 'id' | 'name'>
+  location: Pick<InterviewLocationNode, 'id' | 'name' | 'locationDescription'>
   notes: string
   discussion: string
   booleanEvaluationAnswers: BooleanEvaluationAnswer[]
@@ -34,6 +35,7 @@ export type InterviewNodeShallow = Pick<InterviewNode, 'id'>
 export type ApplicantStatus =
   | 'EMAIL_SENT'
   | 'HAS_REGISTERED_PROFILE'
+  | 'HAS_SET_PRIORITIES'
   | 'SCHEDULED_INTERVIEW'
   | 'INTERVIEW_FINISHED'
   | 'DID_NOT_SHOW_UP_FOR_INTERVIEW'
@@ -77,8 +79,9 @@ export type ApplicantNode = {
   image: string | File
   dateOfBirth: Date | string
   priorities: InternalGroupPositionPriorityArray[]
-  interview: InterviewNode
+  interview: InterviewNode | null
   interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials'>
+  willBeAdmitted: boolean
 }
 
 export type AdmissionStatus =

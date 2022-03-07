@@ -21,7 +21,7 @@ export const EXTERNALLY_AVAILABLE_INTERNAL_GROUP_POSITIONS_QUERY = gql`
       id
       name
     }
-    currentlyAdmissionInternalGroupPositionData {
+    currentAdmissionInternalGroupPositionData {
       id
       availablePositions
       internalGroupPosition {
@@ -32,9 +32,9 @@ export const EXTERNALLY_AVAILABLE_INTERNAL_GROUP_POSITIONS_QUERY = gql`
   }
 `
 
-export const CURRENTLY_ADMISSION_INTERNAL_GROUP_POSITION_DATA = gql`
-  query CurrentlyAdmissionInternalGroupPositionData {
-    currentlyAdmissionInternalGroupPositionData {
+export const CURRENT_ADMISSION_INTERNAL_GROUP_POSITION_DATA = gql`
+  query CurrentAdmissionInternalGroupPositionData {
+    currentAdmissionInternalGroupPositionData {
       id
       availablePositions
       internalGroupPosition {

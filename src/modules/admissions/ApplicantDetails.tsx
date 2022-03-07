@@ -1,9 +1,11 @@
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { UserThumbnail } from 'modules/users'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { PATCH_INTERVIEW } from './mutations'
 import { APPLICANT_QUERY } from './queries'
 import { ApplicantQueryReturns, ApplicantQueryVariables } from './types'
 
@@ -37,11 +39,21 @@ interface ApplicantDetailsParams {
 
 export const ApplicantDetails: React.VFC = () => {
   const { applicantId } = useParams<ApplicantDetailsParams>()
+  const [editMode, setEditMode] = useState(false)
 
   const { data, loading, error } = useQuery<
     ApplicantQueryReturns,
     ApplicantQueryVariables
-  >(APPLICANT_QUERY, { variables: { id: applicantId } })
+  >(APPLICANT_QUERY, { variables: { id: applicantId }, pollInterval: 10000 })
+
+  const [patchInterview] = useMutation(PATCH_INTERVIEW)
+
+  useEffect(() => {
+    if (!editMode) return
+
+    // In here we handle note taking changes
+    // If this is an editor we write to the db periodically
+  }, [editMode])
 
   if (error) return <FullPageError />
 
@@ -51,13 +63,25 @@ export const ApplicantDetails: React.VFC = () => {
 
   if (applicant === null) return <FullPage404 />
 
+  const { interview } = applicant
+
+  if (interview === null)
+    return <span>Søker har ikke satt seg opp til intervju</span>
+
   return (
     <Wrapper>
-      <ApplicantName>{applicant.fullName}</ApplicantName>
+      <ApplicantName>{applicant.fullName}</ApplicantName>{' '}
+      <button
+        onClick={() => {
+          setEditMode(!editMode)
+        }}
+      >
+        Skriv notater
+      </button>
       <div>
         <h3>Intevjuere</h3>
         <InterviewersContainer>
-          {applicant.interview.interviewers.map(user => (
+          {interview.interviewers.map(user => (
             <UserThumbnail user={user} size="medium" />
           ))}
         </InterviewersContainer>
@@ -66,7 +90,7 @@ export const ApplicantDetails: React.VFC = () => {
       <div>
         <h3>Ja/nei spørsmål</h3>
         <StatementsContainer>
-          {applicant.interview.booleanEvaluationAnswers.map(evaluation => (
+          {interview.booleanEvaluationAnswers.map(evaluation => (
             <StatementRow>
               {evaluation.statement}
               {evaluation.answer ? <span> ja</span> : <span>Nei</span>}
@@ -76,11 +100,11 @@ export const ApplicantDetails: React.VFC = () => {
       </div>
       <div>
         <h3>Intervjunotater</h3>
-        {applicant.interview.notes}
+        {interview.notes}
       </div>
       <div>
         <h3>Diskusjon</h3>
-        {applicant.interview.discussion}
+        {interview.discussion}
       </div>
     </Wrapper>
   )
