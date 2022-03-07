@@ -49,11 +49,12 @@ const AutoCompleteBox = styled.div`
   flex-direction: column;
   gap: 1px;
   width: 90%;
-  height: minmax(45px, 600px);
+  min-height: 60px;
+  max-height: 600px;
   top: 35px;
   left: 10px;
 
-  overlow-y: scroll;
+  overflow-y: scroll;
   background-color: ${props => props.theme.colors.lightGray};
   box-shadow: ${props => props.theme.shadow.default};
 `
