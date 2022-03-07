@@ -15,7 +15,7 @@ import { InterviewBooking } from './InterviewBooking'
 import { GET_APPLICATION_FROM_TOKEN } from './queries'
 import { RegisterProfileForm } from './RegisterProfileForm'
 import { ReSendApplicantTokenForm } from './ReSendApplicantTokenForm'
-
+import { SetPriorities } from './SetPriorities'
 const Wrapper = styled.div`
   margin: 0 auto;
 `
@@ -58,7 +58,7 @@ export const ApplicantPortal: React.VFC = () => {
       </Wrapper>
     )
 
-  const handlePatchApplicant = () => {
+  const handleRetractApplication = () => {
     patchApplicant({
       variables: {
         id: applicant.id,
@@ -78,6 +78,17 @@ export const ApplicantPortal: React.VFC = () => {
   if (applicant.status === 'HAS_REGISTERED_PROFILE') {
     return (
       <Wrapper>
+        Du kan sette opp til 3 prioriteringer. Du må minst ha 1 stilling i denne
+        listen. Du får muligheten til å prioritere på nytt på slutten av
+        intervjuett ditt
+        <SetPriorities applicant={applicant} />
+      </Wrapper>
+    )
+  }
+
+  if (applicant.status === 'HAS_SET_PRIORITIES') {
+    return (
+      <Wrapper>
         Tilgjengelige intervjutider
         <InterviewBooking applicantToken={applicantToken} />
       </Wrapper>
@@ -88,10 +99,14 @@ export const ApplicantPortal: React.VFC = () => {
     return (
       <Wrapper>
         <p>
-          Hei! Din intervjutid er{' '}
-          {format(new Date(applicant.interview.interviewStart), 'EEE')} i
-          {applicant.interview.location.name}
+          Hei! Du har intervju
+          {format(
+            new Date(applicant.interview!.interviewStart),
+            'EEEE d MMMM H:mm'
+          )}{' '}
+          i{applicant.interview!.location.name}
         </p>
+        <p>{applicant.interview?.location.locationDescription}</p>
       </Wrapper>
     )
   }
@@ -107,7 +122,7 @@ export const ApplicantPortal: React.VFC = () => {
           }
           return <span>{priority.internalGroupPosition.name}</span>
         })}
-        <button onClick={handlePatchApplicant}>Trekk søknad</button>
+        <button onClick={handleRetractApplication}>Trekk søknad</button>
       </Wrapper>
     )
   }

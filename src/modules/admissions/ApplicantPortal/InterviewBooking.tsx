@@ -51,7 +51,6 @@ export const InterviewBooking: React.VFC<InterviewBookingProps> = ({
           bookInterview: { ok },
         },
       } = res
-      console.log(ok)
       if (!ok) {
         toast.error('Noe gikk galt, prøv igjen')
       }
@@ -85,7 +84,7 @@ export const InterviewBooking: React.VFC<InterviewBookingProps> = ({
           setDayOffset(dayOffset + 2)
         }}
       >
-        Ingen av disse tidspunktene passer
+        Ingen av disse tidspunktene passer for meg
       </button>
     </Wrapper>
   )

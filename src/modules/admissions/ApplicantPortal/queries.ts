@@ -26,6 +26,7 @@ export const GET_APPLICATION_FROM_TOKEN = gql`
       hometown
       address
       priorities {
+        id
         internalGroupPosition {
           id
           name
@@ -37,8 +38,18 @@ export const GET_APPLICATION_FROM_TOKEN = gql`
         location {
           id
           name
+          locationDescription
         }
       }
+    }
+  }
+`
+
+export const INTERNAL_GROUP_POSITIONS_AVAILABLE_FOR_APPLICANTS_QUERY = gql`
+  query InternalGroupPositionsAvailableForApplicants {
+    internalGroupPositionsAvailableForApplicants {
+      id
+      name
     }
   }
 `

@@ -13,3 +13,27 @@ export const BOOK_INTERRVIEW_MUTATION = gql`
     }
   }
 `
+
+export const ADD_INTERNAL_GROUP_POSITION_PRIORITY = gql`
+  mutation AddInternalGroupPositionPriority(
+    $internalGroupPositionId: ID!
+    $applicantId: ID!
+  ) {
+    addInternalGroupPositionPriority(
+      internalGroupPositionId: $internalGroupPositionId
+      applicantId: $applicantId
+    ) {
+      success
+    }
+  }
+`
+
+// export const CHANGE_INTERNAL_GROUP_PRIORITY_ORDER = gql``
+
+export const DELETE_INTERNAL_GROUP_POSITION_PRIORITY = gql`
+  mutation DeleteInternalGroupPositionPriority($id: ID!) {
+    deleteInternalGroupPositionPriority(id: $id) {
+      found
+    }
+  }
+`
