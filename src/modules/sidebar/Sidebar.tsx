@@ -163,11 +163,7 @@ export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
         </UserInfoWrapper>
         <NavItem icon="user" label="Min profil" link={`/users/${user.id}`} />
         <NavItem icon="wallet" label="Min økonomi" link={'/economy/me'} />
-        <NavItem
-          icon="calendar-alt"
-          label="Min vaktplan"
-          link={'/schedules/me'}
-        />
+        <NavItem icon="calendar-alt" label="Min vaktplan" link={'/schedules'} />
         <NavItem icon="sign-out-alt" label="Logg ut" onClick={logout} />
       </SidebarUserprofile>
       <SidebarNavSection>

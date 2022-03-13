@@ -9,6 +9,7 @@ import {
   QuotesList,
   ReviewQuotes,
 } from 'modules/quotes'
+import SchedulePage from 'modules/schedules/SchedulePage'
 import {
   CreateSummary,
   EditSummary,
@@ -43,7 +44,7 @@ export const AuthRoutes: React.FC = () => {
       />
 
       {/* Schedules module */}
-      <PrivateRoute exact path="/schedules" component={FullPage404} />
+      <PrivateRoute exact path="/schedules" component={SchedulePage} />
 
       {/* Economy module */}
       <PrivateRoute exact path="/economy" component={FullPage404} />
