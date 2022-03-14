@@ -5,11 +5,11 @@ import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
 } from 'modules/users/types'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { components, DropdownIndicatorProps } from 'react-select'
-import Async from 'react-select/async'
+import Select, { components, DropdownIndicatorProps } from 'react-select'
 import styled from 'styled-components'
+import { useDebounce } from 'util/hooks'
 import { UserOption, usersToSelectOption } from 'util/user'
 
 const Wrapper = styled.div`
@@ -40,18 +40,20 @@ const DropdownIndicator = (
 
 export const UserSearch: React.VFC = () => {
   const [userQuery, setUserQuery] = useState('')
+  const debounceQuery = useDebounce(userQuery)
   const [selected, setSelected] = useState<UserOption | null>(null)
   const history = useHistory()
 
-  const [execute, { loading }] = useLazyQuery<
+  const [execute, { loading, data }] = useLazyQuery<
     AllUsersShallowQueryReturns,
     AllUsersShallowQueryVariables
-  >(ALL_ACTIVE_USERS_SHALLOW_QUERY, { variables: { q: userQuery } })
+  >(ALL_ACTIVE_USERS_SHALLOW_QUERY, { variables: { q: debounceQuery } })
 
-  const promiseOptions = async (value: string) => {
-    const { data } = await execute({ variables: { q: value } })
-    return usersToSelectOption(data?.allActiveUsers)
-  }
+  useEffect(() => {
+    if (debounceQuery) {
+      execute()
+    }
+  }, [debounceQuery])
 
   const handleSelectUser = useCallback(
     (userId: string | undefined) => {
@@ -63,14 +65,15 @@ export const UserSearch: React.VFC = () => {
     },
     [setUserQuery, history]
   )
+  const options = usersToSelectOption(data?.allActiveUsers)
 
   return (
     <Wrapper>
-      <Async
+      <Select
         isLoading={loading}
-        loadOptions={promiseOptions}
         onInputChange={val => setUserQuery(val)}
         onChange={val => handleSelectUser(val?.value)}
+        options={options}
         value={selected}
         styles={{
           container: () => ({ width: '100%' }),
