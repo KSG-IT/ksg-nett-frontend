@@ -6,7 +6,7 @@ import {
 } from 'modules/users'
 import Select from 'react-select'
 import styled from 'styled-components'
-import { SelectOption } from './UserSelect'
+import { usersToSelectOption } from 'util/user'
 
 interface WrapperProps {
   fullwidth: boolean
@@ -44,11 +44,7 @@ export const UserMultiSelect: React.VFC<UserMultiSelectProps> = ({
     AllUsersShallowQueryVariables
   >(ALL_ACTIVE_USERS_SHALLOW_QUERY)
 
-  const options: SelectOption[] =
-    data?.allActiveUsers.edges.map(({ node }) => ({
-      label: node.fullName,
-      value: node.id,
-    })) || []
+  const options = usersToSelectOption(data?.allActiveUsers)
 
   const initialValue = options.filter(option => users.includes(option.value))
 

@@ -6,6 +6,7 @@ import {
 } from 'modules/users'
 import Select from 'react-select'
 import styled from 'styled-components'
+import { usersToSelectOption } from 'util/user'
 
 interface WrapperProps {
   fullwidth: boolean
@@ -31,10 +32,6 @@ interface UserSelectProps {
   width?: string
   setUserCallback: (slectedId: string) => void
 }
-export interface SelectOption {
-  label: string
-  value: string
-}
 
 export const UserSelect: React.VFC<UserSelectProps> = ({
   userId,
@@ -47,12 +44,7 @@ export const UserSelect: React.VFC<UserSelectProps> = ({
     AllUsersShallowQueryVariables
   >(ALL_ACTIVE_USERS_SHALLOW_QUERY)
 
-  const options: SelectOption[] =
-    data?.allActiveUsers.edges.map(({ node }) => ({
-      label: node.fullName,
-      value: node.id,
-    })) || []
-
+  const options = usersToSelectOption(data?.allActiveUsers)
   const initialValue = options.find(option => option.value == userId)
 
   return (
