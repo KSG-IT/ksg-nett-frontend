@@ -10,7 +10,6 @@ import { useHistory } from 'react-router-dom'
 import { components, DropdownIndicatorProps } from 'react-select'
 import Async from 'react-select/async'
 import styled from 'styled-components'
-import { useDebounce } from 'util/hooks'
 import { UserOption, usersToSelectOption } from 'util/user'
 
 const Wrapper = styled.div`
@@ -41,17 +40,16 @@ const DropdownIndicator = (
 
 export const UserSearch: React.VFC = () => {
   const [userQuery, setUserQuery] = useState('')
-  const debouncedQuery = useDebounce(userQuery)
   const [selected, setSelected] = useState<UserOption | null>(null)
   const history = useHistory()
 
   const [execute, { loading }] = useLazyQuery<
     AllUsersShallowQueryReturns,
     AllUsersShallowQueryVariables
-  >(ALL_ACTIVE_USERS_SHALLOW_QUERY, { variables: { q: debouncedQuery } })
+  >(ALL_ACTIVE_USERS_SHALLOW_QUERY, { variables: { q: userQuery } })
 
-  const promiseOptions = async () => {
-    const { data } = await execute({ variables: { q: debouncedQuery } })
+  const promiseOptions = async (value: string) => {
+    const { data } = await execute({ variables: { q: value } })
     return usersToSelectOption(data?.allActiveUsers)
   }
 
