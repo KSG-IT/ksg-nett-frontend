@@ -4,6 +4,7 @@ export type InternalGroupNode = {
   id: string
   name: string
   currentlyDiscussing: ApplicantNode | null
+  groupImage: string
 }
 
 export type InternalGroupPositionNode = {
