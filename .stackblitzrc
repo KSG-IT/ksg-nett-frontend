@@ -1,0 +1,5 @@
+{
+    "startCommand": "yarn && yarn start",
+    "NODE_ENV": "development"
+    "installDependencies": false
+}
