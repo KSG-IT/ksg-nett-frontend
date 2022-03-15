@@ -51,6 +51,7 @@ export const UserMultiSelect: React.VFC<UserMultiSelectProps> = ({
   return (
     <Wrapper fullwidth={fullwidth} width={width}>
       <Select
+        closeMenuOnSelect={false}
         isMulti={true}
         isLoading={loading}
         defaultValue={initialValue}
