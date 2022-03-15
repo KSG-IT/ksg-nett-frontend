@@ -1,16 +1,17 @@
 import { useLazyQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { UserThumbnail } from 'modules/users'
 import { ALL_ACTIVE_USERS_SHALLOW_QUERY } from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
+  UserNode,
 } from 'modules/users/types'
 import { useCallback, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Select, { components, DropdownIndicatorProps } from 'react-select'
 import styled from 'styled-components'
 import { useDebounce } from 'util/hooks'
-import { UserOption, usersToSelectOption } from 'util/user'
 
 const Wrapper = styled.div`
   height: 35px;
@@ -28,8 +29,14 @@ const Wrapper = styled.div`
   }
 `
 
+const SelectEntry = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
 const DropdownIndicator = (
-  props: DropdownIndicatorProps<UserOption, false>
+  props: DropdownIndicatorProps<UserSearchOption, false>
 ) => {
   return (
     <components.DropdownIndicator {...props}>
@@ -38,10 +45,23 @@ const DropdownIndicator = (
   )
 }
 
+interface UserSearchOption {
+  label: string
+  value: string
+  user: UserNode
+}
+
+const Option = (props: UserSearchOption) => (
+  <SelectEntry>
+    {props.label}
+    <UserThumbnail user={props.user} size="small" />
+  </SelectEntry>
+)
+
 export const UserSearch: React.VFC = () => {
   const [userQuery, setUserQuery] = useState('')
   const debounceQuery = useDebounce(userQuery)
-  const [selected, setSelected] = useState<UserOption | null>(null)
+  const [selected, setSelected] = useState<UserSearchOption | null>(null)
   const history = useHistory()
 
   const [execute, { loading, data }] = useLazyQuery<
@@ -65,7 +85,12 @@ export const UserSearch: React.VFC = () => {
     },
     [setUserQuery, history]
   )
-  const options = usersToSelectOption(data?.allActiveUsers)
+  const options: UserSearchOption[] =
+    data?.allActiveUsers.edges.map(({ node }) => ({
+      value: node.id,
+      label: node.fullName,
+      user: node as UserNode,
+    })) || []
 
   return (
     <Wrapper>
@@ -80,6 +105,7 @@ export const UserSearch: React.VFC = () => {
         }}
         placeholder="Search..."
         components={{ DropdownIndicator }}
+        formatOptionLabel={data => <Option {...data} />}
       />
     </Wrapper>
   )
