@@ -56,7 +56,7 @@ export const UserSearch: React.VFC = () => {
   }, [debounceQuery])
 
   const handleSelectUser = useCallback(
-    (userId: string | undefined) => {
+    (userId: string) => {
       if (userId) {
         setUserQuery('')
         setSelected(null)
@@ -72,7 +72,7 @@ export const UserSearch: React.VFC = () => {
       <Select
         isLoading={loading}
         onInputChange={val => setUserQuery(val)}
-        onChange={val => handleSelectUser(val?.value)}
+        onChange={val => val && handleSelectUser(val.value)}
         options={options}
         value={selected}
         styles={{
