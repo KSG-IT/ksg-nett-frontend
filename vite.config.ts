@@ -12,7 +12,7 @@ dotenv.config()
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   server: {
-    port: 3012,
+    port: Number(process.env.VITE_PORT) || 3000,
   },
   define: {
     'process.env': {},

@@ -49,7 +49,8 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "vite",
+    "local": "vite --mode local",
+    "start": "vite --mode development",
     "build": "tsc && vite build",
     "prepare": "husky install",
     "build:dev": "REACT_APP_STAGE=development npm run build"
