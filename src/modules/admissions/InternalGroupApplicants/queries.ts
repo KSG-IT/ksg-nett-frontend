@@ -1,6 +1,6 @@
 import { gql } from 'graphql-tag'
 
-const CORE_APPLICANT_FIELDS = gql`
+export const CORE_APPLICANT_FIELDS = gql`
   fragment CoreApplicantFields on ApplicantNode {
     id
     email
@@ -28,7 +28,11 @@ export const INTERNAL_GROUP_APPLICANTS_DATA = gql`
   ${CORE_APPLICANT_FIELDS}
   query InternalGroupApplicantsDataQuery($internalGroup: ID!) {
     internalGroupApplicantsData(internalGroup: $internalGroup) {
-      internalGroupName
+      internalGroup {
+        name
+      }
+      positionsToFill
+      currentProgress
       firstPriorities {
         ...CoreApplicantFields
       }

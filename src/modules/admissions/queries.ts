@@ -168,3 +168,12 @@ export const APPLICANT_QUERY = gql`
     }
   }
 `
+
+export const INTERNAL_GROUPS_ACCEPTING_APPLICANTS = gql`
+  query InternalGroupsAcceptingApplicantsQuery {
+    internalGroupsAcceptingApplicants {
+      id
+      name
+    }
+  }
+`

@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast'
 import styled from 'styled-components'
 import { PatchMutationVariables } from 'types/graphql'
 import { ConfigurationWizard } from '../ConfigureAdmission/ConfigurationWizard'
+import { DiscussionDashboard } from '../DiscussionDashboard/DiscussionDashboard'
 import { CREATE_APPLICATIONS, PATCH_ADMISSION } from '../mutations'
 import { ACTIVE_ADMISSION_QUERY } from '../queries'
 import {
@@ -35,6 +36,7 @@ export const AdmissionDashboard: React.VFC = () => {
   const { data, loading, error } = useQuery<ActiveAdmissioneturns>(
     ACTIVE_ADMISSION_QUERY,
     {
+      // should not poll unless the admission is open. Should hide this behind some state and component
       pollInterval: 1000 * 30,
     }
   )
@@ -73,6 +75,15 @@ export const AdmissionDashboard: React.VFC = () => {
 
   if (activeAdmission === null || activeAdmission.status === 'CONFIGURATION')
     return <ConfigurationWizard />
+
+  console.log(activeAdmission)
+  if (activeAdmission.status === 'IN_SESSION') {
+    return (
+      <Wrapper>
+        <DiscussionDashboard />
+      </Wrapper>
+    )
+  }
 
   if (activeAdmission.status === 'FINALIZATION') {
     return (

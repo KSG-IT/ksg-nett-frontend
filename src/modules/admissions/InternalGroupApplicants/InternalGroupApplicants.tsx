@@ -64,12 +64,12 @@ export const InternalGroupApplicants: React.VFC = ({}) => {
     firstPriorities,
     secondPriorities,
     thirdPriorities,
-    internalGroupName,
+    internalGroup: { name },
   } = internalGroupApplicantsData
 
   return (
     <Wrapper>
-      <h1>{internalGroupName} søkere</h1>
+      <h1>{name} søkere</h1>
       <InfoBoxContainer>
         <FontAwesomeIcon icon="info" />
         <span>

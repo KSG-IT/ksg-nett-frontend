@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client'
 import { Card } from 'components/Card'
 import { FullContentLoader } from 'components/Loading'
+import { INTERNAL_GROUPS_ACCEPTING_APPLICANTS } from 'modules/admissions/queries'
+import { InternalGroupsAcceptingApplicantsReturns } from 'modules/admissions/types'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import { INTERNAL_GROUPS_ACCEPTING_APPLICANTS } from './queries'
-import { InternalGroupsAcceptingApplicantsReturns } from './types'
 
 const Wrapper = styled.div`
   display: flex;

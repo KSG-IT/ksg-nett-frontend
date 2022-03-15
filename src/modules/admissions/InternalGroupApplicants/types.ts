@@ -1,3 +1,4 @@
+import { InternalGroupNode } from 'modules/organization/types'
 import { ApplicantStatus, InterviewNode } from '../types'
 
 export type CoreApplicantNode = {
@@ -14,7 +15,9 @@ export type CoreApplicantNode = {
 
 export interface InternalGroupApplicantsDataReturns {
   internalGroupApplicantsData: {
-    internalGroupName: string
+    internalGroup: Pick<InternalGroupNode, 'id' | 'name'>
+    positionsToFill: number
+    currentProgress: number
     firstPriorities: CoreApplicantNode[]
     secondPriorities: CoreApplicantNode[]
     thirdPriorities: CoreApplicantNode[]

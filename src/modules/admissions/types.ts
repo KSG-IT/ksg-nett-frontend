@@ -1,5 +1,9 @@
-import { InternalGroupPositionNode } from 'modules/organization/types'
+import {
+  InternalGroupNode,
+  InternalGroupPositionNode,
+} from 'modules/organization/types'
 import { UserNode } from 'modules/users'
+import { CoreApplicantNode } from './InternalGroupApplicants/types'
 
 export type InterviewLocationNode = {
   id: string
@@ -19,6 +23,15 @@ export type BooleanEvaluationAnswer = {
   answer: boolean
 }
 
+export type AdditionalEvaluationAnswer = {
+  statement: string
+  answer: boolean
+}
+// <AdditionalInfoContainer>
+// {interview.totalEvaluation}
+// {interview.canCommitThreeSemesters}
+// {interview.?cannotCommitThreeSemestersDetails}
+
 export type InterviewNode = {
   id: string
   interviewStart: Date
@@ -28,6 +41,10 @@ export type InterviewNode = {
   notes: string
   discussion: string
   booleanEvaluationAnswers: BooleanEvaluationAnswer[]
+  additionalEvaluationAnswers: AdditionalEvaluationAnswer[]
+  totalEvaluation: 'VERY_GOOD' | 'GOOD' | 'MEDIUM' | 'POOR' | 'VERY_POOT'
+  canCommitThreeSemesters: boolean
+  cannotCommitThreeSemestersDetails: string | null
 }
 
 export type InterviewNodeShallow = Pick<InterviewNode, 'id'>
@@ -56,14 +73,20 @@ export type ApplicantPriority = 'FIRST' | 'SECOND' | 'THIRD'
 export type InternalGroupPriority =
   | 'WANT'
   | 'DO_NOT_WANT'
-  | 'RERSERVE'
+  | 'RESERVE'
   | 'SHOULD_BE_ADMITTED'
+  | 'PASS_AROUND'
+  | null
 
 export type InternalGroupPositionPriorityNode = {
   id: string
-  internalGroupPosition: Pick<InternalGroupPositionNode, 'id' | 'name'>
+  internalGroupPosition: Pick<
+    InternalGroupPositionNode,
+    'id' | 'name' | 'internalGroup'
+  >
   applicantPriority: ApplicantPriority
   internalGroupPriority: InternalGroupPriority
+  applicant: ApplicantNode
 }
 
 export type InternalGroupPositionPriorityArray =
@@ -82,6 +105,8 @@ export type ApplicantNode = {
   interview: InterviewNode | null
   interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials'>
   willBeAdmitted: boolean
+  discussionStart: Date | null
+  discussionEnd: Date | null
 }
 
 export type AdmissionStatus =
@@ -140,6 +165,23 @@ export interface ApplicantQueryReturns {
 
 export interface ApplicantQueryVariables {
   id: string
+}
+
+export interface InternalGroupsAcceptingApplicantsReturns {
+  internalGroupsAcceptingApplicants: Pick<InternalGroupNode, 'id' | 'name'>[]
+}
+
+export type InternalGroupApplicantData = {
+  internalGroup: Pick<InternalGroupNode, 'id' | 'name'>
+  positionsToFill: number
+  currentProgress: number
+  firstPriorities: CoreApplicantNode[]
+  secondPriorities: CoreApplicantNode[]
+  thirdPriorities: CoreApplicantNode[]
+}
+
+export interface AllInternalGroupsAcceptingApplicantsReturns {
+  allInternalGroupApplicantData: InternalGroupApplicantData[]
 }
 
 /* === MUTATION TYPING === */
