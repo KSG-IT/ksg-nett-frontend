@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import kitLogo from 'assets/images/kit_logo.png'
-import { useAuth } from 'context/Authentication'
 import { Liquidity } from 'modules/economy/types'
 import { getLiquidity } from 'modules/economy/utils'
 import { UserThumbnail } from 'modules/users'
+import { useStore } from 'store'
 import styled from 'styled-components'
 import { ZIndexRange } from 'types/enums'
 import { removeLoginToken } from 'util/auth'
@@ -130,7 +130,7 @@ interface SidebarProps {
 
 export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
   const isMobile = useRenderMobile()
-  const user = useAuth()
+  const user = useStore(state => state.user)!
   const shouldRenderSidebar = !isMobile || sidebarOpen
 
   const liquidity = getLiquidity(user.balance)

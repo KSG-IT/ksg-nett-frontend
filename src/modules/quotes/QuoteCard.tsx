@@ -1,10 +1,10 @@
 import { useMutation } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useAuth } from 'context/Authentication'
 import { QuoteNode } from 'modules/quotes/types'
 import { UserThumbnail } from 'modules/users'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useStore } from 'store'
 import styled from 'styled-components'
 import {
   CreateQuoteVoteReturns,
@@ -93,7 +93,7 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({
   quote,
   displaySemester = false,
 }) => {
-  const me = useAuth()
+  const me = useStore(state => state.user)!
   const [upvoted, setUpvoted] = useState(me.upvotedQuoteIds.includes(quote.id))
   const [voteSum, setVoteSum] = useState(quote.sum)
   const [upvote] = useMutation<

@@ -1,10 +1,10 @@
-import { useAuth } from 'context/Authentication'
+import { useQuery } from '@apollo/client'
 import { format } from 'date-fns'
 import { UserThumbnail } from 'modules/users'
+import { useStore } from 'store'
 import styled from 'styled-components'
-import { DashboardDataQueryReturns } from './types'
-import { useQuery } from '@apollo/client'
 import { DASHBOARD_DATA_QUERY } from './queries'
+import { DashboardDataQueryReturns } from './types'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -85,8 +85,7 @@ const TransactionSpan = styled.div`
 `
 
 export const Dashboard = () => {
-  const user = useAuth()
-  const { lastTransactions } = user
+  const user = useStore(state => state.user)!
 
   const { data, loading, error } =
     useQuery<DashboardDataQueryReturns>(DASHBOARD_DATA_QUERY)
@@ -123,7 +122,7 @@ export const Dashboard = () => {
             <span>Quantity</span>
             <span>Total amount</span>
           </TransactionSpan>
-          {lastTransactions.map((activity, i) => (
+          {user.lastTransactions.map((activity, i) => (
             <TransactionSpan key={i}>
               <span>{format(new Date(activity.timestamp), 'd.M')}</span>
               <span>{activity.name}</span>
