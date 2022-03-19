@@ -5,12 +5,25 @@ export type InternalGroupNode = {
   name: string
   currentlyDiscussing: ApplicantNode | null
   groupImage: string
+  description: string
 }
 
 export type InternalGroupPositionNode = {
   id: string
   internalGroup: InternalGroupNode
   name: string
+}
+
+export type InternalGroupReturns = {
+  internalGroup: InternalGroupNode
+}
+
+export type InternalGroupNodeShallow = {
+  id: string
+}
+
+export type InternalGroupVariables = {
+  id: string
 }
 
 // === Mutation typing ===
