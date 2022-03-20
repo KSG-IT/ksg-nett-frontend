@@ -3,8 +3,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
+import { useStore } from 'store'
 import styled from 'styled-components'
-import { setLoginToken } from 'util/auth'
 import * as yup from 'yup'
 import { LOGIN_MUTATION } from './mutations'
 import { LoginMutationReturns, LoginMutationVariables } from './types'
@@ -89,6 +89,7 @@ export const Login: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) })
+  const setToken = useStore(state => state.setToken)
 
   const [login] = useMutation<LoginMutationReturns, LoginMutationVariables>(
     LOGIN_MUTATION,
@@ -101,8 +102,7 @@ export const Login: FC = () => {
         }
 
         const { token } = data.login
-
-        setLoginToken(token!)
+        setToken(token!)
         client.resetStore()
         history.push('/dashboard')
       },

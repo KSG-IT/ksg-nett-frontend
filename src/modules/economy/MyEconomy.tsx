@@ -1,5 +1,11 @@
+import { useMutation, useQuery } from '@apollo/client'
+import { yupResolver } from '@hookform/resolvers/yup'
+import format from 'date-fns/format'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useStore } from 'store'
 import styled from 'styled-components'
-import { useAuth } from 'context/Authentication'
+import { numberWithSpaces } from 'util/parsing'
+import * as yup from 'yup'
 import {
   BankAccountActivity,
   CreateDepositMutationReturns,
@@ -9,12 +15,6 @@ import {
   MY_BANK_ACCOUNT_QUERY,
 } from '.'
 import { CREATE_DEPOSIT } from './mutations'
-import { useMutation, useQuery } from '@apollo/client'
-import { numberWithSpaces } from 'util/parsing'
-import format from 'date-fns/format'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import { SubmitHandler, useForm } from 'react-hook-form'
 
 const Wrapper = styled.div`
   display: flex;
@@ -84,7 +84,7 @@ type DepositFormInput = {
 }
 
 export const MyEconomy = () => {
-  const user = useAuth()
+  const user = useStore(state => state.user)!
 
   let schema = yup.object().shape({
     amount: yup.number().required().min(1, 'Må være et positivt tall'),
