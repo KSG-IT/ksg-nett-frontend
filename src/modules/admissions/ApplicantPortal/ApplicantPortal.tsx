@@ -16,6 +16,7 @@ import { GET_APPLICATION_FROM_TOKEN } from './queries'
 import { RegisterProfileForm } from './RegisterProfileForm'
 import { ReSendApplicantTokenForm } from './ReSendApplicantTokenForm'
 import { SetPriorities } from './SetPriorities'
+
 const Wrapper = styled.div`
   margin: 0 auto;
 `

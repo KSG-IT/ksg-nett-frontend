@@ -1,4 +1,5 @@
 import { InternalGroupNode } from 'modules/organization/types'
+import { ApplicantNode } from '../types'
 
 export type InterviewSlot = {
   interviewStart: Date
@@ -22,7 +23,9 @@ export interface InterviewsAvailableForBookingVariables {
 
 export interface GetApplicantFromTokenVariables {}
 
-export interface GetApplicantFromTokenReturns {}
+export interface GetApplicantFromTokenReturns {
+  applicant: ApplicantNode
+}
 
 // === Mutation typing ===
 
