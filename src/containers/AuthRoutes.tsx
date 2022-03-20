@@ -3,7 +3,6 @@ import { PrivateRoute } from 'containers/PrivateRoute'
 import { ApplicantDetails } from 'modules/admissions'
 import { AdmissionDashboard } from 'modules/admissions/AdmissionDashboard'
 import { ConfigurationWizard } from 'modules/admissions/ConfigureAdmission'
-import { InterviewOverview } from 'modules/admissions/ConfigureAdmission/InterviewOverview'
 import { InternalGroupDiscussion } from 'modules/admissions/DiscussionDashboard/InternalGroupDiscussion'
 import { InternalGroupApplicants } from 'modules/admissions/InternalGroupApplicants'
 import { Dashboard } from 'modules/dashboard'
@@ -105,11 +104,6 @@ export const AuthRoutes: React.VFC = () => {
         exact
         path="/admissions/config/interview-location-availability"
         component={FullPage404}
-      />
-      <PrivateRoute
-        exact
-        path="/admissions/config/interview-overview"
-        component={InterviewOverview}
       />
       <PrivateRoute
         exact
