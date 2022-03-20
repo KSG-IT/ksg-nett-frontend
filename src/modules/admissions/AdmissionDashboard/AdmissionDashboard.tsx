@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import styled from 'styled-components'
 import { PatchMutationVariables } from 'types/graphql'
+import { CloseAdmission } from '../CloseAdmission/CloseAdmission'
 import { ConfigurationWizard } from '../ConfigureAdmission/ConfigurationWizard'
 import { DiscussionDashboard } from '../DiscussionDashboard/DiscussionDashboard'
 import { CREATE_APPLICATIONS, PATCH_ADMISSION } from '../mutations'
@@ -17,7 +18,6 @@ import {
   PatchAdmissionReturns,
 } from '../types'
 import { ActiveAdmissionTable } from './ActiveAdmissionTable'
-import { CloseAdmission } from './CloseAdmission'
 import { InternalGroupsNav } from './InternalGroupsNav'
 
 const Wrapper = styled.div`
