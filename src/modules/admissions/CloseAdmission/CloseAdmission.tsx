@@ -1,7 +1,8 @@
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import styled from 'styled-components'
+import { CLOSE_ADMISSION_MUTATION } from '../AdmissionDashboard/mutations'
 import { VALID_APPLICANTS_QUERY } from '../AdmissionDashboard/queries'
 import { ApplicantNode } from '../types'
 import { ToggleApplicantInline } from './ToggleApplicantInline'
@@ -37,6 +38,11 @@ const TableCell = styled.div`
 
 export const CloseAdmission: React.VFC = () => {
   const { error, loading, data } = useQuery(VALID_APPLICANTS_QUERY)
+
+  const [closeAdmission, { loading: mutationLoading }] = useMutation(
+    CLOSE_ADMISSION_MUTATION,
+    { refetchQueries: ['ActiveAdmission'] }
+  )
 
   if (error) return <FullPageError />
 
@@ -85,7 +91,9 @@ export const CloseAdmission: React.VFC = () => {
           </TableRow>
         ))}
       </Table>
-      <button>Ta opp søkere til KSG</button>
+      <button onClick={() => closeAdmission()} disabled={mutationLoading}>
+        Ta opp søkere til KSG
+      </button>
     </Wrapper>
   )
 }
