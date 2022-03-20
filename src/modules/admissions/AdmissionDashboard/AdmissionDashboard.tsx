@@ -22,7 +22,6 @@ import { InternalGroupsNav } from './InternalGroupsNav'
 
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};
-
   overflow-y: scroll;
 `
 
@@ -76,7 +75,6 @@ export const AdmissionDashboard: React.VFC = () => {
   if (activeAdmission === null || activeAdmission.status === 'CONFIGURATION')
     return <ConfigurationWizard />
 
-  console.log(activeAdmission)
   if (activeAdmission.status === 'IN_SESSION') {
     return (
       <Wrapper>
@@ -85,7 +83,7 @@ export const AdmissionDashboard: React.VFC = () => {
     )
   }
 
-  if (activeAdmission.status === 'FINALIZATION') {
+  if (activeAdmission.status === 'LOCKED') {
     return (
       <Wrapper>
         <CloseAdmission />

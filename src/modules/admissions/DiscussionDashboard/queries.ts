@@ -76,6 +76,9 @@ export const INTERNAL_GROUP_DISCUSSION_DATA = gql`
           }
         }
       }
+      availablePicks {
+        ...InternalGroupPriorityFields
+      }
       firstPicks {
         ...InternalGroupPriorityFields
       }

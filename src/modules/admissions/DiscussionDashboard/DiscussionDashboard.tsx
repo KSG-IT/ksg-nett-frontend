@@ -1,8 +1,9 @@
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import { LOCK_ADMISSION_MUTATION } from '../AdmissionDashboard/mutations'
 import { AllInternalGroupsAcceptingApplicantsReturns } from '../types'
 import { ALL_INTERNAL_GROUP_APPLICANT_DATA } from './queries'
 const Wrapper = styled.div`
@@ -36,6 +37,8 @@ export const DiscussionDashboard: React.VFC = () => {
       ALL_INTERNAL_GROUP_APPLICANT_DATA
     )
 
+  const [lockAdmission] = useMutation(LOCK_ADMISSION_MUTATION)
+
   if (error) return <FullPageError />
 
   if (loading || !data) return <FullContentLoader />
@@ -48,6 +51,7 @@ export const DiscussionDashboard: React.VFC = () => {
   return (
     <Wrapper>
       <Title>Fordelingsmøtet</Title>
+      <button onClick={() => lockAdmission()}>Fordelingsmøtet er ferdig</button>
       {allInternalGroupApplicantData.map(data => (
         // Should probably be a new query which shows different stats
         <InternalGroupStatsContainer

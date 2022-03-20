@@ -5,6 +5,7 @@ export type InternalGroupDiscussionData = {
   firstPicks: InternalGroupPositionPriorityNode[]
   availableSecondPicks: InternalGroupPositionPriorityNode[]
   availableThirdPicks: InternalGroupPositionPriorityNode[]
+  availablePicks: InternalGroupPositionPriorityNode[]
   currentApplicantUnderDiscussion: ApplicantNode
   internalGroup: InternalGroupNode
   processedApplicants: InternalGroupPositionPriorityNode[]

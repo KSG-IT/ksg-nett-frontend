@@ -15,3 +15,13 @@ export const CLOSE_ADMISSION_MUTATION = gql`
     }
   }
 `
+
+export const LOCK_ADMISSION_MUTATION = gql`
+  mutation LockAdmissionMutation {
+    lockAdmission {
+      admission {
+        id
+      }
+    }
+  }
+`

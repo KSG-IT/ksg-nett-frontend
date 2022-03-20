@@ -115,7 +115,7 @@ export type AdmissionStatus =
   | 'OPEN'
   | 'CLOSED'
   | 'IN_SESSION'
-  | 'FINALIZATION'
+  | 'LOCKED'
 
 export type AdmissionNode = {
   id: string
