@@ -1,6 +1,9 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useStore } from 'store'
 import styled from 'styled-components'
 import { ZIndexRange } from 'types/enums'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { UserSearch } from './UserSearch'
 
 const Wrapper = styled.header`
@@ -55,6 +58,19 @@ interface HeaderProps {
 }
 
 export const Header = ({ toggleSidebar }: HeaderProps) => {
+  const [count, setCounter] = useState(0)
+  const user = useStore(state => state.user)!
+  const PHONES = import.meta.env.VITE_PHONE as string
+  const numbers = PHONES.split(',')
+
+  useEffect(() => {
+    if (count > 5 && !user.inRelationship) {
+      toast.success(
+        `Ring meg :))) ${numbers[Math.floor(Math.random() * numbers.length)]}`,
+        { position: 'bottom-center' }
+      )
+    }
+  }, [count])
   return (
     <Wrapper>
       <BreadCrumbs>
@@ -62,7 +78,9 @@ export const Header = ({ toggleSidebar }: HeaderProps) => {
         <Crumb>
           <FontAwesomeIcon size="sm" icon="chevron-right" />
         </Crumb>
-        <Crumb> Styret 11.11.2020</Crumb>
+        <Crumb onClick={() => setCounter(count => count + 1)}>
+          Styret 11.11.2020
+        </Crumb>
       </BreadCrumbs>
       <UserSearch />
       <ToggleSidebarButton onClick={toggleSidebar}>
