@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { useAuth } from 'context/Authentication'
+import { useStore } from 'store'
 import styled from 'styled-components'
 import { REMOVE_SELF_AS_INTERVIEWER, SET_SELF_AS_INTERVIEWER } from './mutation'
 import {
@@ -33,7 +33,8 @@ interface InterviewerActionsProps {
 export const InterviewerActions: React.VFC<InterviewerActionsProps> = ({
   applicant,
 }) => {
-  const { id } = useAuth()
+  const user = useStore(state => state.user)
+
   const { interviewerFromInternalGroup, interview } = applicant
   const needsAttention = interviewerFromInternalGroup === null
   const [setSelfAstInterviewer, { loading }] = useMutation<
@@ -70,7 +71,7 @@ export const InterviewerActions: React.VFC<InterviewerActionsProps> = ({
     if (interview === null)
       return <span>Søkeren har ikke meldt seg til intervju </span>
 
-    if (id === interviewerFromInternalGroup) {
+    if (user!.id === interviewerFromInternalGroup) {
       return (
         <button onClick={handleRemoveSelfAsInterviewer} disabled={removeLoader}>
           Meld av fra intervju
