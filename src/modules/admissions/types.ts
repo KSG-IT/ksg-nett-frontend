@@ -105,7 +105,6 @@ export type ApplicantNode = {
 
 export type AdmissionStatus =
   | 'CONFIGURATION'
-  | 'INTERVIEW_OVERVIEW'
   | 'OPEN'
   | 'CLOSED'
   | 'IN_SESSION'
