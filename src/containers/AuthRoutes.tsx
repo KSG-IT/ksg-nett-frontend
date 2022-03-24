@@ -97,16 +97,6 @@ export const AuthRoutes: React.VFC = () => {
       />
       <PrivateRoute
         exact
-        path="/admissions/config/interview-schedule"
-        component={FullPage404}
-      />
-      <PrivateRoute
-        exact
-        path="/admissions/config/interview-location-availability"
-        component={FullPage404}
-      />
-      <PrivateRoute
-        exact
         path="/admissions/:admissionId"
         component={FullPage404}
       />
