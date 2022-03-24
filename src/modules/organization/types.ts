@@ -1,9 +1,6 @@
-import { ApplicantNode } from 'modules/admissions/types'
-
 export type InternalGroupNode = {
   id: string
   name: string
-  currentlyDiscussing: ApplicantNode | null
 }
 
 export type InternalGroupPositionNode = {
@@ -14,10 +11,7 @@ export type InternalGroupPositionNode = {
 
 // === Mutation typing ===
 
-export type PatchInternalGroupInput = {
-  name?: string
-  currentlyDiscussing?: string
-}
+export type PatchInternalGroupInput = Partial<Omit<InternalGroupNode, 'id'>>
 
 export interface PatchInternalGroupReturns {
   internalGroup: InternalGroupNode

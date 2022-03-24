@@ -27,10 +27,6 @@ export type AdditionalEvaluationAnswer = {
   statement: string
   answer: boolean
 }
-// <AdditionalInfoContainer>
-// {interview.totalEvaluation}
-// {interview.canCommitThreeSemesters}
-// {interview.?cannotCommitThreeSemestersDetails}
 
 export type InterviewNode = {
   id: string
@@ -42,7 +38,7 @@ export type InterviewNode = {
   discussion: string
   booleanEvaluationAnswers: BooleanEvaluationAnswer[]
   additionalEvaluationAnswers: AdditionalEvaluationAnswer[]
-  totalEvaluation: 'VERY_GOOD' | 'GOOD' | 'MEDIUM' | 'POOR' | 'VERY_POOT'
+  totalEvaluation: 'VERY_GOOD' | 'GOOD' | 'MEDIUM' | 'POOR' | 'VERY_POOR'
   canCommitThreeSemesters: boolean
   cannotCommitThreeSemestersDetails: string | null
 }
@@ -105,8 +101,6 @@ export type ApplicantNode = {
   interview: InterviewNode | null
   interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials'>
   willBeAdmitted: boolean
-  discussionStart: Date | null
-  discussionEnd: Date | null
 }
 
 export type AdmissionStatus =

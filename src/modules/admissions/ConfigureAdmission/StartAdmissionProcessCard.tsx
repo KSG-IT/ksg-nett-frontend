@@ -13,8 +13,6 @@ interface StartAdmissionProcessCardProps {
 export const StartAdmissionProcessCard: React.VFC<
   StartAdmissionProcessCardProps
 > = ({ setStageCallback }) => {
-  // Before opening the admission process we need to
-  // decide how many each internal gorup is accepting
   const [openAdmission] = useMutation<
     CreateAdmissionReturns,
     CreateAdmissionVariables
