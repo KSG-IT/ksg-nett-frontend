@@ -8,3 +8,16 @@ export type InternalGroupPositionNode = {
   internalGroup: InternalGroupNode
   name: string
 }
+
+// === Mutation typing ===
+
+export type PatchInternalGroupInput = Partial<Omit<InternalGroupNode, 'id'>>
+
+export interface PatchInternalGroupReturns {
+  internalGroup: InternalGroupNode
+}
+
+export interface PatchInternalGroupVariables {
+  id: string
+  input: PatchInternalGroupInput
+}

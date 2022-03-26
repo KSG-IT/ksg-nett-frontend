@@ -1,9 +1,4 @@
-import {
-  ApolloClient,
-  ApolloLink,
-  InMemoryCache,
-  RequestHandler,
-} from '@apollo/client'
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 import { createUploadLink } from 'apollo-upload-client'
@@ -18,6 +13,16 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : '',
+    },
+  }
+})
+const languageLink = setContext((_, { headers }) => {
+  const lang = '' // Can read this from localstorage when we implement some translation provider
+
+  return {
+    headers: {
+      ...headers,
+      'Accept-Language': lang ? lang : '',
     },
   }
 })
@@ -39,8 +44,11 @@ const uploadLink = createUploadLink({
 
 const client = new ApolloClient({
   link: ApolloLink.from([
+    authLink,
     errorLink,
-    authLink.concat(uploadLink as unknown as ApolloLink | RequestHandler),
+    languageLink,
+    //@ts-ignore
+    uploadLink,
   ]),
   cache: new InMemoryCache(),
 })

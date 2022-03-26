@@ -1,6 +1,10 @@
 import { FullPage404 } from 'components/FullPageComponents'
 import { PrivateRoute } from 'containers/PrivateRoute'
-import { AdmissionDashboard } from 'modules/admissions'
+import { ApplicantDetails } from 'modules/admissions'
+import { AdmissionDashboard } from 'modules/admissions/AdmissionDashboard'
+import { ConfigurationWizard } from 'modules/admissions/ConfigureAdmission'
+import { InternalGroupDiscussion } from 'modules/admissions/DiscussionDashboard/InternalGroupDiscussion'
+import { InternalGroupApplicants } from 'modules/admissions/InternalGroupApplicants'
 import { Dashboard } from 'modules/dashboard'
 import { Deposits, MyEconomy } from 'modules/economy'
 import {
@@ -18,7 +22,7 @@ import {
 import { UserProfile } from 'modules/users'
 import { Redirect, Switch } from 'react-router-dom'
 
-export const AuthRoutes: React.FC = () => {
+export const AuthRoutes: React.VFC = () => {
   return (
     <Switch>
       {/* Module routes */}
@@ -70,6 +74,27 @@ export const AuthRoutes: React.FC = () => {
 
       {/* Admissions module */}
       <PrivateRoute exact path="/admissions" component={AdmissionDashboard} />
+      <PrivateRoute
+        exact
+        path="/admissions/internal-group-applicants/:internalGroupId"
+        component={InternalGroupApplicants}
+      />
+      <PrivateRoute
+        exact
+        path="/admissions/internal-group-discussion/:internalGroupId"
+        component={InternalGroupDiscussion}
+      />
+
+      <PrivateRoute
+        exact
+        path="/admissions/applicants/:applicantId"
+        component={ApplicantDetails}
+      />
+      <PrivateRoute
+        exact
+        path="/admissions/config"
+        component={ConfigurationWizard}
+      />
       <PrivateRoute
         exact
         path="/admissions/:admissionId"

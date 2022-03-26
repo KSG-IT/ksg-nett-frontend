@@ -1,6 +1,7 @@
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import { ApplicantStatusBadge } from './ApplicantStatusBadge'
-import { AdmissionNode } from './types'
+import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
+import { AdmissionNode } from '../types'
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -11,7 +12,7 @@ const Wrapper = styled.div`
 const TableHeaderRow = styled.div`
   display: flex;
   flex-direction: row;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
   gap: 10px;
 `
@@ -21,9 +22,15 @@ const TableHeaderCell = styled.div``
 const TableRow = styled.div`
   display: flex;
   flex-direction: row;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 400;
   gap: 10px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${props => props.theme.colors.background};
+    font-weight: 500;
+  }
 `
 
 const TableCell = styled.div``
@@ -36,6 +43,11 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
   admission,
 }) => {
   const { applicants } = admission
+  const history = useHistory()
+
+  const handleRedirect = (applicantId: string) => {
+    history.push(`/admissions/applicants/${applicantId}`)
+  }
   return (
     <Wrapper>
       <TableHeaderRow>
@@ -47,12 +59,23 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
         <TableHeaderCell>Prioritet 3</TableHeaderCell>
       </TableHeaderRow>
       {applicants.map(applicant => (
-        <TableRow>
-          <TableCell>{applicant.fullName}</TableCell>
-          <TableCell>{applicant.email}</TableCell>
-          <TableCell>Barservitør</TableCell>
-          <TableCell>Økonomiansvarlig</TableCell>
-          <TableCell>Bartender</TableCell>
+        <TableRow
+          key={applicant.id}
+          onClick={() => handleRedirect(applicant.id)}
+        >
+          <TableCell key="fullname">{applicant.fullName}</TableCell>
+          <TableCell key="email">{applicant.email}</TableCell>
+          {applicant.priorities.map((priority, i) => {
+            const key = `priority-${i}`
+            if (priority === null)
+              return <TableCell key={key}>Ingen prio</TableCell>
+
+            return (
+              <TableCell key={key}>
+                {priority.internalGroupPosition.name}
+              </TableCell>
+            )
+          })}
           <TableCell>
             <ApplicantStatusBadge applicantStatus={applicant.status} />
           </TableCell>

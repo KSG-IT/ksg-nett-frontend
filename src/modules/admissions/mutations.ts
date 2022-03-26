@@ -10,6 +10,16 @@ export const CREATE_ADMISSION = gql`
   }
 `
 
+export const PATCH_ADMISSION = gql`
+  mutation PatchAdmission($id: ID!, $input: PatchAdmissionInput!) {
+    patchAdmission(id: $id, input: $input) {
+      admission {
+        id
+      }
+    }
+  }
+`
+
 export const CREATE_APPLICATIONS = gql`
   mutation CreateApplications($emails: [String]) {
     createApplications(emails: $emails) {
@@ -31,6 +41,16 @@ export const PATCH_APPLICANT = gql`
   mutation patchApplicant($id: ID!, $input: PatchApplicantInput!) {
     patchApplicant(id: $id, input: $input) {
       applicant {
+        id
+      }
+    }
+  }
+`
+
+export const PATCH_INTERVIEW = gql`
+  mutation PatchInterview($id: ID!, $input: PatchInterviewInput!) {
+    patchInterview(id: $id, input: $input) {
+      interview {
         id
       }
     }

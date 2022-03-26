@@ -1,7 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from 'components/Button'
-import { FullPage404, FullPageError } from 'components/FullPageComponents'
+import {
+  FullPage404,
+  FullPageEmpty,
+  FullPageError,
+} from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { format } from 'date-fns'
 import { UserThumbnail } from 'modules/users/UserThumbnail'
@@ -76,16 +79,6 @@ const Title = styled.h1`
   margin-top: 0;
 `
 
-const NoQuotesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: auto;
-  color: ${props => props.theme.colors.gray2};
-  font-size: 28px;
-  font-weight: 600;
-`
-
 export const ReviewQuotes = () => {
   // IN the future we can split this into multiple views
   // * approving unapproved quotes
@@ -137,17 +130,13 @@ export const ReviewQuotes = () => {
 
   if (pendingQuotes === null) return <FullPage404 />
 
-  if (pendingQuotes.length === 0) {
+  if (pendingQuotes.length === 0)
     return (
       <Wrapper>
         <Title>Innsendte sitater</Title>
-        <NoQuotesContainer>
-          <FontAwesomeIcon icon="battery-empty" size="3x" />
-          Oi, her var det tomt.
-        </NoQuotesContainer>
+        <FullPageEmpty />
       </Wrapper>
     )
-  }
 
   return (
     <Wrapper>

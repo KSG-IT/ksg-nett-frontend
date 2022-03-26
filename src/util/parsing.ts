@@ -9,3 +9,10 @@ export function numberWithSpaces(x: number | string | null | undefined) {
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
   return parts.join('.')
 }
+
+export function parseDurationString(input: string): string {
+  return input
+    .split('')
+    .filter(char => char === ':' || !isNaN(parseInt(char)))
+    .join('')
+}

@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client'
 import { Button } from 'components/Button'
 import { useState } from 'react'
 import styled from 'styled-components'
-import { RE_SEND_APPLICATION_TOKEN } from '../mutation'
+import { RE_SEND_APPLICATION_TOKEN } from '../mutations'
 import {
   ReSendApplicationTokenReturns,
   ReSendApplicationTokenVariables,
