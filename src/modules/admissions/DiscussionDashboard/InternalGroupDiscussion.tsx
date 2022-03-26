@@ -30,17 +30,6 @@ interface InternalGroupDiscussionParams {
 
 export const InternalGroupDiscussion: React.VFC = () => {
   const { internalGroupId } = useParams<InternalGroupDiscussionParams>()
-  /**
-   * LIST
-   * 1. Add typing for query
-   * 2. Start extracting and dispoaying it in different regions
-   * 3. Add component for Discussion card which shows details of applicant and who has
-   * interviewed it as well
-   * 4. Add buttons with mutations to discuss an applicant
-   *  > an applicant can either be given WANT DO_NOT_WANT or PASSAROUND
-   * > The PASSAROUND should go in some free for all pile
-   * > Can maybe add some "discussion started" timer
-   */
 
   const { error, loading, data } = useQuery<InternalGroupDiscussionDataReturns>(
     INTERNAL_GROUP_DISCUSSION_DATA,
@@ -62,7 +51,6 @@ export const InternalGroupDiscussion: React.VFC = () => {
     },
   } = data
 
-  // ALl this should be handled by a table component intstead
   return (
     <Wrapper>
       <h1>Fordelingsmøte {internalGroup.name}</h1>

@@ -37,7 +37,9 @@ export const DiscussionDashboard: React.VFC = () => {
       ALL_INTERNAL_GROUP_APPLICANT_DATA
     )
 
-  const [lockAdmission] = useMutation(LOCK_ADMISSION_MUTATION)
+  const [lockAdmission] = useMutation(LOCK_ADMISSION_MUTATION, {
+    refetchQueries: ['ActiveAdmission'],
+  })
 
   if (error) return <FullPageError />
 
