@@ -10,9 +10,9 @@ const Bootstrap: React.VFC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
   const setUser = useStore(state => state.setUser)
 
-  if (loading || data === undefined) return <span>Loading</span>
-
   if (error) return <span>Error {error.message}</span>
+
+  if (loading || data === undefined) return <span>Loading</span>
 
   const { me } = data
   if (me == null || me === undefined) {
