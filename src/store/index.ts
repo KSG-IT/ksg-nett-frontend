@@ -30,6 +30,8 @@ interface Store {
   setUser: (user: UserNode) => void
   token: string
   setToken: (token: string) => void
+  sidebarOpen: boolean
+  toggleSidebarOpen: () => void
 }
 
 export const useStore = create<Store>(set => ({
@@ -39,5 +41,9 @@ export const useStore = create<Store>(set => ({
   setToken: token => {
     localStorage.setItem(LOGIN_TOKEN_KEY, token)
     set(() => ({ token: token }))
+  },
+  sidebarOpen: false,
+  toggleSidebarOpen: () => {
+    set(state => ({ sidebarOpen: !state.sidebarOpen }))
   },
 }))
