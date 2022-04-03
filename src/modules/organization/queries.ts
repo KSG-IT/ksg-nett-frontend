@@ -8,3 +8,12 @@ export const ALL_INTERNAL_GROUP_POSITIONS = gql`
     }
   }
 `
+
+export const ALL_INTERNAL_GROUPS = gql`
+  query AllInternalGroupsQuery {
+    allInternalGroups {
+      id
+      name
+    }
+  }
+`

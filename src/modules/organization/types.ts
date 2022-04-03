@@ -9,6 +9,11 @@ export type InternalGroupPositionNode = {
   name: string
 }
 
+// === Query typing ===
+export interface AllInternalGroupsReturns {
+  allInternalGroups: InternalGroupNode[]
+}
+
 // === Mutation typing ===
 
 export type PatchInternalGroupInput = Partial<Omit<InternalGroupNode, 'id'>>
