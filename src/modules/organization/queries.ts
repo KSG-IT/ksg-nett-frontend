@@ -23,6 +23,8 @@ export const ALL_INTEREST_GROUPS = gql`
       id
       name
       type
+      groupImage
+      groupIcon
     }
   }
 `
@@ -33,6 +35,7 @@ export const ALL_INTERNAL_WORK_GROUPS = gql`
       name
       id
       groupImage
+      groupIcon
     }
   }
 `
@@ -45,6 +48,13 @@ export const INTERNAL_GROUP_QUERY = gql`
       type
       groupImage
       description
+      membershipData {
+        internalGroupPositionName
+        users {
+          id
+          fullName
+        }
+      }
     }
   }
 `

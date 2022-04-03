@@ -1,11 +1,24 @@
 import { ApplicantNode } from 'modules/admissions/types'
+import { UserNode } from 'modules/users/types'
 
 export type InternalGroupNode = {
   id: string
   name: string
   currentlyDiscussing: ApplicantNode | null
   groupImage: string
+  groupIcon: string
   description: string
+  membershipData: InternalGroupMembershipDataNode[]
+}
+
+// export type InternalGroupPositionMembershipNode = {
+//   user: UserNode
+//   position: InternalGroupPositionNode
+// }
+
+export type InternalGroupMembershipDataNode = {
+  internalGroupPositionName: string
+  users: UserNode[]
 }
 
 export type InternalGroupPositionNode = {

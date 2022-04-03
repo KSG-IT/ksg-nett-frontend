@@ -3,13 +3,13 @@ import { InternalGroupNode } from './types'
 
 const Wrapper = styled.div`
   display: flex;
-  background: #e3e3e3;
+  background: white;
   color: black;
   justify-content: space-between;
   align-items: center;
   border-radius: 6px;
   padding: 10px;
-  padding-right: 5%;
+  padding: 10px 30px 10px 30px;
   box-shadow: ${props => props.theme.shadow.default};
 
   :hover {
@@ -18,11 +18,13 @@ const Wrapper = styled.div`
     transform: scale(0.98);
   }
 `
-interface GroupImageProps {
+interface GroupIconProps {
   src: string
 }
 
-const GroupIcon = styled.div<GroupImageProps>`
+const GroupName = styled.h2``
+
+const GroupIcon = styled.div<GroupIconProps>`
   width: 60px;
   height: 80px;
   background-image: url('${props => props.src}');
@@ -39,14 +41,12 @@ interface InternalGroupCardProps {
 export const InternalGroupCard: React.VFC<InternalGroupCardProps> = ({
   internalGroup,
 }) => {
-  console.log(internalGroup.groupImage)
-
   return (
     <Wrapper>
-      <h2>{internalGroup.name}</h2>
+      <GroupName>{internalGroup.name}</GroupName>
       <GroupIcon
         src={
-          internalGroup.groupImage ??
+          internalGroup.groupIcon ??
           'https://static.wikia.nocookie.net/roblox/images/3/3b/NOOB!.png'
         }
       />

@@ -1,13 +1,10 @@
 import { useQuery } from '@apollo/client'
+import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { InternalGroupCard } from './InternalGroupCard'
-import {
-  ALL_INTEREST_GROUPS,
-  ALL_INTERNAL_GROUPS,
-  ALL_INTERNAL_WORK_GROUPS,
-} from './queries'
+import { ALL_INTEREST_GROUPS, ALL_INTERNAL_WORK_GROUPS } from './queries'
 import { InternalGroupNode } from './types'
 
 const Wrapper = styled.div`
@@ -21,12 +18,6 @@ const InternalGroupsFlexContainer = styled.div`
   flex-flow: row wrap;
   margin-top: 10px;
   gap: 1.5rem;
-`
-
-const Title = styled.h1`
-  font-weight: 700;
-  color: slateblue;
-  margin: 0;
 `
 
 const InternalGroupsContainerTitle = styled.h2`
@@ -72,22 +63,16 @@ export const InternalGroups: React.VFC = () => {
     data: interestData,
   } = useQuery<AllInterestGroupsReturns>(ALL_INTEREST_GROUPS)
 
-  if (internalError) return <div>`Error! ${internalError.message}`</div>
+  if (internalError) return <FullPageError />
   if (internalLoading || !internalData) return <FullContentLoader />
 
   if (interestLoading || !interestData) return <FullContentLoader />
-  // 1. QUERY fetch shit
-  // Types til dataen jeg henter
-  // gjøre loading og error check
-  // Implentere en form for layout
-  console.log({ ALL_INTERNAL_GROUPS })
 
   const { allInternalWorkGroups } = internalData
   const { allInterestGroups } = interestData
 
   return (
     <Wrapper>
-      <Title>Interngjenger</Title>
       <InternalGroupsFlexContainer>
         <InternalGroupsContainerTitle>Drift</InternalGroupsContainerTitle>
         <InternalGroupsContainer>
@@ -106,7 +91,13 @@ export const InternalGroups: React.VFC = () => {
         </InternalGroupsContainerTitle>
         <InternalGroupsContainer>
           {allInterestGroups.map((group: InternalGroupNode) => (
-            <InternalGroupCard internalGroup={group} />
+            <div
+              onClick={() => {
+                history.push(`/internal-groups/${group.id}`)
+              }}
+            >
+              <InternalGroupCard internalGroup={group} />
+            </div>
           ))}
         </InternalGroupsContainer>
       </InternalGroupsFlexContainer>
