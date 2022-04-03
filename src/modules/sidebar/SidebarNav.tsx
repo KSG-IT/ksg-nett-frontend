@@ -1,6 +1,6 @@
+import { gql, useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import { NavGroup } from './NavGroup'
-import { useQuery, gql } from '@apollo/client'
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,7 +57,7 @@ export const SidebarNav = () => {
         navGroupTitle="Admin"
         navItems={[
           { icon: 'car', link: '/schedules', label: 'Vaktlister' },
-          { icon: 'address-book', link: '/users', label: 'Personal' },
+          { icon: 'address-book', link: '/users/manage', label: 'Personal' },
           { icon: 'user-plus', link: '/admissions', label: 'Opptak' },
           {
             icon: 'credit-card',
