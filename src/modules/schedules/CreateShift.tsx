@@ -5,7 +5,7 @@ import { add, setHours, setMinutes } from 'date-fns'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useCreateShiftMutation } from './api/create-shift'
-import { useScheduleQuery } from './api/query'
+import { useScheduleQuery } from './api/get-schedules'
 
 interface FormData {
   name: string
