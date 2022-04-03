@@ -20,12 +20,7 @@ const TableRow = styled.div`
   font-size: 16px;
   font-weight: 400;
   gap: 10px;
-
-  &:hover {
-    cursor: pointer;
-    background-color: ${props => props.theme.colors.background};
-    font-weight: 500;
-  }
+  height: 25px;
 `
 
 const Table = styled.div`
@@ -35,7 +30,9 @@ const Table = styled.div`
   background-color: ${props => props.theme.colors.white};
 `
 
-const TableCell = styled.div``
+const TableCell = styled.div`
+  font-size: 16px;
+`
 
 interface UserManagementTableProps {
   activeOnly: boolean
@@ -58,7 +55,6 @@ export const UserManagementTable: React.VFC<UserManagementTableProps> = ({
 
   useEffect(() => {
     if (internalGroupId === '') return
-    console.log(internalGroupId)
     getUserData()
   }, [internalGroupId])
 
