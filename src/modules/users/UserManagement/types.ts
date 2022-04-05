@@ -1,6 +1,6 @@
 import { InternalGroupPositionNode } from 'modules/organization/types'
 
-enum InternalGroupPositionType {
+export enum InternalGroupPositionType {
   FUNCTIONARY = 'FUNCTIONARY',
   ACTIVE_FUNCTIONARY_PANG = 'ACTIVE_FUNCTIONARY_PANG',
   OLD_FUNCTIONARY_PANG = 'OLD_FUNCTIONARY_PANG',
@@ -24,6 +24,7 @@ export type ManageInternalGroupUser = {
   userId: string
   position: InternalGroupPositionNode
   internalGroupPositionType: InternalGroupPositionType
+  internalGroupPositionMembership: InternalGroupPositionMembershipNode
   dateJoinedSemesterShorthand: string
   fullName: string
   positionName: string
@@ -38,4 +39,16 @@ export interface ManageUsersDataReturns {
 export interface ManageUsersDataVariables {
   activeOnly: boolean
   internalGroupId: string
+}
+
+// === Mutation typing ===
+
+export interface AssignNewInternalGroupPositionMembershipReturns {
+  internalGroupPositionMembership: InternalGroupPositionMembershipNode
+}
+
+export interface AssignNewInternalGroupPositionMembershipVariables {
+  userId: string
+  internalGroupPositionId: string
+  internalGroupPositionType: InternalGroupPositionType
 }

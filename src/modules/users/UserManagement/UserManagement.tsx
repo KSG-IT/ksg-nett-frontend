@@ -55,7 +55,7 @@ export const UserManagement: React.VFC = () => {
             <label>Kun aktive</label>
           </ControllerGroup>
           <Button buttonStyle="primary" width="170px">
-            Legg til bruker
+            Tilegn nytt verv
           </Button>
         </ControllerPanelContainer>
       </Card>

@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import styled from 'styled-components'
 import { MANAGE_USERS_DATA_QUERY } from './queries'
 import { ManageUsersDataReturns, ManageUsersDataVariables } from './types'
+import { UserManagementTableRow } from './UserManagementTableRow'
 
 const TableHeaderRow = styled.div`
   display: flex;
@@ -20,7 +21,8 @@ const TableRow = styled.div`
   font-size: 16px;
   font-weight: 400;
   gap: 10px;
-  height: 25px;
+  height: 35px;
+  align-items: center;
 `
 
 const Table = styled.div`
@@ -79,6 +81,7 @@ export const UserManagementTable: React.VFC<UserManagementTableProps> = ({
             <TableCell>{userData.positionName}</TableCell>
             <TableCell>{userData.internalGroupPositionType}</TableCell>
             <TableCell>{userData.dateJoinedSemesterShorthand}</TableCell>
+            <UserManagementTableRow userData={userData} />
           </TableRow>
         ))
       )}

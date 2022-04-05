@@ -9,6 +9,12 @@ export const MANAGE_USERS_DATA_QUERY = gql`
       userId
       fullName
       dateJoinedSemesterShorthand
+      internalGroupPositionMembership {
+        id
+        position {
+          id
+        }
+      }
       internalGroupPositionType
       positionName
     }
