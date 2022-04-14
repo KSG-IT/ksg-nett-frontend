@@ -14,6 +14,10 @@ export interface AllInternalGroupsReturns {
   allInternalGroups: InternalGroupNode[]
 }
 
+export interface AllInternalGroupPositionsReturns {
+  allInternalGroupPositions: InternalGroupPositionNode[]
+}
+
 // === Mutation typing ===
 
 export type PatchInternalGroupInput = Partial<Omit<InternalGroupNode, 'id'>>
