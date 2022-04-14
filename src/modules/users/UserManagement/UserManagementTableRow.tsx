@@ -1,7 +1,8 @@
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
-import Select from 'react-select'
+import toast from 'react-hot-toast'
 import styled from 'styled-components'
+import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from './mutations'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
@@ -38,54 +39,10 @@ export const UserManagementTableRow: React.VFC<UserManagementTableRowProp> = ({
     refetchQueries: ['ManageUsersDataQuery'],
   })
 
-  const options: InternalGroupPositionTypeOption[] = [
-    {
-      value: InternalGroupPositionType['GANG_MEMBER'],
-      label: 'Gjengmedlem',
-    },
-    {
-      value: InternalGroupPositionType['HANGAROUND'],
-      label: 'Hangaround',
-    },
-    {
-      value: InternalGroupPositionType['TEMPORARY_LEAVE'],
-      label: 'Permisjon',
-    },
-    {
-      value: InternalGroupPositionType['FUNCTIONARY'],
-      label: 'Funksjonær',
-    },
-    {
-      value: InternalGroupPositionType['ACTIVE_GANG_MEMBER_PANG'],
-      label: 'Gjengpang',
-    },
-    {
-      value: InternalGroupPositionType['ACTIVE_FUNCTIONARY_PANG'],
-      label: 'Aktiv funkepang',
-    },
-    {
-      value: InternalGroupPositionType['INTEREST_GROUP_MEMBER'],
-      label: 'Interessegruppemedlem',
-    },
-    {
-      value: InternalGroupPositionType['OLD_FUNCTIONARY_PANG'],
-      label: 'Gammel funkepang',
-    },
-    {
-      value: InternalGroupPositionType['OLD_GANG_MEMBER_PANG'],
-      label: 'Gammel gjengpang',
-    },
-  ]
-
   const handleAssignNewPosition = () => {
-    // Can replace this with a useEffect which renders the button disabled if not
-    console.log(selectedInternalGroupPositionType === null)
     if (selectedInternalGroupPositionType === null) return
 
-    console.log(
-      selectedInternalGroupPositionType.value ===
-        userData.internalGroupPositionType
-    )
+    // We also do not execute the mutation if the type has not changed
     if (
       selectedInternalGroupPositionType.value ===
       userData.internalGroupPositionType
@@ -99,20 +56,14 @@ export const UserManagementTableRow: React.VFC<UserManagementTableRowProp> = ({
           userData.internalGroupPositionMembership.position.id,
         internalGroupPositionType: selectedInternalGroupPositionType.value,
       },
-    }).then(res => console.log(res))
+    }).then(() => toast.success('Bruker oppdatert!'))
   }
-
-  const currentType = options.find(
-    option => option.value === userData.internalGroupPositionType
-  )
-  const defaultChoice = currentType === undefined ? null : currentType
 
   return (
     <Wrapper>
-      <Select
-        defaultValue={defaultChoice}
+      <InternalGroupPositionTypeSelect
         onChange={setSelectedInternalGroupPositionType}
-        options={options}
+        selected={selectedInternalGroupPositionType}
       />
 
       <button
@@ -123,6 +74,8 @@ export const UserManagementTableRow: React.VFC<UserManagementTableRowProp> = ({
       >
         Endre status
       </button>
+      {/* Button should set the date ended for this membership to now */}
+      <button>Ferdig med KSG</button>
     </Wrapper>
   )
 }
