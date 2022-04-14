@@ -61,6 +61,7 @@ export const UserManagementTable: React.VFC<UserManagementTableProps> = ({
   }, [internalGroupId])
 
   const usersData = data?.manageUsersData ?? []
+
   return (
     <Table>
       {/* Should parse data in here and show loading state here */}

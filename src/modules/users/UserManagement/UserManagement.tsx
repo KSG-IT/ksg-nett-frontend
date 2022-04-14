@@ -2,6 +2,7 @@ import { Button } from 'components/Button'
 import { Card } from 'components/Card'
 import { InternalGroupSelect } from 'components/Select/InternalGroupSelect'
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { UserManagementTable } from './UserManagementTable'
 
@@ -34,6 +35,7 @@ const ControllerGroup = styled.div`
 export const UserManagement: React.VFC = () => {
   const [activeUsersOnly, setActiveUsersOnly] = useState(true)
   const [internalGroupId, setInternalGroupId] = useState('')
+  const history = useHistory()
 
   return (
     <Wrapper>
@@ -54,7 +56,11 @@ export const UserManagement: React.VFC = () => {
             />
             <label>Kun aktive</label>
           </ControllerGroup>
-          <Button buttonStyle="primary" width="170px">
+          <Button
+            buttonStyle="primary"
+            width="170px"
+            onClick={() => history.push('/users/manage/add-user')}
+          >
             Tilegn nytt verv
           </Button>
         </ControllerPanelContainer>
