@@ -4,7 +4,7 @@ import { FullContentLoader } from 'components/Loading'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { InternalGroupCard } from './InternalGroupCard'
-import { ALL_INTEREST_GROUPS, ALL_INTERNAL_WORK_GROUPS } from './queries'
+import { ALL_INTERNAL_GROUPS_QUERY } from './queries'
 import { InternalGroupNode } from './types'
 
 const Wrapper = styled.div`
@@ -35,49 +35,40 @@ const InternalGroupsContainer = styled.div`
   ${props => props.theme.media.mobile} {
     grid-template-columns: 1fr;
   }
-  ${props => props.theme.media.smallScreen} {
-    grid-template-columns: 1fr;
+  ${props => props.theme.media.largeScreen} {
+    grid-template-columns: 1fr 1fr;
   }
   gap: 10px;
   border-radius: 4px;
 `
 
 interface AllInternalGroupsReturns {
-  allInternalWorkGroups: InternalGroupNode[]
-}
-
-interface AllInterestGroupsReturns {
-  allInterestGroups: InternalGroupNode[]
+  internalGroups: InternalGroupNode[]
+  interestGroups: InternalGroupNode[]
 }
 
 export const InternalGroups: React.VFC = () => {
   const history = useHistory()
-  const {
-    loading: internalLoading,
-    error: internalError,
-    data: internalData,
-  } = useQuery<AllInternalGroupsReturns>(ALL_INTERNAL_WORK_GROUPS)
-  const {
-    loading: interestLoading,
-    error: interestError,
-    data: interestData,
-  } = useQuery<AllInterestGroupsReturns>(ALL_INTEREST_GROUPS)
 
-  if (internalError) return <FullPageError />
-  if (internalLoading || !internalData) return <FullContentLoader />
+  const allInternalGroupTypesQuery = useQuery<AllInternalGroupsReturns>(
+    ALL_INTERNAL_GROUPS_QUERY
+  )
 
-  if (interestLoading || !interestData) return <FullContentLoader />
+  if (allInternalGroupTypesQuery.error) return <FullPageError />
+  if (allInternalGroupTypesQuery.loading || !allInternalGroupTypesQuery.data)
+    return <FullContentLoader />
 
-  const { allInternalWorkGroups } = internalData
-  const { allInterestGroups } = interestData
+  const internalGroups = allInternalGroupTypesQuery.data?.internalGroups
+  const interestGroups = allInternalGroupTypesQuery.data?.interestGroups
 
   return (
     <Wrapper>
       <InternalGroupsFlexContainer>
         <InternalGroupsContainerTitle>Drift</InternalGroupsContainerTitle>
         <InternalGroupsContainer>
-          {allInternalWorkGroups.map((group: InternalGroupNode) => (
+          {internalGroups.map((group: InternalGroupNode) => (
             <div
+              key={group.id}
               onClick={() => {
                 history.push(`/internal-groups/${group.id}`)
               }}
@@ -90,8 +81,9 @@ export const InternalGroups: React.VFC = () => {
           Interessegrupper
         </InternalGroupsContainerTitle>
         <InternalGroupsContainer>
-          {allInterestGroups.map((group: InternalGroupNode) => (
+          {interestGroups.map((group: InternalGroupNode) => (
             <div
+              key={group.id}
               onClick={() => {
                 history.push(`/internal-groups/${group.id}`)
               }}

@@ -8,37 +8,6 @@ export const ALL_INTERNAL_GROUP_POSITIONS = gql`
     }
   }
 `
-export const ALL_INTERNAL_GROUPS = gql`
-  query AllInternalGroups {
-    allInternalGroups {
-      id
-      name
-    }
-  }
-`
-
-export const ALL_INTEREST_GROUPS = gql`
-  query {
-    allInterestGroups {
-      id
-      name
-      type
-      groupImage
-      groupIcon
-    }
-  }
-`
-
-export const ALL_INTERNAL_WORK_GROUPS = gql`
-  query {
-    allInternalWorkGroups {
-      name
-      id
-      groupImage
-      groupIcon
-    }
-  }
-`
 
 export const INTERNAL_GROUP_QUERY = gql`
   query InternalGroup($id: ID!) {
@@ -55,6 +24,23 @@ export const INTERNAL_GROUP_QUERY = gql`
           fullName
         }
       }
+    }
+  }
+`
+
+export const ALL_INTERNAL_GROUPS_QUERY = gql`
+  query allInternalGroupsQuery {
+    internalGroups: allInternalGroups(Type: INTERNAL_GROUP) {
+      id
+      name
+      type
+      groupIcon
+    }
+    interestGroups: allInternalGroups(Type: INTEREST_GROUP) {
+      id
+      name
+      type
+      groupIcon
     }
   }
 `

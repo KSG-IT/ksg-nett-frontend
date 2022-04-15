@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client'
+import { FullPage404 } from 'components/FullPageComponents'
 import { UserThumbnail } from 'modules/users/UserThumbnail'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
@@ -13,7 +14,7 @@ const Wrapper = styled.div`
   grid-template-areas:
     'groupname groupname . .'
     'image image details details'
-    'members . . .';
+    'members members members members';
   ${props => props.theme.media.mobile} {
     display: flex;
     flex-flow: row wrap;
@@ -51,7 +52,9 @@ const DetailsHeader = styled.h3`
   border-width: 1px;
 `
 
-const DetailsText = styled.div``
+const DetailsText = styled.p`
+  margin: 0 auto;
+`
 
 const GroupName = styled.h1`
   margin: 0;
@@ -105,7 +108,7 @@ const InternalGroupPositionUsersContainer = styled.div`
 const ContainerTitle = styled.h2`
   font-weight: 600;
   margin: 0;
-  color: #1d1d3980;
+  color: rgba(0, 0, 0, 0.4);
 `
 
 interface GroupImageProps {
@@ -139,14 +142,13 @@ export const InternalGroupDetail: React.VFC = () => {
     variables: { id: internalGroupId },
   })
 
-  if (loading) return <span>Loading</span>
+  if (error) return <span>Loading</span>
 
-  if (!data || error) return <span>Something went wrong</span>
+  if (loading || !data) return <span>Something went wrong</span>
 
   const { internalGroup } = data
 
-  if (internalGroup === null || internalGroup === undefined)
-    return <span>Interngruppen eksisterer ikke</span>
+  if (internalGroup === null) return <FullPage404 />
 
   return (
     <Wrapper>

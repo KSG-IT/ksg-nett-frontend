@@ -11,11 +11,6 @@ export type InternalGroupNode = {
   membershipData: InternalGroupMembershipDataNode[]
 }
 
-// export type InternalGroupPositionMembershipNode = {
-//   user: UserNode
-//   position: InternalGroupPositionNode
-// }
-
 export type InternalGroupMembershipDataNode = {
   internalGroupPositionName: string
   users: UserNode[]
@@ -29,6 +24,11 @@ export type InternalGroupPositionNode = {
 
 export type InternalGroupReturns = {
   internalGroup: InternalGroupNode
+}
+
+export enum InternalGroupType {
+  INTERNAL_GROUP = 'INTERNAL_GROUP',
+  INTEREST_GROUP = 'INTEREST_GROUP',
 }
 
 export type InternalGroupNodeShallow = {
