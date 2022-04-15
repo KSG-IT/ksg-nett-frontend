@@ -13,13 +13,6 @@ const Wrapper = styled.div`
   overflow-y: scroll;
 `
 
-const InternalGroupsFlexContainer = styled.div`
-  justify-content: flex-start;
-  flex-flow: row wrap;
-  margin-top: 10px;
-  gap: 1.5rem;
-`
-
 const InternalGroupsContainerTitle = styled.h2`
   display: flex;
   margin: 0;
@@ -32,14 +25,15 @@ const InternalGroupsContainerTitle = styled.h2`
 const InternalGroupsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  ${props => props.theme.media.mobile} {
-    grid-template-columns: 1fr;
-  }
   ${props => props.theme.media.largeScreen} {
     grid-template-columns: 1fr 1fr;
   }
+  ${props => props.theme.media.mobile} {
+    grid-template-columns: 1fr;
+  }
   gap: 10px;
   border-radius: 4px;
+  margin-bottom: 1.618em;
 `
 
 interface AllInternalGroupsReturns {
@@ -63,36 +57,34 @@ export const InternalGroups: React.VFC = () => {
 
   return (
     <Wrapper>
-      <InternalGroupsFlexContainer>
-        <InternalGroupsContainerTitle>Drift</InternalGroupsContainerTitle>
-        <InternalGroupsContainer>
-          {internalGroups.map((group: InternalGroupNode) => (
-            <div
-              key={group.id}
-              onClick={() => {
-                history.push(`/internal-groups/${group.id}`)
-              }}
-            >
-              <InternalGroupCard internalGroup={group} />
-            </div>
-          ))}
-        </InternalGroupsContainer>
-        <InternalGroupsContainerTitle>
-          Interessegrupper
-        </InternalGroupsContainerTitle>
-        <InternalGroupsContainer>
-          {interestGroups.map((group: InternalGroupNode) => (
-            <div
-              key={group.id}
-              onClick={() => {
-                history.push(`/internal-groups/${group.id}`)
-              }}
-            >
-              <InternalGroupCard internalGroup={group} />
-            </div>
-          ))}
-        </InternalGroupsContainer>
-      </InternalGroupsFlexContainer>
+      <InternalGroupsContainerTitle>Drift</InternalGroupsContainerTitle>
+      <InternalGroupsContainer>
+        {internalGroups.map((group: InternalGroupNode) => (
+          <div
+            key={group.id}
+            onClick={() => {
+              history.push(`/internal-groups/${group.id}`)
+            }}
+          >
+            <InternalGroupCard internalGroup={group} />
+          </div>
+        ))}
+      </InternalGroupsContainer>
+      <InternalGroupsContainerTitle>
+        Interessegrupper
+      </InternalGroupsContainerTitle>
+      <InternalGroupsContainer>
+        {interestGroups.map((group: InternalGroupNode) => (
+          <div
+            key={group.id}
+            onClick={() => {
+              history.push(`/internal-groups/${group.id}`)
+            }}
+          >
+            <InternalGroupCard internalGroup={group} />
+          </div>
+        ))}
+      </InternalGroupsContainer>
     </Wrapper>
   )
 }

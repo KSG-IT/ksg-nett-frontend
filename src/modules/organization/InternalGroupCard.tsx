@@ -5,11 +5,11 @@ const Wrapper = styled.div`
   display: flex;
   background: white;
   color: black;
+  height: 120px;
   justify-content: space-between;
   align-items: center;
   border-radius: 6px;
-  padding: 10px;
-  padding: 10px 30px 10px 30px;
+  padding: 1.618em;
   box-shadow: ${props => props.theme.shadow.default};
 
   :hover {
