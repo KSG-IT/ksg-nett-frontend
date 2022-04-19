@@ -1,12 +1,12 @@
-import styled from 'styled-components'
-import { useQuery, useMutation } from '@apollo/client'
-import { SIDEBAR_QUERY } from 'modules/sidebar/SidebarNav'
-import { AllDepositsQuery, ALL_DEPOSITS, DepositNode, PATCH_DEPOSIT } from '.'
-import { useAuth } from 'context/Authentication'
-import { ME_QUERY, UserThumbnail } from 'modules/users'
-import { MEDIA_URL } from 'util/env'
+import { useMutation, useQuery } from '@apollo/client'
 import { format } from 'date-fns'
+import { SIDEBAR_QUERY } from 'modules/sidebar/SidebarNav'
+import { ME_QUERY, UserThumbnail } from 'modules/users'
 import { UserNode } from 'modules/users/types'
+import { useStore } from 'store'
+import styled from 'styled-components'
+import { MEDIA_URL } from 'util/env'
+import { AllDepositsQuery, ALL_DEPOSITS, DepositNode, PATCH_DEPOSIT } from '.'
 
 const Wrapper = styled.div`
   display: grid;
@@ -131,7 +131,7 @@ export const Deposits = () => {
       { query: ME_QUERY },
     ],
   })
-  const user = useAuth()
+  const user = useStore(state => state.user)!
 
   const handlePatchDeposit = (deposit: DepositNode) => {
     const { id, signedOffBy } = deposit

@@ -41,10 +41,7 @@ export type InternalGroupVariables = {
 
 // === Mutation typing ===
 
-export type PatchInternalGroupInput = {
-  name?: string
-  currentlyDiscussing?: string
-}
+export type PatchInternalGroupInput = Partial<Omit<InternalGroupNode, 'id'>>
 
 export interface PatchInternalGroupReturns {
   internalGroup: InternalGroupNode

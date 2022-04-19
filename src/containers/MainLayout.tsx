@@ -1,7 +1,7 @@
 import { AuthRoutes } from 'containers//AuthRoutes'
 import { Header } from 'modules/header'
 import { Sidebar } from 'modules/sidebar'
-import { useState } from 'react'
+import { useStore } from 'store'
 import styled, { css } from 'styled-components'
 import { useRenderMobile } from 'util/isMobile'
 interface WrapperProps {
@@ -50,24 +50,21 @@ const SidebarWrapper = styled.div`
 `
 
 const MainLayout: React.FC = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const sidebarOpen = useStore(state => state.sidebarOpen)
+  const toggleSidebarOpen = useStore(state => state.toggleSidebarOpen)
   const isMobile = useRenderMobile()
 
   const shouldNotRenderContent = isMobile && sidebarOpen
 
-  const toggleSidebarCallback = () => {
-    setSidebarOpen(!sidebarOpen)
-  }
-
   return (
     <Wrapper sidebarOpen={true}>
       <HeaderWrapper>
-        <Header toggleSidebar={toggleSidebarCallback}></Header>
+        <Header toggleSidebar={toggleSidebarOpen}></Header>
       </HeaderWrapper>
       <SidebarWrapper>
         <Sidebar
           sidebarOpen={sidebarOpen}
-          toggleSidebarCallback={toggleSidebarCallback}
+          toggleSidebarCallback={toggleSidebarOpen}
         />
       </SidebarWrapper>
       <ContentWrapper visible={shouldNotRenderContent}>

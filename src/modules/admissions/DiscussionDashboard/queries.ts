@@ -37,54 +37,10 @@ export const INTERNAL_GROUP_DISCUSSION_DATA = gql`
         id
         name
       }
-      currentApplicantUnderDiscussion {
-        id
-        email
-        status
-        fullName
-        image
-        phone
-        study
-        hometown
-        priorities {
-          ...InternalGroupPriorityFields
-        }
-        address
-        discussionStart
-        discussionEnd
-        interview {
-          id
+      availablePicks {
+        ...InternalGroupPriorityFields
+      }
 
-          interviewStart
-          notes
-          discussion
-          interviewers {
-            id
-            profileImage
-            initials
-          }
-          canCommitThreeSemesters
-          cannotCommitThreeSemestersDetails
-          totalEvaluation
-          additionalEvaluationAnswers {
-            statement
-            answer
-          }
-          booleanEvaluationAnswers {
-            statement
-            answer
-          }
-        }
-      }
-      firstPicks {
-        ...InternalGroupPriorityFields
-      }
-      availableSecondPicks {
-        ...InternalGroupPriorityFields
-      }
-      availableThirdPicks {
-        ...InternalGroupPriorityFields
-      }
       processedApplicants {
         ...InternalGroupPriorityFields
       }

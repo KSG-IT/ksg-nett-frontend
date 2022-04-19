@@ -16,6 +16,7 @@ export type UserNode = {
   isStaff: boolean
   isSuperuser: boolean
   isActive: boolean
+  inRelationship: boolean
   needsPasswordChange: boolean
   isAdministrator: boolean
   bankAccountActivity: BankAccountActivity[]

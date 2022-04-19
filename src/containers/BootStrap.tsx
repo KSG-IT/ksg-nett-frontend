@@ -1,30 +1,30 @@
 import { useQuery } from '@apollo/client'
 import MainLayout from 'containers/MainLayout'
-import AuthProvider from 'context/Authentication'
 import { MeQueryReturns, ME_QUERY } from 'modules/users'
 import { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { useStore } from 'store'
 import { PublicRoutes } from './PublicRoutes'
 
 const Bootstrap: React.VFC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
-
-  if (loading || data === undefined) return <span>Loading</span>
+  const setUser = useStore(state => state.setUser)
 
   if (error) return <span>Error {error.message}</span>
 
-  const { me } = data
+  if (loading || data === undefined) return <span>Loading</span>
 
+  const { me } = data
   if (me == null || me === undefined) {
     return <PublicRoutes />
   }
+  setUser(me)
+
   return (
-    <AuthProvider user={me}>
-      <Router>
-        <MainLayout />
-        <Toaster />
-      </Router>
-    </AuthProvider>
+    <Router>
+      <MainLayout />
+      <Toaster />
+    </Router>
   )
 }
 export default Bootstrap

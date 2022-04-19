@@ -5,8 +5,9 @@ import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import styled from 'styled-components'
 import { PatchMutationVariables } from 'types/graphql'
+import { CloseAdmission } from '../CloseAdmission'
 import { ConfigurationWizard } from '../ConfigureAdmission/ConfigurationWizard'
-import { DiscussionDashboard } from '../DiscussionDashboard/DiscussionDashboard'
+import { DiscussionDashboard } from '../DiscussionDashboard'
 import { CREATE_APPLICATIONS, PATCH_ADMISSION } from '../mutations'
 import { ACTIVE_ADMISSION_QUERY } from '../queries'
 import {
@@ -17,12 +18,10 @@ import {
   PatchAdmissionReturns,
 } from '../types'
 import { ActiveAdmissionTable } from './ActiveAdmissionTable'
-import { CloseAdmission } from './CloseAdmission'
 import { InternalGroupsNav } from './InternalGroupsNav'
 
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};
-
   overflow-y: scroll;
 `
 
@@ -76,7 +75,6 @@ export const AdmissionDashboard: React.VFC = () => {
   if (activeAdmission === null || activeAdmission.status === 'CONFIGURATION')
     return <ConfigurationWizard />
 
-  console.log(activeAdmission)
   if (activeAdmission.status === 'IN_SESSION') {
     return (
       <Wrapper>
@@ -85,7 +83,7 @@ export const AdmissionDashboard: React.VFC = () => {
     )
   }
 
-  if (activeAdmission.status === 'FINALIZATION') {
+  if (activeAdmission.status === 'LOCKED') {
     return (
       <Wrapper>
         <CloseAdmission />

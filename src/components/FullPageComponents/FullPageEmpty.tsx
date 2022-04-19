@@ -2,10 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  margin: auto;
-`
-
-const NoQuotesContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,10 +13,8 @@ const NoQuotesContainer = styled.div`
 export const FullPageEmpty: React.VFC = () => {
   return (
     <Wrapper>
-      <NoQuotesContainer>
-        <FontAwesomeIcon icon="battery-empty" size="3x" />
-        Oi, her var det tomt.
-      </NoQuotesContainer>
+      <FontAwesomeIcon icon="battery-empty" size="3x" />
+      Oi, her var det tomt.
     </Wrapper>
   )
 }

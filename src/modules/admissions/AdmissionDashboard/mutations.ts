@@ -11,7 +11,20 @@ export const TOGGLE_APPLICANT_WILL_BE_ADMITTED_MUTATION = gql`
 export const CLOSE_ADMISSION_MUTATION = gql`
   mutation CloseAdmissionMutation {
     closeAdmission {
-      success
+      failedUserGeneration {
+        id
+        fullName
+      }
+    }
+  }
+`
+
+export const LOCK_ADMISSION_MUTATION = gql`
+  mutation LockAdmissionMutation {
+    lockAdmission {
+      admission {
+        id
+      }
     }
   }
 `
