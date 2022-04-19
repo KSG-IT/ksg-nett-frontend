@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { InternalGroupCard } from './InternalGroupCard'
 import { ALL_INTERNAL_GROUPS_QUERY } from './queries'
@@ -42,8 +41,6 @@ interface AllInternalGroupsReturns {
 }
 
 export const InternalGroups: React.VFC = () => {
-  const history = useHistory()
-
   const { loading, error, data } = useQuery<AllInternalGroupsReturns>(
     ALL_INTERNAL_GROUPS_QUERY
   )
