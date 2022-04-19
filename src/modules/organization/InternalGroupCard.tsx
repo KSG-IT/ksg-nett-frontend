@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { InternalGroupNode } from './types'
 
@@ -41,8 +42,14 @@ interface InternalGroupCardProps {
 export const InternalGroupCard: React.VFC<InternalGroupCardProps> = ({
   internalGroup,
 }) => {
+  const history = useHistory()
   return (
-    <Wrapper>
+    <Wrapper
+      key={internalGroup.id}
+      onClick={() => {
+        history.push(`/internal-groups/${internalGroup.id}`)
+      }}
+    >
       <GroupName>{internalGroup.name}</GroupName>
       <GroupIcon
         src={

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { FullPage404 } from 'components/FullPageComponents'
+import { FullPage404, FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading/FullContentLoader'
 import { UserThumbnail } from 'modules/users/UserThumbnail'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
@@ -142,10 +143,8 @@ export const InternalGroupDetail: React.VFC = () => {
     variables: { id: internalGroupId },
   })
 
-  if (error) return <span>Loading</span>
-
-  if (loading || !data) return <span>Something went wrong</span>
-
+  if (error) return <FullPageError />
+  if (loading || !data) return <FullContentLoader />
   const { internalGroup } = data
 
   if (internalGroup === null) return <FullPage404 />

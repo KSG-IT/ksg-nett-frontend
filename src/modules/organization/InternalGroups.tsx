@@ -44,30 +44,22 @@ interface AllInternalGroupsReturns {
 export const InternalGroups: React.VFC = () => {
   const history = useHistory()
 
-  const allInternalGroupTypesQuery = useQuery<AllInternalGroupsReturns>(
+  const { loading, error, data } = useQuery<AllInternalGroupsReturns>(
     ALL_INTERNAL_GROUPS_QUERY
   )
 
-  if (allInternalGroupTypesQuery.error) return <FullPageError />
-  if (allInternalGroupTypesQuery.loading || !allInternalGroupTypesQuery.data)
-    return <FullContentLoader />
+  if (error) return <FullPageError />
+  if (loading || !data) return <FullContentLoader />
 
-  const internalGroups = allInternalGroupTypesQuery.data?.internalGroups
-  const interestGroups = allInternalGroupTypesQuery.data?.interestGroups
+  const internalGroups = data?.internalGroups
+  const interestGroups = data?.interestGroups
 
   return (
     <Wrapper>
       <InternalGroupsContainerTitle>Drift</InternalGroupsContainerTitle>
       <InternalGroupsContainer>
         {internalGroups.map((group: InternalGroupNode) => (
-          <div
-            key={group.id}
-            onClick={() => {
-              history.push(`/internal-groups/${group.id}`)
-            }}
-          >
-            <InternalGroupCard internalGroup={group} />
-          </div>
+          <InternalGroupCard internalGroup={group} />
         ))}
       </InternalGroupsContainer>
       <InternalGroupsContainerTitle>
@@ -75,14 +67,7 @@ export const InternalGroups: React.VFC = () => {
       </InternalGroupsContainerTitle>
       <InternalGroupsContainer>
         {interestGroups.map((group: InternalGroupNode) => (
-          <div
-            key={group.id}
-            onClick={() => {
-              history.push(`/internal-groups/${group.id}`)
-            }}
-          >
-            <InternalGroupCard internalGroup={group} />
-          </div>
+          <InternalGroupCard internalGroup={group} />
         ))}
       </InternalGroupsContainer>
     </Wrapper>
