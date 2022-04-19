@@ -45,7 +45,6 @@ export const InternalGroupCard: React.VFC<InternalGroupCardProps> = ({
   const history = useHistory()
   return (
     <Wrapper
-      key={internalGroup.id}
       onClick={() => {
         history.push(`/internal-groups/${internalGroup.id}`)
       }}

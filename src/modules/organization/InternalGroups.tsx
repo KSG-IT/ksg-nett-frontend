@@ -56,7 +56,7 @@ export const InternalGroups: React.VFC = () => {
       <InternalGroupsContainerTitle>Drift</InternalGroupsContainerTitle>
       <InternalGroupsContainer>
         {internalGroups.map((group: InternalGroupNode) => (
-          <InternalGroupCard internalGroup={group} />
+          <InternalGroupCard key={group.id} internalGroup={group} />
         ))}
       </InternalGroupsContainer>
       <InternalGroupsContainerTitle>
@@ -64,7 +64,7 @@ export const InternalGroups: React.VFC = () => {
       </InternalGroupsContainerTitle>
       <InternalGroupsContainer>
         {interestGroups.map((group: InternalGroupNode) => (
-          <InternalGroupCard internalGroup={group} />
+          <InternalGroupCard key={group.id} internalGroup={group} />
         ))}
       </InternalGroupsContainer>
     </Wrapper>
