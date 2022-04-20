@@ -34,6 +34,7 @@ export interface SociProductNode {
 }
 
 export interface SociBankAccountNode {
+  id: string
   user: UserNode
   balance: number
   cardUuid: string
@@ -118,4 +119,17 @@ export interface CreateDepositMutationVariables {
 
 export interface CreateDepositMutationReturns {
   depposit: DepositNode
+}
+
+type SociBankAccountInput = {
+  cardUuid: string
+}
+
+export interface PatchSociBankAccountReturns {
+  sociBankAccount: Pick<SociBankAccountNode, 'id'>
+}
+
+export interface PatchSociBankAccountVariables {
+  id: string
+  input: SociBankAccountInput
 }
