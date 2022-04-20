@@ -52,3 +52,15 @@ export const ALL_DEPOSITS = gql`
     }
   }
 `
+
+export const MY_EXPENDITURES = gql`
+  query MyExpenditures($dateRange: TotalExpenditureDateRange) {
+    myExpenditures(dateRange: $dateRange) {
+      total
+      data {
+        day
+        sum
+      }
+    }
+  }
+`
