@@ -13,7 +13,7 @@ export const MY_BANK_ACCOUNT_QUERY = gql`
         createdAt
       }
       user {
-        bankAccountActivity {
+        lastTransactions {
           name
           amount
           quantity

@@ -115,7 +115,7 @@ export interface MyBankAccountReturns {
     cardUuid: string
     deposits: DepositNode[]
     user: {
-      bankAccountActivity: BankAccountActivity[]
+      lastTransactions: BankAccountActivity[]
     }
   }
 }
