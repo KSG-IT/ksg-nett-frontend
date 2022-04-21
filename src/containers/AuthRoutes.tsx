@@ -56,6 +56,16 @@ export const AuthRoutes: React.VFC = () => {
       {/* Economy module */}
       <PrivateRoute exact path="/economy" component={FullPage404} />
       <PrivateRoute exact path="/economy/me" component={MyEconomy} />
+      <PrivateRoute
+        exact
+        path="/economy/me/purchase-history"
+        component={FullPage404}
+      />
+      <PrivateRoute
+        exact
+        path="/economy/me/deposit-history"
+        component={FullPage404}
+      />
       <PrivateRoute exact path="/economy/deposits" component={Deposits} />
 
       {/* Summaries module */}
