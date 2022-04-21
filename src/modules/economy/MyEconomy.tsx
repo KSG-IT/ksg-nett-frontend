@@ -13,8 +13,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-areas:
     'title .'
-    'account .'
-    'deposits .'
+    'deposits account'
     'activity activity'
     'expenditure expenditure';
   grid-template-columns: 1fr 2fr;
@@ -84,7 +83,7 @@ export const MyEconomy: React.VFC = () => {
       </SectionContainer>
       <SectionContainer gridArea="deposits">
         <SubTitle>Innskudd</SubTitle>
-        <MyDeposits deposits={data.myBankAccount.deposits} />
+        <MyDeposits deposits={data.myBankAccount.lastDeposits} />
       </SectionContainer>
     </Wrapper>
   )

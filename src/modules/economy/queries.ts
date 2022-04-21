@@ -6,7 +6,7 @@ export const MY_BANK_ACCOUNT_QUERY = gql`
       id
       cardUuid
       balance
-      deposits {
+      lastDeposits {
         id
         amount
         approved
