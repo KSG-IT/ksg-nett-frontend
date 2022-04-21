@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Paper } from '@mantine/core'
+import { Card } from '@mantine/core'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
@@ -17,15 +17,6 @@ const EditIcon = styled(FontAwesomeIcon)`
     cursor: pointer;
     opacity: 0.8;
   }
-`
-
-const Layout = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  padding: 5px;
-  gap: 10px;
 `
 
 const Label = styled.label`
@@ -89,25 +80,23 @@ export const AccountCard: React.VFC<AccountCardProps> = ({ account }) => {
   }
 
   return (
-    <Paper p="md">
-      <Layout>
-        <CardRow>
-          <Label>Saldo:</Label>
-          <Balance>{numberWithSpaces(account.balance)},- NOK</Balance>
-        </CardRow>
-        <CardRow>
-          <Label>Kortnummer:</Label>
-          <CardInputContainer>
-            <input
-              value={cardUuid}
-              disabled={!editable}
-              onChange={evt => setCardUuid(evt.target.value)}
-              onBlur={toggleEditable}
-            />
-            <EditIcon icon="edit" onClick={toggleEditable} />
-          </CardInputContainer>
-        </CardRow>
-      </Layout>
-    </Paper>
+    <Card>
+      <Card.Section m="xs">
+        <Label>Saldo:</Label>
+        <Balance>{numberWithSpaces(account.balance)},- NOK</Balance>
+      </Card.Section>
+      <Card.Section m="xs">
+        <Label>Kortnummer:</Label>
+        <CardInputContainer>
+          <input
+            value={cardUuid}
+            disabled={!editable}
+            onChange={evt => setCardUuid(evt.target.value)}
+            onBlur={toggleEditable}
+          />
+          <EditIcon icon="edit" onClick={toggleEditable} />
+        </CardInputContainer>
+      </Card.Section>
+    </Card>
   )
 }
