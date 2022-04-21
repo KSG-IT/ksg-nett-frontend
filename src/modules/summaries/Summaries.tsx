@@ -1,10 +1,18 @@
 import { useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Search } from 'components/Input'
+import {
+  Avatar,
+  AvatarsGroup,
+  Button,
+  Group,
+  Paper,
+  Table,
+  TextInput,
+} from '@mantine/core'
+import { FullPageError } from 'components/FullPageComponents'
 import { format } from 'date-fns'
-import { UserThumbnail } from 'modules/users'
 import { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { useDebounce } from 'util/hooks/useDebounce'
@@ -24,66 +32,14 @@ const Wrapper = styled.div`
   }
 `
 
-const HeaderSection = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`
-
 const Title = styled.h1`
   margin: 0;
 `
-const NewSummaryButton = styled.button`
-  width: 120px;
-  height: 35px;
-  background-color: ${props => props.theme.colors.purpleAction};
-  color: ${props => props.theme.colors.white};
-  border-radius: 10px;
-  border: none;
-  box-shadow: ${props => props.theme.shadow.default};
-  font-size: 14px;
-`
 
-const SummariesTable = styled.div`
-  flex-direction: column;
-  width: 100%;
-  display: flex;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: ${props => props.theme.shadow.default};
-`
-
-const SummariesTableHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  font-weight: 500;
-  font-size: 16px;
-  padding: 10px 5px;
-`
-
-const SummariesTableHeaderCell = styled.div`
-  width: 350px;
-`
-
-const SummariesTableRow = styled(Link)`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 5px;
-  align-items: center;
-  padding: 0 5px;
-
+const TableRow = styled.tr`
   :hover {
     cursor: pointer;
-    background-color: ${props => props.theme.colors.lightGray};
   }
-`
-
-const SummariesTableCell = styled.div`
-  width: 350px;
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-  font-size: 14px;
 `
 
 export const Summaries = () => {
@@ -91,7 +47,7 @@ export const Summaries = () => {
   const debouncedQuery = useDebounce(query)
   const history = useHistory()
 
-  const { data, loading, error, fetchMore } = useQuery<
+  const { data, error, fetchMore } = useQuery<
     AllSummariesQueryReturns,
     AllSummariesQueryVariables
   >(ALL_SUMMARIES, {
@@ -100,10 +56,32 @@ export const Summaries = () => {
     variables: { q: debouncedQuery, first: DEFAULT_PAGINATION_SIZE },
   })
 
-  if (error) return <span>An error has occurred</span>
+  if (error) return <FullPageError />
 
   const summaries = data?.allSummaries.edges.map(edge => edge.node) ?? []
   const hasNextPage = data?.allSummaries.pageInfo.hasNextPage ?? false
+
+  const rows = summaries.map(summary => (
+    <TableRow
+      onClick={() => history.push(`/summaries/${summary.id}`)}
+      key={summary.id}
+    >
+      <td>{format(new Date(summary.date), 'MM.dd')}</td>
+      <td>{summary.type}</td>
+      <td>
+        <AvatarsGroup>
+          {summary.participants.map(user => (
+            <Avatar color={'red'}>{user.initials}</Avatar>
+          ))}
+        </AvatarsGroup>
+      </td>
+      <td>
+        <Avatar color={'blue'} radius={'lg'}>
+          {summary.reporter.initials}
+        </Avatar>
+      </td>
+    </TableRow>
+  ))
 
   const handleFetchMore = async () => {
     if (typeof data === 'undefined') return
@@ -140,58 +118,37 @@ export const Summaries = () => {
 
   return (
     <Wrapper>
-      <HeaderSection>
+      <Group position="apart" align={'baseline'}>
         <Title>Referater</Title>
-        <NewSummaryButton
+        <Button
+          size="md"
           onClick={() => {
             history.push('/summaries/create')
           }}
+          leftIcon={<FontAwesomeIcon color="white" icon="plus" size="lg" />}
         >
-          <FontAwesomeIcon color="white" icon="plus" size="lg" />
           Nytt referat
-        </NewSummaryButton>
-      </HeaderSection>
-      <Search
+        </Button>
+      </Group>
+      <TextInput
         value={query}
-        placeholder="Search for content"
-        fullwidth
-        onChange={setQuery}
+        placeholder="Søk etter innhold"
+        icon={<FontAwesomeIcon icon="search" size="sm" />}
+        onChange={evt => setQuery(evt.target.value)}
       />
-      <SummariesTable>
-        <SummariesTableHeader>
-          <SummariesTableHeaderCell>Dato</SummariesTableHeaderCell>
-          <SummariesTableHeaderCell>Type</SummariesTableHeaderCell>
-          <SummariesTableHeaderCell>Deltakere</SummariesTableHeaderCell>
-          <SummariesTableHeaderCell>Referent</SummariesTableHeaderCell>
-        </SummariesTableHeader>
-        {loading ? (
-          <span>loading</span>
-        ) : (
-          <>
-            {summaries.map(summary => (
-              <SummariesTableRow
-                key={summary.id}
-                to={`summaries/${summary.id}`}
-              >
-                <SummariesTableCell>
-                  {format(new Date(summary.date), 'dd.MM.yyyy')}
-                </SummariesTableCell>
-                <SummariesTableCell>{summary.type}</SummariesTableCell>
-                <SummariesTableCell>
-                  {/* This cell we can consider truncating. kinda doing a thumbnail with +7 if there are 7 more */}
-                  {summary.participants.map(user => (
-                    <UserThumbnail user={user} size="small" key={user.id} />
-                  ))}
-                </SummariesTableCell>
-                <SummariesTableCell>
-                  <UserThumbnail user={summary.reporter} size="small" />
-                </SummariesTableCell>
-              </SummariesTableRow>
-            ))}
-          </>
-        )}
-      </SummariesTable>
-      {hasNextPage && <button onClick={handleFetchMore}>Hent fler</button>}
+      <Paper p="sm">
+        <Table highlightOnHover>
+          <thead>
+            <td>Dato</td>
+            <td>Type</td>
+            <td>Deltakere</td>
+            <td>Referent</td>
+          </thead>
+          <tbody>{rows}</tbody>
+        </Table>
+      </Paper>
+
+      {hasNextPage && <Button onClick={handleFetchMore}>Hent fler</Button>}
     </Wrapper>
   )
 }
