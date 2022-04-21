@@ -51,6 +51,7 @@ export type CreateQuoteInput = {
   text: string
   context: string | null
   tagged: string[]
+  createdAt: string
 }
 
 export type PatchQuoteInput = {

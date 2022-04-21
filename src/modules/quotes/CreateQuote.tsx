@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { Button } from 'components/Button'
 import { UserMultiSelect } from 'components/Select'
+import { formatISO } from 'date-fns'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useHistory } from 'react-router-dom'
@@ -81,6 +82,7 @@ export const CreateQuote: React.VFC = () => {
               text: text,
               context: context,
               tagged: tagged,
+              createdAt: formatISO(new Date()),
             },
           },
         }),
