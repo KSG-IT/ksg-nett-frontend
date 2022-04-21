@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Card } from 'components/Card'
+import { Paper, Select } from '@mantine/core'
 import { format } from 'date-fns'
 import { BarSeries, ChartProvider, Tooltip, XAxis, YAxis } from 'rough-charts'
 import styled from 'styled-components'
@@ -10,12 +10,6 @@ import {
   MyExpendituresReturns,
   MyExpendituresVariables,
 } from './types'
-const Layout = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-`
 
 const TotalRow = styled.div`
   display: flex;
@@ -67,32 +61,32 @@ export const MyExpenditures: React.VFC = () => {
   }))
 
   return (
-    <Card>
-      <Layout>
-        <select>
-          {dateRangeOptions.map(option => (
-            <option value={option.value}>{option.label}</option>
-          ))}
-        </select>
-        <ChartProvider height={300} width={750} data={parsedData}>
-          <XAxis dataKey="name" tickSize={15} tickCount={12} />
-          <YAxis />
-          <BarSeries
-            dataKey="value1"
-            options={{
-              stroke: 'red',
-              strokeWidth: 1,
-              roughness: 3,
-            }}
-          />
+    <Paper shadow={'lg'} p="md">
+      <Select
+        label={'Periode'}
+        data={dateRangeOptions}
+        defaultValue={dateRangeOptions[0].value}
+      />
 
-          <Tooltip />
-        </ChartProvider>
-        <TotalRow>
-          <TotalLabel>Sum</TotalLabel>
-          <TotalValue>{numberWithSpaces(3420)},- NOK </TotalValue>
-        </TotalRow>
-      </Layout>
-    </Card>
+      <ChartProvider height={300} width={750} data={parsedData}>
+        <XAxis dataKey="name" tickSize={15} tickCount={12} />
+        <YAxis />
+        <BarSeries
+          dataKey="value1"
+          options={{
+            stroke: 'red',
+            strokeWidth: 1,
+            roughness: 3,
+          }}
+        />
+
+        <Tooltip />
+      </ChartProvider>
+
+      <TotalRow>
+        <TotalLabel>Sum</TotalLabel>
+        <TotalValue>{numberWithSpaces(3420)},- NOK </TotalValue>
+      </TotalRow>
+    </Paper>
   )
 }

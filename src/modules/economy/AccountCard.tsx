@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Card } from 'components/Card'
+import { Paper } from '@mantine/core'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
@@ -89,7 +89,7 @@ export const AccountCard: React.VFC<AccountCardProps> = ({ account }) => {
   }
 
   return (
-    <Card>
+    <Paper p="md">
       <Layout>
         <CardRow>
           <Label>Saldo:</Label>
@@ -108,6 +108,6 @@ export const AccountCard: React.VFC<AccountCardProps> = ({ account }) => {
           </CardInputContainer>
         </CardRow>
       </Layout>
-    </Card>
+    </Paper>
   )
 }
