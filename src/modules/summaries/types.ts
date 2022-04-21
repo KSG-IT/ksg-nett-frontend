@@ -1,17 +1,20 @@
 import { UserNode } from 'modules/users'
 import { RelayEdgesWithPageInfo } from 'types/graphql'
 
-export type SummaryType =
-  | 'DRIFT'
-  | 'BARSJEF'
-  | 'STYRET'
-  | 'SPRITBARSJEF'
-  | 'ANNET'
-  | 'HOVMESTER'
-  | 'KAFEANSVARLIG'
-  | 'SOUSCHEF'
-  | 'ARRANGEMENT'
-  | 'OKONOMI'
+export enum SummaryType {
+  DRIFT = 'DRIFT',
+  BARSJEF = 'BARSJEF',
+  DAGLIGHALLEN = 'DAGLIGHALLEN',
+  STYRET = 'STYRET',
+  SPRITBARSJEF = 'SPRITBARSJEF',
+  HOVMESTER = 'HOVMSTER',
+  KAFEANSVARLIG = 'KAFEANSVARLIG',
+  SOUSCHEF = 'SOUSCHEF',
+  ARRANGEMENT = 'ARRANGEMENT',
+  OKONOMI = 'OKONOMI',
+  KIT = 'KIT',
+  ANNET = 'ANNET',
+}
 
 export interface SummaryNode {
   id: string

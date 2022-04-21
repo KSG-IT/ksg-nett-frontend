@@ -1,9 +1,12 @@
 import { useMutation } from '@apollo/client'
-import { ErrorMessage } from '@hookform/error-message'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Card } from 'components/Card'
+import { Button, Card, Select, Textarea } from '@mantine/core'
+import { DatePicker } from '@mantine/dates'
 import { UserMultiSelect, UserSelect } from 'components/Select'
+import { formatISO } from 'date-fns'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import * as yup from 'yup'
@@ -103,6 +106,10 @@ const TextArea = styled.textarea`
 `
 
 export const CreateSummary = () => {
+  const [date, setDate] = useState<Date | null>(new Date())
+  const [summaryType, setSummaryType] = useState<SummaryType | null>(
+    summaryTypeChoices[0].value
+  )
   const [createSummary] = useMutation<
     CreateSummaryMutationReturns,
     CreateSummaryMutationVariables
@@ -123,8 +130,6 @@ export const CreateSummary = () => {
       .required('Noen må være tilstede'),
     reporter: yup.string().required('Må ha en referent'),
     contents: yup.string().required('Må ha innhold'),
-    type: yup.string(),
-    date: yup.date().required('Referat må ha en dato'),
   })
 
   const {
@@ -146,24 +151,32 @@ export const CreateSummary = () => {
   }
 
   const onSubmit: SubmitHandler<SummaryInput> = async data => {
-    await createSummary({
-      variables: {
-        input: {
-          contents: data.contents,
-          participants: data.participants,
-          reporter: data.reporter,
-          type: data.type,
-          date: data.date,
+    if (date === null || summaryType === null) return
+    toast.promise(
+      createSummary({
+        variables: {
+          input: {
+            contents: data.contents,
+            participants: data.participants,
+            reporter: data.reporter,
+            type: summaryType,
+            date: formatISO(date), //, "yyyy-MM-dd"),
+          },
         },
-      },
-    })
+      }),
+      {
+        loading: 'Oppretter referat',
+        success: 'Referat opprettet',
+        error: 'Noe gikk galt',
+      }
+    )
   }
 
   return (
     <Wrapper>
       <Title>Rediger referat</Title>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Card>
+        <Card sx={() => ({ overflow: 'visible' })}>
           <FormTop>
             <ReporterContainer>
               <label>Referent</label>
@@ -171,11 +184,6 @@ export const CreateSummary = () => {
                 fullwidth
                 userId={getValues('reporter')}
                 setUserCallback={handleUpdateReporter}
-              />
-              <ErrorMessage
-                errors={errors}
-                name="reporter"
-                render={({ message }) => <p>{message}</p>}
               />
             </ReporterContainer>
             <ParticipantsContainer>
@@ -187,30 +195,31 @@ export const CreateSummary = () => {
               />
             </ParticipantsContainer>
             <TypeContainer>
-              <label>Type referat</label>
-              <select {...register('type')}>
-                {summaryTypeChoices.map((choice, i) => (
-                  <option value={choice.value} key={i}>
-                    {choice.label}
-                  </option>
-                ))}
-              </select>
+              <Select
+                value={summaryType}
+                onChange={evt => {
+                  console.log(evt)
+                  setSummaryType(evt as SummaryType)
+                }}
+                label="Type referat"
+                data={summaryTypeChoices}
+              />
             </TypeContainer>
 
             <DateContainer>
-              <label>Dato</label>
-              <input placeholder="YYYY-MM-DD" {...register('date')} />
+              <DatePicker
+                label="Dato"
+                value={date}
+                maxDate={new Date()}
+                onChange={setDate}
+              />
             </DateContainer>
           </FormTop>
         </Card>
 
-        <TextArea {...register('contents')} />
-        <ErrorMessage
-          errors={errors}
-          name="contents"
-          render={({ message }) => <p>{message}</p>}
-        />
-        <button type="submit">Lagre referat</button>
+        <Textarea label="Innhold" minRows={24} {...register('contents')} />
+
+        <Button type="submit">Lagre referat</Button>
       </form>
     </Wrapper>
   )
