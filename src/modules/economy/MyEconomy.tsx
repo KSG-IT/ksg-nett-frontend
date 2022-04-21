@@ -43,11 +43,6 @@ const AccountActivityCard = styled.div`
   padding: 15px;
 `
 
-const AccountActivityEntry = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
 interface SectionProps {
   gridArea: string
 }
