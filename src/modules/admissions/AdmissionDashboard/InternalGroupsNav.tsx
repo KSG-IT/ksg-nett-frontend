@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Card } from 'components/Card'
+import { Box, Group, Paper, Text, Title } from '@mantine/core'
 import { FullContentLoader } from 'components/Loading'
 import { INTERNAL_GROUPS_ACCEPTING_APPLICANTS } from 'modules/admissions/queries'
 import { InternalGroupsAcceptingApplicantsReturns } from 'modules/admissions/types'
@@ -10,8 +10,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `
-
-const Title = styled.h2``
 
 const InternalGroupCardsContainer = styled.div`
   display: flex;
@@ -55,20 +53,28 @@ export const InternalGroupsNav: React.VFC = () => {
 
   return (
     <Wrapper>
-      <Title>Gjenger som har eksternopptak</Title>
-      <InternalGroupCardsContainer>
+      <Title order={2}>Gjenger som har eksternopptak</Title>
+      <Group>
         {internalGroupsAcceptingApplicants.map(group => (
-          <Card>
-            <InternalGroupCard
+          <Box>
+            <Paper
+              sx={() => ({
+                '&:hover': {
+                  // ToDo add a theme
+                  opacity: 0.7,
+                },
+              })}
+              p="xl"
               onClick={() => {
                 handleRedirect(group.id)
               }}
+              style={{ cursor: 'pointer' }}
             >
-              {group.name}
-            </InternalGroupCard>
-          </Card>
+              <Text size="xl">{group.name}</Text>
+            </Paper>
+          </Box>
         ))}
-      </InternalGroupCardsContainer>
+      </Group>
     </Wrapper>
   )
 }
