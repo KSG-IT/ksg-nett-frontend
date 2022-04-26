@@ -1,5 +1,14 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Group, Stack, Textarea, Title } from '@mantine/core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  Button,
+  Group,
+  Paper,
+  Stack,
+  Table,
+  Textarea,
+  Title,
+} from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useState } from 'react'
@@ -26,8 +35,6 @@ const Wrapper = styled.div`
   overflow-y: scroll;
 `
 
-const AddApplicantArea = styled.textarea``
-
 export const AdmissionDashboard: React.VFC = () => {
   // Should display information about ongoing admission
   // admins should be able to open up a new admission if it does not exist
@@ -41,7 +48,7 @@ export const AdmissionDashboard: React.VFC = () => {
     }
   )
 
-  const [admissionNextPhase] = useMutation<
+  const [admissionNextPhase, { loading: nextPhaseLoading }] = useMutation<
     PatchAdmissionReturns,
     PatchMutationVariables<PatchAdmissionInput>
   >(PATCH_ADMISSION)
@@ -66,9 +73,17 @@ export const AdmissionDashboard: React.VFC = () => {
   }
 
   const handleAdmissionNextPhase = (admissionId: string) => {
-    admissionNextPhase({
-      variables: { id: admissionId, input: { status: 'IN_SESSION' } },
-    })
+    toast.promise(
+      admissionNextPhase({
+        variables: { id: admissionId, input: { status: 'IN_SESSION' } },
+        refetchQueries: ['ActiveAdmission'],
+      }),
+      {
+        error: 'Noe gikk galt',
+        loading: 'Avslutter intervjuperioden',
+        success: 'Intervjuperiode stengt!',
+      }
+    )
   }
 
   const { activeAdmission } = data
@@ -96,12 +111,30 @@ export const AdmissionDashboard: React.VFC = () => {
     <Wrapper>
       <Title>Opptak</Title>
       <InternalGroupsNav />
-      <Stack>
+      <Title order={2} mt="md">
+        Mine kommende intervjuer
+      </Title>
+      <Paper p="md">
+        <Table>
+          <thead>
+            <td>Tidspunkt</td>
+            <td>Lokale</td>
+            <td>Søker</td>
+          </thead>
+          <tbody>
+            <td>Ikke</td>
+            <td>Implementert</td>
+            <td>Enda</td>
+          </tbody>
+        </Table>
+      </Paper>
+      <Stack mt="md">
         <Title order={2}>Søkere</Title>
         <ActiveAdmissionTable admission={activeAdmission} />
       </Stack>
       <Stack>
         <Title order={2}>Legg til søkere</Title>
+        {/* ToDo: Replace with dropzone? Drop -> opens modal with all emails? */}
         <Textarea
           minRows={12}
           placeholder="søker1@epost.com&#10;søker2@epost.com&#10;..."
@@ -109,8 +142,15 @@ export const AdmissionDashboard: React.VFC = () => {
           onChange={evt => setEmails(evt.target.value)}
         />
         <Group>
-          <Button onClick={handleCreateApplications}>Send epost</Button>
           <Button
+            leftIcon={<FontAwesomeIcon icon="paper-plane" />}
+            onClick={handleCreateApplications}
+          >
+            Send epost
+          </Button>
+          <Button
+            leftIcon={<FontAwesomeIcon icon="clock" />}
+            disabled={nextPhaseLoading}
             onClick={() => {
               handleAdmissionNextPhase(activeAdmission.id)
             }}
