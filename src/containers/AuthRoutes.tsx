@@ -7,6 +7,8 @@ import { InternalGroupDiscussion } from 'modules/admissions/DiscussionDashboard/
 import { InternalGroupApplicants } from 'modules/admissions/InternalGroupApplicants'
 import { Dashboard } from 'modules/dashboard'
 import { Deposits, MyEconomy } from 'modules/economy'
+import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
+import { InternalGroups } from 'modules/organization/InternalGroups'
 import {
   CreateQuote,
   PopularQuotes,
@@ -39,14 +41,15 @@ export const AuthRoutes: React.VFC = () => {
       <PrivateRoute exact path="/quotes/popular" component={PopularQuotes} />
 
       {/* Internal groups module */}
-      <PrivateRoute exact path="/internal-groups" component={FullPage404} />
+      <PrivateRoute exact path="/internal-groups" component={InternalGroups} />
       <PrivateRoute
         exact
         path="/internal-groups/:internalGroupId"
-        component={FullPage404}
+        component={InternalGroupDetail}
       />
 
       {/* Schedules module */}
+
       <PrivateRoute exact path="/schedules" component={FullPage404} />
 
       {/* Economy module */}
