@@ -3,7 +3,7 @@ import { ALL_INTERNAL_GROUP_POSITIONS } from 'modules/organization/queries'
 import { AllInternalGroupPositionsReturns } from 'modules/organization/types'
 import Select from 'react-select'
 import styled from 'styled-components'
-import { internalGroupToSelectOptions } from 'util/organization'
+import { internalGroupPositionToSelectOptions } from 'util/organization'
 
 interface WrapperProps {
   fullwidth: boolean
@@ -41,7 +41,9 @@ export const InternalGroupPositionSelect: React.VFC<
     ALL_INTERNAL_GROUP_POSITIONS
   )
 
-  const options = internalGroupToSelectOptions(data?.allInternalGroupPositions)
+  const options = internalGroupPositionToSelectOptions(
+    data?.allInternalGroupPositions
+  )
   const initialValue = options.find(
     option => option.value == internalGroupPositionId
   )

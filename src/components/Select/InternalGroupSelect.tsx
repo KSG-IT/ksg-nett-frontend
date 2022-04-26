@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { ALL_INTERNAL_GROUPS } from 'modules/organization/queries'
+import { ALL_INTERNAL_GROUPS_QUERY } from 'modules/organization/queries'
 import { AllInternalGroupsReturns } from 'modules/organization/types'
 import Select from 'react-select'
 import styled from 'styled-components'
@@ -35,8 +35,9 @@ export const InternalGroupSelect: React.VFC<InternalGroupSelectProps> = ({
   width = '400px',
   setInternalGroupCallback,
 }) => {
-  const { loading, data } =
-    useQuery<AllInternalGroupsReturns>(ALL_INTERNAL_GROUPS)
+  const { loading, data } = useQuery<AllInternalGroupsReturns>(
+    ALL_INTERNAL_GROUPS_QUERY
+  )
 
   const options = internalGroupToSelectOptions(data?.allInternalGroups)
   const initialValue = options.find(option => option.value == internalGroupId)

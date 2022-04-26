@@ -1,4 +1,5 @@
 import { useLazyQuery } from '@apollo/client'
+import { Center, Loader, Table } from '@mantine/core'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 import { MANAGE_USERS_DATA_QUERY } from './queries'
@@ -11,29 +12,6 @@ const TableHeaderRow = styled.div`
   font-size: 18px;
   font-weight: 600;
   gap: 10px;
-`
-
-const TableHeaderCell = styled.div``
-
-const TableRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  font-size: 16px;
-  font-weight: 400;
-  gap: 10px;
-  height: 35px;
-  align-items: center;
-`
-
-const Table = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background-color: ${props => props.theme.colors.white};
-`
-
-const TableCell = styled.div`
-  font-size: 16px;
 `
 
 interface UserManagementTableProps {
@@ -62,30 +40,35 @@ export const UserManagementTable: React.VFC<UserManagementTableProps> = ({
 
   const usersData = data?.manageUsersData ?? []
 
+  const tableRows = usersData.map(membership => (
+    <tr key={membership.userId}>
+      <td>{membership.fullName}</td>
+      <td>{membership.positionName}</td>
+      <td>{membership.internalGroupPositionType}</td>
+      <td>{membership.dateJoinedSemesterShorthand}</td>
+      <UserManagementTableRow userData={membership} />
+    </tr>
+  ))
+
   return (
     <Table>
       {/* Should parse data in here and show loading state here */}
-      <TableHeaderRow>
-        <TableHeaderCell>Navn</TableHeaderCell>
-        <TableHeaderCell>Verv</TableHeaderCell>
-        <TableHeaderCell>Type</TableHeaderCell>
-        <TableHeaderCell>Startet</TableHeaderCell>
-        <TableHeaderCell></TableHeaderCell>
-      </TableHeaderRow>
-
-      {loading ? (
-        <span>Henter brukere...</span>
-      ) : (
-        usersData.map(userData => (
-          <TableRow>
-            <TableCell>{userData.fullName}</TableCell>
-            <TableCell>{userData.positionName}</TableCell>
-            <TableCell>{userData.internalGroupPositionType}</TableCell>
-            <TableCell>{userData.dateJoinedSemesterShorthand}</TableCell>
-            <UserManagementTableRow userData={userData} />
-          </TableRow>
-        ))
-      )}
+      <thead>
+        <td>Navn</td>
+        <td>Verv</td>
+        <td>Type</td>
+        <td>Startet</td>
+        <td></td>
+      </thead>
+      <tbody>
+        {loading ? (
+          <Center>
+            <Loader /> henter brukere
+          </Center>
+        ) : (
+          tableRows
+        )}
+      </tbody>
     </Table>
   )
 }
