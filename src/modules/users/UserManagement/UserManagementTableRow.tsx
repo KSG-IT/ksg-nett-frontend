@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/client'
+import { Button } from '@mantine/core'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
@@ -60,22 +61,26 @@ export const UserManagementTableRow: React.VFC<UserManagementTableRowProp> = ({
   }
 
   return (
-    <Wrapper>
-      <InternalGroupPositionTypeSelect
-        onChange={setSelectedInternalGroupPositionType}
-        selected={selectedInternalGroupPositionType}
-      />
+    <>
+      <td>
+        <InternalGroupPositionTypeSelect
+          onChange={setSelectedInternalGroupPositionType}
+          selected={selectedInternalGroupPositionType}
+        />
+      </td>
 
-      <button
-        onClick={() => {
-          handleAssignNewPosition()
-        }}
-        disabled={loading}
-      >
-        Endre status
-      </button>
-      {/* Button should set the date ended for this membership to now */}
-      <button>Ferdig med KSG</button>
-    </Wrapper>
+      <td>
+        <Button
+          onClick={() => {
+            handleAssignNewPosition()
+          }}
+          disabled={loading}
+        >
+          Endre status
+        </Button>
+        {/* Button should set the date ended for this membership to now */}
+        <Button color="red">Ferdig med KSG</Button>
+      </td>
+    </>
   )
 }
