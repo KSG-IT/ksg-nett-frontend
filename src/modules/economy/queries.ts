@@ -25,8 +25,8 @@ export const MY_BANK_ACCOUNT_QUERY = gql`
 `
 
 export const ALL_DEPOSITS = gql`
-  query AllDeposits {
-    allDeposits {
+  query AllDeposits($q: String, $unverifiedOnly: Boolean) {
+    allDeposits(q: $q, unverifiedOnly: $unverifiedOnly) {
       edges {
         node {
           id

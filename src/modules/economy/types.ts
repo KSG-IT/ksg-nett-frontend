@@ -100,6 +100,11 @@ export interface AllDepositsQuery {
   allDeposits: RelayEdges<DepositNode>
 }
 
+export interface AllDepositsVariables {
+  q: string
+  unverifiedOnly: boolean
+}
+
 export interface AllProductOrdersQuery {
   allProductOrders: RelayEdges<ProductOrderNode>
 }
