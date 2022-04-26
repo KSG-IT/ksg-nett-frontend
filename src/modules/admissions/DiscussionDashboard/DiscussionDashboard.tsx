@@ -1,4 +1,15 @@
 import { useMutation, useQuery } from '@apollo/client'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  Avatar,
+  Button,
+  Group,
+  Paper,
+  RingProgress,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useHistory } from 'react-router-dom'
@@ -6,21 +17,9 @@ import styled from 'styled-components'
 import { LOCK_ADMISSION_MUTATION } from '../AdmissionDashboard/mutations'
 import { AllInternalGroupsAcceptingApplicantsReturns } from '../types'
 import { ALL_INTERNAL_GROUP_APPLICANT_DATA } from './queries'
+
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};
-`
-
-const Title = styled.h1``
-
-const InternalGroupStatsContainer = styled.div`
-  padding: 10px;
-  background-color: ${props => props.theme.colors.white};
-  margin: 5px;
-
-  &:hover {
-    cursor: pointer;
-    opacity: 0.8;
-  }
 `
 
 export const DiscussionDashboard: React.VFC = () => {
@@ -52,24 +51,56 @@ export const DiscussionDashboard: React.VFC = () => {
   const { allInternalGroupApplicantData } = data
   return (
     <Wrapper>
-      <Title>Fordelingsmøtet</Title>
-      <button onClick={() => lockAdmission()}>Fordelingsmøtet er ferdig</button>
-      {allInternalGroupApplicantData.map(data => (
-        // Should probably be a new query which shows different stats
-        <InternalGroupStatsContainer
-          key={data.internalGroup.id}
-          onClick={() => handleRedirect(data.internalGroup.id)}
-        >
-          <h3>{data.internalGroup.name}</h3>
-          <span>Søkere bestemt så langt {data.currentProgress}</span>
-          <span>Antall søkere de skal ta opp {data.positionsToFill}</span>
-
-          {/* HEre we can display number of applicants.
-          How many they are taking up and how far they have left. By clicking on it
-          we can move to a detail page which is a panel listing applicants they ahve to cover
-           and can mark as "do want" or sent furthe ralong*/}
-        </InternalGroupStatsContainer>
-      ))}
+      <Group position="apart" mb="md">
+        <Title>Fordelingsmøtet</Title>
+        <Button onClick={() => lockAdmission()}>
+          Fordelingsmøtet er ferdig
+        </Button>
+      </Group>
+      <Stack>
+        {allInternalGroupApplicantData.map(data => (
+          <Paper p="sm" key={data.internalGroup.id}>
+            <Stack>
+              <Title order={1}>{data.internalGroup.name}</Title>
+              <Group>
+                <RingProgress
+                  label={
+                    <Text size="xs" align="center">
+                      Progresjon
+                    </Text>
+                  }
+                  sections={[{ value: data.positionsToFill, color: 'orange' }]}
+                />
+                <Stack>
+                  <Title order={2}>MVP's</Title>
+                  {/* Can show who in each group has the most interview */}
+                  <Group>
+                    {['AO', 'SS', 'SH'].map(initials => (
+                      <Stack>
+                        <Avatar radius="xl" color="cyan">
+                          {initials}
+                        </Avatar>
+                        <Text weight={600} size="sm">
+                          Navn navnesen
+                        </Text>
+                        <Text size="xs">23 intervjuer</Text>
+                      </Stack>
+                    ))}
+                  </Group>
+                </Stack>
+              </Group>
+              <Group position="right">
+                <Button
+                  leftIcon={<FontAwesomeIcon icon="eye" />}
+                  onClick={() => handleRedirect(data.internalGroup.id)}
+                >
+                  Mer detaljer
+                </Button>
+              </Group>
+            </Stack>
+          </Paper>
+        ))}
+      </Stack>
     </Wrapper>
   )
 }
