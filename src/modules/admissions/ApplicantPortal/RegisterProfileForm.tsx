@@ -1,6 +1,16 @@
 import { useMutation } from '@apollo/client'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button } from 'components/Button'
+import {
+  Alert,
+  Button,
+  Group,
+  Input,
+  Stack,
+  TextInput,
+  Title,
+} from '@mantine/core'
+import { DatePicker } from '@mantine/dates'
 import { format } from 'date-fns'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -29,22 +39,9 @@ const Wrapper = styled.div`
   }
 `
 
-const FormInput = styled.input`
-  height: 35px;
-  border-radius: 8px;
-`
-
 const FormInputLabel = styled.label`
   font-size: 14px;
   font-weight: 500;
-`
-
-const FormInputArea = styled.div`
-  display: flex;
-  width: 100%;
-  hiehgt: 100%;
-  flex-direction: column;
-  justify-content: center;
 `
 
 type RegisterProfileFormInput = {
@@ -60,10 +57,12 @@ type RegisterProfileFormInput = {
 
 interface RegisterProfileFormProps {
   applicant: ApplicantNode
+  nextStepCallback: () => void
 }
 
 export const RegisterProfileForm: React.VFC<RegisterProfileFormProps> = ({
   applicant,
+  nextStepCallback,
 }) => {
   // Todo
   // 1. Implement react hook for
@@ -107,45 +106,29 @@ export const RegisterProfileForm: React.VFC<RegisterProfileFormProps> = ({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <Wrapper>
-        <FormInputArea>
-          <FormInputLabel>Fornavn</FormInputLabel>
-          <FormInput {...register('firstName')} />
-        </FormInputArea>
-        <FormInputArea>
-          <FormInputLabel>Etternavn</FormInputLabel>
-          <FormInput {...register('lastName')} />
-        </FormInputArea>
-        <FormInputArea>
-          <FormInputLabel>Adresse</FormInputLabel>
-          <FormInput {...register('address')} />
-        </FormInputArea>
-        <FormInputArea>
-          <FormInputLabel>Hjemby</FormInputLabel>
-          <FormInput {...register('hometown')} />
-        </FormInputArea>
-        <FormInputArea>
-          <FormInputLabel>Studie</FormInputLabel>
-          <FormInput {...register('study')} />
-        </FormInputArea>
-        <FormInputArea>
-          <FormInputLabel>Fødselsdato</FormInputLabel>
-          <FormInput placeholder="YYYY-MM-DD" {...register('dateOfBirth')} />
-        </FormInputArea>
-        <FormInputArea>
-          <FormInputLabel>Telefon</FormInputLabel>
-          <FormInput {...register('phone')} />
-        </FormInputArea>
-        <FormInputArea>
-          <FormInputLabel>Bilde</FormInputLabel>
-          <input type="file" {...register('image')}></input>
-        </FormInputArea>
-
-        <FormInputArea>
-          <Button type="submit">Fullfør profil</Button>
-        </FormInputArea>
-      </Wrapper>
-    </form>
+    <Stack>
+      <Title>Registrer personalia</Title>
+      <Alert icon={<FontAwesomeIcon icon="info" />}>
+        All personlig informasjon blir slettet i etterkant av opptaket.
+      </Alert>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <TextInput label="Fornavn" {...register('firstName')} />
+        <TextInput label="Etternavn" {...register('lastName')} />
+        <TextInput label="Adresse" {...register('address')} />
+        <TextInput label="Hjemby" {...register('hometown')} />
+        <TextInput label="Studie" {...register('study')} />
+        <DatePicker
+          label="Fødselsdato"
+          placeholder="Velg en dato"
+          {...register('dateOfBirth')}
+        />
+        <TextInput label="Telefon" {...register('phone')} />
+        <FormInputLabel>Bilde</FormInputLabel>
+        <Input type="file" {...register('image')}></Input>
+        <Group position="right" mt="md">
+          <Button type="submit">Lagre informasjon</Button>
+        </Group>
+      </form>
+    </Stack>
   )
 }

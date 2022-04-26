@@ -1,6 +1,9 @@
 import { useMutation, useQuery } from '@apollo/client'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Alert, Button, Group, Stack, Text, Title } from '@mantine/core'
 import { PATCH_APPLICANT } from 'modules/admissions/mutations'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import styled from 'styled-components'
 import { ApplicantNode, InternalGroupPositionPriorityNode } from '../types'
 import {
@@ -31,9 +34,13 @@ interface InternalGroupPosition {
 
 interface SetPrioritiesProps {
   applicant: ApplicantNode
+  nextStepCallback: () => void
 }
 
-export const SetPriorities: React.VFC<SetPrioritiesProps> = ({ applicant }) => {
+export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
+  applicant,
+  nextStepCallback,
+}) => {
   // === Local state variables ===
   // Initial priority state are applicant non-null priorities
   const [priorities, setPriorities] = useState<
@@ -86,6 +93,10 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({ applicant }) => {
       },
     },
     refetchQueries: ['GetApplicantFromToken'],
+    onCompleted() {
+      nextStepCallback()
+      toast.success('Lagret prioriteringer!')
+    },
   })
 
   const [deleteInternalGroupPriority] = useMutation(
@@ -114,7 +125,7 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({ applicant }) => {
     deleteInternalGroupPriority({ variables: { id: priorityId } })
   }
 
-  const handleMoveToInterviweBooking = () => {
+  const handleNextStep = () => {
     applicantNextPhase()
   }
 
@@ -123,42 +134,48 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({ applicant }) => {
   const canAddPriority = priorities.length < 3
 
   return (
-    <Wrapper>
-      <PriorityContainer>
-        {priorities.map(priority => {
-          return (
-            <span>
-              {priority.internalGroupPosition.name}
-              <button
-                onClick={() => {
-                  handleDeletePriority(priority.id)
-                }}
-              >
-                Slett prioritet
-              </button>
-            </span>
-          )
-        })}
-      </PriorityContainer>
-      {canAddPriority && (
-        <div>
+    <Stack>
+      <Alert color="blue">
+        Du må minst ha 1 stilling før du kan booke intervju, og kan ikke ha mer
+        enn 3.
+      </Alert>
+      {priorities.map(priority => {
+        return (
+          <Group position="apart">
+            <Text>{priority.internalGroupPosition.name}</Text>
+            <Button
+              color="red"
+              leftIcon={<FontAwesomeIcon icon="trash-alt" />}
+              onClick={() => {
+                handleDeletePriority(priority.id)
+              }}
+            >
+              Slett prioritet
+            </Button>
+          </Group>
+        )
+      })}
+      <Stack>
+        <Title order={3}>Tilgjengelige stillinger</Title>
+        <Group>
           {filteredInternalGroupPositions.map(position => (
-            <button
+            <Button
               key={position.name}
+              color="green"
               onClick={() => {
                 handleAddPriority(position.id)
               }}
+              disabled={!canAddPriority}
             >
               {position.name}
-            </button>
+            </Button>
           ))}
-        </div>
-      )}
-      {canMoveOn ? (
-        <button onClick={handleMoveToInterviweBooking}>Book intervju</button>
-      ) : (
-        'Du må minst ha 1 stilling før du kan booke intervju'
-      )}
-    </Wrapper>
+        </Group>
+      </Stack>
+
+      <Button onClick={handleNextStep} disabled={!canMoveOn}>
+        Book intervju
+      </Button>
+    </Stack>
   )
 }
