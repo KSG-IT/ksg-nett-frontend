@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Paper, Select } from '@mantine/core'
 import { format } from 'date-fns'
-import { BarSeries, ChartProvider, Tooltip, XAxis, YAxis } from 'rough-charts'
+import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts'
 import styled from 'styled-components'
 import { numberWithSpaces } from 'util/parsing'
 import { MY_EXPENDITURES } from './queries'
@@ -56,8 +56,8 @@ export const MyExpenditures: React.VFC = () => {
   ]
 
   const parsedData = data.myExpenditures.data.map(day => ({
-    name: format(new Date(day.day), 'd'),
-    value1: day.sum,
+    name: format(new Date(day.day), 'd MMM'),
+    value: day.sum,
   }))
 
   return (
@@ -68,20 +68,12 @@ export const MyExpenditures: React.VFC = () => {
         defaultValue={dateRangeOptions[0].value}
       />
 
-      <ChartProvider height={300} width={750} data={parsedData}>
-        <XAxis dataKey="name" tickSize={15} tickCount={12} />
-        <YAxis />
-        <BarSeries
-          dataKey="value1"
-          options={{
-            stroke: 'red',
-            strokeWidth: 1,
-            roughness: 3,
-          }}
-        />
-
-        <Tooltip />
-      </ChartProvider>
+      <BarChart width={700} height={300} data={parsedData}>
+        <Bar dataKey={'value'} fill={'hotpink'} unit=",- NOK" />
+        <XAxis dataKey={'name'} />
+        <YAxis dataKey={'value'} />
+        <Tooltip filterNull />
+      </BarChart>
 
       <TotalRow>
         <TotalLabel>Sum</TotalLabel>
