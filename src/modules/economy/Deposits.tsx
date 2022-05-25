@@ -1,14 +1,32 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Group, Paper, Table, Title } from '@mantine/core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  Button,
+  Checkbox,
+  Group,
+  Paper,
+  Table,
+  TextInput,
+  Title,
+} from '@mantine/core'
+import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { format } from 'date-fns'
 import { SIDEBAR_QUERY } from 'modules/sidebar/SidebarNav'
 import { ME_QUERY } from 'modules/users'
+import { useState } from 'react'
 import { useStore } from 'store'
 import styled from 'styled-components'
 import { MEDIA_URL } from 'util/env'
+import { useDebounce } from 'util/hooks'
 import { numberWithSpaces } from 'util/parsing'
-import { AllDepositsQuery, ALL_DEPOSITS, DepositNode, PATCH_DEPOSIT } from '.'
+import {
+  AllDepositsQuery,
+  AllDepositsVariables,
+  ALL_DEPOSITS,
+  DepositNode,
+  PATCH_DEPOSIT,
+} from '.'
 
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};
@@ -20,92 +38,10 @@ const Wrapper = styled.div`
   }
 `
 
-const DepositTableArea = styled.div`
-  grid-area: table;
-`
-
-const DepositTable = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  padding: 16px;
-  background-color: ${props => props.theme.colors.white};
-  box-shadow: ${props => props.theme.shadow.default};
-`
-
-const DepositTableHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-`
-
-const DepositTableHeaderCell = styled.div<HideOnMobile>`
-  font-size: 18px;
-  font-weight: 600;
-  width: 150px;
-
-  ${props => props.theme.media.mobile} {
-    display: ${props => (props.shouldHide ? 'none' : 'flex')};
-  }
-`
-
-const DepositTableBody = styled.div``
-
-const DepositTableRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin-bottom: 5px;
-`
-
-interface HideOnMobile {
-  shouldHide?: boolean
-}
-
-const DepositTableCell = styled.div<HideOnMobile>`
-  width: 150px;
-
-  ${props => props.theme.media.mobile} {
-    display: ${props => (props.shouldHide ? 'none' : 'flex')};
-  }
-`
-
-const ActionButton1 = styled.button`
-  grid-area: button1;
-  background-color: ${props => props.theme.colors.purpleAction};
-  color: white;
-  border: none;
-  border-radius: 4px;
-  height: 35px;
-`
-
-const ActionButton2 = styled.button`
-  grid-area: button2;
-  border: none;
-  border-radius: 4px;
-  height: 35px;
-  background-color: ${props => props.theme.colors.purple};
-  color: ${props => props.theme.colors.white};
-`
-
-interface DepositActionButtonProps {
-  status: boolean
-}
-
-const DepositActionButton = styled.button<DepositActionButtonProps>`
-  border: none;
-  border-radius: 4px;
-  height: 35px;
-  width: 90px;
-  color: white;
-  background-color: ${props =>
-    props.status
-      ? props.theme.colors.warningRed
-      : props.theme.colors.purpleAction};
-  cursor: pointer;
-`
-
-export const Deposits = () => {
+export const Deposits: React.VFC = () => {
+  const [unverifiedOnly, setUnverifiedOnly] = useState(true)
+  const [query, setQuery] = useState('')
+  const debouncedQuery = useDebounce(query)
   const [patchDeposit] = useMutation(PATCH_DEPOSIT, {
     refetchQueries: [
       { query: ALL_DEPOSITS },
@@ -142,10 +78,19 @@ export const Deposits = () => {
     }
   }
 
-  const { data, loading, error } = useQuery<AllDepositsQuery>(ALL_DEPOSITS)
+  const { data, loading, error } = useQuery<
+    AllDepositsQuery,
+    AllDepositsVariables
+  >(ALL_DEPOSITS, {
+    variables: {
+      q: debouncedQuery,
+      unverifiedOnly: unverifiedOnly,
+    },
+  })
 
-  if (error) return <span>Error</span>
+  if (error) return <FullPageError />
 
+  // Loading state should be moved into table
   if (loading || !data) return <FullContentLoader />
 
   const deposits = data?.allDeposits.edges.map(edge => edge.node) ?? []
@@ -169,13 +114,24 @@ export const Deposits = () => {
         )}
       </td>
       <td>
-        <Button
-          onClick={() => {
-            handlePatchDeposit(deposit)
-          }}
-        >
-          Godkjenn
-        </Button>
+        {deposit.approved ? (
+          <Button
+            onClick={() => {
+              handlePatchDeposit(deposit)
+            }}
+          >
+            Godkjenn
+          </Button>
+        ) : (
+          <Button
+            color="red"
+            onClick={() => {
+              handlePatchDeposit(deposit)
+            }}
+          >
+            Underkjenn
+          </Button>
+        )}
       </td>
     </tr>
   ))
@@ -184,8 +140,22 @@ export const Deposits = () => {
     <Wrapper>
       <Group position="apart">
         <Title>Innskudd</Title>
-        <Button>Godkjente innskudd</Button>
       </Group>
+      <Paper p="md" mb="sm" mt="sm">
+        <Group align="center">
+          <TextInput
+            value={query}
+            onChange={evt => setQuery(evt.target.value)}
+            icon={<FontAwesomeIcon icon="search" />}
+            placeholder="Søk etter bruker..."
+          />
+          <Checkbox
+            label="Bare ikke godkjente"
+            checked={unverifiedOnly}
+            onChange={() => setUnverifiedOnly(!unverifiedOnly)}
+          />
+        </Group>
+      </Paper>
       <Paper p="md">
         <Table>
           <thead>
