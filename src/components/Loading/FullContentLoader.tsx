@@ -1,5 +1,5 @@
+import { Loader } from '@mantine/core'
 import styled from 'styled-components'
-
 const Wrapper = styled.div`
   margin: auto;
   font-size: 28px;
@@ -7,5 +7,9 @@ const Wrapper = styled.div`
 `
 
 export const FullContentLoader: React.VFC = () => {
-  return <Wrapper>LOADING...</Wrapper>
+  return (
+    <Wrapper>
+      <Loader />
+    </Wrapper>
+  )
 }

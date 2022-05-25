@@ -1,41 +1,23 @@
 import { useMutation, useQuery } from '@apollo/client'
+import { Button, Group, Paper, Table, Title } from '@mantine/core'
+import { FullContentLoader } from 'components/Loading'
 import { format } from 'date-fns'
 import { SIDEBAR_QUERY } from 'modules/sidebar/SidebarNav'
-import { ME_QUERY, UserThumbnail } from 'modules/users'
-import { UserNode } from 'modules/users/types'
+import { ME_QUERY } from 'modules/users'
 import { useStore } from 'store'
 import styled from 'styled-components'
 import { MEDIA_URL } from 'util/env'
+import { numberWithSpaces } from 'util/parsing'
 import { AllDepositsQuery, ALL_DEPOSITS, DepositNode, PATCH_DEPOSIT } from '.'
 
 const Wrapper = styled.div`
-  display: grid;
-  width: 100%;
+  ${props => props.theme.layout.default};
   overflow-y: scroll;
-  height: 100%;
-  padding: 32px 32px 32px 32px;
-
-  grid-template-areas:
-    'title . . .'
-    'toolbar toolbar button1 button2'
-    'table table table table';
-  grid-template-rows: 75px 75px auto;
-  grid-template-columns: repeat(4, 1fr);
-  ${props => props.theme.media.mobile} {
-    display: flex;
-    flex-direction: column;
-    padding: 16px 32px 0 16px;
-  }
 
   ${props => props.theme.media.mobile} {
     display: flex;
     flex-direction: column;
   }
-`
-
-const Title = styled.h1`
-  margin: 0;
-  grid-area: title;
 `
 
 const DepositTableArea = styled.div`
@@ -164,82 +146,58 @@ export const Deposits = () => {
 
   if (error) return <span>Error</span>
 
-  if (loading || !data) return <span>Loading...</span>
+  if (loading || !data) return <FullContentLoader />
 
   const deposits = data?.allDeposits.edges.map(edge => edge.node) ?? []
 
+  const rows = deposits.map(deposit => (
+    <tr>
+      <td>{format(new Date(deposit.createdAt), 'MM.dd')}</td>
+      <td>{deposit.account.user.fullName}</td>
+      <td>{numberWithSpaces(deposit.amount)},- NOK</td>
+      <td>
+        {deposit.receipt ? (
+          <a
+            href={`${MEDIA_URL}${deposit.receipt}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Kvittering
+          </a>
+        ) : (
+          'Ingen kvittering'
+        )}
+      </td>
+      <td>
+        <Button
+          onClick={() => {
+            handlePatchDeposit(deposit)
+          }}
+        >
+          Godkjenn
+        </Button>
+      </td>
+    </tr>
+  ))
+
   return (
     <Wrapper>
-      <Title>Deposits</Title>
-      <ActionButton1>Some acton</ActionButton1>
-      <ActionButton2>Another action</ActionButton2>
-
-      <DepositTableArea>
-        <DepositTable>
-          <DepositTableHeader>
-            <DepositTableHeaderCell>Dato</DepositTableHeaderCell>
-            <DepositTableHeaderCell>Person</DepositTableHeaderCell>
-            <DepositTableHeaderCell>Beløp</DepositTableHeaderCell>
-            <DepositTableHeaderCell shouldHide>
-              Kvittering
-            </DepositTableHeaderCell>
-            <DepositTableHeaderCell>Godkjent av</DepositTableHeaderCell>
-            <DepositTableHeaderCell>Handling</DepositTableHeaderCell>
-          </DepositTableHeader>
-
-          <DepositTableBody>
-            {deposits.map((deposit, i) => (
-              <DepositTableRow key={i}>
-                <DepositTableCell shouldHide>
-                  {format(new Date(deposit.createdAt), 'dd.MM')}
-                </DepositTableCell>
-                <DepositTableCell shouldHide={false}>
-                  {deposit.account.user.fullName}
-                </DepositTableCell>
-                <DepositTableCell shouldHide={false}>
-                  {deposit.amount},- NOK
-                </DepositTableCell>
-                <DepositTableCell shouldHide={false}>
-                  {deposit.receipt ? (
-                    <a
-                      href={`${MEDIA_URL}${deposit.receipt}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Kvittering
-                    </a>
-                  ) : (
-                    'Ingen kvittering'
-                  )}
-                </DepositTableCell>
-                <DepositTableCell shouldHide={true}>
-                  {deposit.approved ? (
-                    <UserThumbnail
-                      size="small"
-                      user={
-                        deposit.signedOffBy as Pick<
-                          UserNode,
-                          'id' | 'profileImage' | 'initials'
-                        >
-                      }
-                    />
-                  ) : null}
-                </DepositTableCell>
-                <DepositTableCell shouldHide={false}>
-                  <DepositActionButton
-                    status={deposit.approved}
-                    onClick={() => {
-                      handlePatchDeposit(deposit)
-                    }}
-                  >
-                    {deposit.approved ? 'Underkjenn' : 'Godkjenn'}
-                  </DepositActionButton>
-                </DepositTableCell>
-              </DepositTableRow>
-            ))}
-          </DepositTableBody>
-        </DepositTable>
-      </DepositTableArea>
+      <Group position="apart">
+        <Title>Innskudd</Title>
+        <Button>Godkjente innskudd</Button>
+      </Group>
+      <Paper p="md">
+        <Table>
+          <thead>
+            <td>Dato</td>
+            <td>Navn</td>
+            <td>Beløp</td>
+            <td>Kvittering</td>
+            <td></td>
+          </thead>
+          <tbody>{rows}</tbody>
+        </Table>
+      </Paper>
     </Wrapper>
   )
 }

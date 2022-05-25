@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
+import { Button, Group, Stack, Textarea, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useState } from 'react'
@@ -93,22 +94,31 @@ export const AdmissionDashboard: React.VFC = () => {
 
   return (
     <Wrapper>
-      <button
-        onClick={() => {
-          handleAdmissionNextPhase(activeAdmission.id)
-        }}
-      >
-        Intervjuperioden er over
-      </button>
+      <Title>Opptak</Title>
       <InternalGroupsNav />
-      <label>Legg til epostadrersse</label>
-      <AddApplicantArea
-        value={emails}
-        onChange={evt => setEmails(evt.target.value)}
-      />
-      <button onClick={handleCreateApplications}>Legg til nye søkere</button>
-
-      <ActiveAdmissionTable admission={activeAdmission} />
+      <Stack>
+        <Title order={2}>Søkere</Title>
+        <ActiveAdmissionTable admission={activeAdmission} />
+      </Stack>
+      <Stack>
+        <Title order={2}>Legg til søkere</Title>
+        <Textarea
+          minRows={12}
+          placeholder="søker1@epost.com&#10;søker2@epost.com&#10;..."
+          value={emails}
+          onChange={evt => setEmails(evt.target.value)}
+        />
+        <Group>
+          <Button onClick={handleCreateApplications}>Send epost</Button>
+          <Button
+            onClick={() => {
+              handleAdmissionNextPhase(activeAdmission.id)
+            }}
+          >
+            Intervjuperioden er over
+          </Button>
+        </Group>
+      </Stack>
     </Wrapper>
   )
 }

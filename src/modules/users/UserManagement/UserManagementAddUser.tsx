@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { Button } from 'components/Button'
+import { Button, Group } from '@mantine/core'
 import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -14,15 +14,18 @@ import {
   AssignNewInternalGroupPositionMembershipVariables,
 } from './types'
 
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-`
+const Wrapper = styled.div``
 
 const Title = styled.h1`
   margin: 0;
 `
 
-export const UserManagementAddUser: React.VFC = () => {
+interface UserManagementAddUserProps {
+  setModalOpen: (open: boolean) => void
+}
+export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
+  setModalOpen,
+}) => {
   /**
    * 1. Select user
    * 2. Select internal group position
@@ -42,7 +45,7 @@ export const UserManagementAddUser: React.VFC = () => {
     AssignNewInternalGroupPositionMembershipVariables
   >(ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP, {
     onCompleted() {
-      history.push('/users/manage')
+      setModalOpen(false)
     },
   })
 
@@ -72,19 +75,14 @@ export const UserManagementAddUser: React.VFC = () => {
         selected={selectedInternalGroupPositionType}
         onChange={setSelectedInternalGroupPositionType}
       />
-      <Button
-        buttonStyle="cancel"
-        onClick={() => history.push('/users/manage')}
-      >
-        Avbryt
-      </Button>
-      <Button
-        onClick={handleAssignNewPosition}
-        buttonStyle="primary"
-        disabled={loading}
-      >
-        Lagre
-      </Button>
+      <Group mt="md" position="right">
+        <Button color="gray" onClick={() => setModalOpen(false)}>
+          Avbryt
+        </Button>
+        <Button onClick={handleAssignNewPosition} disabled={loading}>
+          Lagre
+        </Button>
+      </Group>
     </Wrapper>
   )
 }

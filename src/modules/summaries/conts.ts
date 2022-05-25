@@ -1,46 +1,47 @@
+import { SummaryType } from './types'
 export const summaryTypeChoices = [
   {
-    value: 'ARRANGEMENT',
+    value: SummaryType['ARRANGEMENT'],
     label: 'Arrangement',
   },
   {
-    value: 'BARSJEF',
+    value: SummaryType['BARSJEF'],
     label: 'Barsjef',
   },
   {
-    value: 'DAGLIGHALLEN',
+    value: SummaryType['DAGLIGHALLEN'],
     label: 'Daglighallen',
   },
   {
-    value: 'HOVMESTER',
+    value: SummaryType['HOVMESTER'],
     label: 'Hovmester',
   },
   {
-    value: 'KAFEANSVARLIG',
+    value: SummaryType['KAFEANSVARLIG'],
     label: 'Kafeansvarlig',
   },
   {
-    value: 'SOUSCHEF',
+    value: SummaryType['SOUSCHEF'],
     label: 'Souschef',
   },
   {
-    value: 'STYRET',
+    value: SummaryType['STYRET'],
     label: 'Styret',
   },
   {
-    value: 'SPRITBARSJEF',
+    value: SummaryType['SPRITBARSJEF'],
     label: 'Spritbarsjef',
   },
   {
-    value: 'OKONOMI',
+    value: SummaryType['OKONOMI'],
     label: 'Økonomi',
   },
   {
-    value: 'KIT',
+    value: SummaryType['KIT'],
     label: 'KSG-IT',
   },
   {
-    value: 'ANNET',
+    value: SummaryType['ANNET'],
     label: 'Annet',
   },
 ]
