@@ -3,8 +3,8 @@ import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import styled from 'styled-components'
 import { InternalGroupCard } from './InternalGroupCard'
-import { ALL_INTERNAL_GROUPS_QUERY } from './queries'
-import { InternalGroupNode } from './types'
+import { ALL_INTERNAL_GROUPS_BY_TYPE_QUERY } from './queries'
+import { AllInternalGroupsByTypeReturns, InternalGroupNode } from './types'
 
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};
@@ -35,14 +35,9 @@ const InternalGroupsContainer = styled.div`
   margin-bottom: 1.618em;
 `
 
-interface AllInternalGroupsReturns {
-  internalGroups: InternalGroupNode[]
-  interestGroups: InternalGroupNode[]
-}
-
 export const InternalGroups: React.VFC = () => {
-  const { loading, error, data } = useQuery<AllInternalGroupsReturns>(
-    ALL_INTERNAL_GROUPS_QUERY
+  const { loading, error, data } = useQuery<AllInternalGroupsByTypeReturns>(
+    ALL_INTERNAL_GROUPS_BY_TYPE_QUERY
   )
 
   if (error) return <FullPageError />

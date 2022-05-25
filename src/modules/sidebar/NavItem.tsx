@@ -1,7 +1,8 @@
-import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
 import { IconName } from '@fortawesome/fontawesome-common-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { NavLink } from 'react-router-dom'
+import { useStore } from 'store'
+import styled from 'styled-components'
 
 const Wrapper = styled(NavLink)`
   display: flex;
@@ -52,10 +53,16 @@ export const NavItem: React.FC<NavItemProps> = ({
   link = '',
   label,
   notificationsCounter = 0,
-  onClick,
+  onClick = () => {},
 }) => {
+  const toggleSidebarOpen = useStore(state => state.toggleSidebarOpen)
+
+  const handleOnClick = () => {
+    onClick()
+    toggleSidebarOpen()
+  }
   return (
-    <Wrapper to={link} onClick={onClick}>
+    <Wrapper to={link} onClick={handleOnClick}>
       <FontAwesomeIcon
         icon={['fas', icon]}
         color="inherit"

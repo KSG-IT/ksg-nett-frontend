@@ -22,6 +22,19 @@ export type InternalGroupPositionNode = {
   name: string
 }
 
+// === Query typing ===
+export interface AllInternalGroupsReturns {
+  allInternalGroups: InternalGroupNode[]
+}
+
+export interface AllInternalGroupsByTypeReturns {
+  internalGroups: InternalGroupNode[]
+  interestGroups: InternalGroupNode[]
+}
+
+export interface AllInternalGroupPositionsReturns {
+  allInternalGroupPositions: InternalGroupPositionNode[]
+}
 export type InternalGroupReturns = {
   internalGroup: InternalGroupNode
 }

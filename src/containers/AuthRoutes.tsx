@@ -22,6 +22,10 @@ import {
   SummaryDetail,
 } from 'modules/summaries'
 import { UserProfile } from 'modules/users'
+import {
+  UserManagement,
+  UserManagementAddUser,
+} from 'modules/users/UserManagement'
 import { Redirect, Switch } from 'react-router-dom'
 
 export const AuthRoutes: React.VFC = () => {
@@ -72,7 +76,13 @@ export const AuthRoutes: React.VFC = () => {
       />
 
       {/* Users module */}
-      <PrivateRoute exact path="/users" component={FullPage404} />
+      <PrivateRoute exact path="/users/manage" component={UserManagement} />
+      <PrivateRoute
+        exact
+        path="/users/manage/add-user"
+        component={UserManagementAddUser}
+      />
+
       <PrivateRoute exact path="/users/:userId" component={UserProfile} />
 
       {/* Admissions module */}

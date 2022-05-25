@@ -7,6 +7,7 @@ interface ButtonProps {
   backgroundColor?: string
   type?: 'submit' | 'text' | 'reset'
   buttonStyle?: 'primary' | 'cancel'
+  disabled?: boolean
   hide?: boolean
 
   className?: string
@@ -52,6 +53,7 @@ export const Button: React.FC<ButtonProps> = ({
   borderRadius = '4px',
   backgroundColor = 'purple',
   buttonStyle = 'primary',
+  disabled = false,
   hide = false,
   type,
   className,
@@ -66,6 +68,7 @@ export const Button: React.FC<ButtonProps> = ({
       borderRadius={borderRadius}
       backgroundColor={backgroundColor}
       className={className}
+      disabled={disabled}
       onClick={onClick}
       buttonStyle={buttonStyle}
       hide={hide}

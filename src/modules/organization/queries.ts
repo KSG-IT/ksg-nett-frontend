@@ -30,13 +30,22 @@ export const INTERNAL_GROUP_QUERY = gql`
 
 export const ALL_INTERNAL_GROUPS_QUERY = gql`
   query allInternalGroupsQuery {
-    internalGroups: allInternalGroups(Type: INTERNAL_GROUP) {
+    allInternalGroups {
+      id
+      name
+    }
+  }
+`
+
+export const ALL_INTERNAL_GROUPS_BY_TYPE_QUERY = gql`
+  query allInternalGroupsByTypeQuery {
+    internalGroups: allInternalGroupsByType(internalGroupType: INTERNAL_GROUP) {
       id
       name
       type
       groupIcon
     }
-    interestGroups: allInternalGroups(Type: INTEREST_GROUP) {
+    interestGroups: allInternalGroupsByType(internalGroupType: INTEREST_GROUP) {
       id
       name
       type
