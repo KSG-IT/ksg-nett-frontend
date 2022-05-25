@@ -6,13 +6,14 @@ export const MY_BANK_ACCOUNT_QUERY = gql`
       id
       cardUuid
       balance
-      deposits {
+      lastDeposits {
         id
         amount
         approved
+        createdAt
       }
       user {
-        bankAccountActivity {
+        lastTransactions {
           name
           amount
           quantity
@@ -48,6 +49,18 @@ export const ALL_DEPOSITS = gql`
             profileImage
           }
         }
+      }
+    }
+  }
+`
+
+export const MY_EXPENDITURES = gql`
+  query MyExpenditures($dateRange: TotalExpenditureDateRange) {
+    myExpenditures(dateRange: $dateRange) {
+      total
+      data {
+        day
+        sum
       }
     }
   }

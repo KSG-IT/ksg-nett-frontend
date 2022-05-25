@@ -18,6 +18,20 @@ export type TransactionHistoryType =
   | DepositNode
 
 // Should this be a node? Node is reserved for Relay type queries aren't they?
+
+export enum ExpenditureDateRangeEnum {
+  THIS_MONTH = 'THIS_MONTH',
+}
+
+export type ExpenditureDay = {
+  day: Date
+  sum: number
+}
+
+export type TotalExpenditure = {
+  data: ExpenditureDay[]
+  total: number
+}
 export interface BankAccountActivity {
   name: string
   amount: number
@@ -34,6 +48,7 @@ export interface SociProductNode {
 }
 
 export interface SociBankAccountNode {
+  id: string
   user: UserNode
   balance: number
   cardUuid: string
@@ -98,11 +113,19 @@ export interface MyBankAccountReturns {
     id: string
     balance: number
     cardUuid: string
-    deposits: DepositNode[]
+    lastDeposits: DepositNode[]
     user: {
-      bankAccountActivity: BankAccountActivity[]
+      lastTransactions: BankAccountActivity[]
     }
   }
+}
+
+export interface MyExpendituresReturns {
+  myExpenditures: TotalExpenditure
+}
+
+export interface MyExpendituresVariables {
+  dateRange: ExpenditureDateRangeEnum
 }
 
 // Mutation
@@ -118,4 +141,17 @@ export interface CreateDepositMutationVariables {
 
 export interface CreateDepositMutationReturns {
   depposit: DepositNode
+}
+
+type SociBankAccountInput = {
+  cardUuid: string
+}
+
+export interface PatchSociBankAccountReturns {
+  sociBankAccount: Pick<SociBankAccountNode, 'id'>
+}
+
+export interface PatchSociBankAccountVariables {
+  id: string
+  input: SociBankAccountInput
 }
