@@ -1,4 +1,6 @@
 import { useMutation } from '@apollo/client'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Badge, Menu, Table, Text } from '@mantine/core'
 import { InternalGroupNode } from 'modules/organization/types'
 import { UserThumbnail } from 'modules/users'
 import { useHistory } from 'react-router-dom'
@@ -80,85 +82,58 @@ export const DiscussApplicantsTable: React.VFC<DiscussApplicantsTableProps> = ({
     })
   }
 
-  return (
-    <Wrapper>
-      <TableHeaderRow>
-        <TableHeaderCell>Navn</TableHeaderCell>
-        <TableHeaderCell>Prioritet søker</TableHeaderCell>
-        <TableHeaderCell>Status</TableHeaderCell>
-        <TableHeaderCell>Intervjuere</TableHeaderCell>
-        <TableHeaderCell>Handlinger</TableHeaderCell>
-      </TableHeaderRow>
-      {internalGroupPositionPriorites.map(internalGroupPositionPriority => (
-        <TableRow key={internalGroupPositionPriority.id}>
-          <TableCell>
-            {internalGroupPositionPriority.applicant.fullName}
-          </TableCell>
-          <TableCell>
-            {internalGroupPositionPriority.applicantPriority}
-          </TableCell>
-          <TableCell>
-            {internalGroupPositionPriority.internalGroupPriority ?? (
-              <span>---</span>
-            )}
-          </TableCell>
-          <TableCell>
-            {handleRenderInterviewers(internalGroupPositionPriority)}
-          </TableCell>
-          <TableCell>
-            <button
-              onClick={() => handleMoreInfo(internalGroupPositionPriority)}
-            >
-              Mer info
-            </button>
-          </TableCell>
-          <TableCell>
-            <button
-              onClick={() =>
-                handleSetApplicantStatus(internalGroupPositionPriority, 'WANT')
-              }
-            >
+  const rows = internalGroupPositionPriorites.map(priority => (
+    <tr key={priority.id}>
+      <td>{priority.applicant.fullName}</td>
+      <td>
+        <Badge>{priority.applicantPriority}</Badge>
+      </td>
+      <td>
+        <Badge>{priority.internalGroupPriority}</Badge>
+      </td>
+      <td>{handleRenderInterviewers(priority)}</td>
+      <td>
+        <Menu>
+          <Menu.Label>Handlinger</Menu.Label>
+          <Menu.Item icon={<FontAwesomeIcon icon="check" color="green" />}>
+            <Text onClick={() => handleSetApplicantStatus(priority, 'WANT')}>
               Vil ha
-            </button>
-          </TableCell>
-          <TableCell>
-            <button
-              onClick={() =>
-                handleSetApplicantStatus(
-                  internalGroupPositionPriority,
-                  'PASS_AROUND'
-                )
-              }
-            >
-              Runde
-            </button>
-          </TableCell>
-          <TableCell>
-            <button
-              onClick={() =>
-                handleSetApplicantStatus(
-                  internalGroupPositionPriority,
-                  'RESERVE'
-                )
-              }
-            >
-              Reserve
-            </button>
-          </TableCell>
-          <TableCell>
-            <button
-              onClick={() =>
-                handleSetApplicantStatus(
-                  internalGroupPositionPriority,
-                  'DO_NOT_WANT'
-                )
-              }
+            </Text>
+          </Menu.Item>
+          <Menu.Item icon={<FontAwesomeIcon icon="times" color="red" />}>
+            <Text
+              onClick={() => handleSetApplicantStatus(priority, 'DO_NOT_WANT')}
             >
               Vil ikke ha
-            </button>
-          </TableCell>
-        </TableRow>
-      ))}
-    </Wrapper>
+            </Text>
+          </Menu.Item>
+          <Menu.Item icon={<FontAwesomeIcon icon="wheelchair" color="blue" />}>
+            <Text onClick={() => handleSetApplicantStatus(priority, 'RESERVE')}>
+              Reserve
+            </Text>
+          </Menu.Item>
+          <Menu.Item icon={<FontAwesomeIcon icon="clock" color="yellow" />}>
+            <Text
+              onClick={() => handleSetApplicantStatus(priority, 'PASS_AROUND')}
+            >
+              Send på runde
+            </Text>
+          </Menu.Item>
+        </Menu>
+      </td>
+    </tr>
+  ))
+
+  return (
+    <Table highlightOnHover>
+      <thead>
+        <td>Navn</td>
+        <td>Prioritet søker</td>
+        <td>Status</td>
+        <td>Intervjuere</td>
+        <td>Handlinger</td>
+      </thead>
+      <tbody>{rows}</tbody>
+    </Table>
   )
 }

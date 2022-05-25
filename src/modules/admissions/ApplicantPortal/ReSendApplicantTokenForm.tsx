@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
-import { Button } from 'components/Button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Alert, Button, Center, Stack, TextInput, Title } from '@mantine/core'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { RE_SEND_APPLICATION_TOKEN } from '../mutations'
@@ -12,8 +13,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `
-
-const EmailInput = styled.input``
 
 const SendAgainLabel = styled.label`
   text-decoration: underline;
@@ -41,18 +40,34 @@ export const ReSendApplicantTokenForm: React.VFC = () => {
 
   if (emailSent)
     return (
-      <Wrapper>
-        Følg med på innboksen din
-        <SendAgainLabel onClick={() => setEmailSent(!false)}>
-          Send epost på nytt?
-        </SendAgainLabel>
-      </Wrapper>
+      <Center>
+        <Stack>
+          <Title>KSG søkerportal</Title>
+          <Alert color="green">
+            Følg med på inboxen din. Om eposten din er registrert i systemet
+            vårt skal du straks få en epost.
+          </Alert>
+          <Button
+            onClick={() => setEmailSent(false)}
+            leftIcon={<FontAwesomeIcon icon="paper-plane" />}
+          >
+            Send epost på nytt?
+          </Button>
+        </Stack>
+      </Center>
     )
 
   return (
-    <Wrapper>
-      <EmailInput value={email} onChange={evt => setEmail(evt.target.value)} />
-      <Button onClick={handleSendResetEmail}>Send lenke på nytt</Button>
-    </Wrapper>
+    <Center>
+      <Stack>
+        <Title>KSG søkerportal</Title>
+        <TextInput
+          value={email}
+          onChange={evt => setEmail(evt.target.value)}
+          label="Epost"
+        />
+        <Button onClick={handleSendResetEmail}>Send lenke på nytt</Button>
+      </Stack>
+    </Center>
   )
 }

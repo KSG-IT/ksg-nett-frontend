@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/client'
+import { Button } from '@mantine/core'
 import { useStore } from 'store'
 import styled from 'styled-components'
 import { REMOVE_SELF_AS_INTERVIEWER, SET_SELF_AS_INTERVIEWER } from './mutation'
@@ -73,9 +74,9 @@ export const InterviewerActions: React.VFC<InterviewerActionsProps> = ({
 
     if (user!.id === interviewerFromInternalGroup) {
       return (
-        <button onClick={handleRemoveSelfAsInterviewer} disabled={removeLoader}>
+        <Button onClick={handleRemoveSelfAsInterviewer} loading={removeLoader}>
           Meld av fra intervju
-        </button>
+        </Button>
       )
     }
     if (interviewerFromInternalGroup !== null) {
@@ -83,9 +84,9 @@ export const InterviewerActions: React.VFC<InterviewerActionsProps> = ({
     }
 
     return (
-      <button onClick={handleSetSelfAsInterviewer} disabled={loading}>
+      <Button onClick={handleSetSelfAsInterviewer} loading={loading}>
         Meld opp til intervju
-      </button>
+      </Button>
     )
   }
   return (

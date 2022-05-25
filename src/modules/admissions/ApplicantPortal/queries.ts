@@ -20,6 +20,7 @@ export const GET_APPLICATION_FROM_TOKEN = gql`
       status
       firstName
       lastName
+      token
       image
       phone
       study

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Alert, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useParams } from 'react-router-dom'
@@ -16,17 +17,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-`
-
-const InfoBoxContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  background-color: ${props => props.theme.colors.blue};
-  color: white;
-  border-radius: 10px;
-  padding: 10px;
-  gap: 10px;
 `
 
 interface InternalGroupApplicantsParams {
@@ -69,24 +59,26 @@ export const InternalGroupApplicants: React.VFC = ({}) => {
 
   return (
     <Wrapper>
-      <h1>{name} søkere</h1>
-      <InfoBoxContainer>
-        <FontAwesomeIcon icon="info" />
-        <span>
-          Rød farge betyr at ingen fra gjengen representeres på intervjuet eller
-          at søkeren ikke har booket et intervju
-        </span>
-      </InfoBoxContainer>
-      <h2>Førstevalg</h2>
+      <Title>Søkeroversikt {name}</Title>
+      <Alert
+        style={{ overflow: 'visible' }}
+        icon={<FontAwesomeIcon icon="info" />}
+        title="Obs!"
+      >
+        Rød farge betyr at ingen fra gjengen representeres på intervjuet eller
+        at søkeren ikke har booket et intervju. Det er opp til deres gjeng å
+        ringe de søkerne som har dere på førstevalg
+      </Alert>
+      <Title order={2}>Førstevalg</Title>
       {firstPriorities.map(applicant => (
         <InterviewerActions applicant={applicant} />
       ))}
-      <h2>Andrevalg</h2>
+      <Title order={2}>Andrevalg</Title>
       {secondPriorities.map(applicant => (
         <InterviewerActions applicant={applicant} />
       ))}
 
-      <h2>Tredjevalg</h2>
+      <Title order={2}>Tredjevalg</Title>
       {thirdPriorities.map(applicant => (
         <InterviewerActions applicant={applicant} />
       ))}

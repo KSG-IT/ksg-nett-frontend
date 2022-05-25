@@ -46,7 +46,7 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
   ))
   return (
     <Wrapper>
-      <Paper p="md">
+      <Paper p="md" style={{ overflow: 'scroll' }}>
         <Table highlightOnHover>
           <thead>
             <td>Navn</td>
