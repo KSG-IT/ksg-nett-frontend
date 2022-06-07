@@ -3,6 +3,7 @@ import {
   InternalGroupPositionNode,
 } from 'modules/organization/types'
 import { UserNode } from 'modules/users'
+import { InterviewBooleanEvaluationNode } from './ConfigureAdmission/types'
 import { CoreApplicantNode } from './InternalGroupApplicants/types'
 
 export type InterviewLocationNode = {
@@ -39,8 +40,6 @@ export type InterviewNode = {
   booleanEvaluationAnswers: BooleanEvaluationAnswer[]
   additionalEvaluationAnswers: AdditionalEvaluationAnswer[]
   totalEvaluation: 'VERY_GOOD' | 'GOOD' | 'MEDIUM' | 'POOR' | 'VERY_POOR'
-  canCommitThreeSemesters: boolean
-  cannotCommitThreeSemestersDetails: string | null
 }
 
 export type InterviewNodeShallow = Pick<InterviewNode, 'id'>
@@ -101,6 +100,9 @@ export type ApplicantNode = {
   interview: InterviewNode | null
   interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials'>
   willBeAdmitted: boolean
+  canCommitThreeSemesters: boolean
+  openForOtherPositions: boolean
+  // cannotCommitThreeSemestersDetails: string | null
 }
 
 export type AdmissionStatus =
@@ -229,3 +231,20 @@ export interface PatchApplicantVariables {
 export type PatchInterviewScheduleTemplateInput = Partial<
   Omit<InterviewScheduleTemplateNode, 'id'>
 >
+
+export type PatchInterviewBooleanEvaluationAnswerInput = {
+  value: boolean
+}
+
+export type InterviewBooleanEvaluationAnswerNode = {
+  statement: InterviewBooleanEvaluationNode
+  id: string
+  value: boolean
+}
+
+export interface PatchInterviewBooleanEvaluationAnswerReturns {
+  interviewBooleanEvaluationAnswer: Pick<
+    InterviewBooleanEvaluationAnswerNode,
+    'id'
+  >
+}

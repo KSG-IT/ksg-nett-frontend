@@ -156,8 +156,11 @@ export const APPLICANT_QUERY = gql`
           locationDescription
         }
         booleanEvaluationAnswers {
-          statement
-          answer
+          id
+          statement {
+            statement
+          }
+          value
         }
         interviewers {
           id
@@ -174,6 +177,36 @@ export const INTERNAL_GROUPS_ACCEPTING_APPLICANTS = gql`
     internalGroupsAcceptingApplicants {
       id
       name
+    }
+  }
+`
+
+export const INTERVIEW_DETAIL_QUERY = gql`
+  query Interview($id: ID!) {
+    interview(id: $id) {
+      id
+      notes
+      discussion
+      applicant {
+        id
+        fullName
+        canCommitThreeSemesters
+        openForOtherPositions
+      }
+      booleanEvaluationAnswers {
+        id
+        statement {
+          statement
+        }
+        value
+      }
+      additionalEvaluationAnswers {
+        id
+        statement {
+          statement
+        }
+        answer
+      }
     }
   }
 `

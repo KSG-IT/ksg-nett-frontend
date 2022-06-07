@@ -16,3 +16,34 @@ export function parseDurationString(input: string): string {
     .filter(char => char === ':' || !isNaN(parseInt(char)))
     .join('')
 }
+
+export const booleanToRadio = (input: boolean | null): '' | 'yes' | 'no' => {
+  /**
+   * Parses a boolean value to a "yes" "no" or blank string value to use when parsing GraphQL
+   * data. We implement it this way instead of checkboxes for UX reasons
+   */
+
+  switch (input) {
+    case true:
+      return 'yes'
+    case false:
+      return 'no'
+    case null:
+      return ''
+  }
+}
+
+export const radioToBoolean = (input: '' | 'yes' | 'no') => {
+  /**
+   * Parses a yes-no radiogrorup to a a boolean value to use in GraphQL mutations.
+   * We implement it this way instead of checkboxes for UX reasons
+   */
+  switch (input) {
+    case '':
+      return null
+    case 'yes':
+      return true
+    case 'no':
+      return false
+  }
+}

@@ -56,3 +56,29 @@ export const PATCH_INTERVIEW = gql`
     }
   }
 `
+
+export const PATCH_INTERVIEW_ADDITIONAL_EVALUATION_ANSWER = gql`
+  mutation PatchInterviewAdditionalEvaluationAnswer(
+    $id: ID!
+    $input: PatchInterviewAdditionalEvaluationAnswerInput!
+  ) {
+    patchInterviewAdditionalEvaluationAnswer(id: $id, input: $input) {
+      interviewAdditionalEvaluationAnswer {
+        id
+      }
+    }
+  }
+`
+
+export const PATCH_INTERVIEW_BOOLEAN_EVALUATION_ANSWER = gql`
+  mutation PatchInterviewBooleanEvaluationAnswer(
+    $id: ID!
+    $input: PatchInterviewBooleanEvaluationAnswerInput!
+  ) {
+    patchInterviewBooleanEvaluationAnswer(id: $id, input: $input) {
+      interviewBooleanEvaluationAnswer {
+        id
+      }
+    }
+  }
+`
