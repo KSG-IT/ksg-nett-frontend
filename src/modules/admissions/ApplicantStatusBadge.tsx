@@ -1,3 +1,4 @@
+import { Badge } from '@mantine/core'
 import styled from 'styled-components'
 import { ApplicantStatus } from './types'
 
@@ -11,10 +12,10 @@ const Wrapper = styled.div`
 const handleStatusLabelText = (status: ApplicantStatus) => {
   switch (status) {
     case 'EMAIL_SENT':
-      return 'Epost'
+      return 'Sendt epost'
 
     case 'SCHEDULED_INTERVIEW':
-      return 'Intervju'
+      return 'Booket intervju'
 
     case 'HAS_REGISTERED_PROFILE':
       return 'Registrert'
@@ -29,7 +30,7 @@ const handleStatusLabelText = (status: ApplicantStatus) => {
       return 'Avslått'
 
     case 'RETRACTED_APPLICATION':
-      return 'Trukket'
+      return 'Trukket søknad'
 
     case 'INTERVIEW_FINISHED':
       return 'Hatt intervju'
@@ -46,5 +47,5 @@ interface ApplicantStatusBadgeProps {
 export const ApplicantStatusBadge: React.VFC<ApplicantStatusBadgeProps> = ({
   applicantStatus,
 }) => {
-  return <Wrapper>{handleStatusLabelText(applicantStatus)}</Wrapper>
+  return <Badge size="lg">{handleStatusLabelText(applicantStatus)}</Badge>
 }
