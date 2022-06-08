@@ -3,8 +3,9 @@ import {
   InternalGroupPositionNode,
 } from 'modules/organization/types'
 import { UserNode } from 'modules/users'
-import { InterviewBooleanEvaluationNode } from './ConfigureAdmission/types'
 import { CoreApplicantNode } from './InternalGroupApplicants/types'
+//ToDo: This whole file is a mess. Need to organize the types a bit better.
+// Not sure how to go about this though
 
 export type InterviewLocationNode = {
   id: string
@@ -19,14 +20,23 @@ export type InterviewLocationAvailabilityNode = {
   datetimeTo: Date
 }
 
-export type BooleanEvaluationAnswer = {
+export type InterviewBooleanEvaluationNode = {
+  id: string
   statement: string
-  answer: boolean
+}
+
+export type InterviewBooleanEvaluationAnswerNode = {
+  id: string
+  statement: Pick<InterviewBooleanEvaluationNode, 'statement' | 'id'>
+  value: boolean
 }
 
 export type AdditionalEvaluationAnswer = {
-  statement: string
-  answer: boolean
+  statement: {
+    id: string
+    statement: string
+  }
+  answer: 'VERY_LITTLE' | 'LITTLE' | 'MEDIUM' | 'SOMEWHAT' | 'VERY'
 }
 
 export type InterviewNode = {
@@ -37,7 +47,7 @@ export type InterviewNode = {
   location: Pick<InterviewLocationNode, 'id' | 'name' | 'locationDescription'>
   notes: string
   discussion: string
-  booleanEvaluationAnswers: BooleanEvaluationAnswer[]
+  booleanEvaluationAnswers: InterviewBooleanEvaluationAnswerNode[]
   additionalEvaluationAnswers: AdditionalEvaluationAnswer[]
   totalEvaluation: 'VERY_GOOD' | 'GOOD' | 'MEDIUM' | 'POOR' | 'VERY_POOR'
 }
@@ -84,7 +94,7 @@ export type InternalGroupPositionPriorityNode = {
   applicant: ApplicantNode
 }
 
-export type InternalGroupPositionPriorityArray =
+export type InternalGroupPositionPriority =
   InternalGroupPositionPriorityNode | null
 
 export type ApplicantNode = {
@@ -96,12 +106,13 @@ export type ApplicantNode = {
   lastName: string
   image: string | File
   dateOfBirth: Date | string
-  priorities: InternalGroupPositionPriorityArray[]
+  priorities: InternalGroupPositionPriority[]
   interview: InterviewNode | null
   interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials'>
   willBeAdmitted: boolean
   canCommitThreeSemesters: boolean
   openForOtherPositions: boolean
+
   // cannotCommitThreeSemestersDetails: string | null
 }
 
@@ -233,12 +244,6 @@ export type PatchInterviewScheduleTemplateInput = Partial<
 >
 
 export type PatchInterviewBooleanEvaluationAnswerInput = {
-  value: boolean
-}
-
-export type InterviewBooleanEvaluationAnswerNode = {
-  statement: InterviewBooleanEvaluationNode
-  id: string
   value: boolean
 }
 

@@ -3,11 +3,12 @@ import { PATCH_APPLICANT, PATCH_INTERVIEW } from './mutations'
 import { ApplicantStatus } from './types'
 
 type PatchInterviewInput = {
-  applicant: {
+  applicant?: {
     status: ApplicantStatus
   }
   notes?: string
   discussion?: string
+  totalEvaluation?: 'VERY_GOOD' | 'GOOD' | 'MEDIUM' | 'POOR' | 'VERY_POOR'
 }
 
 interface PatchInterviewVariables {

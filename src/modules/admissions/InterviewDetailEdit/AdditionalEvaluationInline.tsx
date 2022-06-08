@@ -1,36 +1,11 @@
 import { useMutation } from '@apollo/client'
 import { Group, Text } from '@mantine/core'
+import { additionalEvaluationOptions } from 'modules/admissions/consts'
 import { PATCH_INTERVIEW_ADDITIONAL_EVALUATION_ANSWER } from 'modules/admissions/mutations'
 import React, { useEffect, useState } from 'react'
 
-const options = [
-  {
-    value: '',
-    label: '-------',
-  },
-  {
-    value: 'VERY_LITTLE',
-    label: 'Veldig lite',
-  },
-  {
-    value: 'LITTLE',
-    label: 'Litt',
-  },
-  {
-    value: 'MEDIUM',
-    label: 'Middels',
-  },
-  {
-    value: 'SOMEWHAT',
-    label: 'Noe',
-  },
-  {
-    value: 'VERY',
-    label: 'Veldig',
-  },
-]
-
 type StatementNode = {
+  id: string
   statement: string
 }
 
@@ -59,7 +34,8 @@ type Option = {
 }
 
 const stringOptionArraySearch = (str: string, arr: Option[]) => {
-  // Searches for an option in an array of options by value
+  // Searches for an option in an array of options by value.
+  // Returns the option if found, otherwise undefined
   return arr.some(option => option.value === str)
 }
 
@@ -67,14 +43,17 @@ export const AdditionalEvaluationInline: React.VFC<
   AdditionalEvaluationInlineProps
 > = ({ additionalEvaluation }) => {
   const [selectedValue, setSelectedValue] = useState(
-    stringOptionArraySearch(additionalEvaluation.answer, options)
+    stringOptionArraySearch(
+      additionalEvaluation.answer,
+      additionalEvaluationOptions
+    )
       ? additionalEvaluation.answer
       : ''
   )
   const [patchAnswer] = useMutation(
     PATCH_INTERVIEW_ADDITIONAL_EVALUATION_ANSWER
   )
-  // We execute the mutation when the value changes
+
   useEffect(() => {
     if (selectedValue === additionalEvaluation.answer) return
 
@@ -97,7 +76,7 @@ export const AdditionalEvaluationInline: React.VFC<
         }}
         value={selectedValue}
       >
-        {options.map(option => (
+        {additionalEvaluationOptions.map(option => (
           <option value={option.value}>{option.label}</option>
         ))}
       </select>

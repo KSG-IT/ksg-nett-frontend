@@ -162,6 +162,14 @@ export const APPLICANT_QUERY = gql`
           }
           value
         }
+        additionalEvaluationAnswers {
+          id
+          answer
+          statement {
+            id
+            statement
+          }
+        }
         interviewers {
           id
           initials
@@ -192,6 +200,13 @@ export const INTERVIEW_DETAIL_QUERY = gql`
         fullName
         canCommitThreeSemesters
         openForOtherPositions
+        priorities {
+          id
+          internalGroupPosition {
+            id
+            name
+          }
+        }
       }
       booleanEvaluationAnswers {
         id

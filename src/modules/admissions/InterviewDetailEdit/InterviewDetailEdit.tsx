@@ -6,14 +6,16 @@ import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { usePatchApplicant } from '../mutations.hooks'
 import { INTERVIEW_DETAIL_QUERY } from '../queries'
-import { ApplicantNode } from '../types'
+import { ApplicantNode, InternalGroupPositionPriority } from '../types'
 import {
   AdditionalEvaluationInline,
   InterviewAdditionalEvaluationAnswerNode,
 } from './AdditionalEvaluationInline'
 import { AdditionalInformationFields } from './AdditionalInformationFields'
+import { ApplicantPrioritiesField } from './ApplicantPrioritiesField'
 import { BooleanEvaluationInline } from './BooleanEvaluationInline'
 import { InterviewNoteBox } from './InterviewNoteBox'
+import { TotalEvaluationSelect } from './TotalEvaluationSelect'
 
 interface InterviewDetailEditParams {
   interviewId: string
@@ -33,17 +35,22 @@ type InterviewNode = {
   discussion: string
   applicant: Pick<
     ApplicantNode,
-    'id' | 'fullName' | 'canCommitThreeSemesters' | 'openForOtherPositions'
+    | 'id'
+    | 'fullName'
+    | 'canCommitThreeSemesters'
+    | 'openForOtherPositions'
+    | 'priorities'
   >
   booleanEvaluationAnswers: InterviewBooleanEvaluationAnswerNode[]
   additionalEvaluationAnswers: InterviewAdditionalEvaluationAnswerNode[]
+  totalEvaluation: 'VERY_POOR' | 'POOR' | 'MEDIUM' | 'GOOD' | 'VERY_GOOD'
+  priorities: InternalGroupPositionPriority[]
 }
 
 export const InterviewDetailEdit: React.VFC = () => {
   const { interviewId } = useParams<InterviewDetailEditParams>()
   const [modalOpen, setModalOpen] = useState(false)
   const history = useHistory()
-  const [notes, setNotes] = useState()
 
   const { data, loading, error } = useQuery(INTERVIEW_DETAIL_QUERY, {
     variables: { id: interviewId },
@@ -58,7 +65,6 @@ export const InterviewDetailEdit: React.VFC = () => {
   const interview: InterviewNode = data.interview
 
   if (interview === null) return <FullPage404 />
-  console.log(interview)
 
   const handleLockInterview = () => {
     patchApplicant({
@@ -68,8 +74,11 @@ export const InterviewDetailEdit: React.VFC = () => {
           status: 'INTERVIEW_FINISHED',
         },
       },
-    }).then(() => history.push(`/applicants/${interview.applicant.id}`))
+    }).then(() =>
+      history.push(`/admissions/applicants/${interview.applicant.id}`)
+    )
   }
+
   return (
     <Stack style={{ overflowY: 'scroll', width: '100%', padding: '32px' }}>
       <Title>Intervjunotater: {interview.applicant.fullName}</Title>
@@ -98,6 +107,7 @@ export const InterviewDetailEdit: React.VFC = () => {
         )}
       </Stack>
       <AdditionalInformationFields applicant={interview.applicant} />
+      <ApplicantPrioritiesField applicant={interview.applicant} />
       <InterviewNoteBox
         interviewId={interview.id}
         field="notes"
@@ -111,6 +121,9 @@ export const InterviewDetailEdit: React.VFC = () => {
       />
 
       <Group>
+        <TotalEvaluationSelect interview={interview} />
+      </Group>
+      <Group>
         <Button>Lagre</Button>
 
         <Button
@@ -120,6 +133,7 @@ export const InterviewDetailEdit: React.VFC = () => {
         >
           Lås intervjunotater
         </Button>
+        <Button color="red">ToDo: Møtte aldri opp</Button>
       </Group>
 
       <Modal
