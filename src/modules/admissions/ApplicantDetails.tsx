@@ -35,9 +35,9 @@ const parseAdditionalEvaluation = (
     case 'LITTLE':
       return 'Lite'
     case 'MEDIUM':
-      return 'Medium'
+      return 'Middels'
     case 'SOMEWHAT':
-      return 'Noe'
+      return 'Litt'
     case 'VERY':
       return 'Veldig'
   }
@@ -84,7 +84,14 @@ export const ApplicantDetails: React.VFC = () => {
           </Text>
           <ApplicantStatusBadge applicantStatus={applicant.status} />
         </Group>
-        <Group></Group>
+        <Group>
+          <Text>Total vurdering</Text>
+          <Text>{interview.totalEvaluation}</Text>
+        </Group>
+        <Group>
+          <Text>Kan bli 3 semestre</Text>
+          {parseBooleanEvaluation(applicant.canCommitThreeSemesters)}
+        </Group>
       </Card>
       {!interviewFinished && (
         <Button
