@@ -139,6 +139,7 @@ export const APPLICANT_QUERY = gql`
       study
       hometown
       address
+      canCommitThreeSemesters
       priorities {
         internalGroupPosition {
           id
@@ -150,6 +151,7 @@ export const APPLICANT_QUERY = gql`
         interviewStart
         notes
         discussion
+        totalEvaluation
         location {
           id
           name
