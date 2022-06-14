@@ -27,7 +27,7 @@ const parseBooleanEvaluation = (value: true | false | null) => {
 }
 
 const parseAdditionalEvaluation = (
-  value: 'VERY_LITTLE' | 'LITTLE' | 'MEDIUM' | 'SOMEWHAT' | 'VERY'
+  value: 'VERY_LITTLE' | 'LITTLE' | 'MEDIUM' | 'SOMEWHAT' | 'VERY' | null
 ) => {
   switch (value) {
     case 'VERY_LITTLE':
@@ -40,6 +40,27 @@ const parseAdditionalEvaluation = (
       return 'Litt'
     case 'VERY':
       return 'Veldig'
+    case null:
+      return 'Ikke evaluert'
+  }
+}
+
+const parseTotalEvaluation = (
+  value: 'VERY_POOR' | 'POOR' | 'MEDIUM' | 'GOOD' | 'VERY_GOOD' | null
+) => {
+  switch (value) {
+    case 'VERY_POOR':
+      return 'Veldig dårlig'
+    case 'POOR':
+      return 'Dårlig'
+    case 'MEDIUM':
+      return 'Middels'
+    case 'GOOD':
+      return 'Bra'
+    case 'VERY_GOOD':
+      return 'Veldig bra'
+    case null:
+      return 'Ikke evaluert'
   }
 }
 
@@ -86,7 +107,7 @@ export const ApplicantDetails: React.VFC = () => {
         </Group>
         <Group>
           <Text>Total vurdering</Text>
-          <Text>{interview.totalEvaluation}</Text>
+          <Text>{parseTotalEvaluation(interview.totalEvaluation)}</Text>
         </Group>
         <Group>
           <Text>Kan bli 3 semestre</Text>
