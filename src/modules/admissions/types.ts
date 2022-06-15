@@ -158,8 +158,6 @@ export type ApplicantNode = {
   willBeAdmitted: boolean
   canCommitThreeSemesters: boolean
   openForOtherPositions: boolean
-
-  // cannotCommitThreeSemestersDetails: string | null
 }
 
 export type AdmissionStatus =
