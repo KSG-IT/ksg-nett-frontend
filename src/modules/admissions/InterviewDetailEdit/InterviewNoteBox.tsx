@@ -16,13 +16,12 @@ export const InterviewNoteBox: React.VFC<InterviewNoteBoxProps> = ({
   field,
 }) => {
   /**
-   * A 'secure' notebox which debounces the text area value and saves its value to the correspondong
-   * field
+   * Executes a mutation saving the contents of the textarea to the database
+   * after a given timeout from the last change.
    */
   const [value, setValue] = useState(initialValue)
   const [lastSavedValue, setLastSavedValue] = useState(initialValue)
   const debouncedValue = useDebounce(value, 5000)
-  const [savedAt, setSavedAt] = useState(new Date()) // Can use this for updating somewhere
 
   const [save] = useMutation(PATCH_INTERVIEW)
 
@@ -30,20 +29,15 @@ export const InterviewNoteBox: React.VFC<InterviewNoteBoxProps> = ({
     const input = {
       [field]: debouncedValue,
     }
-    console.log(input)
 
     if (lastSavedValue === debouncedValue) {
-      console.log('No changes, no mutation')
       return
     }
     save({ variables: { id: interviewId, input: input } }).then((data: any) => {
-      console.log(data)
-      console.log('saved, updating last saved')
       setLastSavedValue(debouncedValue)
     })
   }, [debouncedValue])
 
-  const handleChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {}
   return (
     <Textarea
       minRows={12}
