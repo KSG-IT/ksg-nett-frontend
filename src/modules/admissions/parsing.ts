@@ -1,3 +1,5 @@
+import { ApplicantStatus } from './types'
+
 export const parseBooleanEvaluation = (value: true | false | null) => {
   switch (value) {
     case true:
@@ -44,5 +46,36 @@ export const parseTotalEvaluation = (
       return 'Veldig bra'
     case null:
       return 'Ikke evaluert'
+  }
+}
+
+export const parseApplicantStatus = (status: ApplicantStatus) => {
+  switch (status) {
+    case 'EMAIL_SENT':
+      return 'Sendt epost'
+
+    case 'SCHEDULED_INTERVIEW':
+      return 'Booket intervju'
+
+    case 'HAS_REGISTERED_PROFILE':
+      return 'Registrert'
+
+    case 'ACCEPTED':
+      return 'Akseptert'
+
+    case 'DID_NOT_SHOW_UP_FOR_INTERVIEW':
+      return 'Ikke møtt'
+
+    case 'REJECTED':
+      return 'Avslått'
+
+    case 'RETRACTED_APPLICATION':
+      return 'Trukket søknad'
+
+    case 'INTERVIEW_FINISHED':
+      return 'Hatt intervju'
+
+    case 'TO_BE_CALLED':
+      return 'Skal ringes'
   }
 }
