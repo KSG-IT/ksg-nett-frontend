@@ -236,6 +236,14 @@ export interface AllInternalGroupsAcceptingApplicantsReturns {
   allInternalGroupApplicantData: InternalGroupApplicantData[]
 }
 
+export interface InterviewDetailQueryReturns {
+  interview: InterviewNode | null
+}
+
+export interface InterviewDetailQueryVariables {
+  id: string
+}
+
 /* === MUTATION TYPING === */
 
 export interface CreateAdmissionReturns {

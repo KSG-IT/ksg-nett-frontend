@@ -8,7 +8,8 @@ import { usePatchApplicant } from '../mutations.hooks'
 import { INTERVIEW_DETAIL_QUERY } from '../queries'
 import {
   InterviewAdditionalEvaluationAnswerNode,
-  InterviewNode,
+  InterviewDetailQueryReturns,
+  InterviewDetailQueryVariables,
 } from '../types'
 import { AdditionalEvaluationInline } from './AdditionalEvaluationInline'
 import { AdditionalInformationFields } from './AdditionalInformationFields'
@@ -26,7 +27,10 @@ export const InterviewDetailEdit: React.VFC = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const history = useHistory()
 
-  const { data, loading, error } = useQuery(INTERVIEW_DETAIL_QUERY, {
+  const { data, loading, error } = useQuery<
+    InterviewDetailQueryReturns,
+    InterviewDetailQueryVariables
+  >(INTERVIEW_DETAIL_QUERY, {
     variables: { id: interviewId },
   })
 
@@ -36,7 +40,7 @@ export const InterviewDetailEdit: React.VFC = () => {
 
   if (loading || !data) return <FullContentLoader />
 
-  const interview: InterviewNode = data.interview
+  const { interview } = data
 
   if (interview === null) return <FullPage404 />
 
