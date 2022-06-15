@@ -281,16 +281,6 @@ export interface ReSendApplicationTokenVariables {
   email: string
 }
 
-export type PatchApplicantInput = Partial<Omit<ApplicantNode, 'id'>>
-
-export interface PatchApplicantReturns {
-  applicant: Pick<ApplicantNode, 'id'>
-}
-export interface PatchApplicantVariables {
-  id: string
-  input: PatchApplicantInput
-}
-
 export type PatchInterviewScheduleTemplateInput = Partial<
   Omit<InterviewScheduleTemplateNode, 'id'>
 >

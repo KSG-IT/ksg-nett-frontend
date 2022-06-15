@@ -1,8 +1,7 @@
-import { useMutation } from '@apollo/client'
 import { Textarea } from '@mantine/core'
 import React, { useEffect, useState } from 'react'
 import { useDebounce } from 'util/hooks'
-import { PATCH_INTERVIEW } from '../mutations'
+import { usePatchInterview } from '../mutations.hooks'
 
 interface InterviewNoteBoxProps {
   interviewId: string
@@ -23,19 +22,22 @@ export const InterviewNoteBox: React.VFC<InterviewNoteBoxProps> = ({
   const [lastSavedValue, setLastSavedValue] = useState(initialValue)
   const debouncedValue = useDebounce(value, 5000)
 
-  const [save] = useMutation(PATCH_INTERVIEW)
+  const { patchInterview } = usePatchInterview()
 
   useEffect(() => {
     const input = {
+      // This notation dynamically creates a property on the input object
+      // meaning it could either be 'notes' or 'discussion' fields so we can
+      // use the same input object for both.
       [field]: debouncedValue,
     }
 
     if (lastSavedValue === debouncedValue) {
       return
     }
-    save({ variables: { id: interviewId, input: input } }).then((data: any) => {
+    patchInterview({ variables: { id: interviewId, input: input } }).then(() =>
       setLastSavedValue(debouncedValue)
-    })
+    )
   }, [debouncedValue])
 
   return (
