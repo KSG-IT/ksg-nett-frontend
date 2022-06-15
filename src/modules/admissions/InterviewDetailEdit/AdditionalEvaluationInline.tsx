@@ -1,85 +1,59 @@
 import { useMutation } from '@apollo/client'
-import { Group, Text } from '@mantine/core'
+import { Group, Select } from '@mantine/core'
 import { additionalEvaluationOptions } from 'modules/admissions/consts'
 import { PATCH_INTERVIEW_ADDITIONAL_EVALUATION_ANSWER } from 'modules/admissions/mutations'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import {
+  InterviewAdditionalEvaluationAnswerNode,
+  PatchInterviewAdditionalEvaluationAnswerReturns,
+  PatchInterviewAdditionalEvaluationAnswerVariables,
+} from '../types'
 
-type StatementNode = {
-  id: string
-  statement: string
-}
-
-export type InterviewAdditionalEvaluationAnswerNode = {
-  id: string
-  answer: string
-  statement: StatementNode
-}
+type AdditionalEvaluationOptionValue =
+  | 'VERY_LITTLE'
+  | 'LITTLE'
+  | 'MEDIUM'
+  | 'SOMEWHAT'
+  | 'VERY'
+  | ''
 
 interface AdditionalEvaluationInlineProps {
   additionalEvaluation: InterviewAdditionalEvaluationAnswerNode
 }
-
-type PatchInterviewAdditionalEvaluationInput = {
-  answer: string
-}
-
-interface PatchInterviewAdditionalEvaluationVariables {
-  id: string
-  input: PatchInterviewAdditionalEvaluationInput
-}
-
-type Option = {
-  value: string
-  label: string
-}
-
-const stringOptionArraySearch = (str: string, arr: Option[]) => {
-  // Searches for an option in an array of options by value.
-  // Returns the option if found, otherwise undefined
-  return arr.some(option => option.value === str)
-}
-
 export const AdditionalEvaluationInline: React.VFC<
   AdditionalEvaluationInlineProps
 > = ({ additionalEvaluation }) => {
-  const [selectedValue, setSelectedValue] = useState(
-    stringOptionArraySearch(
-      additionalEvaluation.answer,
-      additionalEvaluationOptions
-    )
-      ? additionalEvaluation.answer
-      : ''
-  )
-  const [patchAnswer] = useMutation(
-    PATCH_INTERVIEW_ADDITIONAL_EVALUATION_ANSWER
-  )
+  const [selectedValue, setSelectedValue] =
+    useState<AdditionalEvaluationOptionValue>(additionalEvaluation.answer || '')
+  const [patchAnswer] = useMutation<
+    PatchInterviewAdditionalEvaluationAnswerReturns,
+    PatchInterviewAdditionalEvaluationAnswerVariables
+  >(PATCH_INTERVIEW_ADDITIONAL_EVALUATION_ANSWER)
 
-  useEffect(() => {
-    if (selectedValue === additionalEvaluation.answer) return
+  const handleChange = (selected: AdditionalEvaluationOptionValue) => {
+    if (selected === additionalEvaluation.answer) return
+
+    const parsedValue = selected === '' ? null : selected
 
     patchAnswer({
       variables: {
         id: additionalEvaluation.id,
         input: {
-          answer: selectedValue,
+          answer: parsedValue,
         },
       },
     })
-  }, [selectedValue, patchAnswer, additionalEvaluation.id])
+    setSelectedValue(selected)
+  }
 
   return (
     <Group>
-      <Text>{additionalEvaluation.statement.statement}</Text>
-      <select
-        onChange={evt => {
-          setSelectedValue(evt.target.value)
-        }}
+      <Select
+        label={additionalEvaluation.statement.statement}
+        onChange={handleChange}
         value={selectedValue}
-      >
-        {additionalEvaluationOptions.map(option => (
-          <option value={option.value}>{option.label}</option>
-        ))}
-      </select>
+        data={additionalEvaluationOptions}
+      />
     </Group>
   )
 }

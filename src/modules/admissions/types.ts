@@ -5,7 +5,34 @@ import {
 import { UserNode } from 'modules/users'
 import { CoreApplicantNode } from './InternalGroupApplicants/types'
 //ToDo: This whole file is a mess. Need to organize the types a bit better.
-// Not sure how to go about this though
+/**
+ * An idea would be to group the types around the model instead
+ * of around the type.
+ *
+ * Example
+ * ==== Applicant ====
+ *
+ * type ApplicantNode = {
+ *  id: string
+ *  ...
+ * }
+ *
+ * interface AllApplicantsReturns {
+ *  allApplicants: ApplicantNode[]
+ * }
+ *
+ * interface CreateApplicantReturns {
+ *  createApplicant: ApplicantNode
+ * }
+ *
+ * type CreateApplicantInput = {
+ *  name: string
+ *  ...
+ * }
+ * interface CreateApplicantVariables {
+ * input: CreateApplicantInput
+ * }
+ */
 
 export type InterviewLocationNode = {
   id: string
@@ -31,12 +58,21 @@ export type InterviewBooleanEvaluationAnswerNode = {
   value: boolean
 }
 
-export type AdditionalEvaluationAnswer = {
+export type AdditionalEvauationAnswer =
+  | 'VERY_LITTLE'
+  | 'LITTLE'
+  | 'MEDIUM'
+  | 'SOMEWHAT'
+  | 'VERY'
+  | null
+
+export type InterviewAdditionalEvaluationAnswerNode = {
+  id: string
   statement: {
     id: string
     statement: string
   }
-  answer: 'VERY_LITTLE' | 'LITTLE' | 'MEDIUM' | 'SOMEWHAT' | 'VERY'
+  answer: AdditionalEvauationAnswer
 }
 
 export type InterviewNode = {
@@ -48,7 +84,7 @@ export type InterviewNode = {
   notes: string
   discussion: string
   booleanEvaluationAnswers: InterviewBooleanEvaluationAnswerNode[]
-  additionalEvaluationAnswers: AdditionalEvaluationAnswer[]
+  additionalEvaluationAnswers: InterviewAdditionalEvaluationAnswerNode[]
   totalEvaluation: 'VERY_GOOD' | 'GOOD' | 'MEDIUM' | 'POOR' | 'VERY_POOR'
 }
 
@@ -252,4 +288,20 @@ export interface PatchInterviewBooleanEvaluationAnswerReturns {
     InterviewBooleanEvaluationAnswerNode,
     'id'
   >
+}
+
+type PatchInterviewAdditionalEvaluationAnswerInput = {
+  answer: AdditionalEvauationAnswer
+}
+
+export interface PatchInterviewAdditionalEvaluationAnswerReturns {
+  interviewAdditionalEvaluationAnswer: Pick<
+    InterviewAdditionalEvaluationAnswerNode,
+    'id'
+  >
+}
+
+export interface PatchInterviewAdditionalEvaluationAnswerVariables {
+  id: string
+  input: PatchInterviewAdditionalEvaluationAnswerInput
 }
