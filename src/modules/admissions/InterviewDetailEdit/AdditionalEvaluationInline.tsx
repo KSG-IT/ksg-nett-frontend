@@ -24,7 +24,7 @@ export const AdditionalEvaluationInline: React.VFC<
   AdditionalEvaluationInlineProps
 > = ({ additionalEvaluation }) => {
   const [selectedValue, setSelectedValue] =
-    useState<AdditionalEvaluationOptionValue>(additionalEvaluation.answer || '')
+    useState<AdditionalEvaluationOptionValue>(additionalEvaluation.answer ?? '')
   const [patchAnswer] = useMutation<
     PatchInterviewAdditionalEvaluationAnswerReturns,
     PatchInterviewAdditionalEvaluationAnswerVariables
