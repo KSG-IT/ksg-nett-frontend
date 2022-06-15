@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { Group, Radio, RadioGroup, Text } from '@mantine/core'
+import { Group, Radio, RadioGroup } from '@mantine/core'
 import React, { useState } from 'react'
 import { PatchMutationVariables } from 'types/graphql'
 import { booleanToRadio, radioToBoolean } from 'util/parsing'
@@ -50,8 +50,11 @@ export const BooleanEvaluationInline: React.VFC<
 
   return (
     <Group>
-      <Text>{booleanEvaluationAnswer.statement.statement}</Text>
-      <RadioGroup value={value} onChange={handleChange}>
+      <RadioGroup
+        value={value}
+        onChange={handleChange}
+        label={booleanEvaluationAnswer.statement.statement}
+      >
         <Radio value="yes" label="Ja" />
         <Radio value="no" label="Nei" />
       </RadioGroup>
