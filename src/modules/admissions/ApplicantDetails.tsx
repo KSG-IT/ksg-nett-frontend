@@ -8,61 +8,17 @@ import { useHistory, useParams } from 'react-router-dom'
 import remarkGfm from 'remark-gfm'
 import styled from 'styled-components'
 import { ApplicantStatusBadge } from './ApplicantStatusBadge'
+import {
+  parseAdditionalEvaluation,
+  parseBooleanEvaluation,
+  parseTotalEvaluation,
+} from './parsing'
 import { APPLICANT_QUERY } from './queries'
 import { ApplicantQueryReturns, ApplicantQueryVariables } from './types'
-
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};
   overflow-y: scroll;
 `
-const parseBooleanEvaluation = (value: true | false | null) => {
-  switch (value) {
-    case true:
-      return 'Ja'
-    case false:
-      return 'Nei'
-    case null:
-      return 'Ubesvart'
-  }
-}
-
-const parseAdditionalEvaluation = (
-  value: 'VERY_LITTLE' | 'LITTLE' | 'MEDIUM' | 'SOMEWHAT' | 'VERY' | null
-) => {
-  switch (value) {
-    case 'VERY_LITTLE':
-      return 'Veldig lite'
-    case 'LITTLE':
-      return 'Lite'
-    case 'MEDIUM':
-      return 'Middels'
-    case 'SOMEWHAT':
-      return 'Litt'
-    case 'VERY':
-      return 'Veldig'
-    case null:
-      return 'Ikke evaluert'
-  }
-}
-
-const parseTotalEvaluation = (
-  value: 'VERY_POOR' | 'POOR' | 'MEDIUM' | 'GOOD' | 'VERY_GOOD' | null
-) => {
-  switch (value) {
-    case 'VERY_POOR':
-      return 'Veldig dårlig'
-    case 'POOR':
-      return 'Dårlig'
-    case 'MEDIUM':
-      return 'Middels'
-    case 'GOOD':
-      return 'Bra'
-    case 'VERY_GOOD':
-      return 'Veldig bra'
-    case null:
-      return 'Ikke evaluert'
-  }
-}
 
 interface ApplicantDetailsParams {
   applicantId: string
