@@ -55,7 +55,7 @@ export type InterviewBooleanEvaluationNode = {
 export type InterviewBooleanEvaluationAnswerNode = {
   id: string
   statement: Pick<InterviewBooleanEvaluationNode, 'statement' | 'id'>
-  value: boolean
+  value: boolean | null
 }
 
 export type AdditionalEvauationAnswer =

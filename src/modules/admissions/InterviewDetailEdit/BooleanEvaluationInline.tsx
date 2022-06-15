@@ -4,15 +4,10 @@ import React, { useState } from 'react'
 import { PatchMutationVariables } from 'types/graphql'
 import { booleanToRadio, radioToBoolean } from 'util/parsing'
 import { PATCH_INTERVIEW_BOOLEAN_EVALUATION_ANSWER } from '../mutations'
-import { PatchInterviewBooleanEvaluationAnswerReturns } from '../types'
-
-type InterviewBooleanEvaluationAnswerNode = {
-  id: string
-  value: boolean | null
-  statement: {
-    statement: string
-  }
-}
+import {
+  InterviewBooleanEvaluationAnswerNode,
+  PatchInterviewBooleanEvaluationAnswerReturns,
+} from '../types'
 
 interface BooleanEvaluationInlineProps {
   booleanEvaluationAnswer: InterviewBooleanEvaluationAnswerNode
@@ -21,12 +16,6 @@ interface BooleanEvaluationInlineProps {
 export const BooleanEvaluationInline: React.VFC<
   BooleanEvaluationInlineProps
 > = ({ booleanEvaluationAnswer }) => {
-  /**
-   * This component serves to alter the response of yes/no type evalutation questions in
-   * an inline format. Each change of the local state triggers a mutation to the backend.
-   * If anything goes wrong we should probably reset the value and give some sort of toast
-   * feedback
-   */
   const [value, setValue] = useState(
     booleanToRadio(booleanEvaluationAnswer.value)
   )
