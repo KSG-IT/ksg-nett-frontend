@@ -6,11 +6,11 @@ import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { usePatchApplicant } from '../mutations.hooks'
 import { INTERVIEW_DETAIL_QUERY } from '../queries'
-import { ApplicantNode, InternalGroupPositionPriority } from '../types'
 import {
-  AdditionalEvaluationInline,
   InterviewAdditionalEvaluationAnswerNode,
-} from './AdditionalEvaluationInline'
+  InterviewNode,
+} from '../types'
+import { AdditionalEvaluationInline } from './AdditionalEvaluationInline'
 import { AdditionalInformationFields } from './AdditionalInformationFields'
 import { ApplicantPrioritiesField } from './ApplicantPrioritiesField'
 import { BooleanEvaluationInline } from './BooleanEvaluationInline'
@@ -19,32 +19,6 @@ import { TotalEvaluationSelect } from './TotalEvaluationSelect'
 
 interface InterviewDetailEditParams {
   interviewId: string
-}
-
-type InterviewBooleanEvaluationAnswerNode = {
-  id: string
-  value: boolean | null
-  statement: {
-    statement: string
-  }
-}
-
-type InterviewNode = {
-  id: string
-  notes: string
-  discussion: string
-  applicant: Pick<
-    ApplicantNode,
-    | 'id'
-    | 'fullName'
-    | 'canCommitThreeSemesters'
-    | 'openForOtherPositions'
-    | 'priorities'
-  >
-  booleanEvaluationAnswers: InterviewBooleanEvaluationAnswerNode[]
-  additionalEvaluationAnswers: InterviewAdditionalEvaluationAnswerNode[]
-  totalEvaluation: 'VERY_POOR' | 'POOR' | 'MEDIUM' | 'GOOD' | 'VERY_GOOD'
-  priorities: InternalGroupPositionPriority[]
 }
 
 export const InterviewDetailEdit: React.VFC = () => {
@@ -82,7 +56,6 @@ export const InterviewDetailEdit: React.VFC = () => {
   return (
     <Stack style={{ overflowY: 'scroll', width: '100%', padding: '32px' }}>
       <Title>Intervjunotater: {interview.applicant.fullName}</Title>
-      <Title>Ja/nei evalueringer </Title>
       <Stack>
         {interview.booleanEvaluationAnswers.map((booleanEvaluation, index) => (
           <BooleanEvaluationInline
@@ -92,7 +65,6 @@ export const InterviewDetailEdit: React.VFC = () => {
         ))}
       </Stack>
 
-      <Title>Vurderinger</Title>
       <Stack>
         {interview.additionalEvaluationAnswers.map(
           (

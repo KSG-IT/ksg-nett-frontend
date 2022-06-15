@@ -85,7 +85,17 @@ export type InterviewNode = {
   discussion: string
   booleanEvaluationAnswers: InterviewBooleanEvaluationAnswerNode[]
   additionalEvaluationAnswers: InterviewAdditionalEvaluationAnswerNode[]
-  totalEvaluation: 'VERY_GOOD' | 'GOOD' | 'MEDIUM' | 'POOR' | 'VERY_POOR'
+
+  applicant: Pick<
+    ApplicantNode,
+    | 'id'
+    | 'fullName'
+    | 'canCommitThreeSemesters'
+    | 'openForOtherPositions'
+    | 'priorities'
+  >
+  totalEvaluation: 'VERY_POOR' | 'POOR' | 'MEDIUM' | 'GOOD' | 'VERY_GOOD' | null
+  priorities: InternalGroupPositionPriority[]
 }
 
 export type InterviewNodeShallow = Pick<InterviewNode, 'id'>
