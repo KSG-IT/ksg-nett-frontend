@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Alert, Button, Group, Stack, Text, Title } from '@mantine/core'
-import { PATCH_APPLICANT } from 'modules/admissions/mutations'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
+import { usePatchApplicant } from '../mutations.hooks'
 import { ApplicantNode, InternalGroupPositionPriorityNode } from '../types'
 import {
   ADD_INTERNAL_GROUP_POSITION_PRIORITY,
@@ -85,19 +85,7 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
   )
 
   // Saves priorities and moves the applicant to the interview booking phase
-  const [applicantNextPhase] = useMutation(PATCH_APPLICANT, {
-    variables: {
-      id: applicant.id,
-      input: {
-        status: 'HAS_SET_PRIORITIES',
-      },
-    },
-    refetchQueries: ['GetApplicantFromToken'],
-    onCompleted() {
-      nextStepCallback()
-      toast.success('Lagret prioriteringer!')
-    },
-  })
+  const { patchApplicant } = usePatchApplicant()
 
   const [deleteInternalGroupPriority] = useMutation(
     DELETE_INTERNAL_GROUP_POSITION_PRIORITY,
@@ -126,7 +114,19 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
   }
 
   const handleNextStep = () => {
-    applicantNextPhase()
+    patchApplicant({
+      variables: {
+        id: applicant.id,
+        input: {
+          status: 'HAS_SET_PRIORITIES',
+        },
+      },
+      refetchQueries: ['GetApplicantFromToken'],
+      onCompleted() {
+        nextStepCallback()
+        toast.success('Lagret prioriteringer!')
+      },
+    })
   }
 
   // ToDo move this to local state and update in useEffect
