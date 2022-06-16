@@ -124,6 +124,7 @@ export type ApplicantPriority = 'FIRST' | 'SECOND' | 'THIRD'
 export type InternalGroupPriority =
   | 'WANT'
   | 'DO_NOT_WANT'
+  | 'CURRENTLY_DISCUSSING'
   | 'RESERVE'
   | 'SHOULD_BE_ADMITTED'
   | 'PASS_AROUND'
