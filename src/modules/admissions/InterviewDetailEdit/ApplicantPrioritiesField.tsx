@@ -31,7 +31,7 @@ export const ApplicantPrioritiesField: React.VFC<
       {applicant.priorities.map((priority, index) => {
         if (priority === null) return
         return (
-          <Group>
+          <Group key={index}>
             {index + 1}. {priority?.internalGroupPosition.name}{' '}
             {renderChangePriorityButtons(index, priority)}
           </Group>
