@@ -123,11 +123,12 @@ export type ApplicantPriority = 'FIRST' | 'SECOND' | 'THIRD'
 
 export type InternalGroupPriority =
   | 'WANT'
+  | 'PROBABLY_WANT'
   | 'DO_NOT_WANT'
   | 'CURRENTLY_DISCUSSING'
   | 'RESERVE'
-  | 'SHOULD_BE_ADMITTED'
   | 'PASS_AROUND'
+  | 'INTERESTED'
   | null
 
 export type InternalGroupPositionPriorityNode = {

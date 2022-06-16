@@ -1,4 +1,4 @@
-import { ApplicantStatus } from './types'
+import { ApplicantStatus, InternalGroupPriority } from './types'
 
 export const parseBooleanEvaluation = (value: true | false | null) => {
   switch (value) {
@@ -77,5 +77,28 @@ export const parseApplicantStatus = (status: ApplicantStatus) => {
 
     case 'TO_BE_CALLED':
       return 'Skal ringes'
+  }
+}
+
+export const parseInternalGroupPositionPriority = (
+  priority: InternalGroupPriority
+) => {
+  switch (priority) {
+    case 'WANT':
+      return 'Vil ha'
+    case 'PROBABLY_WANT':
+      return 'Vil sannsynligvis ha'
+    case 'INTERESTED':
+      return 'Interessert'
+    case 'DO_NOT_WANT':
+      return 'Vil ikke ha'
+    case 'CURRENTLY_DISCUSSING':
+      return 'Diskuteres'
+    case 'RESERVE':
+      return 'Reserve'
+    case 'PASS_AROUND':
+      return 'På runde'
+    case null:
+      return 'Ikke vurdert'
   }
 }
