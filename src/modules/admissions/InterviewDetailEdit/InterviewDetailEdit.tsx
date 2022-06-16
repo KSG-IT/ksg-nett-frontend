@@ -13,6 +13,7 @@ import {
 import { AdditionalEvaluationAnswerList } from './AdditionalEvaluationAnswerList'
 import { AdditionalInformationFields } from './AdditionalInformationFields'
 import { ApplicantPrioritiesField } from './ApplicantPrioritiesField'
+import { BooleanEvaluationAnswerList } from './BooleanEvaluationAnswerList'
 import { InterviewNoteBox } from './InterviewNoteBox'
 import { TotalEvaluationSelect } from './TotalEvaluationSelect'
 
@@ -58,6 +59,10 @@ export const InterviewDetailEdit: React.VFC = () => {
   return (
     <Stack style={{ overflowY: 'scroll', width: '100%', padding: '32px' }}>
       <Title>Intervjunotater: {interview.applicant.fullName}</Title>
+
+      <BooleanEvaluationAnswerList
+        booleanEvaluations={interview.booleanEvaluationAnswers}
+      />
 
       <AdditionalEvaluationAnswerList
         additionalEvaluations={interview.additionalEvaluationAnswers}
