@@ -37,20 +37,26 @@ export const RE_SEND_APPLICATION_TOKEN = gql`
   }
 `
 
-export const PATCH_APPLICANT = gql`
-  mutation patchApplicant($id: ID!, $input: PatchApplicantInput!) {
-    patchApplicant(id: $id, input: $input) {
-      applicant {
+export const PATCH_INTERVIEW_ADDITIONAL_EVALUATION_ANSWER = gql`
+  mutation PatchInterviewAdditionalEvaluationAnswer(
+    $id: ID!
+    $input: PatchInterviewAdditionalEvaluationAnswerInput!
+  ) {
+    patchInterviewAdditionalEvaluationAnswer(id: $id, input: $input) {
+      interviewAdditionalEvaluationAnswer {
         id
       }
     }
   }
 `
 
-export const PATCH_INTERVIEW = gql`
-  mutation PatchInterview($id: ID!, $input: PatchInterviewInput!) {
-    patchInterview(id: $id, input: $input) {
-      interview {
+export const PATCH_INTERVIEW_BOOLEAN_EVALUATION_ANSWER = gql`
+  mutation PatchInterviewBooleanEvaluationAnswer(
+    $id: ID!
+    $input: PatchInterviewBooleanEvaluationAnswerInput!
+  ) {
+    patchInterviewBooleanEvaluationAnswer(id: $id, input: $input) {
+      interviewBooleanEvaluationAnswer {
         id
       }
     }

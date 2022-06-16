@@ -1,8 +1,6 @@
-import { useMutation } from '@apollo/client'
 import { Button, Group, Modal, Stack, Text, Title } from '@mantine/core'
-import { PatchMutationVariables } from 'types/graphql'
-import { PATCH_APPLICANT } from '../mutations'
-import { ApplicantNode, PatchApplicantReturns } from '../types'
+import { usePatchApplicant } from '../mutations.hooks'
+import { ApplicantNode } from '../types'
 
 interface RetractApplicationModalProps {
   applicant: ApplicantNode
@@ -13,21 +11,23 @@ interface RetractApplicationModalProps {
 export const RetractApplicationModal: React.VFC<
   RetractApplicationModalProps
 > = ({ applicant, opened, setOpened }) => {
-  const [patchApplicant, { loading }] = useMutation<
-    PatchApplicantReturns,
-    PatchMutationVariables<ApplicantNode>
-  >(PATCH_APPLICANT, {
-    refetchQueries: ['GetApplicantFromToken'],
-    variables: {
-      id: applicant.id,
-      input: {
-        status: 'RETRACTED_APPLICATION',
+  const { patchApplicant, loading } = usePatchApplicant()
+
+  const handleRetractApplication = () => {
+    patchApplicant({
+      refetchQueries: ['GetApplicantFromToken'],
+      variables: {
+        id: applicant.id,
+        input: {
+          status: 'RETRACTED_APPLICATION',
+        },
       },
-    },
-    onCompleted() {
-      setOpened(false)
-    },
-  })
+      onCompleted() {
+        setOpened(false)
+      },
+    })
+  }
+
   return (
     <Modal opened={opened} onClose={() => setOpened(false)}>
       <Stack>

@@ -1,4 +1,3 @@
-import { useMutation } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
@@ -16,13 +15,8 @@ import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import * as yup from 'yup'
-import { PATCH_APPLICANT } from '../mutations'
-import {
-  ApplicantNode,
-  PatchApplicantInput,
-  PatchApplicantReturns,
-  PatchApplicantVariables,
-} from '../types'
+import { usePatchApplicant } from '../mutations.hooks'
+import { ApplicantNode, ApplicantStatus } from '../types'
 
 const Wrapper = styled.div`
   display: grid;
@@ -70,10 +64,8 @@ export const RegisterProfileForm: React.VFC<RegisterProfileFormProps> = ({
   // 3. Add preview of image for upload
   // 4. Mutate and refetch profile
   // 5. Render book interview view or message that you will be called
-  const [registerProfile] = useMutation<
-    PatchApplicantReturns,
-    PatchApplicantVariables
-  >(PATCH_APPLICANT, { refetchQueries: ['GetApplicantFromToken'] })
+
+  const { patchApplicant } = usePatchApplicant()
 
   let schema = yup.object().shape({
     firstName: yup.string().required(),
@@ -93,15 +85,19 @@ export const RegisterProfileForm: React.VFC<RegisterProfileFormProps> = ({
   const onSubmit: SubmitHandler<RegisterProfileFormInput> = data => {
     const fileList = data.image
     const file = fileList[0]
-    const input: PatchApplicantInput = {
+    const input = {
       ...data,
       image: file,
       dateOfBirth: format(new Date(data.dateOfBirth), 'yyyy-MM-dd'),
-      status: 'HAS_REGISTERED_PROFILE',
+      status: 'HAS_REGISTERED_PROFILE' as ApplicantStatus,
     }
 
-    registerProfile({
-      variables: { id: applicant.id, input: { ...input } },
+    patchApplicant({
+      variables: {
+        id: applicant.id,
+        input: { ...input },
+      },
+      refetchQueries: ['GetApplicantFromToken'],
     })
   }
 
