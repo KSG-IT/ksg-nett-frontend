@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { Group, Select } from '@mantine/core'
-import { additionalEvaluationOptions } from 'modules/admissions/consts'
 import { PATCH_INTERVIEW_ADDITIONAL_EVALUATION_ANSWER } from 'modules/admissions/mutations'
+import { additionalEvaluationOptions } from 'modules/admissions/options'
 import React, { useState } from 'react'
 import {
   InterviewAdditionalEvaluationAnswerNode,
