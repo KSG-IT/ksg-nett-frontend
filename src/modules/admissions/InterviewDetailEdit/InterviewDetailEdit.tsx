@@ -60,13 +60,9 @@ export const InterviewDetailEdit: React.VFC = () => {
     <Stack style={{ overflowY: 'scroll', width: '100%', padding: '32px' }}>
       <Title>Intervjunotater: {interview.applicant.fullName}</Title>
 
-      <BooleanEvaluationAnswerList
-        booleanEvaluations={interview.booleanEvaluationAnswers}
-      />
+      <BooleanEvaluationAnswerList interview={interview} />
 
-      <AdditionalEvaluationAnswerList
-        additionalEvaluations={interview.additionalEvaluationAnswers}
-      />
+      <AdditionalEvaluationAnswerList interview={interview} />
       <AdditionalInformationFields applicant={interview.applicant} />
       <ApplicantPrioritiesField applicant={interview.applicant} />
       <InterviewNoteBox

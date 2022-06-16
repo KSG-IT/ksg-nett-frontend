@@ -1,16 +1,17 @@
-import { InterviewBooleanEvaluationAnswerNode } from '../types'
+import { InterviewNode } from '../types'
 import { BooleanEvaluationInline } from './BooleanEvaluationInline'
 
 interface BooleanEvaluationAnswerListProps {
-  booleanEvaluations: InterviewBooleanEvaluationAnswerNode[]
+  interview: InterviewNode
 }
 
 export const BooleanEvaluationAnswerList: React.VFC<
   BooleanEvaluationAnswerListProps
-> = ({ booleanEvaluations }) => {
+> = ({ interview }) => {
+  const { booleanEvaluationAnswers } = interview
   return (
     <>
-      {booleanEvaluations.map(booleanEvaluation => (
+      {booleanEvaluationAnswers.map(booleanEvaluation => (
         <BooleanEvaluationInline
           key={booleanEvaluation.id}
           booleanEvaluationAnswer={booleanEvaluation}

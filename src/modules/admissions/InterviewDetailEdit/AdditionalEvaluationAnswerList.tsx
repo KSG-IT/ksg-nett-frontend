@@ -1,16 +1,17 @@
-import { InterviewAdditionalEvaluationAnswerNode } from '../types'
+import { InterviewNode } from '../types'
 import { AdditionalEvaluationInline } from './AdditionalEvaluationInline'
 
 interface AdditionalEvaluationListProps {
-  additionalEvaluations: InterviewAdditionalEvaluationAnswerNode[]
+  interview: InterviewNode
 }
 
 export const AdditionalEvaluationAnswerList: React.VFC<
   AdditionalEvaluationListProps
-> = ({ additionalEvaluations }) => {
+> = ({ interview }) => {
+  const { additionalEvaluationAnswers } = interview
   return (
     <>
-      {additionalEvaluations.map(additionalEvaluation => (
+      {additionalEvaluationAnswers.map(additionalEvaluation => (
         <AdditionalEvaluationInline
           key={additionalEvaluation.id}
           additionalEvaluation={additionalEvaluation}
