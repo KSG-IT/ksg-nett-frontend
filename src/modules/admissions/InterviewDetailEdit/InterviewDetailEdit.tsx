@@ -60,26 +60,30 @@ export const InterviewDetailEdit: React.VFC = () => {
     <Stack style={{ overflowY: 'scroll', width: '100%', padding: '32px' }}>
       <Title>Intervjunotater: {interview.applicant.fullName}</Title>
 
+      {/* We render different interview evaluation fields */}
       <BooleanEvaluationAnswerList interview={interview} />
-
       <AdditionalEvaluationAnswerList interview={interview} />
       <AdditionalInformationFields applicant={interview.applicant} />
       <ApplicantPrioritiesField applicant={interview.applicant} />
+
+      {/* Interview and discussion Notes */}
       <InterviewNoteBox
         interviewId={interview.id}
         field="notes"
         initialValue={interview.notes}
       />
-
       <InterviewNoteBox
         interviewId={interview.id}
         field="discussion"
         initialValue={interview.discussion}
       />
 
+      {/* Final evaluation */}
       <Group>
         <TotalEvaluationSelect interview={interview} />
       </Group>
+
+      {/* Controls */}
       <Group>
         <Button>Lagre</Button>
 
@@ -93,6 +97,7 @@ export const InterviewDetailEdit: React.VFC = () => {
         <Button color="red">ToDo: Møtte aldri opp</Button>
       </Group>
 
+      {/* Confirm interview lock prompt */}
       <Modal
         opened={modalOpen}
         onClose={() => setModalOpen(false)}
