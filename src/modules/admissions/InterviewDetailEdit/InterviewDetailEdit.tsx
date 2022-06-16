@@ -7,14 +7,12 @@ import { useHistory, useParams } from 'react-router-dom'
 import { usePatchApplicant } from '../mutations.hooks'
 import { INTERVIEW_DETAIL_QUERY } from '../queries'
 import {
-  InterviewAdditionalEvaluationAnswerNode,
   InterviewDetailQueryReturns,
   InterviewDetailQueryVariables,
 } from '../types'
-import { AdditionalEvaluationInline } from './AdditionalEvaluationInline'
+import { AdditionalEvaluationAnswerList } from './AdditionalEvaluationAnswerList'
 import { AdditionalInformationFields } from './AdditionalInformationFields'
 import { ApplicantPrioritiesField } from './ApplicantPrioritiesField'
-import { BooleanEvaluationInline } from './BooleanEvaluationInline'
 import { InterviewNoteBox } from './InterviewNoteBox'
 import { TotalEvaluationSelect } from './TotalEvaluationSelect'
 
@@ -60,28 +58,10 @@ export const InterviewDetailEdit: React.VFC = () => {
   return (
     <Stack style={{ overflowY: 'scroll', width: '100%', padding: '32px' }}>
       <Title>Intervjunotater: {interview.applicant.fullName}</Title>
-      <Stack>
-        {interview.booleanEvaluationAnswers.map((booleanEvaluation, index) => (
-          <BooleanEvaluationInline
-            key={index}
-            booleanEvaluationAnswer={booleanEvaluation}
-          />
-        ))}
-      </Stack>
 
-      <Stack>
-        {interview.additionalEvaluationAnswers.map(
-          (
-            additionalEvaluation: InterviewAdditionalEvaluationAnswerNode,
-            index
-          ) => (
-            <AdditionalEvaluationInline
-              key={index}
-              additionalEvaluation={additionalEvaluation}
-            />
-          )
-        )}
-      </Stack>
+      <AdditionalEvaluationAnswerList
+        additionalEvaluations={interview.additionalEvaluationAnswers}
+      />
       <AdditionalInformationFields applicant={interview.applicant} />
       <ApplicantPrioritiesField applicant={interview.applicant} />
       <InterviewNoteBox
