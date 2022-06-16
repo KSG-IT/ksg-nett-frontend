@@ -1,6 +1,7 @@
 import { AuthRoutes } from 'containers//AuthRoutes'
 import { Header } from 'modules/header'
 import { Sidebar } from 'modules/sidebar'
+import { ErrorBoundary } from 'react-error-boundary'
 import { useStore } from 'store'
 import styled, { css } from 'styled-components'
 import { useRenderMobile } from 'util/isMobile'
@@ -49,6 +50,23 @@ const SidebarWrapper = styled.div`
   grid-area: sidebar;
 `
 
+interface ErrorFallbackProps {
+  error: Error
+  resetErrorBoundary: () => void
+}
+const ErrorFallback: React.VFC<ErrorFallbackProps> = ({
+  error,
+  resetErrorBoundary,
+}) => {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  )
+}
+
 const MainLayout: React.FC = () => {
   const sidebarOpen = useStore(state => state.sidebarOpen)
   const toggleSidebarOpen = useStore(state => state.toggleSidebarOpen)
@@ -68,7 +86,9 @@ const MainLayout: React.FC = () => {
         />
       </SidebarWrapper>
       <ContentWrapper visible={shouldNotRenderContent}>
-        <AuthRoutes />
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <AuthRoutes />
+        </ErrorBoundary>
       </ContentWrapper>
     </Wrapper>
   )
