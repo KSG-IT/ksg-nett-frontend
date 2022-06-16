@@ -5,7 +5,7 @@ import { AdmissionDashboard } from 'modules/admissions/AdmissionDashboard'
 import { ConfigurationWizard } from 'modules/admissions/ConfigureAdmission'
 import { InternalGroupDiscussion } from 'modules/admissions/DiscussionDashboard/InternalGroupDiscussion'
 import { InternalGroupApplicants } from 'modules/admissions/InternalGroupApplicants'
-import { InterviewDetailEdit } from 'modules/admissions/InterviewEdit/InterviewDetailEdit'
+import { InterviewEdit } from 'modules/admissions/InterviewEdit/InterviewEdit'
 import { Dashboard } from 'modules/dashboard'
 import { Deposits, MyEconomy } from 'modules/economy'
 import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
@@ -117,7 +117,7 @@ export const AuthRoutes: React.VFC = () => {
       <PrivateRoute
         exact
         path="/admissions/interviews/:interviewId/edit"
-        component={InterviewDetailEdit}
+        component={InterviewEdit}
       />
       <PrivateRoute
         exact

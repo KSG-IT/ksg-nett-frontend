@@ -21,7 +21,7 @@ interface InterviewDetailEditParams {
   interviewId: string
 }
 
-export const InterviewDetailEdit: React.VFC = () => {
+export const InterviewEdit: React.VFC = () => {
   const { interviewId } = useParams<InterviewDetailEditParams>()
   const [modalOpen, setModalOpen] = useState(false)
   const history = useHistory()
