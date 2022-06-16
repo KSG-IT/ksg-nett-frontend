@@ -57,13 +57,15 @@ export const usePatchInterview = () => {
   }
 }
 
+type PatchApplicantInput = {
+  status?: ApplicantStatus
+  canCommitThreeSemesters?: boolean | null
+  openForOtherPositions?: boolean | null
+}
+
 interface PatchApplicantVariables {
   id: string
-  input: {
-    status?: ApplicantStatus
-    canCommitThreeSemesters?: boolean | null
-    openForOtherPositions?: boolean | null
-  }
+  input: PatchApplicantInput
 }
 interface PatchApplicantReturns {
   applicant: {
