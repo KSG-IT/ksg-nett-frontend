@@ -1,23 +1,24 @@
 import { useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Alert, Badge, Paper, Stack, Table, Text, Title } from '@mantine/core'
+import {
+  Alert,
+  Button,
+  Group,
+  Paper,
+  Stack,
+  Table,
+  Text,
+  Title,
+} from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
+import { InfoPopover } from 'components/InfoPopover'
 import { FullContentLoader } from 'components/Loading'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
 import { DiscussApplicantsTable } from './DicussApplicantsTable'
+import { FreeForAllApplicantsTable } from './FreeForAllApplicantsTable'
+import { InternalGroupPositionPriorityBadge } from './InternalGroupPositionPriorityBadge'
 import { INTERNAL_GROUP_DISCUSSION_DATA } from './queries'
 import { InternalGroupDiscussionDataReturns } from './types'
-
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  overflow-y: scroll;
-  gap: 15px;
-`
 
 interface InternalGroupDiscussionParams {
   internalGroupId: string
@@ -40,23 +41,44 @@ export const InternalGroupDiscussion: React.VFC = () => {
 
   const {
     internalGroupDiscussionData: {
-      availablePicks,
+      applicants,
       processedApplicants,
       internalGroup,
+      applicantsOpenForOtherPositions,
     },
   } = data
 
+  // Move to its own component
+  const applicantsOpenForOtherPositionsRows =
+    applicantsOpenForOtherPositions.map(applicant => (
+      <tr key={applicant.id}>
+        <td>{applicant.fullName}</td>
+        <td>
+          <Button>Interessert i kandidat</Button>
+        </td>
+        <td>
+          <Button
+            leftIcon={<FontAwesomeIcon icon="eye" />}
+            onClick={() => alert('Denne burde sende deg videre, lol')}
+          >
+            Mer info
+          </Button>
+        </td>
+      </tr>
+    ))
+
+  // Move to its own component
   const processedApplicantsRows = processedApplicants.map(priority => (
     <tr key={priority.id}>
       <td>{priority.applicant.fullName}</td>
       <td>
-        <Badge>{priority.internalGroupPriority}</Badge>
+        <InternalGroupPositionPriorityBadge priority={priority} />
       </td>
     </tr>
   ))
 
   return (
-    <Wrapper>
+    <Stack style={{ overflowY: 'scroll', padding: '32px' }}>
       <Title>Fordelingsmøte {internalGroup.name}</Title>
       <Title order={2}>Statistikk</Title>
       <Paper p="md">
@@ -65,27 +87,41 @@ export const InternalGroupDiscussion: React.VFC = () => {
         </Stack>
       </Paper>
       <Title order={2}>Kandidater tilgjengelige for vurdering</Title>
-      <Paper p="md">
-        <DiscussApplicantsTable
-          internalGroupPositionPriorites={availablePicks}
-          internalGroup={internalGroup}
-        />
-      </Paper>
       <Alert
         style={{ overflow: 'visible' }}
         icon={<FontAwesomeIcon icon="info" />}
       >
         <Text>
-          Søkere blir fortløpende gjort tilgjengelig i denne tabellen så fort
-          som andre gjenger blir ferdig med å vurdere søkerne sine. Å markere en
-          kandidat som <b>Vil ha</b> eller <b>Vil ikke ha</b> er permanente
-          endringer og flytter de til tabellen under. <b>Send på runde</b> vil
-          gjøre det mulig for neste gjeng i rekka å vurdere den aktuelle søkeren
-          uten at dere gir opp kandidaten enda
+          Søkere blir fortløpende oppdatert i denne tabellen. Her har du
+          mulighet til å se hvordan de andre gjengene, og deres egen gjeng
+          prioriterer kandidaten. Å markere en kandidat som <b>Vil ikke ha </b>
+          er en permanent handling og fjerner kandidaten fra denne tabellen. På
+          høyre side av tabellen finnes en meny som markerer hva deres gjeng vil
+          gjøre med kandidaten.
         </Text>
       </Alert>
+      <Alert
+        style={{ overflow: 'visible' }}
+        icon={<FontAwesomeIcon icon="exclamation-triangle" />}
+        color="yellow"
+      >
+        <Text weight="bold">
+          Obs! Du markerer ønsker på vegne av {internalGroup.name}
+        </Text>
+      </Alert>
+      <Paper p="md">
+        <DiscussApplicantsTable
+          internalGroup={internalGroup}
+          applicants={applicants}
+        />
+      </Paper>
 
-      <Title order={2}>Ferdigvurderte søkere</Title>
+      <Group>
+        {/* Move to own component */}
+        <Title order={2}>Ferdigvurderte søkere</Title>
+        <InfoPopover content="Dette er søkere dere har vurdert som at dere vil ha eller vil ikke ha" />
+        <pre>Kan hende vi blir kvitt denne?</pre>
+      </Group>
       <Paper p="md">
         <Table>
           <thead>
@@ -95,6 +131,26 @@ export const InternalGroupDiscussion: React.VFC = () => {
           <tbody>{processedApplicantsRows}</tbody>
         </Table>
       </Paper>
-    </Wrapper>
+
+      <Group>
+        {/* Backend query resolving that they are open for other positions and are not guaranteed a spot.
+          Question remains, what are the conditions for this? All other priorities being DO_NOT_WANT? What about
+          Reserve, pass-around etc.? Think we need to clearly define some type of condition.
+
+          For now we can probably just render all applicants that are open for other positions, and filter
+          away any that are guaranteed a spot
+        */}
+        {/* Move to own component */}
+        <Title order={2}>Kandidater åpne for andre verv</Title>
+        <InfoPopover
+          content="Her har dere mulighet til å melde interesse for kandidater som er åpne
+          for andre verv. Trykk på en kandidat for å se detaljene ved intervjuet. [TANKEN ER AT DETTE BLIR PITCHINGEN]"
+        />
+      </Group>
+      <FreeForAllApplicantsTable
+        applicants={applicantsOpenForOtherPositions}
+        internalGroupId={internalGroupId}
+      />
+    </Stack>
   )
 }

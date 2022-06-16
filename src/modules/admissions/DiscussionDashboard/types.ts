@@ -2,10 +2,10 @@ import { InternalGroupNode } from 'modules/organization/types'
 import { ApplicantNode, InternalGroupPositionPriorityNode } from '../types'
 
 export type InternalGroupDiscussionData = {
-  availablePicks: InternalGroupPositionPriorityNode[]
-  currentApplicantUnderDiscussion: ApplicantNode
   internalGroup: InternalGroupNode
   processedApplicants: InternalGroupPositionPriorityNode[]
+  applicantsOpenForOtherPositions: ApplicantNode[]
+  applicants: ApplicantNode[]
 }
 
 // === Query typings ===

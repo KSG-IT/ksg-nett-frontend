@@ -6,12 +6,21 @@ const INTERNAL_GROUP_PRIORITY_FIELDS = gql`
     applicant {
       id
       fullName
+      interview {
+        id
+        interviewers {
+          id
+          fullName
+          profileImage
+        }
+      }
     }
     internalGroupPriority
     applicantPriority
     internalGroupPosition {
       internalGroup {
         id
+        name
       }
     }
   }
@@ -37,12 +46,32 @@ export const INTERNAL_GROUP_DISCUSSION_DATA = gql`
         id
         name
       }
-      availablePicks {
-        ...InternalGroupPriorityFields
-      }
-
       processedApplicants {
         ...InternalGroupPriorityFields
+      }
+      applicantsOpenForOtherPositions {
+        id
+        fullName
+        priorities {
+          ...InternalGroupPriorityFields
+        }
+      }
+
+      applicants {
+        id
+        fullName
+        priorities {
+          id
+          internalGroupPriority
+          internalGroupPosition {
+            id
+            name
+            internalGroup {
+              id
+              name
+            }
+          }
+        }
       }
     }
   }
