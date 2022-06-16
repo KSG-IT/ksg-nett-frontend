@@ -1,4 +1,8 @@
-import { ApplicantStatus, InternalGroupPriority } from './types'
+import {
+  ApplicantPriority,
+  ApplicantStatus,
+  InternalGroupPriority,
+} from './types'
 
 export const parseBooleanEvaluation = (value: true | false | null) => {
   switch (value) {
@@ -100,5 +104,16 @@ export const parseInternalGroupPositionPriority = (
       return 'På runde'
     case null:
       return 'Ikke vurdert'
+  }
+}
+
+export const parseApplicantPriority = (priority: ApplicantPriority) => {
+  switch (priority) {
+    case 'FIRST':
+      return 'Første'
+    case 'SECOND':
+      return 'Andre'
+    case 'THIRD':
+      return 'Tredje'
   }
 }
