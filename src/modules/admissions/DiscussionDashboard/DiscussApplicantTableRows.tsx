@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Menu, Text } from '@mantine/core'
+import { Menu, Text, useMantineTheme } from '@mantine/core'
 import { useHistory } from 'react-router-dom'
 import { PatchMutationVariables } from 'types/graphql'
 import {
@@ -46,6 +46,7 @@ export const DiscussApplicantTableRows: React.VFC<
    * which is intended to place within a tbody element.
    */
   const history = useHistory()
+  const theme = useMantineTheme()
   const { priorities } = applicant
 
   const [patchInternalGroupPositionPriority] = useMutation<
@@ -95,31 +96,56 @@ export const DiscussApplicantTableRows: React.VFC<
             <Text onClick={() => handleMoreInfo(applicant)}>Mer info</Text>
           </Menu.Item>
           <Menu.Label>Handlinger</Menu.Label>
-          <Menu.Item icon={<FontAwesomeIcon icon="check" color="green" />}>
+          <Menu.Item
+            icon={
+              <FontAwesomeIcon icon="check" color={theme.colors.green[5]} />
+            }
+          >
             <Text onClick={() => handleSetApplicantStatus('WANT')}>Vil ha</Text>
           </Menu.Item>
-          <Menu.Item icon={<FontAwesomeIcon icon="question" color="orange" />}>
+          <Menu.Item
+            icon={
+              <FontAwesomeIcon icon="question" color={theme.colors.orange[5]} />
+            }
+          >
             <Text onClick={() => handleSetApplicantStatus('PROBABLY_WANT')}>
               Vil sannsynligvis ha
             </Text>
           </Menu.Item>
-          <Menu.Item icon={<FontAwesomeIcon icon="box" color="turqois" />}>
+          <Menu.Item
+            icon={<FontAwesomeIcon icon="box" color={theme.colors.grape[5]} />}
+          >
             <Text onClick={() => handleSetApplicantStatus('INTERESTED')}>
               Interessert
             </Text>
           </Menu.Item>
 
-          <Menu.Item icon={<FontAwesomeIcon icon="wheelchair" color="blue" />}>
+          <Menu.Item
+            icon={
+              <FontAwesomeIcon
+                icon="wheelchair"
+                color={theme.colors.yellow[5]}
+              />
+            }
+          >
             <Text onClick={() => handleSetApplicantStatus('RESERVE')}>
               Reserve
             </Text>
           </Menu.Item>
-          <Menu.Item icon={<FontAwesomeIcon icon="hourglass" color="pink" />}>
+          <Menu.Item
+            icon={
+              <FontAwesomeIcon icon="hourglass" color={theme.colors.pink[5]} />
+            }
+          >
             <Text onClick={() => handleSetApplicantStatus('PASS_AROUND')}>
               Send på runde
             </Text>
           </Menu.Item>
-          <Menu.Item icon={<FontAwesomeIcon icon="trash-alt" color="red" />}>
+          <Menu.Item
+            icon={
+              <FontAwesomeIcon icon="trash-alt" color={theme.colors.red[5]} />
+            }
+          >
             <Text onClick={() => handleSetApplicantStatus('DO_NOT_WANT')}>
               Vil ikke ha
             </Text>
