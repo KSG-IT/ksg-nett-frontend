@@ -55,6 +55,13 @@ export const INTERNAL_GROUP_DISCUSSION_DATA = gql`
         priorities {
           ...InternalGroupPriorityFields
         }
+        internalGroupInterests {
+          id
+          internalGroup {
+            id
+            name
+          }
+        }
       }
 
       applicants {

@@ -160,6 +160,12 @@ export type ApplicantNode = {
   willBeAdmitted: boolean
   canCommitThreeSemesters: boolean
   openForOtherPositions: boolean
+  internalGroupInterests: ApplicantInterestNode[]
+}
+
+export type ApplicantInterestNode = {
+  applicant: Pick<ApplicantNode, 'id'>
+  internalGroup: Pick<InternalGroupNode, 'id'>
 }
 
 export type AdmissionStatus =
