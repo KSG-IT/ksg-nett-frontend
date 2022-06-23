@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Menu, Text, useMantineTheme } from '@mantine/core'
+import { Loader, Menu, Text, useMantineTheme } from '@mantine/core'
 import { useHistory } from 'react-router-dom'
 import { PatchMutationVariables } from 'types/graphql'
 import {
@@ -13,7 +13,10 @@ import { InternalGroupPositionPriorityBadge } from './InternalGroupPositionPrior
 import { PATCH_INTERNAL_GROUP_POSITION_PRIORITY } from './mutations'
 import { PatchInternalGroupPositionPriorityReturns } from './types'
 
-const renderPrioritycell = (priority: InternalGroupPositionPriority) => {
+const renderPrioritycell = (
+  priority: InternalGroupPositionPriority,
+  index: number
+) => {
   // We need table cell content regardless of the priority being null or not
   if (priority === null)
     return (
@@ -49,7 +52,7 @@ export const DiscussApplicantTableRows: React.VFC<
   const theme = useMantineTheme()
   const { priorities } = applicant
 
-  const [patchInternalGroupPositionPriority] = useMutation<
+  const [patchInternalGroupPositionPriority, { loading }] = useMutation<
     PatchInternalGroupPositionPriorityReturns,
     PatchMutationVariables<InternalGroupPositionPriorityNode>
   >(PATCH_INTERNAL_GROUP_POSITION_PRIORITY, {
@@ -74,6 +77,7 @@ export const DiscussApplicantTableRows: React.VFC<
 
     // find() returns undefined if no match is found
     if (thisInternalGroupPriority === undefined)
+      // Exceptions shall not pass silently
       throw Error('Internal group is undefined')
 
     patchInternalGroupPositionPriority({
@@ -84,73 +88,99 @@ export const DiscussApplicantTableRows: React.VFC<
     })
   }
 
-  const priorityCells = priorities.map(priority => renderPrioritycell(priority))
-
+  const priorityCells = priorities.map((priority, index) =>
+    renderPrioritycell(priority, index)
+  )
   return (
     <tr>
       <td>{applicant.fullName}</td>
       {priorityCells}
       <td>
-        <Menu>
-          <Menu.Item icon={<FontAwesomeIcon icon="eye" />}>
-            <Text onClick={() => handleMoreInfo(applicant)}>Mer info</Text>
-          </Menu.Item>
-          <Menu.Label>Handlinger</Menu.Label>
-          <Menu.Item
-            icon={
-              <FontAwesomeIcon icon="check" color={theme.colors.green[5]} />
-            }
-          >
-            <Text onClick={() => handleSetApplicantStatus('WANT')}>Vil ha</Text>
-          </Menu.Item>
-          <Menu.Item
-            icon={
-              <FontAwesomeIcon icon="question" color={theme.colors.orange[5]} />
-            }
-          >
-            <Text onClick={() => handleSetApplicantStatus('PROBABLY_WANT')}>
-              Vil sannsynligvis ha
-            </Text>
-          </Menu.Item>
-          <Menu.Item
-            icon={<FontAwesomeIcon icon="box" color={theme.colors.grape[5]} />}
-          >
-            <Text onClick={() => handleSetApplicantStatus('INTERESTED')}>
-              Interessert
-            </Text>
-          </Menu.Item>
+        {loading ? (
+          <Loader />
+        ) : (
+          <Menu>
+            <Menu.Item icon={<FontAwesomeIcon icon="eye" />}>
+              <Text onClick={() => handleMoreInfo(applicant)}>Mer info</Text>
+            </Menu.Item>
+            <Menu.Label>Handlinger</Menu.Label>
+            <Menu.Item
+              icon={
+                <FontAwesomeIcon icon="square" color={theme.colors.blue[5]} />
+              }
+            >
+              <Text
+                onClick={() => handleSetApplicantStatus('CURRENTLY_DISCUSSING')}
+              >
+                Diskuteres
+              </Text>
+            </Menu.Item>
+            <Menu.Item
+              icon={
+                <FontAwesomeIcon icon="check" color={theme.colors.green[5]} />
+              }
+            >
+              <Text onClick={() => handleSetApplicantStatus('WANT')}>
+                Vil ha
+              </Text>
+            </Menu.Item>
+            <Menu.Item
+              icon={
+                <FontAwesomeIcon
+                  icon="question"
+                  color={theme.colors.orange[5]}
+                />
+              }
+            >
+              <Text onClick={() => handleSetApplicantStatus('PROBABLY_WANT')}>
+                Vil sannsynligvis ha
+              </Text>
+            </Menu.Item>
+            <Menu.Item
+              icon={
+                <FontAwesomeIcon icon="box" color={theme.colors.grape[5]} />
+              }
+            >
+              <Text onClick={() => handleSetApplicantStatus('INTERESTED')}>
+                Interessert
+              </Text>
+            </Menu.Item>
 
-          <Menu.Item
-            icon={
-              <FontAwesomeIcon
-                icon="wheelchair"
-                color={theme.colors.yellow[5]}
-              />
-            }
-          >
-            <Text onClick={() => handleSetApplicantStatus('RESERVE')}>
-              Reserve
-            </Text>
-          </Menu.Item>
-          <Menu.Item
-            icon={
-              <FontAwesomeIcon icon="hourglass" color={theme.colors.pink[5]} />
-            }
-          >
-            <Text onClick={() => handleSetApplicantStatus('PASS_AROUND')}>
-              Send på runde
-            </Text>
-          </Menu.Item>
-          <Menu.Item
-            icon={
-              <FontAwesomeIcon icon="trash-alt" color={theme.colors.red[5]} />
-            }
-          >
-            <Text onClick={() => handleSetApplicantStatus('DO_NOT_WANT')}>
-              Vil ikke ha
-            </Text>
-          </Menu.Item>
-        </Menu>
+            <Menu.Item
+              icon={
+                <FontAwesomeIcon
+                  icon="wheelchair"
+                  color={theme.colors.yellow[5]}
+                />
+              }
+            >
+              <Text onClick={() => handleSetApplicantStatus('RESERVE')}>
+                Reserve
+              </Text>
+            </Menu.Item>
+            <Menu.Item
+              icon={
+                <FontAwesomeIcon
+                  icon="hourglass"
+                  color={theme.colors.pink[5]}
+                />
+              }
+            >
+              <Text onClick={() => handleSetApplicantStatus('PASS_AROUND')}>
+                Send på runde
+              </Text>
+            </Menu.Item>
+            <Menu.Item
+              icon={
+                <FontAwesomeIcon icon="trash-alt" color={theme.colors.red[5]} />
+              }
+            >
+              <Text onClick={() => handleSetApplicantStatus('DO_NOT_WANT')}>
+                Vil ikke ha
+              </Text>
+            </Menu.Item>
+          </Menu>
+        )}
       </td>
     </tr>
   )

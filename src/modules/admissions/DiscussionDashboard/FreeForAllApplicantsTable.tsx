@@ -1,5 +1,10 @@
 import { Button, Paper } from '@mantine/core'
+import toast from 'react-hot-toast'
 import { useHistory } from 'react-router-dom'
+import {
+  useCreateApplicantInterest,
+  useDeleteApplicantInterest,
+} from '../mutations.hooks'
 import { ApplicantNode, InternalGroupPositionPriority } from '../types'
 import { InternalGroupPositionPriorityBadge } from './InternalGroupPositionPriorityBadge'
 
@@ -23,6 +28,58 @@ const renderPrioritycell = (priority: InternalGroupPositionPriority) => {
   )
 }
 
+const renderActionButton = (
+  applicant: ApplicantNode,
+  internalGroupId: string
+) => {
+  const history = useHistory()
+  const { internalGroupInterests } = applicant
+  const interest = internalGroupInterests.find(
+    interest => interest.internalGroup.id === internalGroupId
+  )
+
+  const { createApplicantInterest } = useCreateApplicantInterest()
+  const { deleteApplicantInterest } = useDeleteApplicantInterest()
+
+  const handleCreateApplicantInterest = () => {
+    createApplicantInterest({
+      variables: {
+        input: {
+          applicant: applicant.id,
+          internalGroup: internalGroupId,
+        },
+      },
+      refetchQueries: ['InternalGroupDiscussionDataQuery'],
+      onCompleted() {
+        toast.success('Interesse for søker registrert!')
+      },
+    })
+  }
+
+  if (interest === undefined) {
+    return (
+      <Button onClick={handleCreateApplicantInterest} color="green">
+        Vi vil ha!
+      </Button>
+    )
+  }
+  const handleDeleteApplicantInterest = () => {
+    deleteApplicantInterest({
+      variables: { id: interest.id },
+      refetchQueries: ['InternalGroupDiscussionDataQuery'],
+      onCompleted() {
+        toast.success('Interesse for søker slettet!')
+      },
+    })
+  }
+
+  return (
+    <Button onClick={handleDeleteApplicantInterest} color="red">
+      Sike!
+    </Button>
+  )
+}
+
 interface FreeForAllApplicantsTableProps {
   applicants: ApplicantNode[]
   internalGroupId: string
@@ -37,9 +94,6 @@ export const FreeForAllApplicantsTable: React.VFC<
   const handleMoreInfo = (applicant: ApplicantNode) => {
     history.push(`/admissions/applicants/${applicant.id}`)
   }
-  const handleReportInterest = (applicantId: string) => {
-    console.log(`Reporting interest in ${applicantId}`)
-  }
 
   // Render rows
   const rows = applicants.map(applicant => (
@@ -51,14 +105,7 @@ export const FreeForAllApplicantsTable: React.VFC<
           Kandidatdetaljer
         </Button>
       </td>
-      <td>
-        <Button
-          onClick={() => handleReportInterest(applicant.id)}
-          color="green"
-        >
-          Vi vil ha!
-        </Button>
-      </td>
+      <td>{renderActionButton(applicant, internalGroupId)}</td>
     </tr>
   ))
 

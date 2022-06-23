@@ -2,7 +2,9 @@ import { FullPage404 } from 'components/FullPageComponents'
 import { PrivateRoute } from 'containers/PrivateRoute'
 import { ApplicantDetails } from 'modules/admissions'
 import { AdmissionDashboard } from 'modules/admissions/AdmissionDashboard'
+import { CloseAdmission } from 'modules/admissions/CloseAdmission'
 import { ConfigurationWizard } from 'modules/admissions/ConfigureAdmission'
+import { DiscussionDashboard } from 'modules/admissions/DiscussionDashboard'
 import { InternalGroupDiscussion } from 'modules/admissions/DiscussionDashboard/InternalGroupDiscussion'
 import { InternalGroupApplicants } from 'modules/admissions/InternalGroupApplicants'
 import { InterviewEdit } from 'modules/admissions/InterviewEdit/InterviewEdit'
@@ -95,6 +97,7 @@ export const AuthRoutes: React.VFC = () => {
       />
 
       <PrivateRoute exact path="/users/:userId" component={UserProfile} />
+      <PrivateRoute exact path="/users/newbies" component={FullPage404} />
 
       {/* Admissions module */}
       <PrivateRoute exact path="/admissions" component={AdmissionDashboard} />
@@ -124,6 +127,14 @@ export const AuthRoutes: React.VFC = () => {
         path="/admissions/config"
         component={ConfigurationWizard}
       />
+
+      <PrivateRoute
+        exact
+        path="/admissions/discussion-dashboard"
+        component={DiscussionDashboard}
+      />
+
+      <PrivateRoute exact path="/admissions/close" component={CloseAdmission} />
       <PrivateRoute
         exact
         path="/admissions/:admissionId"

@@ -11,13 +11,13 @@ import {
 } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { MessageBox } from 'components/MessageBox'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import { PatchMutationVariables } from 'types/graphql'
-import { CloseAdmission } from '../CloseAdmission'
 import { ConfigurationWizard } from '../ConfigureAdmission/ConfigurationWizard'
-import { DiscussionDashboard } from '../DiscussionDashboard'
 import { CREATE_APPLICATIONS, PATCH_ADMISSION } from '../mutations'
 import { ACTIVE_ADMISSION_QUERY } from '../queries'
 import {
@@ -28,6 +28,7 @@ import {
   PatchAdmissionReturns,
 } from '../types'
 import { ActiveAdmissionTable } from './ActiveAdmissionTable'
+import { ApplicantStatistics } from './ApplicantStatistics'
 import { InternalGroupsNav } from './InternalGroupsNav'
 
 const Wrapper = styled.div`
@@ -63,7 +64,10 @@ export const AdmissionDashboard: React.VFC = () => {
   if (loading || !data) return <FullContentLoader />
 
   const handleCreateApplications = () => {
-    const parsedEmails = emails.split('\n')
+    const parsedEmails = emails
+      .split('\n')
+      .filter(emailString => emailString !== '')
+
     toast.promise(createApplications({ variables: { emails: parsedEmails } }), {
       loading: 'Oppretter søknader',
       error: 'Noe gikk galt',
@@ -92,24 +96,17 @@ export const AdmissionDashboard: React.VFC = () => {
     return <ConfigurationWizard />
 
   if (activeAdmission.status === 'IN_SESSION') {
-    return (
-      <Wrapper>
-        <DiscussionDashboard />
-      </Wrapper>
-    )
+    return <Redirect to="/admissions/discussion-dashboard" />
   }
 
   if (activeAdmission.status === 'LOCKED') {
-    return (
-      <Wrapper>
-        <CloseAdmission />
-      </Wrapper>
-    )
+    return <Redirect to="/admissions/close" />
   }
 
   return (
     <Wrapper>
       <Title>Opptak</Title>
+      <ApplicantStatistics admission={activeAdmission} />
       <InternalGroupsNav />
       <Title order={2} mt="md">
         Mine kommende intervjuer
@@ -134,6 +131,9 @@ export const AdmissionDashboard: React.VFC = () => {
       </Stack>
       <Stack>
         <Title order={2}>Legg til søkere</Title>
+        <MessageBox type="info">
+          Her kan du legge inn søkere sin epost. Hver epost på hver sin linje.
+        </MessageBox>
         {/* ToDo: Replace with dropzone? Drop -> opens modal with all emails? */}
         <Textarea
           minRows={12}

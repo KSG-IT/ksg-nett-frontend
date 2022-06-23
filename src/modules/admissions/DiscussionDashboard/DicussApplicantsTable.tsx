@@ -13,6 +13,7 @@ export const DiscussApplicantsTable: React.VFC<DiscussApplicantsTableProps> = ({
 }) => {
   const rows = applicants.map(applicant => (
     <DiscussApplicantTableRows
+      key={applicant.id}
       applicant={applicant}
       internalGroupId={internalGroup.id}
     />

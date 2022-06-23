@@ -1,15 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  Alert,
-  Button,
-  Group,
-  Paper,
-  Stack,
-  Table,
-  Text,
-  Title,
-} from '@mantine/core'
+import { Alert, Group, Paper, Stack, Table, Text, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { InfoPopover } from 'components/InfoPopover'
 import { FullContentLoader } from 'components/Loading'
@@ -47,25 +38,6 @@ export const InternalGroupDiscussion: React.VFC = () => {
       applicantsOpenForOtherPositions,
     },
   } = data
-
-  // Move to its own component
-  const applicantsOpenForOtherPositionsRows =
-    applicantsOpenForOtherPositions.map(applicant => (
-      <tr key={applicant.id}>
-        <td>{applicant.fullName}</td>
-        <td>
-          <Button>Interessert i kandidat</Button>
-        </td>
-        <td>
-          <Button
-            leftIcon={<FontAwesomeIcon icon="eye" />}
-            onClick={() => alert('Denne burde sende deg videre, lol')}
-          >
-            Mer info
-          </Button>
-        </td>
-      </tr>
-    ))
 
   // Move to its own component
   const processedApplicantsRows = processedApplicants.map(priority => (
