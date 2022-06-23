@@ -31,6 +31,7 @@ export const ToggleApplicantTableRow: React.VFC<ToggleApplicantInlineProps> = ({
 
     toggleApplicantWillBeAdmitted({
       variables: { id: applicant.id },
+      refetchQueries: ['AdmissionApplicantPreviewQuery'],
       onCompleted({ toggleApplicantWillBeAdmitted }) {
         const { success } = toggleApplicantWillBeAdmitted
 
