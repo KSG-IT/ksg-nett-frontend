@@ -164,8 +164,10 @@ export type ApplicantNode = {
 }
 
 export type ApplicantInterestNode = {
-  applicant: Pick<ApplicantNode, 'id'>
-  internalGroup: Pick<InternalGroupNode, 'id'>
+  id: string
+  applicant: Pick<ApplicantNode, 'id' | 'fullName'>
+  internalGroup: Pick<InternalGroupNode, 'id' | 'name'>
+  positionToBeOffered: Pick<InternalGroupPositionNode, 'id' | 'name'> | null
 }
 
 export type AdmissionStatus =

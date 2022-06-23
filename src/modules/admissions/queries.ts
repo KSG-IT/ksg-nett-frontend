@@ -227,3 +227,44 @@ export const INTERVIEW_DETAIL_QUERY = gql`
     }
   }
 `
+
+export const VALID_APPLICANTS_QUERY = gql`
+  query CloseAdmissionQueryData {
+    validApplicants {
+      applicantInterests {
+        id
+        applicant {
+          id
+          fullName
+        }
+        internalGroup {
+          id
+          name
+        }
+        positionToBeOffered {
+          id
+          name
+        }
+      }
+      validApplicants {
+        id
+        fullName
+        status
+        willBeAdmitted
+        priorities {
+          id
+          applicantPriority
+          internalGroupPriority
+          internalGroupPosition {
+            name
+            id
+            internalGroup {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`
