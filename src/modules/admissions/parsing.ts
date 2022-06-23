@@ -81,6 +81,8 @@ export const parseApplicantStatus = (status: ApplicantStatus) => {
 
     case 'TO_BE_CALLED':
       return 'Skal ringes'
+    case 'HAS_SET_PRIORITIES':
+      return 'Valgt stillinger'
   }
 }
 
@@ -107,7 +109,7 @@ export const parseInternalGroupPositionPriority = (
   }
 }
 
-export const parseApplicantPriority = (priority: ApplicantPriority) => {
+export const parseApplicantPriority = (priority: ApplicantPriority | 'N/A') => {
   switch (priority) {
     case 'FIRST':
       return 'Første'
@@ -115,5 +117,7 @@ export const parseApplicantPriority = (priority: ApplicantPriority) => {
       return 'Andre'
     case 'THIRD':
       return 'Tredje'
+    case 'N/A':
+      return 'N/A'
   }
 }
