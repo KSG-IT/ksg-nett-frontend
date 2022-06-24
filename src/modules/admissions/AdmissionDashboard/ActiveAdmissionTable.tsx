@@ -1,8 +1,9 @@
-import { Badge, Paper, Table } from '@mantine/core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Divider, Menu, Paper, Table } from '@mantine/core'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { AdmissionNode } from '../types'
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,18 +31,34 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
   }
 
   const rows = applicants.map(applicant => (
-    <TableRow key={applicant.id} onClick={() => handleRedirect(applicant.id)}>
+    <TableRow key={applicant.id}>
       <td>{applicant.fullName}</td>
       <td>{applicant.email}</td>
       <td>
-        <Badge>{applicant.status}</Badge>
+        <ApplicantStatusBadge applicantStatus={applicant.status} />
       </td>
       {applicant.priorities.map((priority, i) => {
-        const key = `priority-${i}`
-        if (priority === null) return <td key={key}>Ingen prio</td>
-
-        return <td key={key}>{priority.internalGroupPosition.name}</td>
+        const content =
+          priority === null ? 'Ingen prio' : priority.internalGroupPosition.name
+        return <td key={i}>{content}</td>
       })}
+      <td>
+        <Menu>
+          <Menu.Label>Valg</Menu.Label>
+          <Menu.Item
+            icon={<FontAwesomeIcon icon="eye" />}
+            onClick={() => handleRedirect(applicant.id)}
+          >
+            Mer info
+          </Menu.Item>
+
+          <Divider />
+          <Menu.Label>Admin</Menu.Label>
+          <Menu.Item color={'red'} icon={<FontAwesomeIcon icon="times" />}>
+            Slett
+          </Menu.Item>
+        </Menu>
+      </td>
     </TableRow>
   ))
   return (
@@ -55,6 +72,7 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
             <td>Prioritet 1</td>
             <td>Prioritet 2</td>
             <td>Prioritet 3</td>
+            <td>Handlinger</td>
           </thead>
           <tbody>{rows}</tbody>
         </Table>
