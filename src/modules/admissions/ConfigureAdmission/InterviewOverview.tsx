@@ -75,7 +75,7 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
   const [openAdmission] = useMutation<
     PatchAdmissionReturns,
     PatchMutationVariables<PatchAdmissionInput>
-  >(PATCH_ADMISSION)
+  >(PATCH_ADMISSION, { refetchQueries: ['ActiveAdmission'] })
 
   if (error) return <FullPageError />
 
