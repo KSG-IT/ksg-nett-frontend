@@ -28,7 +28,7 @@ export const CloseAdmission: React.VFC = () => {
   if (loading || !data) return <FullContentLoader />
 
   const {
-    validApplicants: { validApplicants, applicantInterests },
+    closeAdmissionData: { validApplicants, applicantInterests },
   } = data
 
   return (
@@ -46,9 +46,10 @@ export const CloseAdmission: React.VFC = () => {
       <Title order={2}>Kandidater som har fått tilbud</Title>
       <MessageBox type="info">
         Her markerer du hvem som blir tatt opp i <b>KSG</b>. Dette er alle
-        søkere som har blitt market som noe annet enn <b>Vil ikke ha</b>. Søkere
-        vil bli tilegnet et verv automatisk avhengig av den gjengen med øverste
-        prioritet som har sagt at de har lyst på kandidaten.
+        søkere som har blitt markert som <b>Vil ha</b> eller <b>Reserve</b>{' '}
+        etter det interne fordelignsmøtet av minst én av prioriteringen deres.
+        Søkere vil bli tilegnet et verv automatisk avhengig av den gjengen med
+        øverste prioritet som har sagt at de har lyst på kandidaten.
       </MessageBox>
       <Paper p="md" mt="sm">
         <CloseAdmissionTable applicants={validApplicants} />
@@ -62,21 +63,12 @@ export const CloseAdmission: React.VFC = () => {
         på knappen i tabellen gir du kandidaten til en av gjengene. Dette kan du
         endre på så mye du vil fram til opptaket stenges.
       </MessageBox>
-      <MessageBox type="warning">
-        <b>Obs! </b> Mangler knapp for å angre på å gi bort en kandidat så ikke
-        trykk på en kandidat som ikke skal få et tilbud (kommer snart
-        <sup>
-          <b>TM</b>
-        </sup>
-        ).
-      </MessageBox>
       <Paper p="sm">
         <FreeForAllWithOffersTable applicantInterests={applicantInterests} />
       </Paper>
       <Group>
         <Button onClick={() => setPreviewModalOpen(true)}>
           Fullfør opptak
-          {/* Add a modal to this which shows the end result */}
         </Button>
         <a href={`${API_URL}/admissions/callsheet`} target="_blank">
           <Button>Last ned ringeliste</Button>

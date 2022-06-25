@@ -230,7 +230,7 @@ export const INTERVIEW_DETAIL_QUERY = gql`
 
 export const VALID_APPLICANTS_QUERY = gql`
   query CloseAdmissionQueryData {
-    validApplicants {
+    closeAdmissionData {
       applicantInterests {
         id
         applicant {
