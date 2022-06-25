@@ -3,15 +3,10 @@ import { Button, Group, Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useHistory } from 'react-router-dom'
-import styled from 'styled-components'
 import { LOCK_ADMISSION_MUTATION } from '../AdmissionDashboard/mutations'
 import { AllInternalGroupsAcceptingApplicantsReturns } from '../types'
 import { InternalGroupPreviewList } from './InternalGroupPreviewList'
 import { ALL_INTERNAL_GROUP_APPLICANT_DATA } from './queries'
-
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-`
 
 export const DiscussionDashboard: React.VFC = () => {
   /**
