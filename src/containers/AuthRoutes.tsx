@@ -8,6 +8,7 @@ import { DiscussionDashboard } from 'modules/admissions/DiscussionDashboard'
 import { InternalGroupDiscussion } from 'modules/admissions/DiscussionDashboard/InternalGroupDiscussion'
 import { InternalGroupApplicants } from 'modules/admissions/InternalGroupApplicants'
 import { InterviewEdit } from 'modules/admissions/InterviewEdit/InterviewEdit'
+import { MyInterviews } from 'modules/admissions/MyInterviews'
 import { Dashboard } from 'modules/dashboard'
 import { Deposits, MyEconomy } from 'modules/economy'
 import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
@@ -126,6 +127,11 @@ export const AuthRoutes: React.VFC = () => {
         exact
         path="/admissions/config"
         component={ConfigurationWizard}
+      />
+      <PrivateRoute
+        exact
+        path="/admissions/my-interviews"
+        component={MyInterviews}
       />
 
       <PrivateRoute
