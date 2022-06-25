@@ -4,6 +4,7 @@ import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useHistory } from 'react-router-dom'
 import { LOCK_ADMISSION_MUTATION } from '../AdmissionDashboard/mutations'
+import { AdmissionsShortcutPanel } from '../AdmissionsShortcutPanel'
 import { AllInternalGroupsAcceptingApplicantsReturns } from '../types'
 import { InternalGroupPreviewList } from './InternalGroupPreviewList'
 import { ALL_INTERNAL_GROUP_APPLICANT_DATA } from './queries'
@@ -33,6 +34,7 @@ export const DiscussionDashboard: React.VFC = () => {
   const { allInternalGroupApplicantData } = data
   return (
     <Stack style={{ overflowY: 'scroll', width: '900px' }} p="lg">
+      <AdmissionsShortcutPanel />
       <Group position="apart" mb="md">
         <Title>Fordelingsmøtet</Title>
         <Button onClick={() => lockAdmission()}>

@@ -17,6 +17,7 @@ import { toast } from 'react-hot-toast'
 import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import { PatchMutationVariables } from 'types/graphql'
+import { AdmissionsShortcutPanel } from '../AdmissionsShortcutPanel'
 import { ConfigurationWizard } from '../ConfigureAdmission/ConfigurationWizard'
 import { CREATE_APPLICATIONS, PATCH_ADMISSION } from '../mutations'
 import { ACTIVE_ADMISSION_QUERY } from '../queries'
@@ -106,6 +107,7 @@ export const AdmissionDashboard: React.VFC = () => {
   return (
     <Wrapper>
       <Title>Opptak</Title>
+      <AdmissionsShortcutPanel />
       <ApplicantStatistics admission={activeAdmission} />
       <InternalGroupsNav />
       <Title order={2} mt="md">
