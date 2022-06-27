@@ -97,8 +97,8 @@ export const AuthRoutes: React.VFC = () => {
         component={UserManagementAddUser}
       />
 
-      <PrivateRoute exact path="/users/:userId" component={UserProfile} />
       <PrivateRoute exact path="/users/newbies" component={FullPage404} />
+      <PrivateRoute exact path="/users/:userId" component={UserProfile} />
 
       {/* Admissions module */}
       <PrivateRoute exact path="/admissions" component={AdmissionDashboard} />
