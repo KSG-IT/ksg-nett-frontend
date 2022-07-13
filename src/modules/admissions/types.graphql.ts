@@ -14,6 +14,35 @@ import {
 
 // === Node types ===
 
+export type InterviewAdditionalEvaluationStatementNode = {
+  id: string
+  statement: string
+  order: number
+}
+
+export type InterviewNode = {
+  id: string
+  interviewStart: Date
+  interviewEnd: Date
+  interviewers: Pick<UserNode, 'id' | 'initials' | 'profileImage'>[]
+  location: Pick<InterviewLocationNode, 'id' | 'name' | 'locationDescription'>
+  notes: string
+  discussion: string
+  booleanEvaluationAnswers: InterviewBooleanEvaluationAnswerNode[]
+  additionalEvaluationAnswers: InterviewAdditionalEvaluationAnswerNode[]
+
+  applicant: Pick<
+    ApplicantNode,
+    | 'id'
+    | 'fullName'
+    | 'canCommitThreeSemesters'
+    | 'openForOtherPositions'
+    | 'priorities'
+  >
+  totalEvaluation: InterviewTotalEvaluationValues | null
+  priorities: InternalGroupPositionPriority[]
+}
+
 export type InterviewLocationNode = {
   id: string
   name: string
@@ -48,34 +77,10 @@ export type InterviewAdditionalEvaluationAnswerNode = {
   answer: InterviewAdditionalEvaluationAnswerValues | null
 }
 
-export type InterviewNode = {
-  id: string
-  interviewStart: Date
-  interviewEnd: Date
-  interviewers: Pick<UserNode, 'id' | 'initials' | 'profileImage'>[]
-  location: Pick<InterviewLocationNode, 'id' | 'name' | 'locationDescription'>
-  notes: string
-  discussion: string
-  booleanEvaluationAnswers: InterviewBooleanEvaluationAnswerNode[]
-  additionalEvaluationAnswers: InterviewAdditionalEvaluationAnswerNode[]
-
-  applicant: Pick<
-    ApplicantNode,
-    | 'id'
-    | 'fullName'
-    | 'canCommitThreeSemesters'
-    | 'openForOtherPositions'
-    | 'priorities'
-  >
-  totalEvaluation: InterviewTotalEvaluationValues | null
-  priorities: InternalGroupPositionPriority[]
-}
-
 export type AdmissionAvailableInternalGroupPositionData = {
   id: string
   internalGroupPosition: Pick<InternalGroupPositionNode, 'id' | 'name'>
   availablePositions: number
-  __typename: string
 }
 
 export type InternalGroupPositionPriorityNode = {
@@ -110,6 +115,22 @@ export type ApplicantNode = {
   internalGroupInterests: ApplicantInterestNode[]
 }
 
+// Shiuld be renamed. Implies a Shallow type but we are
+// starting to have a lot of custom fields?
+export type CoreApplicantNode = {
+  id: string
+  status: ApplicantStatusValues
+  email: string
+  fullName: string
+  image: string | File
+  dateOfBirth: Date | string
+  interview: InterviewNode | null
+  interviewerFromInternalGroup: string | null
+  interviewIsCovered: boolean
+  iAmAttendingInterview: boolean
+  phone: string
+}
+
 export type ApplicantInterestNode = {
   id: string
   applicant: Pick<ApplicantNode, 'id' | 'fullName'>
@@ -138,6 +159,7 @@ export type InterviewScheduleTemplateNode = {
 }
 
 /* === QUERY TYPING === */
+
 export interface ActiveAdmissioneturns {
   activeAdmission: Pick<
     AdmissionNode,
@@ -193,6 +215,85 @@ export interface InterviewDetailQueryReturns {
 
 export interface InterviewDetailQueryVariables {
   id: string
+}
+
+/* === Query typing === */
+
+export interface InterviewsAvailableForBookingReturns {
+  interviewsAvailableForBooking: AvailableInterviewsDayGrouping[]
+}
+
+export interface InterviewsAvailableForBookingVariables {
+  requestMoreInterviewsOffset: Date
+}
+
+export interface GetApplicantFromTokenVariables {}
+
+export interface GetApplicantFromTokenReturns {
+  applicant: ApplicantNode
+}
+
+// === Query typings ===
+
+export interface InternalGroupDiscussionDataReturns {
+  internalGroupDiscussionData: InternalGroupDiscussionData
+}
+
+// === Query typing === //
+export interface InterviewOverviewReturns {
+  interviewOverview: InterviewOverview
+  interviewScheduleTemplate: InterviewScheduleTemplateNode
+}
+
+export interface InterviewTemplateReturns {
+  interviewTemplate: {
+    interviewBooleanEvaluationStatements: Pick<
+      InterviewBooleanEvaluationNode,
+      'id' | 'statement'
+    >[]
+
+    interviewAdditionalEvaluationStatements: Pick<
+      InterviewAdditionalEvaluationStatementNode,
+      'id' | 'statement'
+    >[]
+  }
+}
+
+export type InterviewLocationDateGrouping = {
+  name: string
+  interviews: Pick<InterviewNode, 'id' | 'interviewStart' | 'interviewEnd'>[]
+}
+
+export type InterviewDay = {
+  date: Date
+  locations: InterviewLocationDateGrouping[]
+}
+
+export type InterviewOverview = {
+  interviewCount: number
+  admissionId: string
+  interviewDayGroupings: InterviewDay[]
+}
+
+export interface InternalGroupApplicantsDataReturns {
+  internalGroupApplicantsData: {
+    internalGroup: Pick<InternalGroupNode, 'id' | 'name'>
+    positionsToFill: number
+    currentProgress: number
+    firstPriorities: CoreApplicantNode[]
+    secondPriorities: CoreApplicantNode[]
+    thirdPriorities: CoreApplicantNode[]
+  }
+}
+
+export type InterviewSlot = {
+  interviewStart: Date
+  interviewIds: string[]
+}
+
+export type AvailableInterviewsDayGrouping = {
+  date: Date
+  interviewSlots: InterviewSlot[]
 }
 
 /* === MUTATION TYPING === */
@@ -275,54 +376,6 @@ export type CreateInterviewLocationInput = {
   name: string
 }
 
-export type InterviewLocationDateGrouping = {
-  name: string
-  interviews: Pick<InterviewNode, 'id' | 'interviewStart' | 'interviewEnd'>[]
-}
-
-export type InterviewDay = {
-  date: Date
-  locations: InterviewLocationDateGrouping[]
-}
-
-export type InterviewOverview = {
-  interviewCount: number
-  admissionId: string
-  interviewDayGroupings: InterviewDay[]
-}
-
-// export type InterviewBooleanEvaluationNode = {
-//   id: string
-//   statement: string
-//   order: number
-// }
-
-export type InterviewAdditionalEvaluationStatementNode = {
-  id: string
-  statement: string
-  order: number
-}
-
-// === Query typing === //
-export interface InterviewOverviewReturns {
-  interviewOverview: InterviewOverview
-  interviewScheduleTemplate: InterviewScheduleTemplateNode
-}
-
-export interface InterviewTemplateReturns {
-  interviewTemplate: {
-    interviewBooleanEvaluationStatements: Pick<
-      InterviewBooleanEvaluationNode,
-      'id' | 'statement'
-    >[]
-
-    interviewAdditionalEvaluationStatements: Pick<
-      InterviewAdditionalEvaluationStatementNode,
-      'id' | 'statement'
-    >[]
-  }
-}
-
 // === Mutation typing === //
 export interface CreateInterviewLocationAvailabilityVariables {
   input: CreateInterviewLocationAvailabilityInput
@@ -359,37 +412,11 @@ export interface PatchAdmissionAvailableInternalGroupPositionDataReturns {
   patchAdmissionAvailableInternalGroupPositionData: {
     admissionAvailableInternalGroupPositionData: Pick<
       AdmissionAvailableInternalGroupPositionData,
-      'id' | '__typename' | 'availablePositions'
+      'id' | 'availablePositions'
     >
   }
 }
 
-// Shiuld be renamed. Implies a Shallow type but we are
-// starting to have a lot of custom fields?
-export type CoreApplicantNode = {
-  id: string
-  status: ApplicantStatusValues
-  email: string
-  fullName: string
-  image: string | File
-  dateOfBirth: Date | string
-  interview: InterviewNode | null
-  interviewerFromInternalGroup: string | null
-  interviewIsCovered: boolean
-  iAmAttendingInterview: boolean
-  phone: string
-}
-
-export interface InternalGroupApplicantsDataReturns {
-  internalGroupApplicantsData: {
-    internalGroup: Pick<InternalGroupNode, 'id' | 'name'>
-    positionsToFill: number
-    currentProgress: number
-    firstPriorities: CoreApplicantNode[]
-    secondPriorities: CoreApplicantNode[]
-    thirdPriorities: CoreApplicantNode[]
-  }
-}
 export interface InternalGroupApplicantsDataVariables {
   internalGroup: string
 }
@@ -411,42 +438,10 @@ export type InternalGroupDiscussionData = {
   applicants: ApplicantNode[]
 }
 
-// === Query typings ===
-
-export interface InternalGroupDiscussionDataReturns {
-  internalGroupDiscussionData: InternalGroupDiscussionData
-}
-
 // === Mutation typings ====
 
 export interface PatchInternalGroupPositionPriorityReturns {
   internalGroupPositionPriority: InternalGroupPositionPriorityNode
-}
-
-export type InterviewSlot = {
-  interviewStart: Date
-  interviewIds: string[]
-}
-
-export type AvailableInterviewsDayGrouping = {
-  date: Date
-  interviewSlots: InterviewSlot[]
-}
-
-/* === Query typing === */
-
-export interface InterviewsAvailableForBookingReturns {
-  interviewsAvailableForBooking: AvailableInterviewsDayGrouping[]
-}
-
-export interface InterviewsAvailableForBookingVariables {
-  requestMoreInterviewsOffset: Date
-}
-
-export interface GetApplicantFromTokenVariables {}
-
-export interface GetApplicantFromTokenReturns {
-  applicant: ApplicantNode
 }
 
 // === Mutation typing ===
