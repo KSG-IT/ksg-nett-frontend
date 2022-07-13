@@ -1,5 +1,5 @@
-import { ApplicantPortal } from 'modules/admissions/ApplicantPortal'
-import { ReSendApplicantTokenForm } from 'modules/admissions/ApplicantPortal/ReSendApplicantTokenForm'
+import { ReSendApplicantTokenForm } from 'modules/admissions/components/ApplicantPortal/ReSendApplicantTokenForm'
+import { ApplicantPortal } from 'modules/admissions/views'
 import { Login } from 'modules/login'
 import { Toaster } from 'react-hot-toast'
 import {

@@ -1,4 +1,4 @@
-import { ApplicantNode } from 'modules/admissions/types'
+import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { UserNode } from 'modules/users/types'
 
 export type InternalGroupNode = {

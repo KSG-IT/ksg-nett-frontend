@@ -1,7 +1,7 @@
-import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
-import { UserQueryVariables, USER_QUERY, UserQueryReturns } from '.'
 import { useParams } from 'react-router-dom'
+import styled from 'styled-components'
+import { UserQueryReturns, UserQueryVariables, USER_QUERY } from '.'
 
 const Wrapper = styled.div`
   display: grid;
