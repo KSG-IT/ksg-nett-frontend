@@ -1,14 +1,17 @@
 import { FullPage404 } from 'components/FullPageComponents'
 import { PrivateRoute } from 'containers/PrivateRoute'
 import { ApplicantDetails } from 'modules/admissions'
-import { AdmissionDashboard } from 'modules/admissions/AdmissionDashboard'
-import { CloseAdmission } from 'modules/admissions/CloseAdmission'
-import { ConfigurationWizard } from 'modules/admissions/ConfigureAdmission'
-import { DiscussionDashboard } from 'modules/admissions/DiscussionDashboard'
-import { InternalGroupDiscussion } from 'modules/admissions/DiscussionDashboard/InternalGroupDiscussion'
-import { InternalGroupApplicants } from 'modules/admissions/InternalGroupApplicants'
-import { InterviewEdit } from 'modules/admissions/InterviewEdit/InterviewEdit'
-import { MyInterviews } from 'modules/admissions/MyInterviews'
+import {
+  AdmissionDashboard,
+  ApplicantsOverview,
+  CloseAdmission,
+  ConfigurationWizard,
+  DiscussionDashboard,
+  EditInterview,
+  InternalGroupApplicants,
+  InternalGroupDiscussion,
+  MyInterviews,
+} from 'modules/admissions/views'
 import { Dashboard } from 'modules/dashboard'
 import { Deposits, MyEconomy } from 'modules/economy'
 import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
@@ -35,7 +38,6 @@ import { Redirect, Switch } from 'react-router-dom'
 export const AuthRoutes: React.VFC = () => {
   return (
     <Switch>
-      {/* Module routes */}
       <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
       {/* Events module */}
@@ -102,6 +104,7 @@ export const AuthRoutes: React.VFC = () => {
 
       {/* Admissions module */}
       <PrivateRoute exact path="/admissions" component={AdmissionDashboard} />
+
       <PrivateRoute
         exact
         path="/admissions/internal-group-applicants/:internalGroupId"
@@ -115,13 +118,19 @@ export const AuthRoutes: React.VFC = () => {
 
       <PrivateRoute
         exact
+        path="/admissions/applicants-overview"
+        component={ApplicantsOverview}
+      />
+
+      <PrivateRoute
+        exact
         path="/admissions/applicants/:applicantId"
         component={ApplicantDetails}
       />
       <PrivateRoute
         exact
         path="/admissions/interviews/:interviewId/edit"
-        component={InterviewEdit}
+        component={EditInterview}
       />
       <PrivateRoute
         exact

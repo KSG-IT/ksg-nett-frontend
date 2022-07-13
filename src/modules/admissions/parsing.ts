@@ -1,8 +1,8 @@
 import {
-  ApplicantPriority,
-  ApplicantStatus,
-  InternalGroupPriority,
-} from './types'
+  ApplicantStatusValues,
+  InternalGroupPositionPriorityApplicantPriorityValues,
+  InternalGroupPositionPriorityInternalGroupPriorityValues,
+} from './consts'
 
 export const parseBooleanEvaluation = (value: true | false | null) => {
   switch (value) {
@@ -53,7 +53,7 @@ export const parseTotalEvaluation = (
   }
 }
 
-export const parseApplicantStatus = (status: ApplicantStatus) => {
+export const parseApplicantStatus = (status: ApplicantStatusValues) => {
   switch (status) {
     case 'EMAIL_SENT':
       return 'Sendt epost'
@@ -87,7 +87,7 @@ export const parseApplicantStatus = (status: ApplicantStatus) => {
 }
 
 export const parseInternalGroupPositionPriority = (
-  priority: InternalGroupPriority
+  priority: InternalGroupPositionPriorityInternalGroupPriorityValues
 ) => {
   switch (priority) {
     case 'WANT':
@@ -109,7 +109,9 @@ export const parseInternalGroupPositionPriority = (
   }
 }
 
-export const parseApplicantPriority = (priority: ApplicantPriority | 'N/A') => {
+export const parseApplicantPriority = (
+  priority: InternalGroupPositionPriorityApplicantPriorityValues | 'N/A'
+) => {
   switch (priority) {
     case 'FIRST':
       return 'Første'

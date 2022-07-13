@@ -1,6 +1,6 @@
 import React from 'react'
-import { InternalGroupPositionPriorityBadge } from './DiscussionDashboard/InternalGroupPositionPriorityBadge'
-import { InternalGroupPositionPriority } from './types'
+import { InternalGroupPositionPriorityBadge } from './components/InternalGroupPositionPriorityBadge'
+import { InternalGroupPositionPriority } from './types.graphql'
 /**
  * The compiler was not happy with returning react fragments and other HTML DOM elements wihtout
  * the .tsx extention being applied
