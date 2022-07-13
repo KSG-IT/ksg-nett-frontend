@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { NavItemProps, NavItem } from './NavItem'
+import { NavItem, NavItemProps } from './NavItem'
 
 const Wrapper = styled.div`
   display: flex;

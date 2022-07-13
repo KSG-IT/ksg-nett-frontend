@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import { UserNode } from 'modules/users/types'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 type ThumbnailSizes =
   | 'tiny'
