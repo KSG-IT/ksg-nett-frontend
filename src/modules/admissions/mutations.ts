@@ -322,3 +322,11 @@ export const REMOVE_SELF_AS_INTERVIEWER = gql`
     }
   }
 `
+
+export const DELETE_APPLICANT = gql`
+  mutation DeleteApplicant($id: ID!) {
+    deleteApplicant(id: $id) {
+      found
+    }
+  }
+`

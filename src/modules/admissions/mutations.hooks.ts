@@ -3,8 +3,18 @@ import { gql } from 'graphql-tag'
 import { InternalGroupNode } from 'modules/organization/types'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import { ApplicantStatusValues, InterviewTotalEvaluationValues } from './consts'
-import { CLOSE_ADMISSION_MUTATION, LOCK_ADMISSION_MUTATION } from './mutations'
-import { ApplicantInterestNode, ApplicantNode } from './types.graphql'
+import {
+  CLOSE_ADMISSION_MUTATION,
+  CREATE_APPLICATIONS,
+  DELETE_APPLICANT,
+  LOCK_ADMISSION_MUTATION,
+} from './mutations'
+import {
+  ApplicantInterestNode,
+  ApplicantNode,
+  CreateApplicationsReturns,
+  CreateApplicationsVariables,
+} from './types.graphql'
 
 const PATCH_APPLICANT = gql`
   mutation PatchApplicant($id: ID!, $input: PatchApplicantInput!) {
@@ -246,6 +256,33 @@ export const useResetApplicantInternalGroupPositionOffer = () => {
     resetApplicantInternalGroupPositionOfferMutation,
     loading,
     error,
+  }
+}
+
+// === APPLICANT MUTATIONS ===
+export const useApplicantMutations = () => {
+  const [patchApplicant, { loading: patchApplicantLoading }] = useMutation<
+    PatchApplicantReturns,
+    PatchApplicantVariables
+  >(PATCH_APPLICANT)
+
+  const [deleteApplicant, { loading: deleteApplicantLoading }] = useMutation<
+    DeleteMutationReturns,
+    DeleteMutationVariables
+  >(DELETE_APPLICANT)
+
+  const [createApplicants, { loading: createApplicantsLoading }] = useMutation<
+    CreateApplicationsReturns,
+    CreateApplicationsVariables
+  >(CREATE_APPLICATIONS, { refetchQueries: ['ActiveAdmission'] })
+
+  return {
+    patchApplicant,
+    patchApplicantLoading,
+    deleteApplicant,
+    deleteApplicantLoading,
+    createApplicants,
+    createApplicantsLoading,
   }
 }
 
