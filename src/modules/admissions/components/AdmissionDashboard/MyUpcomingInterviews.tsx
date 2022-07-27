@@ -4,7 +4,7 @@ export const MyUpcomingInterviews: React.VFC<{}> = ({}) => {
   return (
     <Stack>
       <Title order={2}>Mine kommende intervjuer</Title>
-      <Paper p="sm">
+      <Paper p="sm" mb="md">
         <Table>
           <thead>
             <td>Tidspunkt</td>

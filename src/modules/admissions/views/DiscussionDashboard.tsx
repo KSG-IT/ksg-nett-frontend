@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client'
 import { Button, Group, Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { useHistory } from 'react-router-dom'
 import { AdmissionsShortcutPanel } from '../components/AdmissionDashboard/AdmissionsShortcutPanel'
 import { InternalGroupPreviewList } from '../components/DiscussionDashboard/InternalGroupPreviewList'
 import { useAdmissionMutations } from '../mutations.hooks'
@@ -16,8 +15,9 @@ export const DiscussionDashboard: React.VFC = () => {
    * Shows a profile card of the applicant and their values
    * Can also show statistics for the group on the top
    *
+   * TODO: Redirect if admission is in wrong state
+   * if admissions.status !== IN_SESSION => redirect /admissions
    */
-  const history = useHistory()
   const { data, loading, error } =
     useQuery<AllInternalGroupsAcceptingApplicantsReturns>(
       ALL_INTERNAL_GROUP_APPLICANT_DATA
