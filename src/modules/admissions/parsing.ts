@@ -3,6 +3,7 @@ import {
   InternalGroupPositionPriorityApplicantPriorityValues,
   InternalGroupPositionPriorityInternalGroupPriorityValues,
 } from './consts'
+import { InternalGroupPositionPriority } from './types.graphql'
 
 export const parseBooleanEvaluation = (value: true | false | null) => {
   switch (value) {
@@ -122,4 +123,20 @@ export const parseApplicantPriority = (
     case 'N/A':
       return 'N/A'
   }
+}
+
+/**
+ * Parses an InternalGroupPositionPriority object into a string value for the internal group
+ * position it references.
+ * @param internalGroupPositionPriority The priority of the applicant we want to parse the name of
+ * @returns Name of the internal group position or 'N/A' if the priority is not valid
+ */
+export const parseApplicantPriorityInternalGroupPosition = (
+  internalGroupPositionPriority: InternalGroupPositionPriority | null
+) => {
+  if (!internalGroupPositionPriority) {
+    return '-'
+  }
+
+  return internalGroupPositionPriority.internalGroupPosition.name
 }

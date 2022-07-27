@@ -15,12 +15,10 @@ import {
 } from '../components/AdmissionDashboard'
 import { AdmissionsShortcutPanel } from '../components/AdmissionDashboard/AdmissionsShortcutPanel'
 import { AdmissionStatusValues } from '../consts'
-import { CREATE_APPLICATIONS, PATCH_ADMISSION } from '../mutations'
+import { PATCH_ADMISSION } from '../mutations'
 import { ACTIVE_ADMISSION_QUERY } from '../queries'
 import {
   ActiveAdmissioneturns,
-  CreateApplicationsReturns,
-  CreateApplicationsVariables,
   PatchAdmissionInput,
   PatchAdmissionReturns,
 } from '../types.graphql'
@@ -45,27 +43,9 @@ export const AdmissionDashboard: React.VFC = () => {
     PatchMutationVariables<PatchAdmissionInput>
   >(PATCH_ADMISSION)
 
-  const [createApplications] = useMutation<
-    CreateApplicationsReturns,
-    CreateApplicationsVariables
-  >(CREATE_APPLICATIONS, { refetchQueries: ['ActiveAdmission'] })
-
   if (error) return <FullPageError />
 
   if (loading || !data) return <FullContentLoader />
-
-  const handleCreateApplications = () => {
-    const parsedEmails = emails
-      .split('\n')
-      .filter(emailString => emailString !== '')
-
-    toast.promise(createApplications({ variables: { emails: parsedEmails } }), {
-      loading: 'Oppretter søknader',
-      error: 'Noe gikk galt',
-      success: 'søknader opprettet',
-    })
-    setEmails('')
-  }
 
   const handleAdmissionNextPhase = (admissionId: string) => {
     toast.promise(

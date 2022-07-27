@@ -112,6 +112,7 @@ export const INTERVIEW_OVERVIEW_QUERY = gql`
   }
 `
 
+// RENAME TO DETAIL QUERY
 export const APPLICANT_QUERY = gql`
   query ApplicantQuery($id: ID!) {
     applicant(id: $id) {
@@ -215,6 +216,7 @@ export const INTERVIEW_DETAIL_QUERY = gql`
   }
 `
 
+// RENAME TO MATCH QUERY NAME
 export const VALID_APPLICANTS_QUERY = gql`
   query CloseAdmissionQueryData {
     closeAdmissionData {
@@ -469,6 +471,13 @@ export const CORE_APPLICANT_FIELDS = gql`
     study
     hometown
     address
+    priorities {
+      id
+      internalGroupPosition {
+        id
+        name
+      }
+    }
     interviewerFromInternalGroup(internalGroupId: $internalGroup)
     interviewIsCovered(internalGroupId: $internalGroup)
     iAmAttendingInterview

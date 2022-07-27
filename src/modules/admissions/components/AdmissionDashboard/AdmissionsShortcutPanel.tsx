@@ -20,7 +20,7 @@ export const AdmissionsShortcutPanel: React.VFC<{}> = () => {
           </Card>
         </Link>
 
-        <Link to="/admissions/applicants">
+        <Link to="/admissions/applicants-overview">
           <Card
             p="sm"
             style={{ aspectRatio: '1', borderRadius: '16px' }}

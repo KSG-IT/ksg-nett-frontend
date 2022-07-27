@@ -129,6 +129,7 @@ export type CoreApplicantNode = {
   interviewIsCovered: boolean
   iAmAttendingInterview: boolean
   phone: string
+  priorities: InternalGroupPositionPriority[]
 }
 
 export type ApplicantInterestNode = {
@@ -165,6 +166,10 @@ export interface ActiveAdmissioneturns {
     AdmissionNode,
     'id' | 'availableInternalGroupPositionsData' | 'status'
   > | null
+}
+
+export interface CurrentApplicantsReturns {
+  currentApplicants: CoreApplicantNode[]
 }
 
 export interface GetApplicantFromTokenVariables {

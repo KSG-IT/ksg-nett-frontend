@@ -1,1 +1,1 @@
-export * from './ApplicantTable'
+export * from './ApplicantsTable'
