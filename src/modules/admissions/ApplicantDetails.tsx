@@ -1,36 +1,23 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
+import { Button, Card, Group, Stack, Text, Title } from '@mantine/core'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { UserThumbnail } from 'modules/users'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import { useHistory, useParams } from 'react-router-dom'
+import remarkGfm from 'remark-gfm'
 import styled from 'styled-components'
-import { PATCH_INTERVIEW } from './mutations'
+import { ApplicantStatusBadge } from './ApplicantStatusBadge'
+import {
+  parseAdditionalEvaluation,
+  parseBooleanEvaluation,
+  parseTotalEvaluation,
+} from './parsing'
 import { APPLICANT_QUERY } from './queries'
 import { ApplicantQueryReturns, ApplicantQueryVariables } from './types'
-
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};
   overflow-y: scroll;
-`
-
-const ApplicantName = styled.h2``
-
-const InterviewersContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-`
-
-const StatementsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const StatementRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
 `
 
 interface ApplicantDetailsParams {
@@ -39,21 +26,12 @@ interface ApplicantDetailsParams {
 
 export const ApplicantDetails: React.VFC = () => {
   const { applicantId } = useParams<ApplicantDetailsParams>()
-  const [editMode, setEditMode] = useState(false)
+  const history = useHistory()
 
   const { data, loading, error } = useQuery<
     ApplicantQueryReturns,
     ApplicantQueryVariables
   >(APPLICANT_QUERY, { variables: { id: applicantId }, pollInterval: 10000 })
-
-  const [patchInterview] = useMutation(PATCH_INTERVIEW)
-
-  useEffect(() => {
-    if (!editMode) return
-
-    // In here we handle note taking changes
-    // If this is an editor we write to the db periodically
-  }, [editMode])
 
   if (error) return <FullPageError />
 
@@ -65,47 +43,86 @@ export const ApplicantDetails: React.VFC = () => {
 
   const { interview } = applicant
 
+  // This is probably a bit flaky.
+  const interviewFinished = applicant.status === 'INTERVIEW_FINISHED'
+
   if (interview === null)
     return <span>Søker har ikke satt seg opp til intervju</span>
 
   return (
     <Wrapper>
-      <ApplicantName>{applicant.fullName}</ApplicantName>{' '}
-      <button
-        onClick={() => {
-          setEditMode(!editMode)
-        }}
-      >
-        Skriv notater
-      </button>
-      <div>
-        <h3>Intevjuere</h3>
-        <InterviewersContainer>
+      {/* Rewrite Wrapper to Stack? */}
+      {/* Top level part should have a details card with perosanl information and image */}
+      <Title>Kandidatdetaljer</Title>
+      <Card>
+        <Group>
+          <Text size="lg" weight="bold">
+            {applicant.fullName}
+          </Text>
+          <ApplicantStatusBadge applicantStatus={applicant.status} />
+        </Group>
+        <Group>
+          <Text>Total vurdering</Text>
+          <Text>{parseTotalEvaluation(interview.totalEvaluation)}</Text>
+        </Group>
+        <Group>
+          <Text>Kan bli 3 semestre</Text>
+          {parseBooleanEvaluation(applicant.canCommitThreeSemesters)}
+        </Group>
+      </Card>
+      {!interviewFinished && (
+        <Button
+          onClick={() => {
+            history.push(`/admissions/interviews/${interview.id}/edit`)
+          }}
+        >
+          Skriv notater
+        </Button>
+      )}
+      <Title>Intevjuere</Title>
+      <Card>
+        <Group>
           {interview.interviewers.map(user => (
             <UserThumbnail user={user} size="medium" />
           ))}
-        </InterviewersContainer>
-      </div>
-      <div>Status: {applicant.status}</div>
-      <div>
-        <h3>Ja/nei spørsmål</h3>
-        <StatementsContainer>
-          {interview.booleanEvaluationAnswers.map(evaluation => (
-            <StatementRow>
-              {evaluation.statement}
-              {evaluation.answer ? <span> ja</span> : <span>Nei</span>}
-            </StatementRow>
-          ))}
-        </StatementsContainer>
-      </div>
-      <div>
-        <h3>Intervjunotater</h3>
-        {interview.notes}
-      </div>
-      <div>
-        <h3>Diskusjon</h3>
-        {interview.discussion}
-      </div>
+        </Group>
+      </Card>
+      <Title>Vurderinger</Title>
+      <Card>
+        <Group align="flex-start">
+          <Stack justify="flex-start">
+            {interview.booleanEvaluationAnswers.map(evaluation => (
+              <Stack mt="xs">
+                <Text weight="bold">{evaluation.statement.statement}</Text>
+                <Text>{parseBooleanEvaluation(evaluation.value)}</Text>
+              </Stack>
+            ))}
+          </Stack>
+          <Stack justify="flex-start">
+            {interview.additionalEvaluationAnswers.map(evaluation => (
+              <Stack mt="xs">
+                <Text weight="bold">{evaluation.statement.statement}</Text>
+                <Text>{parseAdditionalEvaluation(evaluation.answer)}</Text>
+              </Stack>
+            ))}
+          </Stack>
+        </Group>
+      </Card>
+
+      <Stack>
+        <Title>Intervjunotater</Title>
+        <Card p="xs">
+          <ReactMarkdown plugins={[remarkGfm]}>{interview.notes}</ReactMarkdown>
+        </Card>
+      </Stack>
+      <Stack>
+        <Title>Diskusjonsnotater</Title>
+        <Card p="xs">
+          <ReactMarkdown plugins={[remarkGfm]}>
+            {interview.discussion}
+          </ReactMarkdown>
+        </Card>
+      </Stack>
     </Wrapper>
   )
 }

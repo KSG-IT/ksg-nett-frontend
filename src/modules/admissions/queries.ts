@@ -139,6 +139,7 @@ export const APPLICANT_QUERY = gql`
       study
       hometown
       address
+      canCommitThreeSemesters
       priorities {
         internalGroupPosition {
           id
@@ -150,14 +151,26 @@ export const APPLICANT_QUERY = gql`
         interviewStart
         notes
         discussion
+        totalEvaluation
         location {
           id
           name
           locationDescription
         }
         booleanEvaluationAnswers {
-          statement
+          id
+          statement {
+            statement
+          }
+          value
+        }
+        additionalEvaluationAnswers {
+          id
           answer
+          statement {
+            id
+            statement
+          }
         }
         interviewers {
           id
@@ -174,6 +187,43 @@ export const INTERNAL_GROUPS_ACCEPTING_APPLICANTS = gql`
     internalGroupsAcceptingApplicants {
       id
       name
+    }
+  }
+`
+
+export const INTERVIEW_DETAIL_QUERY = gql`
+  query Interview($id: ID!) {
+    interview(id: $id) {
+      id
+      notes
+      discussion
+      applicant {
+        id
+        fullName
+        canCommitThreeSemesters
+        openForOtherPositions
+        priorities {
+          id
+          internalGroupPosition {
+            id
+            name
+          }
+        }
+      }
+      booleanEvaluationAnswers {
+        id
+        statement {
+          statement
+        }
+        value
+      }
+      additionalEvaluationAnswers {
+        id
+        statement {
+          statement
+        }
+        answer
+      }
     }
   }
 `

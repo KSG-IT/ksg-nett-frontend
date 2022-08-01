@@ -4,6 +4,35 @@ import {
 } from 'modules/organization/types'
 import { UserNode } from 'modules/users'
 import { CoreApplicantNode } from './InternalGroupApplicants/types'
+//ToDo: This whole file is a mess. Need to organize the types a bit better.
+/**
+ * An idea would be to group the types around the model instead
+ * of around the type.
+ *
+ * Example
+ * ==== Applicant ====
+ *
+ * type ApplicantNode = {
+ *  id: string
+ *  ...
+ * }
+ *
+ * interface AllApplicantsReturns {
+ *  allApplicants: ApplicantNode[]
+ * }
+ *
+ * interface CreateApplicantReturns {
+ *  createApplicant: ApplicantNode
+ * }
+ *
+ * type CreateApplicantInput = {
+ *  name: string
+ *  ...
+ * }
+ * interface CreateApplicantVariables {
+ * input: CreateApplicantInput
+ * }
+ */
 
 export type InterviewLocationNode = {
   id: string
@@ -18,14 +47,32 @@ export type InterviewLocationAvailabilityNode = {
   datetimeTo: Date
 }
 
-export type BooleanEvaluationAnswer = {
+export type InterviewBooleanEvaluationNode = {
+  id: string
   statement: string
-  answer: boolean
 }
 
-export type AdditionalEvaluationAnswer = {
-  statement: string
-  answer: boolean
+export type InterviewBooleanEvaluationAnswerNode = {
+  id: string
+  statement: Pick<InterviewBooleanEvaluationNode, 'statement' | 'id'>
+  value: boolean | null
+}
+
+export type AdditionalEvauationAnswer =
+  | 'VERY_LITTLE'
+  | 'LITTLE'
+  | 'MEDIUM'
+  | 'SOMEWHAT'
+  | 'VERY'
+  | null
+
+export type InterviewAdditionalEvaluationAnswerNode = {
+  id: string
+  statement: {
+    id: string
+    statement: string
+  }
+  answer: AdditionalEvauationAnswer
 }
 
 export type InterviewNode = {
@@ -36,11 +83,19 @@ export type InterviewNode = {
   location: Pick<InterviewLocationNode, 'id' | 'name' | 'locationDescription'>
   notes: string
   discussion: string
-  booleanEvaluationAnswers: BooleanEvaluationAnswer[]
-  additionalEvaluationAnswers: AdditionalEvaluationAnswer[]
-  totalEvaluation: 'VERY_GOOD' | 'GOOD' | 'MEDIUM' | 'POOR' | 'VERY_POOR'
-  canCommitThreeSemesters: boolean
-  cannotCommitThreeSemestersDetails: string | null
+  booleanEvaluationAnswers: InterviewBooleanEvaluationAnswerNode[]
+  additionalEvaluationAnswers: InterviewAdditionalEvaluationAnswerNode[]
+
+  applicant: Pick<
+    ApplicantNode,
+    | 'id'
+    | 'fullName'
+    | 'canCommitThreeSemesters'
+    | 'openForOtherPositions'
+    | 'priorities'
+  >
+  totalEvaluation: 'VERY_POOR' | 'POOR' | 'MEDIUM' | 'GOOD' | 'VERY_GOOD' | null
+  priorities: InternalGroupPositionPriority[]
 }
 
 export type InterviewNodeShallow = Pick<InterviewNode, 'id'>
@@ -85,7 +140,7 @@ export type InternalGroupPositionPriorityNode = {
   applicant: ApplicantNode
 }
 
-export type InternalGroupPositionPriorityArray =
+export type InternalGroupPositionPriority =
   InternalGroupPositionPriorityNode | null
 
 export type ApplicantNode = {
@@ -97,10 +152,12 @@ export type ApplicantNode = {
   lastName: string
   image: string | File
   dateOfBirth: Date | string
-  priorities: InternalGroupPositionPriorityArray[]
+  priorities: InternalGroupPositionPriority[]
   interview: InterviewNode | null
   interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials'>
   willBeAdmitted: boolean
+  canCommitThreeSemesters: boolean
+  openForOtherPositions: boolean
 }
 
 export type AdmissionStatus =
@@ -177,6 +234,14 @@ export interface AllInternalGroupsAcceptingApplicantsReturns {
   allInternalGroupApplicantData: InternalGroupApplicantData[]
 }
 
+export interface InterviewDetailQueryReturns {
+  interview: InterviewNode | null
+}
+
+export interface InterviewDetailQueryVariables {
+  id: string
+}
+
 /* === MUTATION TYPING === */
 
 export interface CreateAdmissionReturns {
@@ -216,16 +281,33 @@ export interface ReSendApplicationTokenVariables {
   email: string
 }
 
-export type PatchApplicantInput = Partial<Omit<ApplicantNode, 'id'>>
-
-export interface PatchApplicantReturns {
-  applicant: Pick<ApplicantNode, 'id'>
-}
-export interface PatchApplicantVariables {
-  id: string
-  input: PatchApplicantInput
-}
-
 export type PatchInterviewScheduleTemplateInput = Partial<
   Omit<InterviewScheduleTemplateNode, 'id'>
 >
+
+export type PatchInterviewBooleanEvaluationAnswerInput = {
+  value: boolean
+}
+
+export interface PatchInterviewBooleanEvaluationAnswerReturns {
+  interviewBooleanEvaluationAnswer: Pick<
+    InterviewBooleanEvaluationAnswerNode,
+    'id'
+  >
+}
+
+type PatchInterviewAdditionalEvaluationAnswerInput = {
+  answer: AdditionalEvauationAnswer
+}
+
+export interface PatchInterviewAdditionalEvaluationAnswerReturns {
+  interviewAdditionalEvaluationAnswer: Pick<
+    InterviewAdditionalEvaluationAnswerNode,
+    'id'
+  >
+}
+
+export interface PatchInterviewAdditionalEvaluationAnswerVariables {
+  id: string
+  input: PatchInterviewAdditionalEvaluationAnswerInput
+}
