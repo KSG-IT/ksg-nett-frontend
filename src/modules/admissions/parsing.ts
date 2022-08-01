@@ -1,4 +1,9 @@
-import { ApplicantStatus } from './types'
+import {
+  ApplicantStatusValues,
+  InternalGroupPositionPriorityApplicantPriorityValues,
+  InternalGroupPositionPriorityInternalGroupPriorityValues,
+} from './consts'
+import { InternalGroupPositionPriority } from './types.graphql'
 
 export const parseBooleanEvaluation = (value: true | false | null) => {
   switch (value) {
@@ -49,7 +54,7 @@ export const parseTotalEvaluation = (
   }
 }
 
-export const parseApplicantStatus = (status: ApplicantStatus) => {
+export const parseApplicantStatus = (status: ApplicantStatusValues) => {
   switch (status) {
     case 'EMAIL_SENT':
       return 'Sendt epost'
@@ -77,5 +82,61 @@ export const parseApplicantStatus = (status: ApplicantStatus) => {
 
     case 'TO_BE_CALLED':
       return 'Skal ringes'
+    case 'HAS_SET_PRIORITIES':
+      return 'Valgt stillinger'
   }
+}
+
+export const parseInternalGroupPositionPriority = (
+  priority: InternalGroupPositionPriorityInternalGroupPriorityValues
+) => {
+  switch (priority) {
+    case 'WANT':
+      return 'Vil ha'
+    case 'PROBABLY_WANT':
+      return 'Vil sannsynligvis ha'
+    case 'INTERESTED':
+      return 'Interessert'
+    case 'DO_NOT_WANT':
+      return 'Vil ikke ha'
+    case 'CURRENTLY_DISCUSSING':
+      return 'Diskuteres'
+    case 'RESERVE':
+      return 'Reserve'
+    case 'PASS_AROUND':
+      return 'På runde'
+    case null:
+      return 'Ikke vurdert'
+  }
+}
+
+export const parseApplicantPriority = (
+  priority: InternalGroupPositionPriorityApplicantPriorityValues | 'N/A'
+) => {
+  switch (priority) {
+    case 'FIRST':
+      return 'Første'
+    case 'SECOND':
+      return 'Andre'
+    case 'THIRD':
+      return 'Tredje'
+    case 'N/A':
+      return 'N/A'
+  }
+}
+
+/**
+ * Parses an InternalGroupPositionPriority object into a string value for the internal group
+ * position it references.
+ * @param internalGroupPositionPriority The priority of the applicant we want to parse the name of
+ * @returns Name of the internal group position or 'N/A' if the priority is not valid
+ */
+export const parseApplicantPriorityInternalGroupPosition = (
+  internalGroupPositionPriority: InternalGroupPositionPriority | null
+) => {
+  if (!internalGroupPositionPriority) {
+    return '-'
+  }
+
+  return internalGroupPositionPriority.internalGroupPosition.name
 }

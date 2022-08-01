@@ -12,19 +12,6 @@ export const ACTIVE_ADMISSION_QUERY = gql`
           name
         }
       }
-      applicants {
-        id
-        email
-        status
-        fullName
-        priorities {
-          id
-          internalGroupPosition {
-            id
-            name
-          }
-        }
-      }
     }
   }
 `
@@ -125,6 +112,7 @@ export const INTERVIEW_OVERVIEW_QUERY = gql`
   }
 `
 
+// RENAME TO DETAIL QUERY
 export const APPLICANT_QUERY = gql`
   query ApplicantQuery($id: ID!) {
     applicant(id: $id) {
@@ -223,6 +211,306 @@ export const INTERVIEW_DETAIL_QUERY = gql`
           statement
         }
         answer
+      }
+    }
+  }
+`
+
+// RENAME TO MATCH QUERY NAME
+export const VALID_APPLICANTS_QUERY = gql`
+  query CloseAdmissionQueryData {
+    closeAdmissionData {
+      applicantInterests {
+        id
+        applicant {
+          id
+          fullName
+        }
+        internalGroup {
+          id
+          name
+        }
+        positionToBeOffered {
+          id
+          name
+        }
+      }
+      validApplicants {
+        id
+        fullName
+        status
+        willBeAdmitted
+        priorities {
+          id
+          applicantPriority
+          internalGroupPriority
+          internalGroupPosition {
+            name
+            id
+            internalGroup {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export const CURRENT_APPLICANTS_QUERY = gql`
+  query CurrentApplicantsQuery {
+    currentApplicants {
+      id
+      fullName
+      email
+      status
+      priorities {
+        id
+        internalGroupPosition {
+          name
+          id
+        }
+      }
+    }
+  }
+`
+
+const INTERNAL_GROUP_PRIORITY_FIELDS = gql`
+  fragment InternalGroupPriorityFields on InternalGroupPositionPriorityNode {
+    id
+    applicant {
+      id
+      fullName
+      interview {
+        id
+        interviewers {
+          id
+          fullName
+          profileImage
+        }
+      }
+    }
+    internalGroupPriority
+    applicantPriority
+    internalGroupPosition {
+      internalGroup {
+        id
+        name
+      }
+    }
+  }
+`
+export const ALL_INTERNAL_GROUP_APPLICANT_DATA = gql`
+  query AllInternalGroupApplicantData {
+    allInternalGroupApplicantData {
+      positionsToFill
+      currentProgress
+      internalGroup {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const INTERNAL_GROUP_DISCUSSION_DATA = gql`
+  ${INTERNAL_GROUP_PRIORITY_FIELDS}
+  query InternalGroupDiscussionDataQuery($internalGroupId: ID!) {
+    internalGroupDiscussionData(internalGroupId: $internalGroupId) {
+      internalGroup {
+        id
+        name
+      }
+      processedApplicants {
+        ...InternalGroupPriorityFields
+      }
+      applicantsOpenForOtherPositions {
+        id
+        fullName
+        priorities {
+          ...InternalGroupPriorityFields
+        }
+        internalGroupInterests {
+          id
+          internalGroup {
+            id
+            name
+          }
+        }
+      }
+
+      applicants {
+        id
+        fullName
+        priorities {
+          id
+          internalGroupPriority
+          internalGroupPosition {
+            id
+            name
+            internalGroup {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export const INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY = gql`
+  query InterviewsAvailableForBookingQuery($dayOffset: Int!) {
+    interviewsAvailableForBooking(dayOffset: $dayOffset) {
+      date
+      interviewSlots {
+        interviewStart
+        interviewIds
+      }
+    }
+  }
+`
+
+export const GET_APPLICATION_FROM_TOKEN = gql`
+  query GetApplicantFromToken($token: String!) {
+    getApplicantFromToken(token: $token) {
+      id
+      email
+      status
+      firstName
+      lastName
+      token
+      image
+      phone
+      study
+      hometown
+      address
+      priorities {
+        id
+        internalGroupPosition {
+          id
+          name
+        }
+      }
+      interview {
+        id
+        interviewStart
+        location {
+          id
+          name
+          locationDescription
+        }
+      }
+    }
+  }
+`
+
+export const INTERNAL_GROUP_POSITIONS_AVAILABLE_FOR_APPLICANTS_QUERY = gql`
+  query InternalGroupPositionsAvailableForApplicants {
+    internalGroupPositionsAvailableForApplicants {
+      id
+      name
+    }
+  }
+`
+
+export const INTERVIEW_TEMPLATE_QUERY = gql`
+  query InterviewTemplateQuery {
+    interviewTemplate {
+      interviewBooleanEvaluationStatements {
+        id
+        statement
+      }
+      interviewAdditionalEvaluationStatements {
+        id
+        statement
+      }
+    }
+  }
+`
+
+export const EXTERNALLY_AVAILABLE_INTERNAL_GROUP_POSITIONS_QUERY = gql`
+  query ExternallyAvailableInternalGroupPositionsQuery {
+    externallyAvailableInternalGroupPositions {
+      id
+      name
+    }
+    currentAdmissionInternalGroupPositionData {
+      id
+      availablePositions
+      internalGroupPosition {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const CURRENT_ADMISSION_INTERNAL_GROUP_POSITION_DATA = gql`
+  query CurrentAdmissionInternalGroupPositionData {
+    currentAdmissionInternalGroupPositionData {
+      id
+      availablePositions
+      internalGroupPosition {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const CORE_APPLICANT_FIELDS = gql`
+  fragment CoreApplicantFields on ApplicantNode {
+    id
+    email
+    status
+    fullName
+    image
+    phone
+    study
+    hometown
+    address
+    priorities {
+      id
+      internalGroupPosition {
+        id
+        name
+      }
+    }
+    interviewerFromInternalGroup(internalGroupId: $internalGroup)
+    interviewIsCovered(internalGroupId: $internalGroup)
+    iAmAttendingInterview
+    interview {
+      id
+      interviewStart
+      interviewers {
+        id
+        profileImage
+        initials
+      }
+    }
+  }
+`
+
+export const INTERNAL_GROUP_APPLICANTS_DATA = gql`
+  ${CORE_APPLICANT_FIELDS}
+  query InternalGroupApplicantsDataQuery($internalGroup: ID!) {
+    internalGroupApplicantsData(internalGroup: $internalGroup) {
+      internalGroup {
+        name
+      }
+      positionsToFill
+      currentProgress
+      firstPriorities {
+        ...CoreApplicantFields
+      }
+      secondPriorities {
+        ...CoreApplicantFields
+      }
+
+      thirdPriorities {
+        ...CoreApplicantFields
       }
     }
   }
