@@ -14,7 +14,6 @@ import { FullContentLoader } from 'components/Loading'
 import { format } from 'date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
 import { InterviewBooking } from '../components/ApplicantPortal/InterviewBooking'
 import { RegisterProfileForm } from '../components/ApplicantPortal/RegisterProfileForm'
 import { ReSendApplicantTokenForm } from '../components/ApplicantPortal/ReSendApplicantTokenForm'
@@ -26,8 +25,6 @@ import {
   GeApplicantFromTokenReturns,
   GetApplicantFromTokenVariables,
 } from '../types.graphql'
-
-const Wrapper = styled.div``
 
 interface ApplicantPortalParams {
   applicantToken: string
