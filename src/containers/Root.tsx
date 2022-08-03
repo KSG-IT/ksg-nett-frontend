@@ -9,6 +9,8 @@ import Bootstrap from './BootStrap'
 library.add(fas)
 
 function Root() {
+  console.log(import.meta.env)
+
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
