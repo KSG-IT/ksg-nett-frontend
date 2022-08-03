@@ -61,7 +61,9 @@
     "start": "vite --mode development",
     "build": "tsc && vite build",
     "prepare": "husky install",
-    "build:dev": "REACT_APP_STAGE=development npm run build",
+    "build:development": "vite build --mode development",
+    "push:development": "./deploy.sh development",
+    "deploy:development": "npm run build:development && npm run push:development",
     "test": "jest src"
   },
   "husky": {

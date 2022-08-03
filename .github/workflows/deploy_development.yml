@@ -1,0 +1,39 @@
+name: Deploy development
+
+on:
+  push:
+    branches: [develop]
+
+env:
+  AWS_DEFAULT_REGION: eu-west-3
+  AWS_DEFAULT_OUTPUT: json
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  TAG: ${{ github.sha }}
+  PROJECT_NAME: ksg-nett
+
+jobs:
+  test:
+    uses: ./.github/workflows/tests.yml
+
+  build:
+    runs-on: ubuntu-20.04
+    needs: [test]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - id: install-aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+        with:
+          version: 2 # default
+          verbose: false # default
+          arch: amd64 # allowed values: amd64, arm64
+      - name: Install dependencies
+        run: yarn install
+      - name: Deploy development
+        run: yarn deploy:development
