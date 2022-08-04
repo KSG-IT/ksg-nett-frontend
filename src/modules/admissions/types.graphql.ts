@@ -332,6 +332,28 @@ export interface CreateApplicationsVariables {
   emails: string[]
 }
 
+export type PatchApplicantInput = {
+  firstName?: string
+  lastName?: string
+  phone?: string
+  address?: string
+  homeTown?: string
+
+  status?: ApplicantStatusValues
+  canCommitThreeSemesters?: boolean | null
+  openForOtherPositions?: boolean | null
+}
+
+export interface PatchApplicantVariables {
+  id: string
+  input: PatchApplicantInput
+}
+export interface PatchApplicantReturns {
+  applicant: {
+    id: string
+  }
+}
+
 export interface ReSendApplicationTokenReturns {
   ok: boolean
 }

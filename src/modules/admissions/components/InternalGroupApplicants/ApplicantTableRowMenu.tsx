@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Menu, MenuItem } from '@mantine/core'
+import { Button, Menu } from '@mantine/core'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { useHistory } from 'react-router-dom'
 
@@ -27,11 +27,21 @@ export const ApplicantTableRowMenu: React.VFC<{
   }
   const txt = applicant.iAmAttendingInterview ? 'Meld av' : 'Meld opp'
   return (
-    <Menu>
-      <MenuItem onClick={handleMoreInfo} icon={<FontAwesomeIcon icon="eye" />}>
-        Mer info
-      </MenuItem>
-      <MenuItem>{txt}</MenuItem>
+    <Menu position="left-start">
+      <Menu.Target>
+        <Button variant="outline">
+          <FontAwesomeIcon icon="ellipsis-h" />
+        </Button>
+      </Menu.Target>
+      <Menu.Dropdown>
+        <Menu.Item
+          onClick={handleMoreInfo}
+          icon={<FontAwesomeIcon icon="eye" />}
+        >
+          Mer info
+        </Menu.Item>
+      </Menu.Dropdown>
+      <Menu.Item>{txt}</Menu.Item>
     </Menu>
   )
 }

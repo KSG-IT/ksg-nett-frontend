@@ -9,9 +9,9 @@
     "@fortawesome/react-fontawesome": "^0.1.16",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.6.0",
-    "@mantine/core": "^4.1.4",
-    "@mantine/dates": "^4.1.4",
-    "@mantine/hooks": "^4.1.4",
+    "@mantine/core": "^5.0.2",
+    "@mantine/dates": "^5.0.2",
+    "@mantine/hooks": "^5.0.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -57,7 +57,7 @@
     "zustand": "^3.7.1"
   },
   "scripts": {
-    "local": "vite --mode local",
+    "local": "vite",
     "start": "vite --mode development",
     "build": "tsc && vite build",
     "prepare": "husky install",

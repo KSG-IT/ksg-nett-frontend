@@ -1,4 +1,4 @@
-import { Input, Radio, RadioGroup, Stack } from '@mantine/core'
+import { Input, Radio, Stack } from '@mantine/core'
 import { usePatchApplicant } from 'modules/admissions/mutations.hooks'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
@@ -51,22 +51,22 @@ export const AdditionalInformationFields: React.VFC<
 
   return (
     <Stack>
-      <RadioGroup
+      <Radio.Group
         label="Kandidat åpen for andre verv?"
         onChange={handleChangeOpenForOtherPositions}
         value={openForOtherPositions}
       >
         <Radio value="yes" label="Ja" />
         <Radio value="no" label="Nei" />
-      </RadioGroup>
-      <RadioGroup
+      </Radio.Group>
+      <Radio.Group
         label="Kan bli i 3 semestre?"
         onChange={handleChangeCanCommit}
         value={canCommitThreeSemesters}
       >
         <Radio value="yes" label="Ja" />
         <Radio value="not" label="Nei" />
-      </RadioGroup>
+      </Radio.Group>
       {/* ToDo add mutation. Maybe with some debounce handler */}
       <label>Begrunnelse</label>
       <Input disabled={radioToBoolean(canCommitThreeSemesters) || false} />

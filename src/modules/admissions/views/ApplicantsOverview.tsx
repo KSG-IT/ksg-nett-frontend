@@ -14,7 +14,10 @@ import { CurrentApplicantsReturns } from '../types.graphql'
 export const ApplicantsOverview: React.FC<{}> = ({}) => {
   const [emails, setEmails] = useState('')
   const { data, loading, error } = useQuery<CurrentApplicantsReturns>(
-    CURRENT_APPLICANTS_QUERY
+    CURRENT_APPLICANTS_QUERY,
+    {
+      pollInterval: 20000,
+    }
   )
 
   const { createApplicants, createApplicantsLoading } = useApplicantMutations()
@@ -40,7 +43,7 @@ export const ApplicantsOverview: React.FC<{}> = ({}) => {
 
   return (
     <ScrollArea p="md" style={{ width: '100%' }}>
-      <Stack style={{ maxWidth: '900px' }}>
+      <Stack>
         <Title mb="lg">Søkeroversikt</Title>
         <ApplicantsTable applicants={currentApplicants} />
         <Title mt="md" mb="md" order={2}>
