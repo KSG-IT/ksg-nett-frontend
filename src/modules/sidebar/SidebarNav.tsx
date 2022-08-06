@@ -1,5 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
 import styled from 'styled-components'
+import { PERMISSIONS } from 'util/permissions'
 import { NavGroup } from './NavGroup'
 
 const Wrapper = styled.div`
@@ -58,7 +59,12 @@ export const SidebarNav = () => {
         navItems={[
           { icon: 'car', link: '/schedules', label: 'Vaktlister' },
           { icon: 'address-book', link: '/users/manage', label: 'Personal' },
-          { icon: 'user-plus', link: '/admissions', label: 'Opptak' },
+          {
+            icon: 'user-plus',
+            link: '/admissions',
+            label: 'Opptak',
+            permissions: PERMISSIONS.admissions.view.admission,
+          },
           {
             icon: 'credit-card',
             link: '/economy/deposits',

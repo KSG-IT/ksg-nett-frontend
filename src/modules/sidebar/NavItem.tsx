@@ -1,5 +1,6 @@
 import { IconName } from '@fortawesome/fontawesome-common-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { PermissionGate } from 'components/PermissionGate'
 import { NavLink } from 'react-router-dom'
 import { useStore } from 'store'
 import styled from 'styled-components'
@@ -45,6 +46,7 @@ export interface NavItemProps {
   link?: string
   label: string
   notificationsCounter?: number
+  permissions?: string[] | string
   onClick?: () => void
 }
 
@@ -53,6 +55,7 @@ export const NavItem: React.FC<NavItemProps> = ({
   link = '',
   label,
   notificationsCounter = 0,
+  permissions = [],
   onClick = () => {},
 }) => {
   const toggleSidebarOpen = useStore(state => state.toggleSidebarOpen)
@@ -62,16 +65,20 @@ export const NavItem: React.FC<NavItemProps> = ({
     toggleSidebarOpen()
   }
   return (
-    <Wrapper to={link} onClick={handleOnClick}>
-      <FontAwesomeIcon
-        icon={['fas', icon]}
-        color="inherit"
-        size="1x"
-        type="regular"
-        cursor="inherit"
-      />
-      <span style={{ margin: '0 5px 0 12px' }}>{label}</span>{' '}
-      {notificationsCounter > 0 ? <Badge>{notificationsCounter}</Badge> : null}
-    </Wrapper>
+    <PermissionGate permissions={permissions}>
+      <Wrapper to={link} onClick={handleOnClick}>
+        <FontAwesomeIcon
+          icon={['fas', icon]}
+          color="inherit"
+          size="1x"
+          type="regular"
+          cursor="inherit"
+        />
+        <span style={{ margin: '0 5px 0 12px' }}>{label}</span>{' '}
+        {notificationsCounter > 0 ? (
+          <Badge>{notificationsCounter}</Badge>
+        ) : null}
+      </Wrapper>
+    </PermissionGate>
   )
 }

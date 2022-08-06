@@ -34,6 +34,8 @@ import {
   UserManagementAddUser,
 } from 'modules/users/UserManagement'
 import { Redirect, Switch } from 'react-router-dom'
+import { PERMISSIONS } from 'util/permissions'
+import { GatedRoute } from './GatedRoute'
 
 export const AuthRoutes: React.VFC = () => {
   return (
@@ -103,37 +105,47 @@ export const AuthRoutes: React.VFC = () => {
       <PrivateRoute exact path="/users/:userId" component={UserProfile} />
 
       {/* Admissions module */}
-      <PrivateRoute exact path="/admissions" component={AdmissionDashboard} />
+      <GatedRoute
+        exact
+        permissions={PERMISSIONS.admissions.view.admission}
+        path="/admissions"
+        component={AdmissionDashboard}
+      />
+      <GatedRoute
+        exact
+        path="/admissions/applicants-overview"
+        permissions={PERMISSIONS.admissions.view.admission}
+        component={ApplicantsOverview}
+      />
 
-      <PrivateRoute
+      <GatedRoute
         exact
         path="/admissions/internal-group-applicants/:internalGroupId"
+        permissions={PERMISSIONS.admissions.view.admission}
         component={InternalGroupApplicants}
       />
-      <PrivateRoute
+      <GatedRoute
         exact
+        permissions={PERMISSIONS.admissions.view.admission}
         path="/admissions/internal-group-discussion/:internalGroupId"
         component={InternalGroupDiscussion}
       />
 
-      <PrivateRoute
+      <GatedRoute
         exact
-        path="/admissions/applicants-overview"
-        component={ApplicantsOverview}
-      />
-
-      <PrivateRoute
-        exact
+        permissions={PERMISSIONS.admissions.view.admission}
         path="/admissions/applicants/:applicantId"
         component={ApplicantDetails}
       />
-      <PrivateRoute
+      <GatedRoute
         exact
+        permissions={PERMISSIONS.admissions.change.interview}
         path="/admissions/interviews/:interviewId/edit"
         component={EditInterview}
       />
-      <PrivateRoute
+      <GatedRoute
         exact
+        permissions={PERMISSIONS.admissions.change.admission}
         path="/admissions/config"
         component={ConfigurationWizard}
       />
