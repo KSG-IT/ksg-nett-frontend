@@ -26,6 +26,9 @@ export const ME_QUERY = gql`
         quantity
         timestamp
       }
+
+      isSuperuser
+      allPermissions
     }
   }
 `
