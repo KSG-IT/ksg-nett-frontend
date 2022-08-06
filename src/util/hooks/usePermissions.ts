@@ -6,7 +6,6 @@ type OnlyRequired<T, K extends keyof T> = Partial<T> & Required<Pick<T, K>>
 
 export function usePermissions() {
   const me = useStore(state => state.user)
-  // const admin = useAdmin()
 
   const hasPermissions = useCallback(
     (permissions: string | string[], allowAdmin: boolean = false) =>
