@@ -14,6 +14,8 @@ import {
   ApplicantNode,
   CreateApplicationsReturns,
   CreateApplicationsVariables,
+  PatchApplicantReturns,
+  PatchApplicantVariables,
 } from './types.graphql'
 
 const PATCH_APPLICANT = gql`
@@ -69,22 +71,6 @@ export const usePatchInterview = () => {
     patchInterview: patchInterview,
     loading: loading,
     error: error,
-  }
-}
-
-type PatchApplicantInput = {
-  status?: ApplicantStatusValues
-  canCommitThreeSemesters?: boolean | null
-  openForOtherPositions?: boolean | null
-}
-
-interface PatchApplicantVariables {
-  id: string
-  input: PatchApplicantInput
-}
-interface PatchApplicantReturns {
-  applicant: {
-    id: string
   }
 }
 

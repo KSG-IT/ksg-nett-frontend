@@ -13,14 +13,13 @@ export const InfoPopover: React.VFC<InfoPopoverProps> = ({ content }) => {
       opened={opened}
       onClose={() => setOpened(false)}
       position="bottom"
-      placement="center"
       withArrow
       trapFocus={false}
       closeOnEscape={false}
       transition="pop-top-left"
       width={260}
-      styles={{ body: { pointerEvents: 'none' } }}
-      target={
+    >
+      <Popover.Target>
         <FontAwesomeIcon
           icon={'question-circle'}
           size="lg"
@@ -28,11 +27,12 @@ export const InfoPopover: React.VFC<InfoPopoverProps> = ({ content }) => {
           onMouseEnter={() => setOpened(true)}
           onMouseLeave={() => setOpened(false)}
         />
-      }
-    >
-      <div style={{ display: 'flex' }}>
-        <Text size="sm">{content}</Text>
-      </div>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <div style={{ display: 'flex' }}>
+          <Text size="sm">{content}</Text>
+        </div>
+      </Popover.Dropdown>
     </Popover>
   )
 }

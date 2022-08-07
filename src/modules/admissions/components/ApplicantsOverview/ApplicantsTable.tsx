@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Card, Menu, Table } from '@mantine/core'
+import { Button, Card, Menu, Table } from '@mantine/core'
 import { parseApplicantPriorityInternalGroupPosition } from 'modules/admissions/parsing'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { useHistory } from 'react-router-dom'
@@ -32,14 +32,21 @@ export const ApplicantsTable: React.FC<{
       </td>
 
       <td>
-        <Menu>
-          <Menu.Label>Valg</Menu.Label>
-          <Menu.Item
-            icon={<FontAwesomeIcon icon="eye" />}
-            onClick={() => handleMoreInfo(applicant.id)}
-          >
-            Mer info
-          </Menu.Item>
+        <Menu position="left-start">
+          <Menu.Target>
+            <Button variant="outline">
+              <FontAwesomeIcon icon="ellipsis-h" />
+            </Button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Label>Valg</Menu.Label>
+            <Menu.Item
+              icon={<FontAwesomeIcon icon="eye" />}
+              onClick={() => handleMoreInfo(applicant.id)}
+            >
+              Mer info
+            </Menu.Item>
+          </Menu.Dropdown>
         </Menu>
       </td>
     </tr>

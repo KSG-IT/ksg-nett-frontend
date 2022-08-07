@@ -15,7 +15,7 @@ import { format } from 'date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { InterviewBooking } from '../components/ApplicantPortal/InterviewBooking'
-import { RegisterProfileForm } from '../components/ApplicantPortal/RegisterProfileForm'
+import { RegisterInformationForm } from '../components/ApplicantPortal/RegisterInformationForm'
 import { ReSendApplicantTokenForm } from '../components/ApplicantPortal/ReSendApplicantTokenForm'
 import { RetractApplicationModal } from '../components/ApplicantPortal/RetractApplicationModal'
 import { SetPriorities } from '../components/ApplicantPortal/SetPriorities'
@@ -105,7 +105,7 @@ export const ApplicantPortal: React.VFC = () => {
         <Group>
           <Stepper active={active} breakpoint="sm">
             <Stepper.Step allowStepClick={false} label="Registrer personalia">
-              <RegisterProfileForm
+              <RegisterInformationForm
                 nextStepCallback={nextStep}
                 applicant={applicant}
               />

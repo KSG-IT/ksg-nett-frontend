@@ -1,14 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  Avatar,
-  AvatarsGroup,
-  Button,
-  Group,
-  Paper,
-  Table,
-  TextInput,
-} from '@mantine/core'
+import { Avatar, Button, Group, Paper, Table, TextInput } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { format } from 'date-fns'
 import { useState } from 'react'
@@ -69,11 +61,11 @@ export const Summaries = () => {
       <td>{format(new Date(summary.date), 'MM.dd')}</td>
       <td>{summary.type}</td>
       <td>
-        <AvatarsGroup>
+        <Avatar.Group>
           {summary.participants.map(user => (
             <Avatar color={'red'}>{user.initials}</Avatar>
           ))}
-        </AvatarsGroup>
+        </Avatar.Group>
       </td>
       <td>
         <Avatar color={'blue'} radius={'lg'}>

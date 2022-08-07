@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { Group, Radio, RadioGroup } from '@mantine/core'
+import { Group, Radio } from '@mantine/core'
 import { PATCH_INTERVIEW_BOOLEAN_EVALUATION_ANSWER } from 'modules/admissions/mutations'
 import {
   InterviewBooleanEvaluationAnswerNode,
@@ -39,14 +39,14 @@ export const BooleanEvaluationInline: React.VFC<
 
   return (
     <Group>
-      <RadioGroup
+      <Radio.Group
         value={value}
         onChange={handleChange}
         label={booleanEvaluationAnswer.statement.statement}
       >
         <Radio value="yes" label="Ja" />
         <Radio value="no" label="Nei" />
-      </RadioGroup>
+      </Radio.Group>
     </Group>
   )
 }
