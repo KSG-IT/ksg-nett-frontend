@@ -22,6 +22,9 @@ export type UserNode = {
   bankAccountActivity: BankAccountActivity[]
   lastTransactions: BankAccountActivity[]
   upvotedQuoteIds: string[]
+
+  allPermissions: string[]
+  isSuperUser: boolean
 }
 
 export interface UserQueryReturns {
