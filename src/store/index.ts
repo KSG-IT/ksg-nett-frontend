@@ -23,6 +23,8 @@ export const UserPlaceholder: UserNode = {
   bankAccountActivity: [],
   lastTransactions: [],
   upvotedQuoteIds: [],
+  isSuperUser: false,
+  allPermissions: [],
 }
 
 interface Store {
