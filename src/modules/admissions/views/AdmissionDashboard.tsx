@@ -3,12 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import { PatchMutationVariables } from 'types/graphql'
-import { ConfigurationWizard } from '.'
+import { PERMISSIONS } from 'util/permissions'
 import {
   InternalGroupsNav,
   MyUpcomingInterviews,
@@ -67,7 +68,7 @@ export const AdmissionDashboard: React.VFC = () => {
   const { activeAdmission } = data
 
   if (activeAdmission === null || activeAdmission.status === 'CONFIGURATION')
-    return <ConfigurationWizard />
+    return <Redirect to="/admissions/config" />
 
   if (activeAdmission.status === 'IN_SESSION') {
     return <Redirect to="/admissions/discussion-dashboard" />
@@ -80,20 +81,20 @@ export const AdmissionDashboard: React.VFC = () => {
   return (
     <Wrapper>
       <Title>Kontrollpanel opptak</Title>
+      <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
+        <Button
+          leftIcon={<FontAwesomeIcon icon="clock" />}
+          disabled={nextPhaseLoading}
+          onClick={() => {
+            handleAdmissionNextPhase(activeAdmission.id)
+          }}
+        >
+          Intervjuperioden er over
+        </Button>
+      </PermissionGate>
       <AdmissionsShortcutPanel />
-      {/* <ApplicantStatistics admission={activeAdmission} /> */}
       <InternalGroupsNav />
       <MyUpcomingInterviews />
-
-      <Button
-        leftIcon={<FontAwesomeIcon icon="clock" />}
-        disabled={nextPhaseLoading}
-        onClick={() => {
-          handleAdmissionNextPhase(activeAdmission.id)
-        }}
-      >
-        Intervjuperioden er over
-      </Button>
     </Wrapper>
   )
 }

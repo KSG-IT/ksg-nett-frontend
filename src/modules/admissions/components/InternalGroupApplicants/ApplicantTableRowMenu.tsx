@@ -25,7 +25,9 @@ export const ApplicantTableRowMenu: React.VFC<{
   const handleMoreInfo = () => {
     history.push(`/admissions/applicants/${applicant.id}`)
   }
-  const txt = applicant.iAmAttendingInterview ? 'Meld av' : 'Meld opp'
+  const txt = applicant.iAmAttendingInterview
+    ? 'Meld av intervju'
+    : 'Meld opp til intervju'
   return (
     <Menu position="left-start">
       <Menu.Target>
@@ -40,8 +42,8 @@ export const ApplicantTableRowMenu: React.VFC<{
         >
           Mer info
         </Menu.Item>
+        <Menu.Item>{txt}</Menu.Item>
       </Menu.Dropdown>
-      <Menu.Item>{txt}</Menu.Item>
     </Menu>
   )
 }
