@@ -1,29 +1,14 @@
 import { useMutation } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Alert, Button, Center, Stack, TextInput, Title } from '@mantine/core'
+import { MessageBox } from 'components/MessageBox'
 import { RE_SEND_APPLICATION_TOKEN } from 'modules/admissions/mutations'
 import {
   ReSendApplicationTokenReturns,
   ReSendApplicationTokenVariables,
 } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import styled from 'styled-components'
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const SendAgainLabel = styled.label`
-  text-decoration: underline;
-  font-size: 12px;
-  font-weight: 500;
-  color: ${props => props.theme.colors.gray2};
-
-  :hover {
-    cursor: pointer;
-  }
-`
+import toast from 'react-hot-toast'
 
 export const ReSendApplicantTokenForm: React.VFC = () => {
   const [email, setEmail] = useState('')
@@ -31,11 +16,22 @@ export const ReSendApplicantTokenForm: React.VFC = () => {
   const [sendResetMail] = useMutation<
     ReSendApplicationTokenReturns,
     ReSendApplicationTokenVariables
-  >(RE_SEND_APPLICATION_TOKEN, { variables: { email: email } })
+  >(RE_SEND_APPLICATION_TOKEN)
 
   const handleSendResetEmail = () => {
-    setEmailSent(true)
-    sendResetMail()
+    const parsedEmail = email.trim()
+
+    if (parsedEmail === '') {
+      toast.error('Du må skrive inn en epost')
+      return
+    }
+    sendResetMail({ variables: { email: parsedEmail } })
+      .then(() => {
+        toast.success('Epost sendt!')
+        setEmailSent(true)
+        setEmail('')
+      })
+      .catch(() => toast.error('Noe gikk galt'))
   }
 
   if (emailSent)
@@ -58,9 +54,14 @@ export const ReSendApplicantTokenForm: React.VFC = () => {
     )
 
   return (
-    <Center>
-      <Stack>
+    <Center p="lg">
+      <Stack style={{ maxWidth: '600px' }}>
         <Title>KSG søkerportal</Title>
+        <MessageBox type="info">
+          Følg med på inboxen din. Om eposten din er registrert i systemet vårt
+          skal du straks få en epost. Bruk samme epost du har brukt for å
+          registrere deg på <b>Samfundet</b> sine nettsider.
+        </MessageBox>
         <TextInput
           value={email}
           onChange={evt => setEmail(evt.target.value)}

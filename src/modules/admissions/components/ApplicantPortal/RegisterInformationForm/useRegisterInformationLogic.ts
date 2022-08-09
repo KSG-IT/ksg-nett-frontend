@@ -4,7 +4,6 @@ import { PatchApplicantReturns } from 'modules/admissions/types.graphql'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
-import { RegisterInformationView } from './RegisterInformationView'
 
 export type RegisterInformationFormData = {
   firstName: string
@@ -28,17 +27,20 @@ const RegisterInformationSchema = yup.object().shape({
   image: yup.mixed().required('Bildet må lastes opp'),
 })
 
-interface Props {
-  defaultValues: Omit<RegisterInformationFormData, 'applicantId'>
-  onSubmit: (
-    data: RegisterInformationFormData
-  ) => Promise<FetchResult<PatchApplicantReturns>>
+type OnFormSubmit<FormData, MutationReturns> = (
+  data: FormData
+) => Promise<FetchResult<MutationReturns>>
+
+interface UseRegisterInformationLogicInput {
+  defaultValues: RegisterInformationFormData
+  nextStepCallback: () => void
+  onSubmit: OnFormSubmit<RegisterInformationFormData, PatchApplicantReturns>
 }
 
-export const RegisterInformationLogic: React.VFC<Props> = ({
-  onSubmit,
-  defaultValues,
-}) => {
+export function useRegisterInformationLogic(
+  input: UseRegisterInformationLogicInput
+) {
+  const { defaultValues, onSubmit, nextStepCallback } = input
   const form = useForm<RegisterInformationFormData>({
     mode: 'onSubmit',
     defaultValues,
@@ -47,11 +49,14 @@ export const RegisterInformationLogic: React.VFC<Props> = ({
 
   const handleSubmit = async (data: RegisterInformationFormData) => {
     await onSubmit(data)
-      .then(() => form.reset(data))
+      .then(() => nextStepCallback())
       .catch(err => {
         toast.error(err.message)
       })
   }
 
-  return <RegisterInformationView form={form} onSubmit={handleSubmit} />
+  return {
+    form,
+    onSubmit: handleSubmit,
+  }
 }

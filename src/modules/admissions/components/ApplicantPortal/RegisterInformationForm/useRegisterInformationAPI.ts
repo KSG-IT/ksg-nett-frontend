@@ -2,18 +2,17 @@ import { format } from 'date-fns'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
-import {
-  RegisterInformationFormData,
-  RegisterInformationLogic,
-} from './RegisterInformationLogic'
+import { RegisterInformationFormData } from './useRegisterInformationLogic'
 
-interface RegisterInformationAPIProps {
+interface UseRegisterInformationAPIInput {
   applicant: ApplicantNode
+  nextStepCallback: () => void
 }
 
-export const RegisterInformationAPI: React.VFC<RegisterInformationAPIProps> = ({
+export function useRegisterInformationAPI({
   applicant,
-}) => {
+  nextStepCallback,
+}: UseRegisterInformationAPIInput) {
   const { patchApplicant } = useApplicantMutations()
 
   const handleSubmit = async (data: RegisterInformationFormData) => {
@@ -44,11 +43,9 @@ export const RegisterInformationAPI: React.VFC<RegisterInformationAPIProps> = ({
     dateOfBirth: new Date(),
     phone: '',
   }
-
-  return (
-    <RegisterInformationLogic
-      onSubmit={handleSubmit}
-      defaultValues={defaultValues}
-    />
-  )
+  return {
+    defaultValues,
+    nextStepCallback,
+    onSubmit: handleSubmit,
+  }
 }
