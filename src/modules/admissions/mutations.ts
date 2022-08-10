@@ -285,9 +285,7 @@ export const PATCH_INTERVIEW_ADDITIONAL_EVALUATION_STATEMENT = gql`
 export const DELETE_INTERVIEW_ADDITIONAL_EVALUATION_STATEMENT = gql`
   mutation DeleteInterviewAdditionalEvaluationStatement($id: ID!) {
     deleteInterviewAdditionalEvaluationStatement(id: $id) {
-      interviewAdditionalEvaluationStatement {
-        found
-      }
+      found
     }
   }
 `
