@@ -108,7 +108,7 @@ export type ApplicantNode = {
   phone: string
   hometown: string
   study: string
-  image: string | File
+  image: string
   dateOfBirth: Date | string
   priorities: InternalGroupPositionPriority[]
   interview: InterviewNode | null

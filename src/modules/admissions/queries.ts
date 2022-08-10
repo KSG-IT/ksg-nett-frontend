@@ -126,6 +126,7 @@ export const APPLICANT_QUERY = gql`
       phone
       study
       hometown
+      dateOfBirth
       address
       canCommitThreeSemesters
       priorities {
