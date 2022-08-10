@@ -47,6 +47,10 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
           <Text>Kan bli 3 semestre:</Text>
           {parseBooleanEvaluation(applicant.canCommitThreeSemesters)}
         </Group>
+        <Group>
+          <Text>Åpen for andre verv:</Text>
+          {parseBooleanEvaluation(applicant.openForOtherPositions)}
+        </Group>
       </Card>
       {canEdit && (
         <Button

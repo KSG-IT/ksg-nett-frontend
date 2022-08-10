@@ -129,6 +129,7 @@ export const APPLICANT_QUERY = gql`
       dateOfBirth
       address
       canCommitThreeSemesters
+      openForOtherPositions
       priorities {
         internalGroupPosition {
           id
