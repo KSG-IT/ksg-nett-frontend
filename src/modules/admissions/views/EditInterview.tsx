@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import { Button, Group, Modal, Stack, Text, Title } from '@mantine/core'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { MessageBox } from 'components/MessageBox'
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import {
@@ -62,6 +63,12 @@ export const EditInterview: React.VFC = () => {
   return (
     <Stack style={{ overflowY: 'scroll', width: '100%', padding: '32px' }}>
       <Title>Intervjunotater: {interview.applicant.fullName}</Title>
+      <MessageBox type="danger">
+        <b>Obs!</b> Det skal aldri være mer enn én person som fører notater. Det
+        vil si at bare én skal være inne på denne siden mens intervjuet pågår.
+        Dette er for å forsikre integritet i intervjunotatene. Det samme gjelder
+        å ha flere faner oppe på samme side.
+      </MessageBox>
 
       {/* We render different interview evaluation fields */}
       <BooleanEvaluationAnswerList interview={interview} />
