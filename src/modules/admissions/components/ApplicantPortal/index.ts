@@ -1,5 +1,4 @@
 export * from './InterviewBooking'
-export * from './RegisterProfileForm'
 export * from './ReSendApplicantTokenForm'
 export * from './RetractApplicationModal'
 export * from './SetPriorities'
