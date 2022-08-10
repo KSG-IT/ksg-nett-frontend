@@ -104,6 +104,10 @@ export type ApplicantNode = {
   fullName: string
   firstName: string
   lastName: string
+  address: string
+  phone: string
+  hometown: string
+  study: string
   image: string | File
   dateOfBirth: Date | string
   priorities: InternalGroupPositionPriority[]

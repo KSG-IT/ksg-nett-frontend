@@ -34,13 +34,13 @@ export function useRegisterInformationAPI({
   }
 
   const defaultValues = {
-    firstName: '',
-    lastName: '',
-    address: '',
-    hometown: '',
-    study: '',
+    firstName: applicant?.firstName ?? '',
+    lastName: applicant?.lastName ?? '',
+    address: applicant?.address ?? '',
+    hometown: applicant?.hometown ?? '',
+    study: applicant?.study ?? '',
     dateOfBirth: new Date(),
-    phone: '',
+    phone: applicant?.phone ?? '',
   }
   return {
     defaultValues,
