@@ -13,7 +13,7 @@ export type RegisterInformationFormData = {
   study: string
   dateOfBirth: Date
   phone: string
-  image?: FileList
+  image?: File
 }
 
 const RegisterInformationSchema = yup.object().shape({

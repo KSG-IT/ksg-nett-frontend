@@ -15,9 +15,8 @@ export function useRegisterInformationAPI({
 }: UseRegisterInformationAPIInput) {
   const { patchApplicant } = useApplicantMutations()
 
-  const handleSubmit = async (data: RegisterInformationFormData) => {
+  async function handleSubmit(data: RegisterInformationFormData) {
     const { id } = applicant
-
     const input = {
       ...data,
       image: data.image,

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Alert,
   Button,
-  FileInput,
+  FileButton,
   Group,
   Stack,
   TextInput,
@@ -10,7 +10,6 @@ import {
 } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
-import { useState } from 'react'
 import { useRegisterInformationAPI } from './useRegisterInformationAPI'
 import { useRegisterInformationLogic } from './useRegisterInformationLogic'
 
@@ -22,22 +21,12 @@ interface ResisterInformationViewProps {
 export const RegisterInformationForm: React.FC<
   ResisterInformationViewProps
 > = ({ applicant, nextStepCallback }) => {
-  console.log(applicant)
   const { form, onSubmit } = useRegisterInformationLogic(
     useRegisterInformationAPI({ applicant, nextStepCallback })
   )
-  const { formState, register, handleSubmit, getValues } = form
+  const { formState, register, handleSubmit, getValues, setValue } = form
   const { errors, isSubmitting } = formState
-  const [image, setImage] = useState<string | null>(null)
 
-  const handleUploadImage = (file: File | null) => {
-    if (file === null || file === undefined) return
-    const fileReader = new FileReader()
-    const s = fileReader.readAsDataURL(file)
-    if (file) {
-      setImage(URL.createObjectURL(file))
-    }
-  }
   return (
     <Stack>
       <Title>Registrer personalia</Title>
@@ -81,13 +70,19 @@ export const RegisterInformationForm: React.FC<
           error={errors?.phone?.message}
           {...register('phone')}
         />
-        <label>Bilde</label>
-        <FileInput
-          accept="image/png,image/jpeg"
-          required
-          error={errors?.image?.message}
-          {...register('image')}
-        />
+        <Group>
+          <FileButton
+            accept="image/png,image/jpeg"
+            onChange={file => setValue('image', file ?? undefined)}
+          >
+            {props => (
+              <Button leftIcon={<FontAwesomeIcon icon="upload" />} {...props}>
+                Last opp bilde
+              </Button>
+            )}
+          </FileButton>
+          {getValues('image') && (getValues('image')?.name ?? '')}
+        </Group>
         <Group position="right" mt="md">
           <Button disabled={isSubmitting} type="submit">
             Lagre informasjon
