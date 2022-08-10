@@ -69,17 +69,17 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
 }) => {
   const history = useHistory()
   const { data, error, loading } = useQuery<InterviewOverviewReturns>(
-    INTERVIEW_OVERVIEW_QUERY,
-    {
-      onCompleted(data) {
-        history.push('admissions')
-      },
-    }
+    INTERVIEW_OVERVIEW_QUERY
   )
 
   const [generateInterviews] = useMutation<GenerateInterviewsReturns>(
     GENERATE_INTERVIEWS,
-    { refetchQueries: ['InterviewOverviewQuery'] }
+    {
+      refetchQueries: ['InterviewOverviewQuery'],
+      onCompleted: () => {
+        toast.success('Genererte intervjuer!')
+      },
+    }
   )
 
   const [deleteAllInterviews] = useMutation(DELETE_ALL_INTERVIEWS, {
@@ -134,7 +134,7 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
         id: admissionId,
         input: { status: AdmissionStatusValues.OPEN },
       },
-    })
+    }).then(() => history.push('/admissions'))
   }
 
   return (
