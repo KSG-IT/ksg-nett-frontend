@@ -5,13 +5,17 @@ import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import { ApplicantStatusValues, InterviewTotalEvaluationValues } from './consts'
 import {
   CLOSE_ADMISSION_MUTATION,
+  CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION,
   CREATE_APPLICATIONS,
   DELETE_APPLICANT,
   LOCK_ADMISSION_MUTATION,
+  UPLOAD_APPLICANTS_FILE_MUTATION,
 } from './mutations'
 import {
   ApplicantInterestNode,
   ApplicantNode,
+  CreateApplicantsFromCSVDataReturns,
+  CreateApplicantsFromCSVDataVariables,
   CreateApplicationsReturns,
   CreateApplicationsVariables,
   PatchApplicantReturns,
@@ -262,6 +266,18 @@ export const useApplicantMutations = () => {
     CreateApplicationsVariables
   >(CREATE_APPLICATIONS, { refetchQueries: ['ActiveAdmission'] })
 
+  const [uploadApplicantCSVDataMutation] = useMutation(
+    UPLOAD_APPLICANTS_FILE_MUTATION
+  )
+
+  const [
+    createApplicantsFromCSVDataMutation,
+    { loading: createApplicantsFromCSVLoading },
+  ] = useMutation<
+    CreateApplicantsFromCSVDataReturns,
+    CreateApplicantsFromCSVDataVariables
+  >(CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION)
+
   return {
     patchApplicant,
     patchApplicantLoading,
@@ -269,6 +285,9 @@ export const useApplicantMutations = () => {
     deleteApplicantLoading,
     createApplicants,
     createApplicantsLoading,
+    uploadApplicantCSVDataMutation,
+    createApplicantsFromCSVDataMutation,
+    createApplicantsFromCSVLoading,
   }
 }
 

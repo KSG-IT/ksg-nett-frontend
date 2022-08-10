@@ -29,6 +29,28 @@ export const CREATE_APPLICATIONS = gql`
   }
 `
 
+export const UPLOAD_APPLICANTS_FILE_MUTATION = gql`
+  mutation UploadApplicantsCsv($applicantsFile: Upload!) {
+    uploadApplicantsCsv(applicantsFile: $applicantsFile) {
+      validApplicants {
+        fullName
+        firstName
+        lastName
+        phone
+        email
+      }
+    }
+  }
+`
+
+export const CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION = gql`
+  mutation CreateApplicantsFromCsvData($applicants: [ApplicantCSVDataInput!]!) {
+    createApplicantsFromCsvData(applicants: $applicants) {
+      ok
+    }
+  }
+`
+
 export const RE_SEND_APPLICATION_TOKEN = gql`
   mutation ReSendApplicationToken($email: String!) {
     reSendApplicationToken(email: $email) {

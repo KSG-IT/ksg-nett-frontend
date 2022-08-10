@@ -115,6 +115,14 @@ export type ApplicantNode = {
   internalGroupInterests: ApplicantInterestNode[]
 }
 
+export type ApplicantCSVData = {
+  fullName: string
+  firstName: string
+  lastName: string
+  phone: string
+  email: string
+}
+
 // Shiuld be renamed. Implies a Shallow type but we are
 // starting to have a lot of custom fields?
 export type CoreApplicantNode = {
@@ -487,4 +495,11 @@ export interface InternalGroupPositionsAvailableForApplicantReturns {
     InternalGroupNode,
     'id' | 'name'
   >[]
+}
+
+export interface CreateApplicantsFromCSVDataReturns {
+  ok: boolean
+}
+export interface CreateApplicantsFromCSVDataVariables {
+  applicants: ApplicantCSVData[]
 }
