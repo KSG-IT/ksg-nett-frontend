@@ -198,7 +198,6 @@ export const CreateSummary = () => {
               <Select
                 value={summaryType}
                 onChange={evt => {
-                  console.log(evt)
                   setSummaryType(evt as SummaryType)
                 }}
                 label="Type referat"
