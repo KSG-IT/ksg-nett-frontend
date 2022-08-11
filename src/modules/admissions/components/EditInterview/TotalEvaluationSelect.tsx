@@ -1,6 +1,6 @@
 import { Select } from '@mantine/core'
 import { InterviewTotalEvaluationValues } from 'modules/admissions/consts'
-import { usePatchInterview } from 'modules/admissions/mutations.hooks'
+import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import { InterviewNode } from 'modules/admissions/types.graphql'
 
 const totalEvaluationOptions = [
@@ -33,7 +33,7 @@ interface TotalEvaluationSelectProps {
 export const TotalEvaluationSelect: React.VFC<TotalEvaluationSelectProps> = ({
   interview,
 }) => {
-  const { patchInterview } = usePatchInterview()
+  const { patchInterview } = useInterviewMutations()
 
   const handleChange = (value: InterviewTotalEvaluationValues) => {
     patchInterview({

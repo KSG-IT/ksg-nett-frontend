@@ -1,5 +1,5 @@
 import { Textarea } from '@mantine/core'
-import { usePatchInterview } from 'modules/admissions/mutations.hooks'
+import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import React, { useEffect, useState } from 'react'
 import { useDebounce } from 'util/hooks'
 
@@ -22,7 +22,7 @@ export const InterviewNoteBox: React.VFC<InterviewNoteBoxProps> = ({
   const [lastSavedValue, setLastSavedValue] = useState(initialValue)
   const debouncedValue = useDebounce(value, 5000)
 
-  const { patchInterview } = usePatchInterview()
+  const { patchInterview } = useInterviewMutations()
 
   useEffect(() => {
     const input = {

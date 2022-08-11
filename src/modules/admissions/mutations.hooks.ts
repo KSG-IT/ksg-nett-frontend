@@ -101,22 +101,6 @@ export const useInterviewMutations = () => {
   }
 }
 
-// Refactor into a useInterviewMutation hook
-export const usePatchInterview = () => {
-  const [patchInterview, { loading, error }] = useMutation<
-    PatchInterviewReturns,
-    PatchInterviewVariables
-  >(PATCH_INTERVIEW, {
-    refetchQueries: ['ApplicantQuery'],
-  })
-
-  return {
-    patchInterview: patchInterview,
-    loading: loading,
-    error: error,
-  }
-}
-
 // Refactor into a useApplicantMutation hook
 export const usePatchApplicant = () => {
   const [patchApplicant, { loading, error }] = useMutation<
