@@ -1,8 +1,8 @@
-import { FetchResult } from '@apollo/client'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { PatchApplicantReturns } from 'modules/admissions/types.graphql'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { OnFormSubmit } from 'types/forms'
 import * as yup from 'yup'
 
 export type RegisterInformationFormData = {
@@ -26,10 +26,6 @@ const RegisterInformationSchema = yup.object().shape({
   phone: yup.string().required('Telefonnummer må fylles ut'),
   image: yup.mixed().required('Bildet må lastes opp'),
 })
-
-type OnFormSubmit<FormData, MutationReturns> = (
-  data: FormData
-) => Promise<FetchResult<MutationReturns>>
 
 interface UseRegisterInformationLogicInput {
   defaultValues: RegisterInformationFormData
