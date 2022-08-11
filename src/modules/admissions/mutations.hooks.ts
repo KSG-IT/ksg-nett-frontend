@@ -9,6 +9,8 @@ import {
   CREATE_APPLICATIONS,
   DELETE_APPLICANT,
   LOCK_ADMISSION_MUTATION,
+  REMOVE_SELF_AS_INTERVIEWER,
+  SET_SELF_AS_INTERVIEWER,
   UPLOAD_APPLICANTS_FILE_MUTATION,
 } from './mutations'
 import {
@@ -20,6 +22,8 @@ import {
   CreateApplicationsVariables,
   PatchApplicantReturns,
   PatchApplicantVariables,
+  SetSelfAsInterviewerMutatationReturns,
+  SetSelfAsInterviewerMutatationVariables,
 } from './types.graphql'
 
 const PATCH_APPLICANT = gql`
@@ -59,6 +63,41 @@ interface PatchInterviewVariables {
 interface PatchInterviewReturns {
   patchInterview: {
     id: string
+  }
+}
+
+export const useInterviewMutations = () => {
+  const [
+    patchInterview,
+    { loading: patchInterviewLoading, error: patchInterviewError },
+  ] = useMutation<PatchInterviewReturns, PatchInterviewVariables>(
+    PATCH_INTERVIEW,
+    {
+      refetchQueries: ['ApplicantQuery'],
+    }
+  )
+
+  const [setSelfAsInterviewer] = useMutation<
+    SetSelfAsInterviewerMutatationReturns,
+    SetSelfAsInterviewerMutatationVariables
+  >(SET_SELF_AS_INTERVIEWER)
+
+  const [removeSelfAsInterviewer, { loading: removeSelfLoading }] = useMutation(
+    REMOVE_SELF_AS_INTERVIEWER,
+    {
+      refetchQueries: ['InternalGroupApplicantsDataQuery'],
+    }
+  )
+
+  return {
+    patchInterview,
+    patchInterviewLoading,
+    patchInterviewError,
+
+    setSelfAsInterviewer,
+
+    removeSelfAsInterviewer,
+    removeSelfLoading,
   }
 }
 
