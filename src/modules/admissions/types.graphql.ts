@@ -374,10 +374,6 @@ export interface ReSendApplicationTokenVariables {
   email: string
 }
 
-export type PatchInterviewScheduleTemplateInput = Partial<
-  Omit<InterviewScheduleTemplateNode, 'id'>
->
-
 export type PatchInterviewBooleanEvaluationAnswerInput = {
   value: boolean
 }
@@ -444,6 +440,19 @@ export interface PatchInterviewScheduleTemplateReturns {
     interviewScheduleTemplate: {
       id: string
     }
+  }
+}
+
+export interface PatchInterviewScheduleTemplateVariables {
+  id: string
+  input: {
+    defaultBlockSize: number
+    defaultInterviewDuration: string
+    defaultPauseDuration: string
+    defaultInterviewDayStart: string
+    defaultInterviewDayEnd: string
+    interviewPeriodStartDate: string
+    interviewPeriodEndDate: string
   }
 }
 

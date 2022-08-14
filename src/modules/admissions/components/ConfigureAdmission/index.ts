@@ -1,4 +1,3 @@
-export * from './AdmissionConfigForm'
 export * from './ConfigureInterviewLocationAvailability'
 export * from './ConfigureInterviewSchedule'
 export * from './ConfigureInterviewTemplate'

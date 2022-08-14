@@ -1,9 +1,6 @@
-import { useQuery } from '@apollo/client'
-import { FullPageError } from 'components/FullPageComponents'
-import { FullContentLoader } from 'components/Loading'
 import styled from 'styled-components'
-import { INTERVIEW_SCHEDULE_TEMPLATE } from '../../queries'
-import { AdmissionConfigForm } from './AdmissionConfigForm'
+import { InterviewScheduleForm } from '../AdmissionConfiguration/InterviewScheduleForm'
+
 type WizardStage =
   | 'START'
   | 'SCHEDULE'
@@ -26,20 +23,16 @@ interface ConfigureInterviewScheduleProps {
 export const ConfigureInterviewSchedule: React.VFC<
   ConfigureInterviewScheduleProps
 > = ({ setStageCallback }) => {
-  const { data, loading, error } = useQuery(INTERVIEW_SCHEDULE_TEMPLATE)
-
-  if (error) return <FullPageError />
-
-  if (loading || !data) return <FullContentLoader />
-
-  const { interviewScheduleTemplate: interviewSchedule } = data
+  const nextStage = () => {
+    setStageCallback('INTERVIEW_LOCATION_AVAILABILITY')
+  }
 
   return (
     <Wrapper>
       <Title>Innstillinger intervjuperiode</Title>
-      <AdmissionConfigForm
-        interviewSchedule={interviewSchedule}
-        setStageCallback={setStageCallback}
+      <InterviewScheduleForm
+        // interviewSchedule={interviewSchedule}
+        nextStageCallback={nextStage}
       />
     </Wrapper>
   )

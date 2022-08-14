@@ -9,6 +9,7 @@ import {
   CREATE_APPLICATIONS,
   DELETE_APPLICANT,
   LOCK_ADMISSION_MUTATION,
+  PATCH_INTERVIEW_SCHEDULE_TEMPLATE,
   REMOVE_SELF_AS_INTERVIEWER,
   SET_SELF_AS_INTERVIEWER,
   UPLOAD_APPLICANTS_FILE_MUTATION,
@@ -22,6 +23,8 @@ import {
   CreateApplicationsVariables,
   PatchApplicantReturns,
   PatchApplicantVariables,
+  PatchInterviewScheduleTemplateReturns,
+  PatchInterviewScheduleTemplateVariables,
   SetSelfAsInterviewerMutatationReturns,
   SetSelfAsInterviewerMutatationVariables,
 } from './types.graphql'
@@ -98,6 +101,17 @@ export const useInterviewMutations = () => {
 
     removeSelfAsInterviewer,
     removeSelfLoading,
+  }
+}
+
+export const useInterviewScheduleMutations = () => {
+  const [patchInterviewSchedule] = useMutation<
+    PatchInterviewScheduleTemplateReturns,
+    PatchInterviewScheduleTemplateVariables
+  >(PATCH_INTERVIEW_SCHEDULE_TEMPLATE)
+
+  return {
+    patchInterviewSchedule,
   }
 }
 

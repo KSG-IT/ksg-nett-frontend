@@ -42,6 +42,9 @@ export const ToggleApplicantTableRow: React.VFC<ToggleApplicantInlineProps> = ({
         toast.error('No gikk galt')
       },
     }).then(({ data }) => {
+      // I have a feeling this is not the best way to do this.
+      // Should probably just do a mutation and disable it during
+      // loading and set the value on success.
       if (data === null || data === undefined) {
         setWillBeAdmitted(toggleFallback)
         return
