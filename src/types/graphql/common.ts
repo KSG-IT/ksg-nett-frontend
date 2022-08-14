@@ -25,13 +25,5 @@ export interface DeleteMutationReturns {
 
 export interface PatchMutationVariables<NodeType> {
   id: string
-  input: {
-    defaultBlockSize: number
-    defaultInterviewDuration: string
-    defaultPauseDuration: string
-    defaultInterviewDayStart: string
-    defaultInterviewDayEnd: string
-    interviewPeriodStartDate: string
-    interviewPeriodEndDate: string
-  }
+  input: Partial<Omit<NodeType, 'id'>>
 }
