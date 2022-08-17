@@ -26,6 +26,7 @@ export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
   if (dataLoading) {
     return <Loader />
   }
+  console.table(getValues())
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

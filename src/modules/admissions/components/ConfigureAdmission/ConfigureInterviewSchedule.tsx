@@ -8,7 +8,6 @@ type WizardStage =
   | 'INTERVIEW_TEMPLATE'
   | 'AVAILABLE_POSITIONS'
   | 'SUMMARY'
-  | null
 
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};

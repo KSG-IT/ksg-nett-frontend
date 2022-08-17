@@ -4,6 +4,7 @@ import {
   PatchInterviewScheduleTemplateReturns,
   PatchInterviewScheduleTemplateVariables,
 } from 'modules/admissions/types.graphql'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { OnFormSubmit } from 'types/forms'
@@ -84,6 +85,12 @@ export function useInterviewScheduleLogic({
         toast.error(err.message)
       })
   }
+
+  useEffect(() => {
+    if (dataLoading) return
+
+    form.reset(defaultValues)
+  }, [defaultValues])
 
   return {
     form,

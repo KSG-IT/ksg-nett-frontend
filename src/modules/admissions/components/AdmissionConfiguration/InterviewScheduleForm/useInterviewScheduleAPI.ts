@@ -5,6 +5,8 @@ import { useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { InterviewScheduleFormData } from './useInterviewScheduleLogic'
 
+function transform() {}
+
 export function useInterviewScheduleAPI() {
   const { patchInterviewSchedule } = useInterviewScheduleMutations()
   const [scheduleId, setScheduleId] = useState<string>('')
@@ -44,6 +46,10 @@ export function useInterviewScheduleAPI() {
   const parsedDefaultValues = useMemo(() => {
     // There is some wonky time conversion because we get a string from the backend
     // but we want to parse it to a date value to be used in the form
+    if (!data) {
+      // THis is less than ideal probably
+      return {} as InterviewScheduleFormData
+    }
     const interviewScheduleTemplate = data.interviewScheduleTemplate
 
     const timeValues: Omit<
@@ -71,6 +77,7 @@ export function useInterviewScheduleAPI() {
       }
     }, {} as InterviewScheduleFormData)
 
+    console.log(interviewScheduleTemplate.interviewPeriodEndDate)
     return {
       ...parsedTimeValaues,
       interviewPeriodStartDate: new Date(
@@ -82,6 +89,7 @@ export function useInterviewScheduleAPI() {
       defaultBlockSize: interviewScheduleTemplate.defaultBlockSize,
     }
   }, [data])
+  // console.table(parsedDefaultValues)
 
   return {
     defaultValues: parsedDefaultValues,
