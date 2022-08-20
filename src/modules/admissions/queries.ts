@@ -441,6 +441,7 @@ export const EXTERNALLY_AVAILABLE_INTERNAL_GROUP_POSITIONS_QUERY = gql`
     currentAdmissionInternalGroupPositionData {
       id
       availablePositions
+      membershipType
       internalGroupPosition {
         id
         name

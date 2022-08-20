@@ -81,6 +81,7 @@ export type AdmissionAvailableInternalGroupPositionData = {
   id: string
   internalGroupPosition: Pick<InternalGroupPositionNode, 'id' | 'name'>
   availablePositions: number
+  membershipType: 'FUNCTIONARY' | 'GANG_MEMBER'
 }
 
 export type InternalGroupPositionPriorityNode = {
@@ -460,7 +461,7 @@ export interface PatchAdmissionAvailableInternalGroupPositionDataReturns {
   patchAdmissionAvailableInternalGroupPositionData: {
     admissionAvailableInternalGroupPositionData: Pick<
       AdmissionAvailableInternalGroupPositionData,
-      'id' | 'availablePositions'
+      'id' | 'availablePositions' | 'membershipType'
     >
   }
 }
