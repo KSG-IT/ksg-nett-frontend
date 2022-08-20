@@ -2,9 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Alert,
   Button,
+  Checkbox,
   FileButton,
   Group,
   Stack,
+  Text,
   TextInput,
   Title,
 } from '@mantine/core'
@@ -26,6 +28,7 @@ export const RegisterInformationForm: React.FC<
   )
   const { formState, register, handleSubmit, getValues, setValue } = form
   const { errors, isSubmitting } = formState
+  console.log(errors)
 
   return (
     <Stack>
@@ -70,6 +73,10 @@ export const RegisterInformationForm: React.FC<
           error={errors?.phone?.message}
           {...register('phone')}
         />
+        <Checkbox
+          label="Ønsker digitalt intervju"
+          {...register('wantsDigitalInterview')}
+        />
         <Group>
           <FileButton
             accept="image/png,image/jpeg"
@@ -82,6 +89,7 @@ export const RegisterInformationForm: React.FC<
             )}
           </FileButton>
           {getValues('image') && (getValues('image')?.name ?? '')}
+          {errors?.image && <Text color="red">Bilde må lastes opp</Text>}
         </Group>
         <Group position="right" mt="md">
           <Button disabled={isSubmitting} type="submit">

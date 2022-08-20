@@ -38,6 +38,11 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
       {/* Rewrite Wrapper to Stack? */}
       {/* Top level part should have a details card with perosanl information and image */}
       <Title order={2}>Intrvjudetaljer</Title>
+      {applicant.wantsDigitalInterview && (
+        <MessageBox type="warning">
+          <b>Obs!</b> Søker ønsker digitalt intervju
+        </MessageBox>
+      )}
       <Card>
         <Group>
           <Text>Total vurdering:</Text>

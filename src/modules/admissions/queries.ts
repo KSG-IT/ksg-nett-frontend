@@ -130,6 +130,7 @@ export const APPLICANT_QUERY = gql`
       address
       canCommitThreeSemesters
       openForOtherPositions
+      wantsDigitalInterview
       priorities {
         internalGroupPosition {
           id

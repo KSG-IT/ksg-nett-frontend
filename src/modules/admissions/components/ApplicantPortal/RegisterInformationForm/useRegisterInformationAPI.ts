@@ -41,6 +41,7 @@ export function useRegisterInformationAPI({
     study: applicant?.study ?? '',
     dateOfBirth: new Date(),
     phone: applicant?.phone ?? '',
+    wantsDigitalInterview: applicant?.wantsDigitalInterview ?? false,
   }
   return {
     defaultValues,

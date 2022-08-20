@@ -114,6 +114,7 @@ export type ApplicantNode = {
   priorities: InternalGroupPositionPriority[]
   interview: InterviewNode | null
   interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials'>
+  wantsDigitalInterview: boolean
   willBeAdmitted: boolean
   canCommitThreeSemesters: boolean
   openForOtherPositions: boolean

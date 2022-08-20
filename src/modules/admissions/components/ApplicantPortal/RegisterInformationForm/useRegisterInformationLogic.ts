@@ -13,6 +13,7 @@ export type RegisterInformationFormData = {
   study: string
   dateOfBirth: Date
   phone: string
+  wantsDigitalInterview: boolean
   image?: File
 }
 
@@ -25,6 +26,7 @@ const RegisterInformationSchema = yup.object().shape({
   dateOfBirth: yup.date().required('Fødselsdato må fylles ut'),
   phone: yup.string().required('Telefonnummer må fylles ut'),
   image: yup.mixed().required('Bildet må lastes opp'),
+  wantsDigitalInterview: yup.boolean().required(),
 })
 
 interface UseRegisterInformationLogicInput {
