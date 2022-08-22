@@ -1,30 +1,26 @@
+import { Group, Stack, Text, Title } from '@mantine/core'
 import { format } from 'date-fns'
-import {
-  InterviewLocationDateGrouping,
-  InterviewScheduleTemplateNode,
-} from 'modules/admissions/types.graphql'
-import styled from 'styled-components'
-
-const Wrapper = styled.div``
+import { InterviewLocationDateGrouping } from 'modules/admissions/types.graphql'
 
 export interface InterviewLocationInterviewsCardProps {
   interviewlocationGrouping: InterviewLocationDateGrouping
-  interviewScheduleTemplate: InterviewScheduleTemplateNode
 }
 
 export const InterviewLocationInterviewsCard: React.VFC<
   InterviewLocationInterviewsCardProps
-> = ({ interviewlocationGrouping, interviewScheduleTemplate }) => {
+> = ({ interviewlocationGrouping }) => {
   const { name, interviews } = interviewlocationGrouping
   return (
-    <Wrapper>
-      <h3>{name}</h3>
+    <Stack m={0} p={0}>
+      <Title order={3}>{name}</Title>
       {interviews.map((interview, index) => (
-        <div key={index}>
-          <span>{format(new Date(interview.interviewStart), 'HH:mm')}</span>
-          <span>{format(new Date(interview.interviewEnd), 'HH:mm')}</span>
-        </div>
+        <Group key={index}>
+          <Text>
+            {format(new Date(interview.interviewStart), 'HH:mm')}-
+            {format(new Date(interview.interviewEnd), 'HH:mm')}
+          </Text>
+        </Group>
       ))}
-    </Wrapper>
+    </Stack>
   )
 }

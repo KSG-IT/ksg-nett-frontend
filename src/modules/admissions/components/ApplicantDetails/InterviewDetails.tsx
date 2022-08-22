@@ -1,5 +1,6 @@
 import { Button, Card, Group, Stack, Text, Title } from '@mantine/core'
 import { MessageBox } from 'components/MessageBox'
+import { format } from 'date-fns'
 import {
   parseAdditionalEvaluation,
   parseBooleanEvaluation,
@@ -37,12 +38,24 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
     <Stack>
       {/* Rewrite Wrapper to Stack? */}
       {/* Top level part should have a details card with perosanl information and image */}
-      <Title order={2}>Intrvjudetaljer</Title>
+      <Title order={2}>Intervjudetaljer</Title>
       {applicant.wantsDigitalInterview && (
         <MessageBox type="warning">
           <b>Obs!</b> Søker ønsker digitalt intervju
         </MessageBox>
       )}
+      <Card>
+        <Group>
+          <Text weight="bold">Intervjutid</Text>
+          <Text>
+            {format(new Date(interview.interviewStart), 'iii d MMM HH:mm')}
+          </Text>
+        </Group>
+        <Group>
+          <Text weight="bold">Intervjusted</Text>
+          <Text>{interview.location.name}</Text>
+        </Group>
+      </Card>
       <Card>
         <Group>
           <Text>Total vurdering:</Text>
