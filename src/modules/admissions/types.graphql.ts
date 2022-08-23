@@ -518,3 +518,14 @@ export interface CreateApplicantsFromCSVDataReturns {
 export interface CreateApplicantsFromCSVDataVariables {
   applicants: ApplicantCSVData[]
 }
+
+//   UpdateInternalGroupPositionPriorityOrderReturns,
+// UpdateInternalGroupPositionPriorityOrderVariables
+
+export interface UpdateInternalGroupPositionPriorityOrderReturns {
+  priorityOrder: Pick<InternalGroupPositionPriorityNode, 'id'>[]
+}
+export interface UpdateInternalGroupPositionPriorityOrderVariables {
+  applicantId: string
+  priorityOrder: string[]
+}

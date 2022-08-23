@@ -51,6 +51,22 @@ export const CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION = gql`
   }
 `
 
+export const UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION = gql`
+  mutation UpdateInternalGroupPositionPriorityOrder(
+    $applicantId: ID!
+    $priorityOrder: [ID!]!
+  ) {
+    updateInternalGroupPositionPriorityOrder(
+      applicantId: $applicantId
+      priorityOrder: $priorityOrder
+    ) {
+      internalGroupPositionPriorities {
+        id
+      }
+    }
+  }
+`
+
 export const RE_SEND_APPLICATION_TOKEN = gql`
   mutation ReSendApplicationToken($email: String!) {
     reSendApplicationToken(email: $email) {

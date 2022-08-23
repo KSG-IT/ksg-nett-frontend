@@ -12,6 +12,7 @@ import {
   PATCH_INTERVIEW_SCHEDULE_TEMPLATE,
   REMOVE_SELF_AS_INTERVIEWER,
   SET_SELF_AS_INTERVIEWER,
+  UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
   UPLOAD_APPLICANTS_FILE_MUTATION,
 } from './mutations'
 import {
@@ -27,6 +28,8 @@ import {
   PatchInterviewScheduleTemplateVariables,
   SetSelfAsInterviewerMutatationReturns,
   SetSelfAsInterviewerMutatationVariables,
+  UpdateInternalGroupPositionPriorityOrderReturns,
+  UpdateInternalGroupPositionPriorityOrderVariables,
 } from './types.graphql'
 
 const PATCH_APPLICANT = gql`
@@ -315,6 +318,14 @@ export const useApplicantMutations = () => {
     CreateApplicantsFromCSVDataVariables
   >(CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION)
 
+  const [
+    updateInternalGroupPositionPriorityOrder,
+    { loading: updateInternalGroupPositionPriorityOrderLoading },
+  ] = useMutation<
+    UpdateInternalGroupPositionPriorityOrderReturns,
+    UpdateInternalGroupPositionPriorityOrderVariables
+  >(UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION)
+
   return {
     patchApplicant,
     patchApplicantLoading,
@@ -325,6 +336,9 @@ export const useApplicantMutations = () => {
     uploadApplicantCSVDataMutation,
     createApplicantsFromCSVDataMutation,
     createApplicantsFromCSVLoading,
+
+    updateInternalGroupPositionPriorityOrder,
+    updateInternalGroupPositionPriorityOrderLoading,
   }
 }
 
