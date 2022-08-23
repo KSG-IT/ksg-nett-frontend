@@ -40,13 +40,13 @@ export const ApplicantDetails: React.VFC = () => {
   const didNotShowUp =
     applicant.status === ApplicantStatusValues.DID_NOT_SHOW_UP_FOR_INTERVIEW
 
-  const canEdit = !interviewFinished || !didNotShowUp
+  const cannotEdit = interviewFinished || didNotShowUp
 
   return (
     <ScrollArea style={{ width: '100%' }} p="lg">
       <Title order={2}>Kandidatdetaljer</Title>
       <PersonalDetailsCard applicant={applicant} />
-      <InterviewDetails applicant={applicant} canEdit={canEdit} />
+      <InterviewDetails applicant={applicant} canEdit={!cannotEdit} />
     </ScrollArea>
   )
 }

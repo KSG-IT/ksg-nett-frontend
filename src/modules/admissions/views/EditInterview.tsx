@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Modal, Stack, Text, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -8,9 +8,11 @@ import { useHistory, useParams } from 'react-router-dom'
 import {
   AdditionalEvaluationAnswerList,
   AdditionalInformationFields,
+  ApplicantDidNotShowModal,
   ApplicantPrioritiesField,
   BooleanEvaluationAnswerList,
   InterviewNoteBox,
+  LockInterviewModal,
   TotalEvaluationSelect,
 } from '../components/EditInterview/'
 import { ApplicantStatusValues } from '../consts'
@@ -27,7 +29,9 @@ interface EditInterviewParams {
 
 export const EditInterview: React.VFC = () => {
   const { interviewId } = useParams<EditInterviewParams>()
-  const [modalOpen, setModalOpen] = useState(false)
+  const [lockModalOpen, setLockModalOpen] = useState(false)
+  const [didNotShowModalOpen, setDidNotShowModalOpen] = useState(false)
+
   const history = useHistory()
 
   const { data, loading, error } = useQuery<
@@ -47,16 +51,29 @@ export const EditInterview: React.VFC = () => {
 
   if (interview === null) return <FullPage404 />
 
-  const handleLockInterview = () => {
+  function handleLockInterview() {
     patchApplicant({
       variables: {
-        id: interview.applicant.id,
+        id: interview!.applicant.id,
         input: {
           status: ApplicantStatusValues.INTERVIEW_FINISHED,
         },
       },
     }).then(() =>
-      history.push(`/admissions/applicants/${interview.applicant.id}`)
+      history.push(`/admissions/applicants/${interview!.applicant.id}`)
+    )
+  }
+
+  function handleApplicantDidNotShow() {
+    patchApplicant({
+      variables: {
+        id: interview!.applicant.id,
+        input: {
+          status: ApplicantStatusValues.DID_NOT_SHOW_UP_FOR_INTERVIEW,
+        },
+      },
+    }).then(() =>
+      history.push(`/admissions/applicants/${interview!.applicant.id}`)
     )
   }
 
@@ -99,31 +116,31 @@ export const EditInterview: React.VFC = () => {
 
         <Button
           onClick={() => {
-            setModalOpen(true)
+            setLockModalOpen(true)
           }}
         >
           Lås intervjunotater
         </Button>
-        <Button color="red">ToDo: Møtte aldri opp</Button>
+        <Button
+          onClick={() => {
+            setDidNotShowModalOpen(true)
+          }}
+          color="red"
+        >
+          Møtte aldri opp
+        </Button>
       </Group>
 
-      {/* Confirm interview lock prompt */}
-      <Modal
-        opened={modalOpen}
-        onClose={() => setModalOpen(false)}
-        title={<Title>Lås intervju</Title>}
-      >
-        <Text>
-          Er du sikker på at du har notert ferdig? Det er ikke mulig å redigere
-          intervjuet etter denne handlingen!
-        </Text>
-        <Group position="right">
-          <Button onClick={handleLockInterview}>Lås</Button>
-          <Button onClick={() => setModalOpen(false)} color="red">
-            Avbryt
-          </Button>
-        </Group>
-      </Modal>
+      <LockInterviewModal
+        opened={lockModalOpen}
+        onClose={() => setLockModalOpen(false)}
+        lockInterviewCallback={handleLockInterview}
+      />
+      <ApplicantDidNotShowModal
+        opened={didNotShowModalOpen}
+        onClose={() => setDidNotShowModalOpen(false)}
+        applicantDidNotShowCallback={handleApplicantDidNotShow}
+      />
     </Stack>
   )
 }
