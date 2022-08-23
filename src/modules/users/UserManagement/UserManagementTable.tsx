@@ -1,45 +1,14 @@
-import { useLazyQuery } from '@apollo/client'
-import { Center, Loader, Table } from '@mantine/core'
-import { useEffect } from 'react'
-import styled from 'styled-components'
-import { MANAGE_USERS_DATA_QUERY } from './queries'
-import { ManageUsersDataReturns, ManageUsersDataVariables } from './types'
+import { Table } from '@mantine/core'
+import { ManageInternalGroupUser } from './types'
 import { UserManagementTableRow } from './UserManagementTableRow'
 
-const TableHeaderRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  font-size: 18px;
-  font-weight: 600;
-  gap: 10px;
-`
-
 interface UserManagementTableProps {
-  activeOnly: boolean
-  internalGroupId: string
+  usersData: ManageInternalGroupUser[]
 }
 
 export const UserManagementTable: React.VFC<UserManagementTableProps> = ({
-  activeOnly,
-  internalGroupId,
+  usersData,
 }) => {
-  const [getUserData, { error, loading, data }] = useLazyQuery<
-    ManageUsersDataReturns,
-    ManageUsersDataVariables
-  >(MANAGE_USERS_DATA_QUERY, {
-    variables: {
-      activeOnly: activeOnly,
-      internalGroupId: internalGroupId,
-    },
-  })
-
-  useEffect(() => {
-    if (internalGroupId === '') return
-    getUserData()
-  }, [internalGroupId])
-
-  const usersData = data?.manageUsersData ?? []
-
   const tableRows = usersData.map(membership => (
     <tr key={membership.userId}>
       <td>{membership.fullName}</td>
@@ -60,15 +29,7 @@ export const UserManagementTable: React.VFC<UserManagementTableProps> = ({
         <td>Startet</td>
         <td></td>
       </thead>
-      <tbody>
-        {loading ? (
-          <Center>
-            <Loader /> henter brukere
-          </Center>
-        ) : (
-          tableRows
-        )}
-      </tbody>
+      <tbody>{tableRows}</tbody>
     </Table>
   )
 }
