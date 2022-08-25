@@ -37,6 +37,10 @@ export const ApplicantTableRowMenu: React.VFC<{
     ? 'user-minus'
     : 'user-plus'
 
+  const attendingInterviewColor = applicant.iAmAttendingInterview
+    ? 'red'
+    : 'green'
+
   const handleAttendInterview = () => {
     const { interview } = applicant
     if (interview === null) {
@@ -49,7 +53,11 @@ export const ApplicantTableRowMenu: React.VFC<{
 
     handler({
       variables: { interviewId: interview.id },
-      refetchQueries: ['InternalGroupApplicantsDataQuery'],
+      refetchQueries: [
+        'InternalGroupApplicantsDataQuery',
+        'MyInterviews',
+        'MyUpcomingInterviews',
+      ],
     })
   }
   return (
@@ -68,6 +76,7 @@ export const ApplicantTableRowMenu: React.VFC<{
         </Menu.Item>
         <Menu.Item
           onClick={handleAttendInterview}
+          color={attendingInterviewColor}
           icon={<FontAwesomeIcon icon={atttendInterviewIcon} />}
         >
           {attendInterviewText}
