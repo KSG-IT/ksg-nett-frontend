@@ -29,10 +29,8 @@ import {
   SummaryDetail,
 } from 'modules/summaries'
 import { UserProfile } from 'modules/users'
-import {
-  UserManagement,
-  UserManagementAddUser,
-} from 'modules/users/UserManagement'
+import { UserManagementAddUser } from 'modules/users/UserManagement'
+import { ManageUsers } from 'modules/users/views'
 import { Redirect, Switch } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
 import { GatedRoute } from './GatedRoute'
@@ -94,14 +92,13 @@ export const AuthRoutes: React.VFC = () => {
       />
 
       {/* Users module */}
-      <PrivateRoute exact path="/users/manage" component={UserManagement} />
+      <PrivateRoute exact path="/users/manage" component={ManageUsers} />
       <PrivateRoute
         exact
         path="/users/manage/add-user"
         component={UserManagementAddUser}
       />
 
-      <PrivateRoute exact path="/users/newbies" component={FullPage404} />
       <PrivateRoute exact path="/users/:userId" component={UserProfile} />
 
       {/* Admissions module */}
@@ -161,11 +158,11 @@ export const AuthRoutes: React.VFC = () => {
         component={DiscussionDashboard}
       />
 
-      <PrivateRoute exact path="/admissions/close" component={CloseAdmission} />
-      <PrivateRoute
+      <GatedRoute
         exact
-        path="/admissions/:admissionId"
-        component={FullPage404}
+        permissions={PERMISSIONS.admissions.change.admission}
+        path="/admissions/close"
+        component={CloseAdmission}
       />
 
       <Redirect from="/" to="/dashboard" />

@@ -1,7 +1,9 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button } from 'components/Button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button, Group, ScrollArea, Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { MessageBox } from 'components/MessageBox'
 import { format } from 'date-fns'
 import { AdmissionStatusValues } from 'modules/admissions/consts'
 import {
@@ -28,18 +30,6 @@ type WizardStage =
   | 'INTERVIEW_TEMPLATE'
   | 'AVAILABLE_POSITIONS'
   | 'SUMMARY'
-  | null
-
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-`
-
-const Title = styled.h1`
-  margin: 0;
-`
 
 const InterviewLocationGroupingContainer = styled.div`
   display: flex;
@@ -69,17 +59,17 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
 }) => {
   const history = useHistory()
   const { data, error, loading } = useQuery<InterviewOverviewReturns>(
-    INTERVIEW_OVERVIEW_QUERY,
-    {
-      onCompleted(data) {
-        history.push('admissions')
-      },
-    }
+    INTERVIEW_OVERVIEW_QUERY
   )
 
   const [generateInterviews] = useMutation<GenerateInterviewsReturns>(
     GENERATE_INTERVIEWS,
-    { refetchQueries: ['InterviewOverviewQuery'] }
+    {
+      refetchQueries: ['InterviewOverviewQuery'],
+      onCompleted: () => {
+        toast.success('Genererte intervjuer!')
+      },
+    }
   )
 
   const [deleteAllInterviews] = useMutation(DELETE_ALL_INTERVIEWS, {
@@ -108,24 +98,21 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
 
   const {
     interviewOverview: { interviewDayGroupings, admissionId },
-    interviewScheduleTemplate,
   } = data
 
   if (interviewDayGroupings.length === 0)
     return (
-      <Wrapper>
+      <Stack p="lg">
         <Title>Genererte intervjuer</Title>
-        <div>Oi, her var det tomt</div>
-        <Button
-          buttonStyle="cancel"
-          onClick={() => setStageCallback('AVAILABLE_POSITIONS')}
-        >
-          Forrige steg
-        </Button>
-        <Button onClick={handleGenerateInterviews}>
-          Generer interjuer basert på innstillinger
-        </Button>
-      </Wrapper>
+        <Group>
+          <Button onClick={() => setStageCallback('AVAILABLE_POSITIONS')}>
+            Forrige steg
+          </Button>
+          <Button onClick={handleGenerateInterviews}>
+            Generer interjuer basert på innstillinger
+          </Button>
+        </Group>
+      </Stack>
     )
 
   const handleOpenAdmission = () => {
@@ -134,36 +121,48 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
         id: admissionId,
         input: { status: AdmissionStatusValues.OPEN },
       },
-    })
+    }).then(() => history.push('/admissions'))
   }
 
   return (
-    <Wrapper>
-      <Title>Genererte intervjuer</Title>
-      <button onClick={() => deleteAllInterviews()}>Slett intervjuene</button>
-      {interviewDayGroupings.map(interviewDayGroup => (
-        <div key={format(new Date(interviewDayGroup.date), 'y-M-d')}>
-          <h2>{format(new Date(interviewDayGroup.date), 'EEEE d LLLL')}</h2>
-          <InterviewDayCard>
-            <InterviewLocationGroupingContainer>
-              {interviewDayGroup.locations.map(grouping => (
-                <InterviewLocationInterviewsCard
-                  key={grouping.name}
-                  interviewlocationGrouping={grouping}
-                  interviewScheduleTemplate={interviewScheduleTemplate}
-                />
-              ))}
-            </InterviewLocationGroupingContainer>
-          </InterviewDayCard>
-        </div>
-      ))}
-      <Button
-        buttonStyle="cancel"
-        onClick={() => setStageCallback('AVAILABLE_POSITIONS')}
-      >
-        Forrige steg
-      </Button>
-      <Button onClick={handleOpenAdmission}>Åpne opptaket</Button>
-    </Wrapper>
+    <ScrollArea style={{ width: '100%' }} p="lg">
+      <Group>
+        <Title my="md">Genererte intervjuer</Title>
+        <Button
+          leftIcon={<FontAwesomeIcon icon="trash" />}
+          color="red"
+          onClick={() => deleteAllInterviews()}
+        >
+          Slett intervjuene
+        </Button>
+      </Group>
+      <MessageBox type="warning">
+        <b>Obs!</b> Om du har endret på noen av den tidligere dataen må du
+        slette intervjuene og generere de på nytt igjen!
+      </MessageBox>
+      <Stack>
+        {interviewDayGroupings.map(interviewDayGroup => (
+          <div key={format(new Date(interviewDayGroup.date), 'y-M-d')}>
+            <h2>{format(new Date(interviewDayGroup.date), 'EEEE d LLLL')}</h2>
+            <InterviewDayCard>
+              <InterviewLocationGroupingContainer>
+                {interviewDayGroup.locations.map(grouping => (
+                  <InterviewLocationInterviewsCard
+                    key={grouping.name}
+                    interviewlocationGrouping={grouping}
+                  />
+                ))}
+              </InterviewLocationGroupingContainer>
+            </InterviewDayCard>
+          </div>
+        ))}
+      </Stack>
+      <Group>
+        <Button onClick={() => setStageCallback('AVAILABLE_POSITIONS')}>
+          Forrige steg
+        </Button>
+        <Button onClick={handleOpenAdmission}>Åpne opptaket</Button>
+      </Group>
+    </ScrollArea>
   )
 }

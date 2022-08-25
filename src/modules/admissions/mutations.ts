@@ -29,6 +29,44 @@ export const CREATE_APPLICATIONS = gql`
   }
 `
 
+export const UPLOAD_APPLICANTS_FILE_MUTATION = gql`
+  mutation UploadApplicantsCsv($applicantsFile: Upload!) {
+    uploadApplicantsCsv(applicantsFile: $applicantsFile) {
+      validApplicants {
+        fullName
+        firstName
+        lastName
+        phone
+        email
+      }
+    }
+  }
+`
+
+export const CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION = gql`
+  mutation CreateApplicantsFromCsvData($applicants: [ApplicantCSVDataInput!]!) {
+    createApplicantsFromCsvData(applicants: $applicants) {
+      ok
+    }
+  }
+`
+
+export const UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION = gql`
+  mutation UpdateInternalGroupPositionPriorityOrder(
+    $applicantId: ID!
+    $priorityOrder: [ID!]!
+  ) {
+    updateInternalGroupPositionPriorityOrder(
+      applicantId: $applicantId
+      priorityOrder: $priorityOrder
+    ) {
+      internalGroupPositionPriorities {
+        id
+      }
+    }
+  }
+`
+
 export const RE_SEND_APPLICATION_TOKEN = gql`
   mutation ReSendApplicationToken($email: String!) {
     reSendApplicationToken(email: $email) {
@@ -263,9 +301,7 @@ export const PATCH_INTERVIEW_ADDITIONAL_EVALUATION_STATEMENT = gql`
 export const DELETE_INTERVIEW_ADDITIONAL_EVALUATION_STATEMENT = gql`
   mutation DeleteInterviewAdditionalEvaluationStatement($id: ID!) {
     deleteInterviewAdditionalEvaluationStatement(id: $id) {
-      interviewAdditionalEvaluationStatement {
-        found
-      }
+      found
     }
   }
 `

@@ -2,6 +2,10 @@ import { useQuery } from '@apollo/client'
 import { Button, Group, Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { PermissionGate } from 'components/PermissionGate'
+import toast from 'react-hot-toast'
+import { useHistory } from 'react-router-dom'
+import { PERMISSIONS } from 'util/permissions'
 import { AdmissionsShortcutPanel } from '../components/AdmissionDashboard/AdmissionsShortcutPanel'
 import { InternalGroupPreviewList } from '../components/DiscussionDashboard/InternalGroupPreviewList'
 import { useAdmissionMutations } from '../mutations.hooks'
@@ -18,6 +22,7 @@ export const DiscussionDashboard: React.VFC = () => {
    * TODO: Redirect if admission is in wrong state
    * if admissions.status !== IN_SESSION => redirect /admissions
    */
+  const history = useHistory()
   const { data, loading, error } =
     useQuery<AllInternalGroupsAcceptingApplicantsReturns>(
       ALL_INTERNAL_GROUP_APPLICANT_DATA
@@ -31,6 +36,13 @@ export const DiscussionDashboard: React.VFC = () => {
 
   const handleLockAdmission = () => {
     lockAdmission({ refetchQueries: ['ActiveAdmission'] })
+      .then(() => {
+        toast.success('Fordelingsmøtet er låst')
+        history.push('/admissions')
+      })
+      .catch(() => {
+        toast.error('Noe gikk galt')
+      })
   }
   const { allInternalGroupApplicantData } = data
   return (
@@ -38,7 +50,11 @@ export const DiscussionDashboard: React.VFC = () => {
       <AdmissionsShortcutPanel />
       <Group position="apart" mb="md">
         <Title>Fordelingsmøtet</Title>
-        <Button onClick={handleLockAdmission}>Fordelingsmøtet er ferdig</Button>
+        <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
+          <Button onClick={handleLockAdmission}>
+            Fordelingsmøtet er ferdig
+          </Button>
+        </PermissionGate>
       </Group>
       <InternalGroupPreviewList
         allInternalGroupApplicantData={allInternalGroupApplicantData}

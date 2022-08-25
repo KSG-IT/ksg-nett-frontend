@@ -5,17 +5,31 @@ import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import { ApplicantStatusValues, InterviewTotalEvaluationValues } from './consts'
 import {
   CLOSE_ADMISSION_MUTATION,
+  CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION,
   CREATE_APPLICATIONS,
   DELETE_APPLICANT,
   LOCK_ADMISSION_MUTATION,
+  PATCH_INTERVIEW_SCHEDULE_TEMPLATE,
+  REMOVE_SELF_AS_INTERVIEWER,
+  SET_SELF_AS_INTERVIEWER,
+  UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
+  UPLOAD_APPLICANTS_FILE_MUTATION,
 } from './mutations'
 import {
   ApplicantInterestNode,
   ApplicantNode,
+  CreateApplicantsFromCSVDataReturns,
+  CreateApplicantsFromCSVDataVariables,
   CreateApplicationsReturns,
   CreateApplicationsVariables,
   PatchApplicantReturns,
   PatchApplicantVariables,
+  PatchInterviewScheduleTemplateReturns,
+  PatchInterviewScheduleTemplateVariables,
+  SetSelfAsInterviewerMutatationReturns,
+  SetSelfAsInterviewerMutatationVariables,
+  UpdateInternalGroupPositionPriorityOrderReturns,
+  UpdateInternalGroupPositionPriorityOrderVariables,
 } from './types.graphql'
 
 const PATCH_APPLICANT = gql`
@@ -58,19 +72,49 @@ interface PatchInterviewReturns {
   }
 }
 
-// Refactor into a useInterviewMutation hook
-export const usePatchInterview = () => {
-  const [patchInterview, { loading, error }] = useMutation<
-    PatchInterviewReturns,
-    PatchInterviewVariables
-  >(PATCH_INTERVIEW, {
-    refetchQueries: ['ApplicantQuery'],
-  })
+export const useInterviewMutations = () => {
+  const [
+    patchInterview,
+    { loading: patchInterviewLoading, error: patchInterviewError },
+  ] = useMutation<PatchInterviewReturns, PatchInterviewVariables>(
+    PATCH_INTERVIEW,
+    {
+      refetchQueries: ['ApplicantQuery'],
+    }
+  )
+
+  const [setSelfAsInterviewer] = useMutation<
+    SetSelfAsInterviewerMutatationReturns,
+    SetSelfAsInterviewerMutatationVariables
+  >(SET_SELF_AS_INTERVIEWER)
+
+  const [removeSelfAsInterviewer, { loading: removeSelfLoading }] = useMutation(
+    REMOVE_SELF_AS_INTERVIEWER,
+    {
+      refetchQueries: ['InternalGroupApplicantsDataQuery'],
+    }
+  )
 
   return {
-    patchInterview: patchInterview,
-    loading: loading,
-    error: error,
+    patchInterview,
+    patchInterviewLoading,
+    patchInterviewError,
+
+    setSelfAsInterviewer,
+
+    removeSelfAsInterviewer,
+    removeSelfLoading,
+  }
+}
+
+export const useInterviewScheduleMutations = () => {
+  const [patchInterviewSchedule] = useMutation<
+    PatchInterviewScheduleTemplateReturns,
+    PatchInterviewScheduleTemplateVariables
+  >(PATCH_INTERVIEW_SCHEDULE_TEMPLATE)
+
+  return {
+    patchInterviewSchedule,
   }
 }
 
@@ -262,6 +306,26 @@ export const useApplicantMutations = () => {
     CreateApplicationsVariables
   >(CREATE_APPLICATIONS, { refetchQueries: ['ActiveAdmission'] })
 
+  const [uploadApplicantCSVDataMutation] = useMutation(
+    UPLOAD_APPLICANTS_FILE_MUTATION
+  )
+
+  const [
+    createApplicantsFromCSVDataMutation,
+    { loading: createApplicantsFromCSVLoading },
+  ] = useMutation<
+    CreateApplicantsFromCSVDataReturns,
+    CreateApplicantsFromCSVDataVariables
+  >(CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION)
+
+  const [
+    updateInternalGroupPositionPriorityOrder,
+    { loading: updateInternalGroupPositionPriorityOrderLoading },
+  ] = useMutation<
+    UpdateInternalGroupPositionPriorityOrderReturns,
+    UpdateInternalGroupPositionPriorityOrderVariables
+  >(UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION)
+
   return {
     patchApplicant,
     patchApplicantLoading,
@@ -269,6 +333,12 @@ export const useApplicantMutations = () => {
     deleteApplicantLoading,
     createApplicants,
     createApplicantsLoading,
+    uploadApplicantCSVDataMutation,
+    createApplicantsFromCSVDataMutation,
+    createApplicantsFromCSVLoading,
+
+    updateInternalGroupPositionPriorityOrder,
+    updateInternalGroupPositionPriorityOrderLoading,
   }
 }
 

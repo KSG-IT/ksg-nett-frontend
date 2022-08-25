@@ -81,6 +81,7 @@ export type AdmissionAvailableInternalGroupPositionData = {
   id: string
   internalGroupPosition: Pick<InternalGroupPositionNode, 'id' | 'name'>
   availablePositions: number
+  membershipType: 'FUNCTIONARY' | 'GANG_MEMBER'
 }
 
 export type InternalGroupPositionPriorityNode = {
@@ -104,15 +105,28 @@ export type ApplicantNode = {
   fullName: string
   firstName: string
   lastName: string
-  image: string | File
+  address: string
+  phone: string
+  hometown: string
+  study: string
+  image: string
   dateOfBirth: Date | string
   priorities: InternalGroupPositionPriority[]
   interview: InterviewNode | null
   interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials'>
+  wantsDigitalInterview: boolean
   willBeAdmitted: boolean
   canCommitThreeSemesters: boolean
   openForOtherPositions: boolean
   internalGroupInterests: ApplicantInterestNode[]
+}
+
+export type ApplicantCSVData = {
+  fullName: string
+  firstName: string
+  lastName: string
+  phone: string
+  email: string
 }
 
 // Shiuld be renamed. Implies a Shallow type but we are
@@ -362,10 +376,6 @@ export interface ReSendApplicationTokenVariables {
   email: string
 }
 
-export type PatchInterviewScheduleTemplateInput = Partial<
-  Omit<InterviewScheduleTemplateNode, 'id'>
->
-
 export type PatchInterviewBooleanEvaluationAnswerInput = {
   value: boolean
 }
@@ -435,11 +445,24 @@ export interface PatchInterviewScheduleTemplateReturns {
   }
 }
 
+export interface PatchInterviewScheduleTemplateVariables {
+  id: string
+  input: {
+    defaultBlockSize: number
+    defaultInterviewDuration: string
+    defaultPauseDuration: string
+    defaultInterviewDayStart: string
+    defaultInterviewDayEnd: string
+    interviewPeriodStartDate: string
+    interviewPeriodEndDate: string
+  }
+}
+
 export interface PatchAdmissionAvailableInternalGroupPositionDataReturns {
   patchAdmissionAvailableInternalGroupPositionData: {
     admissionAvailableInternalGroupPositionData: Pick<
       AdmissionAvailableInternalGroupPositionData,
-      'id' | 'availablePositions'
+      'id' | 'availablePositions' | 'membershipType'
     >
   }
 }
@@ -487,4 +510,22 @@ export interface InternalGroupPositionsAvailableForApplicantReturns {
     InternalGroupNode,
     'id' | 'name'
   >[]
+}
+
+export interface CreateApplicantsFromCSVDataReturns {
+  ok: boolean
+}
+export interface CreateApplicantsFromCSVDataVariables {
+  applicants: ApplicantCSVData[]
+}
+
+//   UpdateInternalGroupPositionPriorityOrderReturns,
+// UpdateInternalGroupPositionPriorityOrderVariables
+
+export interface UpdateInternalGroupPositionPriorityOrderReturns {
+  priorityOrder: Pick<InternalGroupPositionPriorityNode, 'id'>[]
+}
+export interface UpdateInternalGroupPositionPriorityOrderVariables {
+  applicantId: string
+  priorityOrder: string[]
 }

@@ -2,23 +2,21 @@ import { format } from 'date-fns'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
-import {
-  RegisterInformationFormData,
-  RegisterInformationLogic,
-} from './RegisterInformationLogic'
+import { RegisterInformationFormData } from './useRegisterInformationLogic'
 
-interface RegisterInformationAPIProps {
+interface UseRegisterInformationAPIInput {
   applicant: ApplicantNode
+  nextStepCallback: () => void
 }
 
-export const RegisterInformationAPI: React.VFC<RegisterInformationAPIProps> = ({
+export function useRegisterInformationAPI({
   applicant,
-}) => {
+  nextStepCallback,
+}: UseRegisterInformationAPIInput) {
   const { patchApplicant } = useApplicantMutations()
 
-  const handleSubmit = async (data: RegisterInformationFormData) => {
+  async function handleSubmit(data: RegisterInformationFormData) {
     const { id } = applicant
-
     const input = {
       ...data,
       image: data.image,
@@ -36,19 +34,18 @@ export const RegisterInformationAPI: React.VFC<RegisterInformationAPIProps> = ({
   }
 
   const defaultValues = {
-    firstName: '',
-    lastName: '',
-    address: '',
-    hometown: '',
-    study: '',
+    firstName: applicant?.firstName ?? '',
+    lastName: applicant?.lastName ?? '',
+    address: applicant?.address ?? '',
+    hometown: applicant?.hometown ?? '',
+    study: applicant?.study ?? '',
     dateOfBirth: new Date(),
-    phone: '',
+    phone: applicant?.phone ?? '',
+    wantsDigitalInterview: applicant?.wantsDigitalInterview ?? false,
   }
-
-  return (
-    <RegisterInformationLogic
-      onSubmit={handleSubmit}
-      defaultValues={defaultValues}
-    />
-  )
+  return {
+    defaultValues,
+    nextStepCallback,
+    onSubmit: handleSubmit,
+  }
 }

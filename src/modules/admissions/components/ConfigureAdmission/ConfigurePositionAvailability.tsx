@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from '@apollo/client'
+import { Button, Card, Table, Text, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { MessageBox } from 'components/MessageBox'
 import { CREATE_ADMISSION_AVAILABLE_INTERNAL_GROUP_POSITION_DATA } from 'modules/admissions/mutations'
 import { EXTERNALLY_AVAILABLE_INTERNAL_GROUP_POSITIONS_QUERY } from 'modules/admissions/queries'
 import { AdmissionAvailableInternalGroupPositionData } from 'modules/admissions/types.graphql'
@@ -15,7 +17,6 @@ type WizardStage =
   | 'INTERVIEW_TEMPLATE'
   | 'AVAILABLE_POSITIONS'
   | 'SUMMARY'
-  | null
 
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};
@@ -34,10 +35,6 @@ const AvailablePositionsRow = styled.div`
 `
 
 const NavigationContainer = styled.div``
-
-const Title = styled.h1`
-  margin: 0;
-`
 
 interface ExternallyAvailableInternalGroupPositionsReturns {
   currentAdmissionInternalGroupPositionData: AdmissionAvailableInternalGroupPositionData[]
@@ -101,25 +98,42 @@ export const ConfigurePosistionAvailability: React.VFC<
 
   return (
     <Wrapper>
-      <Title>Tilgjengelige verv</Title>
-      {currentAdmissionInternalGroupPositionData.map(position => (
-        <PositionAvailabilityInput
-          availablePosition={position}
-          key={position.id}
-        />
-      ))}
-
-      <h2>Legg til verv</h2>
-      <AvailablePositionsContainer>
-        {availablePositionsToAdd.map(position => (
-          <AvailablePositionsRow key={position.id}>
-            <span>{position.name}</span>
-            <button onClick={() => handleAddPosition(position.id)}>
-              Gjør tilgjengelig
-            </button>
-          </AvailablePositionsRow>
+      <Title my="md">Tilgjengelige verv</Title>
+      <MessageBox type="info">
+        Her kan du velge verv som skal være mulig å søke på og hvor mange vi tar
+        opp i hver av stillingene.
+      </MessageBox>
+      <Card my="md">
+        {currentAdmissionInternalGroupPositionData.map(position => (
+          <PositionAvailabilityInput
+            availablePosition={position}
+            key={position.id}
+          />
         ))}
-      </AvailablePositionsContainer>
+      </Card>
+
+      <Title order={3}>Legg til verv</Title>
+      <Card>
+        <Table>
+          <thead>
+            <td>Verv</td>
+          </thead>
+          <tbody>
+            {availablePositionsToAdd.map(position => (
+              <tr>
+                <td>
+                  <Text>{position.name}</Text>
+                </td>
+                <td>
+                  <Button onClick={() => handleAddPosition(position.id)}>
+                    Gjør tilgjengelig
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Card>
       <NavigationContainer>
         <button onClick={() => setStageCallback('INTERVIEW_TEMPLATE')}>
           Forrige steg

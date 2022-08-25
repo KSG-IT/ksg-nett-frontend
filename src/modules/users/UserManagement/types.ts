@@ -37,7 +37,6 @@ export interface ManageUsersDataReturns {
 }
 
 export interface ManageUsersDataVariables {
-  activeOnly: boolean
   internalGroupId: string
 }
 

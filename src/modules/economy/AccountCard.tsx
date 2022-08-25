@@ -72,8 +72,6 @@ export const AccountCard: React.VFC<AccountCardProps> = ({ account }) => {
   }
 
   const handleChangeCardUuid = () => {
-    console.log(cardUuid)
-    console.log(account.cardUuid)
     if (cardUuid === account.cardUuid) return
 
     changeCardUuid()

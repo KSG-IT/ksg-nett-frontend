@@ -1,10 +1,9 @@
-import { FetchResult } from '@apollo/client'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { PatchApplicantReturns } from 'modules/admissions/types.graphql'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { OnFormSubmit } from 'types/forms'
 import * as yup from 'yup'
-import { RegisterInformationView } from './RegisterInformationView'
 
 export type RegisterInformationFormData = {
   firstName: string
@@ -14,7 +13,8 @@ export type RegisterInformationFormData = {
   study: string
   dateOfBirth: Date
   phone: string
-  image?: FileList
+  wantsDigitalInterview: boolean
+  image?: File
 }
 
 const RegisterInformationSchema = yup.object().shape({
@@ -26,19 +26,19 @@ const RegisterInformationSchema = yup.object().shape({
   dateOfBirth: yup.date().required('Fødselsdato må fylles ut'),
   phone: yup.string().required('Telefonnummer må fylles ut'),
   image: yup.mixed().required('Bildet må lastes opp'),
+  wantsDigitalInterview: yup.boolean().required(),
 })
 
-interface Props {
-  defaultValues: Omit<RegisterInformationFormData, 'applicantId'>
-  onSubmit: (
-    data: RegisterInformationFormData
-  ) => Promise<FetchResult<PatchApplicantReturns>>
+interface UseRegisterInformationLogicInput {
+  defaultValues: RegisterInformationFormData
+  nextStepCallback: () => void
+  onSubmit: OnFormSubmit<RegisterInformationFormData, PatchApplicantReturns>
 }
 
-export const RegisterInformationLogic: React.VFC<Props> = ({
-  onSubmit,
-  defaultValues,
-}) => {
+export function useRegisterInformationLogic(
+  input: UseRegisterInformationLogicInput
+) {
+  const { defaultValues, onSubmit, nextStepCallback } = input
   const form = useForm<RegisterInformationFormData>({
     mode: 'onSubmit',
     defaultValues,
@@ -47,11 +47,14 @@ export const RegisterInformationLogic: React.VFC<Props> = ({
 
   const handleSubmit = async (data: RegisterInformationFormData) => {
     await onSubmit(data)
-      .then(() => form.reset(data))
+      .then(() => nextStepCallback())
       .catch(err => {
         toast.error(err.message)
       })
   }
 
-  return <RegisterInformationView form={form} onSubmit={handleSubmit} />
+  return {
+    form,
+    onSubmit: handleSubmit,
+  }
 }

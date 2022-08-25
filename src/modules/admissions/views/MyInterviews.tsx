@@ -8,7 +8,10 @@ import { useHistory } from 'react-router-dom'
 import { InterviewNode } from '../types.graphql'
 
 interface MyInterviewsReturns {
-  myInterviews: Pick<InterviewNode, 'id' | 'interviewStart' | 'applicant'>[]
+  myInterviews: Pick<
+    InterviewNode,
+    'id' | 'interviewStart' | 'applicant' | 'location'
+  >[]
 }
 
 const MY_INTERVIEWS_QUERY = gql`
@@ -16,6 +19,10 @@ const MY_INTERVIEWS_QUERY = gql`
     myInterviews {
       id
       interviewStart
+      location {
+        id
+        name
+      }
       applicant {
         id
         fullName
@@ -52,6 +59,7 @@ export const MyInterviews: React.VFC = () => {
     <tr>
       <td>{interview.applicant.fullName}</td>
       <td>{format(new Date(interview.interviewStart), 'iii d MMM HH:mm')}</td>
+      <td>{interview.location.name}</td>
       <td>
         <Button
           onClick={() => {
@@ -73,7 +81,7 @@ export const MyInterviews: React.VFC = () => {
             <tr>
               <td>Navn</td>
               <td>Tidspunkt</td>
-              <td></td>
+              <td>Sted</td>
             </tr>
           </thead>
           <tbody>{rows}</tbody>

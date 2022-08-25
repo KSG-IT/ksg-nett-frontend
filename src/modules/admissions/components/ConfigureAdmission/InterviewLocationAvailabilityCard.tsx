@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Card } from 'components/Card'
+import { Button, Group, Paper, Title } from '@mantine/core'
+import { DatePicker, TimeRangeInput } from '@mantine/dates'
 import {
   CREATE_INTERVIEW_LOCATION_AVAILABILITY,
   DELETE_INTERVIEW_LOCATION,
@@ -45,8 +46,9 @@ interface InterviewLocationAvailabilityProps {
 export const InterviewLocationAvailabilityCard: React.VFC<
   InterviewLocationAvailabilityProps
 > = ({ interviewLocation }) => {
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
+  const [from, setFrom] = useState<[Date, Date]>([new Date(), new Date()])
+  const [date, setDate] = useState<Date | null>(new Date())
+  const [to, setTo] = useState<[Date, Date]>([new Date(), new Date()])
 
   const [createInterviewLocationAvailability] = useMutation<
     CreateInterviewLocationAvailabilityReturns,
@@ -58,23 +60,44 @@ export const InterviewLocationAvailabilityCard: React.VFC<
   const [deleteInterviewLocationMutation] = useMutation<
     DeleteMutationReturns,
     DeleteMutationVariables
-  >(DELETE_INTERVIEW_LOCATION, { refetchQueries: ['AllInterviewLocations'] })
+  >(DELETE_INTERVIEW_LOCATION, {
+    refetchQueries: ['AllInterviewLocations'],
+    onCompleted: () => {
+      toast.success('Slettet Intervjulokale')
+    },
+  })
+
+  console.log(from)
+
+  function concatenateDateAndTime() {
+    // We create two new datetime objects using the range of the time
+    if (date === null) return
+    const fromDate = new Date(date)
+    fromDate.setHours(from[0].getHours())
+    fromDate.setMinutes(from[0].getMinutes())
+    fromDate.setSeconds(0)
+    const toDate = new Date(date)
+    toDate.setHours(from[1].getHours())
+    toDate.setMinutes(from[1].getMinutes())
+    toDate.setSeconds(0)
+
+    return {
+      fromDate,
+      toDate,
+    }
+  }
 
   const handleCreateInterviewLocationAvailability = () => {
-    const fromDate = new Date(from)
-    const toDate = new Date(to)
-    if (fromDate.getTime() > toDate.getTime()) {
-      toast.error('Tidspunkt fra må være før tidspunkt til')
-      return
-    }
+    const dates = concatenateDateAndTime()
+    if (!dates) return
+    const { fromDate, toDate } = dates
 
-    if (from === '' || to === '') return
     createInterviewLocationAvailability({
       variables: {
         input: {
           interviewLocation: interviewLocation.id,
-          datetimeFrom: new Date(from),
-          datetimeTo: new Date(to),
+          datetimeFrom: fromDate,
+          datetimeTo: toDate,
         },
       },
     })
@@ -84,39 +107,36 @@ export const InterviewLocationAvailabilityCard: React.VFC<
     deleteInterviewLocationMutation({ variables: { id: interviewLocation.id } })
   }
 
+  concatenateDateAndTime()
   return (
-    <Card>
-      <Wrapper>
-        <CardHeader>
-          <InterviewLocationName>
-            {interviewLocation.name}
-          </InterviewLocationName>
-          <DeleteInterviewLocationIcon
-            icon="times"
-            size="lg"
-            onClick={handleDeleteInterviewLocation}
-          />
-        </CardHeader>
-        {interviewLocation.availability.map(availability => (
-          <InterviewLocationAvailabilityInline
-            availability={availability}
-            key={availability.id}
-          />
-        ))}
-        <input
-          type="datetime-local"
+    <Paper p="lg">
+      <CardHeader>
+        <Title order={3}>{interviewLocation.name}</Title>
+        <DeleteInterviewLocationIcon
+          icon="times"
+          size="lg"
+          onClick={handleDeleteInterviewLocation}
+        />
+      </CardHeader>
+      {/* Refactor this into a mantine table */}
+      {interviewLocation.availability.map(availability => (
+        <InterviewLocationAvailabilityInline
+          availability={availability}
+          key={availability.id}
+        />
+      ))}
+      <Group>
+        <DatePicker value={date} onChange={setDate} />
+        <TimeRangeInput
           value={from}
-          onChange={evt => setFrom(evt.target.value)}
+          onChange={setFrom}
+          // onChange={evt => setFrom(evt.target.value)}
         />
-        <input
-          type="datetime-local"
-          value={to}
-          onChange={evt => setTo(evt.target.value)}
-        />
-        <button onClick={handleCreateInterviewLocationAvailability}>
-          Legg til intervall
-        </button>
-      </Wrapper>
-    </Card>
+      </Group>
+
+      <Button onClick={handleCreateInterviewLocationAvailability}>
+        Legg til intervall
+      </Button>
+    </Paper>
   )
 }

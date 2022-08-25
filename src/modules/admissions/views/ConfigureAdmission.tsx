@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useEffect, useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import {
   ConfigureInterviewLocationAvailability,
   ConfigureInterviewSchedule,
@@ -20,7 +21,6 @@ type WizardStage =
   | 'INTERVIEW_TEMPLATE'
   | 'AVAILABLE_POSITIONS'
   | 'SUMMARY'
-  | null
 
 const configWizardSwitchHandler = (
   configurationStage: WizardStage,
@@ -45,36 +45,37 @@ const configWizardSwitchHandler = (
       )
     case 'SUMMARY':
       return <InterviewOverview setStageCallback={setStageCallback} />
-    case null: // This could maybe function as an error catchall?
-      return <FullContentLoader />
   }
 }
 
 export const ConfigurationWizard: React.VFC = () => {
-  const [wizardStage, setWizardStage] = useState<WizardStage>(null)
+  const [wizardStage, setWizardStage] = useState<WizardStage>('START')
+  // This logic needs to be reoworked abd nived away from the useEffect hook
 
-  const { data, loading, error } = useQuery<ActiveAdmissioneturns>(
+  // query admission
+  const { loading, error, data } = useQuery<ActiveAdmissioneturns>(
     ACTIVE_ADMISSION_QUERY
   )
 
   useEffect(() => {
     if (!data) return
+
     const { activeAdmission } = data
 
-    if (activeAdmission === null) {
-      setWizardStage('START')
-      return
-    }
+    const initialStage = activeAdmission === null ? 'START' : 'SCHEDULE'
+    setWizardStage(initialStage)
+  }, [data])
 
-    const { status } = activeAdmission
-    if (status === 'CONFIGURATION') {
-      setWizardStage('SCHEDULE')
-    }
-  }, [data, setWizardStage])
+  if (error) {
+    return <FullPageError />
+  }
 
-  if (error) return <FullPageError />
+  if (loading || !data) {
+    return <FullContentLoader />
+  }
 
-  if (loading || !data) return <FullContentLoader />
+  if (data?.activeAdmission?.status === 'OPEN')
+    return <Redirect to="/admission" />
 
   return configWizardSwitchHandler(wizardStage, setWizardStage)
 }

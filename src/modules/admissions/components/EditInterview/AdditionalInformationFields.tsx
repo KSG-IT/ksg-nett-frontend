@@ -65,7 +65,7 @@ export const AdditionalInformationFields: React.VFC<
         value={canCommitThreeSemesters}
       >
         <Radio value="yes" label="Ja" />
-        <Radio value="not" label="Nei" />
+        <Radio value="no" label="Nei" />
       </Radio.Group>
       {/* ToDo add mutation. Maybe with some debounce handler */}
       <label>Begrunnelse</label>
