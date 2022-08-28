@@ -84,12 +84,12 @@ export const SummaryDetail = () => {
       <ParticipantsRow>
         Tilestede:
         {summary.participants.map((user, i) => (
-          <UserThumbnail user={user} size="small" key={i} />
+          <UserThumbnail user={user} size="sm" key={i} />
         ))}
       </ParticipantsRow>
       <ParticipantsRow>
         Referent
-        <UserThumbnail user={summary.reporter} size="small" />
+        <UserThumbnail user={summary.reporter} size="sm" />
       </ParticipantsRow>
 
       <ReactMarkdown plugins={[remarkGfm]}>{summary.contents}</ReactMarkdown>

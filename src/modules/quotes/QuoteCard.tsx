@@ -146,7 +146,7 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({
       <QuoteFooter>
         <TaggedContainer>
           {quote.tagged.map(user => (
-            <UserThumbnail user={user} size="small" key={user.id} />
+            <UserThumbnail user={user} size="sm" key={user.id} />
           ))}
         </TaggedContainer>
         <VoteContainer>

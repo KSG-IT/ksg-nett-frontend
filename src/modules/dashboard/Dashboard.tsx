@@ -149,7 +149,7 @@ export const Dashboard = () => {
             <QuoteContext>{quote.context}</QuoteContext>
             <QuoteTaggedWrapper>
               {quote.tagged.map(taggedUser => (
-                <UserThumbnail size="small" user={taggedUser} />
+                <UserThumbnail size="sm" user={taggedUser} />
               ))}
             </QuoteTaggedWrapper>
           </QuoteQard>

@@ -54,7 +54,7 @@ interface UserSearchOption {
 const Option = (props: UserSearchOption) => (
   <SelectEntry>
     {props.label}
-    <UserThumbnail user={props.user} size="small" />
+    <UserThumbnail user={props.user} size="sm" />
   </SelectEntry>
 )
 

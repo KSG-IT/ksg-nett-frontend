@@ -151,7 +151,7 @@ export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
       <SidebarUserprofile>
         <UserInfoWrapper>
           <ThumbnailWrapper>
-            <UserThumbnail user={user} size="medium" />
+            <UserThumbnail user={user} size="md" />
           </ThumbnailWrapper>
           <UserFullname>{user.fullName}</UserFullname>
           <UserBalanceWrapper>
