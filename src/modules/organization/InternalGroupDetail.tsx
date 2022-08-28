@@ -168,7 +168,7 @@ export const InternalGroupDetail: React.VFC = () => {
             <InternalGroupPositionUsersContainer>
               {position.users.map(user => (
                 <ThumbnailWrapper>
-                  <UserThumbnail user={user} size="medium" key={user.id} />
+                  <UserThumbnail user={user} size="md" key={user.id} />
                   <UserFullname>{user.fullName}</UserFullname>
                 </ThumbnailWrapper>
               ))}
