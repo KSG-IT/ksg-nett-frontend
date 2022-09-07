@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Title } from '@mantine/core'
+import { Button, Group, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
@@ -80,18 +80,20 @@ export const AdmissionDashboard: React.VFC = () => {
 
   return (
     <Wrapper>
-      <Title>Kontrollpanel opptak</Title>
-      <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
-        <Button
-          leftIcon={<FontAwesomeIcon icon="clock" />}
-          disabled={nextPhaseLoading}
-          onClick={() => {
-            handleAdmissionNextPhase(activeAdmission.id)
-          }}
-        >
-          Intervjuperioden er over
-        </Button>
-      </PermissionGate>
+      <Group position="apart">
+        <Title>Kontrollpanel opptak</Title>
+        <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
+          <Button
+            leftIcon={<FontAwesomeIcon icon="clock" />}
+            disabled={nextPhaseLoading}
+            onClick={() => {
+              handleAdmissionNextPhase(activeAdmission.id)
+            }}
+          >
+            Intervjuperioden er over
+          </Button>
+        </PermissionGate>
+      </Group>
       <AdmissionsShortcutPanel />
       <InternalGroupsNav />
       <MyUpcomingInterviews />

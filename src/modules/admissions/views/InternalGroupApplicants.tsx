@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Paper, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -54,16 +55,17 @@ export const InternalGroupApplicants: React.VFC = ({}) => {
     firstPriorities,
     secondPriorities,
     thirdPriorities,
-    internalGroup: { name },
+    internalGroup: { name: internalGroupName },
   } = internalGroupApplicantsData
 
   return (
     <Wrapper>
-      <Title>Søkeroversikt {name}</Title>
+      <Title>Søkeroversikt {internalGroupName}</Title>
       <MessageBox type="info">
-        Rød farge betyr at ingen fra gjengen representeres på intervjuet eller
-        at søkeren ikke har booket et intervju. Det er opp til deres gjeng å
-        ringe de søkerne som har dere på førstevalg
+        <FontAwesomeIcon icon="times-circle" color="red" /> indikerer ingen fra{' '}
+        {internalGroupName.toLocaleLowerCase()} er på intervjuet.{' '}
+        <FontAwesomeIcon icon="check-circle" color="green" /> indikerer at det
+        minst er én fra {internalGroupName.toLocaleLowerCase()} på intervjuet.
       </MessageBox>
       <Title order={2}>Førstevalg</Title>
       <Paper p="md">

@@ -1,11 +1,13 @@
 import { useMutation } from '@apollo/client'
 import { gql } from 'graphql-tag'
 import { InternalGroupNode } from 'modules/organization/types'
+import toast from 'react-hot-toast'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import { ApplicantStatusValues, InterviewTotalEvaluationValues } from './consts'
 import {
   CLOSE_ADMISSION_MUTATION,
   CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION,
+  CREATE_APPLICANT_COMMENT_MUTATION,
   CREATE_APPLICATIONS,
   DELETE_APPLICANT,
   LOCK_ADMISSION_MUTATION,
@@ -18,6 +20,8 @@ import {
 import {
   ApplicantInterestNode,
   ApplicantNode,
+  CreateApplicantCommentReturns,
+  CreateApplicantCommentVariables,
   CreateApplicantsFromCSVDataReturns,
   CreateApplicantsFromCSVDataVariables,
   CreateApplicationsReturns,
@@ -86,7 +90,11 @@ export const useInterviewMutations = () => {
   const [setSelfAsInterviewer] = useMutation<
     SetSelfAsInterviewerMutatationReturns,
     SetSelfAsInterviewerMutatationVariables
-  >(SET_SELF_AS_INTERVIEWER)
+  >(SET_SELF_AS_INTERVIEWER, {
+    onError: error => {
+      toast.error(error.message)
+    },
+  })
 
   const [removeSelfAsInterviewer, { loading: removeSelfLoading }] = useMutation(
     REMOVE_SELF_AS_INTERVIEWER,
@@ -339,6 +347,18 @@ export const useApplicantMutations = () => {
 
     updateInternalGroupPositionPriorityOrder,
     updateInternalGroupPositionPriorityOrderLoading,
+  }
+}
+
+export const useApplicantCommentMutations = () => {
+  const [createApplicantComment, { loading: createApplicantCommentLoading }] =
+    useMutation<CreateApplicantCommentReturns, CreateApplicantCommentVariables>(
+      CREATE_APPLICANT_COMMENT_MUTATION
+    )
+
+  return {
+    createApplicantComment,
+    createApplicantCommentLoading,
   }
 }
 

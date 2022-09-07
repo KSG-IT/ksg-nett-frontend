@@ -1,4 +1,5 @@
 export * from './AdmissionDashboard'
+export * from './ApplicantNotices'
 export * from './ApplicantPortal'
 export * from './ApplicantsOverview'
 export * from './CloseAdmission'

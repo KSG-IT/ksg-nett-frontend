@@ -50,3 +50,8 @@ export enum AdmissionStatusValues {
   IN_SESSION = 'IN_SESSION',
   LOCKED = 'LOCKED',
 }
+
+export enum NoticeMethodValues {
+  EMAIL = 'EMAIL',
+  CALL = 'CALL',
+}

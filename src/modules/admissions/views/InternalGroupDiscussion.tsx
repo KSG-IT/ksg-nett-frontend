@@ -1,11 +1,10 @@
 import { useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Alert, Group, Paper, Stack, Table, Text, Title } from '@mantine/core'
+import { Alert, Group, Paper, Stack, Text, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { InfoPopover } from 'components/InfoPopover'
 import { FullContentLoader } from 'components/Loading'
 import { useParams } from 'react-router-dom'
-import { InternalGroupPositionPriorityBadge } from '../components'
 import {
   DiscussApplicantsTable,
   FreeForAllApplicantsTable,
@@ -35,31 +34,15 @@ export const InternalGroupDiscussion: React.VFC = () => {
   const {
     internalGroupDiscussionData: {
       applicants,
-      processedApplicants,
       internalGroup,
       applicantsOpenForOtherPositions,
     },
   } = data
 
-  // Move to its own component
-  const processedApplicantsRows = processedApplicants.map(priority => (
-    <tr key={priority.id}>
-      <td>{priority.applicant.fullName}</td>
-      <td>
-        <InternalGroupPositionPriorityBadge priority={priority} />
-      </td>
-    </tr>
-  ))
-
   return (
     <Stack style={{ overflowY: 'scroll', padding: '32px' }}>
       <Title>Fordelingsmøte {internalGroup.name}</Title>
-      <Title order={2}>Statistikk</Title>
-      <Paper p="md">
-        <Stack>
-          <Text>Kommer en gang i fremtiden</Text>
-        </Stack>
-      </Paper>
+
       <Title order={2}>Kandidater tilgjengelige for vurdering</Title>
       <Alert
         style={{ overflow: 'visible' }}
@@ -68,10 +51,11 @@ export const InternalGroupDiscussion: React.VFC = () => {
         <Text>
           Søkere blir fortløpende oppdatert i denne tabellen. Her har du
           mulighet til å se hvordan de andre gjengene, og deres egen gjeng
-          prioriterer kandidaten. Å markere en kandidat som <b>Vil ikke ha </b>
-          er en permanent handling og fjerner kandidaten fra denne tabellen. På
-          høyre side av tabellen finnes en meny som markerer hva deres gjeng vil
-          gjøre med kandidaten.
+          prioriterer kandidaten. På høyre side av tabellen finnes en meny som
+          markerer hva deres gjeng vil gjøre med kandidaten. Bare søkere som er
+          markert med <b>Vil ha</b> eller <b>Reserve</b> kommer videre med i
+          systemet. Alle kandidater må bli vurdert før fordelingsmøtet kan
+          stenges.
         </Text>
       </Alert>
       <Alert
@@ -88,22 +72,6 @@ export const InternalGroupDiscussion: React.VFC = () => {
           internalGroup={internalGroup}
           applicants={applicants}
         />
-      </Paper>
-
-      <Group>
-        {/* Move to own component */}
-        <Title order={2}>Ferdigvurderte søkere</Title>
-        <InfoPopover content="Dette er søkere dere har vurdert som at dere vil ha eller vil ikke ha" />
-        <pre>Kan hende vi blir kvitt denne?</pre>
-      </Group>
-      <Paper p="md">
-        <Table>
-          <thead>
-            <td>Navn</td>
-            <td>{internalGroup.name} vurderinger</td>
-          </thead>
-          <tbody>{processedApplicantsRows}</tbody>
-        </Table>
       </Paper>
 
       <Group>
