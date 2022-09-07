@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
+import { GET_APPLICATION_FROM_TOKEN } from 'modules/admissions/queries'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { RegisterInformationFormData } from './useRegisterInformationLogic'
 
@@ -22,6 +23,7 @@ export function useRegisterInformationAPI({
       image: data.image,
       dateOfBirth: format(new Date(data.dateOfBirth), 'yyyy-MM-dd'),
       status: ApplicantStatusValues.HAS_REGISTERED_PROFILE,
+      lastActivity: new Date(),
     }
 
     return patchApplicant({
@@ -29,7 +31,7 @@ export function useRegisterInformationAPI({
         id: id,
         input: input,
       },
-      refetchQueries: ['GetApplicantFromToken'],
+      refetchQueries: [GET_APPLICATION_FROM_TOKEN],
     })
   }
 

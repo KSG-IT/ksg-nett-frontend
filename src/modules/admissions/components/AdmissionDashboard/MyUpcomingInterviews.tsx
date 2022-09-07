@@ -42,7 +42,7 @@ export const MyUpcomingInterviews: React.VFC = () => {
   if (error)
     return (
       <MessageBox type="danger">
-        Kunne ikke hente fremtidige intervjuer
+        Noe gikk galt. Kunne ikke hente fremtidige intervjuer
       </MessageBox>
     )
 
@@ -73,9 +73,13 @@ export const MyUpcomingInterviews: React.VFC = () => {
       <Paper p="sm" mb="md">
         <Table>
           <thead>
-            <td>Tidspunkt</td>
-            <td>Lokale</td>
-            <td>Søker</td>
+            <tr>
+              <th>Søker</th>
+              <th>Tidspunkt</th>
+              <th>Lokale</th>
+              <th>Intervjuere</th>
+              <th></th>
+            </tr>
           </thead>
           <tbody>{rows}</tbody>
         </Table>

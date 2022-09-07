@@ -3,6 +3,7 @@ import { PrivateRoute } from 'containers/PrivateRoute'
 import { ApplicantDetails } from 'modules/admissions'
 import {
   AdmissionDashboard,
+  ApplicantNotices,
   ApplicantsOverview,
   CloseAdmission,
   ConfigurationWizard,
@@ -113,6 +114,12 @@ export const AuthRoutes: React.VFC = () => {
         path="/admissions/applicants-overview"
         permissions={PERMISSIONS.admissions.view.admission}
         component={ApplicantsOverview}
+      />
+      <GatedRoute
+        exact
+        path="/admissions/applicant-notices"
+        permissions={PERMISSIONS.admissions.view.admission}
+        component={ApplicantNotices}
       />
 
       <GatedRoute

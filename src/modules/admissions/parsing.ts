@@ -2,6 +2,7 @@ import {
   ApplicantStatusValues,
   InternalGroupPositionPriorityApplicantPriorityValues,
   InternalGroupPositionPriorityInternalGroupPriorityValues,
+  NoticeMethodValues,
 } from './consts'
 import { InternalGroupPositionPriority } from './types.graphql'
 
@@ -122,6 +123,19 @@ export const parseApplicantPriority = (
       return 'Tredje'
     case 'N/A':
       return 'N/A'
+  }
+}
+
+export function parseApplicantNoticeMethod(
+  noticeMethod: NoticeMethodValues | null
+) {
+  switch (noticeMethod) {
+    case NoticeMethodValues.EMAIL:
+      return 'Sendt epost'
+    case NoticeMethodValues.CALL:
+      return 'Ringt'
+    case null:
+      return '-'
   }
 }
 
