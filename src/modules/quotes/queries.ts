@@ -18,6 +18,7 @@ export const APPROVED_QUOTES_QUERY = gql`
             id
             initials
             profileImage
+            fullName
           }
         }
       }

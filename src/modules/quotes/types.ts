@@ -5,7 +5,7 @@ export interface QuoteNode {
   id: string
   text: string
   reportedBy: UserNode
-  tagged: Pick<UserNode, 'id' | 'profileImage' | 'initials'>[]
+  tagged: Pick<UserNode, 'id' | 'profileImage' | 'initials' | 'fullName'>[]
   verifiedBy: UserNode | null
   context: string
   sum: number
