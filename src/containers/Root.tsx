@@ -1,6 +1,7 @@
 import { ApolloProvider } from '@apollo/client/react'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { MantineProvider } from '@mantine/core'
 import client from 'apollo-setup'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'theme'
@@ -11,9 +12,11 @@ library.add(fas)
 function Root() {
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <Bootstrap />
-      </ThemeProvider>
+      <MantineProvider>
+        <ThemeProvider theme={theme}>
+          <Bootstrap />
+        </ThemeProvider>
+      </MantineProvider>
     </ApolloProvider>
   )
 }
