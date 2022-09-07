@@ -126,7 +126,7 @@ export function UserProfile() {
             <Grid p={'xl'}>
               <Grid.Col xs={6} lg={6}>
                 <Text
-                  align={`${mediaQuery ? 'left' : 'center'}`}
+                  align={mediaQuery ? 'left' : 'center'}
                   className={classes.role}
                 >
                   {user.ksgStatus}
