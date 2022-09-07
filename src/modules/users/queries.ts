@@ -39,10 +39,39 @@ export const USER_QUERY = gql`
       fullName
       biography
       homeAddress
+      dateOfBirth
+      ksgStatus
+      study
       studyAddress
+      email
       phone
       initials
       profileImage
+      internalGroupPositionMembershipHistory {
+        id
+        membershipStart
+        membershipEnd
+        position {
+          name
+          internalGroup {
+            name
+          }
+        }
+      }
+      taggedAndVerifiedQuotes {
+        id
+        text
+        verifiedBy {
+          id
+        }
+        context
+        tagged {
+          id
+          initials
+          profileImage
+          fullName
+        }
+      }
     }
   }
 `

@@ -1,5 +1,8 @@
+import { IconName } from '@fortawesome/fontawesome-svg-core'
 import { BankAccountActivity } from 'modules/economy/types'
+import { QuoteNode } from 'modules/quotes/types'
 import { RelayEdges } from 'types/graphql'
+import { InternalGroupPositionMembershipNode } from './UserManagement/types'
 
 export type UserNode = {
   id: string
@@ -10,8 +13,13 @@ export type UserNode = {
   biography: string
   initials: string
   username: string
+  dateOfBirth: string
+  studyAddress: string
+  ksgStatus: string
+  study: string
   balance: number
   email: string
+  taggedAndVerifiedQuotes: QuoteNode[]
   profileImage: string | null
   isStaff: boolean
   isSuperuser: boolean
@@ -22,6 +30,7 @@ export type UserNode = {
   bankAccountActivity: BankAccountActivity[]
   lastTransactions: BankAccountActivity[]
   upvotedQuoteIds: string[]
+  internalGroupPositionMembershipHistory: InternalGroupPositionMembershipNode[]
 
   allPermissions: string[]
   isSuperUser: boolean
@@ -47,4 +56,9 @@ export interface AllUsersShallowQueryReturns {
   allActiveUsers: RelayEdges<
     Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>
   >
+}
+
+export interface IconWithDataProps {
+  icon: IconName
+  userData: string
 }
