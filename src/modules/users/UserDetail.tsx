@@ -103,7 +103,7 @@ export function UserProfile() {
         <Grid.Col span={1}>
           <Stack align={'center'}>
             <FontAwesomeIcon
-              icon={['fas', `${icon}`]}
+              icon={icon}
               className={classes.icon}
               style={{ color: 'darkgoldenrod' }}
             />

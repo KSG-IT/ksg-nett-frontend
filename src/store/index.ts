@@ -25,6 +25,12 @@ export const UserPlaceholder: UserNode = {
   upvotedQuoteIds: [],
   isSuperUser: false,
   allPermissions: [],
+  dateOfBirth: '',
+  studyAddress: '',
+  ksgStatus: '',
+  study: '',
+  taggedAndVerifiedQuotes: [],
+  internalGroupPositionMembershipHistory: [],
 }
 
 interface Store {
