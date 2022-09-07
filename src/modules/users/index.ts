@@ -1,4 +1,4 @@
+export * from './components/UserThumbnail'
 export * from './queries'
 export * from './types'
-export * from './UserProfile'
-export * from './UserThumbnail'
+export * from './UserDetail'
