@@ -139,7 +139,7 @@ export function UserProfile() {
 
                 <Space h={'xs'} />
                 <Text
-                  align={`${mediaQuery ? 'left' : 'center'}`}
+                  align={mediaQuery ? 'left' : 'center'}
                   className={classes.name}
                 >
                   {user.fullName}
