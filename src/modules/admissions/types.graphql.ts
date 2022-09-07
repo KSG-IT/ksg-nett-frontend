@@ -24,7 +24,10 @@ export type InterviewNode = {
   id: string
   interviewStart: Date
   interviewEnd: Date
-  interviewers: Pick<UserNode, 'id' | 'initials' | 'profileImage'>[]
+  interviewers: Pick<
+    UserNode,
+    'id' | 'initials' | 'profileImage' | 'fullName'
+  >[]
   location: Pick<InterviewLocationNode, 'id' | 'name' | 'locationDescription'>
   notes: string
   discussion: string
