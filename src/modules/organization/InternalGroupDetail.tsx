@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading/FullContentLoader'
-import { UserThumbnail } from 'modules/users/UserThumbnail'
+import { UserThumbnail } from 'modules/users/components/UserThumbnail'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { INTERNAL_GROUP_QUERY } from './queries'
