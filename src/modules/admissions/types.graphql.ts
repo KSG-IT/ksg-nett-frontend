@@ -136,7 +136,10 @@ export type ApplicantNode = {
   lastNotice: Date | null
   noticeMethod: NoticeMethodValues | null
   noticeComment: string
-  noticeUser: Pick<UserNode, 'id' | 'initials' | 'profileImage'> | null
+  noticeUser: Pick<
+    UserNode,
+    'id' | 'initials' | 'profileImage' | 'fullName'
+  > | null
 }
 
 export type ApplicantCSVData = {
