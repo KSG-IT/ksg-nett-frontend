@@ -1,4 +1,5 @@
 import { Button, Paper } from '@mantine/core'
+import { MessageBox } from 'components/MessageBox'
 import {
   useCreateApplicantInterest,
   useDeleteApplicantInterest,
@@ -92,6 +93,14 @@ export const FreeForAllApplicantsTable: React.VFC<
   FreeForAllApplicantsTableProps
 > = ({ applicants, internalGroupId }) => {
   const history = useHistory()
+
+  if (applicants.length === 0) {
+    return (
+      <MessageBox type="warning">
+        Det finnes ingen andre søkere som er åpne for andre verv
+      </MessageBox>
+    )
+  }
 
   // Handlers
   const handleMoreInfo = (applicant: ApplicantNode) => {

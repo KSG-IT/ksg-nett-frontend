@@ -15,6 +15,7 @@ import { PatchMutationVariables } from 'types/graphql'
 
 const renderPrioritycell = (
   priority: InternalGroupPositionPriority,
+  internalGroupId: string,
   index: number
 ) => {
   // We need table cell content regardless of the priority being null or not
@@ -26,9 +27,18 @@ const renderPrioritycell = (
       </>
     )
 
+  const bold =
+    priority.internalGroupPosition.internalGroup.id === internalGroupId
+
   return (
     <>
-      <td>{priority.internalGroupPosition.internalGroup.name}</td>
+      <td
+        style={{
+          fontWeight: bold ? 'bold' : 'normal',
+        }}
+      >
+        {priority.internalGroupPosition.internalGroup.name}
+      </td>
       <td>
         <InternalGroupPositionPriorityBadge priority={priority} />
       </td>
@@ -91,7 +101,7 @@ export const DiscussApplicantTableRows: React.VFC<
   }
 
   const priorityCells = priorities.map((priority, index) =>
-    renderPrioritycell(priority, index)
+    renderPrioritycell(priority, internalGroupId, index)
   )
   return (
     <tr>

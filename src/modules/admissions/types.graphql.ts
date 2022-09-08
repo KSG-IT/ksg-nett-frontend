@@ -10,6 +10,7 @@ import {
   InternalGroupPositionPriorityInternalGroupPriorityValues,
   InterviewAdditionalEvaluationAnswerValues,
   InterviewTotalEvaluationValues,
+  NoticeMethodValues,
 } from './consts'
 
 // === Node types ===
@@ -101,6 +102,13 @@ export type InternalGroupPositionPriorityNode = {
 export type InternalGroupPositionPriority =
   InternalGroupPositionPriorityNode | null
 
+export type ApplicantCommentNode = {
+  id: string
+  text: string
+  createdAt: Date
+  user: Pick<UserNode, 'id' | 'initials' | 'profileImage' | 'fullName'>
+}
+
 export type ApplicantNode = {
   id: string
   status: ApplicantStatusValues
@@ -122,6 +130,13 @@ export type ApplicantNode = {
   canCommitThreeSemesters: boolean
   openForOtherPositions: boolean
   internalGroupInterests: ApplicantInterestNode[]
+  comments: ApplicantCommentNode[]
+
+  lastActivity: Date | null
+  lastNotice: Date | null
+  noticeMethod: NoticeMethodValues | null
+  noticeComment: string
+  noticeUser: Pick<UserNode, 'id' | 'initials' | 'profileImage'> | null
 }
 
 export type ApplicantCSVData = {
@@ -359,6 +374,12 @@ export type PatchApplicantInput = {
   status?: ApplicantStatusValues
   canCommitThreeSemesters?: boolean | null
   openForOtherPositions?: boolean | null
+
+  lastActivity?: Date | null
+  lastNotice?: Date | null
+  noticeComment?: string
+  noticeMethod?: NoticeMethodValues | null
+  noticeUser?: string
 }
 
 export interface PatchApplicantVariables {
@@ -369,6 +390,19 @@ export interface PatchApplicantReturns {
   applicant: {
     id: string
   }
+}
+
+export type CreateApplicantCommentInput = {
+  applicant: string
+  text: string
+}
+
+export interface CreateApplicantCommentVariables {
+  input: CreateApplicantCommentInput
+}
+
+export interface CreateApplicantCommentReturns {
+  applicantComment: Pick<ApplicantCommentNode, 'id'>
 }
 
 export interface ReSendApplicationTokenReturns {
@@ -486,7 +520,6 @@ export interface SetSelfAsInterviewerMutatationVariables {
 
 export type InternalGroupDiscussionData = {
   internalGroup: InternalGroupNode
-  processedApplicants: InternalGroupPositionPriorityNode[]
   applicantsOpenForOtherPositions: ApplicantNode[]
   applicants: ApplicantNode[]
 }

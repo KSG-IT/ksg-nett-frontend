@@ -10,7 +10,7 @@ export const AdmissionsShortcutPanel: React.VFC<{}> = () => {
         <Link to="/admissions/my-interviews">
           <Card
             p="sm"
-            style={{ aspectRatio: '1', borderRadius: '16px' }}
+            style={{ width: '145px', height: '145px', borderRadius: '16px' }}
             withBorder
           >
             <Stack m="auto" align={'center'}>
@@ -23,12 +23,25 @@ export const AdmissionsShortcutPanel: React.VFC<{}> = () => {
         <Link to="/admissions/applicants-overview">
           <Card
             p="sm"
-            style={{ aspectRatio: '1', borderRadius: '16px' }}
+            style={{ width: '145px', height: '145px', borderRadius: '16px' }}
             withBorder
           >
             <Stack m="auto" align={'center'}>
               <FontAwesomeIcon icon="users" size="3x" />
               <Text weight={'bold'}>Søkeroversikt</Text>
+            </Stack>
+          </Card>
+        </Link>
+
+        <Link to="/admissions/applicant-notices">
+          <Card
+            p="sm"
+            style={{ width: '145px', height: '145px', borderRadius: '16px' }}
+            withBorder
+          >
+            <Stack m="auto" align={'center'}>
+              <FontAwesomeIcon icon="user-clock" size="3x" />
+              <Text weight={'bold'}>Oppfølging</Text>
             </Stack>
           </Card>
         </Link>

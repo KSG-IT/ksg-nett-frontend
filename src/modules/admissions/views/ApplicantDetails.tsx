@@ -4,6 +4,7 @@ import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useParams } from 'react-router-dom'
 import {
+  ApplicantComments,
   InterviewDetails,
   PersonalDetailsCard,
 } from '../components/ApplicantDetails'
@@ -47,6 +48,7 @@ export const ApplicantDetails: React.VFC = () => {
       <Title order={2}>Kandidatdetaljer</Title>
       <PersonalDetailsCard applicant={applicant} />
       <InterviewDetails applicant={applicant} canEdit={!cannotEdit} />
+      <ApplicantComments applicant={applicant} />
     </ScrollArea>
   )
 }
