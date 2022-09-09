@@ -6,7 +6,7 @@ interface UserHistoryProps {
   memberships: InternalGroupPositionMembershipNode[]
 }
 
-export function UserHistory({ memberships }: UserHistoryProps) {
+export const UserHistory: React.VFC<UserHistoryProps> = ({ memberships }) => {
   const fields = memberships.map(
     ({ id, position, membershipStart, membershipEnd }) => (
       <Timeline.Item
@@ -18,7 +18,7 @@ export function UserHistory({ memberships }: UserHistoryProps) {
             gradient={{ from: 'orange', to: 'gold' }}
             radius="xl"
           >
-            <FontAwesomeIcon icon={['fas', 'coffee']} />
+            <FontAwesomeIcon icon={['fas', 'users']} />
           </ThemeIcon>
         }
         key={id}

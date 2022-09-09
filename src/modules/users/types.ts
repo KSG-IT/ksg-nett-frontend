@@ -1,4 +1,3 @@
-import { IconName } from '@fortawesome/fontawesome-svg-core'
 import { BankAccountActivity } from 'modules/economy/types'
 import { QuoteNode } from 'modules/quotes/types'
 import { RelayEdges } from 'types/graphql'
@@ -56,9 +55,4 @@ export interface AllUsersShallowQueryReturns {
   allActiveUsers: RelayEdges<
     Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>
   >
-}
-
-export interface IconWithDataProps {
-  icon: IconName
-  userData: string
 }

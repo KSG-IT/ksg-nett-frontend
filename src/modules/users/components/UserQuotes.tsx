@@ -16,7 +16,7 @@ const useStyles = createStyles(theme => ({
   },
 }))
 
-export function UserQuotes({ quotes }: UserQuotesProps) {
+export const UserQuotes: React.VFC<UserQuotesProps> = ({ quotes }) => {
   const { classes } = useStyles()
   const fields = quotes.map(quote => (
     <Card className={classes.card} key={quote.id} radius="lg" shadow={'xs'}>

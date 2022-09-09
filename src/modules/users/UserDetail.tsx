@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client'
+import { IconName } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Avatar,
@@ -9,35 +10,25 @@ import {
   Divider,
   Grid,
   Group,
-  Space,
   Stack,
   Text,
   Title,
 } from '@mantine/core'
 import { useParams } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
-import {
-  IconWithDataProps,
-  UserQueryReturns,
-  UserQueryVariables,
-  USER_QUERY,
-} from '.'
+import { UserQueryReturns, UserQueryVariables, USER_QUERY } from '.'
 import { UserHistory } from './components/UserHistory'
 import { UserQuotes } from './components/UserQuotes'
 
 interface UserProfileParams {
   userId: string
 }
+interface IconWithDataProps {
+  icon: IconName
+  userData: string
+}
 
 const useStyles = createStyles(theme => ({
-  detailsWrapper: {
-    padding: '0px',
-    margin: '0px',
-  },
-  detailsCard: {
-    color: 'black',
-    maxWidth: 900,
-  },
   title: {
     color: theme.colors.gray[6],
     fontWeight: 'bold',
@@ -71,12 +62,9 @@ const useStyles = createStyles(theme => ({
     textTransform: 'uppercase',
     fontSize: theme.fontSizes.lg,
   },
-  list: {
-    color: theme.colors.gray[7],
-  },
 }))
 
-export function UserProfile() {
+export const UserProfile: React.VFC = () => {
   const { classes } = useStyles()
   const mediaQuery = useMediaQuery('(min-width: 800px)')
   const { userId } = useParams<UserProfileParams>()
@@ -132,13 +120,13 @@ export function UserProfile() {
                   {user.ksgStatus}
                 </Text>
                 {mediaQuery ? null : (
-                  <Center>
+                  <Center mt={'xs'}>
                     <Avatar src={user.profileImage} size="xl" radius={60} />
                   </Center>
                 )}
 
-                <Space h={'xs'} />
                 <Text
+                  mt={'sm'}
                   align={mediaQuery ? 'left' : 'center'}
                   className={classes.name}
                 >
