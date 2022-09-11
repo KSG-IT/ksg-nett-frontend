@@ -137,6 +137,17 @@ export const APPLICANT_QUERY = gql`
           name
         }
       }
+      comments {
+        id
+        user {
+          id
+          fullName
+          initials
+          profileImage
+        }
+        text
+        createdAt
+      }
       interview {
         id
         interviewStart
@@ -325,9 +336,6 @@ export const INTERNAL_GROUP_DISCUSSION_DATA = gql`
         id
         name
       }
-      processedApplicants {
-        ...InternalGroupPriorityFields
-      }
       applicantsOpenForOtherPositions {
         id
         fullName
@@ -515,6 +523,27 @@ export const INTERNAL_GROUP_APPLICANTS_DATA = gql`
 
       thirdPriorities {
         ...CoreApplicantFields
+      }
+    }
+  }
+`
+
+export const APPLICANT_NOTICES_QUERY = gql`
+  query ApplicantNoticesQuery {
+    applicantNotices {
+      id
+      email
+      phone
+      status
+      fullName
+      lastActivity
+      lastNotice
+      noticeMethod
+      noticeComment
+      noticeUser {
+        id
+        initials
+        profileImage
       }
     }
   }

@@ -107,13 +107,6 @@ export const AppNavbar = ({ opened }: AppNavbarProps) => {
   const { classes } = useNavbarStyles()
 
   return (
-    <Navbar
-      p="md"
-      hiddenBreakpoint="sm"
-      hidden={!opened}
-      width={{ sm: 200, lg: 300 }}
-      style={{ backgroundColor: 'white' }}
-    >
       {routes.map(routeGroup => (
         <div className={classes.group}>
           <Text weight={600} mb="xs">

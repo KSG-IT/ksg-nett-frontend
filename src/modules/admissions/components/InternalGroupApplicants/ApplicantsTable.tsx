@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Badge, Table } from '@mantine/core'
-import { InfoPopover } from 'components/InfoPopover'
+import { Avatar, Badge, Table } from '@mantine/core'
 import { format } from 'date-fns'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
+import { UserThumbnail } from 'modules/users'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { ApplicantTableRowMenu } from './ApplicantTableRowMenu'
 
@@ -43,7 +43,13 @@ export const ApplicantsTable: React.VFC<{
       </td>
       <td>{applicant.phone}</td>
       <td>{getInterviewTime(applicant)}</td>
-      <td></td>
+      <td>
+        <Avatar.Group>
+          {applicant.interview?.interviewers.map(interviewer => (
+            <UserThumbnail key={interviewer.id} user={interviewer} />
+          ))}
+        </Avatar.Group>
+      </td>
       <td>
         <InterviewCoveredBadge covered={applicant.interviewIsCovered} />
       </td>
@@ -62,14 +68,7 @@ export const ApplicantsTable: React.VFC<{
           <td>Telefon</td>
           <td>Intervjutid</td>
           <td>Intevjuere</td>
-          <td>
-            Ayokay?{' '}
-            <InfoPopover
-              content={
-                'Grønn status betyr at minst én person fra denne interngjengen representeres på intervjuet'
-              }
-            />
-          </td>
+          <td>Dekket?</td>
           <td></td>
         </tr>
       </thead>

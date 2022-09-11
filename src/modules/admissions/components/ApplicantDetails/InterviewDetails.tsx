@@ -83,7 +83,7 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
       <Card>
         <Group>
           {interview.interviewers.map(user => (
-            <UserThumbnail user={user} size="medium" />
+            <UserThumbnail user={user} size="md" />
           ))}
         </Group>
       </Card>

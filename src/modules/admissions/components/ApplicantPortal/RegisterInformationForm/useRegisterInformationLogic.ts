@@ -46,11 +46,11 @@ export function useRegisterInformationLogic(
   })
 
   const handleSubmit = async (data: RegisterInformationFormData) => {
-    await onSubmit(data)
-      .then(() => nextStepCallback())
-      .catch(err => {
-        toast.error(err.message)
-      })
+    await toast.promise(onSubmit(data), {
+      success: 'Informasjonen er lagret',
+      loading: 'Lagrer...',
+      error: 'Noe gikk galt',
+    })
   }
 
   return {

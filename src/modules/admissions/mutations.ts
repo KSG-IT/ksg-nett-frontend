@@ -366,3 +366,15 @@ export const DELETE_APPLICANT = gql`
     }
   }
 `
+
+export const CREATE_APPLICANT_COMMENT_MUTATION = gql`
+  mutation CreateApplicantCommentMutation(
+    $input: CreateApplicantCommentInput!
+  ) {
+    createApplicantComment(input: $input) {
+      applicantComment {
+        id
+      }
+    }
+  }
+`
