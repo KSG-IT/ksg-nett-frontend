@@ -51,7 +51,7 @@ const MainLayout: React.FC = () => {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      navbar={<AppNavbar opened={opened} routes={[]} />}
+      navbar={<AppNavbar opened={opened} />}
       footer={
         <Footer height={60} p="md" className={classes.footer}>
           <Text>

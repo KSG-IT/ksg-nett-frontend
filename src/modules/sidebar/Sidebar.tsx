@@ -17,7 +17,6 @@ import {
 } from '@tabler/icons'
 import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useStore } from 'store'
 
 interface RouteGroup {
   title: string
@@ -31,7 +30,6 @@ interface RouteItem {
 }
 interface AppNavbarProps {
   opened: boolean
-  routes: RouteGroup[]
 }
 
 const routes: RouteGroup[] = [
@@ -100,13 +98,18 @@ const NavItem: FC<RouteItem & { active: boolean }> = props => {
 }
 
 export const AppNavbar = ({ opened }: AppNavbarProps) => {
-  const user = useStore(state => state.user)!
-  // const liquidity = getLiquidity(user.balance)
   let location = useLocation()
 
   const { classes } = useNavbarStyles()
 
   return (
+    <Navbar
+      p="md"
+      hiddenBreakpoint="sm"
+      hidden={!opened}
+      width={{ sm: 200, lg: 300 }}
+      style={{ backgroundColor: 'white' }}
+    >
       {routes.map(routeGroup => (
         <div className={classes.group}>
           <Text weight={600} mb="xs">
