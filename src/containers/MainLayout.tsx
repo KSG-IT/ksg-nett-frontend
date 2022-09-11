@@ -1,59 +1,27 @@
-import { AuthRoutes } from 'containers//AuthRoutes'
-import { Header } from 'modules/header'
-import { Sidebar } from 'modules/sidebar'
+import {
+  Anchor,
+  AppShell,
+  Burger,
+  createStyles,
+  Footer,
+  Group,
+  Header,
+  Image,
+  MediaQuery,
+  Text,
+  useMantineTheme,
+} from '@mantine/core'
+import { AppNavbar } from 'modules/sidebar'
+import { useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { useStore } from 'store'
-import styled, { css } from 'styled-components'
-import { useRenderMobile } from 'util/isMobile'
-interface WrapperProps {
-  sidebarOpen: boolean
-}
-
-const Wrapper = styled.div<WrapperProps>`
-  display: grid;
-  width: 100%;
-  grid-template-columns: 250px calc(100vw - 250px);
-  grid-template-rows: 70px calc(100vh - 70px);
-  grid-template-areas:
-    'sidebar header'
-    'sidebar main';
-
-  ${props => props.theme.media.mobile} {
-    display: flex;
-    flex-direction: column;
-    ${props =>
-      props.sidebarOpen &&
-      css`
-        overflow-y: auto;
-      `};
-  }
-`
-
-interface ContentWrapperProps {
-  visible: boolean
-}
-
-const ContentWrapper = styled.div<ContentWrapperProps>`
-  grid-area: main;
-  display: ${props => (props.visible ? 'none' : 'flex')};
-  background-color: ${props => props.theme.colors.background};
-  height: calc(100vh - 70px);
-`
-
-const HeaderWrapper = styled.div`
-  grid-area: header;
-  width: 100%;
-  height: 100%;
-`
-
-const SidebarWrapper = styled.div`
-  grid-area: sidebar;
-`
+import logoUrl from '../assets/images/548spaghetti_100786.png'
+import { AuthRoutes } from './AuthRoutes'
 
 interface ErrorFallbackProps {
   error: Error
   resetErrorBoundary: () => void
 }
+
 const ErrorFallback: React.VFC<ErrorFallbackProps> = ({
   error,
   resetErrorBoundary,
@@ -68,30 +36,71 @@ const ErrorFallback: React.VFC<ErrorFallbackProps> = ({
 }
 
 const MainLayout: React.FC = () => {
-  const sidebarOpen = useStore(state => state.sidebarOpen)
-  const toggleSidebarOpen = useStore(state => state.toggleSidebarOpen)
-  const isMobile = useRenderMobile()
-
-  const shouldNotRenderContent = isMobile && sidebarOpen
-
+  const theme = useMantineTheme()
+  const [opened, setOpened] = useState(false)
+  const { classes } = useStyles()
   return (
-    <Wrapper sidebarOpen={true}>
-      <HeaderWrapper>
-        <Header toggleSidebar={toggleSidebarOpen}></Header>
-      </HeaderWrapper>
-      <SidebarWrapper>
-        <Sidebar
-          sidebarOpen={sidebarOpen}
-          toggleSidebarCallback={toggleSidebarOpen}
-        />
-      </SidebarWrapper>
-      <ContentWrapper visible={shouldNotRenderContent}>
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <AuthRoutes />
-        </ErrorBoundary>
-      </ContentWrapper>
-    </Wrapper>
+    <AppShell
+      styles={{
+        root: {
+          fontFamily: 'Inter',
+        },
+        main: {
+          background: theme.colors.gray[0],
+        },
+      }}
+      navbarOffsetBreakpoint="sm"
+      asideOffsetBreakpoint="sm"
+      navbar={<AppNavbar opened={opened} routes={[]} />}
+      footer={
+        <Footer height={60} p="md" className={classes.footer}>
+          <Text>
+            Har du funnet en feil på nettsiden? Ta kontakt med
+            <Anchor href="mailto:ksg-it@samfundet.no"> KSG - IT </Anchor>
+          </Text>
+        </Footer>
+      }
+      header={
+        <Header height={70} p="md">
+          <div
+            style={{ display: 'flex', alignItems: 'center', height: '100%' }}
+          >
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+              <Burger
+                opened={opened}
+                onClick={() => setOpened(o => !o)}
+                size="sm"
+                color={theme.colors.gray[6]}
+                mr="xl"
+              />
+            </MediaQuery>
+            <Group className={classes.header}>
+              <Image src={logoUrl} width={48} height={48} />
+              <Text weight={700} size="lg">
+                Kafe- og serveringsnett
+              </Text>
+            </Group>
+          </div>
+        </Header>
+      }
+    >
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <AuthRoutes />
+      </ErrorBoundary>
+    </AppShell>
   )
 }
+
+const useStyles = createStyles(t => ({
+  header: {
+    [`@media (max-width: ${t.breakpoints.sm}px)`]: {
+      flexDirection: 'row-reverse',
+    },
+  },
+  footer: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+}))
 
 export default MainLayout

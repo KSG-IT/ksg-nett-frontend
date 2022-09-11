@@ -12,6 +12,7 @@
     "@mantine/core": "^5.0.2",
     "@mantine/dates": "^5.0.2",
     "@mantine/hooks": "^5.0.2",
+    "@tabler/icons": "^1.95.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -92,7 +93,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^2.0.1",
-    "vite-tsconfig-paths": "^3.4.1",
     "husky": "^7.0.0",
     "jest": "^27.5.1",
     "prettier-plugin-organize-imports": "^2.3.4",
@@ -101,6 +101,7 @@
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-polyfill-node": "^0.8.0",
     "ts-jest": "^27.1.4",
-    "vite": "^3.0.9"
+    "vite": "^3.0.9",
+    "vite-tsconfig-paths": "^3.4.1"
   }
 }

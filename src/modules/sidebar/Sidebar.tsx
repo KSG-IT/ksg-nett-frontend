@@ -1,178 +1,156 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import kitLogo from 'assets/images/kit_logo.png'
-import { Liquidity } from 'modules/economy/types'
-import { getLiquidity } from 'modules/economy/utils'
-import { UserThumbnail } from 'modules/users'
+import { createStyles, Navbar, Text } from '@mantine/core'
+import {
+  IconAffiliate,
+  IconBlockquote,
+  IconCalendarTime,
+  IconCreditCard,
+  IconDisabled,
+  IconEdit,
+  IconHome,
+  IconPhoto,
+  IconQuestionMark,
+  IconReportMoney,
+  IconShoppingCart,
+  IconUserPlus,
+  IconUsers,
+  TablerIcon,
+} from '@tabler/icons'
+import { FC } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useStore } from 'store'
-import styled from 'styled-components'
-import { ZIndexRange } from 'types/enums'
-import { removeLoginToken } from 'util/auth'
-import { useRenderMobile } from 'util/isMobile'
-import { numberWithSpaces } from 'util/parsing'
-import { NavItem } from './NavItem'
-import { SidebarNav } from './SidebarNav'
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100%;
-  padding: 10px 0;
-  color: ${props => props.theme.colors.white};
-  background-color: ${props => props.theme.colors.purple};
-  z-index: ${ZIndexRange.Sidebar};
-  overflow-y: scroll;
-`
-
-const SidebarTop = styled.div`
-  display: flex;
-  flex-direction: row;
-  background-color: ${props => props.theme.colors.purple};
-  width: 100%;
-  height: 80px;
-  align-items: center;
-
-  ${props => props.theme.media.mobile} {
-    display: none;
-  }
-`
-
-const SidebarUserprofile = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: auto;
-  padding: 20px 0;
-  ${props => props.theme.media.mobile} {
-    padding: 0 20px;
-  }
-`
-
-const UserInfoWrapper = styled.div`
-  display: grid;
-  width: 100%;
-  height: 60px;
-  padding: 0 15px;
-  grid-template-areas:
-    'thumbnail name'
-    'thumbnail balance';
-  grid-template-columns: 1fr 3fr;
-  grid-template-rows: 1fr 1fr;
-`
-
-const ThumbnailWrapper = styled.div`
-  grid-area: thumbnail;
-  display: flex;
-  align-items: center;
-`
-
-const UserFullname = styled.div`
-  grid-area: name;
-  font-size: 18px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-`
-const UserBalanceWrapper = styled.div`
-  grid-area: balance;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`
-
-interface UserBalanceProps {
-  liquidity: Liquidity
+interface RouteGroup {
+  title: string
+  items: RouteItem[]
 }
 
-const UserBalance = styled.div<UserBalanceProps>`
-  font-size: 14px;
-  font-weight: 600;
-
-  color: ${props =>
-    props.liquidity === 'negative'
-      ? 'red'
-      : props.liquidity === 'neutral'
-      ? 'white'
-      : props.liquidity === 'positive'
-      ? 'yellow'
-      : 'cyan'};
-`
-
-const SidebarLogo = styled.div`
-  width: 75px;
-  aspect-ratio: 1/1;
-  background-image: url(${kitLogo});
-  background-size: cover;
-  background-position: 50% 50%;
-`
-
-const SidebarTopText = styled.h3`
-  margin: 0 0 0 15px;
-  display: flex;
-  font-weight: 600;
-`
-
-const SidebarNavSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`
-
-const Icon = styled(FontAwesomeIcon)`
-  color: ${props => props.theme.colors.white};
-  margin-right: 10px;
-`
-
-interface SidebarProps {
-  sidebarOpen: boolean
-  toggleSidebarCallback: () => void
+interface RouteItem {
+  label: string
+  link: string
+  icon: TablerIcon
+}
+interface AppNavbarProps {
+  opened: boolean
+  routes: RouteGroup[]
 }
 
-export const Sidebar = ({ sidebarOpen }: SidebarProps) => {
-  const isMobile = useRenderMobile()
-  const user = useStore(state => state.user)!
-  const shouldRenderSidebar = !isMobile || sidebarOpen
+const routes: RouteGroup[] = [
+  {
+    title: 'Generelt',
+    items: [
+      { icon: IconHome, link: '/dashboard', label: 'Kontrollpanel' },
+      { icon: IconDisabled, link: '/events', label: 'Arrangement' },
+      { icon: IconEdit, link: '/summaries', label: 'Møtereferater' },
+      {
+        icon: IconAffiliate,
+        link: '/internal-groups',
+        label: 'Interngjenger',
+      },
+    ],
+  },
+  {
+    title: 'Underholdning',
+    items: [
+      {
+        icon: IconBlockquote,
+        link: '/quotes',
+        label: 'Sitater',
+      },
+      { icon: IconQuestionMark, link: '/quiz', label: 'Quiz' },
+      { icon: IconPhoto, link: '/gallery', label: 'Galleri' },
+    ],
+  },
+  {
+    title: 'Admin',
+    items: [
+      { icon: IconCalendarTime, link: '/schedules', label: 'Vaktlister' },
+      { icon: IconUsers, link: '/users/manage', label: 'Personal' },
+      {
+        icon: IconUserPlus,
+        link: '/admissions',
+        label: 'Opptak',
+      },
+      {
+        icon: IconCreditCard,
+        link: '/economy/deposits',
+        label: 'Innskudd',
+      },
+      {
+        icon: IconShoppingCart,
+        link: '/economy/sociproducts',
+        label: 'Soci produker',
+      },
+      {
+        icon: IconReportMoney,
+        link: '/economy/soci-sessions',
+        label: 'Krysselister',
+      },
+    ],
+  },
+]
 
-  const liquidity = getLiquidity(user.balance)
-
-  const logout = () => {
-    removeLoginToken()
-    window.location.reload()
-  }
-
-  if (!shouldRenderSidebar) return null
-
+const NavItem: FC<RouteItem & { active: boolean }> = props => {
+  const { classes, cx } = useNavItemStyles({ active: props.active })
   return (
-    <Wrapper>
-      <SidebarTop>
-        <SidebarLogo />
-        <SidebarTopText>Kafé- og Serveringsgjengen</SidebarTopText>
-      </SidebarTop>
-      <SidebarUserprofile>
-        <UserInfoWrapper>
-          <ThumbnailWrapper>
-            <UserThumbnail user={user} size="medium" />
-          </ThumbnailWrapper>
-          <UserFullname>{user.fullName}</UserFullname>
-          <UserBalanceWrapper>
-            <Icon icon="coins" size="1x" />
-            <UserBalance liquidity={liquidity}>
-              {numberWithSpaces(user.balance)},- NOK
-            </UserBalance>
-          </UserBalanceWrapper>
-        </UserInfoWrapper>
-        <NavItem icon="user" label="Min profil" link={`/users/${user.id}`} />
-        <NavItem icon="wallet" label="Min økonomi" link={'/economy/me'} />
-        <NavItem
-          icon="calendar-alt"
-          label="Min vaktplan"
-          link={'/schedules/me'}
-        />
-        <NavItem icon="sign-out-alt" label="Logg ut" onClick={logout} />
-      </SidebarUserprofile>
-      <SidebarNavSection>
-        <SidebarNav />
-      </SidebarNavSection>
-    </Wrapper>
+    <Link to={props.link} className={classes.navItem}>
+      <props.icon className={cx(classes.icon)} data-active={props.active} />
+      <Text className={classes.text}>{props.label}</Text>
+    </Link>
   )
 }
+
+export const AppNavbar = ({ opened }: AppNavbarProps) => {
+  const user = useStore(state => state.user)!
+  // const liquidity = getLiquidity(user.balance)
+  let location = useLocation()
+
+  const { classes } = useNavbarStyles()
+
+  return (
+    <Navbar
+      p="md"
+      hiddenBreakpoint="sm"
+      hidden={!opened}
+      width={{ sm: 200, lg: 300 }}
+      style={{ backgroundColor: 'white' }}
+    >
+      {routes.map(routeGroup => (
+        <div className={classes.group}>
+          <Text weight={600} mb="xs">
+            {routeGroup.title}
+          </Text>
+          {routeGroup.items.map(item => (
+            <NavItem {...item} active={location.pathname === item.link} />
+          ))}
+        </div>
+      ))}
+    </Navbar>
+  )
+}
+
+const useNavItemStyles = createStyles((t, { active }: { active: boolean }) => ({
+  icon: {
+    color: active ? t.colors.white : t.colors.gray[6],
+    marginRight: t.spacing.sm,
+  },
+  text: {
+    fontWeight: 600,
+    color: active ? t.colors.white : t.colors.gray[6],
+  },
+  navItem: {
+    display: 'flex',
+    width: '100%',
+    borderRadius: t.radius.sm,
+    padding: `${t.spacing.xs}px ${t.spacing.sm}px`,
+    backgroundColor: active ? t.colors.brand : t.colors.white,
+    '&:hover': {
+      backgroundColor: !active ? t.colors.red[0] : 'none',
+    },
+  },
+}))
+
+const useNavbarStyles = createStyles(t => ({
+  group: {
+    paddingBottom: t.spacing.sm,
+  },
+}))
