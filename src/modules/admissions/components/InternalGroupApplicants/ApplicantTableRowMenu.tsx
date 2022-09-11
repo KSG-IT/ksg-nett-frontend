@@ -3,17 +3,17 @@ import { Button, Menu } from '@mantine/core'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import toast from 'react-hot-toast'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export const ApplicantTableRowMenu: React.VFC<{
   applicant: CoreApplicantNode
 }> = ({ applicant }) => {
-  const history = useHistory()
+  const history = useNavigate()
   const { setSelfAsInterviewer, removeSelfAsInterviewer } =
     useInterviewMutations()
 
   const handleMoreInfo = () => {
-    history.push(`/admissions/applicants/${applicant.id}`)
+    navigate(`/admissions/applicants/${applicant.id}`)
   }
   const attendInterviewText = applicant.iAmAttendingInterview
     ? 'Meld av intervju'

@@ -9,7 +9,7 @@ import {
   InternalGroupPositionPriority,
 } from 'modules/admissions/types.graphql'
 import toast from 'react-hot-toast'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { InternalGroupPositionPriorityBadge } from '../InternalGroupPositionPriorityBadge'
 
 const renderPrioritycell = (priority: InternalGroupPositionPriority) => {
@@ -36,7 +36,7 @@ const renderActionButton = (
   applicant: ApplicantNode,
   internalGroupId: string
 ) => {
-  const history = useHistory()
+  const history = useNavigate()
   const { internalGroupInterests } = applicant
   const interest = internalGroupInterests.find(
     interest => interest.internalGroup.id === internalGroupId
@@ -92,7 +92,7 @@ interface FreeForAllApplicantsTableProps {
 export const FreeForAllApplicantsTable: React.VFC<
   FreeForAllApplicantsTableProps
 > = ({ applicants, internalGroupId }) => {
-  const history = useHistory()
+  const history = useNavigate()
 
   if (applicants.length === 0) {
     return (
@@ -104,7 +104,7 @@ export const FreeForAllApplicantsTable: React.VFC<
 
   // Handlers
   const handleMoreInfo = (applicant: ApplicantNode) => {
-    history.push(`/admissions/applicants/${applicant.id}`)
+    navigate(`/admissions/applicants/${applicant.id}`)
   }
 
   // Render rows

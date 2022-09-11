@@ -5,20 +5,20 @@ import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { parseApplicantPriorityInternalGroupPosition } from 'modules/admissions/parsing'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { DeleteApplicantModal } from './DeleteApplicantModal'
 
 export const ApplicantsTable: React.FC<{
   applicants: CoreApplicantNode[]
 }> = ({ applicants }) => {
-  const history = useHistory()
+  const history = useNavigate()
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [applicantToDelete, setApplicantToDelete] =
     useState<CoreApplicantNode | null>(null)
 
   const handleMoreInfo = (applicantId: string) => {
-    history.push(`/admissions/applicants/${applicantId}`)
+    navigate(`/admissions/applicants/${applicantId}`)
   }
 
   const { deleteApplicant } = useApplicantMutations()

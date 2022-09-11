@@ -2,7 +2,7 @@ import { useApolloClient, useMutation } from '@apollo/client'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useStore } from 'store'
 import styled from 'styled-components'
 import * as yup from 'yup'
@@ -77,7 +77,7 @@ type Inputs = {
 
 export const Login: FC = () => {
   const client = useApolloClient()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   let schema = yup.object().shape({
     username: yup.string().required(),
@@ -104,7 +104,7 @@ export const Login: FC = () => {
         const { token } = data.login
         setToken(token!)
         client.resetStore()
-        history.push('/dashboard')
+        navigate('/dashboard')
       },
 
       onError: error => console.error(error),

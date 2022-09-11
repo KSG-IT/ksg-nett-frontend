@@ -4,7 +4,7 @@ import { UserMultiSelect } from 'components/Select'
 import { formatISO } from 'date-fns'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { CreateQuoteReturns, CreateQuoteVariables } from '.'
 import { CREATE_QUOTE } from './mutations'
@@ -54,7 +54,7 @@ const quoteContextPlaceholder = ' Fulle Elias som blir leid til do'
 export const CreateQuote: React.VFC = () => {
   const [text, setText] = useState('')
   const [context, setContext] = useState('')
-  const history = useHistory()
+  const history = useNavigate()
   const [tagged, setTagged] = useState<string[]>([])
   const [createQuote] = useMutation<CreateQuoteReturns, CreateQuoteVariables>(
     CREATE_QUOTE,
@@ -92,7 +92,7 @@ export const CreateQuote: React.VFC = () => {
           error: 'Noe gikk galt',
         }
       )
-      .then(() => history.push('/quotes'))
+      .then(() => navigate('/quotes'))
   }
   return (
     <Wrapper>

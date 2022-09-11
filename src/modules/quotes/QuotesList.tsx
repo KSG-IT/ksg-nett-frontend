@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import { Button } from 'components/Button'
 import { Search } from 'components/Input'
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { useDebounce } from 'util/hooks/useDebounce'
@@ -70,7 +70,7 @@ const FetchMoreArea = styled.div`
 export const QuotesList = () => {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query)
-  const history = useHistory()
+  const history = useNavigate()
   const { data, fetchMore } = useQuery<
     ApprovedQuotesReturns,
     ApprovedQuotesVariables
@@ -118,17 +118,17 @@ export const QuotesList = () => {
     <Wrapper>
       <Title>Sitater</Title>
       <PopularQuotesContainer>
-        <Button onClick={() => history.push('/quotes/popular')}>
+        <Button onClick={() => navigate('/quotes/popular')}>
           Populære sitater
         </Button>
       </PopularQuotesContainer>
       <ApproveQuotesContainer>
-        <Button onClick={() => history.push('/quotes/review')}>
+        <Button onClick={() => navigate('/quotes/review')}>
           Godkjenn sitater
         </Button>
       </ApproveQuotesContainer>
       <SendInQuoteContainer>
-        <Button onClick={() => history.push('/quotes/create')}>
+        <Button onClick={() => navigate('/quotes/create')}>
           Send inn sitat
         </Button>
       </SendInQuoteContainer>

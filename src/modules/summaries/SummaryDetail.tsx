@@ -5,7 +5,7 @@ import { FullContentLoader } from 'components/Loading'
 import { UserThumbnail } from 'modules/users'
 import ReactMarkdown from 'react-markdown'
 import { useParams } from 'react-router'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import remarkGfm from 'remark-gfm'
 import styled from 'styled-components'
 import { SummaryDetailQueryVariables, SummaryDetailsQueryReturns } from '.'
@@ -51,7 +51,7 @@ interface ParamProps {
 
 export const SummaryDetail = () => {
   const params = useParams<ParamProps>()
-  const history = useHistory()
+  const history = useNavigate()
 
   const { error, loading, data } = useQuery<
     SummaryDetailsQueryReturns,
@@ -77,7 +77,7 @@ export const SummaryDetail = () => {
           cursor="pointer"
           size="lg"
           onClick={() => {
-            history.push(`/summaries/${summary.id}/edit`)
+            navigate(`/summaries/${summary.id}/edit`)
           }}
         />
       </TitleSection>

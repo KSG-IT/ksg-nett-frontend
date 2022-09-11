@@ -4,7 +4,7 @@ import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { format } from 'date-fns'
 import { gql } from 'graphql-tag'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { InterviewNode } from '../types.graphql'
 
 interface MyInterviewsReturns {
@@ -43,7 +43,7 @@ const useMyInterviews = () => {
 
 export const MyInterviews: React.VFC = () => {
   const { error, data, loading } = useMyInterviews()
-  const history = useHistory()
+  const history = useNavigate()
 
   if (error) return <FullPageError />
 
@@ -52,7 +52,7 @@ export const MyInterviews: React.VFC = () => {
   const { myInterviews } = data
 
   const handleRedirectToInterview = (applicantId: string) => {
-    history.push(`/admissions/applicants/${applicantId}`)
+    navigate(`/admissions/applicants/${applicantId}`)
   }
 
   const rows = myInterviews.map(interview => (

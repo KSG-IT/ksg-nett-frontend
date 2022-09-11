@@ -10,15 +10,15 @@ import {
   Title,
 } from '@mantine/core'
 import { InternalGroupApplicantData } from 'modules/admissions/types.graphql'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export const InternalGroupPreviewCard: React.VFC<{
   internalGroupDiscussionData: InternalGroupApplicantData
 }> = ({ internalGroupDiscussionData }) => {
-  const history = useHistory()
+  const history = useNavigate()
 
   const handleRedirect = (internalGroupId: string) => {
-    history.push(`/admissions/internal-group-discussion/${internalGroupId}`)
+    navigate(`/admissions/internal-group-discussion/${internalGroupId}`)
   }
 
   return (

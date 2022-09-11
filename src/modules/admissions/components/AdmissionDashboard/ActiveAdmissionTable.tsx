@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Divider, Menu, Paper, Table } from '@mantine/core'
 import { ApplicantStatusBadge } from 'modules/admissions/components'
 import { AdmissionNode } from 'modules/admissions/types.graphql'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 const Wrapper = styled.div`
   display: flex;
@@ -24,10 +24,10 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
   admission,
 }) => {
   const { applicants } = admission
-  const history = useHistory()
+  const history = useNavigate()
 
   const handleRedirect = (applicantId: string) => {
-    history.push(`/admissions/applicants/${applicantId}`)
+    navigate(`/admissions/applicants/${applicantId}`)
   }
 
   const rows = applicants.map(applicant => (

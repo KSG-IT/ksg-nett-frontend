@@ -4,7 +4,7 @@ import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
 import toast from 'react-hot-toast'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
 import { AdmissionsShortcutPanel } from '../components/AdmissionDashboard/AdmissionsShortcutPanel'
 import { InternalGroupPreviewList } from '../components/DiscussionDashboard/InternalGroupPreviewList'
@@ -22,7 +22,7 @@ export const DiscussionDashboard: React.VFC = () => {
    * TODO: Redirect if admission is in wrong state
    * if admissions.status !== IN_SESSION => redirect /admissions
    */
-  const history = useHistory()
+  const history = useNavigate()
   const { data, loading, error } =
     useQuery<AllInternalGroupsAcceptingApplicantsReturns>(
       ALL_INTERNAL_GROUP_APPLICANT_DATA
@@ -38,7 +38,7 @@ export const DiscussionDashboard: React.VFC = () => {
     lockAdmission({ refetchQueries: ['ActiveAdmission'] })
       .then(() => {
         toast.success('Fordelingsmøtet er låst')
-        history.push('/admissions')
+        navigate('/admissions')
       })
       .catch(() => {
         toast.error('Noe gikk galt')

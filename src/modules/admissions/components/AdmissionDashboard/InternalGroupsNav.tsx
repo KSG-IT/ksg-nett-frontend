@@ -3,7 +3,7 @@ import { Box, Group, Paper, Text, Title } from '@mantine/core'
 import { FullContentLoader } from 'components/Loading'
 import { INTERNAL_GROUPS_ACCEPTING_APPLICANTS } from 'modules/admissions/queries'
 import { InternalGroupsAcceptingApplicantsReturns } from 'modules/admissions/types.graphql'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -35,14 +35,14 @@ export const InternalGroupsNav: React.VFC = () => {
   /**
    * Here we query and list internal groups that have external applicants and add shortcuts to their respetive applicant dasboards
    */
-  const history = useHistory()
+  const history = useNavigate()
   const { error, loading, data } =
     useQuery<InternalGroupsAcceptingApplicantsReturns>(
       INTERNAL_GROUPS_ACCEPTING_APPLICANTS
     )
 
   const handleRedirect = (internalGroupId: string) => {
-    history.push(`admissions/internal-group-applicants/${internalGroupId}`)
+    navigate(`admissions/internal-group-applicants/${internalGroupId}`)
   }
 
   if (error) return null

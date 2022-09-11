@@ -7,7 +7,7 @@ import { formatISO } from 'date-fns'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { summaryTypeChoices } from './conts'
@@ -118,10 +118,10 @@ export const CreateSummary = () => {
     awaitRefetchQueries: true,
     onCompleted({ createSummary }) {
       const { summary } = createSummary
-      history.push(`/summaries/${summary.id}`)
+      navigate(`/summaries/${summary.id}`)
     },
   })
-  const history = useHistory()
+  const history = useNavigate()
 
   let schema = yup.object({
     participants: yup

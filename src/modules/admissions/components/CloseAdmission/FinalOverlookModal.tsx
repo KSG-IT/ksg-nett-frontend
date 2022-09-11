@@ -1,20 +1,20 @@
 import { Button, LoadingOverlay, Modal, Stack, Title } from '@mantine/core'
 import { useAdmissionMutations } from 'modules/admissions/mutations.hooks'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ResultPreview } from './ResultPreview'
 
 export const FinalOverlookModal: React.VFC<{
   opened: boolean
   onClose: () => void
 }> = ({ opened, onClose }) => {
-  const history = useHistory()
+  const history = useNavigate()
 
   const { closeAdmission, closeAdmissionLoading } = useAdmissionMutations()
 
   const handleCloseAdmission = () => {
     closeAdmission({
       onCompleted() {
-        history.push('/users/newbies')
+        navigate('/users/newbies')
       },
     })
   }

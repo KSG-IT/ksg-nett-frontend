@@ -18,7 +18,7 @@ import {
   PatchAdmissionReturns,
 } from 'modules/admissions/types.graphql'
 import toast from 'react-hot-toast'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { PatchMutationVariables } from 'types/graphql'
 import { InterviewLocationInterviewsCard } from './InterviewLocationInterviewsCard'
@@ -57,7 +57,7 @@ interface GenerateInterviewsReturns {
 export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
   setStageCallback,
 }) => {
-  const history = useHistory()
+  const history = useNavigate()
   const { data, error, loading } = useQuery<InterviewOverviewReturns>(
     INTERVIEW_OVERVIEW_QUERY
   )
@@ -121,7 +121,7 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
         id: admissionId,
         input: { status: AdmissionStatusValues.OPEN },
       },
-    }).then(() => history.push('/admissions'))
+    }).then(() => navigate('/admissions'))
   }
 
   return (

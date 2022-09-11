@@ -10,7 +10,7 @@ import {
   InternalGroupPositionPriorityNode,
   PatchInternalGroupPositionPriorityReturns,
 } from 'modules/admissions/types.graphql'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { PatchMutationVariables } from 'types/graphql'
 
 const renderPrioritycell = (
@@ -58,7 +58,7 @@ export const DiscussApplicantTableRows: React.VFC<
    * Accepts and applicant and an internal group id. Returns a table row object
    * which is intended to place within a tbody element.
    */
-  const history = useHistory()
+  const history = useNavigate()
   const theme = useMantineTheme()
   const { priorities } = applicant
 
@@ -70,7 +70,7 @@ export const DiscussApplicantTableRows: React.VFC<
   })
 
   const handleMoreInfo = (applicant: ApplicantNode) => {
-    history.push(`/admissions/applicants/${applicant.id}`)
+    navigate(`/admissions/applicants/${applicant.id}`)
   }
 
   const handleSetApplicantStatus = (
