@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client'
-import { IconName } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Avatar,
@@ -14,19 +13,14 @@ import {
   Text,
   Title,
 } from '@mantine/core'
+import { FullPage404, FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
 import { useParams } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
 import { UserQueryReturns, UserQueryVariables, USER_QUERY } from '.'
+import { IconWithData } from './components/IconWithData'
 import { UserHistory } from './components/UserHistory'
 import { UserQuotes } from './components/UserQuotes'
-
-interface UserProfileParams {
-  userId: string
-}
-interface IconWithDataProps {
-  icon: IconName
-  userData: string
-}
 
 const useStyles = createStyles(theme => ({
   title: {
@@ -45,12 +39,6 @@ const useStyles = createStyles(theme => ({
     maxHeight: '100%',
     fit: 'cover',
   },
-  icon: {
-    color:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[5]
-        : theme.colors.gray[7],
-  },
   name: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontWeight: 500,
@@ -64,6 +52,10 @@ const useStyles = createStyles(theme => ({
   },
 }))
 
+interface UserProfileParams {
+  userId: string
+}
+
 export const UserProfile: React.VFC = () => {
   const { classes } = useStyles()
   const mediaQuery = useMediaQuery('(min-width: 800px)')
@@ -74,37 +66,15 @@ export const UserProfile: React.VFC = () => {
   >(USER_QUERY, {
     variables: { id: userId },
   })
-  if (loading) return <span>Loading</span>
 
-  if (!data || error) return <span>Something went wrong</span>
+  if (error) return <FullPageError />
+  if (loading || !data) return <FullContentLoader />
 
   const {
     user: { internalGroupPositionMembershipHistory: memberships, ...user },
   } = data
 
-  if (user === null || user === undefined)
-    return <span>Bruker eksisterer ikke</span>
-
-  const IconWithData: React.FC<IconWithDataProps> = ({ icon, userData }) => {
-    return (
-      <Grid align={'center'} columns={12}>
-        <Grid.Col span={1}>
-          <Stack align={'center'}>
-            <FontAwesomeIcon
-              icon={icon}
-              className={classes.icon}
-              style={{ color: 'darkgoldenrod' }}
-            />
-          </Stack>
-        </Grid.Col>
-        <Grid.Col span={10}>
-          <Text size="sm" color={'dimmed'}>
-            {userData}
-          </Text>
-        </Grid.Col>
-      </Grid>
-    )
-  }
+  if (user === null || user === undefined) return <FullPage404 />
 
   return (
     <Group align={'flex-start'} mt={50} mx={'md'}>
@@ -145,10 +115,7 @@ export const UserProfile: React.VFC = () => {
                   userData={user.dateOfBirth}
                 />
                 <Group noWrap spacing={10} mt={'xl'}>
-                  <FontAwesomeIcon
-                    icon={['fas', 'book-open']}
-                    className={classes.icon}
-                  />
+                  <FontAwesomeIcon icon={['fas', 'book-open']} color={'gray'} />
                   <Text className={classes.role}>Om meg</Text>
                 </Group>
                 <Text mt={'xs'}>{user.biography}</Text>

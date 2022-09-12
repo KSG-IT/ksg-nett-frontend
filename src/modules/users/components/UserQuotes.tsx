@@ -2,10 +2,6 @@ import { Avatar, Card, createStyles, SimpleGrid, Text } from '@mantine/core'
 import { QuoteNode } from 'modules/quotes/types'
 import { UserThumbnail } from './UserThumbnail'
 
-interface UserQuotesProps {
-  quotes: QuoteNode[]
-}
-
 const useStyles = createStyles(theme => ({
   quoteText: {
     color: theme.colors.gray[7],
@@ -15,6 +11,10 @@ const useStyles = createStyles(theme => ({
     maxWidth: 400,
   },
 }))
+
+interface UserQuotesProps {
+  quotes: QuoteNode[]
+}
 
 export const UserQuotes: React.VFC<UserQuotesProps> = ({ quotes }) => {
   const { classes } = useStyles()
