@@ -90,6 +90,7 @@ export const Login: FC = () => {
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) })
   const setToken = useStore(state => state.setToken)
+  const setUser = useStore(state => state.setUser)
 
   const [login] = useMutation<LoginMutationReturns, LoginMutationVariables>(
     LOGIN_MUTATION,
@@ -101,8 +102,10 @@ export const Login: FC = () => {
           return
         }
 
-        const { token } = data.login
+        const { token, user } = data.login
         setToken(token!)
+        setUser(user!)
+
         client.resetStore()
         navigate('/dashboard')
       },

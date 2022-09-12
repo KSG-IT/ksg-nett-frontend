@@ -3,9 +3,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { MantineProvider, MantineThemeOverride } from '@mantine/core'
 import client from 'apollo-setup'
+import { BrowserRouter } from 'react-router-dom'
+import { AppRoutes } from 'routes'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'theme'
-import Bootstrap from './BootStrap'
 
 library.add(fas)
 
@@ -19,7 +20,9 @@ function Root() {
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
         <MantineProvider theme={mtheme}>
-          <Bootstrap />
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
         </MantineProvider>
       </ThemeProvider>
     </ApolloProvider>

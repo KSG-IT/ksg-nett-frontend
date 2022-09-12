@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import MainLayout from 'containers/MainLayout'
+import MainLayout from 'components/Layout/MainLayout'
 import { MeQueryReturns, ME_QUERY } from 'modules/users'
 import { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router } from 'react-router-dom'

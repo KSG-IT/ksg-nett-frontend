@@ -1,5 +1,5 @@
 import { FullPage404 } from 'components/FullPageComponents'
-import { PrivateRoute } from 'containers/PrivateRoute'
+import { Route } from 'containers/Route'
 import { ApplicantDetails } from 'modules/admissions'
 import {
   AdmissionDashboard,
@@ -32,148 +32,131 @@ import {
 import { UserProfile } from 'modules/users'
 import { UserManagementAddUser } from 'modules/users/UserManagement'
 import { ManageUsers } from 'modules/users/views'
-import { Redirect, Switch } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
-import { GatedRoute } from './GatedRoute'
 
 export const AuthRoutes: React.VFC = () => {
   return (
     <Switch>
-      <PrivateRoute exact path="/dashboard" component={Dashboard} />
+      <Route exact path="/dashboard" component={Dashboard} />
 
       {/* Events module */}
-      <PrivateRoute exact path="/events" component={FullPage404} />
-      <PrivateRoute exact path="/events/eventId" component={FullPage404} />
+      <Route path="/events" component={FullPage404} />
+      <Route path="/events/eventId" component={FullPage404} />
 
       {/* Quotes module */}
-      <PrivateRoute exact path="/quotes" component={QuotesList} />
-      <PrivateRoute exact path="/quotes/create" component={CreateQuote} />
-      <PrivateRoute exact path="/quotes/review" component={ReviewQuotes} />
-      <PrivateRoute exact path="/quotes/popular" component={PopularQuotes} />
+      <Route path="/quotes" component={QuotesList} />
+      <Route path="/quotes/create" component={CreateQuote} />
+      <Route path="/quotes/review" component={ReviewQuotes} />
+      <Route path="/quotes/popular" component={PopularQuotes} />
 
       {/* Internal groups module */}
-      <PrivateRoute exact path="/internal-groups" component={InternalGroups} />
-      <PrivateRoute
-        exact
+      <Route path="/internal-groups" component={InternalGroups} />
+      <Route
         path="/internal-groups/:internalGroupId"
         component={InternalGroupDetail}
       />
 
       {/* Schedules module */}
 
-      <PrivateRoute exact path="/schedules" component={FullPage404} />
+      <Route path="/schedules" component={FullPage404} />
 
       {/* Economy module */}
-      <PrivateRoute exact path="/economy" component={FullPage404} />
-      <PrivateRoute exact path="/economy/me" component={MyEconomy} />
-      <PrivateRoute
-        exact
-        path="/economy/me/purchase-history"
-        component={FullPage404}
-      />
-      <PrivateRoute
-        exact
-        path="/economy/me/deposit-history"
-        component={FullPage404}
-      />
-      <PrivateRoute exact path="/economy/deposits" component={Deposits} />
+      <Route path="/economy" component={FullPage404} />
+      <Route path="/economy/me" component={MyEconomy} />
+      <Route path="/economy/me/purchase-history" component={FullPage404} />
+      <Route exact path="/economy/me/deposit-history" component={FullPage404} />
+      <Route exact path="/economy/deposits" component={Deposits} />
 
       {/* Summaries module */}
-      <PrivateRoute exact path="/summaries" component={Summaries} />
-      <PrivateRoute exact path="/summaries/create" component={CreateSummary} />
-      <PrivateRoute
-        exact
-        path="/summaries/:summaryId"
-        component={SummaryDetail}
-      />
-      <PrivateRoute
-        exact
-        path="/summaries/:summaryId/edit"
-        component={EditSummary}
-      />
+      <Route exact path="/summaries" component={Summaries} />
+      <Route exact path="/summaries/create" component={CreateSummary} />
+      <Route exact path="/summaries/:summaryId" component={SummaryDetail} />
+      <Route exact path="/summaries/:summaryId/edit" component={EditSummary} />
 
       {/* Users module */}
-      <PrivateRoute exact path="/users/manage" component={ManageUsers} />
-      <PrivateRoute
+      <Route exact path="/users/manage" component={ManageUsers} />
+      <Route
         exact
         path="/users/manage/add-user"
         component={UserManagementAddUser}
       />
 
-      <PrivateRoute exact path="/users/:userId" component={UserProfile} />
+      <Route exact path="/users/:userId" component={UserProfile} />
 
       {/* Admissions module */}
-      <GatedRoute
+      <Route
         exact
         permissions={PERMISSIONS.admissions.view.admission}
         path="/admissions"
         component={AdmissionDashboard}
       />
-      <GatedRoute
+      <Route
         exact
         path="/admissions/applicants-overview"
         permissions={PERMISSIONS.admissions.view.admission}
         component={ApplicantsOverview}
       />
-      <GatedRoute
+      <Route
         exact
         path="/admissions/applicant-notices"
         permissions={PERMISSIONS.admissions.view.admission}
         component={ApplicantNotices}
       />
 
-      <GatedRoute
+      <Route
         exact
         path="/admissions/internal-group-applicants/:internalGroupId"
         permissions={PERMISSIONS.admissions.view.admission}
         component={InternalGroupApplicants}
       />
-      <GatedRoute
+      <Route
         exact
         permissions={PERMISSIONS.admissions.view.admission}
         path="/admissions/internal-group-discussion/:internalGroupId"
         component={InternalGroupDiscussion}
       />
 
-      <GatedRoute
+      <Route
         exact
         permissions={PERMISSIONS.admissions.view.admission}
         path="/admissions/applicants/:applicantId"
         component={ApplicantDetails}
       />
-      <GatedRoute
+      <Route
         exact
         permissions={PERMISSIONS.admissions.change.interview}
         path="/admissions/interviews/:interviewId/edit"
         component={EditInterview}
       />
-      <GatedRoute
+      <Route
         exact
         permissions={PERMISSIONS.admissions.change.admission}
         path="/admissions/config"
         component={ConfigurationWizard}
       />
-      <PrivateRoute
-        exact
-        path="/admissions/my-interviews"
-        component={MyInterviews}
-      />
+      <Route exact path="/admissions/my-interviews" component={MyInterviews} />
 
-      <PrivateRoute
+      <Route
         exact
         path="/admissions/discussion-dashboard"
         component={DiscussionDashboard}
       />
 
-      <GatedRoute
+      <Route
         exact
         permissions={PERMISSIONS.admissions.change.admission}
         path="/admissions/close"
         component={CloseAdmission}
       />
 
-      <Redirect from="/" to="/dashboard" />
-      <Redirect exact from="/" to="/dashboard" />
+      <Route
+        path="about"
+        render={() => <Redirect from="/" to="/dashboard" />}
+      />
+      <Route
+        path="about"
+        render={() => <Redirect exact from="/" to="/dashboard" />}
+      />
     </Switch>
   )
 }

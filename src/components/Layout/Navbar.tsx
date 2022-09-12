@@ -37,7 +37,7 @@ const routes: RouteGroup[] = [
     title: 'Generelt',
     items: [
       { icon: IconHome, link: '/dashboard', label: 'Kontrollpanel' },
-      { icon: IconDisabled, link: '/events', label: 'Arrangement' },
+      { icon: IconDisabled, link: '/dashboard/events', label: 'Arrangement' },
       { icon: IconEdit, link: '/summaries', label: 'Møtereferater' },
       {
         icon: IconAffiliate,

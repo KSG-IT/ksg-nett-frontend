@@ -11,9 +11,8 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { AppRoutes } from 'routes'
 import logoUrl from '../../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
 
@@ -22,7 +21,7 @@ interface ErrorFallbackProps {
   resetErrorBoundary: () => void
 }
 
-const ErrorFallback: React.VFC<ErrorFallbackProps> = ({
+const ErrorFallback: React.FC<ErrorFallbackProps> = ({
   error,
   resetErrorBoundary,
 }) => {
@@ -35,7 +34,7 @@ const ErrorFallback: React.VFC<ErrorFallbackProps> = ({
   )
 }
 
-const MainLayout: React.FC = () => {
+const MainLayout: React.FC<{ children: React.ReactNode }> = props => {
   const theme = useMantineTheme()
   const [opened, setOpened] = useState(false)
   const { classes } = useStyles()
@@ -85,7 +84,7 @@ const MainLayout: React.FC = () => {
       }
     >
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <AppRoutes />
+        {props.children}
       </ErrorBoundary>
     </AppShell>
   )

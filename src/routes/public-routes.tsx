@@ -1,16 +1,12 @@
 import { Login } from 'modules/login'
-import { Route } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 const PublicRoutes = () => {
   return (
-    <>
-      <Route path="/login" element={<Login />} />
-      {/* <Route path="/applicant-portal" element={<ReSendApplicantTokenForm />} />
-      <Route
-        path="/applicant-portal/:applicantToken"
-        element={<ApplicantPortal />}
-      /> */}
-    </>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/login2" element={<Login />} />
+    </Routes>
   )
 }
 
