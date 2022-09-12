@@ -1,12 +1,12 @@
 import { QuoteNode } from 'modules/quotes/types'
 import { SummaryNode } from 'modules/summaries'
-import { UserNode } from 'modules/users'
+import { WantedUser } from './components/WantedList'
 
 /* QUERIES */
 export interface DashboardDataQueryReturns {
   dashboardData: {
     lastSummaries: Pick<SummaryNode, 'date' | 'type' | 'id'>[]
     lastQuotes: Pick<QuoteNode, 'text' | 'tagged' | 'id' | 'context'>[]
-    wantedList: Pick<UserNode, 'balance' | 'fullName' | 'id'>[]
+    wantedList: WantedUser[]
   }
 }
