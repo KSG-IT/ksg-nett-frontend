@@ -22,3 +22,5 @@ export const FullPage404: React.VFC = () => {
     </Wrapper>
   )
 }
+
+export default FullPage404

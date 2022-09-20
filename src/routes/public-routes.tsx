@@ -1,11 +1,11 @@
 import { Login } from 'modules/login'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 const PublicRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/login2" element={<Login />} />
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   )
 }
