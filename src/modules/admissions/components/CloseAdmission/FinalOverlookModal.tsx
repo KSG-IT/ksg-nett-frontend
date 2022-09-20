@@ -7,7 +7,7 @@ export const FinalOverlookModal: React.VFC<{
   opened: boolean
   onClose: () => void
 }> = ({ opened, onClose }) => {
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   const { closeAdmission, closeAdmissionLoading } = useAdmissionMutations()
 

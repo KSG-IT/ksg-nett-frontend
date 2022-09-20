@@ -43,7 +43,7 @@ const useMyInterviews = () => {
 
 export const MyInterviews: React.VFC = () => {
   const { error, data, loading } = useMyInterviews()
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   if (error) return <FullPageError />
 

@@ -35,7 +35,7 @@ const InternalGroupsContainer = styled.div`
   margin-bottom: 1.618em;
 `
 
-export const InternalGroups: React.VFC = () => {
+export const InternalGroups: React.FC = () => {
   const { loading, error, data } = useQuery<AllInternalGroupsByTypeReturns>(
     ALL_INTERNAL_GROUPS_BY_TYPE_QUERY
   )

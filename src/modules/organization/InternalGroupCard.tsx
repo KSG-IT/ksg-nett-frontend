@@ -42,7 +42,7 @@ interface InternalGroupCardProps {
 export const InternalGroupCard: React.VFC<InternalGroupCardProps> = ({
   internalGroup,
 }) => {
-  const history = useNavigate()
+  const navigate = useNavigate()
   return (
     <Wrapper
       onClick={() => {

@@ -26,10 +26,6 @@ import {
   GetApplicantFromTokenVariables,
 } from '../types.graphql'
 
-interface ApplicantPortalParams {
-  applicantToken: string
-}
-
 const translateStatusToStep = (status: ApplicantStatusValues): number => {
   switch (status) {
     case 'EMAIL_SENT':
@@ -45,12 +41,18 @@ const translateStatusToStep = (status: ApplicantStatusValues): number => {
   }
 }
 
-export const ApplicantPortal: React.VFC = () => {
+interface ApplicantPortalParams {
+  applicantToken: string
+}
+
+export const ApplicantPortal: React.FC = () => {
   const [active, setActive] = useState(0)
   const [modalOpen, setModalOpen] = useState(false)
   const nextStep = () =>
     setActive(current => (current < 4 ? current + 1 : current))
-  const { applicantToken } = useParams<ApplicantPortalParams>()
+  const { applicantToken } = useParams<
+    keyof ApplicantPortalParams
+  >() as ApplicantPortalParams
 
   const { data, loading, error } = useQuery<
     GeApplicantFromTokenReturns,
@@ -100,7 +102,7 @@ export const ApplicantPortal: React.VFC = () => {
 
   return (
     <Center>
-      <Stack>
+      <Stack p="md">
         <Title>KSG søkerportal</Title>
         <Group>
           <Stepper active={active} breakpoint="sm">

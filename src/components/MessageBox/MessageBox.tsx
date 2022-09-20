@@ -1,9 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Alert, Text } from '@mantine/core'
 
-export const MessageBox: React.FC<{
+interface MessageBoxProps {
   type: 'info' | 'warning' | 'danger'
-}> = ({ type, children }) => {
+  children: React.ReactNode
+}
+
+export const MessageBox: React.FC<MessageBoxProps> = ({ type, children }) => {
   let icon
   let color: 'blue' | 'yellow' | 'red'
 

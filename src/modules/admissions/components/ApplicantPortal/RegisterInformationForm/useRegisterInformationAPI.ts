@@ -41,7 +41,7 @@ export function useRegisterInformationAPI({
     address: applicant?.address ?? '',
     hometown: applicant?.hometown ?? '',
     study: applicant?.study ?? '',
-    dateOfBirth: new Date(),
+    dateOfBirth: new Date(1996, 10, 11),
     phone: applicant?.phone ?? '',
     wantsDigitalInterview: applicant?.wantsDigitalInterview ?? false,
   }

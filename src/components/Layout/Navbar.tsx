@@ -37,7 +37,7 @@ const routes: RouteGroup[] = [
     title: 'Generelt',
     items: [
       { icon: IconHome, link: '/dashboard', label: 'Kontrollpanel' },
-      { icon: IconDisabled, link: '/dashboard/events', label: 'Arrangement' },
+      { icon: IconDisabled, link: '/events', label: 'Arrangement' },
       { icon: IconEdit, link: '/summaries', label: 'Møtereferater' },
       {
         icon: IconAffiliate,
@@ -110,8 +110,8 @@ export const AppNavbar = ({ opened }: AppNavbarProps) => {
       width={{ sm: 200, lg: 300 }}
       style={{ backgroundColor: 'white' }}
     >
-      {routes.map(routeGroup => (
-        <div className={classes.group}>
+      {routes.map((routeGroup, index) => (
+        <div className={classes.group} key={index}>
           <Text weight={600} mb="xs">
             {routeGroup.title}
           </Text>

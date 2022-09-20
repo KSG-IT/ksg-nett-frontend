@@ -105,8 +105,10 @@ interface EditSummaryParams {
 }
 
 export const EditSummary: React.VFC = () => {
-  const { summaryId } = useParams<EditSummaryParams>()
-  const history = useNavigate()
+  const { summaryId } = useParams<
+    keyof EditSummaryParams
+  >() as EditSummaryParams
+  const navigate = useNavigate()
 
   // Validation initialization
   let schema = yup.object({

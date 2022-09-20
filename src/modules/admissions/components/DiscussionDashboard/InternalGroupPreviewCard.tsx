@@ -10,17 +10,11 @@ import {
   Title,
 } from '@mantine/core'
 import { InternalGroupApplicantData } from 'modules/admissions/types.graphql'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-export const InternalGroupPreviewCard: React.VFC<{
+export const InternalGroupPreviewCard: React.FC<{
   internalGroupDiscussionData: InternalGroupApplicantData
 }> = ({ internalGroupDiscussionData }) => {
-  const history = useNavigate()
-
-  const handleRedirect = (internalGroupId: string) => {
-    navigate(`/admissions/internal-group-discussion/${internalGroupId}`)
-  }
-
   return (
     <Paper p="sm" key={internalGroupDiscussionData.internalGroup.id}>
       <Stack>
@@ -60,14 +54,11 @@ export const InternalGroupPreviewCard: React.VFC<{
           </Stack>
         </Group>
         <Group position="right">
-          <Button
-            leftIcon={<FontAwesomeIcon icon="eye" />}
-            onClick={() =>
-              handleRedirect(internalGroupDiscussionData.internalGroup.id)
-            }
-          >
-            Mer detaljer
-          </Button>
+          <Link to={`${internalGroupDiscussionData.internalGroup.id}`}>
+            <Button leftIcon={<FontAwesomeIcon icon="eye" />}>
+              Mer detaljer
+            </Button>
+          </Link>
         </Group>
       </Stack>
     </Paper>

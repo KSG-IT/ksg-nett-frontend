@@ -2,6 +2,8 @@ import {
   Anchor,
   AppShell,
   Burger,
+  Button,
+  Container,
   createStyles,
   Footer,
   Group,
@@ -11,6 +13,7 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core'
+import { UserSearch } from 'modules/header/UserSearch'
 import React, { useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import logoUrl from '../../assets/images/548spaghetti_100786.png'
@@ -26,11 +29,11 @@ const ErrorFallback: React.FC<ErrorFallbackProps> = ({
   resetErrorBoundary,
 }) => {
   return (
-    <div role="alert">
-      <p>Something went wrong:</p>
-      <pre>{error.message}</pre>
-      <button onClick={resetErrorBoundary}>Try again</button>
-    </div>
+    <Container role="alert">
+      <Text>Something went wrong:</Text>
+      <Text>{error.message}</Text>
+      <Button onClick={resetErrorBoundary}>Try again</Button>
+    </Container>
   )
 }
 
@@ -78,11 +81,13 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = props => {
               <Text weight={700} size="lg">
                 Kafe- og serveringsnett
               </Text>
+              <UserSearch />
             </Group>
           </div>
         </Header>
       }
     >
+      {/* Main content being rendered */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {props.children}
       </ErrorBoundary>

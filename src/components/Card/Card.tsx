@@ -14,6 +14,7 @@ const Wrapper = styled.div<WrapperProps>`
 `
 
 interface CardProps {
+  children: React.ReactNode
   width?: string
 }
 

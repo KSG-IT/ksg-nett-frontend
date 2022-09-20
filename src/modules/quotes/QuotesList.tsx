@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button } from 'components/Button'
+import { Button } from '@mantine/core'
 import { Search } from 'components/Input'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -70,7 +70,7 @@ const FetchMoreArea = styled.div`
 export const QuotesList = () => {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query)
-  const history = useNavigate()
+  const navigate = useNavigate()
   const { data, fetchMore } = useQuery<
     ApprovedQuotesReturns,
     ApprovedQuotesVariables
@@ -146,9 +146,9 @@ export const QuotesList = () => {
         ))}
       </QuotesContainer>
       <FetchMoreArea>
-        <Button hide={!hasNextPage} onClick={handleFetchMore}>
-          Hent flere sitater
-        </Button>
+        {hasNextPage && (
+          <Button onClick={handleFetchMore}>Hent flere sitater</Button>
+        )}
       </FetchMoreArea>
     </Wrapper>
   )

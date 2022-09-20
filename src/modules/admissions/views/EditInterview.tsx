@@ -28,11 +28,13 @@ interface EditInterviewParams {
 }
 
 export const EditInterview: React.VFC = () => {
-  const { interviewId } = useParams<EditInterviewParams>()
+  const { interviewId } = useParams<
+    keyof EditInterviewParams
+  >() as EditInterviewParams
   const [lockModalOpen, setLockModalOpen] = useState(false)
   const [didNotShowModalOpen, setDidNotShowModalOpen] = useState(false)
 
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   const { data, loading, error } = useQuery<
     InterviewDetailQueryReturns,

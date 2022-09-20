@@ -1,4 +1,4 @@
-import { Button, Paper } from '@mantine/core'
+import { Button, Paper, Table } from '@mantine/core'
 import { MessageBox } from 'components/MessageBox'
 import {
   useCreateApplicantInterest,
@@ -36,7 +36,6 @@ const renderActionButton = (
   applicant: ApplicantNode,
   internalGroupId: string
 ) => {
-  const history = useNavigate()
   const { internalGroupInterests } = applicant
   const interest = internalGroupInterests.find(
     interest => interest.internalGroup.id === internalGroupId
@@ -89,10 +88,10 @@ interface FreeForAllApplicantsTableProps {
   internalGroupId: string
 }
 
-export const FreeForAllApplicantsTable: React.VFC<
+export const FreeForAllApplicantsTable: React.FC<
   FreeForAllApplicantsTableProps
 > = ({ applicants, internalGroupId }) => {
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   if (applicants.length === 0) {
     return (
@@ -123,7 +122,7 @@ export const FreeForAllApplicantsTable: React.VFC<
 
   return (
     <Paper p="md">
-      <table>
+      <Table>
         <thead>
           <td>Navn</td>
           <td>Førstevalg</td>
@@ -132,9 +131,11 @@ export const FreeForAllApplicantsTable: React.VFC<
           <td></td>
           <td>Tredjevalg</td>
           <td></td>
+          <td></td>
+          <td></td>
         </thead>
         <tbody>{rows}</tbody>
-      </table>
+      </Table>
     </Paper>
   )
 }

@@ -45,13 +45,13 @@ const SummaryTitle = styled.h1`
   margin: 0;
 `
 
-interface ParamProps {
+interface SummaryDetailParams {
   summaryId: string
 }
 
 export const SummaryDetail = () => {
-  const params = useParams<ParamProps>()
-  const history = useNavigate()
+  const params = useParams<keyof SummaryDetailParams>() as SummaryDetailParams
+  const navigate = useNavigate()
 
   const { error, loading, data } = useQuery<
     SummaryDetailsQueryReturns,

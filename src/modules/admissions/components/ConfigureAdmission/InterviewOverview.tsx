@@ -57,7 +57,7 @@ interface GenerateInterviewsReturns {
 export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
   setStageCallback,
 }) => {
-  const history = useNavigate()
+  const navigate = useNavigate()
   const { data, error, loading } = useQuery<InterviewOverviewReturns>(
     INTERVIEW_OVERVIEW_QUERY
   )
@@ -74,9 +74,6 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
 
   const [deleteAllInterviews] = useMutation(DELETE_ALL_INTERVIEWS, {
     refetchQueries: ['InterviewOverviewQuery'],
-    onCompleted() {
-      toast.success('Alle intervjuer slettet')
-    },
   })
 
   const [openAdmission] = useMutation<

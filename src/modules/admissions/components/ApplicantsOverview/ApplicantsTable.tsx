@@ -12,7 +12,7 @@ import { DeleteApplicantModal } from './DeleteApplicantModal'
 export const ApplicantsTable: React.FC<{
   applicants: CoreApplicantNode[]
 }> = ({ applicants }) => {
-  const history = useNavigate()
+  const navigate = useNavigate()
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [applicantToDelete, setApplicantToDelete] =
     useState<CoreApplicantNode | null>(null)

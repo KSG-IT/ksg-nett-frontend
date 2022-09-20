@@ -22,7 +22,7 @@ export const DiscussionDashboard: React.VFC = () => {
    * TODO: Redirect if admission is in wrong state
    * if admissions.status !== IN_SESSION => redirect /admissions
    */
-  const history = useNavigate()
+  const navigate = useNavigate()
   const { data, loading, error } =
     useQuery<AllInternalGroupsAcceptingApplicantsReturns>(
       ALL_INTERNAL_GROUP_APPLICANT_DATA

@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useEffect, useState } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import {
   ConfigureInterviewLocationAvailability,
   ConfigureInterviewSchedule,
@@ -75,7 +75,7 @@ export const ConfigurationWizard: React.VFC = () => {
   }
 
   if (data?.activeAdmission?.status === 'OPEN')
-    return <Redirect to="/admission" />
+    return <Navigate to="/admission" />
 
   return configWizardSwitchHandler(wizardStage, setWizardStage)
 }

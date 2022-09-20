@@ -37,7 +37,7 @@ const TableRow = styled.tr`
 export const Summaries = () => {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query)
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   const { data, error, fetchMore } = useQuery<
     AllSummariesQueryReturns,

@@ -1,7 +1,7 @@
 import MainLayout from 'components/Layout/MainLayout'
 import { Outlet } from 'react-router-dom'
 
-const Dashboard = () => {
+const Maincontent = () => {
   return (
     <MainLayout>
       <Outlet />
@@ -9,4 +9,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Maincontent
