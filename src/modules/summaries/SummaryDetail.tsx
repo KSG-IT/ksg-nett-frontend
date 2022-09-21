@@ -1,11 +1,11 @@
 import { useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconEdit } from '@tabler/icons'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { UserThumbnail } from 'modules/users'
 import ReactMarkdown from 'react-markdown'
 import { useParams } from 'react-router'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import remarkGfm from 'remark-gfm'
 import styled from 'styled-components'
 import { SummaryDetailQueryVariables, SummaryDetailsQueryReturns } from '.'
@@ -72,14 +72,9 @@ export const SummaryDetail = () => {
     <Wrapper>
       <TitleSection>
         <SummaryTitle>{summary.type}</SummaryTitle>
-        <FontAwesomeIcon
-          icon="edit"
-          cursor="pointer"
-          size="lg"
-          onClick={() => {
-            navigate(`/summaries/${summary.id}/edit`)
-          }}
-        />
+        <Link to={`/summaries/${summary.id}/edit`}>
+          <IconEdit />
+        </Link>
       </TitleSection>
       <ParticipantsRow>
         Tilestede:

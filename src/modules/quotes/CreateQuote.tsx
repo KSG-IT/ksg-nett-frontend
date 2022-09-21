@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { Button } from 'components/Button'
+import { Button } from '@mantine/core'
 import { UserMultiSelect } from 'components/Select'
 import { formatISO } from 'date-fns'
 import { useState } from 'react'
@@ -54,7 +54,7 @@ const quoteContextPlaceholder = ' Fulle Elias som blir leid til do'
 export const CreateQuote: React.VFC = () => {
   const [text, setText] = useState('')
   const [context, setContext] = useState('')
-  const history = useNavigate()
+  const navigate = useNavigate()
   const [tagged, setTagged] = useState<string[]>([])
   const [createQuote] = useMutation<CreateQuoteReturns, CreateQuoteVariables>(
     CREATE_QUOTE,

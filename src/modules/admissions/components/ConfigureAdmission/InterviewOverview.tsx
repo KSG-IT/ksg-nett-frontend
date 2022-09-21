@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Group, ScrollArea, Stack, Title } from '@mantine/core'
+import { IconTrash } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -126,7 +126,7 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
       <Group>
         <Title my="md">Genererte intervjuer</Title>
         <Button
-          leftIcon={<FontAwesomeIcon icon="trash" />}
+          leftIcon={<IconTrash />}
           color="red"
           onClick={() => deleteAllInterviews()}
         >

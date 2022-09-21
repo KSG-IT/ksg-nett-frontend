@@ -34,7 +34,7 @@ export const MyUpcomingInterviews: React.VFC = () => {
   const { loading, error, data } = useQuery<MyInterviewsReturns>(
     MY_UPCOMING_INTERVIEWS_QUERY
   )
-  const history = useNavigate()
+  const navigate = useNavigate()
   const handleRedirectToInterview = (applicantId: string) => {
     navigate(`/admissions/applicants/${applicantId}`)
   }

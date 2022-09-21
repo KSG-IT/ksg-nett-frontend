@@ -93,19 +93,8 @@ const DateContainer = styled.div`
   height: 100%;
 `
 
-const TextArea = styled.textarea`
-  grid-area: content;
-  width: 100%;
-  height: 600px;
-  border-radius: 10px;
-  padding: 10px;
-  outline: none;
-  border: none;
-  margin: 15px 0;
-  box-shadow: ${props => props.theme.shadow.default};
-`
-
 export const CreateSummary = () => {
+  const navigate = useNavigate()
   const [date, setDate] = useState<Date | null>(new Date())
   const [summaryType, setSummaryType] = useState<SummaryType | null>(
     summaryTypeChoices[0].value
@@ -121,7 +110,6 @@ export const CreateSummary = () => {
       navigate(`/summaries/${summary.id}`)
     },
   })
-  const history = useNavigate()
 
   let schema = yup.object({
     participants: yup

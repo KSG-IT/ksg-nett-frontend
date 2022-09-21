@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Avatar, Button, Group, Paper, Table, TextInput } from '@mantine/core'
+import { IconPlus, IconSearch } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { format } from 'date-fns'
 import { useState } from 'react'
@@ -117,7 +117,7 @@ export const Summaries = () => {
           onClick={() => {
             navigate('/summaries/create')
           }}
-          leftIcon={<FontAwesomeIcon color="white" icon="plus" size="lg" />}
+          leftIcon={<IconPlus />}
         >
           Nytt referat
         </Button>
@@ -125,7 +125,7 @@ export const Summaries = () => {
       <TextInput
         value={query}
         placeholder="Søk etter innhold"
-        icon={<FontAwesomeIcon icon="search" size="sm" />}
+        icon={<IconSearch />}
         onChange={evt => setQuery(evt.target.value)}
       />
       <Paper p="sm">

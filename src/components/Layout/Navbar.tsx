@@ -118,8 +118,12 @@ export const AppNavbar = ({ opened }: AppNavbarProps) => {
           <Text weight={600} mb="xs">
             {routeGroup.title}
           </Text>
-          {routeGroup.items.map(item => (
-            <NavItem {...item} active={location.pathname === item.link} />
+          {routeGroup.items.map((item, index) => (
+            <NavItem
+              {...item}
+              active={location.pathname === item.link}
+              key={index}
+            />
           ))}
         </div>
       ))}

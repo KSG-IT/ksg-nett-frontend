@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Card, Group, Stack, Text } from '@mantine/core'
+import { IconUsers, IconUserSearch, IconWheelchair } from '@tabler/icons'
 import { Link } from 'react-router-dom'
 
 export const AdmissionsShortcutPanel: React.VFC<{}> = () => {
@@ -14,7 +14,7 @@ export const AdmissionsShortcutPanel: React.VFC<{}> = () => {
             withBorder
           >
             <Stack m="auto" align={'center'}>
-              <FontAwesomeIcon icon="wheelchair" size="3x" />
+              <IconWheelchair />
               <Text weight={'bold'}>Mine intervjuer</Text>
             </Stack>
           </Card>
@@ -27,7 +27,7 @@ export const AdmissionsShortcutPanel: React.VFC<{}> = () => {
             withBorder
           >
             <Stack m="auto" align={'center'}>
-              <FontAwesomeIcon icon="users" size="3x" />
+              <IconUsers />
               <Text weight={'bold'}>Søkeroversikt</Text>
             </Stack>
           </Card>
@@ -40,7 +40,7 @@ export const AdmissionsShortcutPanel: React.VFC<{}> = () => {
             withBorder
           >
             <Stack m="auto" align={'center'}>
-              <FontAwesomeIcon icon="user-clock" size="3x" />
+              <IconUserSearch />
               <Text weight={'bold'}>Oppfølging</Text>
             </Stack>
           </Card>

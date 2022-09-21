@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { IS_LOGGED_IN_QUERY } from 'modules/login/queries'
-import { IsLoggedInQueryReturns } from 'modules/login/types'
+import { IsLoggedInQueryReturns } from 'modules/login/types.graphql'
 import {
   Redirect,
   Route,

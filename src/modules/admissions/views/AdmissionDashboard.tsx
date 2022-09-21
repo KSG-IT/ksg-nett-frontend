@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Group, Title } from '@mantine/core'
+import { IconClock } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
@@ -78,7 +78,7 @@ export const AdmissionDashboard: React.VFC = () => {
         <Title>Kontrollpanel opptak</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
           <Button
-            leftIcon={<FontAwesomeIcon icon="clock" />}
+            leftIcon={<IconClock />}
             disabled={nextPhaseLoading}
             onClick={() => {
               handleAdmissionNextPhase(activeAdmission.id)

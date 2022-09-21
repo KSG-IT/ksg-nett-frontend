@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Divider, Menu, Paper, Table } from '@mantine/core'
+import { IconEye, IconTrash } from '@tabler/icons'
 import { ApplicantStatusBadge } from 'modules/admissions/components'
 import { AdmissionNode } from 'modules/admissions/types.graphql'
 import { useNavigate } from 'react-router-dom'
@@ -24,7 +24,7 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
   admission,
 }) => {
   const { applicants } = admission
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   const handleRedirect = (applicantId: string) => {
     navigate(`/admissions/applicants/${applicantId}`)
@@ -46,7 +46,7 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
         <Menu>
           <Menu.Label>Valg</Menu.Label>
           <Menu.Item
-            icon={<FontAwesomeIcon icon="eye" />}
+            icon={<IconEye />}
             onClick={() => handleRedirect(applicant.id)}
           >
             Mer info
@@ -54,7 +54,7 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
 
           <Divider />
           <Menu.Label>Admin</Menu.Label>
-          <Menu.Item color={'red'} icon={<FontAwesomeIcon icon="times" />}>
+          <Menu.Item color={'red'} icon={<IconTrash />}>
             Slett
           </Menu.Item>
         </Menu>
