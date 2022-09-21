@@ -38,6 +38,8 @@ import { ManageUsers } from 'modules/users/views'
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useStore } from 'store'
+import { PERMISSIONS } from 'util/permissions'
+import { ProtectedRoute } from './ProtectedRoute'
 import PublicRoutes from './public-routes'
 
 const FullPage404 = React.lazy(
@@ -91,7 +93,14 @@ export const AppRoutes = () => {
 
         <Route path="quotes">
           <Route index element={<QuotesList />} />
-          <Route path="review" element={<ReviewQuotes />} />
+          <Route
+            path="review"
+            element={
+              <ProtectedRoute permissions={PERMISSIONS.quotes.change.quote}>
+                <ReviewQuotes />
+              </ProtectedRoute>
+            }
+          />
           <Route path="popular" element={<PopularQuotes />} />
           <Route path="create" element={<CreateQuote />} />
         </Route>
@@ -114,11 +123,57 @@ export const AppRoutes = () => {
         </Route>
 
         <Route path="admissions">
-          <Route index element={<AdmissionDashboard />} />
-          <Route path="configure" element={<ConfigurationWizard />} />
-          <Route path="my-interviews" element={<MyInterviews />} />
-          <Route path="applicants-overview" element={<ApplicantsOverview />} />
-          <Route path="applicant-notices" element={<ApplicantNotices />} />
+          <Route
+            index
+            element={
+              <ProtectedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <AdmissionDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="configure"
+            element={
+              <ProtectedRoute
+                permissions={PERMISSIONS.admissions.change.admission}
+              >
+                <ConfigurationWizard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="my-interviews"
+            element={
+              <ProtectedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <MyInterviews />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="applicants-overview"
+            element={
+              <ProtectedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <ApplicantsOverview />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="applicant-notices"
+            element={
+              <ProtectedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <ApplicantNotices />
+              </ProtectedRoute>
+            }
+          />
           <Route path="close" element={<CloseAdmission />} />
 
           <Route path="internal-group-applicants">
@@ -129,20 +184,53 @@ export const AppRoutes = () => {
           </Route>
 
           <Route path="discussion-dashboard">
-            <Route index element={<DiscussionDashboard />} />
+            <Route
+              index
+              element={
+                <ProtectedRoute
+                  permissions={PERMISSIONS.admissions.view.admission}
+                >
+                  <DiscussionDashboard />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path=":internalGroupId"
-              element={<InternalGroupDiscussion />}
+              element={
+                <ProtectedRoute
+                  permissions={PERMISSIONS.admissions.view.admission}
+                >
+                  <InternalGroupDiscussion />
+                </ProtectedRoute>
+              }
             />
           </Route>
 
           <Route path="applicants">
-            <Route path=":applicantId" element={<ApplicantDetails />} />
+            <Route
+              path=":applicantId"
+              element={
+                <ProtectedRoute
+                  permissions={PERMISSIONS.admissions.view.admission}
+                >
+                  <ApplicantDetails />
+                </ProtectedRoute>
+              }
+            />
           </Route>
 
           <Route path="interviews">
             <Route path=":interviewId">
-              <Route path="edit" element={<EditInterview />} />
+              <Route
+                path="edit"
+                element={
+                  <ProtectedRoute
+                    permissions={PERMISSIONS.admissions.view.admission}
+                  >
+                    <EditInterview />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
           </Route>
         </Route>
