@@ -60,7 +60,7 @@ export const NavBarMeSection: React.FC = () => {
       />
       <NavItem
         label="Logg ut"
-        link="/schedules/me"
+        link="/"
         icon={IconLogout}
         active={false}
         onClick={() => {

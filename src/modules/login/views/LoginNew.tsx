@@ -76,7 +76,6 @@ export const LoginNew: React.FC = () => {
   const { login } = useLoginMutations()
 
   function handleLogin(data: LoginInput) {
-    console.log('killme')
     const { username, password } = data
     login({
       variables: {
