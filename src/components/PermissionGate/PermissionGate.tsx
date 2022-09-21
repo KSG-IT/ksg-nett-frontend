@@ -9,8 +9,7 @@ export const PermissionGate: React.FC<PermissionGateProps> = ({
   children,
 }) => {
   const { hasPermissions } = usePermissions()
-  console.table(permissions)
-  console.log(hasPermissions(permissions))
+
   const shouldRender = hasPermissions(permissions)
   if (!shouldRender) return null
 
