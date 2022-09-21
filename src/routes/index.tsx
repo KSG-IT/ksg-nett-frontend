@@ -150,6 +150,9 @@ export const AppRoutes = () => {
         <Route path="economy">
           <Route path="deposits" element={<Deposits />} />
           <Route path="me" element={<MyEconomy />} />
+          <Route path="soci-products" element={<h2>Suh duh</h2>} />
+
+          <Route path="soci-sessions" element={<h2>Suh duh 2</h2>} />
           <Route path="*" element={<FullPage404 />} />
         </Route>
 
