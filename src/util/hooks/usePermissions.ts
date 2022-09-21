@@ -28,8 +28,6 @@ export function usePermissions() {
       user && hasPermissions(permissions) && user.id === me.id,
     [me.id, hasPermissions]
   )
-  console.table(me.allPermissions)
-  console.table(me)
 
   const perms = useMemo(
     () => ({
