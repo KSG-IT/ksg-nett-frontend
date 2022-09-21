@@ -76,11 +76,13 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = props => {
                 mr="xl"
               />
             </MediaQuery>
+
             <Group className={classes.header}>
               <Image src={logoUrl} width={48} height={48} />
               <Text weight={700} size="lg">
                 Kafe- og serveringsnett
               </Text>
+
               <UserSearch />
             </Group>
           </div>

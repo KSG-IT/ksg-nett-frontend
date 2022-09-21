@@ -1,6 +1,6 @@
 import { ApplicantPortal } from 'modules/admissions'
 import { ReSendApplicantTokenForm } from 'modules/admissions/components/ApplicantPortal'
-import { Login } from 'modules/login'
+import { LoginNew } from 'modules/login/views/LoginNew'
 import { Route, Routes } from 'react-router-dom'
 
 const PublicRoutes = () => {
@@ -10,8 +10,8 @@ const PublicRoutes = () => {
         <Route index element={<ReSendApplicantTokenForm />} />
         <Route path=":applicantToken" element={<ApplicantPortal />} />
       </Route>
-      <Route path="login" element={<Login />} />
-      <Route path="*" element={<Login />} />
+      <Route path="login" element={<LoginNew />} />
+      <Route path="*" element={<LoginNew />} />
     </Routes>
   )
 }

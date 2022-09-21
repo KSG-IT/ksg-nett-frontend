@@ -26,6 +26,7 @@ import {
   QuotesList,
   ReviewQuotes,
 } from 'modules/quotes'
+import { MyShifts } from 'modules/schedules/views'
 import {
   CreateSummary,
   EditSummary,
@@ -150,6 +151,11 @@ export const AppRoutes = () => {
           <Route path="deposits" element={<Deposits />} />
           <Route path="me" element={<MyEconomy />} />
           <Route path="*" element={<FullPage404 />} />
+        </Route>
+
+        <Route path="schedules">
+          <Route index element={<h1>Oh herro</h1>} />
+          <Route path="me" element={<MyShifts />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" />} />

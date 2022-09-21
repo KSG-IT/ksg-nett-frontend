@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { setLoginToken } from 'util/auth'
 import * as yup from 'yup'
 import { LOGIN_MUTATION } from './mutations'
-import { LoginMutationReturns, LoginMutationVariables } from './types'
+import { LoginMutationReturns, LoginMutationVariables } from './types.graphql'
 
 const Wrapper = styled.div`
   display: flex;
@@ -88,7 +88,6 @@ export const Login: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) })
-  const setToken = useStore(state => state.setToken)
   const setUser = useStore(state => state.setUser)
 
   const [login] = useMutation<LoginMutationReturns, LoginMutationVariables>(

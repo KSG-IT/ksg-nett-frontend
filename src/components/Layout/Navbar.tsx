@@ -17,6 +17,7 @@ import {
 } from '@tabler/icons'
 import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { NavBarMeSection } from './NavBarMeSection'
 
 interface AppNavbarProps {
   opened: boolean
@@ -30,6 +31,7 @@ interface RouteItem {
   label: string
   link: string
   icon: TablerIcon
+  onClick?: () => void
 }
 
 const routes: RouteGroup[] = [
@@ -75,7 +77,7 @@ const routes: RouteGroup[] = [
       },
       {
         icon: IconShoppingCart,
-        link: '/economy/sociproducts',
+        link: '/economy/soci-products',
         label: 'Soci produker',
       },
       {
@@ -87,10 +89,10 @@ const routes: RouteGroup[] = [
   },
 ]
 
-const NavItem: FC<RouteItem & { active: boolean }> = props => {
+export const NavItem: FC<RouteItem & { active: boolean }> = props => {
   const { classes, cx } = useNavItemStyles({ active: props.active })
   return (
-    <Link to={props.link} className={classes.navItem}>
+    <Link to={props.link} className={classes.navItem} onClick={props.onClick}>
       <props.icon className={cx(classes.icon)} data-active={props.active} />
       <Text className={classes.text}>{props.label}</Text>
     </Link>
@@ -98,7 +100,7 @@ const NavItem: FC<RouteItem & { active: boolean }> = props => {
 }
 
 export const AppNavbar = ({ opened }: AppNavbarProps) => {
-  let location = useLocation()
+  const location = useLocation()
 
   const { classes } = useNavbarStyles()
 
@@ -108,8 +110,9 @@ export const AppNavbar = ({ opened }: AppNavbarProps) => {
       hiddenBreakpoint="sm"
       hidden={!opened}
       width={{ sm: 200, lg: 300 }}
-      style={{ backgroundColor: 'white' }}
+      style={{ backgroundColor: 'white', overflowY: 'scroll' }}
     >
+      <NavBarMeSection />
       {routes.map((routeGroup, index) => (
         <div className={classes.group} key={index}>
           <Text weight={600} mb="xs">
