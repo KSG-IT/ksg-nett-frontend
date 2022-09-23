@@ -48,7 +48,7 @@ const configWizardSwitchHandler = (
   }
 }
 
-export const ConfigurationWizard: React.VFC = () => {
+export const ConfigurationWizard: React.FC = () => {
   const [wizardStage, setWizardStage] = useState<WizardStage>('START')
   // This logic needs to be reoworked abd nived away from the useEffect hook
 
@@ -75,7 +75,7 @@ export const ConfigurationWizard: React.VFC = () => {
   }
 
   if (data?.activeAdmission?.status === 'OPEN')
-    return <Navigate to="/admission" />
+    return <Navigate to="/admissions" />
 
   return configWizardSwitchHandler(wizardStage, setWizardStage)
 }
