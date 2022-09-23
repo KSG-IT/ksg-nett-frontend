@@ -48,7 +48,7 @@ const FullPage404 = React.lazy(
 
 const MainContent = React.lazy(() => import('routes/MainContent'))
 
-export const AppRoutes = () => {
+export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
   const setUser = useStore(state => state.setUser)
 
