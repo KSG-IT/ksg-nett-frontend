@@ -7,8 +7,27 @@ export const LOGIN_MUTATION = gql`
       token
       user {
         id
-        email
         username
+        firstName
+        lastName
+        profileImage
+        fullName
+        initials
+        email
+        balance
+        biography
+        studyAddress
+        homeAddress
+        phone
+        upvotedQuoteIds
+        lastTransactions {
+          name
+          amount
+          quantity
+          timestamp
+        }
+        isSuperuser
+        allPermissions
       }
     }
   }

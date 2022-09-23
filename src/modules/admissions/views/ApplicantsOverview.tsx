@@ -1,8 +1,9 @@
 import { useQuery } from '@apollo/client'
-import { ScrollArea, Stack, Title } from '@mantine/core'
+import { Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
+import { PERMISSIONS } from 'util/permissions'
 import { ApplicantsTable } from '../components/ApplicantsOverview'
 import { AddApplicantsArea } from '../components/ApplicantsOverview/AddApplicantsArea'
 import { CURRENT_APPLICANTS_QUERY } from '../queries'
@@ -23,14 +24,12 @@ export const ApplicantsOverview: React.FC<{}> = ({}) => {
   const { currentApplicants } = data
 
   return (
-    <ScrollArea p="md" style={{ width: '100%' }}>
-      <Stack>
-        <Title>Søkeroversikt</Title>
-        <PermissionGate permissions={['admissions.add_applicant']}>
-          <AddApplicantsArea />
-        </PermissionGate>
-        <ApplicantsTable applicants={currentApplicants} />
-      </Stack>
-    </ScrollArea>
+    <Stack>
+      <Title>Søkeroversikt</Title>
+      <PermissionGate permissions={PERMISSIONS.admissions.add.applicant}>
+        <AddApplicantsArea />
+      </PermissionGate>
+      <ApplicantsTable applicants={currentApplicants} />
+    </Stack>
   )
 }

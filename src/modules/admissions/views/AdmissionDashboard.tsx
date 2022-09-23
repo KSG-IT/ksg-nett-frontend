@@ -1,13 +1,12 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Group, Title } from '@mantine/core'
+import { IconClock } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { Redirect } from 'react-router-dom'
-import styled from 'styled-components'
+import { Navigate } from 'react-router-dom'
 import { PatchMutationVariables } from 'types/graphql'
 import { PERMISSIONS } from 'util/permissions'
 import {
@@ -23,11 +22,6 @@ import {
   PatchAdmissionInput,
   PatchAdmissionReturns,
 } from '../types.graphql'
-
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-  overflow-y: scroll;
-`
 
 export const AdmissionDashboard: React.VFC = () => {
   // Should display information about ongoing admission
@@ -68,23 +62,23 @@ export const AdmissionDashboard: React.VFC = () => {
   const { activeAdmission } = data
 
   if (activeAdmission === null || activeAdmission.status === 'CONFIGURATION')
-    return <Redirect to="/admissions/config" />
+    return <Navigate to="/admissions/configure" />
 
   if (activeAdmission.status === 'IN_SESSION') {
-    return <Redirect to="/admissions/discussion-dashboard" />
+    return <Navigate to="/admissions/discussion-dashboard" />
   }
 
   if (activeAdmission.status === 'LOCKED') {
-    return <Redirect to="/admissions/close" />
+    return <Navigate to="/admissions/close" />
   }
 
   return (
-    <Wrapper>
+    <>
       <Group position="apart">
         <Title>Kontrollpanel opptak</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
           <Button
-            leftIcon={<FontAwesomeIcon icon="clock" />}
+            leftIcon={<IconClock />}
             disabled={nextPhaseLoading}
             onClick={() => {
               handleAdmissionNextPhase(activeAdmission.id)
@@ -97,6 +91,6 @@ export const AdmissionDashboard: React.VFC = () => {
       <AdmissionsShortcutPanel />
       <InternalGroupsNav />
       <MyUpcomingInterviews />
-    </Wrapper>
+    </>
   )
 }

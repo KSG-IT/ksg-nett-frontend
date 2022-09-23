@@ -1,11 +1,10 @@
 import { useQuery } from '@apollo/client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Paper, Title } from '@mantine/core'
+import { Paper, Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
 import { ApplicantsTable } from '../components/InternalGroupApplicants/ApplicantsTable'
 import { INTERNAL_GROUP_APPLICANTS_DATA } from '../queries'
 import {
@@ -13,19 +12,14 @@ import {
   InternalGroupApplicantsDataVariables,
 } from '../types.graphql'
 
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-`
-
 interface InternalGroupApplicantsParams {
   internalGroupId: string
 }
 
 export const InternalGroupApplicants: React.VFC = ({}) => {
-  const { internalGroupId } = useParams<InternalGroupApplicantsParams>()
+  const { internalGroupId } = useParams<
+    keyof InternalGroupApplicantsParams
+  >() as InternalGroupApplicantsParams
   const { data, loading, error } = useQuery<
     InternalGroupApplicantsDataReturns,
     InternalGroupApplicantsDataVariables
@@ -59,7 +53,7 @@ export const InternalGroupApplicants: React.VFC = ({}) => {
   } = internalGroupApplicantsData
 
   return (
-    <Wrapper>
+    <Stack>
       <Title>Søkeroversikt {internalGroupName}</Title>
       <MessageBox type="info">
         <FontAwesomeIcon icon="times-circle" color="red" /> indikerer ingen fra{' '}
@@ -79,6 +73,6 @@ export const InternalGroupApplicants: React.VFC = ({}) => {
       <Paper p="md">
         <ApplicantsTable applicants={thirdPriorities} />
       </Paper>
-    </Wrapper>
+    </Stack>
   )
 }

@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Card } from '@mantine/core'
+import { IconEdit } from '@tabler/icons'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
@@ -12,7 +12,7 @@ import {
   SociBankAccountNode,
 } from './types'
 
-const EditIcon = styled(FontAwesomeIcon)`
+const EditIcon = styled(IconEdit)`
   :hover {
     cursor: pointer;
     opacity: 0.8;
@@ -92,7 +92,7 @@ export const AccountCard: React.VFC<AccountCardProps> = ({ account }) => {
             onChange={evt => setCardUuid(evt.target.value)}
             onBlur={toggleEditable}
           />
-          <EditIcon icon="edit" onClick={toggleEditable} />
+          <EditIcon onClick={toggleEditable} />
         </CardInputContainer>
       </Card.Section>
     </Card>

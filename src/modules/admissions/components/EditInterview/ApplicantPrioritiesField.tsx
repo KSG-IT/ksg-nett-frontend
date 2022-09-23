@@ -46,9 +46,6 @@ export const ApplicantPrioritiesField: React.VFC<
   }
 
   function updatePriorities() {
-    console.log('updatePriorities')
-    console.table(priorities)
-
     const filteredPriorities = priorities.filter(priority => priority !== null)
 
     const priorityOrder = filteredPriorities.map(
