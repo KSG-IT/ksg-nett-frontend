@@ -1,12 +1,12 @@
 import { FullPageRestricted } from 'components/FullPageComponents'
 import { usePermissions } from 'util/hooks/usePermissions'
 
-interface ProtectedRouteProps {
+interface RestrictedRouteProps {
   permissions: string | string[]
   children: React.ReactElement
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+export const RestrictedRoute: React.FC<RestrictedRouteProps> = ({
   permissions,
   children,
 }) => {
