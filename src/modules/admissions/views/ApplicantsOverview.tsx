@@ -3,6 +3,7 @@ import { Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
+import { PERMISSIONS } from 'util/permissions'
 import { ApplicantsTable } from '../components/ApplicantsOverview'
 import { AddApplicantsArea } from '../components/ApplicantsOverview/AddApplicantsArea'
 import { CURRENT_APPLICANTS_QUERY } from '../queries'
@@ -25,7 +26,7 @@ export const ApplicantsOverview: React.FC<{}> = ({}) => {
   return (
     <Stack>
       <Title>Søkeroversikt</Title>
-      <PermissionGate permissions={['admissions.add_applicant']}>
+      <PermissionGate permissions={PERMISSIONS.admissions.add.applicant}>
         <AddApplicantsArea />
       </PermissionGate>
       <ApplicantsTable applicants={currentApplicants} />

@@ -13,25 +13,14 @@ import {
   IconShoppingCart,
   IconUserPlus,
   IconUsers,
-  TablerIcon,
 } from '@tabler/icons'
-import { FC } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { NavBarMeSection } from './NavBarMeSection'
+import { NavItem, RouteItem } from './NavItem'
 
-interface AppNavbarProps {
-  opened: boolean
-}
 interface RouteGroup {
   title: string
   items: RouteItem[]
-}
-
-interface RouteItem {
-  label: string
-  link: string
-  icon: TablerIcon
-  onClick?: () => void
 }
 
 const routes: RouteGroup[] = [
@@ -89,17 +78,11 @@ const routes: RouteGroup[] = [
   },
 ]
 
-export const NavItem: FC<RouteItem & { active: boolean }> = props => {
-  const { classes, cx } = useNavItemStyles({ active: props.active })
-  return (
-    <Link to={props.link} className={classes.navItem} onClick={props.onClick}>
-      <props.icon className={cx(classes.icon)} data-active={props.active} />
-      <Text className={classes.text}>{props.label}</Text>
-    </Link>
-  )
+interface AppNavbarProps {
+  opened: boolean
 }
 
-export const AppNavbar = ({ opened }: AppNavbarProps) => {
+export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
   const location = useLocation()
 
   const { classes } = useNavbarStyles()
@@ -130,27 +113,6 @@ export const AppNavbar = ({ opened }: AppNavbarProps) => {
     </Navbar>
   )
 }
-
-const useNavItemStyles = createStyles((t, { active }: { active: boolean }) => ({
-  icon: {
-    color: active ? t.colors.white : t.colors.gray[6],
-    marginRight: t.spacing.sm,
-  },
-  text: {
-    fontWeight: 600,
-    color: active ? t.colors.white : t.colors.gray[6],
-  },
-  navItem: {
-    display: 'flex',
-    width: '100%',
-    borderRadius: t.radius.sm,
-    padding: `${t.spacing.xs}px ${t.spacing.sm}px`,
-    backgroundColor: active ? t.colors.brand : t.colors.white,
-    '&:hover': {
-      backgroundColor: !active ? t.colors.red[0] : 'none',
-    },
-  },
-}))
 
 const useNavbarStyles = createStyles(t => ({
   group: {

@@ -9,7 +9,7 @@ import {
 import { UserThumbnail } from 'modules/users'
 import { useStore } from 'store'
 import { removeLoginToken } from 'util/auth'
-import { NavItem } from './Navbar'
+import { NavItem } from './NavItem'
 
 function liquidityColor(balance: number) {
   if (balance < 0) {

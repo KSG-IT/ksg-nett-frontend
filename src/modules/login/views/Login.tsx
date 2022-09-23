@@ -22,7 +22,7 @@ const useStyles = createStyles(theme => ({
     height: '100vh',
     backgroundSize: 'cover',
     backgroundImage:
-      'url(https://openai-labs-public-images-prod.azureedge.net/user-AekrF96SWGxTyvIYgifBbhoM/generations/generation-TLVuu5mkObF40VBKOArgGdSP/image.webp)',
+      'url(https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80)',
   },
 
   form: {

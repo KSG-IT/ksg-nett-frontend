@@ -1,4 +1,4 @@
-import MainLayout from 'components/Layout/MainLayout'
+import MainLayout from 'containers/MainLayout'
 import { Outlet } from 'react-router-dom'
 
 const Maincontent = () => {

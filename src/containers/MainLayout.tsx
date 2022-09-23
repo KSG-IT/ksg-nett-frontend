@@ -16,7 +16,7 @@ import {
 import { UserSearch } from 'modules/header/UserSearch'
 import React, { useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import logoUrl from '../../assets/images/548spaghetti_100786.png'
+import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
 
 interface ErrorFallbackProps {
@@ -37,7 +37,11 @@ const ErrorFallback: React.FC<ErrorFallbackProps> = ({
   )
 }
 
-const MainLayout: React.FC<{ children: React.ReactNode }> = props => {
+interface MainLayoutProps {
+  children: React.ReactNode
+}
+
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const theme = useMantineTheme()
   const [opened, setOpened] = useState(false)
   const { classes } = useStyles()
@@ -91,7 +95,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = props => {
     >
       {/* Main content being rendered */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {props.children}
+        {children}
       </ErrorBoundary>
     </AppShell>
   )
