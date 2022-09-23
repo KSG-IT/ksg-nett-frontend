@@ -1,4 +1,6 @@
+import { useQuery } from '@apollo/client'
 import {
+  Button,
   Card,
   Group,
   Image,
@@ -6,97 +8,37 @@ import {
   ScrollArea,
   Stack,
   Text,
+  Title,
 } from '@mantine/core'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
 import { format } from 'date-fns'
-import { UserNode } from 'modules/users'
+import { UserNode, UserThumbnail } from 'modules/users'
+import { Link } from 'react-router-dom'
+import { UserShiftCardList } from '../components'
+import { MY_UPCOMING_SHIFTS } from '../queries'
+import { MyUpcomingShiftsReturns } from '../types.graphql'
 
-export const MyShifts: React.VFC = () => {
-  type Mock = {
-    id: number
-    date: Date
-    venue: string
-    users: Pick<UserNode, 'id' | 'fullName' | 'initials' | 'profileImage'>[]
-  }
-  const mockData = [
-    {
-      id: 1,
-      date: new Date(),
-      venue: 'Bodegaen',
-      users: [
-        {
-          user: {
-            id: '1',
-            fullName: 'Alexander Orvik',
-            initials: 'AO',
-            profileImage: 'https://picsum.photos/100/100',
-          },
-          role: 'Bartender',
-        },
-        {
-          user: {
-            id: '2',
-            fullName: 'Sebastian Småland',
-            initials: 'SS',
-            profileImage: 'https://picsum.photos/100/100',
-          },
-          role: 'Bartender',
-        },
-        {
-          user: {
-            id: '3',
-            fullName: 'Anhkha Vo',
-            initials: 'AV',
-            profileImage: 'https://picsum.photos/100/100',
-          },
-          role: 'Bartender',
-        },
-        {
-          user: {
-            id: '4',
-            fullName: 'Magnus Holtet',
-            initials: 'MH',
-            profileImage: 'https://picsum.photos/100/100',
-          },
-          role: 'Bartender',
-        },
-        {
-          user: {
-            id: '5',
-            fullName: 'Sander Haga',
-            initials: 'SH',
-            profileImage: 'https://picsum.photos/100/100',
-          },
-          role: 'Barsjef',
-        },
-      ],
-    },
-  ]
+export const MyShifts: React.FC = () => {
+  const { data, loading, error } =
+    useQuery<MyUpcomingShiftsReturns>(MY_UPCOMING_SHIFTS)
+
+  if (error) return <FullPageError />
+
+  if (loading || !data) return <FullContentLoader />
+
+  const { myUpcomingShifts } = data
+  console.log(myUpcomingShifts)
 
   return (
-    <ScrollArea p="md">
-      <h1>Mine vakter</h1>
-      {mockData.map(shift => (
-        <Card>
-          <Group>
-            <Stack>
-              <Text>{shift.venue}</Text>
-              <Text>{format(shift.date, 'cccc d. MMMM')}</Text>
-              <Text>Oppmøte {format(shift.date, 'HH:mm')}</Text>
-            </Stack>
-            <Group>
-              {shift.users.map(user => (
-                <Stack>
-                  <Paper>
-                    <Image src={user.user.profileImage} />
-                  </Paper>
-                  <Text>{user.user.fullName}</Text>
-                  <Text>{user.role}</Text>
-                </Stack>
-              ))}
-            </Group>
-          </Group>
-        </Card>
-      ))}
-    </ScrollArea>
+    <>
+      <Group position="apart" align="baseline" style={{ maxWidth: 900 }}>
+        <Title>Mine vakter</Title>
+        <Link to="history">
+          <Button>Alle mine vakter</Button>
+        </Link>
+      </Group>
+      <UserShiftCardList shifts={myUpcomingShifts} />
+    </>
   )
 }
