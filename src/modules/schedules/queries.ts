@@ -23,3 +23,27 @@ export const MY_UPCOMING_SHIFTS = gql`
     }
   }
 `
+
+export const ALL_MY_SHIFTS = gql`
+  query AllMyShifts {
+    allMyShifts {
+      id
+      location
+      filledSlots {
+        id
+        role {
+          id
+          name
+        }
+        user {
+          id
+          initials
+          fullName
+        }
+      }
+
+      datetimeStart
+      datetimeEnd
+    }
+  }
+`

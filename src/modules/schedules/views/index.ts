@@ -1,1 +1,2 @@
-export * from './MyShifts'
+export * from './MyUpcomingShifts'
+export * from './AllMyShifts'

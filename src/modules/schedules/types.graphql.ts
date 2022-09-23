@@ -37,4 +37,8 @@ export interface MyUpcomingShiftsReturns {
   myUpcomingShifts: ShiftNode[]
 }
 
+export interface AllMyShiftsReturns {
+  allMyShifts: ShiftNode[]
+}
+
 // === MUTATIONS ===
