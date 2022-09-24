@@ -1,7 +1,5 @@
-import { IconName } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Grid, Stack, Text, ThemeIcon } from '@mantine/core'
-import { IconVideo, TablerIcon } from '@tabler/icons'
+import { TablerIcon } from '@tabler/icons'
 
 interface IconWithDataProps {
   icon: TablerIcon

@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Avatar,
   Card,
@@ -17,9 +16,7 @@ import {
 import {
   IconAt,
   IconBook,
-  IconBookOff,
   IconCake,
-  IconLock,
   IconMapPin,
   IconPhone,
   IconSchool,

@@ -1,6 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Text, ThemeIcon, Timeline } from '@mantine/core'
-import { IconUserPlus, IconUsers } from '@tabler/icons'
+import { IconUsers } from '@tabler/icons'
 import { InternalGroupPositionMembershipNode } from '../UserManagement/types'
 
 interface UserHistoryProps {
