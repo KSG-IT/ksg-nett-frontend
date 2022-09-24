@@ -36,8 +36,12 @@ export const ME_QUERY = gql`
 export const USER_QUERY = gql`
   query User($id: ID!) {
     user(id: $id) {
+      id
       fullName
+      firstName
+      lastName
       biography
+      studyAddress
       homeAddress
       dateOfBirth
       ksgStatus

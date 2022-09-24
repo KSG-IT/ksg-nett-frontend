@@ -19,6 +19,7 @@ import { useParams } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
 import { UserQueryReturns, UserQueryVariables, USER_QUERY } from '.'
 import { IconWithData } from './components/IconWithData'
+import { UserEditForm } from './components/UserEdit/UserEditForm'
 import { UserHistory } from './components/UserHistory'
 import { UserQuotes } from './components/UserQuotes'
 
@@ -70,6 +71,7 @@ export const UserProfile: React.VFC = () => {
   if (error) return <FullPageError />
   if (loading || !data) return <FullContentLoader />
 
+  const fullUser = data.user
   const {
     user: { internalGroupPositionMembershipHistory: memberships, ...user },
   } = data
@@ -122,14 +124,21 @@ export const UserProfile: React.VFC = () => {
               </Grid.Col>
               {mediaQuery ? (
                 <Grid.Col xs={5} lg={5} offset={1}>
-                  <Avatar
-                    src={user.profileImage}
-                    radius={'xl'}
-                    classNames={{
-                      image: classes.profileImage,
-                      root: classes.avatar,
-                    }}
-                  />
+                  <Stack
+                    justify={'space-between'}
+                    style={{ height: '100%' }}
+                    align="flex-end"
+                  >
+                    <Avatar
+                      src={user.profileImage}
+                      radius={'xl'}
+                      classNames={{
+                        image: classes.profileImage,
+                        root: classes.avatar,
+                      }}
+                    />
+                    <UserEditForm user={fullUser} />
+                  </Stack>
                 </Grid.Col>
               ) : null}
             </Grid>
