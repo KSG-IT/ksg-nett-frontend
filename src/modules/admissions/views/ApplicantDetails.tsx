@@ -20,7 +20,9 @@ interface ApplicantDetailsParams {
 }
 
 export const ApplicantDetails: React.VFC = () => {
-  const { applicantId } = useParams<ApplicantDetailsParams>()
+  const { applicantId } = useParams<
+    keyof ApplicantDetailsParams
+  >() as ApplicantDetailsParams
 
   const { data, loading, error } = useQuery<
     ApplicantQueryReturns,

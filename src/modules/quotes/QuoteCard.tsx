@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconThumbUp } from '@tabler/icons'
 import { QuoteNode } from 'modules/quotes/types'
 import { UserThumbnail } from 'modules/users'
 import { useEffect, useState } from 'react'
@@ -73,7 +73,7 @@ interface VoteIconProps {
   $upvoted: boolean
 }
 
-const UpvoteIcon = styled(FontAwesomeIcon)<VoteIconProps>`
+const UpvoteIcon = styled(IconThumbUp)<VoteIconProps>`
   // Transient prop forwarding
   color: ${props => (props.$upvoted ? props.theme.colors.success : 'black')};
   :hover {
@@ -153,11 +153,7 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({
           {displaySemester && <SemesterLabel>{quote.semester}</SemesterLabel>}
           <span>{voteSum}</span>
           <span>
-            <UpvoteIcon
-              icon="thumbs-up"
-              $upvoted={upvoted}
-              onClick={handleUpvote}
-            />
+            <UpvoteIcon $upvoted={upvoted} onClick={handleUpvote} />
           </span>
         </VoteContainer>
       </QuoteFooter>

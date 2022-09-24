@@ -4,7 +4,7 @@ import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { format } from 'date-fns'
 import { InterviewNode } from 'modules/admissions/types.graphql'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface MyInterviewsReturns {
   myUpcomingInterviews: Pick<
@@ -34,9 +34,9 @@ export const MyUpcomingInterviews: React.VFC = () => {
   const { loading, error, data } = useQuery<MyInterviewsReturns>(
     MY_UPCOMING_INTERVIEWS_QUERY
   )
-  const history = useHistory()
+  const navigate = useNavigate()
   const handleRedirectToInterview = (applicantId: string) => {
-    history.push(`/admissions/applicants/${applicantId}`)
+    navigate(`/admissions/applicants/${applicantId}`)
   }
 
   if (error)

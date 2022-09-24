@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Divider, Menu, Paper, Table } from '@mantine/core'
+import { IconEye, IconTrash } from '@tabler/icons'
 import { ApplicantStatusBadge } from 'modules/admissions/components'
 import { AdmissionNode } from 'modules/admissions/types.graphql'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 const Wrapper = styled.div`
   display: flex;
@@ -24,10 +24,10 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
   admission,
 }) => {
   const { applicants } = admission
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const handleRedirect = (applicantId: string) => {
-    history.push(`/admissions/applicants/${applicantId}`)
+    navigate(`/admissions/applicants/${applicantId}`)
   }
 
   const rows = applicants.map(applicant => (
@@ -46,7 +46,7 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
         <Menu>
           <Menu.Label>Valg</Menu.Label>
           <Menu.Item
-            icon={<FontAwesomeIcon icon="eye" />}
+            icon={<IconEye />}
             onClick={() => handleRedirect(applicant.id)}
           >
             Mer info
@@ -54,7 +54,7 @@ export const ActiveAdmissionTable: React.VFC<ActiveAdmissionTableProps> = ({
 
           <Divider />
           <Menu.Label>Admin</Menu.Label>
-          <Menu.Item color={'red'} icon={<FontAwesomeIcon icon="times" />}>
+          <Menu.Item color={'red'} icon={<IconTrash />}>
             Slett
           </Menu.Item>
         </Menu>

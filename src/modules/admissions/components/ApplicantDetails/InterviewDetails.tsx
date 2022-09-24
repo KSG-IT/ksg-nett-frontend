@@ -9,7 +9,7 @@ import {
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { UserThumbnail } from 'modules/users'
 import ReactMarkdown from 'react-markdown'
-import { useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import remarkGfm from 'remark-gfm'
 
 interface InterviewDetailsProps {
@@ -22,7 +22,7 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
   canEdit,
 }) => {
   const { interview } = applicant
-  const history = useHistory()
+  const navigate = useNavigate()
   if (interview === null) {
     return (
       <Stack style={{ maxWidth: 800 }} my="lg">
@@ -71,13 +71,9 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
         </Group>
       </Card>
       {canEdit && (
-        <Button
-          onClick={() => {
-            history.push(`/admissions/interviews/${interview.id}/edit`)
-          }}
-        >
-          Skriv notater
-        </Button>
+        <Link to={`/admissions/interviews/${interview.id}/edit`}>
+          <Button>Skriv notater</Button>
+        </Link>
       )}
       <Title>Intevjuere</Title>
       <Card>

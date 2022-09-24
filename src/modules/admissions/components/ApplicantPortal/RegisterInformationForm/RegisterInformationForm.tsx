@@ -1,6 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  Alert,
   Button,
   Checkbox,
   FileButton,
@@ -11,6 +9,8 @@ import {
   Title,
 } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
+import { IconUpload } from '@tabler/icons'
+import { MessageBox } from 'components/MessageBox'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { useRegisterInformationAPI } from './useRegisterInformationAPI'
 import { useRegisterInformationLogic } from './useRegisterInformationLogic'
@@ -28,14 +28,13 @@ export const RegisterInformationForm: React.FC<
   )
   const { formState, register, handleSubmit, getValues, setValue } = form
   const { errors, isSubmitting } = formState
-  console.log(errors)
 
   return (
     <Stack>
       <Title>Registrer personalia</Title>
-      <Alert icon={<FontAwesomeIcon icon="info" />}>
+      <MessageBox type="info">
         All personlig informasjon blir slettet i etterkant av opptaket.
-      </Alert>
+      </MessageBox>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
           error={errors?.firstName?.message}
@@ -66,7 +65,9 @@ export const RegisterInformationForm: React.FC<
           label="Fødselsdato"
           placeholder="Velg en dato"
           error={errors?.dateOfBirth?.message}
-          {...register('dateOfBirth')}
+          // Not enjoying this hack here
+          value={getValues('dateOfBirth')}
+          onChange={date => date && setValue('dateOfBirth', date)}
         />
         <TextInput
           label="Telefon"
@@ -83,7 +84,7 @@ export const RegisterInformationForm: React.FC<
             onChange={file => setValue('image', file ?? undefined)}
           >
             {props => (
-              <Button leftIcon={<FontAwesomeIcon icon="upload" />} {...props}>
+              <Button leftIcon={<IconUpload />} {...props}>
                 Last opp bilde
               </Button>
             )}

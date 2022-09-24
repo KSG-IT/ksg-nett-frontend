@@ -1,21 +1,21 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Grid, Stack, Text } from '@mantine/core'
+import { Grid, Stack, Text, ThemeIcon } from '@mantine/core'
+import { IconVideo, TablerIcon } from '@tabler/icons'
 
 interface IconWithDataProps {
-  icon: IconName
+  icon: TablerIcon
   userData: string
 }
 
-export const IconWithData: React.FC<IconWithDataProps> = ({
-  icon,
-  userData,
-}) => {
+export function IconWithData({ icon: Icon, userData }: IconWithDataProps) {
   return (
     <Grid align={'center'} columns={12}>
       <Grid.Col span={1}>
         <Stack align={'center'}>
-          <FontAwesomeIcon icon={icon} style={{ color: 'darkgoldenrod' }} />
+          <ThemeIcon variant="light" color={'orange'}>
+            <Icon size={14} stroke={1.5} />
+          </ThemeIcon>
         </Stack>
       </Grid.Col>
       <Grid.Col span={10}>

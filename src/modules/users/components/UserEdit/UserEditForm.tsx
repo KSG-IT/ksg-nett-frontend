@@ -22,6 +22,7 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({ user }) => {
         onClose={() => setOpened(false)}
         title="Rediger profilinformasjon"
         size="lg"
+        padding="xl"
       >
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
@@ -83,11 +84,11 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({ user }) => {
       </Modal>
       <Group position="center">
         <Button
-          variant="gradient"
-          gradient={{ from: 'coral', to: 'yellow', deg: 15 }}
+          variant="light"
+          color={'orange'}
           onClick={() => setOpened(true)}
         >
-          Rediger profil
+          Endre
         </Button>
       </Group>
     </>

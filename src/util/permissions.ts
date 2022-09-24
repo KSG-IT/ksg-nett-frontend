@@ -20,5 +20,8 @@ export const PERMISSIONS = {
     add: {
       quote: 'quotes.add_quote',
     },
+    change: {
+      quote: 'quotes.change_quote',
+    },
   },
 }

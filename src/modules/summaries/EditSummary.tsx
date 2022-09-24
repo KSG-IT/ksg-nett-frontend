@@ -8,7 +8,7 @@ import { UserMultiSelect, UserSelect } from 'components/Select'
 import { format } from 'date-fns'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { summaryTypeChoices } from './conts'
@@ -105,8 +105,10 @@ interface EditSummaryParams {
 }
 
 export const EditSummary: React.VFC = () => {
-  const { summaryId } = useParams<EditSummaryParams>()
-  const history = useHistory()
+  const { summaryId } = useParams<
+    keyof EditSummaryParams
+  >() as EditSummaryParams
+  const navigate = useNavigate()
 
   // Validation initialization
   let schema = yup.object({
@@ -141,7 +143,7 @@ export const EditSummary: React.VFC = () => {
     onCompleted({ patchSummary }) {
       toast.success('Referat oppdatert!')
       const { summary } = patchSummary
-      history.push(`/summaries/${summary.id}`)
+      navigate(`/summaries/${summary.id}`)
     },
   })
 

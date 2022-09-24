@@ -16,8 +16,10 @@ interface InternalGroupDiscussionParams {
   internalGroupId: string
 }
 
-export const InternalGroupDiscussion: React.VFC = () => {
-  const { internalGroupId } = useParams<InternalGroupDiscussionParams>()
+export const InternalGroupDiscussion: React.FC = () => {
+  const { internalGroupId } = useParams<
+    keyof InternalGroupDiscussionParams
+  >() as InternalGroupDiscussionParams
 
   const { error, loading, data } = useQuery<InternalGroupDiscussionDataReturns>(
     INTERNAL_GROUP_DISCUSSION_DATA,
@@ -40,7 +42,7 @@ export const InternalGroupDiscussion: React.VFC = () => {
   } = data
 
   return (
-    <Stack style={{ overflowY: 'scroll', padding: '32px' }}>
+    <Stack>
       <Title>Fordelingsmøte {internalGroup.name}</Title>
 
       <Title order={2}>Kandidater tilgjengelige for vurdering</Title>

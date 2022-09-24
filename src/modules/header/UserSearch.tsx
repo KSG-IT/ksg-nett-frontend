@@ -1,5 +1,5 @@
 import { useLazyQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconSearch } from '@tabler/icons'
 import { UserThumbnail } from 'modules/users'
 import { ALL_ACTIVE_USERS_SHALLOW_QUERY } from 'modules/users/queries'
 import {
@@ -8,7 +8,7 @@ import {
   UserNode,
 } from 'modules/users/types'
 import { useCallback, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Select, { components, DropdownIndicatorProps } from 'react-select'
 import styled from 'styled-components'
 import { useDebounce } from 'util/hooks'
@@ -40,7 +40,7 @@ const DropdownIndicator = (
 ) => {
   return (
     <components.DropdownIndicator {...props}>
-      <FontAwesomeIcon size="1x" icon="search" type="brand" />
+      <IconSearch />
     </components.DropdownIndicator>
   )
 }
@@ -62,7 +62,7 @@ export const UserSearch: React.VFC = () => {
   const [userQuery, setUserQuery] = useState('')
   const debounceQuery = useDebounce(userQuery)
   const [selected, setSelected] = useState<UserSearchOption | null>(null)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const [execute, { loading, data }] = useLazyQuery<
     AllUsersShallowQueryReturns,
@@ -80,7 +80,7 @@ export const UserSearch: React.VFC = () => {
       if (userId) {
         setUserQuery('')
         setSelected(null)
-        history.push(`/users/${userId}`)
+        navigate(`/users/${userId}`)
       }
     },
     [setUserQuery, history]

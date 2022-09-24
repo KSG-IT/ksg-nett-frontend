@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client'
 import { Button, Group } from '@mantine/core'
 import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import {
   InternalGroupPositionTypeOption,
@@ -38,7 +38,7 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
     selectedInternalGroupPositionType,
     setSelectedInternalGroupPositionType,
   ] = useState<InternalGroupPositionTypeOption | null>(null)
-  const history = useHistory()
+  const history = useNavigate()
 
   const [assignNewPosition, { loading }] = useMutation<
     AssignNewInternalGroupPositionMembershipReturns,

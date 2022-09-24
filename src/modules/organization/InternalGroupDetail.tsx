@@ -134,8 +134,10 @@ interface InternalGroupDetailParams {
   internalGroupId: string
 }
 
-export const InternalGroupDetail: React.VFC = () => {
-  const { internalGroupId } = useParams<InternalGroupDetailParams>()
+export const InternalGroupDetail: React.FC = () => {
+  const { internalGroupId } = useParams<
+    keyof InternalGroupDetailParams
+  >() as InternalGroupDetailParams
   const { data, loading, error } = useQuery<
     InternalGroupReturns,
     InternalGroupVariables

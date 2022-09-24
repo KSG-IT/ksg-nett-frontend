@@ -1,27 +1,29 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Menu } from '@mantine/core'
+import { IconDots, IconEye, IconUserMinus, IconUserPlus } from '@tabler/icons'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import toast from 'react-hot-toast'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export const ApplicantTableRowMenu: React.VFC<{
   applicant: CoreApplicantNode
 }> = ({ applicant }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { setSelfAsInterviewer, removeSelfAsInterviewer } =
     useInterviewMutations()
 
   const handleMoreInfo = () => {
-    history.push(`/admissions/applicants/${applicant.id}`)
+    navigate(`/admissions/applicants/${applicant.id}`)
   }
   const attendInterviewText = applicant.iAmAttendingInterview
     ? 'Meld av intervju'
     : 'Meld opp til intervju'
 
-  const atttendInterviewIcon = applicant.iAmAttendingInterview
-    ? 'user-minus'
-    : 'user-plus'
+  const atttendInterviewIcon = applicant.iAmAttendingInterview ? (
+    <IconUserMinus />
+  ) : (
+    <IconUserPlus />
+  )
 
   const attendingInterviewColor = applicant.iAmAttendingInterview
     ? 'red'
@@ -50,20 +52,17 @@ export const ApplicantTableRowMenu: React.VFC<{
     <Menu position="left-start">
       <Menu.Target>
         <Button variant="outline">
-          <FontAwesomeIcon icon="ellipsis-h" />
+          <IconDots />
         </Button>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item
-          onClick={handleMoreInfo}
-          icon={<FontAwesomeIcon icon="eye" />}
-        >
+        <Menu.Item onClick={handleMoreInfo} icon={<IconEye />}>
           Mer info
         </Menu.Item>
         <Menu.Item
           onClick={handleAttendInterview}
           color={attendingInterviewColor}
-          icon={<FontAwesomeIcon icon={atttendInterviewIcon} />}
+          icon={atttendInterviewIcon}
         >
           {attendInterviewText}
         </Menu.Item>

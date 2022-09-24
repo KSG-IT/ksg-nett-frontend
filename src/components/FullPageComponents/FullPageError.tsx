@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconAlertTriangle } from '@tabler/icons'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -17,7 +17,7 @@ const Message = styled.h2`
 export const FullPageError: React.VFC = () => {
   return (
     <Wrapper>
-      <FontAwesomeIcon size="6x" icon="times" type="brand" />
+      <IconAlertTriangle size={200} />
       <Message>Noe gikk galt</Message>
     </Wrapper>
   )
