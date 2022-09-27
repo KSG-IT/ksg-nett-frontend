@@ -22,23 +22,21 @@ interface UserQuotesProps {
 export const UserQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
   const { classes } = useStyles()
 
-  const fields = quotes.map(quote => (
-    <Card className={classes.card} key={quote.id} radius="lg" shadow={'xs'}>
-      <Card.Section p={'md'}>
-        <Text className={classes.quoteText}>{quote.text}</Text>
-        <Text className={classes.quoteContext}>{quote.context}</Text>
-        <Avatar.Group pt={'xs'}>
-          {quote.tagged.map(user => (
-            <UserThumbnail key={user.id} user={user} />
-          ))}
-        </Avatar.Group>
-      </Card.Section>
-    </Card>
-  ))
-
   return (
-    <SimpleGrid cols={2} py={'md'}>
-      {fields}
+    <SimpleGrid cols={2} py={'sm'}>
+      {quotes.map(quote => (
+        <Card className={classes.card} key={quote.id} radius="lg" shadow={'xs'}>
+          <Card.Section p={'md'}>
+            <Text className={classes.quoteText}>{quote.text}</Text>
+            <Text className={classes.quoteContext}>{quote.context}</Text>
+            <Avatar.Group pt={'xs'}>
+              {quote.tagged.map(user => (
+                <UserThumbnail key={user.id} user={user} />
+              ))}
+            </Avatar.Group>
+          </Card.Section>
+        </Card>
+      ))}
     </SimpleGrid>
   )
 }
