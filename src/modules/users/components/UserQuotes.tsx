@@ -16,7 +16,7 @@ interface UserQuotesProps {
   quotes: QuoteNode[]
 }
 
-export const UserQuotes: React.VFC<UserQuotesProps> = ({ quotes }) => {
+export const UserQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
   const { classes } = useStyles()
 
   const fields = quotes.map(quote => (
@@ -33,7 +33,7 @@ export const UserQuotes: React.VFC<UserQuotesProps> = ({ quotes }) => {
   ))
 
   return (
-    <SimpleGrid cols={2} p="md">
+    <SimpleGrid cols={2} py={'md'}>
       {fields}
     </SimpleGrid>
   )

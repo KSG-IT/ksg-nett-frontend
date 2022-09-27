@@ -65,7 +65,7 @@ interface UserProfileParams {
   userId: string
 }
 
-export const UserProfile: React.VFC = () => {
+export const UserProfile: React.FC = () => {
   const { classes } = useStyles()
   const mediaQuery = useMediaQuery('(min-width: 800px)')
   const { userId } = useParams<keyof UserProfileParams>() as UserProfileParams

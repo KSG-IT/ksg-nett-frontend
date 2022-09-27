@@ -10,12 +10,13 @@ import {
   Group,
   Stack,
   Text,
+  ThemeIcon,
   Title,
 } from '@mantine/core'
 import {
   IconAt,
   IconBook,
-  IconConfetti,
+  IconCake,
   IconMapPin,
   IconPhone,
   IconSchool,
@@ -26,6 +27,7 @@ import { useParams } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
 import { UserQueryReturns, UserQueryVariables, USER_QUERY } from '..'
 import { IconWithData } from '../components/IconWithData'
+import { UserEditForm } from '../components/UserEdit/UserEditForm'
 import { UserHistory } from '../components/UserHistory'
 import { UserQuotes } from '../components/UserQuotes'
 
@@ -50,12 +52,42 @@ const useStyles = createStyles(theme => ({
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontWeight: 500,
     fontSize: theme.fontSizes.lg * 1.25,
+    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+      textAlign: 'center',
+    },
   },
   role: {
     color: theme.colors.gray[7],
     fontWeight: 700,
     textTransform: 'uppercase',
     fontSize: theme.fontSizes.lg,
+    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+      textAlign: 'center',
+    },
+  },
+  container: {
+    // Media query with value from theme
+    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+      marginLeft: 0,
+      marginRight: 0,
+    },
+  },
+  wrapper: {
+    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+      marginLeft: 0,
+      marginRight: 0,
+    },
+    marginTop: theme.spacing.md,
+  },
+  card: {
+    maxWidth: 900,
+  },
+  memberships: {
+    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+      marginLeft: theme.spacing.md,
+      marginRight: theme.spacing.md,
+    },
+    marginLeft: theme.spacing.xl,
   },
 }))
 
@@ -77,6 +109,7 @@ export const UserProfile: React.FC = () => {
   if (error) return <FullPageError />
   if (loading || !data) return <FullContentLoader />
 
+  const fullUser = data.user
   const {
     user: { internalGroupPositionMembershipHistory: memberships, ...user },
   } = data
@@ -84,28 +117,19 @@ export const UserProfile: React.FC = () => {
   if (user === null || user === undefined) return <FullPage404 />
 
   return (
-    <Group mt={'md'} align="flex-start">
-      <Stack>
-        <Card shadow={'sm'} radius={'md'}>
+    <Group align={'flex-start'} className={classes.wrapper}>
+      <Stack align={'flex-start'}>
+        <Card shadow={'sm'} radius={'md'} className={classes.card}>
           <Grid p={'xl'}>
             <Grid.Col xs={6} lg={6}>
-              <Text
-                align={mediaQuery ? 'left' : 'center'}
-                className={classes.role}
-              >
-                {user.ksgStatus}
-              </Text>
+              <Text className={classes.role}>{user.ksgStatus}</Text>
               {mediaQuery ? null : (
                 <Center mt={'xs'}>
                   <Avatar src={user.profileImage} size="xl" radius={60} />
                 </Center>
               )}
 
-              <Text
-                mt={'sm'}
-                align={mediaQuery ? 'left' : 'center'}
-                className={classes.name}
-              >
+              <Text mt={'sm'} className={classes.name}>
                 {user.fullName}
               </Text>
               <Divider my={'sm'} />
@@ -113,36 +137,44 @@ export const UserProfile: React.FC = () => {
               <IconWithData icon={IconPhone} userData={user.phone} />
               <IconWithData icon={IconMapPin} userData={user.studyAddress} />
               <IconWithData icon={IconSchool} userData={user.study} />
-              <IconWithData icon={IconConfetti} userData={user.dateOfBirth} />
+              <IconWithData icon={IconCake} userData={user.dateOfBirth} />
               <Group noWrap spacing={10} mt={'xl'}>
-                <IconBook />
+                <ThemeIcon variant="light" color={'orange'}>
+                  <IconBook stroke={1.2} />
+                </ThemeIcon>
                 <Text className={classes.role}>Om meg</Text>
               </Group>
               <Text mt={'xs'}>{user.biography}</Text>
             </Grid.Col>
             {mediaQuery ? (
               <Grid.Col xs={5} lg={5} offset={1}>
-                <Avatar
-                  src={user.profileImage}
-                  radius={'xl'}
-                  classNames={{
-                    image: classes.profileImage,
-                    root: classes.avatar,
-                  }}
-                />
+                <Stack
+                  justify={'space-between'}
+                  style={{ height: '100%' }}
+                  align="flex-end"
+                >
+                  <Avatar
+                    src={user.profileImage}
+                    radius={'lg'}
+                    classNames={{
+                      image: classes.profileImage,
+                      root: classes.avatar,
+                    }}
+                  />
+                  <UserEditForm user={fullUser} />
+                </Stack>
               </Grid.Col>
             ) : null}
           </Grid>
         </Card>
-
-        <Stack mt={'md'}>
+        <Stack ml={'sm'} mt={'md'}>
           <Title order={3} className={classes.title}>
             Sitater
           </Title>
           <UserQuotes quotes={user.taggedAndVerifiedQuotes} />
         </Stack>
       </Stack>
-      <Stack justify={'flex-end'}>
+      <Stack justify={'flex-end'} className={classes.memberships}>
         <Title order={3} className={classes.title}>
           Vervhistorikk
         </Title>

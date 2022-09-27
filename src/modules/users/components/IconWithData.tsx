@@ -21,7 +21,7 @@ export const IconWithData: React.FC<IconWithDataProps> = ({
       </Grid.Col>
       <Grid.Col span={10}>
         <Text size="sm" color={'dimmed'}>
-          {props.userData}
+          {userData}
         </Text>
       </Grid.Col>
     </Grid>

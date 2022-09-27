@@ -1,5 +1,14 @@
 import { Button, Group, Modal, Textarea, TextInput } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
+import {
+  IconAt,
+  IconCake,
+  IconHome,
+  IconMapPin,
+  IconPhone,
+  IconSchool,
+  IconSignature,
+} from '@tabler/icons'
 import { UserNode } from 'modules/users/types'
 import { useState } from 'react'
 import { useEditProfileAPI } from './UserEditAPI'
@@ -26,28 +35,33 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({ user }) => {
       >
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
+            icon={<IconSignature size={14} />}
             error={errors?.firstName?.message}
             label="Fornavn"
             {...register('firstName')}
           />
           <TextInput
+            icon={<IconSignature size={14} />}
             label="Etternavn"
             error={errors?.lastName?.message}
             {...register('lastName')}
           />
           <TextInput
             label="Adresse"
+            icon={<IconMapPin size={14} />}
             error={errors?.studyAddress?.message}
             {...register('studyAddress')}
           />
           <TextInput
             label="Studie"
+            icon={<IconSchool size={14} />}
             error={errors?.study?.message}
             {...register('study')}
           />
           <DatePicker
             label="Fødselsdato"
             placeholder="Velg en dato"
+            icon={<IconCake size={14} />}
             error={errors?.dateOfBirth?.message}
             defaultValue={getValues('dateOfBirth')}
             onChange={date => date && setValue('dateOfBirth', new Date(date))}
@@ -55,11 +69,13 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({ user }) => {
           />
           <TextInput
             label="Telefon"
+            icon={<IconPhone size={14} />}
             error={errors?.phone?.message}
             {...register('phone')}
           />
           <TextInput
             label="Epostadresse"
+            icon={<IconAt size={14} />}
             error={errors?.email?.message}
             {...register('email')}
           />
@@ -69,7 +85,14 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({ user }) => {
             error={errors?.biography?.message}
             {...register('biography')}
           />
-          <Group position="right" mt="md">
+          <Group position="apart" mt="md">
+            <Button
+              variant="outline"
+              color="orange"
+              onClick={() => setOpened(false)}
+            >
+              Lukk
+            </Button>
             <Button
               variant="gradient"
               gradient={{ from: 'coral', to: 'yellow', deg: 15 }}
