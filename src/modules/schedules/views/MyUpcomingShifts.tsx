@@ -20,7 +20,7 @@ export const MyUpcomingShifts: React.FC = () => {
   return (
     <>
       <Group position="apart" align="baseline" style={{ maxWidth: 900 }}>
-        <Title>Mine vakter</Title>
+        <Title>Mine kommende vakter</Title>
         <Link to="history">
           <Button>Alle mine vakter</Button>
         </Link>
