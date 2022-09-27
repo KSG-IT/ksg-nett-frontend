@@ -12,6 +12,7 @@ export const ME_QUERY = gql`
       initials
       email
       balance
+      dateOfBirth
       biography
       studyAddress
       homeAddress
