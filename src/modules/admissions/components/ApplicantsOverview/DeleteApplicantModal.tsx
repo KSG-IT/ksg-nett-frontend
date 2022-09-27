@@ -1,6 +1,6 @@
 import { FetchResult } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Group, LoadingOverlay } from '@mantine/core'
+import { IconTrash } from '@tabler/icons'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -41,7 +41,7 @@ export const DeleteApplicantModal: React.FC<DeleteApplicantModalProps> = ({
       <p>Er du sikker på at du har lyst til å slette {applicant!.fullName}</p>
       <Group>
         <Button
-          leftIcon={<FontAwesomeIcon icon="trash" />}
+          leftIcon={<IconTrash />}
           color="red"
           onClick={handleDeleteApplicant}
         >

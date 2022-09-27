@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, FileInput, Modal, Stack, Table } from '@mantine/core'
+import { IconFileCode, IconUpload, IconUserPlus } from '@tabler/icons'
 import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { ApplicantCSVData } from 'modules/admissions/types.graphql'
@@ -74,11 +74,11 @@ export const UploadAdmissionCSVModal: React.FC<
           label="Velg en opptaksfil"
           accept="text/csv"
           placeholder="Trykk her"
-          icon={<FontAwesomeIcon icon="file-csv" />}
+          icon={<IconFileCode />}
           clearable
         />
         <Button
-          leftIcon={<FontAwesomeIcon icon="upload" />}
+          leftIcon={<IconUpload />}
           disabled={!file}
           type="submit"
           onClick={handleUploadFile}
@@ -89,7 +89,7 @@ export const UploadAdmissionCSVModal: React.FC<
       <Button
         disabled={result.length === 0 || !file}
         loading={createApplicantsFromCSVLoading}
-        leftIcon={<FontAwesomeIcon icon="user-plus" />}
+        leftIcon={<IconUserPlus />}
         my="md"
         onClick={handleCreateProfiles}
       >

@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Avatar,
   Button,
@@ -9,6 +8,7 @@ import {
   Text,
   Title,
 } from '@mantine/core'
+import { IconEye } from '@tabler/icons'
 import { InternalGroupApplicantData } from 'modules/admissions/types.graphql'
 import { Link } from 'react-router-dom'
 
@@ -55,9 +55,7 @@ export const InternalGroupPreviewCard: React.FC<{
         </Group>
         <Group position="right">
           <Link to={`${internalGroupDiscussionData.internalGroup.id}`}>
-            <Button leftIcon={<FontAwesomeIcon icon="eye" />}>
-              Mer detaljer
-            </Button>
+            <Button leftIcon={<IconEye />}>Mer detaljer</Button>
           </Link>
         </Group>
       </Stack>

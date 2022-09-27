@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Popover, Text } from '@mantine/core'
 import { IconInfoCircle } from '@tabler/icons'
 import { useState } from 'react'

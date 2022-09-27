@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Alert, Button, Center, Stack, TextInput, Title } from '@mantine/core'
+import { IconPlane } from '@tabler/icons'
 import { MessageBox } from 'components/MessageBox'
 import { RE_SEND_APPLICATION_TOKEN } from 'modules/admissions/mutations'
 import {
@@ -43,10 +43,7 @@ export const ReSendApplicantTokenForm: React.VFC = () => {
             Følg med på inboxen din. Om eposten din er registrert i systemet
             vårt skal du straks få en epost.
           </Alert>
-          <Button
-            onClick={() => setEmailSent(false)}
-            leftIcon={<FontAwesomeIcon icon="paper-plane" />}
-          >
+          <Button onClick={() => setEmailSent(false)} leftIcon={<IconPlane />}>
             Send epost på nytt?
           </Button>
         </Stack>

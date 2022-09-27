@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Card, Menu, Modal, Table } from '@mantine/core'
 import { IconDots, IconEye, IconTrash } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'

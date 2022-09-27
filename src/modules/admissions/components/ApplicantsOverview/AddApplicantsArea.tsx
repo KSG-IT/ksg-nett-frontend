@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Group, Stack, Textarea, Title } from '@mantine/core'
+import { IconFileUpload, IconPlane } from '@tabler/icons'
 import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { useState } from 'react'
@@ -41,16 +41,13 @@ export const AddApplicantsArea: React.FC = () => {
       />
       <Group>
         <Button
-          leftIcon={<FontAwesomeIcon icon="paper-plane" />}
+          leftIcon={<IconPlane />}
           onClick={handleCreateApplicants}
           disabled={createApplicantsLoading}
         >
           Legg til søkere
         </Button>
-        <Button
-          leftIcon={<FontAwesomeIcon icon="file-upload" />}
-          onClick={() => setOpen(true)}
-        >
+        <Button leftIcon={<IconFileUpload />} onClick={() => setOpen(true)}>
           Last opp fil
         </Button>
         <UploadAdmissionCSVModal opened={open} onClose={() => setOpen(false)} />

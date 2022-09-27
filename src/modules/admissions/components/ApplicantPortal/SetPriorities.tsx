@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Alert, Button, Group, Stack, Text, Title } from '@mantine/core'
+import { IconTrash } from '@tabler/icons'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import {
   ADD_INTERNAL_GROUP_POSITION_PRIORITY,
@@ -147,7 +147,7 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
             <Text>{priority.internalGroupPosition.name}</Text>
             <Button
               color="red"
-              leftIcon={<FontAwesomeIcon icon="trash-alt" />}
+              leftIcon={<IconTrash />}
               onClick={() => {
                 handleDeletePriority(priority.id)
               }}
