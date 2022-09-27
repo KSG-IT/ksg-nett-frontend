@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Card, Menu, Modal, Table } from '@mantine/core'
+import { IconDots, IconEye, IconTrash } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { parseApplicantPriorityInternalGroupPosition } from 'modules/admissions/parsing'
@@ -54,13 +55,13 @@ export const ApplicantsTable: React.FC<{
         <Menu position="left-start">
           <Menu.Target>
             <Button variant="outline">
-              <FontAwesomeIcon icon="ellipsis-h" />
+              <IconDots />
             </Button>
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Label>Valg</Menu.Label>
             <Menu.Item
-              icon={<FontAwesomeIcon icon="eye" />}
+              icon={<IconEye />}
               onClick={() => handleMoreInfo(applicant.id)}
             >
               Mer info
@@ -69,7 +70,7 @@ export const ApplicantsTable: React.FC<{
             <PermissionGate permissions={'admissions.delete_applicant'}>
               <Menu.Label>Admin</Menu.Label>
               <Menu.Item
-                icon={<FontAwesomeIcon icon="trash" />}
+                icon={<IconTrash />}
                 color="red"
                 onClick={() => {
                   setApplicantToDelete(applicant)

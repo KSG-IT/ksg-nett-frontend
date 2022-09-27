@@ -1,6 +1,16 @@
 import { useMutation } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Menu, Text, useMantineTheme } from '@mantine/core'
+import {
+  IconBackpack,
+  IconCheck,
+  IconCreativeCommonsSa,
+  IconDots,
+  IconEye,
+  IconHourglass,
+  IconPlayerPlay,
+  IconQuestionMark,
+  IconWheelchair,
+} from '@tabler/icons'
 import { InternalGroupPositionPriorityBadge } from 'modules/admissions/components'
 import { InternalGroupPositionPriorityInternalGroupPriorityValues } from 'modules/admissions/consts'
 import { PATCH_INTERNAL_GROUP_POSITION_PRIORITY } from 'modules/admissions/mutations'
@@ -110,20 +120,16 @@ export const DiscussApplicantTableRows: React.VFC<
       <td>
         <Menu position="left-start">
           <Menu.Target>
-            <Button variant="outline">
-              <FontAwesomeIcon icon="ellipsis-h" />
+            <Button variant="outline" loading={loading}>
+              <IconDots />
             </Button>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Item icon={<FontAwesomeIcon icon="eye" />}>
+            <Menu.Item icon={<IconEye />}>
               <Text onClick={() => handleMoreInfo(applicant)}>Mer info</Text>
             </Menu.Item>
             <Menu.Label>Handlinger</Menu.Label>
-            <Menu.Item
-              icon={
-                <FontAwesomeIcon icon="square" color={theme.colors.blue[5]} />
-              }
-            >
+            <Menu.Item icon={<IconPlayerPlay />} color="blue">
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -134,11 +140,7 @@ export const DiscussApplicantTableRows: React.VFC<
                 Diskuteres
               </Text>
             </Menu.Item>
-            <Menu.Item
-              icon={
-                <FontAwesomeIcon icon="check" color={theme.colors.green[5]} />
-              }
-            >
+            <Menu.Item color="green" icon={<IconCheck />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -149,14 +151,7 @@ export const DiscussApplicantTableRows: React.VFC<
                 Vil ha
               </Text>
             </Menu.Item>
-            <Menu.Item
-              icon={
-                <FontAwesomeIcon
-                  icon="question"
-                  color={theme.colors.orange[5]}
-                />
-              }
-            >
+            <Menu.Item color="orange" icon={<IconQuestionMark />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -167,11 +162,7 @@ export const DiscussApplicantTableRows: React.VFC<
                 Vil sannsynligvis ha
               </Text>
             </Menu.Item>
-            <Menu.Item
-              icon={
-                <FontAwesomeIcon icon="box" color={theme.colors.grape[5]} />
-              }
-            >
+            <Menu.Item color="grape" icon={<IconBackpack />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -183,14 +174,7 @@ export const DiscussApplicantTableRows: React.VFC<
               </Text>
             </Menu.Item>
 
-            <Menu.Item
-              icon={
-                <FontAwesomeIcon
-                  icon="wheelchair"
-                  color={theme.colors.yellow[5]}
-                />
-              }
-            >
+            <Menu.Item color="yellow" icon={<IconWheelchair />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -201,14 +185,7 @@ export const DiscussApplicantTableRows: React.VFC<
                 Reserve
               </Text>
             </Menu.Item>
-            <Menu.Item
-              icon={
-                <FontAwesomeIcon
-                  icon="hourglass"
-                  color={theme.colors.pink[5]}
-                />
-              }
-            >
+            <Menu.Item color="pink" icon={<IconHourglass />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -219,11 +196,7 @@ export const DiscussApplicantTableRows: React.VFC<
                 Send på runde
               </Text>
             </Menu.Item>
-            <Menu.Item
-              icon={
-                <FontAwesomeIcon icon="trash-alt" color={theme.colors.red[5]} />
-              }
-            >
+            <Menu.Item color="red" icon={<IconCreativeCommonsSa />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
