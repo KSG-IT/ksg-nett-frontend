@@ -1,14 +1,21 @@
-import { Card, Group, Stack, Text } from '@mantine/core'
+import { Card, createStyles, Group, Stack, Text } from '@mantine/core'
 import { format } from 'date-fns'
 import { UserThumbnail } from 'modules/users'
 import { ShiftNode } from '../types.graphql'
+
+const useUserShiftCardStyles = createStyles(theme => ({
+  card: {
+    maxWidth: 900,
+  },
+}))
 
 interface UserShiftCardProps {
   shift: ShiftNode
 }
 export const UserShiftCard: React.FC<UserShiftCardProps> = ({ shift }) => {
+  const { classes } = useUserShiftCardStyles()
   return (
-    <Card my="md" style={{ maxWidth: 900 }} shadow="md">
+    <Card my="md" className={classes.card} shadow="md">
       <Group>
         <Stack>
           {shift.location && (
