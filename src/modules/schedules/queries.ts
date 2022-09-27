@@ -15,6 +15,7 @@ export const MY_UPCOMING_SHIFTS = gql`
           id
           initials
           fullName
+          profileImage
         }
       }
 
@@ -39,6 +40,7 @@ export const ALL_MY_SHIFTS = gql`
           id
           initials
           fullName
+          profileImage
         }
       }
 
