@@ -15,7 +15,7 @@ interface UserShiftCardProps {
 export const UserShiftCard: React.FC<UserShiftCardProps> = ({ shift }) => {
   const { classes } = useUserShiftCardStyles()
   return (
-    <Card my="md" className={classes.card} shadow="md">
+    <Card className={classes.card} shadow="md">
       <Group>
         <Stack>
           {shift.location && (
