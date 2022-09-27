@@ -33,10 +33,17 @@ export const PNEDING_QUOTES_QUERY = gql`
       text
       context
       createdAt
+      reportedBy {
+        id
+        initials
+        fullName
+        profileImage
+      }
       tagged {
         id
         initials
         profileImage
+        fullName
       }
     }
   }
