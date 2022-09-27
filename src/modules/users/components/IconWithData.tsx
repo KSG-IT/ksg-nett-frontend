@@ -6,7 +6,10 @@ interface IconWithDataProps {
   userData: string
 }
 
-export function IconWithData({ icon: Icon, userData }: IconWithDataProps) {
+export const IconWithData: React.FC<IconWithDataProps> = ({
+  icon: Icon,
+  userData,
+}) => {
   return (
     <Grid align={'center'} columns={12}>
       <Grid.Col span={1}>
@@ -18,7 +21,7 @@ export function IconWithData({ icon: Icon, userData }: IconWithDataProps) {
       </Grid.Col>
       <Grid.Col span={10}>
         <Text size="sm" color={'dimmed'}>
-          {userData}
+          {props.userData}
         </Text>
       </Grid.Col>
     </Grid>

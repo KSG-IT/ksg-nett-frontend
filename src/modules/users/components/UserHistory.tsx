@@ -6,7 +6,7 @@ interface UserHistoryProps {
   memberships: InternalGroupPositionMembershipNode[]
 }
 
-export const UserHistory: React.VFC<UserHistoryProps> = ({ memberships }) => {
+export const UserHistory: React.FC<UserHistoryProps> = ({ memberships }) => {
   const fields = memberships.map(
     ({ id, position, membershipStart, membershipEnd }) => (
       <Timeline.Item

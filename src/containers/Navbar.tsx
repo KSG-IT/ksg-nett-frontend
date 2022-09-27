@@ -15,6 +15,7 @@ import {
   IconUsers,
 } from '@tabler/icons'
 import { useLocation } from 'react-router-dom'
+import { useStore } from 'store'
 import { NavBarMeSection } from './NavBarMeSection'
 import { NavItem, RouteItem } from './NavItem'
 
@@ -84,6 +85,7 @@ interface AppNavbarProps {
 
 export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
   const location = useLocation()
+  const isOpen = useStore(state => state.sidebarOpen)
 
   const { classes } = useNavbarStyles()
 
@@ -91,7 +93,7 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
     <Navbar
       p="md"
       hiddenBreakpoint="sm"
-      hidden={!opened}
+      hidden={!isOpen}
       width={{ sm: 200, lg: 300 }}
       style={{ backgroundColor: 'white', overflowY: 'scroll' }}
     >
