@@ -18,6 +18,7 @@ interface UserQuotesProps {
 
 export const UserQuotes: React.VFC<UserQuotesProps> = ({ quotes }) => {
   const { classes } = useStyles()
+
   const fields = quotes.map(quote => (
     <Card className={classes.card} key={quote.id} radius="lg" shadow={'xs'}>
       <Card.Section p={'md'}>
@@ -30,6 +31,7 @@ export const UserQuotes: React.VFC<UserQuotesProps> = ({ quotes }) => {
       </Card.Section>
     </Card>
   ))
+
   return (
     <SimpleGrid cols={2} p="md">
       {fields}

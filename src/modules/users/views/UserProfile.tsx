@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Avatar,
   Card,
@@ -15,6 +14,7 @@ import {
 } from '@mantine/core'
 import {
   IconAt,
+  IconBook,
   IconConfetti,
   IconMapPin,
   IconPhone,
@@ -84,66 +84,65 @@ export const UserProfile: React.FC = () => {
   if (user === null || user === undefined) return <FullPage404 />
 
   return (
-    <Group align={'flex-start'} mt={50} mx={'md'}>
-      <Stack align={'flex-start'}>
-        <Container>
-          <Card shadow={'sm'} radius={'md'}>
-            <Grid p={'xl'}>
-              <Grid.Col xs={6} lg={6}>
-                <Text
-                  align={mediaQuery ? 'left' : 'center'}
-                  className={classes.role}
-                >
-                  {user.ksgStatus}
-                </Text>
-                {mediaQuery ? null : (
-                  <Center mt={'xs'}>
-                    <Avatar src={user.profileImage} size="xl" radius={60} />
-                  </Center>
-                )}
+    <Group mt={'md'} align="flex-start">
+      <Stack>
+        <Card shadow={'sm'} radius={'md'}>
+          <Grid p={'xl'}>
+            <Grid.Col xs={6} lg={6}>
+              <Text
+                align={mediaQuery ? 'left' : 'center'}
+                className={classes.role}
+              >
+                {user.ksgStatus}
+              </Text>
+              {mediaQuery ? null : (
+                <Center mt={'xs'}>
+                  <Avatar src={user.profileImage} size="xl" radius={60} />
+                </Center>
+              )}
 
-                <Text
-                  mt={'sm'}
-                  align={mediaQuery ? 'left' : 'center'}
-                  className={classes.name}
-                >
-                  {user.fullName}
-                </Text>
-                <Divider my={'sm'} />
-                <IconWithData icon={IconAt} userData={user.email} />
-                <IconWithData icon={IconPhone} userData={user.phone} />
-                <IconWithData icon={IconMapPin} userData={user.studyAddress} />
-                <IconWithData icon={IconSchool} userData={user.study} />
-                <IconWithData icon={IconConfetti} userData={user.dateOfBirth} />
-                <Group noWrap spacing={10} mt={'xl'}>
-                  <FontAwesomeIcon icon={['fas', 'book-open']} color={'gray'} />
-                  <Text className={classes.role}>Om meg</Text>
-                </Group>
-                <Text mt={'xs'}>{user.biography}</Text>
+              <Text
+                mt={'sm'}
+                align={mediaQuery ? 'left' : 'center'}
+                className={classes.name}
+              >
+                {user.fullName}
+              </Text>
+              <Divider my={'sm'} />
+              <IconWithData icon={IconAt} userData={user.email} />
+              <IconWithData icon={IconPhone} userData={user.phone} />
+              <IconWithData icon={IconMapPin} userData={user.studyAddress} />
+              <IconWithData icon={IconSchool} userData={user.study} />
+              <IconWithData icon={IconConfetti} userData={user.dateOfBirth} />
+              <Group noWrap spacing={10} mt={'xl'}>
+                <IconBook />
+                <Text className={classes.role}>Om meg</Text>
+              </Group>
+              <Text mt={'xs'}>{user.biography}</Text>
+            </Grid.Col>
+            {mediaQuery ? (
+              <Grid.Col xs={5} lg={5} offset={1}>
+                <Avatar
+                  src={user.profileImage}
+                  radius={'xl'}
+                  classNames={{
+                    image: classes.profileImage,
+                    root: classes.avatar,
+                  }}
+                />
               </Grid.Col>
-              {mediaQuery ? (
-                <Grid.Col xs={5} lg={5} offset={1}>
-                  <Avatar
-                    src={user.profileImage}
-                    radius={'xl'}
-                    classNames={{
-                      image: classes.profileImage,
-                      root: classes.avatar,
-                    }}
-                  />
-                </Grid.Col>
-              ) : null}
-            </Grid>
-          </Card>
-        </Container>
-        <Stack ml={'md'} mt={'md'}>
+            ) : null}
+          </Grid>
+        </Card>
+
+        <Stack mt={'md'}>
           <Title order={3} className={classes.title}>
             Sitater
           </Title>
           <UserQuotes quotes={user.taggedAndVerifiedQuotes} />
         </Stack>
       </Stack>
-      <Stack justify={'flex-end'} mt={'xl'} ml={'xl'}>
+      <Stack justify={'flex-end'}>
         <Title order={3} className={classes.title}>
           Vervhistorikk
         </Title>
