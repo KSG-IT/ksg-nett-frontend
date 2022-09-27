@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Card, Menu, Table } from '@mantine/core'
+import { IconDots, IconMail, IconPhone, IconTrash } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
 import { formatDistanceToNow } from 'date-fns'
 import { NoticeMethodValues } from 'modules/admissions/consts'
@@ -78,12 +78,12 @@ export const NoticeTable: React.VFC<NoticeTableProps> = ({ applicants }) => {
         <Menu position="left-start">
           <Menu.Target>
             <Button variant="outline">
-              <FontAwesomeIcon icon="ellipsis-h" />
+              <IconDots />
             </Button>
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item
-              icon={<FontAwesomeIcon icon="envelope" />}
+              icon={<IconMail />}
               onClick={() =>
                 handleUpdateNotice(applicant, NoticeMethodValues.EMAIL)
               }
@@ -91,7 +91,7 @@ export const NoticeTable: React.VFC<NoticeTableProps> = ({ applicants }) => {
               Sendt epost
             </Menu.Item>
             <Menu.Item
-              icon={<FontAwesomeIcon icon="phone" />}
+              icon={<IconPhone />}
               onClick={() =>
                 handleUpdateNotice(applicant, NoticeMethodValues.CALL)
               }
@@ -102,7 +102,7 @@ export const NoticeTable: React.VFC<NoticeTableProps> = ({ applicants }) => {
             <PermissionGate permissions={'admissions.delete_applicant'}>
               <Menu.Label>Admin</Menu.Label>
               <Menu.Item
-                icon={<FontAwesomeIcon icon="trash" />}
+                icon={<IconTrash />}
                 color="red"
                 onClick={() => {
                   // setApplicantToDelete(applicant)

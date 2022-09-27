@@ -1,2 +1,2 @@
-export * from './ShiftCard'
 export * from './UserShiftCard'
+export * from './UserShiftCardList'

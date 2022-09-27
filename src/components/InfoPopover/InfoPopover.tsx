@@ -1,12 +1,12 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Popover, Text } from '@mantine/core'
+import { IconInfoCircle } from '@tabler/icons'
 import { useState } from 'react'
 
 interface InfoPopoverProps {
   content: string
 }
 
-export const InfoPopover: React.VFC<InfoPopoverProps> = ({ content }) => {
+export const InfoPopover: React.FC<InfoPopoverProps> = ({ content }) => {
   const [opened, setOpened] = useState(false)
   return (
     <Popover
@@ -20,10 +20,7 @@ export const InfoPopover: React.VFC<InfoPopoverProps> = ({ content }) => {
       width={260}
     >
       <Popover.Target>
-        <FontAwesomeIcon
-          icon={'question-circle'}
-          size="lg"
-          color="gray"
+        <IconInfoCircle
           onMouseEnter={() => setOpened(true)}
           onMouseLeave={() => setOpened(false)}
         />

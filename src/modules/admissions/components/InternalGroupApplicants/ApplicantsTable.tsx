@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Avatar, Badge, Table } from '@mantine/core'
+import { IconCheck, IconX } from '@tabler/icons'
 import { format } from 'date-fns'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { UserThumbnail } from 'modules/users'
@@ -19,17 +19,11 @@ const getInterviewTime = (applicant: CoreApplicantNode) => {
   return format(new Date(interview.interviewStart), 'iii d MMM HH:mm')
 }
 
-const InterviewCoveredBadge: React.VFC<{ covered: boolean }> = ({
-  covered,
-}) => {
+const InterviewCoveredBadge: React.FC<{ covered: boolean }> = ({ covered }) => {
   const color = covered ? 'green' : 'red'
-  const icon = covered ? 'check' : 'times'
+  const icon = covered ? <IconCheck /> : <IconX />
 
-  return (
-    <Badge color={color}>
-      <FontAwesomeIcon icon={icon} />
-    </Badge>
-  )
+  return <Badge color={color}>{icon}</Badge>
 }
 
 export const ApplicantsTable: React.VFC<{

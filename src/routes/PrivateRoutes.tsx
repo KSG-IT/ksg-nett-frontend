@@ -26,7 +26,7 @@ import {
   QuotesList,
   ReviewQuotes,
 } from 'modules/quotes'
-import { MyShifts } from 'modules/schedules/views'
+import { AllMyShifts, MyUpcomingShifts } from 'modules/schedules/views'
 import {
   CreateSummary,
   EditSummary,
@@ -39,8 +39,8 @@ import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
-import { RestrictedRoute } from './RestrictedRoute'
 import PublicRoutes from './PublicRoutes'
+import { RestrictedRoute } from './RestrictedRoute'
 
 const FullPage404 = React.lazy(
   () => import('components/FullPageComponents/FullPage404')
@@ -246,7 +246,10 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="schedules">
           <Route index element={<h1>Oh herro</h1>} />
-          <Route path="me" element={<MyShifts />} />
+          <Route path="me">
+            <Route index element={<MyUpcomingShifts />} />
+            <Route path="history" element={<AllMyShifts />} />
+          </Route>
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" />} />
