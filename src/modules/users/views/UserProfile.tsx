@@ -24,9 +24,11 @@ import {
 } from '@tabler/icons'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
+import { PERMISSIONS } from 'util/permissions'
 import {
   IconWithData,
   UserEditForm,
@@ -170,13 +172,15 @@ export const UserProfile: React.FC = () => {
                       root: classes.avatar,
                     }}
                   />
-                  <Button
-                    variant="light"
-                    color={'orange'}
-                    onClick={() => setEditUserModalOpen(true)}
-                  >
-                    Endre
-                  </Button>
+                  <PermissionGate permissions={PERMISSIONS.users.change.user}>
+                    <Button
+                      variant="light"
+                      color={'orange'}
+                      onClick={() => setEditUserModalOpen(true)}
+                    >
+                      Endre
+                    </Button>
+                  </PermissionGate>
                 </Stack>
               </Grid.Col>
             ) : null}
