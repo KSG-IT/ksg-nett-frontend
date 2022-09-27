@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Avatar, Button, Group, Paper, Table, TextInput } from '@mantine/core'
+import { IconPlus, IconSearch } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { format } from 'date-fns'
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { useDebounce } from 'util/hooks/useDebounce'
@@ -37,7 +37,7 @@ const TableRow = styled.tr`
 export const Summaries = () => {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const { data, error, fetchMore } = useQuery<
     AllSummariesQueryReturns,
@@ -55,7 +55,7 @@ export const Summaries = () => {
 
   const rows = summaries.map(summary => (
     <TableRow
-      onClick={() => history.push(`/summaries/${summary.id}`)}
+      onClick={() => navigate(`/summaries/${summary.id}`)}
       key={summary.id}
     >
       <td>{format(new Date(summary.date), 'MM.dd')}</td>
@@ -115,9 +115,9 @@ export const Summaries = () => {
         <Button
           size="md"
           onClick={() => {
-            history.push('/summaries/create')
+            navigate('/summaries/create')
           }}
-          leftIcon={<FontAwesomeIcon color="white" icon="plus" size="lg" />}
+          leftIcon={<IconPlus />}
         >
           Nytt referat
         </Button>
@@ -125,7 +125,7 @@ export const Summaries = () => {
       <TextInput
         value={query}
         placeholder="Søk etter innhold"
-        icon={<FontAwesomeIcon icon="search" size="sm" />}
+        icon={<IconSearch />}
         onChange={evt => setQuery(evt.target.value)}
       />
       <Paper p="sm">

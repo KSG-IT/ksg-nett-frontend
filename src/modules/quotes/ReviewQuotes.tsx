@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button } from 'components/Button'
+import { Button } from '@mantine/core'
 import {
   FullPage404,
   FullPageEmpty,
@@ -150,15 +150,12 @@ export const ReviewQuotes = () => {
               <UserThumbnail user={user} size="sm" key={user.id} />
             ))}
           </QuoteTagged>
-          <QuoteSentBy>{quote.reportedBy}</QuoteSentBy>
+          <QuoteSentBy>{quote.reportedBy.fullName}</QuoteSentBy>
           <QuoteTimestamp>
             Sendt inn {format(new Date(quote.createdAt), 'eeee H:mm')}
           </QuoteTimestamp>
           <QuoteActions>
-            <Button
-              onClick={() => handleDeleteQuote(quote.id)}
-              buttonStyle="cancel"
-            >
+            <Button onClick={() => handleDeleteQuote(quote.id)} color="gray">
               Slett
             </Button>
             <Button onClick={() => handleApproveQuote(quote.id)}>

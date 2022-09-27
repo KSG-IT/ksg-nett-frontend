@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Group, ScrollArea, Stack, Title } from '@mantine/core'
+import { IconTrash } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -18,7 +18,7 @@ import {
   PatchAdmissionReturns,
 } from 'modules/admissions/types.graphql'
 import toast from 'react-hot-toast'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { PatchMutationVariables } from 'types/graphql'
 import { InterviewLocationInterviewsCard } from './InterviewLocationInterviewsCard'
@@ -57,7 +57,7 @@ interface GenerateInterviewsReturns {
 export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
   setStageCallback,
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { data, error, loading } = useQuery<InterviewOverviewReturns>(
     INTERVIEW_OVERVIEW_QUERY
   )
@@ -74,9 +74,6 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
 
   const [deleteAllInterviews] = useMutation(DELETE_ALL_INTERVIEWS, {
     refetchQueries: ['InterviewOverviewQuery'],
-    onCompleted() {
-      toast.success('Alle intervjuer slettet')
-    },
   })
 
   const [openAdmission] = useMutation<
@@ -121,7 +118,7 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
         id: admissionId,
         input: { status: AdmissionStatusValues.OPEN },
       },
-    }).then(() => history.push('/admissions'))
+    }).then(() => navigate('/admissions'))
   }
 
   return (
@@ -129,7 +126,7 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
       <Group>
         <Title my="md">Genererte intervjuer</Title>
         <Button
-          leftIcon={<FontAwesomeIcon icon="trash" />}
+          leftIcon={<IconTrash />}
           color="red"
           onClick={() => deleteAllInterviews()}
         >

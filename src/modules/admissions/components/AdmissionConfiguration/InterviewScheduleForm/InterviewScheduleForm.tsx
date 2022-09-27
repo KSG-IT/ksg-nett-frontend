@@ -16,7 +16,6 @@ export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
   })
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     getValues,
@@ -51,7 +50,7 @@ export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
         label="Antall intervjuer på rad"
         description="Hvor mange intervjuer på rad før man har en pause"
         error={errors?.defaultBlockSize?.message}
-        {...register('defaultBlockSize')}
+        onChange={num => num && setValue('defaultBlockSize', num)}
       />
       <TimeInput
         value={getValues('defaultInterviewDayStart')}
@@ -72,19 +71,18 @@ export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
         }}
       />
       <DatePicker
-        // The value is not displayed even when its registered, but the value
-        // is actually set in the form
         placeholder="Velg dato"
         label="Intervjuperiode stardato"
         error={errors?.interviewPeriodStartDate?.message}
-        {...register('interviewPeriodStartDate')}
+        value={getValues('interviewPeriodStartDate')}
+        onChange={date => date && setValue('interviewPeriodStartDate', date)}
       />
       <DatePicker
-        // Same as above
         placeholder="Velg dato"
         label="Intervjuperiode sluttdato"
         error={errors?.interviewPeriodEndDate?.message}
-        {...register('interviewPeriodEndDate')}
+        value={getValues('interviewPeriodEndDate')}
+        onChange={date => date && setValue('interviewPeriodEndDate', date)}
       />
       <Group align="flex-end">
         <Button type="submit">Lagre innstillinger</Button>

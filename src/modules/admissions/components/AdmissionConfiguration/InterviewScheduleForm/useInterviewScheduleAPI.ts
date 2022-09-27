@@ -77,7 +77,6 @@ export function useInterviewScheduleAPI() {
       }
     }, {} as InterviewScheduleFormData)
 
-    console.log(interviewScheduleTemplate.interviewPeriodEndDate)
     return {
       ...parsedTimeValaues,
       interviewPeriodStartDate: new Date(

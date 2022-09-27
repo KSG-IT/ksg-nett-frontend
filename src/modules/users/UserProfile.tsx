@@ -64,7 +64,7 @@ interface UserProfileParams {
 }
 
 export const UserProfile = () => {
-  const { userId } = useParams<UserProfileParams>()
+  const { userId } = useParams<keyof UserProfileParams>() as UserProfileParams
 
   const { data, loading, error } = useQuery<
     UserQueryReturns,

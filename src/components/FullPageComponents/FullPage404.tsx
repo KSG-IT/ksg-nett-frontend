@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconSkull } from '@tabler/icons'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -17,8 +17,10 @@ const Message = styled.h2`
 export const FullPage404: React.VFC = () => {
   return (
     <Wrapper>
-      <FontAwesomeIcon size="6x" icon="skull-crossbones" type="brand" />
+      <IconSkull size={200} />
       <Message>Denne siden finnes ikke</Message>
     </Wrapper>
   )
 }
+
+export default FullPage404

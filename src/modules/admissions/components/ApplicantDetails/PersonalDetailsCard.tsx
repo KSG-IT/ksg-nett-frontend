@@ -3,7 +3,11 @@ import { format } from 'date-fns'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 
-const Label: React.FC = ({ children }) => {
+interface LabelProps {
+  children: React.ReactNode
+}
+
+const Label: React.FC<LabelProps> = ({ children }) => {
   return (
     <Text weight="bold" size="xs" color="gray.500">
       {children}

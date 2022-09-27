@@ -1,4 +1,6 @@
 import { useQuery } from '@apollo/client'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
 import { createStyles, Grid, Group, Stack } from '@mantine/core'
 import { useStore } from 'store'
 import { ActionsGrid } from './components/ActionCard'
@@ -23,9 +25,9 @@ export const Dashboard = () => {
   const { data, loading, error } =
     useQuery<DashboardDataQueryReturns>(DASHBOARD_DATA_QUERY)
 
-  if (error) return <span>En feil opstod</span>
+  if (error) return <FullPageError />
 
-  if (loading || data === undefined) return <span>Loading</span>
+  if (loading || data === undefined) return <FullContentLoader />
 
   const {
     dashboardData: { wantedList, lastSummaries, lastQuotes },

@@ -7,7 +7,7 @@ import { formatISO } from 'date-fns'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { summaryTypeChoices } from './conts'
@@ -93,19 +93,8 @@ const DateContainer = styled.div`
   height: 100%;
 `
 
-const TextArea = styled.textarea`
-  grid-area: content;
-  width: 100%;
-  height: 600px;
-  border-radius: 10px;
-  padding: 10px;
-  outline: none;
-  border: none;
-  margin: 15px 0;
-  box-shadow: ${props => props.theme.shadow.default};
-`
-
 export const CreateSummary = () => {
+  const navigate = useNavigate()
   const [date, setDate] = useState<Date | null>(new Date())
   const [summaryType, setSummaryType] = useState<SummaryType | null>(
     summaryTypeChoices[0].value
@@ -118,10 +107,9 @@ export const CreateSummary = () => {
     awaitRefetchQueries: true,
     onCompleted({ createSummary }) {
       const { summary } = createSummary
-      history.push(`/summaries/${summary.id}`)
+      navigate(`/summaries/${summary.id}`)
     },
   })
-  const history = useHistory()
 
   let schema = yup.object({
     participants: yup

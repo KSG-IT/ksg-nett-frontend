@@ -12,7 +12,6 @@ import {
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { format } from 'date-fns'
-import { SIDEBAR_QUERY } from 'modules/sidebar/SidebarNav'
 import { ME_QUERY } from 'modules/users'
 import { useState } from 'react'
 import { useStore } from 'store'
@@ -43,11 +42,7 @@ export const Deposits: React.VFC = () => {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query)
   const [patchDeposit] = useMutation(PATCH_DEPOSIT, {
-    refetchQueries: [
-      { query: ALL_DEPOSITS },
-      { query: SIDEBAR_QUERY },
-      { query: ME_QUERY },
-    ],
+    refetchQueries: [{ query: ALL_DEPOSITS }, { query: ME_QUERY }],
   })
   const user = useStore(state => state.user)!
 

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { ScrollArea, Title } from '@mantine/core'
+import { Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -20,7 +20,7 @@ export const ApplicantNotices: React.VFC = () => {
   const { applicantNotices } = data
 
   return (
-    <ScrollArea style={{ width: '100%', padding: '32px' }}>
+    <Stack>
       <Title>Søkere å følge opp</Title>
       <MessageBox type="info">
         Her har du oversikt over alle søkerne som ikke har registrert et ønske
@@ -29,6 +29,6 @@ export const ApplicantNotices: React.VFC = () => {
         legge til en kommentar på søkerne for andre intervjuere å se.
       </MessageBox>
       <NoticeTable applicants={applicantNotices} />
-    </ScrollArea>
+    </Stack>
   )
 }
