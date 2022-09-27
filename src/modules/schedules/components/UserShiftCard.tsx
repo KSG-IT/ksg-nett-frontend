@@ -11,7 +11,12 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({ shift }) => {
     <Card my="md" style={{ maxWidth: 900 }} shadow="md">
       <Group>
         <Stack>
-          <Text>{shift.location}</Text>
+          {shift.location && (
+            <Text>
+              <Text weight={'bold'}>Hvor: </Text>
+              {shift.location}
+            </Text>
+          )}
           <Text>
             {format(new Date(shift.datetimeStart), 'cccc d. MMMM yyyy')}
           </Text>
