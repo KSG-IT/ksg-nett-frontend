@@ -33,7 +33,7 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({ shift }) => {
           {shift.filledSlots.map(slot => (
             <Stack spacing="xs">
               <UserThumbnail user={slot.user} size="xl" />
-              <Text my={0}>{slot.role.name}</Text>
+              <Text my={0}>{slot.role}</Text>
               <Text my={0}>{slot.user.fullName}</Text>
             </Stack>
           ))}

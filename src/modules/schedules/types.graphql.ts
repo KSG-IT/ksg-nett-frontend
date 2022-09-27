@@ -1,23 +1,18 @@
 import { UserNode } from 'modules/users'
-import { LocationValues } from './consts'
+import { LocationValues, RoleValues } from './consts'
 
 // === NODES ===
 export type ShiftSlotNode = {
   id: string
   user: Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'> | null
-  role: RoleNode
+  role: RoleValues
 }
 
 // Is there a better way to do this?
 type FilledShiftSlotNode = {
   id: string
   user: Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>
-  role: RoleNode
-}
-
-export type RoleNode = {
-  id: string
-  name: string
+  role: RoleValues
 }
 
 export type ShiftNode = {

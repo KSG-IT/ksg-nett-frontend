@@ -7,10 +7,7 @@ export const MY_UPCOMING_SHIFTS = gql`
       location
       filledSlots {
         id
-        role {
-          id
-          name
-        }
+        role
         user {
           id
           initials
@@ -32,10 +29,7 @@ export const ALL_MY_SHIFTS = gql`
       location
       filledSlots {
         id
-        role {
-          id
-          name
-        }
+        role
         user {
           id
           initials
