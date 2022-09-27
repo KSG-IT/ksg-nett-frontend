@@ -1,14 +1,24 @@
-import { Avatar, Card, createStyles, SimpleGrid, Text } from '@mantine/core'
+import {
+  Avatar,
+  Card,
+  createStyles,
+  Group,
+  SimpleGrid,
+  Text,
+} from '@mantine/core'
 import { QuoteNode } from 'modules/quotes/types'
 import { UserThumbnail } from './UserThumbnail'
 
 const useStyles = createStyles(theme => ({
   quoteText: {
+    lineHeight: 1.1,
     fontWeight: 'bold',
   },
   quoteContext: {
     color: theme.colors.gray[6],
+    lineHeight: 1.1,
     fontStyle: 'italic',
+    margin: '0.5rem 0',
   },
   card: {
     maxWidth: 400,
@@ -29,11 +39,11 @@ export const UserQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
           <Card.Section p={'md'}>
             <Text className={classes.quoteText}>{quote.text}</Text>
             <Text className={classes.quoteContext}>{quote.context}</Text>
-            <Avatar.Group pt={'xs'}>
+            <Group spacing={5}>
               {quote.tagged.map(user => (
                 <UserThumbnail key={user.id} user={user} />
               ))}
-            </Avatar.Group>
+            </Group>
           </Card.Section>
         </Card>
       ))}
