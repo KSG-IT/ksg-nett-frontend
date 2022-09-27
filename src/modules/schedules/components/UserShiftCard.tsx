@@ -2,7 +2,7 @@ import { Card, createStyles, Group, Stack, Text } from '@mantine/core'
 import { format } from 'date-fns'
 import { UserThumbnail } from 'modules/users'
 import { ShiftNode } from '../types.graphql'
-import { parseShiftRole } from '../util'
+import { parseLocation, parseShiftRole } from '../util'
 
 const useUserShiftCardStyles = createStyles(theme => ({
   card: {
@@ -22,7 +22,7 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({ shift }) => {
           {shift.location && (
             <Text>
               <Text weight={'bold'}>Hvor: </Text>
-              {shift.location}
+              {parseLocation(shift.location)}
             </Text>
           )}
           <Text>
