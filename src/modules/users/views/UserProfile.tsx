@@ -73,6 +73,15 @@ const useStyles = createStyles(theme => ({
       textAlign: 'center',
     },
   },
+  aboutMe: {
+    color: theme.colors.gray[7],
+    fontWeight: 700,
+    textTransform: 'uppercase',
+    fontSize: theme.fontSizes.lg,
+    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+      textAlign: 'center',
+    },
+  },
   container: {
     // Media query with value from theme
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
@@ -153,7 +162,7 @@ export const UserProfile: React.FC = () => {
                 <ThemeIcon variant="light" color={'orange'}>
                   <IconBook stroke={1.2} />
                 </ThemeIcon>
-                <Text className={classes.role}>Om meg</Text>
+                <Text className={classes.aboutMe}>Om meg</Text>
               </Group>
               <Text mt={'xs'}>{user.biography}</Text>
             </Grid.Col>
