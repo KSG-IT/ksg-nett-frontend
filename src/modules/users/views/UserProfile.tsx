@@ -1,12 +1,14 @@
 import { useQuery } from '@apollo/client'
 import {
   Avatar,
+  Button,
   Card,
   Center,
   createStyles,
   Divider,
   Grid,
   Group,
+  Modal,
   Stack,
   Text,
   ThemeIcon,
@@ -22,6 +24,7 @@ import {
 } from '@tabler/icons'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
 import {
@@ -100,7 +103,9 @@ interface UserProfileParams {
 
 export const UserProfile: React.FC = () => {
   const { classes } = useStyles()
-  const mediaQuery = useMediaQuery('(min-width: 800px)')
+  const isMobile = useMediaQuery('(min-width: 800px)')
+  const [editUserModalOpen, setEditUserModalOpen] = useState(false)
+
   const { userId } = useParams<keyof UserProfileParams>() as UserProfileParams
   const { data, loading, error } = useQuery<
     UserQueryReturns,
@@ -110,6 +115,7 @@ export const UserProfile: React.FC = () => {
   })
 
   if (error) return <FullPageError />
+
   if (loading || !data) return <FullContentLoader />
 
   const fullUser = data.user
@@ -126,13 +132,13 @@ export const UserProfile: React.FC = () => {
           <Grid p={'xl'}>
             <Grid.Col xs={6} lg={6}>
               <Text className={classes.role}>{user.ksgStatus}</Text>
-              {mediaQuery ? null : (
+              {isMobile ? null : (
                 <Center mt={'xs'}>
                   <Avatar src={user.profileImage} size="xl" radius={60} />
                 </Center>
               )}
 
-              <Text mt={'sm'} className={classes.name}>
+              <Text className={classes.name} mt={'sm'}>
                 {user.fullName}
               </Text>
               <Divider my={'sm'} />
@@ -149,7 +155,7 @@ export const UserProfile: React.FC = () => {
               </Group>
               <Text mt={'xs'}>{user.biography}</Text>
             </Grid.Col>
-            {mediaQuery ? (
+            {isMobile ? (
               <Grid.Col xs={5} lg={5} offset={1}>
                 <Stack
                   justify={'space-between'}
@@ -164,7 +170,13 @@ export const UserProfile: React.FC = () => {
                       root: classes.avatar,
                     }}
                   />
-                  <UserEditForm user={fullUser} />
+                  <Button
+                    variant="light"
+                    color={'orange'}
+                    onClick={() => setEditUserModalOpen(true)}
+                  >
+                    Endre
+                  </Button>
                 </Stack>
               </Grid.Col>
             ) : null}
@@ -183,6 +195,19 @@ export const UserProfile: React.FC = () => {
         </Title>
         <UserHistory memberships={memberships} />
       </Stack>
+
+      <Modal
+        opened={editUserModalOpen}
+        onClose={() => setEditUserModalOpen(false)}
+        title="Rediger profilinformasjon"
+        size="lg"
+        padding="xl"
+      >
+        <UserEditForm
+          user={fullUser}
+          onCompletedCallback={() => setEditUserModalOpen(false)}
+        />
+      </Modal>
     </Group>
   )
 }

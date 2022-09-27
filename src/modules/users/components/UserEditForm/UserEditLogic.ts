@@ -46,10 +46,11 @@ interface UseRegisterInformationLogicInput {
 interface UseEditLogicInput {
   defaultValues: UserProfileFormData
   onSubmit: OnFormSubmit<UserProfileCleanedData, PatchUserReturns>
+  onCompletedCallback: () => void
 }
 
 export function useEditProfileLogic(input: UseEditLogicInput) {
-  const { defaultValues, onSubmit } = input
+  const { defaultValues, onSubmit, onCompletedCallback } = input
   const form = useForm<UserProfileFormData>({
     mode: 'onSubmit',
     defaultValues,
@@ -61,11 +62,13 @@ export function useEditProfileLogic(input: UseEditLogicInput) {
       ...data,
       dateOfBirth: format(new Date(data.dateOfBirth), 'yyyy-MM-dd'),
     }
-    await toast.promise(onSubmit(cleanedData), {
-      success: 'Informasjonen er lagret',
-      loading: 'Lagrer...',
-      error: 'Noe gikk galt',
-    })
+    await toast
+      .promise(onSubmit(cleanedData), {
+        success: 'Informasjonen er lagret',
+        loading: 'Lagrer...',
+        error: 'Noe gikk galt',
+      })
+      .then(onCompletedCallback)
   }
 
   return {
