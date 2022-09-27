@@ -2,7 +2,7 @@ import {
   InternalGroupNode,
   InternalGroupPositionNode,
 } from 'modules/organization/types'
-import { UserNode } from 'modules/users'
+import { UserNode } from 'modules/users/types'
 import {
   AdmissionStatusValues,
   ApplicantStatusValues,

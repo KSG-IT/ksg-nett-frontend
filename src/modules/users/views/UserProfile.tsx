@@ -3,7 +3,6 @@ import {
   Avatar,
   Card,
   Center,
-  Container,
   createStyles,
   Divider,
   Grid,
@@ -25,11 +24,15 @@ import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useParams } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
-import { UserQueryReturns, UserQueryVariables, USER_QUERY } from '..'
-import { IconWithData } from '../components/IconWithData'
-import { UserEditForm } from '../components/UserEdit/UserEditForm'
-import { UserHistory } from '../components/UserHistory'
-import { UserQuotes } from '../components/UserQuotes'
+import {
+  IconWithData,
+  UserEditForm,
+  UserHistory,
+  UserQuotes,
+} from '../components'
+
+import { USER_QUERY } from '../queries'
+import { UserQueryReturns, UserQueryVariables } from '../types'
 
 const useStyles = createStyles(theme => ({
   title: {

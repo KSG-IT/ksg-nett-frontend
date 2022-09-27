@@ -33,7 +33,8 @@ import {
   Summaries,
   SummaryDetail,
 } from 'modules/summaries'
-import { MeQueryReturns, ME_QUERY } from 'modules/users'
+import { ME_QUERY } from 'modules/users/queries'
+import { MeQueryReturns } from 'modules/users/types'
 import { ManageUsers, UserProfile } from 'modules/users/views'
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'

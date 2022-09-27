@@ -1,4 +1,4 @@
-import { UserNode } from 'modules/users'
+import { UserNode } from 'modules/users/types'
 import create from 'zustand'
 export const LOGIN_TOKEN_KEY = 'login-token'
 

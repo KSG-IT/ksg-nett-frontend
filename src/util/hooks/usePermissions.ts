@@ -1,4 +1,4 @@
-import { UserNode } from 'modules/users'
+import { UserNode } from 'modules/users/types'
 import { useCallback, useMemo } from 'react'
 import { useStore } from 'store'
 

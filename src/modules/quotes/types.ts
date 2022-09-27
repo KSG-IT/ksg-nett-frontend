@@ -1,4 +1,4 @@
-import { UserNode } from 'modules/users'
+import { UserNode } from 'modules/users/types'
 import { RelayEdgesWithPageInfo } from 'types/graphql'
 
 export interface QuoteNode {

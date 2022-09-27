@@ -7,7 +7,7 @@ import {
 } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { format } from 'date-fns'
-import { UserThumbnail } from 'modules/users/components/UserThumbnail'
+import { UserThumbnail } from 'modules/users/components'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
 import { PatchQuoteReturns, PatchQuoteVariables, PendingQuotesReturns } from '.'
