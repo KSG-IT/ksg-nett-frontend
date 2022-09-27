@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconHourglassEmpty } from '@tabler/icons'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 export const FullPageEmpty: React.VFC = () => {
   return (
     <Wrapper>
-      <FontAwesomeIcon icon="battery-empty" size="3x" />
+      <IconHourglassEmpty size={200} />
       Oi, her var det tomt.
     </Wrapper>
   )

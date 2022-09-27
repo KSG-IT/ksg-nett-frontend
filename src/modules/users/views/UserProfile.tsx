@@ -13,14 +13,21 @@ import {
   Text,
   Title,
 } from '@mantine/core'
+import {
+  IconAt,
+  IconConfetti,
+  IconMapPin,
+  IconPhone,
+  IconSchool,
+} from '@tabler/icons'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useParams } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
-import { UserQueryReturns, UserQueryVariables, USER_QUERY } from '.'
-import { IconWithData } from './components/IconWithData'
-import { UserHistory } from './components/UserHistory'
-import { UserQuotes } from './components/UserQuotes'
+import { UserQueryReturns, UserQueryVariables, USER_QUERY } from '..'
+import { IconWithData } from '../components/IconWithData'
+import { UserHistory } from '../components/UserHistory'
+import { UserQuotes } from '../components/UserQuotes'
 
 const useStyles = createStyles(theme => ({
   title: {
@@ -56,10 +63,10 @@ interface UserProfileParams {
   userId: string
 }
 
-export const UserProfile: React.VFC = () => {
+export const UserProfile: React.FC = () => {
   const { classes } = useStyles()
   const mediaQuery = useMediaQuery('(min-width: 800px)')
-  const { userId } = useParams<UserProfileParams>()
+  const { userId } = useParams<keyof UserProfileParams>() as UserProfileParams
   const { data, loading, error } = useQuery<
     UserQueryReturns,
     UserQueryVariables
@@ -103,17 +110,11 @@ export const UserProfile: React.VFC = () => {
                   {user.fullName}
                 </Text>
                 <Divider my={'sm'} />
-                <IconWithData icon={'at'} userData={user.email} />
-                <IconWithData icon={'phone'} userData={user.phone} />
-                <IconWithData
-                  icon={'map-marker-alt'}
-                  userData={user.studyAddress}
-                />
-                <IconWithData icon={'graduation-cap'} userData={user.study} />
-                <IconWithData
-                  icon={'birthday-cake'}
-                  userData={user.dateOfBirth}
-                />
+                <IconWithData icon={IconAt} userData={user.email} />
+                <IconWithData icon={IconPhone} userData={user.phone} />
+                <IconWithData icon={IconMapPin} userData={user.studyAddress} />
+                <IconWithData icon={IconSchool} userData={user.study} />
+                <IconWithData icon={IconConfetti} userData={user.dateOfBirth} />
                 <Group noWrap spacing={10} mt={'xl'}>
                   <FontAwesomeIcon icon={['fas', 'book-open']} color={'gray'} />
                   <Text className={classes.role}>Om meg</Text>

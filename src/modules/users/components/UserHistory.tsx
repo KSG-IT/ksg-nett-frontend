@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Text, ThemeIcon, Timeline } from '@mantine/core'
+import { IconUser } from '@tabler/icons'
 import { InternalGroupPositionMembershipNode } from '../UserManagement/types'
 
 interface UserHistoryProps {
   memberships: InternalGroupPositionMembershipNode[]
 }
 
-export const UserHistory: React.VFC<UserHistoryProps> = ({ memberships }) => {
+export const UserHistory: React.FC<UserHistoryProps> = ({ memberships }) => {
   const fields = memberships.map(
     ({ id, position, membershipStart, membershipEnd }) => (
       <Timeline.Item
@@ -18,7 +19,7 @@ export const UserHistory: React.VFC<UserHistoryProps> = ({ memberships }) => {
             gradient={{ from: 'orange', to: 'gold' }}
             radius="xl"
           >
-            <FontAwesomeIcon icon={['fas', 'users']} />
+            <IconUser />
           </ThemeIcon>
         }
         key={id}

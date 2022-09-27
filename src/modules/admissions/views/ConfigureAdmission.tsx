@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useEffect, useState } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import {
   ConfigureInterviewLocationAvailability,
   ConfigureInterviewSchedule,
@@ -48,7 +48,7 @@ const configWizardSwitchHandler = (
   }
 }
 
-export const ConfigurationWizard: React.VFC = () => {
+export const ConfigurationWizard: React.FC = () => {
   const [wizardStage, setWizardStage] = useState<WizardStage>('START')
   // This logic needs to be reoworked abd nived away from the useEffect hook
 
@@ -75,7 +75,7 @@ export const ConfigurationWizard: React.VFC = () => {
   }
 
   if (data?.activeAdmission?.status === 'OPEN')
-    return <Redirect to="/admission" />
+    return <Navigate to="/admissions" />
 
   return configWizardSwitchHandler(wizardStage, setWizardStage)
 }

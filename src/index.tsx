@@ -1,15 +1,17 @@
 import 'fontsource-roboto'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import Root from './containers/Root'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 
-ReactDOM.render(
+const container = document.getElementById('root')
+const root = createRoot(container!) // createRoot(container!) if you use TypeScript
+
+root.render(
   <React.StrictMode>
     <Root />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 )
 
 // If you want to start measuring performance in your app, pass a function

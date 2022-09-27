@@ -48,7 +48,6 @@ export const InterviewLocationAvailabilityCard: React.VFC<
 > = ({ interviewLocation }) => {
   const [from, setFrom] = useState<[Date, Date]>([new Date(), new Date()])
   const [date, setDate] = useState<Date | null>(new Date())
-  const [to, setTo] = useState<[Date, Date]>([new Date(), new Date()])
 
   const [createInterviewLocationAvailability] = useMutation<
     CreateInterviewLocationAvailabilityReturns,
@@ -66,8 +65,6 @@ export const InterviewLocationAvailabilityCard: React.VFC<
       toast.success('Slettet Intervjulokale')
     },
   })
-
-  console.log(from)
 
   function concatenateDateAndTime() {
     // We create two new datetime objects using the range of the time

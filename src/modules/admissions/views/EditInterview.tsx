@@ -4,7 +4,7 @@ import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   AdditionalEvaluationAnswerList,
   AdditionalInformationFields,
@@ -28,11 +28,13 @@ interface EditInterviewParams {
 }
 
 export const EditInterview: React.VFC = () => {
-  const { interviewId } = useParams<EditInterviewParams>()
+  const { interviewId } = useParams<
+    keyof EditInterviewParams
+  >() as EditInterviewParams
   const [lockModalOpen, setLockModalOpen] = useState(false)
   const [didNotShowModalOpen, setDidNotShowModalOpen] = useState(false)
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const { data, loading, error } = useQuery<
     InterviewDetailQueryReturns,
@@ -59,9 +61,7 @@ export const EditInterview: React.VFC = () => {
           status: ApplicantStatusValues.INTERVIEW_FINISHED,
         },
       },
-    }).then(() =>
-      history.push(`/admissions/applicants/${interview!.applicant.id}`)
-    )
+    }).then(() => navigate(`/admissions/applicants/${interview!.applicant.id}`))
   }
 
   function handleApplicantDidNotShow() {
@@ -72,9 +72,7 @@ export const EditInterview: React.VFC = () => {
           status: ApplicantStatusValues.DID_NOT_SHOW_UP_FOR_INTERVIEW,
         },
       },
-    }).then(() =>
-      history.push(`/admissions/applicants/${interview!.applicant.id}`)
-    )
+    }).then(() => navigate(`/admissions/applicants/${interview!.applicant.id}`))
   }
 
   return (
