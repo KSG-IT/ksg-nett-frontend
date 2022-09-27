@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Button,
   Checkbox,
@@ -9,6 +8,7 @@ import {
   TextInput,
   Title,
 } from '@mantine/core'
+import { IconSearch } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { format } from 'date-fns'
@@ -141,7 +141,7 @@ export const Deposits: React.VFC = () => {
           <TextInput
             value={query}
             onChange={evt => setQuery(evt.target.value)}
-            icon={<FontAwesomeIcon icon="search" />}
+            icon={<IconSearch />}
             placeholder="Søk etter bruker..."
           />
           <Checkbox

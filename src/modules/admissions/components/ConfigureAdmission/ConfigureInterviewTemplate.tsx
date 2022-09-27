@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconTrash } from '@tabler/icons'
 import { Card } from 'components/Card'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -63,14 +63,6 @@ const AddStatementContainer = styled.div`
   gap: 10px;
 `
 
-const DeleteIcon = styled(FontAwesomeIcon)`
-  color: ${props => props.theme.colors.error};
-
-  &:hover {
-    cursor: pointer;
-    opacity: 0.8;
-  }
-`
 interface ConfigureInterviewTemplateProps {
   setStageCallback: (stage: WizardStage) => void
 }
@@ -163,9 +155,7 @@ export const ConfigureInterviewTemplate: React.VFC<
           {interviewBooleanEvaluationStatements.map(node => (
             <StatementRow key={node.id}>
               <span>{node.statement}</span>
-              <DeleteIcon
-                icon="trash-alt"
-                size="sm"
+              <IconTrash
                 onClick={() =>
                   handleDeleteInterviewBooleanEvaluationStatements(node.id)
                 }
@@ -190,8 +180,7 @@ export const ConfigureInterviewTemplate: React.VFC<
           {interviewAdditionalEvaluationStatements.map(node => (
             <StatementRow key={node.id}>
               <span>{node.statement}</span>
-              <DeleteIcon
-                icon="trash-alt"
+              <IconTrash
                 size="sm"
                 onClick={() =>
                   handleDeleteInterviewAdditionalEvaluationStatements(node.id)

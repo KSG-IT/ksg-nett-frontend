@@ -61,14 +61,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       navbar={<AppNavbar opened={sidebarOpen} />}
-      footer={
-        <Footer height={60} p="md" className={classes.footer}>
-          <Text>
-            Har du funnet en feil på nettsiden? Ta kontakt med
-            <Anchor href="mailto:ksg-it@samfundet.no"> KSG - IT </Anchor>
-          </Text>
-        </Footer>
-      }
       header={
         <Header height={70} p="md">
           <div

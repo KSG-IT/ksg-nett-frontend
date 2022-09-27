@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Paper, Table } from '@mantine/core'
+import { IconArrowRight } from '@tabler/icons'
 import { format } from 'date-fns'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -35,7 +35,7 @@ export const MyDeposits: React.VFC<MyDepositsProps> = ({ deposits }) => {
         <tbody>{rows}</tbody>
       </Table>
       <Link to="/economy/me/deposit-history">
-        Fullstendig historikk {<FontAwesomeIcon icon="arrow-right" />}
+        Fullstendig historikk {<IconArrowRight />}
       </Link>
     </Paper>
   )
