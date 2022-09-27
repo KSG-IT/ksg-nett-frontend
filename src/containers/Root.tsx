@@ -3,7 +3,7 @@ import { MantineProvider, MantineThemeOverride } from '@mantine/core'
 import client from 'apollo-setup'
 import { Toaster } from 'react-hot-toast'
 import { BrowserRouter } from 'react-router-dom'
-import { AppRoutes } from 'routes'
+import { PrivateRoutes } from 'routes'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'theme'
 
@@ -18,7 +18,7 @@ function Root() {
       <ThemeProvider theme={theme}>
         <MantineProvider theme={mtheme}>
           <BrowserRouter>
-            <AppRoutes />
+            <PrivateRoutes />
           </BrowserRouter>
           <Toaster />
         </MantineProvider>
