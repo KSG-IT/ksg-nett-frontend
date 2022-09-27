@@ -20,16 +20,6 @@ export function useEditProfileAPI(user: UserNode) {
     })
   }
 
-  /**
-   * export type UserProfileFormData = {
-  firstName: string
-  lastName: string
-  studyAddress: string
-  study: string
-  dateOfBirth: Date
-  phone: string
-}
-   */
   const defaultValues = {
     firstName: user?.firstName ?? '',
     lastName: user?.lastName ?? '',
