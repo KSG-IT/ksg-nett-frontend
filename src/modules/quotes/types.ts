@@ -1,11 +1,11 @@
-import { UserNode } from 'modules/users'
+import { UserNode } from 'modules/users/types'
 import { RelayEdgesWithPageInfo } from 'types/graphql'
 
 export interface QuoteNode {
   id: string
   text: string
   reportedBy: UserNode
-  tagged: Pick<UserNode, 'id' | 'profileImage' | 'initials'>[]
+  tagged: Pick<UserNode, 'id' | 'profileImage' | 'initials' | 'fullName'>[]
   verifiedBy: UserNode | null
   context: string
   sum: number
@@ -58,7 +58,7 @@ export type PatchQuoteInput = {
   text?: string
   context?: string
   reportedBy?: string
-  tagged?: Pick<UserNode, 'id' | 'profileImage' | 'initials'>[]
+  tagged?: Pick<UserNode, 'id' | 'profileImage' | 'initials' | 'fullName'>[]
 }
 
 export interface PatchQuoteVariables {

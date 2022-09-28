@@ -1,4 +1,4 @@
-import { UserNode } from 'modules/users'
+import { UserNode } from 'modules/users/types'
 import create from 'zustand'
 export const LOGIN_TOKEN_KEY = 'login-token'
 
@@ -25,6 +25,14 @@ export const UserPlaceholder: UserNode = {
   upvotedQuoteIds: [],
   isSuperUser: false,
   allPermissions: [],
+  dateOfBirth: '',
+  studyAddress: '',
+  ksgStatus: '',
+  study: '',
+  taggedAndVerifiedQuotes: [],
+  internalGroupPositionMembershipHistory: [],
+  hometown: '',
+  homeAddress: '',
 }
 
 interface Store {

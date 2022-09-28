@@ -7,7 +7,7 @@ import {
   parseTotalEvaluation,
 } from 'modules/admissions/parsing'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
-import { UserThumbnail } from 'modules/users'
+import { UserThumbnail } from 'modules/users/components'
 import ReactMarkdown from 'react-markdown'
 import { Link, useNavigate } from 'react-router-dom'
 import remarkGfm from 'remark-gfm'

@@ -2,7 +2,7 @@ import {
   InternalGroupNode,
   InternalGroupPositionNode,
 } from 'modules/organization/types'
-import { UserNode } from 'modules/users'
+import { UserNode } from 'modules/users/types'
 import {
   AdmissionStatusValues,
   ApplicantStatusValues,
@@ -25,7 +25,10 @@ export type InterviewNode = {
   id: string
   interviewStart: Date
   interviewEnd: Date
-  interviewers: Pick<UserNode, 'id' | 'initials' | 'profileImage'>[]
+  interviewers: Pick<
+    UserNode,
+    'id' | 'initials' | 'profileImage' | 'fullName'
+  >[]
   location: Pick<InterviewLocationNode, 'id' | 'name' | 'locationDescription'>
   notes: string
   discussion: string
@@ -121,7 +124,7 @@ export type ApplicantNode = {
   dateOfBirth: Date | string
   priorities: InternalGroupPositionPriority[]
   interview: InterviewNode | null
-  interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials'>
+  interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials' | 'fullName'>
   wantsDigitalInterview: boolean
   willBeAdmitted: boolean
   canCommitThreeSemesters: boolean
@@ -133,7 +136,10 @@ export type ApplicantNode = {
   lastNotice: Date | null
   noticeMethod: NoticeMethodValues | null
   noticeComment: string
-  noticeUser: Pick<UserNode, 'id' | 'initials' | 'profileImage'> | null
+  noticeUser: Pick<
+    UserNode,
+    'id' | 'initials' | 'profileImage' | 'fullName'
+  > | null
 }
 
 export type ApplicantCSVData = {

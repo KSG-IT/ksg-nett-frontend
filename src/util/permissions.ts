@@ -24,4 +24,9 @@ export const PERMISSIONS = {
       quote: 'quotes.change_quote',
     },
   },
+  users: {
+    change: {
+      user: 'users.change_user',
+    },
+  },
 }

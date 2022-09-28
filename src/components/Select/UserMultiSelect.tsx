@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client'
+import { ALL_ACTIVE_USERS_SHALLOW_QUERY } from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
-  ALL_ACTIVE_USERS_SHALLOW_QUERY,
-} from 'modules/users'
+} from 'modules/users/types'
 import Select from 'react-select'
 import styled from 'styled-components'
 import { usersToSelectOption } from 'util/user'

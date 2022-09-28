@@ -1,6 +1,6 @@
 import { Card, createStyles, Group, Stack, Text } from '@mantine/core'
 import { format } from 'date-fns'
-import { UserThumbnail } from 'modules/users'
+import { UserThumbnail } from 'modules/users/components'
 import { ShiftNode } from '../types.graphql'
 import { parseLocation, parseShiftRole } from '../util'
 

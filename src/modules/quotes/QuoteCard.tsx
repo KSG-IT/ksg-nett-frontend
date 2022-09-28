@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { IconThumbUp } from '@tabler/icons'
 import { QuoteNode } from 'modules/quotes/types'
-import { UserThumbnail } from 'modules/users'
+import { UserThumbnail } from 'modules/users/components'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useStore } from 'store'
