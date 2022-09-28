@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import {
   PatchInterviewScheduleTemplateReturns,
   PatchInterviewScheduleTemplateVariables,

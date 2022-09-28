@@ -1,6 +1,6 @@
 import { Avatar, Badge, Table } from '@mantine/core'
 import { IconCheck, IconX } from '@tabler/icons'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { UserThumbnail } from 'modules/users/components'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'

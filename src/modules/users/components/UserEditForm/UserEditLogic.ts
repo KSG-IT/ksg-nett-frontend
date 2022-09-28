@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { RegisterInformationFormData } from 'modules/admissions/components/ApplicantPortal/RegisterInformationForm/useRegisterInformationLogic'
 import { PatchApplicantReturns } from 'modules/admissions/types.graphql'
 import { PatchUserReturns } from 'modules/users/types'

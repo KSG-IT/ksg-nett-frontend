@@ -6,7 +6,7 @@ import {
   FullPageError,
 } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { UserThumbnail } from 'modules/users/components'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'

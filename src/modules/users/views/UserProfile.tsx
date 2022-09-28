@@ -25,16 +25,16 @@ import {
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useMediaQuery } from 'util/hooks'
-import { PERMISSIONS } from 'util/permissions'
 import {
   IconWithData,
   UserEditForm,
   UserHistory,
   UserQuotes,
-} from '../components'
+} from 'modules/users/components'
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useMediaQuery } from 'util/hooks'
+import { PERMISSIONS } from 'util/permissions'
 
 import { USER_QUERY } from '../queries'
 import { UserQueryReturns, UserQueryVariables } from '../types'

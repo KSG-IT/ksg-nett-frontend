@@ -11,7 +11,7 @@ import {
 } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { InterviewBooking } from '../components/ApplicantPortal/InterviewBooking'

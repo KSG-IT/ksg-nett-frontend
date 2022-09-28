@@ -1,6 +1,6 @@
 import { Button, Card, Group, Stack, Text, Title } from '@mantine/core'
 import { MessageBox } from 'components/MessageBox'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import {
   parseAdditionalEvaluation,
   parseBooleanEvaluation,

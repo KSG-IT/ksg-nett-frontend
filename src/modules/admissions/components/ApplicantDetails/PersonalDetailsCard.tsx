@@ -1,5 +1,5 @@
 import { Grid, Group, Image, Paper, Stack, Text } from '@mantine/core'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 

@@ -1,4 +1,4 @@
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { GET_APPLICATION_FROM_TOKEN } from 'modules/admissions/queries'

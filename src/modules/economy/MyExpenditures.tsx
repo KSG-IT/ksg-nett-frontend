@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Paper, Select } from '@mantine/core'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts'
 import styled from 'styled-components'
 import { numberWithSpaces } from 'util/parsing'

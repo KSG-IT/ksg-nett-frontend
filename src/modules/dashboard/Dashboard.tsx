@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { UserThumbnail } from 'modules/users/components'
 import { useStore } from 'store'
 import styled from 'styled-components'

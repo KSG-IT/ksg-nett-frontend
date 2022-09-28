@@ -1,6 +1,6 @@
 import { Paper, Table } from '@mantine/core'
 import { IconArrowRight } from '@tabler/icons'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { DepositNode } from './types'

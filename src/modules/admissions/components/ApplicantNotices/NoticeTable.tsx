@@ -1,7 +1,7 @@
 import { Button, Card, Menu, Table } from '@mantine/core'
 import { IconDots, IconMail, IconPhone, IconTrash } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNow } from 'util/date-fns'
 import { NoticeMethodValues } from 'modules/admissions/consts'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { parseApplicantNoticeMethod } from 'modules/admissions/parsing'
