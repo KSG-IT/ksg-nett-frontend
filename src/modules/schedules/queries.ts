@@ -43,3 +43,25 @@ export const ALL_MY_SHIFTS = gql`
     }
   }
 `
+
+export const ALL_SCHEDULES = gql`
+  query AllSchedules {
+    allSchedules {
+      id
+      name
+    }
+  }
+`
+
+export const ALL_SCHEDULE_TEMPLATES = gql`
+  query AllScheduleTemplates {
+    allScheduleTemplates {
+      id
+      name
+      schedule {
+        id
+        name
+      }
+    }
+  }
+`

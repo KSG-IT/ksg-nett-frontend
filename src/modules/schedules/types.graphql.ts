@@ -26,6 +26,17 @@ export type ShiftNode = {
   location: LocationValues | null
 }
 
+export type ScheduleNode = {
+  id: string
+  name: string
+  templates: Pick<ScheduleTemplateNode, 'id'>[]
+}
+export type ScheduleTemplateNode = {
+  id: string
+  name: string
+  schedule: Pick<ScheduleNode, 'id' | 'name'>
+}
+
 // === QUERIES ===
 
 export interface MyUpcomingShiftsReturns {
@@ -36,4 +47,20 @@ export interface AllMyShiftsReturns {
   allMyShifts: ShiftNode[]
 }
 
+export interface AllSchedulesReturns {
+  allSchedules: ScheduleNode[]
+}
+
 // === MUTATIONS ===
+
+type PatchScheduleTemplateInput = {
+  name: string
+}
+
+export interface PatchScheduleTemplateReturns {
+  patchScheduleTemplate: Pick<ScheduleTemplateNode, 'id'>
+}
+export interface PatchScheduleTemplateVariables {
+  id: string
+  input: PatchScheduleTemplateInput
+}

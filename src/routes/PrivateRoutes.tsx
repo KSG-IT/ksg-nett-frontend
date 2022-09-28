@@ -26,7 +26,14 @@ import {
   QuotesList,
   ReviewQuotes,
 } from 'modules/quotes'
-import { AllMyShifts, MyUpcomingShifts } from 'modules/schedules/views'
+import {
+  AllMyShifts,
+  MyUpcomingShifts,
+  Schedules,
+  ScheduleDetails,
+  ScheduleTemplates,
+  ScheduleTemplateDetails,
+} from 'modules/schedules/views'
 import {
   CreateSummary,
   EditSummary,
@@ -249,7 +256,7 @@ export const AppRoutes: React.FC = () => {
               <RestrictedRoute
                 permissions={PERMISSIONS.schedules.change.schedule}
               >
-                <p>List over all schedules</p>
+                <Schedules />
               </RestrictedRoute>
             }
           />
@@ -265,7 +272,7 @@ export const AppRoutes: React.FC = () => {
                 <RestrictedRoute
                   permissions={PERMISSIONS.schedules.view.scheduleTemplate}
                 >
-                  <p>List over all templates</p>
+                  <ScheduleTemplates />
                 </RestrictedRoute>
               }
             />
@@ -276,7 +283,7 @@ export const AppRoutes: React.FC = () => {
                   <RestrictedRoute
                     permissions={PERMISSIONS.schedules.view.scheduleTemplate}
                   >
-                    <p>Template details</p>
+                    <ScheduleTemplateDetails />
                   </RestrictedRoute>
                 }
               />
@@ -289,7 +296,7 @@ export const AppRoutes: React.FC = () => {
               <RestrictedRoute
                 permissions={PERMISSIONS.schedules.change.schedule}
               >
-                <h1>Schedule detail</h1>
+                <ScheduleDetails />
               </RestrictedRoute>
             }
           />
