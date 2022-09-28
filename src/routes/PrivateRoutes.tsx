@@ -119,10 +119,6 @@ export const AppRoutes: React.FC = () => {
           <Route index element={<p>Hello Quiz</p>} />
         </Route>
 
-        <Route path="schedules">
-          <Route index element={<p>Hello Schedules</p>} />
-        </Route>
-
         <Route path="admissions">
           <Route
             index
@@ -245,12 +241,58 @@ export const AppRoutes: React.FC = () => {
           <Route path="*" element={<FullPage404 />} />
         </Route>
 
+        {/* ==== SCHEDULES MODULE ==== */}
         <Route path="schedules">
-          <Route index element={<h1>Oh herro</h1>} />
+          <Route
+            index
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <p>List over all schedules</p>
+              </RestrictedRoute>
+            }
+          />
           <Route path="me">
             <Route index element={<MyUpcomingShifts />} />
             <Route path="history" element={<AllMyShifts />} />
           </Route>
+
+          <Route path="templates">
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.schedules.view.scheduleTemplate}
+                >
+                  <p>List over all templates</p>
+                </RestrictedRoute>
+              }
+            />
+            <Route path=":id">
+              <Route
+                index
+                element={
+                  <RestrictedRoute
+                    permissions={PERMISSIONS.schedules.view.scheduleTemplate}
+                  >
+                    <p>Template details</p>
+                  </RestrictedRoute>
+                }
+              />
+            </Route>
+          </Route>
+
+          <Route
+            path=":id"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <h1>Schedule detail</h1>
+              </RestrictedRoute>
+            }
+          />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" />} />
