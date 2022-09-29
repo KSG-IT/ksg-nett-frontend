@@ -1,7 +1,7 @@
 import { Card, Group, Stack, Text } from '@mantine/core'
 import { format } from 'date-fns/esm'
 import { ApplicantCommentNode } from 'modules/admissions/types.graphql'
-import { UserThumbnail } from 'modules/users'
+import { UserThumbnail } from 'modules/users/components'
 
 interface ApplicantCommentCardProps {
   comment: ApplicantCommentNode

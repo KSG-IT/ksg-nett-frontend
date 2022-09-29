@@ -1,5 +1,5 @@
 import { Group, Stack, Text, Title } from '@mantine/core'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { InterviewLocationDateGrouping } from 'modules/admissions/types.graphql'
 
 export interface InterviewLocationInterviewsCardProps {

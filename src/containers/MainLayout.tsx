@@ -16,6 +16,8 @@ import {
 import { UserSearch } from 'modules/header/UserSearch'
 import React, { useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+import { Link } from 'react-router-dom'
+import { useStore } from 'store'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
 
@@ -43,7 +45,8 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const theme = useMantineTheme()
-  const [opened, setOpened] = useState(false)
+  const toggleSidebar = useStore(state => state.toggleSidebarOpen)
+  const sidebarOpen = useStore(state => state.sidebarOpen)
   const { classes } = useStyles()
   return (
     <AppShell
@@ -57,15 +60,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      navbar={<AppNavbar opened={opened} />}
-      footer={
-        <Footer height={60} p="md" className={classes.footer}>
-          <Text>
-            Har du funnet en feil på nettsiden? Ta kontakt med
-            <Anchor href="mailto:ksg-it@samfundet.no"> KSG - IT </Anchor>
-          </Text>
-        </Footer>
-      }
+      navbar={<AppNavbar opened={sidebarOpen} />}
       header={
         <Header height={70} p="md">
           <div
@@ -73,8 +68,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           >
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
-                opened={opened}
-                onClick={() => setOpened(o => !o)}
+                opened={sidebarOpen}
+                onClick={toggleSidebar}
                 size="sm"
                 color={theme.colors.gray[6]}
                 mr="xl"
@@ -82,11 +77,18 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             </MediaQuery>
 
             <Group className={classes.header}>
-              <Image src={logoUrl} width={48} height={48} />
-              <Text weight={700} size="lg">
-                Kafe- og serveringsnett
-              </Text>
-
+              <MediaQuery smallerThan={'md'} styles={{ display: 'none' }}>
+                <Group>
+                  <Link to="/dashboard">
+                    <Image src={logoUrl} width={48} height={48} />
+                  </Link>
+                  <Link to="/dashboard">
+                    <Text weight={700} size="lg">
+                      Kafe- og serveringsnett
+                    </Text>
+                  </Link>
+                </Group>
+              </MediaQuery>
               <UserSearch />
             </Group>
           </div>
@@ -103,6 +105,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
 const useStyles = createStyles(t => ({
   header: {
+    width: '100%',
+    justifyContent: 'space-between',
     [`@media (max-width: ${t.breakpoints.sm}px)`]: {
       flexDirection: 'row-reverse',
     },

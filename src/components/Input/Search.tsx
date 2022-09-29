@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconSearch } from '@tabler/icons'
 import styled from 'styled-components'
 
 interface WrapperProps {
@@ -68,7 +68,7 @@ export const Search: React.VFC<SearchProps> = ({
         }}
         onKeyDown={handleKeyDown}
       />
-      <FontAwesomeIcon icon="search" />
+      <IconSearch />
     </Wrapper>
   )
 }

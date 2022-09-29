@@ -1,4 +1,4 @@
-import { UserNode } from 'modules/users'
+import { UserNode } from 'modules/users/types'
 
 export interface LoginMutationVariables {
   username: String

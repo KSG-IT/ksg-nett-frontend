@@ -24,4 +24,24 @@ export const PERMISSIONS = {
       quote: 'quotes.change_quote',
     },
   },
+  users: {
+    change: {
+      user: 'users.change_user',
+    },
+  },
+  schedules: {
+    add: {
+      schedule: 'schedules.add_schedule',
+    },
+    change: {
+      schedule: 'schedules.change_schedule',
+    },
+    delete: {
+      schedule: 'schedules.delete_schedule',
+    },
+    view: {
+      schedule: 'schedules.view_schedule',
+      scheduleTemplate: 'schedules.view_scheduletemplate',
+    },
+  },
 }

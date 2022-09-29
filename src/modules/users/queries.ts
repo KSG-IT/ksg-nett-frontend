@@ -12,6 +12,7 @@ export const ME_QUERY = gql`
       initials
       email
       balance
+      dateOfBirth
       biography
       studyAddress
       homeAddress
@@ -36,13 +37,46 @@ export const ME_QUERY = gql`
 export const USER_QUERY = gql`
   query User($id: ID!) {
     user(id: $id) {
+      id
       fullName
+      firstName
+      lastName
       biography
-      homeAddress
       studyAddress
+      homeAddress
+      dateOfBirth
+      ksgStatus
+      study
+      studyAddress
+      email
       phone
       initials
       profileImage
+      internalGroupPositionMembershipHistory {
+        id
+        membershipStart
+        membershipEnd
+        position {
+          name
+          internalGroup {
+            name
+          }
+        }
+      }
+      taggedAndVerifiedQuotes {
+        id
+        text
+        verifiedBy {
+          id
+        }
+        context
+        tagged {
+          id
+          initials
+          profileImage
+          fullName
+        }
+      }
     }
   }
 `

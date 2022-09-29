@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Group, Paper, Title } from '@mantine/core'
 import { DatePicker, TimeRangeInput } from '@mantine/dates'
+import { IconX } from '@tabler/icons'
 import {
   CREATE_INTERVIEW_LOCATION_AVAILABILITY,
   DELETE_INTERVIEW_LOCATION,
@@ -13,32 +13,9 @@ import {
 } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
-import styled from 'styled-components'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import { InterviewLocationAvailabilityInline } from './InterviewLocationAvailabilityInline'
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`
 
-const DeleteInterviewLocationIcon = styled(FontAwesomeIcon)`
-  color: ${props => props.theme.colors.error};
-  &:hover {
-    cursor: pointer;
-  }
-`
-
-const CardHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 10px;
-  align-items: center;
-`
-
-const InterviewLocationName = styled.h2`
-  margin: 0;
-`
 interface InterviewLocationAvailabilityProps {
   interviewLocation: InterviewLocationNode
 }
@@ -107,14 +84,10 @@ export const InterviewLocationAvailabilityCard: React.VFC<
   concatenateDateAndTime()
   return (
     <Paper p="lg">
-      <CardHeader>
+      <Group>
         <Title order={3}>{interviewLocation.name}</Title>
-        <DeleteInterviewLocationIcon
-          icon="times"
-          size="lg"
-          onClick={handleDeleteInterviewLocation}
-        />
-      </CardHeader>
+        <IconX onClick={handleDeleteInterviewLocation} />
+      </Group>
       {/* Refactor this into a mantine table */}
       {interviewLocation.availability.map(availability => (
         <InterviewLocationAvailabilityInline

@@ -26,21 +26,29 @@ import {
   QuotesList,
   ReviewQuotes,
 } from 'modules/quotes'
-import { MyShifts } from 'modules/schedules/views'
+import {
+  AllMyShifts,
+  MyUpcomingShifts,
+  Schedules,
+  ScheduleDetails,
+  ScheduleTemplates,
+  ScheduleTemplateDetails,
+} from 'modules/schedules/views'
 import {
   CreateSummary,
   EditSummary,
   Summaries,
   SummaryDetail,
 } from 'modules/summaries'
-import { MeQueryReturns, ME_QUERY, UserProfile } from 'modules/users'
-import { ManageUsers } from 'modules/users/views'
+import { ME_QUERY } from 'modules/users/queries'
+import { MeQueryReturns } from 'modules/users/types'
+import { ManageUsers, UserProfile } from 'modules/users/views'
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
-import { RestrictedRoute } from './RestrictedRoute'
 import PublicRoutes from './PublicRoutes'
+import { RestrictedRoute } from './RestrictedRoute'
 
 const FullPage404 = React.lazy(
   () => import('components/FullPageComponents/FullPage404')
@@ -116,10 +124,6 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="quiz">
           <Route index element={<p>Hello Quiz</p>} />
-        </Route>
-
-        <Route path="schedules">
-          <Route index element={<p>Hello Schedules</p>} />
         </Route>
 
         <Route path="admissions">
@@ -244,9 +248,58 @@ export const AppRoutes: React.FC = () => {
           <Route path="*" element={<FullPage404 />} />
         </Route>
 
+        {/* ==== SCHEDULES MODULE ==== */}
         <Route path="schedules">
-          <Route index element={<h1>Oh herro</h1>} />
-          <Route path="me" element={<MyShifts />} />
+          <Route
+            index
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <Schedules />
+              </RestrictedRoute>
+            }
+          />
+          <Route path="me">
+            <Route index element={<MyUpcomingShifts />} />
+            <Route path="history" element={<AllMyShifts />} />
+          </Route>
+
+          <Route path="templates">
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.schedules.view.scheduleTemplate}
+                >
+                  <ScheduleTemplates />
+                </RestrictedRoute>
+              }
+            />
+            <Route path=":id">
+              <Route
+                index
+                element={
+                  <RestrictedRoute
+                    permissions={PERMISSIONS.schedules.view.scheduleTemplate}
+                  >
+                    <ScheduleTemplateDetails />
+                  </RestrictedRoute>
+                }
+              />
+            </Route>
+          </Route>
+
+          <Route
+            path=":id"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleDetails />
+              </RestrictedRoute>
+            }
+          />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" />} />

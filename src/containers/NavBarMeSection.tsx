@@ -6,7 +6,7 @@ import {
   IconPigMoney,
   IconUser,
 } from '@tabler/icons'
-import { UserThumbnail } from 'modules/users'
+import { UserThumbnail } from 'modules/users/components'
 import { useStore } from 'store'
 import { removeLoginToken } from 'util/auth'
 import { NavItem } from './NavItem'

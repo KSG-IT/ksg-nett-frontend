@@ -4,7 +4,7 @@ import { IconTrash } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { AdmissionStatusValues } from 'modules/admissions/consts'
 import {
   DELETE_ALL_INTERVIEWS,

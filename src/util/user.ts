@@ -1,4 +1,4 @@
-import { AllUsersShallowQueryReturns } from 'modules/users'
+import { AllUsersShallowQueryReturns } from 'modules/users/types'
 
 export interface UserOption {
   value: string

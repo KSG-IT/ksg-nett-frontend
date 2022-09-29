@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client'
 import { Button, Paper, Stack, Table, Title } from '@mantine/core'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { InterviewNode } from 'modules/admissions/types.graphql'
 import { useNavigate } from 'react-router-dom'
 

@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { DELETE_INTERVIEW_LOCATION_AVAILABILITY } from 'modules/admissions/mutations'
 import { InterviewLocationAvailabilityNode } from 'modules/admissions/types.graphql'
 import styled from 'styled-components'

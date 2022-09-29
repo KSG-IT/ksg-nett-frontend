@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Paper, Stack, Title } from '@mantine/core'
+import { IconCircleCheck, IconCircleX } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -56,10 +56,10 @@ export const InternalGroupApplicants: React.VFC = ({}) => {
     <Stack>
       <Title>Søkeroversikt {internalGroupName}</Title>
       <MessageBox type="info">
-        <FontAwesomeIcon icon="times-circle" color="red" /> indikerer ingen fra{' '}
+        <IconCircleX color="red" /> indikerer ingen fra{' '}
         {internalGroupName.toLocaleLowerCase()} er på intervjuet.{' '}
-        <FontAwesomeIcon icon="check-circle" color="green" /> indikerer at det
-        minst er én fra {internalGroupName.toLocaleLowerCase()} på intervjuet.
+        <IconCircleCheck color="green" /> indikerer at det minst er én fra{' '}
+        {internalGroupName.toLocaleLowerCase()} på intervjuet.
       </MessageBox>
       <Title order={2}>Førstevalg</Title>
       <Paper p="md">

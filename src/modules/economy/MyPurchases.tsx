@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Paper, Table } from '@mantine/core'
-import { format } from 'date-fns'
+import { IconArrowRight } from '@tabler/icons'
+import { format } from 'util/date-fns'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { numberWithSpaces } from 'util/parsing'
@@ -39,7 +39,7 @@ export const MyPurchases: React.VFC<MyPurchasesProps> = ({ activities }) => {
         <tbody>{rows}</tbody>
       </Table>
       <Link to="/economy/me/purchase-history">
-        Fullstendig historikk {<FontAwesomeIcon icon="arrow-right" />}
+        Fullstendig historikk {<IconArrowRight />}
       </Link>
     </Paper>
   )

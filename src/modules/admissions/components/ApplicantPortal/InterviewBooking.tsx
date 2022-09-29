@@ -1,17 +1,9 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  Alert,
-  Button,
-  Container,
-  Group,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core'
+import { Button, Container, Group, Stack, Text, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { format } from 'date-fns'
+import { MessageBox } from 'components/MessageBox'
+import { format } from 'util/date-fns'
 import { BOOK_INTERRVIEW_MUTATION } from 'modules/admissions/mutations'
 import { INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY } from 'modules/admissions/queries'
 import { InterviewsAvailableForBookingReturns } from 'modules/admissions/types.graphql'
@@ -63,7 +55,7 @@ export const InterviewBooking: React.VFC<InterviewBookingProps> = ({
   }
   return (
     <Stack>
-      <Alert icon={<FontAwesomeIcon icon="info" />}>
+      <MessageBox type="info">
         <Text>
           Det kan hende prøver å booke intervjutid samtidig. Dette kan medføre
           at tidspunkter forsvinner om du ikke velger et tidspunkt raskt nok.
@@ -72,7 +64,7 @@ export const InterviewBooking: React.VFC<InterviewBookingProps> = ({
           For at vi ikke skal glemme å sette opp intervjuere er det tidligst
           mulig å booke et intervju neste dag.
         </Text>
-      </Alert>
+      </MessageBox>
       {data.interviewsAvailableForBooking.map(day => {
         return (
           <Stack key={`${day.date}`}>

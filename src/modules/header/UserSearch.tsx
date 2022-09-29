@@ -1,6 +1,6 @@
 import { useLazyQuery } from '@apollo/client'
 import { IconSearch } from '@tabler/icons'
-import { UserThumbnail } from 'modules/users'
+import { UserThumbnail } from 'modules/users/components'
 import { ALL_ACTIVE_USERS_SHALLOW_QUERY } from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
