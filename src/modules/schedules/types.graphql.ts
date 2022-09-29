@@ -51,6 +51,10 @@ export interface AllSchedulesReturns {
   allSchedules: ScheduleNode[]
 }
 
+export interface AllScheduleTemplatesReturns {
+  allScheduleTemplates: ScheduleTemplateNode[]
+}
+
 // === MUTATIONS ===
 
 type PatchScheduleTemplateInput = {
