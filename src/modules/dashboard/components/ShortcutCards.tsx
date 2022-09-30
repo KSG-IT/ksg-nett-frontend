@@ -1,5 +1,3 @@
-import { IconName } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Card,
   createStyles,
@@ -8,13 +6,48 @@ import {
   Text,
   UnstyledButton,
 } from '@mantine/core'
+import {
+  IconBriefcase,
+  IconChecklist,
+  IconCreditCard,
+  IconEdit,
+  IconQuote,
+  IconUsers,
+  TablerIcon,
+} from '@tabler/icons'
+import { Link } from 'react-router-dom'
 
 const shortcuts = [
-  { title: 'Innskudd', icon: 'credit-card', color: 'cyan' },
-  { title: 'Interngjeng', icon: 'users', color: 'indigo' },
-  { title: 'Legg til sitat', icon: 'quote-left', color: 'blue' },
-  { title: 'Mine vakter', icon: 'briefcase', color: 'violet' },
-  { title: 'Nytt referat', icon: 'edit', color: 'grape' },
+  {
+    title: 'Innskudd',
+    icon: IconCreditCard,
+    color: 'cyan',
+    link: '/economy/me',
+  },
+  {
+    title: 'Interngjeng',
+    icon: IconUsers,
+    color: 'indigo',
+    link: '/internal-groups',
+  },
+  {
+    title: 'Legg til sitat',
+    icon: IconQuote,
+    color: 'blue',
+    link: '/quotes/create',
+  },
+  {
+    title: 'Mine vakter',
+    icon: IconBriefcase,
+    color: 'violet',
+    link: '/schedules/me',
+  },
+  {
+    title: 'Nytt referat',
+    icon: IconEdit,
+    color: 'grape',
+    link: '/summaries/create',
+  },
 ]
 
 const useStyles = createStyles(theme => ({
@@ -47,22 +80,22 @@ const useStyles = createStyles(theme => ({
       transform: 'scale(1.05)',
     },
   },
-  itemTitle: {
-    color: theme.black,
-  },
 }))
 
-export function ActionsGrid() {
+export const ShortcutCards: React.FC = () => {
   const { classes, theme } = useStyles()
 
-  const items = shortcuts.map(item => (
-    <UnstyledButton p={'lg'} key={item.title} className={classes.item}>
-      <FontAwesomeIcon
-        icon={item.icon as IconName}
-        color={theme.colors[item.color][5]}
-      />
-      <Text weight={400} mt={7} className={classes.itemTitle}>
-        {item.title}
+  const items = shortcuts.map(({ icon: Icon, title, color, link }) => (
+    <UnstyledButton
+      component={Link}
+      to={`${link}`}
+      p={'lg'}
+      key={title}
+      className={classes.item}
+    >
+      <Icon color={theme.colors[color][6]} size={32} />
+      <Text size={'sm'} color={'dimmed'} weight={800}>
+        {title}
       </Text>
     </UnstyledButton>
   ))
@@ -72,7 +105,7 @@ export function ActionsGrid() {
       <Text color="dimmed" className={classes.title}>
         Snarveier
       </Text>
-      <Card withBorder radius="md" p={'lg'} className={classes.card}>
+      <Card p={0} radius="md" className={classes.card}>
         <SimpleGrid
           cols={5}
           my={'xl'}

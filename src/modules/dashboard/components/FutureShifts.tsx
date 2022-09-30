@@ -1,5 +1,5 @@
 import { Card, createStyles, Grid, Stack, Text } from '@mantine/core'
-import { UserNode } from 'modules/users'
+import { UserNode } from 'modules/users/types'
 
 type MockShiftNode = {
   user: Pick<UserNode, 'id' | 'firstName'>
@@ -21,11 +21,12 @@ interface ShiftProps {
 
 const useStyles = createStyles(theme => ({
   card: {
-    backgroundColor: theme.colors.gray[0],
+    backgroundColor: theme.colors.white,
+    borderTop: `4px solid ${theme.colors.brand}`,
   },
 }))
 
-export const FutureShifts: React.VFC<ShiftProps> = ({ shifts }) => {
+export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
   const { classes } = useStyles()
   const shiftCards = shifts.map((shift, index) => (
     <>

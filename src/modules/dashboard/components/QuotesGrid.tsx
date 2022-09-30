@@ -7,7 +7,7 @@ import {
   Text,
 } from '@mantine/core'
 import { QuoteNode } from 'modules/quotes/types'
-import { UserThumbnail } from 'modules/users/UserThumbnail'
+import { UserThumbnail } from 'modules/users/components/UserThumbnail'
 
 interface UserQuotesProps {
   quotes: Pick<QuoteNode, 'text' | 'tagged' | 'id' | 'context'>[]
@@ -23,7 +23,7 @@ const useStyles = createStyles(theme => ({
   },
 }))
 
-export const RecentQuotes: React.VFC<UserQuotesProps> = ({ quotes }) => {
+export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
   const { classes } = useStyles()
   const fields = quotes.map(quote => (
     <Card className={classes.card} key={quote.id} radius="lg" shadow={'xs'}>
@@ -43,11 +43,19 @@ export const RecentQuotes: React.VFC<UserQuotesProps> = ({ quotes }) => {
     </Card>
   ))
   return (
-    <Stack>
+    <Stack mt={'xl'}>
       <Text color={'dimmed'} weight={700} p={'xs'}>
         Siste sitater
       </Text>
-      <SimpleGrid cols={2}>{fields}</SimpleGrid>
+      <SimpleGrid
+        cols={4}
+        breakpoints={[
+          { maxWidth: 'md', cols: 3, spacing: 'md' },
+          { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+        ]}
+      >
+        {fields}
+      </SimpleGrid>
     </Stack>
   )
 }

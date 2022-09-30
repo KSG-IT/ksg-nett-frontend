@@ -7,15 +7,16 @@ import {
   TextProps,
 } from '@mantine/core'
 import { format } from 'date-fns'
-import { UserNode } from 'modules/users'
+import { UserNode } from 'modules/users/types'
 import React from 'react'
 
 const useStyles = createStyles(theme => ({
   card: {
-    backgroundColor: theme.colors.gray[0],
+    backgroundColor: theme.colors.white,
+    borderTop: `4px solid ${theme.colors.brand}`,
   },
   tableHeader: {
-    color: theme.colors.gray[8],
+    color: theme.colors.gray[7],
     textTransform: 'uppercase',
   },
   headerRow: {
@@ -27,7 +28,7 @@ interface TransactionCardProps {
   user: UserNode
 }
 
-export const TransactionCard: React.VFC<TransactionCardProps> = ({ user }) => {
+export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
   const { classes } = useStyles()
   const rows = user.lastTransactions.map((transaction, index) => (
     <tr key={index}>
@@ -38,14 +39,9 @@ export const TransactionCard: React.VFC<TransactionCardProps> = ({ user }) => {
     </tr>
   ))
 
-  const Header: React.VFC<TextProps> = ({ children }) => (
+  const Header: React.FC<TextProps> = ({ children }) => (
     <th>
-      <Text
-        weight={'bolder'}
-        size={'sm'}
-        pb={'xs'}
-        className={classes.tableHeader}
-      >
+      <Text weight={800} size={'sm'} className={classes.tableHeader}>
         {children}
       </Text>
     </th>

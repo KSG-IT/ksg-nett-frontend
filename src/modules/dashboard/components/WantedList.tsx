@@ -1,5 +1,6 @@
 import { Card, Group, Title } from '@mantine/core'
-import { UserNode, UserThumbnail, UserThumbnailProps } from 'modules/users'
+import { UserThumbnail } from 'modules/users/components/UserThumbnail'
+import { UserNode, UserThumbnailProps } from 'modules/users/types'
 
 export type WantedUser = Pick<UserNode, 'balance' | 'fullName'> &
   UserThumbnailProps['user']
@@ -8,7 +9,7 @@ interface WantedListProps {
   users: WantedUser[]
 }
 
-export const WantedList: React.VFC<WantedListProps> = ({ users }) => {
+export const WantedList: React.FC<WantedListProps> = ({ users }) => {
   return (
     <Card>
       <Title order={3}>Wanted</Title>
