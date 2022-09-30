@@ -1,4 +1,4 @@
-import { LocationValues, RoleValues } from './consts'
+import { DayValues, LocationValues, RoleValues } from './consts'
 
 export function parseShiftRole(role: RoleValues) {
   return (
@@ -29,6 +29,27 @@ export function parseLocation(location: LocationValues) {
       return 'Storsalen'
     case LocationValues.STROSSA:
       return 'Strossa'
+    default:
+      return ''
+  }
+}
+
+export function parseDay(day: DayValues) {
+  switch (day) {
+    case DayValues.MONDAY:
+      return 'Mandag'
+    case DayValues.TUESDAY:
+      return 'Tirsdag'
+    case DayValues.WEDNESDAY:
+      return 'Onsdag'
+    case DayValues.THURSDAY:
+      return 'Torsdag'
+    case DayValues.FRIDAY:
+      return 'Fredag'
+    case DayValues.SATURDAY:
+      return 'Lørdag'
+    case DayValues.SUNDAY:
+      return 'Søndag'
     default:
       return ''
   }

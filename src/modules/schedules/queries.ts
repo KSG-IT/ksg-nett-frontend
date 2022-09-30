@@ -65,3 +65,24 @@ export const ALL_SCHEDULE_TEMPLATES = gql`
     }
   }
 `
+
+export const SCHEDULE_TEMPLATE_QUERY = gql`
+  query ScheduleTemplate($id: ID!) {
+    scheduleTemplate(id: $id) {
+      id
+      name
+      schedule {
+        id
+        name
+      }
+      shiftTemplates {
+        id
+        location
+        timeStart
+        timeEnd
+        day
+        duration
+      }
+    }
+  }
+`

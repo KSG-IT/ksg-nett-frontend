@@ -1,5 +1,5 @@
 import { UserNode } from 'modules/users/types'
-import { LocationValues, RoleValues } from './consts'
+import { DayValues, LocationValues, RoleValues } from './consts'
 
 // === NODES ===
 export type ShiftSlotNode = {
@@ -31,10 +31,23 @@ export type ScheduleNode = {
   name: string
   templates: Pick<ScheduleTemplateNode, 'id'>[]
 }
+
+// TEMPLATE NODES
+
 export type ScheduleTemplateNode = {
   id: string
   name: string
   schedule: Pick<ScheduleNode, 'id' | 'name'>
+  shiftTemplates: ShiftTemplateNode[]
+}
+
+export type ShiftTemplateNode = {
+  id: string
+  location: LocationValues | null
+  timeStart: string
+  timeEnd: string
+  day: DayValues
+  duration: string
 }
 
 // === QUERIES ===
@@ -53,6 +66,13 @@ export interface AllSchedulesReturns {
 
 export interface AllScheduleTemplatesReturns {
   allScheduleTemplates: ScheduleTemplateNode[]
+}
+
+export interface ScheduleTemplateQueryVariables {
+  id: string
+}
+export interface ScheduleTemplateQueryReturns {
+  scheduleTemplate: ScheduleTemplateNode | null
 }
 
 // === MUTATIONS ===
