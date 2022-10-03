@@ -41,6 +41,12 @@ export type ScheduleTemplateNode = {
   shiftTemplates: ShiftTemplateNode[]
 }
 
+export type ShiftSlotTemplateNode = {
+  id: string
+  role: RoleValues
+  count: number
+}
+
 export type ShiftTemplateNode = {
   id: string
   location: LocationValues | null
@@ -48,6 +54,7 @@ export type ShiftTemplateNode = {
   timeEnd: string
   day: DayValues
   duration: string
+  shiftSlotTemplates: ShiftSlotTemplateNode[]
 }
 
 // === QUERIES ===
@@ -87,4 +94,58 @@ export interface PatchScheduleTemplateReturns {
 export interface PatchScheduleTemplateVariables {
   id: string
   input: PatchScheduleTemplateInput
+}
+
+export interface PatchShiftSlotTemplateReturns {
+  patchShiftSlotTemplate: Pick<ShiftSlotTemplateNode, 'id'>
+}
+export interface PatchShiftSlotTemplateVariables {
+  id: string
+  input: PatchShiftSlotTemplateInput
+}
+
+type PatchShiftSlotTemplateInput = {
+  role?: RoleValues
+  count?: number
+}
+
+type CreateShiftTemplateInput = {
+  name: string
+  day: DayValues
+  location?: LocationValues | null
+  timeStart: string
+  timeEnd: string
+  scheduleTemplate: string
+}
+
+export interface CreateShiftTemplateReturns {
+  shiftTemplate: Pick<ShiftTemplateNode, 'id'>
+}
+export interface CreateShiftTemplateVariables {
+  input: CreateShiftTemplateInput
+}
+
+export interface CreateShiftSlotTemplateReturns {
+  shiftSlotTemplate: Pick<ShiftSlotTemplateNode, 'id'>
+}
+
+type CreateShiftSlotTemplateInput = {
+  shiftTemplate: string
+  role: RoleValues
+  count: number
+}
+export interface CreateShiftSlotTemplateVariables {
+  input: CreateShiftSlotTemplateInput
+}
+
+export interface CreateScheduleTemplateReturns {
+  scheduleTemplate: Pick<ScheduleTemplateNode, 'id'>
+}
+
+type CreateScheduleTemplateInput = {
+  name: string
+  schedule: string
+}
+export interface CreateScheduleTemplateVariables {
+  input: CreateScheduleTemplateInput
 }

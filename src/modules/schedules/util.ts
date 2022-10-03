@@ -7,7 +7,7 @@ export function parseShiftRole(role: RoleValues) {
   )
 }
 
-export function parseLocation(location: LocationValues) {
+export function parseLocation(location: LocationValues | null) {
   switch (location) {
     case LocationValues.BODEGAEN:
       return 'Bodegaen'

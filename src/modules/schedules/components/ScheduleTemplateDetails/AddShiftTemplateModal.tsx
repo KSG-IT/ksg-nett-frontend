@@ -1,44 +1,78 @@
-import { Button, Group, Modal, NumberInput, Select, Text } from '@mantine/core'
+import { Button, Group, Input, Modal, Select, TextInput } from '@mantine/core'
 import { TimeInput } from '@mantine/dates'
-import { IconPlus, IconTrash } from '@tabler/icons'
-import { RoleValues } from 'modules/schedules/consts'
+import { DaySelect } from 'components/Select'
+import { format } from 'util/date-fns'
+import { DayValues, LocationValues } from 'modules/schedules/consts'
+import { useShiftTemplateMutations } from 'modules/schedules/mutations.hooks'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { SCHEDULE_TEMPLATE_QUERY } from 'modules/schedules/queries'
+import { useParams } from 'react-router-dom'
+
+const locationOptions = [
+  { value: LocationValues.BODEGAEN, label: 'Bodegaen' },
+  { value: LocationValues.DAGLIGHALLEN_BAR, label: 'Daglighallen bar' },
+  { value: LocationValues.LYCHE_BAR, label: 'Lyche bar' },
+  { value: LocationValues.LYCHE_KJOKKEN, label: 'Lyche kjøkken' },
+  { value: LocationValues.STROSSA, label: 'Strossa' },
+  { value: LocationValues.STORSALEN, label: 'Storsalen' },
+  { value: LocationValues.KLUBBEN, label: 'Klubben' },
+  { value: LocationValues.RUNDHALLEN, label: 'Rundhallen' },
+]
+
+interface AddShiftTemplateModalParams {
+  templateId: string
+}
 
 interface AddShiftTemplateModalProps {
   open: boolean
   onCloseCallback: () => void
 }
 
-type RoleSetting = {
-  role: RoleValues
-  count: number
-}
-
 export const AddShiftTemplateModal: React.FC<AddShiftTemplateModalProps> = ({
   open,
   onCloseCallback,
 }) => {
-  const [roleSettings, setRoleSettings] = useState<RoleSetting[]>([
-    {
-      role: RoleValues.BARISTA,
-      count: 1,
-    },
-  ])
+  const { templateId } = useParams<
+    keyof AddShiftTemplateModalParams
+  >() as AddShiftTemplateModalParams
+  const [name, setName] = useState('')
 
-  function handleAddEmptyRole() {
-    setRoleSettings([
-      ...roleSettings,
-      {
-        role: RoleValues.BARISTA,
-        count: 1,
+  const [day, setDay] = useState(DayValues.MONDAY)
+  const [startTime, setStartTime] = useState(new Date())
+  const [endTime, setEndTime] = useState(new Date())
+  const [location, setLocation] = useState<LocationValues | null>(null)
+
+  const { createShiftTemplate, createShiftTemplateLoading } =
+    useShiftTemplateMutations()
+
+  function handleCreateShiftTemplate() {
+    const timeStart = `${format(startTime, 'HH:mm')}:00`
+    const timeEnd = `${format(endTime, 'HH:mm')}:00`
+    const locationInput = location ?? null
+
+    const input = {
+      name,
+      day,
+      timeStart,
+      timeEnd,
+      location: locationInput,
+      scheduleTemplate: templateId,
+    }
+
+    createShiftTemplate({
+      variables: {
+        input,
       },
-    ])
-  }
-
-  function handleRemoveRole(index: number) {
-    // Not working as it should
-
-    setRoleSettings(roleSettings.filter((_, i) => i !== index))
+      refetchQueries: [SCHEDULE_TEMPLATE_QUERY],
+      onError: error => {
+        toast.error(error.message)
+      },
+      onCompleted: () => {
+        toast.success('Vakt lagt til')
+        onCloseCallback()
+      },
+    })
   }
 
   return (
@@ -47,33 +81,41 @@ export const AddShiftTemplateModal: React.FC<AddShiftTemplateModalProps> = ({
       opened={open}
       onClose={onCloseCallback}
     >
-      <Select label="Dag i uken" data={[]}></Select>
-      <TimeInput label="Tidspunkt start"></TimeInput>
-      <TimeInput label="Tidspunkt slutt"></TimeInput>
+      <TextInput
+        label="Navn på vakt"
+        value={name}
+        onChange={e => setName(e.currentTarget.value)}
+      />
+      <DaySelect value={day} onChangeCallback={setDay} />
+      <TimeInput
+        value={startTime}
+        label="Tidspunkt start"
+        onChange={time => setStartTime(time)}
+      ></TimeInput>
+      <TimeInput
+        value={endTime}
+        label="Tidspunkt slutt"
+        onChange={time => setEndTime(time)}
+      ></TimeInput>
+      <Select
+        clearable
+        placeholder="Ikke noe lokale valgt "
+        label="Lokale"
+        value={location}
+        data={locationOptions}
+        onChange={evt => setLocation(evt as LocationValues)}
+      />
 
-      {roleSettings.map((role, index) => (
-        <Group my="sm">
-          <Text>{role.role}</Text>
-          <NumberInput placeholder="Antall" />
-          <IconTrash
-            color="red"
-            onClick={() => handleRemoveRole(index)}
-            style={{ cursor: 'pointer' }}
-          />
-        </Group>
-      ))}
-      <Button
-        variant="subtle"
-        leftIcon={<IconPlus />}
-        onClick={handleAddEmptyRole}
-      >
-        Legg til rolle
-      </Button>
       <Group position="right" my="md">
         <Button color="gray" onClick={onCloseCallback}>
           Avbryt
         </Button>
-        <Button>Opprett</Button>
+        <Button
+          loading={createShiftTemplateLoading}
+          onClick={handleCreateShiftTemplate}
+        >
+          Opprett
+        </Button>
       </Group>
     </Modal>
   )

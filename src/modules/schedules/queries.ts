@@ -82,6 +82,11 @@ export const SCHEDULE_TEMPLATE_QUERY = gql`
         timeEnd
         day
         duration
+        shiftSlotTemplates {
+          id
+          count
+          role
+        }
       }
     }
   }
