@@ -30,3 +30,36 @@ export enum RoleValues {
   SPRITBARTENDER = 'SPRITBARTENDER',
   SPRITBARSJEF = 'SPRITBARSJEF',
 }
+
+export enum ShiftLocation {
+  EDGAR = 'Edgar',
+  BODEGAEN = 'Bodegaen',
+  RUNDHALLEN = 'Rundhallen',
+  KLUBBEN = 'Klubben',
+  LYCHE_BAR = 'Lyche Bar',
+  LYCHE_KJOKKEN = 'Lyche Kjøkken',
+  STORSALEN = 'Storsalen',
+  SELSKAPSSIDEN = 'Selskapssiden',
+  STROSSA = 'Strossa',
+  DAGLIGHALLEN_BAR = 'Daglighallen Bar',
+}
+
+export enum ShiftSlotRole {
+  UGLE = 'Ugle',
+  BRANNVAKT = 'Brannvakt',
+  BARISTA = 'Barista',
+  KAFEANSVARLIG = 'Kafeansvarlig',
+  BARSERVITOR = 'Barservitør',
+  HOVMESTER = 'Hovmester',
+  KOKK = 'Kokk',
+  SOUSCHEF = 'Souschef',
+  RYDDEVAKT = 'Ryddevakt',
+  ARRANGEMENTSBARTENDER = 'Arrangementbartender',
+  ARRANGEMENTSANSVARLIG = 'Arrangementsansvarlig',
+  BRYGGER = 'Brygger',
+  BARTENDER = 'Bartender',
+  BARSJEF = 'Barsjef',
+  BARVAKT = 'Barvakt',
+  SPRITBARTENDER = 'Spritbartender',
+  SPRITBARSJEF = 'Spritbarsjef',
+}

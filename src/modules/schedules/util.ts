@@ -1,4 +1,9 @@
-import { LocationValues, RoleValues } from './consts'
+import {
+  LocationValues,
+  RoleValues,
+  ShiftLocation,
+  ShiftSlotRole,
+} from './consts'
 
 export function parseShiftRole(role: RoleValues) {
   return (
@@ -32,4 +37,14 @@ export function parseLocation(location: LocationValues) {
     default:
       return ''
   }
+}
+
+export function getLocationValue(location: ShiftLocation) {
+  const indexOfLocation = Object.keys(ShiftLocation).indexOf(location)
+  return Object.values(ShiftLocation)[indexOfLocation]
+}
+
+export function getRoleValue(role: ShiftSlotRole) {
+  const indexOfRole = Object.keys(ShiftSlotRole).indexOf(role)
+  return Object.values(ShiftSlotRole)[indexOfRole]
 }
