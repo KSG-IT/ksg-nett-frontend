@@ -3,7 +3,9 @@ import { Button, createStyles, Group, Title } from '@mantine/core'
 import { IconPlus } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
+import { PERMISSIONS } from 'util/permissions'
 import {
   CreateScheduleTemplateModal,
   ScheduleTemplateTable,
@@ -28,9 +30,13 @@ export const ScheduleTemplates: React.FC = () => {
     <div className={classes.wrapper}>
       <Group position="apart" my="md">
         <Title>Vaktplan maler</Title>
-        <Button leftIcon={<IconPlus />} onClick={() => setModalOpen(true)}>
-          Opprett ny mal
-        </Button>
+        <PermissionGate
+          permissions={PERMISSIONS.schedules.add.scheduleTemplate}
+        >
+          <Button leftIcon={<IconPlus />} onClick={() => setModalOpen(true)}>
+            Opprett ny mal
+          </Button>
+        </PermissionGate>
       </Group>
       <ScheduleTemplateTable scheduleTemplates={allScheduleTemplates} />
       <CreateScheduleTemplateModal

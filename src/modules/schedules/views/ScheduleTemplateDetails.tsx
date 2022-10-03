@@ -1,11 +1,13 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Title } from '@mantine/core'
-import { IconPlus } from '@tabler/icons'
+import { IconPlus, IconTrash } from '@tabler/icons'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
+import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { PERMISSIONS } from 'util/permissions'
 import {
   AddShiftTemplateModal,
   ShiftTemplateAccordion,
@@ -38,7 +40,7 @@ export const ScheduleTemplateDetails: React.FC = () => {
 
   if (!scheduleTemplate) return <FullPage404 />
 
-  const { name, shiftTemplates } = scheduleTemplate
+  const { shiftTemplates } = scheduleTemplate
 
   return (
     <div>
@@ -46,9 +48,18 @@ export const ScheduleTemplateDetails: React.FC = () => {
         <Title>
           {scheduleTemplate.name} {scheduleTemplate.schedule.name}
         </Title>
-        <Button leftIcon={<IconPlus />} onClick={() => setModalOpen(true)}>
-          Legg til vakt
-        </Button>
+        <Group>
+          <PermissionGate
+            permissions={PERMISSIONS.schedules.delete.scheduleTemplate}
+          >
+            <Button leftIcon={<IconTrash />} color="red">
+              Slett mal
+            </Button>
+          </PermissionGate>
+          <Button leftIcon={<IconPlus />} onClick={() => setModalOpen(true)}>
+            Legg til vakt
+          </Button>
+        </Group>
       </Group>
 
       <MessageBox type="info">

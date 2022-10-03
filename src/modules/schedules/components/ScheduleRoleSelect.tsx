@@ -13,44 +13,44 @@ const shiftRoleData = [
     label: parseShiftRole(RoleValues.ARRANGEMENTBARTENDER),
   },
   {
-    value: RoleValues.KAFEANSVARLIG,
-    label: parseShiftRole(RoleValues.KAFEANSVARLIG),
-  },
-  {
     value: RoleValues.BARISTA,
     label: parseShiftRole(RoleValues.BARISTA),
-  },
-  {
-    value: RoleValues.HOVMESTER,
-    label: parseShiftRole(RoleValues.HOVMESTER),
   },
   {
     value: RoleValues.BARSERVITOR,
     label: parseShiftRole(RoleValues.BARSERVITOR),
   },
   {
-    value: RoleValues.BARSJEF,
-    label: parseShiftRole(RoleValues.BARSJEF),
-  },
-  {
     value: RoleValues.BARTENDER,
     label: parseShiftRole(RoleValues.BARTENDER),
   },
   {
-    value: RoleValues.SOUSCHEF,
-    label: parseShiftRole(RoleValues.SOUSCHEF),
+    value: RoleValues.BARSJEF,
+    label: parseShiftRole(RoleValues.BARSJEF),
+  },
+  {
+    value: RoleValues.BRANNVAKT,
+    label: parseShiftRole(RoleValues.BRANNVAKT),
+  },
+  {
+    value: RoleValues.HOVMESTER,
+    label: parseShiftRole(RoleValues.HOVMESTER),
+  },
+  {
+    value: RoleValues.KAFEANSVARLIG,
+    label: parseShiftRole(RoleValues.KAFEANSVARLIG),
   },
   {
     value: RoleValues.KOKK,
     label: parseShiftRole(RoleValues.KOKK),
   },
   {
-    value: RoleValues.UGLE,
-    label: parseShiftRole(RoleValues.UGLE),
+    value: RoleValues.SOUSCHEF,
+    label: parseShiftRole(RoleValues.SOUSCHEF),
   },
   {
-    value: RoleValues.BRANNVAKT,
-    label: parseShiftRole(RoleValues.BRANNVAKT),
+    value: RoleValues.UGLE,
+    label: parseShiftRole(RoleValues.UGLE),
   },
 ]
 
