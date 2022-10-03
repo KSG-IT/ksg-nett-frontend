@@ -8,17 +8,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { SCHEDULE_TEMPLATE_QUERY } from 'modules/schedules/queries'
 import { useParams } from 'react-router-dom'
-
-const locationOptions = [
-  { value: LocationValues.BODEGAEN, label: 'Bodegaen' },
-  { value: LocationValues.DAGLIGHALLEN_BAR, label: 'Daglighallen bar' },
-  { value: LocationValues.LYCHE_BAR, label: 'Lyche bar' },
-  { value: LocationValues.LYCHE_KJOKKEN, label: 'Lyche kjøkken' },
-  { value: LocationValues.STROSSA, label: 'Strossa' },
-  { value: LocationValues.STORSALEN, label: 'Storsalen' },
-  { value: LocationValues.KLUBBEN, label: 'Klubben' },
-  { value: LocationValues.RUNDHALLEN, label: 'Rundhallen' },
-]
+import { LocationSelect } from '../LocationSelect'
 
 interface AddShiftTemplateModalParams {
   templateId: string
@@ -97,12 +87,11 @@ export const AddShiftTemplateModal: React.FC<AddShiftTemplateModalProps> = ({
         label="Tidspunkt slutt"
         onChange={time => setEndTime(time)}
       ></TimeInput>
-      <Select
+      <LocationSelect
         clearable
         placeholder="Ikke noe lokale valgt "
         label="Lokale"
         value={location}
-        data={locationOptions}
         onChange={evt => setLocation(evt as LocationValues)}
       />
 
