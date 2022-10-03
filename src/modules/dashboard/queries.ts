@@ -23,6 +23,17 @@ export const DASHBOARD_DATA_QUERY = gql`
           initials
         }
       }
+      myUpcomingShifts {
+        role
+        shift {
+          location
+          datetimeStart
+          datetimeEnd
+          schedule {
+            name
+          }
+        }
+      }
     }
   }
 `
