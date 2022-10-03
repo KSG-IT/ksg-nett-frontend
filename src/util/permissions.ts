@@ -32,12 +32,14 @@ export const PERMISSIONS = {
   schedules: {
     add: {
       schedule: 'schedules.add_schedule',
+      scheduleTemplate: 'schedules.add_scheduletemplate',
     },
     change: {
       schedule: 'schedules.change_schedule',
     },
     delete: {
       schedule: 'schedules.delete_schedule',
+      scheduleTemplate: 'schedules.delete_scheduletemplate',
     },
     view: {
       schedule: 'schedules.view_schedule',
