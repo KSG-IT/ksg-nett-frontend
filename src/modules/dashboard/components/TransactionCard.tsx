@@ -13,7 +13,7 @@ import React from 'react'
 const useStyles = createStyles(theme => ({
   card: {
     backgroundColor: theme.colors.white,
-    borderTop: `4px solid ${theme.colors.brand}`,
+    borderTop: `5px solid ${theme.colors.brand}`,
   },
   tableHeader: {
     color: theme.colors.gray[7],

@@ -1,64 +1,81 @@
-import { Card, createStyles, Grid, Stack, Text } from '@mantine/core'
-import { UserNode } from 'modules/users/types'
+import {
+  Card,
+  createStyles,
+  Divider,
+  Grid,
+  Group,
+  Stack,
+  Text,
+  UnstyledButton,
+} from '@mantine/core'
+import { format } from 'util/date-fns/format'
+import { getLocationValue, getRoleValue } from 'modules/schedules/util'
+import { Link } from 'react-router-dom'
+import { ShiftSlotRole, ShiftLocation } from 'modules/schedules/consts'
 
-type MockShiftNode = {
-  user: Pick<UserNode, 'id' | 'firstName'>
-  slot: {
-    start: string
-    end: string
-    type: {
-      name: string
-    }
-    group: {
+type UpcomingShiftNode = {
+  role: ShiftSlotRole
+  shift: {
+    location: ShiftLocation
+    datetimeStart: Date
+    datetimeEnd: Date
+    schedule: {
       name: string
     }
   }
 }
 
 interface ShiftProps {
-  shifts: MockShiftNode[]
+  shifts: UpcomingShiftNode[]
 }
 
 const useStyles = createStyles(theme => ({
   card: {
     backgroundColor: theme.colors.white,
-    borderTop: `4px solid ${theme.colors.brand}`,
+    borderTop: `5px solid ${theme.colors.brand}`,
+  },
+  shiftButton: {
+    '&:hover': {
+      transform: 'translate(0, -4px)',
+    },
   },
 }))
 
 export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
   const { classes } = useStyles()
-  const shiftCards = shifts.map((shift, index) => (
-    <>
-      <Grid.Col px={0} span={4}>
-        <Text weight={'lighter'} color={'slategray'}>
-          Tidspunkt
-        </Text>
-      </Grid.Col>
-      <Grid.Col px={0} span={4}>
-        <Text weight={'lighter'} color={'violet'}>
-          Type
-        </Text>
-      </Grid.Col>
-      <Grid.Col p={0} span={4}>
-        <Text>
-          {shift.slot.start} - {shift.slot.end}
-        </Text>
-      </Grid.Col>
-      <Grid.Col p={0} span={4}>
-        <Text>{shift.slot.type.name}</Text>
-      </Grid.Col>
-    </>
-  ))
+  const shiftCards = shifts.map(
+    ({ shift: { datetimeEnd, datetimeStart, location }, role }, index) => (
+      <UnstyledButton component={Link} key={index} to="/schedules/me">
+        <Card className={classes.shiftButton} radius={'lg'} withBorder>
+          <Text
+            weight={'bold'}
+            size={'sm'}
+            color="dimmed"
+            transform="uppercase"
+          >
+            {format(new Date(datetimeStart), 'dd.MMMM')}
+          </Text>
+          <Text>
+            {format(new Date(datetimeStart), 'HH:mm')} -{' '}
+            {format(new Date(datetimeEnd), 'HH:mm')}
+          </Text>
+          <Text size={'sm'} color={'maroon'}>
+            {getRoleValue(role)}
+          </Text>
+          <Text color={'dark'} size={'xs'}>
+            {getLocationValue(location)}
+          </Text>
+        </Card>
+      </UnstyledButton>
+    )
+  )
   return (
     <Stack>
       <Text color={'dimmed'} weight={700} p={'xs'}>
         Neste vakter
       </Text>
-      <Card withBorder pt={'lg'} radius={'md'} className={classes.card}>
-        <Grid columns={8} p={'xs'} pl={'md'}>
-          {shiftCards}
-        </Grid>
+      <Card withBorder radius={'md'} className={classes.card}>
+        <Group>{shiftCards}</Group>
       </Card>
     </Stack>
   )

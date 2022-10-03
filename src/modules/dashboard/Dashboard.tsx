@@ -17,29 +17,6 @@ const useStyles = createStyles(theme => ({
     maxWidth: '1300px',
   },
 }))
-
-// TODO: Replace mockData with actual shift data query
-const mockData = [
-  {
-    user: { id: '1', firstName: 'Seb' },
-    slot: {
-      start: '19.00',
-      end: '01.00',
-      type: { name: 'Barservitør' },
-      group: { name: 'gruppe 1' },
-    },
-  },
-  {
-    user: { id: '2', firstName: 'Seb' },
-    slot: {
-      start: '20.00',
-      end: '00.00',
-      type: { name: 'Bartender' },
-      group: { name: 'gruppe 2' },
-    },
-  },
-]
-
 export const Dashboard = () => {
   const { classes } = useStyles()
   const user = useStore(state => state.user)!
@@ -52,16 +29,16 @@ export const Dashboard = () => {
   if (loading || data === undefined) return <FullContentLoader />
 
   const {
-    dashboardData: { wantedList, lastSummaries, lastQuotes },
+    dashboardData: { wantedList, lastQuotes, myUpcomingShifts },
   } = data
 
   return (
-    <Stack spacing={'md'} justify={'flex-start'} className={classes.wrapper}>
+    <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
       <ShortcutCards />
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
         <Grid.Col sm={8} lg={5}>
-          <FutureShifts shifts={mockData} />
+          <FutureShifts shifts={myUpcomingShifts} />
         </Grid.Col>
         <Grid.Col sm={8} lg={5}>
           <TransactionCard user={user} />
