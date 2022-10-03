@@ -2,7 +2,6 @@ import { Select } from '@mantine/core'
 import { RoleValues } from '../consts'
 import { parseShiftRole } from '../util'
 
-// Create value label pars in list
 const shiftRoleData = [
   {
     value: RoleValues.ARRANGEMENTANSVARLIG,
