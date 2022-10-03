@@ -4,6 +4,7 @@ import { LocationValues } from '../consts'
 const locationOptions = [
   { value: LocationValues.BODEGAEN, label: 'Bodegaen' },
   { value: LocationValues.DAGLIGHALLEN_BAR, label: 'Daglighallen bar' },
+  { value: LocationValues.EDGAR, label: 'Edgar' },
   { value: LocationValues.LYCHE_BAR, label: 'Lyche bar' },
   { value: LocationValues.LYCHE_KJOKKEN, label: 'Lyche kjøkken' },
   { value: LocationValues.STROSSA, label: 'Strossa' },
