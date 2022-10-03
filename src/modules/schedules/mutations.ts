@@ -20,7 +20,6 @@ export const PATCH_SCHEDULE_TEMPLATE_MUTATION = gql`
     patchScheduleTemplate(id: $id, input: $input) {
       scheduleTemplate {
         id
-        name
       }
     }
   }

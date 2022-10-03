@@ -6,13 +6,15 @@ import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import toast from 'react-hot-toast'
+import { useNavigate, useParams } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
 import {
   AddShiftTemplateModal,
   ShiftTemplateAccordion,
 } from '../components/ScheduleTemplateDetails'
-import { SCHEDULE_TEMPLATE_QUERY } from '../queries'
+import { useScheduleTemplateMutations } from '../mutations.hooks'
+import { ALL_SCHEDULE_TEMPLATES, SCHEDULE_TEMPLATE_QUERY } from '../queries'
 import {
   ScheduleTemplateQueryReturns,
   ScheduleTemplateQueryVariables,
@@ -23,6 +25,8 @@ interface ScheduleTemplateDetailsParams {
 
 export const ScheduleTemplateDetails: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
+  const navigate = useNavigate()
+
   const { templateId } = useParams<
     keyof ScheduleTemplateDetailsParams
   >() as ScheduleTemplateDetailsParams
@@ -32,6 +36,26 @@ export const ScheduleTemplateDetails: React.FC = () => {
     ScheduleTemplateQueryVariables
   >(SCHEDULE_TEMPLATE_QUERY, { variables: { id: templateId } })
 
+  const { deleteScheduleTemplate } = useScheduleTemplateMutations()
+
+  function handleDeleteScheduleTemplate() {
+    const confirmed = window.confirm(
+      'Er du sikker på at du vil slette denne vaktplan malen?'
+    )
+    if (confirmed) {
+      deleteScheduleTemplate({
+        variables: { id: templateId },
+        refetchQueries: [ALL_SCHEDULE_TEMPLATES],
+        onCompleted: () => {
+          toast.success('Vaktplan malen ble slettet')
+          navigate('/schedules/templates')
+        },
+        onError: () => {
+          toast.error('Kunne ikke slette vaktplan malen')
+        },
+      })
+    }
+  }
   if (error) return <FullPageError />
 
   if (loading || !data) return <FullContentLoader />
@@ -52,7 +76,11 @@ export const ScheduleTemplateDetails: React.FC = () => {
           <PermissionGate
             permissions={PERMISSIONS.schedules.delete.scheduleTemplate}
           >
-            <Button leftIcon={<IconTrash />} color="red">
+            <Button
+              leftIcon={<IconTrash />}
+              color="red"
+              onClick={handleDeleteScheduleTemplate}
+            >
               Slett mal
             </Button>
           </PermissionGate>

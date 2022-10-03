@@ -47,7 +47,7 @@ export const CreateScheduleTemplateModal: React.FC<
       <TextInput
         label="Navn"
         value={name}
-        onChange={e => setName(e.currentTarget.value)}
+        onChange={e => setName(e.target.value)}
       />
       <ScheduleSelect value={scheduleId} onChange={setScheduleId} />
       <Group position="right" my="sm">
