@@ -3,6 +3,7 @@ import { Button, createStyles, Group, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { Link } from 'react-router-dom'
+import { SchedulesTable } from '../components/Schedules'
 import { ALL_SCHEDULES } from '../queries'
 import { AllSchedulesReturns } from '../types.graphql'
 
@@ -32,13 +33,7 @@ export const Schedules: React.FC = () => {
           <Button>Vaktplanmaler</Button>
         </Link>
       </Group>
-      <ul>
-        {allSchedules.map(schedule => (
-          <li key={schedule.id}>
-            <Link to={`${schedule.id}`}>{schedule.name}</Link>
-          </li>
-        ))}
-      </ul>
+      <SchedulesTable schedules={allSchedules} />
     </div>
   )
 }
