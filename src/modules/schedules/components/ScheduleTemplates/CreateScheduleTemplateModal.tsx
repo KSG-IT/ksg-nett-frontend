@@ -49,7 +49,7 @@ export const CreateScheduleTemplateModal: React.FC<
         value={name}
         onChange={e => setName(e.currentTarget.value)}
       />
-      <ScheduleSelect value={scheduleId} onChangeCallback={setScheduleId} />
+      <ScheduleSelect value={scheduleId} onChange={setScheduleId} />
       <Group position="right" my="sm">
         <Button variant="outline" onClick={onCloseCallback}>
           Avbryt

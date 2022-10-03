@@ -1,16 +1,16 @@
 import { useQuery } from '@apollo/client'
-import { Select } from '@mantine/core'
+import { Select, SelectProps } from '@mantine/core'
 import { ALL_SCHEDULES } from '../queries'
 import { AllSchedulesReturns } from '../types.graphql'
 
-interface ScheduleSelectProps {
+interface ScheduleSelectProps extends Omit<SelectProps, 'data'> {
   value: string
-  onChangeCallback: (val: string) => void
+  onChange: (val: string) => void
 }
 
 export const ScheduleSelect: React.FC<ScheduleSelectProps> = ({
   value,
-  onChangeCallback,
+  onChange,
 }) => {
   const { data } = useQuery<AllSchedulesReturns>(ALL_SCHEDULES)
 
@@ -26,7 +26,7 @@ export const ScheduleSelect: React.FC<ScheduleSelectProps> = ({
       label="Vaktplan"
       placeholder="Velg vaktplan"
       value={value}
-      onChange={onChangeCallback}
+      onChange={onChange}
       data={scheduleOptions}
     />
   )
