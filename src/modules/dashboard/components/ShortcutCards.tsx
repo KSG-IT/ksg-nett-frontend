@@ -45,7 +45,7 @@ const shortcuts = [
   {
     title: 'Nytt referat',
     icon: IconEdit,
-    color: 'grape',
+    color: 'orange',
     link: '/summaries/create',
   },
 ]

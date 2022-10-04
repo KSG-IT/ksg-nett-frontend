@@ -1,4 +1,5 @@
 import {
+  Badge,
   Card,
   createStyles,
   Stack,
@@ -32,10 +33,18 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
   const { classes } = useStyles()
   const rows = user.lastTransactions.map((transaction, index) => (
     <tr key={index}>
-      <td>{transaction.name}</td>
-      <td>{transaction.amount}</td>
-      <td>{transaction.quantity}</td>
-      <td>{format(new Date(transaction.timestamp), "'kl' hh.mm, d.MMM")}</td>
+      <td>
+        <Badge variant="filled" color={'teal'}>
+          {transaction.name}
+        </Badge>
+      </td>
+      <td>
+        <Text align="center">{transaction.amount}</Text>
+      </td>
+      <td>
+        <Text align="center">{transaction.quantity}</Text>
+      </td>
+      <td>{format(new Date(transaction.timestamp), "d.MMM 'kl' hh:mm")}</td>
     </tr>
   ))
 

@@ -9,14 +9,12 @@ import {
   UnstyledButton,
 } from '@mantine/core'
 import { format } from 'util/date-fns/format'
-import { getLocationValue, getRoleValue } from 'modules/schedules/util'
 import { Link } from 'react-router-dom'
-import { ShiftSlotRole, ShiftLocation } from 'modules/schedules/consts'
 
 type UpcomingShiftNode = {
-  role: ShiftSlotRole
+  roleDisplay: string
   shift: {
-    location: ShiftLocation
+    locationDisplay: string
     datetimeStart: Date
     datetimeEnd: Date
     schedule: {
@@ -44,7 +42,10 @@ const useStyles = createStyles(theme => ({
 export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
   const { classes } = useStyles()
   const shiftCards = shifts.map(
-    ({ shift: { datetimeEnd, datetimeStart, location }, role }, index) => (
+    (
+      { shift: { datetimeEnd, datetimeStart, locationDisplay }, roleDisplay },
+      index
+    ) => (
       <UnstyledButton component={Link} key={index} to="/schedules/me">
         <Card className={classes.shiftButton} radius={'lg'} withBorder>
           <Text
@@ -60,10 +61,10 @@ export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
             {format(new Date(datetimeEnd), 'HH:mm')}
           </Text>
           <Text size={'sm'} color={'maroon'}>
-            {getRoleValue(role)}
+            {roleDisplay}
           </Text>
           <Text color={'dark'} size={'xs'}>
-            {getLocationValue(location)}
+            {locationDisplay}
           </Text>
         </Card>
       </UnstyledButton>

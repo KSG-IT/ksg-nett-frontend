@@ -2,7 +2,7 @@ import { Card, Group, Title } from '@mantine/core'
 import { UserThumbnail } from 'modules/users/components/UserThumbnail'
 import { UserNode, UserThumbnailProps } from 'modules/users/types'
 
-export type WantedUser = Pick<UserNode, 'balance' | 'fullName'> &
+export type WantedUser = Pick<UserNode, 'balance' | 'initials' | 'fullName'> &
   UserThumbnailProps['user']
 
 interface WantedListProps {

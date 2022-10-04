@@ -24,9 +24,9 @@ export const DASHBOARD_DATA_QUERY = gql`
         }
       }
       myUpcomingShifts {
-        role
+        roleDisplay
         shift {
-          location
+          locationDisplay
           datetimeStart
           datetimeEnd
           schedule {

@@ -1,5 +1,4 @@
 import { QuoteNode } from 'modules/quotes/types'
-import { ShiftLocation, ShiftSlotRole } from 'modules/schedules/consts'
 import { SummaryNode } from 'modules/summaries'
 import { WantedUser } from './components/WantedList'
 
@@ -10,9 +9,9 @@ export interface DashboardDataQueryReturns {
     lastQuotes: Pick<QuoteNode, 'text' | 'tagged' | 'id' | 'context'>[]
     wantedList: WantedUser[]
     myUpcomingShifts: {
-      role: ShiftSlotRole
+      roleDisplay: string
       shift: {
-        location: ShiftLocation
+        locationDisplay: string
         datetimeStart: Date
         datetimeEnd: Date
         schedule: {
