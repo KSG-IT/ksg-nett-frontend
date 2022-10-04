@@ -1,5 +1,10 @@
 import { UserNode } from 'modules/users/types'
-import { DayValues, LocationValues, RoleValues } from './consts'
+import {
+  DayValues,
+  LocationValues,
+  RoleValues,
+  ScheduleDisplayModeValues,
+} from './consts'
 
 // === NODES ===
 export type ShiftSlotNode = {
@@ -20,6 +25,7 @@ export type ShiftNode = {
   users: Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>[]
   slots: ShiftSlotNode[]
   filledSlots: FilledShiftSlotNode[]
+  name: string
 
   datetimeStart: string
   datetimeEnd: string
@@ -30,6 +36,34 @@ export type ScheduleNode = {
   id: string
   name: string
   templates: Pick<ScheduleTemplateNode, 'id'>[]
+  displayMode: ScheduleDisplayModeValues
+}
+
+// NORMALIZED SHIFT NODES
+
+export type ShiftDay = {
+  date: string
+  shifts: ShiftNode[]
+}
+
+export type ShiftDayWeek = {
+  date: string
+  shiftDays: ShiftDay[]
+}
+
+export type ShiftLocationDayGroup = {
+  location: LocationValues | null
+  shifts: ShiftNode[]
+}
+
+export type ShiftLocationDay = {
+  date: string
+  locations: ShiftLocationDayGroup[]
+}
+
+export type ShiftLocationWeek = {
+  date: string
+  shiftDays: ShiftLocationDay[]
 }
 
 // TEMPLATE NODES

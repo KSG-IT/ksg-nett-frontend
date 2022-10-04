@@ -57,6 +57,8 @@ export const SCHEDULE_QUERY = gql`
   query Schedule($id: ID!, $shiftsFrom: Date!, $numberOfWeeks: Int!) {
     schedule(id: $id) {
       id
+      name
+      displayMode
       shiftsFromRange(shiftsFrom: $shiftsFrom, numberOfWeeks: $numberOfWeeks) {
         id
         location
@@ -110,6 +112,76 @@ export const SCHEDULE_TEMPLATE_QUERY = gql`
           id
           count
           role
+        }
+      }
+    }
+  }
+`
+
+export const NORMALIZED_SHIFTS_FROM_RANGE_QUERY = gql`
+  query NormalizedShiftsFromRange(
+    $scheduleId: ID!
+    $shiftsFrom: Date!
+    $numberOfWeeks: Int!
+  ) {
+    normalizedShiftsFromRange(
+      scheduleId: $scheduleId
+      shiftsFrom: $shiftsFrom
+      numberOfWeeks: $numberOfWeeks
+    ) {
+      ... on ShiftDayWeek {
+        date
+        shiftDays {
+          date
+          shifts {
+            id
+            name
+            schedule {
+              id
+              name
+            }
+            slots {
+              role
+              user {
+                id
+                initials
+                fullName
+                profileImage
+              }
+            }
+            location
+            datetimeStart
+            datetimeEnd
+          }
+        }
+      }
+      ... on ShiftLocationWeek {
+        date
+        shiftDays {
+          date
+          locations {
+            location
+            shifts {
+              id
+              name
+              schedule {
+                id
+                name
+              }
+              slots {
+                role
+                user {
+                  id
+                  initials
+                  fullName
+                  profileImage
+                }
+              }
+              location
+              datetimeStart
+              datetimeEnd
+            }
+          }
         }
       }
     }
