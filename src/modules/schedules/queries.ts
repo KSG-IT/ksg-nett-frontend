@@ -53,6 +53,30 @@ export const ALL_SCHEDULES = gql`
   }
 `
 
+export const SCHEDULE_QUERY = gql`
+  query Schedule($id: ID!, $shiftsFrom: Date!, $numberOfWeeks: Int!) {
+    schedule(id: $id) {
+      id
+      shiftsFromRange(shiftsFrom: $shiftsFrom, numberOfWeeks: $numberOfWeeks) {
+        id
+        location
+        datetimeStart
+        datetimeEnd
+        slots {
+          id
+          role
+          user {
+            id
+            initials
+            fullName
+            profileImage
+          }
+        }
+      }
+    }
+  }
+`
+
 export const ALL_SCHEDULE_TEMPLATES = gql`
   query AllScheduleTemplates {
     allScheduleTemplates {
@@ -61,6 +85,32 @@ export const ALL_SCHEDULE_TEMPLATES = gql`
       schedule {
         id
         name
+      }
+    }
+  }
+`
+
+export const SCHEDULE_TEMPLATE_QUERY = gql`
+  query ScheduleTemplate($id: ID!) {
+    scheduleTemplate(id: $id) {
+      id
+      name
+      schedule {
+        id
+        name
+      }
+      shiftTemplates {
+        id
+        location
+        timeStart
+        timeEnd
+        day
+        duration
+        shiftSlotTemplates {
+          id
+          count
+          role
+        }
       }
     }
   }

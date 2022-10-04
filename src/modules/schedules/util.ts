@@ -1,9 +1,4 @@
-import {
-  LocationValues,
-  RoleValues,
-  ShiftLocation,
-  ShiftSlotRole,
-} from './consts'
+import { DayValues, LocationValues, RoleValues } from './consts'
 
 export function parseShiftRole(role: RoleValues) {
   return (
@@ -12,7 +7,7 @@ export function parseShiftRole(role: RoleValues) {
   )
 }
 
-export function parseLocation(location: LocationValues) {
+export function parseLocation(location: LocationValues | null) {
   switch (location) {
     case LocationValues.BODEGAEN:
       return 'Bodegaen'
@@ -39,12 +34,23 @@ export function parseLocation(location: LocationValues) {
   }
 }
 
-export function getLocationValue(location: ShiftLocation) {
-  const indexOfLocation = Object.keys(ShiftLocation).indexOf(location)
-  return Object.values(ShiftLocation)[indexOfLocation]
-}
-
-export function getRoleValue(role: ShiftSlotRole) {
-  const indexOfRole = Object.keys(ShiftSlotRole).indexOf(role)
-  return Object.values(ShiftSlotRole)[indexOfRole]
+export function parseDay(day: DayValues) {
+  switch (day) {
+    case DayValues.MONDAY:
+      return 'Mandag'
+    case DayValues.TUESDAY:
+      return 'Tirsdag'
+    case DayValues.WEDNESDAY:
+      return 'Onsdag'
+    case DayValues.THURSDAY:
+      return 'Torsdag'
+    case DayValues.FRIDAY:
+      return 'Fredag'
+    case DayValues.SATURDAY:
+      return 'Lørdag'
+    case DayValues.SUNDAY:
+      return 'Søndag'
+    default:
+      return ''
+  }
 }

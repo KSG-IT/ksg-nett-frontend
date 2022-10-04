@@ -276,7 +276,7 @@ export const AppRoutes: React.FC = () => {
                 </RestrictedRoute>
               }
             />
-            <Route path=":id">
+            <Route path=":templateId">
               <Route
                 index
                 element={
