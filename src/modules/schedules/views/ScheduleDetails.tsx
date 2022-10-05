@@ -1,44 +1,24 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import {
   Button,
   Card,
   createStyles,
   Group,
   NumberInput,
-  Select,
   Stack,
   Text,
   Title,
 } from '@mantine/core'
+import { DatePicker } from '@mantine/dates'
 import { IconRefresh } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { gql } from 'graphql-tag'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { format } from 'util/date-fns'
+import { ApplyScheduleTemplateModal } from '../components/ScheduleDetails'
 import { ShiftRenderer } from '../components/ScheduleDetails/ShiftRenderer'
-import { ScheduleDisplayModeValues } from '../consts'
 import { SCHEDULE_QUERY } from '../queries'
-
-const TEMP_GENERATE = gql`
-  mutation Generate($scheduleId: ID!, $startDate: Date!, $numberOfDays: Int!) {
-    generate(
-      scheduleTemplateId: $scheduleId
-      startDate: $startDate
-      numberOfWeeks: $numberOfDays
-    ) {
-      shiftsCreated
-    }
-  }
-`
-
-function useShiftMutations() {
-  const [generate] = useMutation(TEMP_GENERATE)
-
-  return { generate }
-}
 
 interface ScheduleDetailsParams {
   id: string
@@ -50,31 +30,7 @@ export const ScheduleDetails: React.FC = () => {
     keyof ScheduleDetailsParams
   >() as ScheduleDetailsParams
 
-  /**
-   *       scheduleTemplateId: "U2NoZWR1bGVUZW1wbGF0ZU5vZGU6MQ=="
-      startDate: "2022-10-04"
-      numberOfWeeks: 2
-   */
-
-  const { generate } = useShiftMutations()
-
-  function handleGenerate() {
-    generate({
-      variables: {
-        scheduleId: 'U2NoZWR1bGVUZW1wbGF0ZU5vZGU6Mg==',
-        // scheduleId: 'U2NoZWR1bGVUZW1wbGF0ZU5vZGU6Mg==',
-        startDate: format(new Date(), 'yyyy-MM-dd'),
-        numberOfDays: 2,
-      },
-      refetchQueries: [SCHEDULE_QUERY],
-      onCompleted: () => {
-        toast.success('Generated shifts')
-      },
-      onError: err => {
-        toast.error(err.message)
-      },
-    })
-  }
+  const [modalOpen, setModalOpen] = useState(false)
 
   const [shiftsFrom, setShiftsFrom] = useState<Date>(new Date())
   const [numberOfWeeks, setNumberOfWeeks] = useState(2)
@@ -96,7 +52,7 @@ export const ScheduleDetails: React.FC = () => {
   }
 
   const { schedule } = data
-  const { shiftsFromRange: shifts, displayMode } = schedule
+  const { displayMode } = schedule
 
   return (
     <div className={classes.wrapper}>
@@ -105,15 +61,24 @@ export const ScheduleDetails: React.FC = () => {
       <Card className={classes.controls} shadow="sm">
         <Group position="apart" align={'flex-end'}>
           <Group align={'flex-end'}>
-            <Select label={'Uke'} data={[]} />
-            <NumberInput label="Antall uker" />
+            <DatePicker
+              label={'Uke'}
+              value={shiftsFrom}
+              onChange={val => val && setShiftsFrom(val)}
+            />
+            <NumberInput
+              label="Antall uker"
+              value={numberOfWeeks}
+              onChange={val => val && setNumberOfWeeks(val)}
+            />
             <Stack spacing={0}>
               <label>Visningsmodus</label>
               <Text weight="bold">{displayMode}</Text>
             </Stack>
-            <Button leftIcon={<IconRefresh />}>Oppdater</Button>
           </Group>
-          <Button onClick={handleGenerate}>Generer vakter fra mal</Button>
+          <Button onClick={() => setModalOpen(true)}>
+            Generer vakter fra mal
+          </Button>
         </Group>
       </Card>
 
@@ -124,11 +89,10 @@ export const ScheduleDetails: React.FC = () => {
           numberOfWeeks={numberOfWeeks}
         />
       </div>
-
-      {/* <ShiftWeek
-        displayMode={ScheduleDisplayModeValues.SINGLE_LOCATION}
-        shifts={shifts}
-      /> */}
+      <ApplyScheduleTemplateModal
+        isOpen={modalOpen}
+        onCloseCallback={() => setModalOpen(false)}
+      />
     </div>
   )
 }
