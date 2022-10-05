@@ -18,6 +18,7 @@ import {
 } from 'modules/admissions/views'
 import { Dashboard } from 'modules/dashboard/Dashboard'
 import { Deposits, MyEconomy } from 'modules/economy'
+import { CreateDeposit } from 'modules/economy/views'
 import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
 import { InternalGroups } from 'modules/organization/InternalGroups'
 import {
@@ -240,6 +241,7 @@ export const AppRoutes: React.FC = () => {
         </Route>
 
         <Route path="economy">
+          <Route path="deposits/create" element={<CreateDeposit />} />
           <Route path="deposits" element={<Deposits />} />
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
