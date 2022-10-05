@@ -1,11 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { format } from 'util/date-fns'
-import { RegisterInformationFormData } from 'modules/admissions/components/ApplicantPortal/RegisterInformationForm/useRegisterInformationLogic'
-import { PatchApplicantReturns } from 'modules/admissions/types.graphql'
 import { PatchUserReturns } from 'modules/users/types'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { OnFormSubmit } from 'types/forms'
+import { format } from 'util/date-fns'
 import * as yup from 'yup'
 
 export type UserProfileFormData = {
@@ -36,12 +34,6 @@ const UserEditSchema = yup.object().shape({
   email: yup.string().required('E-post må fylles ut'),
   biography: yup.string().required('Biografi må fylles ut'),
 })
-
-interface UseRegisterInformationLogicInput {
-  defaultValues: RegisterInformationFormData
-  nextStepCallback: () => void
-  onSubmit: OnFormSubmit<RegisterInformationFormData, PatchApplicantReturns>
-}
 
 interface UseEditLogicInput {
   defaultValues: UserProfileFormData
