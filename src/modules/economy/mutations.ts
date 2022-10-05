@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 
-export const CREATE_DEPOSIT = gql`
+export const CREATE_DEPOSIT_MUTATION = gql`
   mutation CreateDeposit($input: CreateDepositInput!) {
     createDeposit(input: $input) {
       deposit {
