@@ -1,4 +1,4 @@
-import { Accordion, Group, Paper, Text } from '@mantine/core'
+import { Accordion, createStyles, Group, Paper, Text } from '@mantine/core'
 import { ShiftTemplateNode } from 'modules/schedules/types.graphql'
 import { ShiftTemplateAccordionItem } from './ShiftTemplateAccordionItem'
 
@@ -9,6 +9,7 @@ interface ShiftTemplateAccordionProps {
 export const ShiftTemplateAccordion: React.FC<ShiftTemplateAccordionProps> = ({
   shiftTemplates,
 }) => {
+  const { classes } = shiftTemplateAccordionStyles()
   const accordionItems = shiftTemplates.map(shiftTemplate => {
     return (
       <ShiftTemplateAccordionItem
@@ -22,11 +23,19 @@ export const ShiftTemplateAccordion: React.FC<ShiftTemplateAccordionProps> = ({
       <Accordion defaultValue="customization">
         <Accordion.Item value="header">
           <Accordion.Control chevron={false}>
-            <Group position="apart">
-              <Text weight={600}>Dag</Text>
-              <Text weight={600}>Lokale</Text>
-              <Text weight={600}>Start</Text>
-              <Text weight={600}>Slutt</Text>
+            <Group className={classes.shiftTemplateRow} position="apart">
+              <Text className={classes.shiftTemplateColumnCell} weight={600}>
+                Dag
+              </Text>
+              <Text className={classes.shiftTemplateColumnCell} weight={600}>
+                Lokale
+              </Text>
+              <Text className={classes.shiftTemplateColumnCell} weight={600}>
+                Start
+              </Text>
+              <Text className={classes.shiftTemplateColumnCell} weight={600}>
+                Slutt
+              </Text>
             </Group>
           </Accordion.Control>
         </Accordion.Item>
@@ -35,3 +44,15 @@ export const ShiftTemplateAccordion: React.FC<ShiftTemplateAccordionProps> = ({
     </Paper>
   )
 }
+
+const shiftTemplateAccordionStyles = createStyles(theme => ({
+  shiftTemplateRow: {
+    ':nth-child(3)': {
+      textAlign: 'right',
+    },
+  },
+  shiftTemplateColumnCell: {
+    width: '120px',
+    textAlign: 'left',
+  },
+}))

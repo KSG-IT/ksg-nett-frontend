@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Title } from '@mantine/core'
+import { Button, createStyles, Group, Title } from '@mantine/core'
 import { IconPlus, IconTrash } from '@tabler/icons'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'

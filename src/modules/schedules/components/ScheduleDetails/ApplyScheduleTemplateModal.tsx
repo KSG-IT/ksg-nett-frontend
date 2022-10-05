@@ -4,7 +4,10 @@ import { useShiftTemplateMutations } from 'modules/schedules/mutations.hooks'
 import { useState } from 'react'
 import { ScheduleTemplateSelect } from '../ScheduleTemplateSelect'
 import toast from 'react-hot-toast'
-import { SCHEDULE_QUERY } from 'modules/schedules/queries'
+import {
+  NORMALIZED_SHIFTS_FROM_RANGE_QUERY,
+  SCHEDULE_QUERY,
+} from 'modules/schedules/queries'
 import { gql, useMutation } from '@apollo/client'
 
 const TEMP_GENERATE = gql`
@@ -43,7 +46,7 @@ export const ApplyScheduleTemplateModal: React.FC<
         startDate: format(new Date(), 'yyyy-MM-dd'),
         numberOfDays: 2,
       },
-      refetchQueries: [SCHEDULE_QUERY],
+      refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
       onCompleted: () => {
         toast.success('Generated shifts')
         onCloseCallback()
