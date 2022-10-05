@@ -4,14 +4,12 @@ import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import {
-  InternalGroupPositionTypeOption,
-  InternalGroupPositionTypeSelect,
-} from './InternalGroupPositionTypeSelect'
+import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from './mutations'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
+  InternalGroupPositionTypeOption,
 } from './types'
 
 const Wrapper = styled.div``
