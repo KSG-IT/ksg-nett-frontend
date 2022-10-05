@@ -40,11 +40,7 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={'lg'} p={'xl'}>
-        <SimpleGrid
-          breakpoints={[{ minWidth: 'md', cols: 2 }]}
-          cols={1}
-          spacing={'md'}
-        >
+        <SimpleGrid cols={1} spacing={'md'}>
           <NumberInput
             hideControls
             size="md"
@@ -63,8 +59,6 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             icon={<IconNote size={14} />}
             {...register('description')}
           />
-        </SimpleGrid>
-        <Group position="apart" mt={'md'}>
           <FileInput
             size="md"
             withAsterisk
@@ -73,6 +67,8 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             accept="image/png,image/jpeg,image/jpg"
             onChange={value => value && setValue('receipt', value)}
           />
+        </SimpleGrid>
+        <Group position="right" mt={'md'}>
           <Button
             color={'brand'}
             className={classes.button}

@@ -8,7 +8,6 @@ const useStyles = createStyles(theme => ({
   title: {
     color: theme.colors.gray[6],
     fontWeight: 'bold',
-    paddingLeft: theme.spacing.sm,
   },
   card: {
     borderTop: `5px solid ${theme.colors.brand}`,
@@ -19,7 +18,7 @@ export const CreateDeposit: React.FC<DepositProps> = () => {
   const { classes } = useStyles()
   const navigate = useNavigate()
   return (
-    <Container>
+    <Container size={'xs'}>
       <Title
         my={'lg'}
         transform="uppercase"
