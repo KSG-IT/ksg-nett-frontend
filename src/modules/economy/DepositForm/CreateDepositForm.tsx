@@ -70,6 +70,7 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             withAsterisk
             placeholder="Skjermbilde av bankoverføring"
             icon={<IconUpload size={14} />}
+            accept="image/png,image/jpeg,image/jpg"
             onChange={value => value && setValue('receipt', value)}
           />
           <Button
