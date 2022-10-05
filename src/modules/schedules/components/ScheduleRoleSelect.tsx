@@ -28,6 +28,14 @@ const shiftRoleData = [
     label: parseShiftRole(RoleValues.BARSJEF),
   },
   {
+    value: RoleValues.SPRITBARTENDER,
+    label: parseShiftRole(RoleValues.SPRITBARTENDER),
+  },
+  {
+    value: RoleValues.SPRITBARSJEF,
+    label: parseShiftRole(RoleValues.SPRITBARSJEF),
+  },
+  {
     value: RoleValues.BRANNVAKT,
     label: parseShiftRole(RoleValues.BRANNVAKT),
   },
