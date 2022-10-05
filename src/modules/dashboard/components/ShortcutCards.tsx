@@ -8,12 +8,10 @@ import {
 } from '@mantine/core'
 import {
   IconBriefcase,
-  IconChecklist,
   IconCreditCard,
   IconEdit,
   IconQuote,
   IconUsers,
-  TablerIcon,
 } from '@tabler/icons'
 import { Link } from 'react-router-dom'
 
@@ -21,31 +19,31 @@ const shortcuts = [
   {
     title: 'Innskudd',
     icon: IconCreditCard,
-    color: 'cyan',
-    link: '/economy/me',
+    color: 'samfundet-red',
+    link: '/economy/deposits/create',
   },
   {
     title: 'Interngjeng',
     icon: IconUsers,
-    color: 'indigo',
+    color: 'samfundet-red',
     link: '/internal-groups',
   },
   {
     title: 'Legg til sitat',
     icon: IconQuote,
-    color: 'blue',
+    color: 'samfundet-red',
     link: '/quotes/create',
   },
   {
     title: 'Mine vakter',
     icon: IconBriefcase,
-    color: 'violet',
+    color: 'samfundet-red',
     link: '/schedules/me',
   },
   {
     title: 'Nytt referat',
     icon: IconEdit,
-    color: 'orange',
+    color: 'samfundet-red',
     link: '/summaries/create',
   },
 ]
