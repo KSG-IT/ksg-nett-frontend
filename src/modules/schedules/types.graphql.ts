@@ -25,6 +25,7 @@ export type ShiftNode = {
   users: Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>[]
   slots: ShiftSlotNode[]
   filledSlots: FilledShiftSlotNode[]
+  isFilled: boolean
   name: string
 
   datetimeStart: string

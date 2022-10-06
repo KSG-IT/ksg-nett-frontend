@@ -5,22 +5,13 @@ import {
   Container,
   createStyles,
   Group,
-  NumberInput,
-  Stack,
   Text,
   Title,
   UnstyledButton,
 } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
 
-import {
-  IconChevronDownLeft,
-  IconChevronLeft,
-  IconChevronRight,
-  IconRefresh,
-} from '@tabler/icons'
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
-import { FullContentLoader } from 'components/Loading'
 import { add } from 'date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -75,11 +66,10 @@ export const ScheduleDetails: React.FC = () => {
 
   return (
     <div className={classes.wrapper}>
-      <Title className={classes.title}>Vaktplan {schedule.name}</Title>
+      <Group className={classes.controls} align={'baseline'}>
+        <Group position="apart">
+          <Title className={classes.title}>Vaktplan {schedule.name}</Title>
 
-      <Card className={classes.controls} shadow="sm">
-        {/* Should be moved into own component */}
-        <Group position="apart" align={'flex-end'}>
           <Group
             className={classes.weekController}
             spacing={0}
@@ -100,27 +90,12 @@ export const ScheduleDetails: React.FC = () => {
             >
               <IconChevronRight />
             </UnstyledButton>
-            {/* <DatePicker
-              label={'Uke'}
-              value={shiftsFrom}
-              onChange={val => val && setShiftsFrom(val)}
-            />
-            <NumberInput
-              label="Antall uker"
-              value={numberOfWeeks}
-              onChange={val => val && setNumberOfWeeks(val)}
-            />
-            <Stack spacing={0}>
-              <label>Visningsmodus</label>
-              <Text weight="bold">{displayMode}</Text>
-            </Stack> */}
           </Group>
-          ´
           <Button onClick={() => setModalOpen(true)}>
             Generer vakter fra mal
           </Button>
         </Group>
-      </Card>
+      </Group>
 
       <div className={classes.shifts}>
         <ShiftRenderer
@@ -141,7 +116,6 @@ const useScheduleDetailsStyles = createStyles(theme => ({
   wrapper: {
     display: 'grid',
     gridTemplateAreas: `
-      "title ."
       "controls controls"
       "shifts shifts"
     `,
@@ -159,9 +133,10 @@ const useScheduleDetailsStyles = createStyles(theme => ({
     flexDirection: 'column',
   },
   weekController: {
+    backgroundColor: 'white',
     border: '1px solid gray',
     borderRadius: '5px',
-    '> :first-child': {
+    '> :first-child-of-type(button)': {
       borderRight: '1px solid gray',
     },
     '> :last-child': {

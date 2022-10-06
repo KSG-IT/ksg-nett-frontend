@@ -11,9 +11,10 @@ export const ShiftDayWeekList: React.FC<ShiftDayWeekListProps> = ({
 }) => {
   return (
     <Stack>
-      {shiftDayWeeks.map((shiftDayWeek, index) => (
-        <ShiftDayWeekCard key={index} shiftDayWeek={shiftDayWeek} />
-      ))}
+      {shiftDayWeeks.map((shiftDayWeek, index) => {
+        console.log(index)
+        return <ShiftDayWeekCard key={index} shiftDayWeek={shiftDayWeek} />
+      })}
     </Stack>
   )
 }

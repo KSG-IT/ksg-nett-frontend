@@ -136,6 +136,7 @@ export const NORMALIZED_SHIFTS_FROM_RANGE_QUERY = gql`
           shifts {
             id
             name
+            isFilled
             schedule {
               id
               name
@@ -164,6 +165,7 @@ export const NORMALIZED_SHIFTS_FROM_RANGE_QUERY = gql`
             shifts {
               id
               name
+              isFilled
               schedule {
                 id
                 name
