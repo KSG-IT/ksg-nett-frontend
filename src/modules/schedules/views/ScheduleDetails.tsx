@@ -13,6 +13,7 @@ import { DatePicker } from '@mantine/dates'
 import { IconRefresh } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { add } from 'date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { format } from 'util/date-fns'
@@ -32,7 +33,9 @@ export const ScheduleDetails: React.FC = () => {
 
   const [modalOpen, setModalOpen] = useState(false)
 
-  const [shiftsFrom, setShiftsFrom] = useState<Date>(new Date())
+  const [shiftsFrom, setShiftsFrom] = useState<Date>(
+    add(new Date(), { days: 1 })
+  )
   const [numberOfWeeks, setNumberOfWeeks] = useState(2)
 
   const { data, loading, error } = useQuery(SCHEDULE_QUERY, {

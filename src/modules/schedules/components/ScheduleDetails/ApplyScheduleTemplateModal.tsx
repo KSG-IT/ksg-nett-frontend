@@ -1,26 +1,43 @@
-import { Button, Group, Modal } from '@mantine/core'
-import { format } from 'util/date-fns'
-import { useShiftTemplateMutations } from 'modules/schedules/mutations.hooks'
-import { useState } from 'react'
-import { ScheduleTemplateSelect } from '../ScheduleTemplateSelect'
-import toast from 'react-hot-toast'
-import {
-  NORMALIZED_SHIFTS_FROM_RANGE_QUERY,
-  SCHEDULE_QUERY,
-} from 'modules/schedules/queries'
 import { gql, useMutation } from '@apollo/client'
+import { Button, Group, Modal, NumberInput, Text } from '@mantine/core'
+import { DatePicker } from '@mantine/dates'
+import { add } from 'date-fns'
+import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { format } from 'util/date-fns'
+import { ScheduleTemplateSelect } from '../ScheduleTemplateSelect'
 
 const TEMP_GENERATE = gql`
-  mutation Generate($scheduleId: ID!, $startDate: Date!, $numberOfDays: Int!) {
+  mutation Generate($scheduleId: ID!, $startDate: Date!, $numberOfWeeks: Int!) {
     generate(
       scheduleTemplateId: $scheduleId
       startDate: $startDate
-      numberOfWeeks: $numberOfDays
+      numberOfWeeks: $numberOfWeeks
     ) {
       shiftsCreated
     }
   }
 `
+
+function getMondayOfWeekFromDate(date: Date) {
+  date = new Date(date)
+  const first = date.getDate() - date.getDay() + 1
+
+  const monday = new Date(date.setDate(first))
+  return monday
+}
+
+function getSundayOfWeekFromDate(date: Date) {
+  date = new Date(date)
+
+  const first = date.getDate() - date.getDay() + 1
+  const last = first + 6
+
+  const sunday = new Date(date.setDate(last))
+
+  return sunday
+}
 
 function useShiftMutations() {
   const [generate] = useMutation(TEMP_GENERATE)
@@ -37,14 +54,17 @@ export const ApplyScheduleTemplateModal: React.FC<
   ApplyScheduleTemplateModalProps
 > = ({ isOpen, onCloseCallback }) => {
   const { generate } = useShiftMutations()
-  const [scheduleTemplateId, setScheduleTemplateId] = useState<string>('')
+  const [scheduleTemplateId, setScheduleTemplateId] = useState('')
+  const [numberOfWeeks, setNumberOfWeeks] = useState(1)
+  const [shiftsFrom, setShiftsFrom] = useState<Date | null>(new Date())
 
   function handleGenerate() {
+    if (!shiftsFrom) return
     generate({
       variables: {
         scheduleId: scheduleTemplateId,
-        startDate: format(new Date(), 'yyyy-MM-dd'),
-        numberOfDays: 2,
+        startDate: format(shiftsFrom, 'yyyy-MM-dd'),
+        numberOfWeeks: numberOfWeeks,
       },
       refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
       onCompleted: () => {
@@ -56,6 +76,9 @@ export const ApplyScheduleTemplateModal: React.FC<
       },
     })
   }
+
+  console.log(shiftsFrom)
+
   return (
     <Modal
       opened={isOpen}
@@ -66,6 +89,30 @@ export const ApplyScheduleTemplateModal: React.FC<
         value={scheduleTemplateId}
         onChange={setScheduleTemplateId}
       />
+      <DatePicker
+        label="Startdato"
+        value={shiftsFrom}
+        onChange={setShiftsFrom}
+      />
+      <NumberInput
+        label="Antall uker"
+        value={numberOfWeeks}
+        onChange={val => val && setNumberOfWeeks(val)}
+      />
+
+      <Text>
+        Første vakt genererert fra{' '}
+        {shiftsFrom &&
+          format(getMondayOfWeekFromDate(shiftsFrom), 'EEEE dd.MMM')}
+      </Text>
+      <Text>
+        Siste vakt generert til{' '}
+        {shiftsFrom &&
+          format(
+            getSundayOfWeekFromDate(add(shiftsFrom, { weeks: numberOfWeeks })),
+            'EEE dd.MMM'
+          )}
+      </Text>
       <Group my="md" position="right">
         <Button color={'gray'} onClick={onCloseCallback}>
           Avbryt
