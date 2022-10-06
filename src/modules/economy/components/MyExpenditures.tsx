@@ -4,12 +4,12 @@ import { format } from 'util/date-fns'
 import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts'
 import styled from 'styled-components'
 import { numberWithSpaces } from 'util/parsing'
-import { MY_EXPENDITURES } from './queries'
+import { MY_EXPENDITURES } from '../queries'
 import {
   ExpenditureDateRangeEnum,
   MyExpendituresReturns,
   MyExpendituresVariables,
-} from './types'
+} from '../types.graphql'
 
 const TotalRow = styled.div`
   display: flex;
