@@ -9,6 +9,7 @@ export type CreateDepositFormData = {
   amount: number
   description: string
   receipt: File | null
+  createdAt?: string
 }
 
 const DepositCreateSchema = yup.object().shape({

@@ -1,3 +1,4 @@
+import { formatISO } from 'date-fns'
 import { useDepositMutations } from '../../mutations.hooks'
 import { CreateDepositFormData } from './useCreateDepositLogic'
 
@@ -7,6 +8,7 @@ export function useCreateDepositAPI() {
   async function handleSubmit(data: CreateDepositFormData) {
     const input = {
       ...data,
+      createdAt: formatISO(new Date()),
     }
     return createDeposit({
       variables: {
