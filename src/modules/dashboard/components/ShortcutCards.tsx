@@ -1,11 +1,4 @@
-import {
-  Card,
-  createStyles,
-  SimpleGrid,
-  Stack,
-  Text,
-  UnstyledButton,
-} from '@mantine/core'
+import { Card, createStyles, SimpleGrid, Stack, Text } from '@mantine/core'
 import {
   IconBriefcase,
   IconCreditCard,
@@ -13,7 +6,7 @@ import {
   IconQuote,
   IconUsers,
 } from '@tabler/icons'
-import { Link } from 'react-router-dom'
+import { ShortcutCardItem } from './ShortcutCardItem'
 
 const shortcuts = [
   {
@@ -48,55 +41,8 @@ const shortcuts = [
   },
 ]
 
-const useStyles = createStyles(theme => ({
-  card: {
-    backgroundColor: theme.colors.gray[0],
-    minWidth: 400,
-    minHeight: 150,
-  },
-
-  title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontWeight: 700,
-  },
-
-  item: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: `1px solid ${theme.colors.gray[2]}`,
-    textAlign: 'center',
-    borderRadius: theme.radius.md,
-    height: 90,
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.white,
-    transition: 'box-shadow 150ms ease, transform 100ms ease',
-
-    '&:hover': {
-      boxShadow: `${theme.shadows.md} !important`,
-      transform: 'scale(1.05)',
-    },
-  },
-}))
-
 export const ShortcutCards: React.FC = () => {
-  const { classes, theme } = useStyles()
-
-  const items = shortcuts.map(({ icon: Icon, title, color, link }) => (
-    <UnstyledButton
-      component={Link}
-      to={`${link}`}
-      p={'lg'}
-      key={title}
-      className={classes.item}
-    >
-      <Icon color={theme.colors[color][6]} size={32} />
-      <Text size={'sm'} color={'dimmed'} weight={800}>
-        {title}
-      </Text>
-    </UnstyledButton>
-  ))
+  const { classes } = useStyles()
 
   return (
     <Stack>
@@ -113,9 +59,24 @@ export const ShortcutCards: React.FC = () => {
             { maxWidth: 600, cols: 1, spacing: 'sm' },
           ]}
         >
-          {items}
+          {shortcuts.map(shortcut => (
+            <ShortcutCardItem {...shortcut} />
+          ))}
         </SimpleGrid>
       </Card>
     </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  card: {
+    backgroundColor: theme.colors.gray[0],
+    minWidth: 400,
+    minHeight: 150,
+  },
+
+  title: {
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontWeight: 700,
+  },
+}))

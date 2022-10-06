@@ -7,6 +7,8 @@ export const DASHBOARD_DATA_QUERY = gql`
         id
         balance
         fullName
+        initials
+        profileImage
       }
       lastSummaries {
         id
