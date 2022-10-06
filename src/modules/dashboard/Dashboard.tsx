@@ -9,7 +9,7 @@ import { RecentQuotes } from './components/QuotesGrid'
 import { TransactionCard } from './components/TransactionCard'
 import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
-import { DashboardDataQueryReturns } from './types'
+import { DashboardDataQueryReturns } from './types.graphql'
 
 const useStyles = createStyles(theme => ({
   wrapper: {
