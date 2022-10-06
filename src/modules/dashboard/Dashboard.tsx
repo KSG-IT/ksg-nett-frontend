@@ -11,12 +11,6 @@ import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
 import { DashboardDataQueryReturns } from './types.graphql'
 
-const useStyles = createStyles(theme => ({
-  wrapper: {
-    width: '100%',
-    maxWidth: '1300px',
-  },
-}))
 export const Dashboard = () => {
   const { classes } = useStyles()
   const user = useStore(state => state.user)!
@@ -50,3 +44,10 @@ export const Dashboard = () => {
     </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  wrapper: {
+    width: '100%',
+    maxWidth: '1300px',
+  },
+}))

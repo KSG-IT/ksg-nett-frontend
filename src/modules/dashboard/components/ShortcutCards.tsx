@@ -10,7 +10,7 @@ import { ShortcutCardItem } from './ShortcutCardItem'
 
 const shortcuts = [
   {
-    title: 'Innskudd',
+    title: 'Nytt innskudd',
     icon: IconCreditCard,
     color: 'samfundet-red',
     link: '/economy/deposits/create',
