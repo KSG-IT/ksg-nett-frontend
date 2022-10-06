@@ -3,7 +3,7 @@ import { IconArrowRight } from '@tabler/icons'
 import { format } from 'util/date-fns'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { DepositNode } from './types'
+import { DepositNode } from '../types.graphql'
 
 const DepositCell = styled.td`
   user-select: none;

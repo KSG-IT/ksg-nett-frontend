@@ -5,12 +5,12 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
 import { numberWithSpaces } from 'util/parsing'
-import { PATCH_SOCI_BANK_ACCOUNT } from './mutations'
+import { PATCH_SOCI_BANK_ACCOUNT } from '../mutations'
 import {
   PatchSociBankAccountReturns,
   PatchSociBankAccountVariables,
   SociBankAccountNode,
-} from './types'
+} from '../types.graphql'
 
 const EditIcon = styled(IconEdit)`
   :hover {

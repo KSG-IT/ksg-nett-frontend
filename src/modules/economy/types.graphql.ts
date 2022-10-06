@@ -135,17 +135,18 @@ export interface MyExpendituresVariables {
 
 // Mutation
 
-interface CreateDepositInput {
+export interface CreateDepositInput {
   amount: number
   description: string
   receipt: File | null
+  onCompletedCallback: () => void
 }
 export interface CreateDepositMutationVariables {
   input: CreateDepositInput
 }
 
 export interface CreateDepositMutationReturns {
-  depposit: DepositNode
+  deposit: DepositNode
 }
 
 type SociBankAccountInput = {

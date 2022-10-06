@@ -1,5 +1,5 @@
 import { AvatarProps } from '@mantine/core'
-import { BankAccountActivity } from 'modules/economy/types'
+import { BankAccountActivity } from 'modules/economy/types.graphql'
 import { QuoteNode } from 'modules/quotes/types'
 import { RelayEdges } from 'types/graphql'
 import { InternalGroupPositionMembershipNode } from './UserManagement/types'

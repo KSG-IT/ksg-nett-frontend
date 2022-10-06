@@ -2,11 +2,14 @@ import { useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import styled from 'styled-components'
-import { MyBankAccountReturns, MY_BANK_ACCOUNT_QUERY } from '.'
-import { AccountCard } from './AccountCard'
-import { MyDeposits } from './MyDeposits'
-import { MyExpenditures } from './MyExpenditures'
-import { MyPurchases } from './MyPurchases'
+import {
+  MyDeposits,
+  MyExpenditures,
+  MyPurchases,
+  AccountCard,
+} from '../components'
+import { MY_BANK_ACCOUNT_QUERY } from '../queries'
+import { MyBankAccountReturns } from '../types.graphql'
 
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};

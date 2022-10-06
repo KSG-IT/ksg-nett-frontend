@@ -11,21 +11,21 @@ import {
 import { IconSearch } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { format } from 'util/date-fns'
 import { ME_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
 import { useStore } from 'store'
 import styled from 'styled-components'
+import { format } from 'util/date-fns'
 import { MEDIA_URL } from 'util/env'
 import { useDebounce } from 'util/hooks'
 import { numberWithSpaces } from 'util/parsing'
+import { PATCH_DEPOSIT } from '../mutations'
+import { ALL_DEPOSITS } from '../queries'
 import {
   AllDepositsQuery,
   AllDepositsVariables,
-  ALL_DEPOSITS,
   DepositNode,
-  PATCH_DEPOSIT,
-} from '.'
+} from '../types.graphql'
 
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};

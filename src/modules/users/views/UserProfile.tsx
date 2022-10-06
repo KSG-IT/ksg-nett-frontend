@@ -159,7 +159,7 @@ export const UserProfile: React.FC = () => {
               <IconWithData icon={IconSchool} userData={user.study} />
               <IconWithData icon={IconCake} userData={user.dateOfBirth} />
               <Group noWrap spacing={10} mt={'xl'}>
-                <ThemeIcon variant="light" color={'orange'}>
+                <ThemeIcon variant="light" color={'samfundet-red'}>
                   <IconBook stroke={1.2} />
                 </ThemeIcon>
                 <Text className={classes.aboutMe}>Om meg</Text>
@@ -184,7 +184,7 @@ export const UserProfile: React.FC = () => {
                   <PermissionGate permissions={PERMISSIONS.users.change.user}>
                     <Button
                       variant="light"
-                      color={'orange'}
+                      color={'samfundet-red'}
                       onClick={() => setEditUserModalOpen(true)}
                     >
                       Endre

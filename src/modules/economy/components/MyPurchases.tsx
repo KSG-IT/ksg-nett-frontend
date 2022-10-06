@@ -4,7 +4,7 @@ import { format } from 'util/date-fns'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { numberWithSpaces } from 'util/parsing'
-import { BankAccountActivity } from './types'
+import { BankAccountActivity } from '../types.graphql'
 
 const ActivityCell = styled.td`
   user-select: none;
