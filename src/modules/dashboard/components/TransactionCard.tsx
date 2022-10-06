@@ -11,26 +11,13 @@ import { format } from 'date-fns'
 import { UserNode } from 'modules/users/types'
 import React from 'react'
 
-const useStyles = createStyles(theme => ({
-  card: {
-    backgroundColor: theme.colors.white,
-    borderTop: `5px solid ${theme.colors.brand}`,
-  },
-  tableHeader: {
-    color: theme.colors.gray[7],
-    textTransform: 'uppercase',
-  },
-  headerRow: {
-    borderRadius: theme.radius.xs,
-  },
-}))
-
 interface TransactionCardProps {
   user: UserNode
 }
 
 export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
   const { classes } = useStyles()
+
   const rows = user.lastTransactions.map((transaction, index) => (
     <tr key={index}>
       <td>
@@ -77,3 +64,17 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
     </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  card: {
+    backgroundColor: theme.colors.white,
+    borderTop: `5px solid ${theme.colors.brand}`,
+  },
+  tableHeader: {
+    color: theme.colors.gray[7],
+    textTransform: 'uppercase',
+  },
+  headerRow: {
+    borderRadius: theme.radius.xs,
+  },
+}))

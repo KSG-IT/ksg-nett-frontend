@@ -10,8 +10,8 @@ import {
 } from '@mantine/core'
 import { IconCashBanknote, IconNote, IconUpload } from '@tabler/icons'
 
-import { useCreateDepositAPI } from './CreateDepositAPI'
-import { useCreateDepositLogic } from './CreateDepositLogic'
+import { useCreateDepositAPI } from './useCreateDepositAPI'
+import { useCreateDepositLogic } from './useCreateDepositLogic'
 
 const useStyles = createStyles(theme => ({
   button: {

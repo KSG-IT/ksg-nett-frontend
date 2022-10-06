@@ -1,9 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { CreateDepositMutationReturns } from 'modules/economy/types.graphql'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { OnFormSubmit } from 'types/forms'
 import * as yup from 'yup'
-import { CreateDepositMutationReturns } from '../types'
 
 export type CreateDepositFormData = {
   amount: number

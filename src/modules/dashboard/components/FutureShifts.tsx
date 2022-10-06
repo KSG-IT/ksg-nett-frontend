@@ -1,43 +1,18 @@
 import {
   Card,
   createStyles,
-  Divider,
-  Grid,
   Group,
   Stack,
   Text,
   UnstyledButton,
 } from '@mantine/core'
-import { format } from 'util/date-fns/format'
 import { Link } from 'react-router-dom'
-
-type UpcomingShiftNode = {
-  roleDisplay: string
-  shift: {
-    locationDisplay: string
-    datetimeStart: Date
-    datetimeEnd: Date
-    schedule: {
-      name: string
-    }
-  }
-}
+import { format } from 'util/date-fns'
+import { UpcomingShiftNode } from '../types.graphql'
 
 interface ShiftProps {
   shifts: UpcomingShiftNode[]
 }
-
-const useStyles = createStyles(theme => ({
-  card: {
-    backgroundColor: theme.colors.white,
-    borderTop: `5px solid ${theme.colors.brand}`,
-  },
-  shiftButton: {
-    '&:hover': {
-      transform: 'translate(0, -4px)',
-    },
-  },
-}))
 
 export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
   const { classes } = useStyles()
@@ -81,3 +56,15 @@ export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
     </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  card: {
+    backgroundColor: theme.colors.white,
+    borderTop: `5px solid ${theme.colors.brand}`,
+  },
+  shiftButton: {
+    '&:hover': {
+      transform: 'translate(0, -4px)',
+    },
+  },
+}))

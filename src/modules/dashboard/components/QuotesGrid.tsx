@@ -13,16 +13,6 @@ interface UserQuotesProps {
   quotes: Pick<QuoteNode, 'text' | 'tagged' | 'id' | 'context'>[]
 }
 
-const useStyles = createStyles(theme => ({
-  quoteText: {
-    color: theme.colors.gray[7],
-    fontStyle: 'italic',
-  },
-  card: {
-    maxWidth: 200,
-  },
-}))
-
 export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
   const { classes } = useStyles()
   const fields = quotes.map(quote => (
@@ -59,3 +49,13 @@ export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
     </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  quoteText: {
+    color: theme.colors.gray[7],
+    fontStyle: 'italic',
+  },
+  card: {
+    maxWidth: 200,
+  },
+}))

@@ -1,5 +1,5 @@
-import { useDepositMutations } from '../mutations.hooks'
-import { CreateDepositFormData } from './CreateDepositLogic'
+import { useDepositMutations } from '../../mutations.hooks'
+import { CreateDepositFormData } from './useCreateDepositLogic'
 
 export function useCreateDepositAPI() {
   const { createDeposit } = useDepositMutations()
