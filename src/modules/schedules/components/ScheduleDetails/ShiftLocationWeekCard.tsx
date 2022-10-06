@@ -32,8 +32,8 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
                     <div className={classes.shift} key={index}>
                       <Text>{shift.name}</Text>
                       <Text>
-                        {format(new Date(shift.datetimeStart), 'MM.dd')}-
-                        {format(new Date(shift.datetimeStart), 'HH:mm')}
+                        {format(new Date(shift.datetimeStart), 'HH.mm')}-
+                        {format(new Date(shift.datetimeEnd), 'HH:mm')}
                       </Text>
                       {shift.slots.map(slot => (
                         <Text>{slot.role}</Text>

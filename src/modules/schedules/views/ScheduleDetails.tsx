@@ -2,15 +2,23 @@ import { useQuery } from '@apollo/client'
 import {
   Button,
   Card,
+  Container,
   createStyles,
   Group,
   NumberInput,
   Stack,
   Text,
   Title,
+  UnstyledButton,
 } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
-import { IconRefresh } from '@tabler/icons'
+
+import {
+  IconChevronDownLeft,
+  IconChevronLeft,
+  IconChevronRight,
+  IconRefresh,
+} from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { add } from 'date-fns'
@@ -32,12 +40,10 @@ export const ScheduleDetails: React.FC = () => {
   >() as ScheduleDetailsParams
 
   const [modalOpen, setModalOpen] = useState(false)
-
-  const [shiftsFrom, setShiftsFrom] = useState<Date>(
-    add(new Date(), { days: 1 })
-  )
+  const [shiftsFrom, setShiftsFrom] = useState<Date>(new Date())
   const [numberOfWeeks, setNumberOfWeeks] = useState(2)
 
+  //  Query should be moved to own component so we dont get loading state
   const { data, loading, error } = useQuery(SCHEDULE_QUERY, {
     variables: {
       id,
@@ -50,11 +56,21 @@ export const ScheduleDetails: React.FC = () => {
     return <FullPageError />
   }
 
-  if (loading || !data) {
-    return <FullContentLoader />
+  // if (loading || !data) {
+  //   return <FullContentLoader />
+  // }
+
+  function handleNextWeek() {
+    setShiftsFrom(date => add(date, { weeks: 1 }))
   }
 
-  const { schedule } = data
+  function handlePreviousWeek() {
+    setShiftsFrom(date => add(date, { weeks: -1 }))
+  }
+
+  const schedule = data?.schedule ?? {
+    name: 'Laster inn...',
+  }
   const { displayMode } = schedule
 
   return (
@@ -62,9 +78,29 @@ export const ScheduleDetails: React.FC = () => {
       <Title className={classes.title}>Vaktplan {schedule.name}</Title>
 
       <Card className={classes.controls} shadow="sm">
+        {/* Should be moved into own component */}
         <Group position="apart" align={'flex-end'}>
-          <Group align={'flex-end'}>
-            <DatePicker
+          <Group
+            className={classes.weekController}
+            spacing={0}
+            align={'center'}
+          >
+            <UnstyledButton
+              className={classes.weekControllerButton}
+              onClick={handlePreviousWeek}
+            >
+              <IconChevronLeft />
+            </UnstyledButton>
+            <Container>
+              <Text>Uke {format(shiftsFrom, 'w')}</Text>
+            </Container>
+            <UnstyledButton
+              className={classes.weekControllerButton}
+              onClick={handleNextWeek}
+            >
+              <IconChevronRight />
+            </UnstyledButton>
+            {/* <DatePicker
               label={'Uke'}
               value={shiftsFrom}
               onChange={val => val && setShiftsFrom(val)}
@@ -77,8 +113,9 @@ export const ScheduleDetails: React.FC = () => {
             <Stack spacing={0}>
               <label>Visningsmodus</label>
               <Text weight="bold">{displayMode}</Text>
-            </Stack>
+            </Stack> */}
           </Group>
+          ´
           <Button onClick={() => setModalOpen(true)}>
             Generer vakter fra mal
           </Button>
@@ -120,5 +157,20 @@ const useScheduleDetailsStyles = createStyles(theme => ({
     gridArea: 'shifts',
     display: 'flex',
     flexDirection: 'column',
+  },
+  weekController: {
+    border: '1px solid gray',
+    borderRadius: '5px',
+    '> :first-child': {
+      borderRight: '1px solid gray',
+    },
+    '> :last-child': {
+      borderLeft: '1px solid gray',
+    },
+  },
+  weekControllerButton: {
+    ':hover': {
+      cursor: 'pointer',
+    },
   },
 }))

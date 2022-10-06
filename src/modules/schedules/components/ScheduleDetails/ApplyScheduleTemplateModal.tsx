@@ -40,9 +40,9 @@ function getSundayOfWeekFromDate(date: Date) {
 }
 
 function useShiftMutations() {
-  const [generate] = useMutation(TEMP_GENERATE)
+  const [generate, { loading }] = useMutation(TEMP_GENERATE)
 
-  return { generate }
+  return { generate, loading }
 }
 
 interface ApplyScheduleTemplateModalProps {
@@ -53,7 +53,7 @@ interface ApplyScheduleTemplateModalProps {
 export const ApplyScheduleTemplateModal: React.FC<
   ApplyScheduleTemplateModalProps
 > = ({ isOpen, onCloseCallback }) => {
-  const { generate } = useShiftMutations()
+  const { generate, loading } = useShiftMutations()
   const [scheduleTemplateId, setScheduleTemplateId] = useState('')
   const [numberOfWeeks, setNumberOfWeeks] = useState(1)
   const [shiftsFrom, setShiftsFrom] = useState<Date | null>(new Date())
@@ -117,7 +117,9 @@ export const ApplyScheduleTemplateModal: React.FC<
         <Button color={'gray'} onClick={onCloseCallback}>
           Avbryt
         </Button>
-        <Button onClick={handleGenerate}>Generer</Button>
+        <Button disabled={loading} loading={loading} onClick={handleGenerate}>
+          Generer
+        </Button>
       </Group>
     </Modal>
   )
