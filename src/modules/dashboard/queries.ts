@@ -7,6 +7,8 @@ export const DASHBOARD_DATA_QUERY = gql`
         id
         balance
         fullName
+        initials
+        profileImage
       }
       lastSummaries {
         id
@@ -21,6 +23,17 @@ export const DASHBOARD_DATA_QUERY = gql`
           id
           profileImage
           initials
+        }
+      }
+      myUpcomingShifts {
+        roleDisplay
+        shift {
+          locationDisplay
+          datetimeStart
+          datetimeEnd
+          schedule {
+            name
+          }
         }
       }
     }
