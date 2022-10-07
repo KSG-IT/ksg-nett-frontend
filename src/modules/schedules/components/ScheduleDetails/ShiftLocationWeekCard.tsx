@@ -14,6 +14,10 @@ import { parseLocation } from 'modules/schedules/util'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
 
+interface ShiftLocationWeekParams {
+  id: string
+}
+
 interface ShiftLocationWeekCardProps {
   shiftLocationWeek: ShiftLocationWeek
 }
@@ -58,8 +62,9 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
       {shiftLocationWeek.shiftDays.map(shiftDay => (
         <Stack key={shiftDay.date}>
           <Title order={4}>
-            {format(new Date(shiftDay.date), 'EEEE dd.MM')}{' '}
+            {format(new Date(shiftDay.date), 'EEEE dd.MM')}
           </Title>
+
           <Paper className={classes.card}>
             <Group align="flex-start">
               {shiftDay.locations.map(location => (

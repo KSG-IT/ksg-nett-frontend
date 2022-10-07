@@ -54,27 +54,11 @@ export const ALL_SCHEDULES = gql`
 `
 
 export const SCHEDULE_QUERY = gql`
-  query Schedule($id: ID!, $shiftsFrom: Date!, $numberOfWeeks: Int!) {
+  query Schedule($id: ID!) {
     schedule(id: $id) {
       id
       name
       displayMode
-      shiftsFromRange(shiftsFrom: $shiftsFrom, numberOfWeeks: $numberOfWeeks) {
-        id
-        location
-        datetimeStart
-        datetimeEnd
-        slots {
-          id
-          role
-          user {
-            id
-            initials
-            fullName
-            profileImage
-          }
-        }
-      }
     }
   }
 `

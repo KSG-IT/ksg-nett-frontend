@@ -44,7 +44,6 @@ export const ShiftRenderer: React.FC<ShiftRendererProps> = ({
 
   if (loading || !data) return <FullContentLoader />
 
-  console.log(data.normalizedShiftsFromRange)
   return displayMode === ScheduleDisplayModeValues.SINGLE_LOCATION ? (
     <ShiftDayWeekList
       shiftDayWeeks={data.normalizedShiftsFromRange as ShiftDayWeek[]}

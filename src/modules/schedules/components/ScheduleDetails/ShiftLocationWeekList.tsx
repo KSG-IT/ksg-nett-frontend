@@ -9,6 +9,9 @@ interface ShiftLocationWeekListProps {
 export const ShiftLocationWeekList: React.FC<ShiftLocationWeekListProps> = ({
   shiftLocationWeeks,
 }) => {
+  if (shiftLocationWeeks.length === 0) {
+    return <div>Ingen vakter den valgte uken</div>
+  }
   return (
     <Stack>
       {shiftLocationWeeks.map((shiftLocationWeek, index) => (

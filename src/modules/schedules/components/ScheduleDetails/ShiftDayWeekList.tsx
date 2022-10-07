@@ -9,10 +9,13 @@ interface ShiftDayWeekListProps {
 export const ShiftDayWeekList: React.FC<ShiftDayWeekListProps> = ({
   shiftDayWeeks,
 }) => {
+  if (shiftDayWeeks.length === 0) {
+    return <div>Ingen vakter den valgte uken</div>
+  }
+
   return (
     <Stack>
       {shiftDayWeeks.map((shiftDayWeek, index) => {
-        console.log(index)
         return <ShiftDayWeekCard key={index} shiftDayWeek={shiftDayWeek} />
       })}
     </Stack>

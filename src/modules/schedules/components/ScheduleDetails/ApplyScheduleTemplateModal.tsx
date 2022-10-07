@@ -77,8 +77,6 @@ export const ApplyScheduleTemplateModal: React.FC<
     })
   }
 
-  console.log(shiftsFrom)
-
   return (
     <Modal
       opened={isOpen}

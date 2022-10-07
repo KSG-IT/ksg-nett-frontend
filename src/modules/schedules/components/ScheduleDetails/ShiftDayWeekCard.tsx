@@ -40,7 +40,6 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
     toast.error('Lol ikke implementert enda')
     console.error('Missing feature')
   }
-  console.log(shiftDayWeek)
 
   return (
     <Stack className={classes.wrapper}>
