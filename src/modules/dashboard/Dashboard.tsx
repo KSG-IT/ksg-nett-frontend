@@ -1,7 +1,13 @@
 import { useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { createStyles, Grid, Group, Stack } from '@mantine/core'
+import {
+  createStyles,
+  Grid,
+  Group,
+  Stack,
+  useMantineTheme,
+} from '@mantine/core'
 import { useStore } from 'store'
 import { ShortcutCards } from './components/ShortcutCards'
 import { FutureShifts } from './components/FutureShifts'
@@ -10,9 +16,14 @@ import { TransactionCard } from './components/TransactionCard'
 import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
 import { DashboardDataQueryReturns } from './types.graphql'
+import { useMediaQuery } from 'util/hooks'
 
 export const Dashboard = () => {
   const { classes } = useStyles()
+  const theme = useMantineTheme()
+  const mediaQuery = useMediaQuery(
+    `(min-width: ${theme.breakpoints.xl + 300}px)`
+  )
   const user = useStore(state => state.user)!
 
   const { data, loading, error } =
@@ -31,10 +42,10 @@ export const Dashboard = () => {
       <ShortcutCards />
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
-        <Grid.Col sm={8} lg={5}>
+        <Grid.Col sm={12} lg={mediaQuery ? 5 : 6}>
           <FutureShifts shifts={myUpcomingShifts} />
         </Grid.Col>
-        <Grid.Col sm={8} lg={5}>
+        <Grid.Col sm={12} lg={mediaQuery ? 5 : 6}>
           <TransactionCard user={user} />
         </Grid.Col>
       </Grid>
@@ -48,6 +59,11 @@ export const Dashboard = () => {
 const useStyles = createStyles(theme => ({
   wrapper: {
     width: '100%',
-    maxWidth: '1300px',
+    maxWidth: '1600px',
+    padding: theme.spacing.md,
+
+    [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
+      padding: 0,
+    },
   },
 }))

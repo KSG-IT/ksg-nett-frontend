@@ -1,6 +1,7 @@
 import { createStyles, Text, UnstyledButton } from '@mantine/core'
 import { TablerIcon } from '@tabler/icons'
 import { Link } from 'react-router-dom'
+import { useMediaQuery } from 'util/hooks'
 
 interface ShortcutProps {
   title: string
@@ -20,12 +21,12 @@ export const ShortcutCardItem: React.FC<ShortcutProps> = ({
     <UnstyledButton
       component={Link}
       to={`${link}`}
-      p={'lg'}
+      p={'md'}
       key={title}
       className={classes.item}
     >
       <Icon color={theme.colors[color][6]} size={32} />
-      <Text size={'sm'} color={'dimmed'} weight={800}>
+      <Text size={'md'} color={'dimmed'} weight={800} className={classes.text}>
         {title}
       </Text>
     </UnstyledButton>
@@ -34,6 +35,7 @@ export const ShortcutCardItem: React.FC<ShortcutProps> = ({
 
 const useStyles = createStyles(theme => ({
   item: {
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -47,8 +49,13 @@ const useStyles = createStyles(theme => ({
     transition: 'box-shadow 150ms ease, transform 100ms ease',
 
     '&:hover': {
-      boxShadow: `${theme.shadows.md} !important`,
+      boxShadow: `${theme.shadows.sm} !important`,
       transform: 'scale(1.05)',
+    },
+  },
+  text: {
+    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
+      fontSize: theme.fontSizes.md,
     },
   },
 }))

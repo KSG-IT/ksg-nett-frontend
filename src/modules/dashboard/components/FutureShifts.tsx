@@ -22,7 +22,7 @@ export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
       index
     ) => (
       <UnstyledButton component={Link} key={index} to="/schedules/me">
-        <Card className={classes.shiftButton} radius={'lg'} withBorder>
+        <Card p={'lg'} className={classes.shiftButton} radius={'lg'} withBorder>
           <Text
             weight={'bold'}
             size={'sm'}
@@ -47,7 +47,7 @@ export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
   )
   return (
     <Stack>
-      <Text color={'dimmed'} weight={700} p={'xs'}>
+      <Text color={'dimmed'} weight={700} py={'xs'}>
         Neste vakter
       </Text>
       <Card withBorder radius={'md'} className={classes.card}>
@@ -66,5 +66,6 @@ const useStyles = createStyles(theme => ({
     '&:hover': {
       transform: 'translate(0, -4px)',
     },
+    width: '100%',
   },
 }))
