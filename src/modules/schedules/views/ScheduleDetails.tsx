@@ -16,7 +16,10 @@ import { add } from 'date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { format } from 'util/date-fns'
-import { ApplyScheduleTemplateModal } from '../components/ScheduleDetails'
+import {
+  ApplyScheduleTemplateModal,
+  WeekController,
+} from '../components/ScheduleDetails'
 import { CreateShiftModal } from '../components/ScheduleDetails/CreateShiftModal'
 import { ShiftRenderer } from '../components/ScheduleDetails/ShiftRenderer'
 import { SCHEDULE_QUERY } from '../queries'
@@ -60,36 +63,15 @@ export const ScheduleDetails: React.FC = () => {
   const { schedule } = data
   return (
     <div className={classes.wrapper}>
-      <Group className={classes.controls} align={'baseline'}>
+      <Group align={'baseline'}>
         <Group position="apart">
-          <Title className={classes.title}>Vaktplan {schedule.name}</Title>
-          <Group
-            className={classes.weekController}
-            spacing={0}
-            align={'center'}
-          >
-            <UnstyledButton
-              className={classes.weekControllerButton}
-              onClick={handlePreviousWeek}
-            >
-              <IconChevronLeft />
-            </UnstyledButton>
-            <Container>
-              <Text>Uke {format(shiftsFrom, 'w')}</Text>
-            </Container>
-            <UnstyledButton
-              className={classes.weekControllerButton}
-              onClick={handleNextWeek}
-            >
-              <IconChevronRight />
-            </UnstyledButton>
-          </Group>
-          <Button
-            leftIcon={<IconPlus />}
-            onClick={() => setCreateShiftModalOpen(true)}
-          >
-            Legg til nytt skift
-          </Button>
+          <Title>Vaktplan {schedule.name}</Title>
+          <WeekController
+            week={shiftsFrom}
+            previousWeekCallback={handlePreviousWeek}
+            nextWeekCallback={handleNextWeek}
+          />
+
           <Button onClick={() => setApplyTemplateModalOpen(true)}>
             Generer vakter fra mal
           </Button>
@@ -117,38 +99,15 @@ export const ScheduleDetails: React.FC = () => {
 
 const useScheduleDetailsStyles = createStyles(theme => ({
   wrapper: {
-    display: 'grid',
-    gridTemplateAreas: `
-      "controls controls"
-      "shifts shifts"
-    `,
+    display: 'flex',
+    flexDirection: 'column',
+
     gap: theme.spacing.md,
   },
-  title: {
-    gridArea: 'title',
-  },
-  controls: {
-    gridArea: 'controls',
-  },
+
   shifts: {
     gridArea: 'shifts',
     display: 'flex',
     flexDirection: 'column',
-  },
-  weekController: {
-    backgroundColor: 'white',
-    border: '1px solid gray',
-    borderRadius: '5px',
-    'button:first-of-type': {
-      borderRight: '1px solid gray',
-    },
-    'button:last-of-type': {
-      borderLeft: '1px solid gray',
-    },
-  },
-  weekControllerButton: {
-    ':hover': {
-      cursor: 'pointer',
-    },
   },
 }))
