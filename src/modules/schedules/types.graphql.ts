@@ -184,3 +184,19 @@ type CreateScheduleTemplateInput = {
 export interface CreateScheduleTemplateVariables {
   input: CreateScheduleTemplateInput
 }
+
+export interface AddUserToShiftSlotReturns {
+  shiftSlot: Pick<ShiftSlotNode, 'id'>
+}
+export interface AddUserToShiftSlotVariables {
+  shiftSlotId: string
+  userId: string
+}
+
+export interface RemoveUserFromShiftSlotReturns {
+  shiftSlot: Pick<ShiftSlotNode, 'id'>
+}
+
+export interface RemoveUserFromShiftSlotVariables {
+  shiftSlotId: string
+}

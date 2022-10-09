@@ -13,6 +13,7 @@ import { ShiftDayWeek } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
+import { ShiftCard } from './ShiftCard'
 
 interface ShiftDayWeekCardProps {
   shiftDayWeek: ShiftDayWeek
@@ -55,43 +56,14 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
         </Button>
       </Group>
       <Paper className={classes.card}>
-        {shiftDayWeek.shiftDays.map((shiftDay, index) => (
+        {shiftDayWeek.shiftDays.map(shiftDay => (
           <div className={classes.dayColumn} key={shiftDay.date}>
             <Stack>
               <Title order={4}>
                 {format(new Date(shiftDay.date), 'EEEE dd.MM')}
               </Title>
-              {shiftDay.shifts.map((shift, index) => (
-                <div
-                  className={
-                    shift.isFilled
-                      ? classes.filledShift
-                      : classes.notFilledShift
-                  }
-                >
-                  <Group position="apart" align={'flex-end'}>
-                    <Text>{shift.name}</Text>
-                    <UnstyledButton>
-                      <IconTrash
-                        size="18px"
-                        color="red"
-                        onClick={handleDeleteShift}
-                      />
-                    </UnstyledButton>
-                  </Group>
-                  <Text>{parseLocation(shift.location)}</Text>
-
-                  <Text>
-                    {format(new Date(shift.datetimeStart), 'MM.dd')}{' '}
-                    {format(new Date(shift.datetimeStart), 'HH:mm')}
-                  </Text>
-                  {shift.slots.map((slot, index) => (
-                    <div key={index}>
-                      <Text>{slot.role}</Text>
-                      <Text>{slot?.user?.fullName}</Text>
-                    </div>
-                  ))}
-                </div>
+              {shiftDay.shifts.map(shift => (
+                <ShiftCard key={shift.id} shift={shift} />
               ))}
             </Stack>
           </div>
@@ -115,22 +87,5 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     border: '1px solid red',
-  },
-
-  filledShift: {
-    display: 'flex',
-    flexDirection: 'column',
-    border: '1px solid green',
-    marginBottom: theme.spacing.xs,
-    backgroundColor: theme.colors.green[6],
-    color: 'white',
-  },
-  notFilledShift: {
-    display: 'flex',
-    flexDirection: 'column',
-    border: '1px solid green',
-    backgroundColor: theme.colors.red[6],
-    marginBottom: theme.spacing.xs,
-    color: 'white',
   },
 }))

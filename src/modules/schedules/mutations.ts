@@ -84,3 +84,23 @@ export const DELETE_SHIFT_SLOT_TEMPLATE_MUTATION = gql`
     }
   }
 `
+
+export const REMOVE_USER_FROM_SHIFT_SLOT_MUTATION = gql`
+  mutation RemoveUserFromShiftSlot($shiftSlotId: ID!) {
+    removeUserFromShiftSlot(shiftSlotId: $shiftSlotId) {
+      shiftSlot {
+        id
+      }
+    }
+  }
+`
+
+export const ADD_USER_TO_SHIFT_SLOT_MUTATION = gql`
+  mutation AddUserToShiftSlot($shiftSlotId: ID!, $userId: ID!) {
+    addUserToShiftSlot(shiftSlotId: $shiftSlotId, userId: $userId) {
+      shiftSlot {
+        id
+      }
+    }
+  }
+`

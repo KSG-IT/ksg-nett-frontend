@@ -126,6 +126,7 @@ export const NORMALIZED_SHIFTS_FROM_RANGE_QUERY = gql`
               name
             }
             slots {
+              id
               role
               user {
                 id
@@ -155,6 +156,7 @@ export const NORMALIZED_SHIFTS_FROM_RANGE_QUERY = gql`
                 name
               }
               slots {
+                id
                 role
                 user {
                   id

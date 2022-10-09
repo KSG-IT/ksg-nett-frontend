@@ -13,6 +13,7 @@ import { ShiftLocationWeek } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
+import { ShiftCard } from './ShiftCard'
 
 interface ShiftLocationWeekParams {
   id: string
@@ -80,23 +81,7 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
                     </UnstyledButton>
                   </Group>
                   {location.shifts.map(shift => (
-                    <div
-                      className={
-                        shift.isFilled
-                          ? classes.filledShift
-                          : classes.notFilledShift
-                      }
-                      key={shift.id}
-                    >
-                      <Text>{shift.name}</Text>
-                      <Text>
-                        {format(new Date(shift.datetimeStart), 'HH.mm')}-
-                        {format(new Date(shift.datetimeEnd), 'HH:mm')}
-                      </Text>
-                      {shift.slots.map(slot => (
-                        <Text key={slot.id}>{slot.role}</Text>
-                      ))}
-                    </div>
+                    <ShiftCard key={shift.id} shift={shift} />
                   ))}
                 </div>
               ))}
@@ -118,22 +103,5 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     flexDirection: 'column',
     height: '100%',
     border: '1px solid red',
-  },
-
-  filledShift: {
-    display: 'flex',
-    flexDirection: 'column',
-    border: '1px solid green',
-    marginBottom: theme.spacing.xs,
-    backgroundColor: theme.colors.green[6],
-    color: 'white',
-  },
-  notFilledShift: {
-    display: 'flex',
-    flexDirection: 'column',
-    border: '1px solid green',
-    backgroundColor: theme.colors.red[6],
-    marginBottom: theme.spacing.xs,
-    color: 'white',
   },
 }))

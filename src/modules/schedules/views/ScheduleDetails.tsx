@@ -4,6 +4,7 @@ import {
   Container,
   createStyles,
   Group,
+  Stack,
   Text,
   Title,
   UnstyledButton,
@@ -62,8 +63,8 @@ export const ScheduleDetails: React.FC = () => {
 
   const { schedule } = data
   return (
-    <div className={classes.wrapper}>
-      <Group align={'baseline'}>
+    <Stack>
+      <Group position="apart">
         <Group position="apart">
           <Title>Vaktplan {schedule.name}</Title>
           <WeekController
@@ -71,11 +72,10 @@ export const ScheduleDetails: React.FC = () => {
             previousWeekCallback={handlePreviousWeek}
             nextWeekCallback={handleNextWeek}
           />
-
-          <Button onClick={() => setApplyTemplateModalOpen(true)}>
-            Generer vakter fra mal
-          </Button>
         </Group>
+        <Button onClick={() => setApplyTemplateModalOpen(true)}>
+          Generer vakter fra mal
+        </Button>
       </Group>
 
       <div className={classes.shifts}>
@@ -93,7 +93,7 @@ export const ScheduleDetails: React.FC = () => {
         isOpen={createShiftModalOpen}
         onCloseCallback={() => setCreateShiftModalOpen(false)}
       />
-    </div>
+    </Stack>
   )
 }
 

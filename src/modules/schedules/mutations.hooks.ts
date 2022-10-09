@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import {
+  ADD_USER_TO_SHIFT_SLOT_MUTATION,
   CREATE_SCHEDULE_TEMPLATE_MUTATION,
   CREATE_SHIFT_SLOT_TEMPLATE_MUTATION,
   CREATE_SHIFT_TEMPLATE_MUTATION,
@@ -9,8 +10,11 @@ import {
   DELETE_SHIFT_TEMPLATE_MUTATION,
   PATCH_SCHEDULE_TEMPLATE_MUTATION,
   PATCH_SHIFT_SLOT_TEMPLATE_MUTATION,
+  REMOVE_USER_FROM_SHIFT_SLOT_MUTATION,
 } from './mutations'
 import {
+  AddUserToShiftSlotReturns,
+  AddUserToShiftSlotVariables,
   CreateScheduleTemplateReturns,
   CreateScheduleTemplateVariables,
   CreateShiftSlotTemplateReturns,
@@ -21,6 +25,8 @@ import {
   PatchScheduleTemplateVariables,
   PatchShiftSlotTemplateReturns,
   PatchShiftSlotTemplateVariables,
+  RemoveUserFromShiftSlotReturns,
+  RemoveUserFromShiftSlotVariables,
 } from './types.graphql'
 
 export function useScheduleTemplateMutations() {
@@ -92,5 +98,25 @@ export function useShiftSlotTemplateMutations() {
     patchShiftSlotTemplateLoading,
     deleteShiftSlotTemplate,
     deleteShiftSlotTemplateLoading,
+  }
+}
+
+export function useShiftSlotMutations() {
+  const [addUserToShiftSlot, { loading: addUserToShiftSlotLoading }] =
+    useMutation<AddUserToShiftSlotReturns, AddUserToShiftSlotVariables>(
+      ADD_USER_TO_SHIFT_SLOT_MUTATION
+    )
+
+  const [removeUserFromShiftSlot, { loading: removeUserFromShiftSlotLoading }] =
+    useMutation<
+      RemoveUserFromShiftSlotReturns,
+      RemoveUserFromShiftSlotVariables
+    >(REMOVE_USER_FROM_SHIFT_SLOT_MUTATION)
+
+  return {
+    addUserToShiftSlot,
+    addUserToShiftSlotLoading,
+    removeUserFromShiftSlot,
+    removeUserFromShiftSlotLoading,
   }
 }
