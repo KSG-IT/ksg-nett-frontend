@@ -104,3 +104,27 @@ export const ADD_USER_TO_SHIFT_SLOT_MUTATION = gql`
     }
   }
 `
+
+export const GENERATE_SHIFTS_FROM_TEMPLATE_MUTATION = gql`
+  mutation GenerateShiftsFromTemplate(
+    $scheduleTemplateId: ID!
+    $startDate: Date!
+    $numberOfWeeks: Int!
+  ) {
+    generateShiftsFromTemplate(
+      scheduleTemplateId: $scheduleTemplateId
+      startDate: $startDate
+      numberOfWeeks: $numberOfWeeks
+    ) {
+      shiftsCreated
+    }
+  }
+`
+
+export const DELETE_SHIFT_MUTATION = gql`
+  mutation DeleteShift($id: ID!) {
+    deleteShift(id: $id) {
+      found
+    }
+  }
+`

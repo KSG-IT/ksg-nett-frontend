@@ -2,23 +2,12 @@ import { gql, useMutation } from '@apollo/client'
 import { Button, Group, Modal, NumberInput, Text } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import { add } from 'date-fns'
+import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
 import { ScheduleTemplateSelect } from '../ScheduleTemplateSelect'
-
-const TEMP_GENERATE = gql`
-  mutation Generate($scheduleId: ID!, $startDate: Date!, $numberOfWeeks: Int!) {
-    generate(
-      scheduleTemplateId: $scheduleId
-      startDate: $startDate
-      numberOfWeeks: $numberOfWeeks
-    ) {
-      shiftsCreated
-    }
-  }
-`
 
 function getMondayOfWeekFromDate(date: Date) {
   date = new Date(date)
@@ -39,12 +28,6 @@ function getSundayOfWeekFromDate(date: Date) {
   return sunday
 }
 
-function useShiftMutations() {
-  const [generate, { loading }] = useMutation(TEMP_GENERATE)
-
-  return { generate, loading }
-}
-
 interface ApplyScheduleTemplateModalProps {
   isOpen: boolean
   onCloseCallback: () => void
@@ -53,16 +36,17 @@ interface ApplyScheduleTemplateModalProps {
 export const ApplyScheduleTemplateModal: React.FC<
   ApplyScheduleTemplateModalProps
 > = ({ isOpen, onCloseCallback }) => {
-  const { generate, loading } = useShiftMutations()
+  const { generateShiftsFromTemplate, generateShiftsFromTemplateLoading } =
+    useShiftMutations()
   const [scheduleTemplateId, setScheduleTemplateId] = useState('')
   const [numberOfWeeks, setNumberOfWeeks] = useState(1)
   const [shiftsFrom, setShiftsFrom] = useState<Date | null>(new Date())
 
   function handleGenerate() {
     if (!shiftsFrom) return
-    generate({
+    generateShiftsFromTemplate({
       variables: {
-        scheduleId: scheduleTemplateId,
+        scheduleTemplateId: scheduleTemplateId,
         startDate: format(shiftsFrom, 'yyyy-MM-dd'),
         numberOfWeeks: numberOfWeeks,
       },
@@ -115,7 +99,11 @@ export const ApplyScheduleTemplateModal: React.FC<
         <Button color={'gray'} onClick={onCloseCallback}>
           Avbryt
         </Button>
-        <Button disabled={loading} loading={loading} onClick={handleGenerate}>
+        <Button
+          disabled={generateShiftsFromTemplateLoading}
+          loading={generateShiftsFromTemplateLoading}
+          onClick={handleGenerate}
+        >
           Generer
         </Button>
       </Group>

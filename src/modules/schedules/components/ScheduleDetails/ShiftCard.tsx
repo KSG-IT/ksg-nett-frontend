@@ -1,7 +1,13 @@
 import { createStyles, Group, Text, UnstyledButton } from '@mantine/core'
 import { IconTrash, IconX } from '@tabler/icons'
-import { useShiftSlotMutations } from 'modules/schedules/mutations.hooks'
-import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
+import {
+  useShiftMutations,
+  useShiftSlotMutations,
+} from 'modules/schedules/mutations.hooks'
+import {
+  MY_UPCOMING_SHIFTS,
+  NORMALIZED_SHIFTS_FROM_RANGE_QUERY,
+} from 'modules/schedules/queries'
 import { ShiftNode } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import toast from 'react-hot-toast'
@@ -19,6 +25,8 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
     removeUserFromShiftSlotLoading,
   } = useShiftSlotMutations()
 
+  const { deleteShift, deleteShiftLoading } = useShiftMutations()
+
   function handleDeleteWeekShifts() {
     // Should trigger a confirm delete dialog
 
@@ -28,8 +36,16 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
 
   function handleDeleteShift() {
     // Should trigger a confirm delete dialog
-    toast.error('Lol ikke implementert enda')
-    console.error('Missing feature')
+    deleteShift({
+      variables: { id: shift.id },
+      refetchQueries: [MY_UPCOMING_SHIFTS, NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
+      onError() {
+        toast.error('Noe gikk galt')
+      },
+      onCompleted() {
+        toast.success('Vakt slettet')
+      },
+    })
   }
 
   function handleRemoveUserFromShiftSlot(shiftSlotId: string) {
@@ -37,7 +53,7 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
       variables: {
         shiftSlotId: shiftSlotId,
       },
-      refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
+      refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY, MY_UPCOMING_SHIFTS],
       onError() {
         toast.error('Noe gikk galt')
       },
@@ -54,7 +70,7 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
       <Group position="apart" align={'flex-end'}>
         <Text>{shift.name}</Text>
         <UnstyledButton>
-          <IconTrash size="18px" color="red" onClick={handleDeleteShift} />
+          <IconTrash size="18px" onClick={handleDeleteShift} />
         </UnstyledButton>
       </Group>
       <Text>{parseLocation(shift.location)}</Text>

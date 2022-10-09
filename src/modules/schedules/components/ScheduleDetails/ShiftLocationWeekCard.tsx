@@ -6,7 +6,6 @@ import {
   Stack,
   Text,
   Title,
-  UnstyledButton,
 } from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
 import { ShiftLocationWeek } from 'modules/schedules/types.graphql'
@@ -70,16 +69,7 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
             <Group align="flex-start">
               {shiftDay.locations.map(location => (
                 <div className={classes.locationColumn} key={location.location}>
-                  <Group position="apart" align={'flex-end'}>
-                    <Text>{parseLocation(location.location)}</Text>
-                    <UnstyledButton>
-                      <IconTrash
-                        size="18px"
-                        color="red"
-                        onClick={handleDeleteShift}
-                      />
-                    </UnstyledButton>
-                  </Group>
+                  <Text>{parseLocation(location.location)}</Text>
                   {location.shifts.map(shift => (
                     <ShiftCard key={shift.id} shift={shift} />
                   ))}

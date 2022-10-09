@@ -200,3 +200,12 @@ export interface RemoveUserFromShiftSlotReturns {
 export interface RemoveUserFromShiftSlotVariables {
   shiftSlotId: string
 }
+
+export interface GenerateShiftsFromTemplateReturns {
+  shiftsCreated: number
+}
+export interface GenerateShiftsFromTemplateVariables {
+  scheduleTemplateId: string
+  startDate: string
+  numberOfWeeks: number
+}
