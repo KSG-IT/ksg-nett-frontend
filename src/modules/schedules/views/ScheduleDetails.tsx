@@ -1,22 +1,11 @@
 import { useQuery } from '@apollo/client'
-import {
-  Button,
-  Container,
-  createStyles,
-  Group,
-  Stack,
-  Text,
-  Title,
-  UnstyledButton,
-} from '@mantine/core'
+import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
 
-import { IconChevronLeft, IconChevronRight, IconPlus } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { add } from 'date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { format } from 'util/date-fns'
 import {
   ApplyScheduleTemplateModal,
   WeekController,

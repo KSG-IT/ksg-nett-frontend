@@ -1,22 +1,8 @@
-import {
-  Button,
-  createStyles,
-  Group,
-  Paper,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core'
-import { IconTrash } from '@tabler/icons'
+import { createStyles, Group, Paper, Stack, Text, Title } from '@mantine/core'
 import { ShiftLocationWeek } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
-import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
 import { ShiftCard } from './ShiftCard'
-
-interface ShiftLocationWeekParams {
-  id: string
-}
 
 interface ShiftLocationWeekCardProps {
   shiftLocationWeek: ShiftLocationWeek
@@ -32,33 +18,11 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
    */
   const { classes } = useShiftDayWeekCardStyles()
 
-  function handleDeleteWeekShifts() {
-    // Should trigger a confirm delete dialog
-    toast.error('Lol ikke implementert enda')
-    console.error('Missing feature')
-  }
-
-  function handleDeleteShift() {
-    // Should trigger a confirm delete dialog
-    toast.error('Lol ikke implementert enda')
-    console.error('Missing feature')
-  }
-
   return (
-    <Stack style={{ width: '100%' }}>
-      <Group>
-        <Title order={3}>
-          Uke {format(new Date(shiftLocationWeek.date), 'w')}
-        </Title>
-        <Button
-          variant="light"
-          color="red"
-          leftIcon={<IconTrash />}
-          onClick={handleDeleteWeekShifts}
-        >
-          Slett vakter for uke
-        </Button>
-      </Group>
+    <Stack>
+      <Title order={3}>
+        Uke {format(new Date(shiftLocationWeek.date), 'w')}
+      </Title>
       {shiftLocationWeek.shiftDays.map(shiftDay => (
         <Stack key={shiftDay.date}>
           <Title order={4}>

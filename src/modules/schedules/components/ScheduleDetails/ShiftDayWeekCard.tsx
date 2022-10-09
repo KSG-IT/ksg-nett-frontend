@@ -44,17 +44,8 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
 
   return (
     <Stack className={classes.wrapper}>
-      <Group>
-        <Title order={3}>Uke {format(new Date(shiftDayWeek.date), 'w')}</Title>
-        <Button
-          variant="light"
-          color="red"
-          leftIcon={<IconTrash />}
-          onClick={handleDeleteWeekShifts}
-        >
-          Slett vakter for uke
-        </Button>
-      </Group>
+      <Title order={3}>Uke {format(new Date(shiftDayWeek.date), 'w')}</Title>
+
       <Paper className={classes.card}>
         {shiftDayWeek.shiftDays.map(shiftDay => (
           <div className={classes.dayColumn} key={shiftDay.date}>
