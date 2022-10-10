@@ -28,6 +28,7 @@ import {
 } from 'modules/quotes'
 import {
   AllMyShifts,
+  AllShifts,
   MyUpcomingShifts,
   ScheduleDetails,
   Schedules,
@@ -265,6 +266,7 @@ export const AppRoutes: React.FC = () => {
             <Route index element={<MyUpcomingShifts />} />
             <Route path="history" element={<AllMyShifts />} />
           </Route>
+          <Route path="whaddup" element={<AllShifts />} />
 
           <Route path="templates">
             <Route

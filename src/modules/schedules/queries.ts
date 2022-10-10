@@ -175,3 +175,24 @@ export const NORMALIZED_SHIFTS_FROM_RANGE_QUERY = gql`
     }
   }
 `
+
+export const ALL_SHIFTS = gql`
+  query AllShifts($date: Date!) {
+    allShifts(date: $date) {
+      id
+      name
+      location
+      filledSlots {
+        id
+        role
+        user {
+          id
+          initials
+          fullName
+          profileImage
+        }
+      }
+      datetimeStart
+    }
+  }
+`

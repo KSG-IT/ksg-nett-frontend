@@ -1,17 +1,10 @@
-import {
-  Card,
-  createStyles,
-  MediaQuery,
-  SimpleGrid,
-  Stack,
-  Text,
-} from '@mantine/core'
+import { Card, createStyles, SimpleGrid, Stack, Text } from '@mantine/core'
 import {
   IconBriefcase,
   IconCreditCard,
   IconEdit,
   IconQuote,
-  IconUsers,
+  IconWreckingBall,
 } from '@tabler/icons'
 import { ShortcutCardItem } from './ShortcutCardItem'
 
@@ -23,10 +16,10 @@ const shortcuts = [
     link: '/economy/deposits/create',
   },
   {
-    title: 'Interngjeng',
-    icon: IconUsers,
+    title: 'Hvem er på jobb?',
+    icon: IconWreckingBall,
     color: 'samfundet-red',
-    link: '/internal-groups',
+    link: '/schedules/whaddup',
   },
   {
     title: 'Legg til sitat',

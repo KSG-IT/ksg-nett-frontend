@@ -102,6 +102,16 @@ export interface AllMyShiftsReturns {
   allMyShifts: ShiftNode[]
 }
 
+export interface AllShiftsReturns {
+  allShifts: Pick<
+    ShiftNode,
+    'id' | 'datetimeStart' | 'name' | 'filledSlots' | 'location'
+  >[]
+}
+
+export interface AllShiftsVariables {
+  date: string
+}
 export interface AllSchedulesReturns {
   allSchedules: ScheduleNode[]
 }
