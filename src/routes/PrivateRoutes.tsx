@@ -17,8 +17,7 @@ import {
   MyInterviews,
 } from 'modules/admissions/views'
 import { Dashboard } from 'modules/dashboard/Dashboard'
-import { Deposits, MyEconomy } from 'modules/economy'
-import { CreateDeposit } from 'modules/economy/views'
+import { CreateDeposit, Deposits, MyEconomy } from 'modules/economy/views'
 import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
 import { InternalGroups } from 'modules/organization/InternalGroups'
 import {
@@ -30,10 +29,10 @@ import {
 import {
   AllMyShifts,
   MyUpcomingShifts,
-  Schedules,
   ScheduleDetails,
-  ScheduleTemplates,
+  Schedules,
   ScheduleTemplateDetails,
+  ScheduleTemplates,
 } from 'modules/schedules/views'
 import {
   CreateSummary,

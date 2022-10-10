@@ -1,4 +1,4 @@
-import { Liquidity } from './types'
+import { Liquidity } from './types.graphql'
 
 export const getLiquidity = (balance: number): Liquidity => {
   if (balance < 0) {

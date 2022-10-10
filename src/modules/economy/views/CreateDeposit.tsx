@@ -1,6 +1,6 @@
 import { Card, Container, createStyles, Title } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
-import { CreateDepositForm } from '../DepositForm/CreateDepositForm'
+import { CreateDepositForm } from '../components'
 
 interface DepositProps {}
 
