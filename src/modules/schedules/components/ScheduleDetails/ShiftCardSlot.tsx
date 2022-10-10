@@ -63,29 +63,28 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
     })
   }
 
+  const renderedText =
+    shiftSlot.user === null ? (
+      <Text className={classes.hoverable} onClick={() => setOpened(true)}>
+        {shiftSlot.role}
+      </Text>
+    ) : (
+      <Group position="apart">
+        <Text className={classes.hoverable} onClick={() => setOpened(true)}>
+          {shiftSlot.user.fullName}
+        </Text>
+        <UnstyledButton
+          onClick={() => handleRemoveUserFromShiftSlot(shiftSlot.id)}
+        >
+          <IconX size="16px" />
+        </UnstyledButton>
+      </Group>
+    )
+
   return (
     <Popover opened={opened} onChange={setOpened}>
       <Popover.Target>
-        <div>
-          <Text className={classes.hoverable} onClick={() => setOpened(true)}>
-            {shiftSlot.role}
-          </Text>
-          {shiftSlot.user && (
-            <Group position="apart">
-              <Text
-                className={classes.hoverable}
-                onClick={() => setOpened(true)}
-              >
-                {shiftSlot.user.fullName}
-              </Text>
-              <UnstyledButton
-                onClick={() => handleRemoveUserFromShiftSlot(shiftSlot.id)}
-              >
-                <IconX size="16px" />
-              </UnstyledButton>
-            </Group>
-          )}
-        </div>
+        <div>{renderedText}</div>
       </Popover.Target>
       <Popover.Dropdown>
         <Stack spacing="xs" className={classes.wrapper}>
