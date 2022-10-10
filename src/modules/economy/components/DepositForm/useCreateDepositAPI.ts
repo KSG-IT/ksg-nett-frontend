@@ -1,5 +1,5 @@
 import { formatISO } from 'date-fns'
-import { useDepositMutations } from '../../mutations.hooks'
+import { useDepositMutations } from 'modules/economy/mutations.hooks'
 import { CreateDepositFormData } from './useCreateDepositLogic'
 
 export function useCreateDepositAPI() {

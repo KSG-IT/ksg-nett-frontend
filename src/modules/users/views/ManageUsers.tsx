@@ -29,6 +29,7 @@ export const ManageUsers: React.FC = () => {
   >(MANAGE_USERS_DATA_QUERY, {
     variables: {
       internalGroupId: internalGroupId,
+      activeOnly: true,
     },
   })
 
@@ -37,11 +38,13 @@ export const ManageUsers: React.FC = () => {
     getUserData()
   }, [internalGroupId])
 
+  const manageUsersData = data?.manageUsersData || []
+
   return (
     <ScrollArea style={{ width: '100%' }} p="lg">
       <Stack>
-        <Title>Administrer verv </Title>
-        <Paper p="md">
+        <Title color={'dimmed'}>Administrer verv </Title>
+        <Paper withBorder p="md">
           <Text>Velg gjeng</Text>
           <Group position="apart">
             <Group>
@@ -50,16 +53,22 @@ export const ManageUsers: React.FC = () => {
                 setInternalGroupCallback={setInternalGroupId}
               />
             </Group>
-            <Button onClick={() => setModalOpen(true)}>Tilegn nytt verv</Button>
+            <Button color={'samfundet-red'} onClick={() => setModalOpen(true)}>
+              Tilegn nytt verv
+            </Button>
           </Group>
         </Paper>
-        <Title order={2}>Aktive medlemskap</Title>
-        <Paper p="md" my="md">
-          <UserManagementTable usersData={[]} />
+        <Title order={2} color="dimmed">
+          Aktive medlemskap
+        </Title>
+        <Paper withBorder radius={'md'} p="md" my="md">
+          <UserManagementTable usersData={manageUsersData} />
         </Paper>
 
-        <Title order={2}>Tidligere medlemskap</Title>
-        <Paper p="md" my="md">
+        <Title order={2} color="dimmed">
+          Tidligere medlemskap
+        </Title>
+        <Paper withBorder radius={'md'} p="md" my="md">
           <UserManagementTable usersData={[]} />
         </Paper>
 

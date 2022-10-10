@@ -1,32 +1,22 @@
 import { useMutation } from '@apollo/client'
-import { Button } from '@mantine/core'
+import { Button, Group } from '@mantine/core'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import styled from 'styled-components'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from './mutations'
+import { MANAGE_USERS_DATA_QUERY } from './queries'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
-  InternalGroupPositionType,
+  InternalGroupPositionTypeOption,
   ManageInternalGroupUser,
 } from './types'
-
-export interface InternalGroupPositionTypeOption {
-  value: InternalGroupPositionType
-  label: string
-}
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`
 
 interface UserManagementTableRowProp {
   userData: ManageInternalGroupUser
 }
 
-export const UserManagementTableRow: React.VFC<UserManagementTableRowProp> = ({
+export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
   userData,
 }) => {
   const [
@@ -43,7 +33,6 @@ export const UserManagementTableRow: React.VFC<UserManagementTableRowProp> = ({
   const handleAssignNewPosition = () => {
     if (selectedInternalGroupPositionType === null) return
 
-    // We also do not execute the mutation if the type has not changed
     if (
       selectedInternalGroupPositionType.value ===
       userData.internalGroupPositionType
@@ -57,7 +46,14 @@ export const UserManagementTableRow: React.VFC<UserManagementTableRowProp> = ({
           userData.internalGroupPositionMembership.position.id,
         internalGroupPositionType: selectedInternalGroupPositionType.value,
       },
-    }).then(() => toast.success('Bruker oppdatert!'))
+      refetchQueries: [MANAGE_USERS_DATA_QUERY],
+      onError() {
+        toast.error('Noe gikk galt')
+      },
+      onCompleted() {
+        toast.success('Bruker oppdatert!')
+      },
+    })
   }
 
   return (
@@ -70,16 +66,21 @@ export const UserManagementTableRow: React.VFC<UserManagementTableRowProp> = ({
       </td>
 
       <td>
-        <Button
-          onClick={() => {
-            handleAssignNewPosition()
-          }}
-          disabled={loading}
-        >
-          Endre status
-        </Button>
-        {/* Button should set the date ended for this membership to now */}
-        <Button color="red">Ferdig med KSG</Button>
+        <Group>
+          <Button
+            color={'samfundet-red'}
+            onClick={() => {
+              handleAssignNewPosition()
+            }}
+            disabled={loading}
+          >
+            Endre status
+          </Button>
+          {/* Button should set the date ended for this membership to now */}
+          <Button variant="outline" color="samfundet-red">
+            Ferdig med KSG
+          </Button>
+        </Group>
       </td>
     </>
   )
