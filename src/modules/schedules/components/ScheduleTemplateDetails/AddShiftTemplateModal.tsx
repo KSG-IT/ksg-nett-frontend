@@ -100,6 +100,7 @@ export const AddShiftTemplateModal: React.FC<AddShiftTemplateModalProps> = ({
           Avbryt
         </Button>
         <Button
+          color="samfundet-red"
           loading={createShiftTemplateLoading}
           onClick={handleCreateShiftTemplate}
         >

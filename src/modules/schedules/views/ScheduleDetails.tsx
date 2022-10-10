@@ -63,11 +63,14 @@ export const ScheduleDetails: React.FC = () => {
             nextWeekCallback={handleNextWeek}
           />
 
-          <Button leftIcon={<IconSettings />} disabled>
+          <Button color="samfundet-red" leftIcon={<IconSettings />} disabled>
             Innstillinger
           </Button>
         </Group>
-        <Button onClick={() => setApplyTemplateModalOpen(true)}>
+        <Button
+          color="samfundet-red"
+          onClick={() => setApplyTemplateModalOpen(true)}
+        >
           Generer vakter fra mal
         </Button>
       </Group>
