@@ -2,16 +2,16 @@ import { useMutation } from '@apollo/client'
 import { Button, Group } from '@mantine/core'
 import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import {
-  InternalGroupPositionTypeOption,
-  InternalGroupPositionTypeSelect,
-} from './InternalGroupPositionTypeSelect'
+import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from './mutations'
+import { MANAGE_USERS_DATA_QUERY } from './queries'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
+  InternalGroupPositionTypeOption,
 } from './types'
 
 const Wrapper = styled.div``
@@ -58,6 +58,13 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
         internalGroupPositionId: internalGroupPositionId,
         internalGroupPositionType: selectedInternalGroupPositionType.value,
       },
+      refetchQueries: [MANAGE_USERS_DATA_QUERY],
+      onError() {
+        toast.error('Noe gikk galt')
+      },
+      onCompleted() {
+        toast.success('Bruker oppdatert!')
+      },
     })
   }
 
@@ -79,7 +86,11 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
         <Button color="gray" onClick={() => setModalOpen(false)}>
           Avbryt
         </Button>
-        <Button onClick={handleAssignNewPosition} disabled={loading}>
+        <Button
+          color="samfundet-red"
+          onClick={handleAssignNewPosition}
+          disabled={loading}
+        >
           Lagre
         </Button>
       </Group>

@@ -39,6 +39,7 @@ export interface ManageUsersDataReturns {
 
 export interface ManageUsersDataVariables {
   internalGroupId: string
+  activeOnly: boolean
 }
 
 // === Mutation typing ===
@@ -51,4 +52,9 @@ export interface AssignNewInternalGroupPositionMembershipVariables {
   userId: string
   internalGroupPositionId: string
   internalGroupPositionType: InternalGroupPositionType
+}
+
+export interface InternalGroupPositionTypeOption {
+  value: InternalGroupPositionType
+  label: string
 }
