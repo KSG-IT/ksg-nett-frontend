@@ -2,6 +2,7 @@ import {
   createStyles,
   Group,
   Popover,
+  Stack,
   Text,
   UnstyledButton,
 } from '@mantine/core'
@@ -66,35 +67,44 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
     <Popover opened={opened} onChange={setOpened}>
       <Popover.Target>
         <div>
-          <Text className={classes.wrapper} onClick={() => setOpened(true)}>
+          <Text className={classes.hoverable} onClick={() => setOpened(true)}>
             {shiftSlot.role}
           </Text>
           {shiftSlot.user && (
-            <Group>
-              <Text className={classes.wrapper} onClick={() => setOpened(true)}>
+            <Group position="apart">
+              <Text
+                className={classes.hoverable}
+                onClick={() => setOpened(true)}
+              >
                 {shiftSlot.user.fullName}
               </Text>
               <UnstyledButton
                 onClick={() => handleRemoveUserFromShiftSlot(shiftSlot.id)}
               >
-                <IconX />
+                <IconX size="16px" />
               </UnstyledButton>
             </Group>
           )}
         </div>
       </Popover.Target>
       <Popover.Dropdown>
-        <UserSelect setUserCallback={handleAddUserToShift} />
+        <Stack spacing="xs" className={classes.wrapper}>
+          <label>Velg bruker for skift</label>
+          <UserSelect setUserCallback={handleAddUserToShift} />
+        </Stack>
       </Popover.Dropdown>
     </Popover>
   )
 }
 
 const useShiftCardSlotStyles = createStyles(theme => ({
-  wrapper: {
+  hoverable: {
     ':hover': {
       cursor: 'pointer',
       backgroundColor: theme.colors.gray[6],
     },
+  },
+  wrapper: {
+    color: 'black',
   },
 }))
