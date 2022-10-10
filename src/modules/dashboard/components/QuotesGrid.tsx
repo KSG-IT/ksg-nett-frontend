@@ -16,7 +16,7 @@ interface UserQuotesProps {
 export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
   const { classes } = useStyles()
   const fields = quotes.map(quote => (
-    <Card className={classes.card} key={quote.id} radius="lg" shadow={'xs'}>
+    <Card className={classes.card} key={quote.id} shadow={'xs'}>
       <Card.Section p={'sm'}>
         <Text size={'sm'} className={classes.quoteText}>
           {quote.text}
@@ -33,12 +33,13 @@ export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
     </Card>
   ))
   return (
-    <Stack mt={'xl'}>
-      <Text color={'dimmed'} weight={700} p={'xs'}>
+    <Stack>
+      <Text color={'dimmed'} weight={700}>
         Siste sitater
       </Text>
       <SimpleGrid
-        cols={4}
+        mt={'sm'}
+        cols={3}
         breakpoints={[
           { maxWidth: 'md', cols: 3, spacing: 'md' },
           { maxWidth: 'sm', cols: 2, spacing: 'sm' },

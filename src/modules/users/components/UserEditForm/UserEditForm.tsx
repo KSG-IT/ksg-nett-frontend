@@ -9,8 +9,8 @@ import {
   IconSignature,
 } from '@tabler/icons'
 import { UserNode } from 'modules/users/types'
-import { useEditProfileAPI } from './UserEditAPI'
-import { useEditProfileLogic } from './UserEditLogic'
+import { useEditProfileAPI } from './useUserEditAPI'
+import { useEditProfileLogic } from './useUserEditLogic'
 
 interface EditProfileViewProps {
   user: UserNode

@@ -21,7 +21,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
   const rows = user.lastTransactions.map((transaction, index) => (
     <tr key={index}>
       <td>
-        <Badge variant="filled" color={'teal'}>
+        <Badge variant="outline" color={'lime'}>
           {transaction.name}
         </Badge>
       </td>
@@ -48,7 +48,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
       <Text color={'dimmed'} weight={700} p={'xs'}>
         Siste transaksjoner
       </Text>
-      <Card p={'xl'} radius={'md'} className={classes.card} withBorder>
+      <Card py={'xl'} radius={'md'} className={classes.card} withBorder>
         <Table>
           <thead>
             <tr className={classes.headerRow}>
