@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
+import { IconSettings } from '@tabler/icons'
 
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -61,6 +62,10 @@ export const ScheduleDetails: React.FC = () => {
             previousWeekCallback={handlePreviousWeek}
             nextWeekCallback={handleNextWeek}
           />
+
+          <Button leftIcon={<IconSettings />} disabled>
+            Innstillinger
+          </Button>
         </Group>
         <Button onClick={() => setApplyTemplateModalOpen(true)}>
           Generer vakter fra mal

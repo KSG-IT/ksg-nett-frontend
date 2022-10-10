@@ -57,5 +57,6 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     flexDirection: 'column',
     height: '100%',
     border: '1px solid red',
+    width: '200px',
   },
 }))
