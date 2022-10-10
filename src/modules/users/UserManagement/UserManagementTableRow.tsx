@@ -2,13 +2,12 @@ import { useMutation } from '@apollo/client'
 import { Button, Group } from '@mantine/core'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import styled from 'styled-components'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from './mutations'
+import { MANAGE_USERS_DATA_QUERY } from './queries'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
-  InternalGroupPositionType,
   InternalGroupPositionTypeOption,
   ManageInternalGroupUser,
 } from './types'
@@ -34,7 +33,6 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
   const handleAssignNewPosition = () => {
     if (selectedInternalGroupPositionType === null) return
 
-    // We also do not execute the mutation if the type has not changed
     if (
       selectedInternalGroupPositionType.value ===
       userData.internalGroupPositionType
@@ -48,7 +46,14 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
           userData.internalGroupPositionMembership.position.id,
         internalGroupPositionType: selectedInternalGroupPositionType.value,
       },
-    }).then(() => toast.success('Bruker oppdatert!'))
+      refetchQueries: [MANAGE_USERS_DATA_QUERY],
+      onError() {
+        toast.error('Noe gikk galt')
+      },
+      onCompleted() {
+        toast.success('Bruker oppdatert!')
+      },
+    })
   }
 
   return (
