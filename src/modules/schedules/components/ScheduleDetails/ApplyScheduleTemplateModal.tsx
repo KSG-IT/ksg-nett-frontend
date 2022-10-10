@@ -1,4 +1,3 @@
-import { gql, useMutation } from '@apollo/client'
 import { Button, Group, Modal, NumberInput, Text } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import { add } from 'date-fns'
@@ -12,20 +11,14 @@ import { ScheduleTemplateSelect } from '../ScheduleTemplateSelect'
 function getMondayOfWeekFromDate(date: Date) {
   date = new Date(date)
   const first = date.getDate() - date.getDay() + 1
-
-  const monday = new Date(date.setDate(first))
-  return monday
+  return new Date(date.setDate(first))
 }
 
 function getSundayOfWeekFromDate(date: Date) {
   date = new Date(date)
-
   const first = date.getDate() - date.getDay() + 1
   const last = first + 6
-
-  const sunday = new Date(date.setDate(last))
-
-  return sunday
+  return new Date(date.setDate(last))
 }
 
 interface ApplyScheduleTemplateModalProps {
