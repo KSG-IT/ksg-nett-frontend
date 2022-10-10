@@ -66,8 +66,8 @@ export const ShortcutCards: React.FC = () => {
             { maxWidth: 600, cols: 2, spacing: 'sm' },
           ]}
         >
-          {shortcuts.map(shortcut => (
-            <ShortcutCardItem {...shortcut} />
+          {shortcuts.map((shortcut, index) => (
+            <ShortcutCardItem key={index} {...shortcut} />
           ))}
         </SimpleGrid>
       </Card>
