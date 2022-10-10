@@ -1,7 +1,7 @@
 import { useUserMutations } from 'modules/users/mutations.hooks'
 import { USER_QUERY } from 'modules/users/queries'
 import { UserNode } from 'modules/users/types'
-import { UserProfileCleanedData } from './UserEditLogic'
+import { UserProfileCleanedData } from './useUserEditLogic'
 
 export function useEditProfileAPI(user: UserNode) {
   const { patchUser } = useUserMutations()

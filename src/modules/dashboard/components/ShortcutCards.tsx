@@ -1,4 +1,11 @@
-import { Card, createStyles, SimpleGrid, Stack, Text } from '@mantine/core'
+import {
+  Card,
+  createStyles,
+  MediaQuery,
+  SimpleGrid,
+  Stack,
+  Text,
+} from '@mantine/core'
 import {
   IconBriefcase,
   IconCreditCard,
@@ -45,22 +52,22 @@ export const ShortcutCards: React.FC = () => {
   const { classes } = useStyles()
 
   return (
-    <Stack>
+    <Stack spacing={0}>
       <Text color="dimmed" className={classes.title}>
         Snarveier
       </Text>
-      <Card p={0} radius="md" className={classes.card}>
+      <Card py={0} className={classes.card}>
         <SimpleGrid
           cols={5}
           my={'xl'}
           breakpoints={[
             { maxWidth: 980, cols: 3, spacing: 'md' },
             { maxWidth: 755, cols: 2, spacing: 'sm' },
-            { maxWidth: 600, cols: 1, spacing: 'sm' },
+            { maxWidth: 600, cols: 2, spacing: 'sm' },
           ]}
         >
-          {shortcuts.map(shortcut => (
-            <ShortcutCardItem {...shortcut} />
+          {shortcuts.map((shortcut, index) => (
+            <ShortcutCardItem key={index} {...shortcut} />
           ))}
         </SimpleGrid>
       </Card>
@@ -71,8 +78,12 @@ export const ShortcutCards: React.FC = () => {
 const useStyles = createStyles(theme => ({
   card: {
     backgroundColor: theme.colors.gray[0],
-    minWidth: 400,
-    minHeight: 150,
+    paddingRight: theme.spacing.md,
+    paddingLeft: theme.spacing.md,
+
+    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
+      padding: 0,
+    },
   },
 
   title: {
