@@ -128,3 +128,31 @@ export const DELETE_SHIFT_MUTATION = gql`
     }
   }
 `
+
+export const CREATE_SHIFT_MUTATION = gql`
+  mutation CreateShift($input: CreateShiftInput!) {
+    createShift(input: $input) {
+      shift {
+        id
+      }
+    }
+  }
+`
+
+export const CREATE_SHIFT_SLOT_MUTATION = gql`
+  mutation CreateShiftSlot($input: CreateShiftSlotInput!) {
+    createShiftSlot(input: $input) {
+      shiftSlot {
+        id
+      }
+    }
+  }
+`
+
+export const DELETE_SHIFT_SLOT_MUTATION = gql`
+  mutation DeleteShiftSlot($id: ID!) {
+    deleteShiftSlot(id: $id) {
+      found
+    }
+  }
+`

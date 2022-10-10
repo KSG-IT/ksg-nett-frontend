@@ -8,19 +8,23 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core'
-import { IconTrash } from '@tabler/icons'
+import { IconPlus, IconTrash } from '@tabler/icons'
 import { ShiftDayWeek } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
+import { CreateShiftPopover } from './CreateShiftPopover'
 import { ShiftCard } from './ShiftCard'
+import { ShiftWeek } from './ShiftWeek'
 
 interface ShiftDayWeekCardProps {
   shiftDayWeek: ShiftDayWeek
+  scheduleId: string
 }
 
 export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
   shiftDayWeek,
+  scheduleId,
 }) => {
   /**
    * This component renders the schedule using a week-centric approach. Meaning
@@ -57,6 +61,7 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
                 <ShiftCard key={shift.id} shift={shift} />
               ))}
             </Stack>
+            <CreateShiftPopover scheduleId={scheduleId} date={shiftDay.date} />
           </div>
         ))}
       </Paper>

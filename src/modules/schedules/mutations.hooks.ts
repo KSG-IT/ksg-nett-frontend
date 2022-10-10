@@ -3,10 +3,13 @@ import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import {
   ADD_USER_TO_SHIFT_SLOT_MUTATION,
   CREATE_SCHEDULE_TEMPLATE_MUTATION,
+  CREATE_SHIFT_MUTATION,
+  CREATE_SHIFT_SLOT_MUTATION,
   CREATE_SHIFT_SLOT_TEMPLATE_MUTATION,
   CREATE_SHIFT_TEMPLATE_MUTATION,
   DELETE_SCHEDULE_TEMPLATE_MUTATION,
   DELETE_SHIFT_MUTATION,
+  DELETE_SHIFT_SLOT_MUTATION,
   DELETE_SHIFT_SLOT_TEMPLATE_MUTATION,
   DELETE_SHIFT_TEMPLATE_MUTATION,
   GENERATE_SHIFTS_FROM_TEMPLATE_MUTATION,
@@ -19,8 +22,12 @@ import {
   AddUserToShiftSlotVariables,
   CreateScheduleTemplateReturns,
   CreateScheduleTemplateVariables,
+  CreateShiftMutationReturns,
+  CreateShiftMutationVariables,
+  CreateShiftSlotReturns,
   CreateShiftSlotTemplateReturns,
   CreateShiftSlotTemplateVariables,
+  CreateShiftSlotVariables,
   CreateShiftTemplateReturns,
   CreateShiftTemplateVariables,
   GenerateShiftsFromTemplateReturns,
@@ -117,7 +124,21 @@ export function useShiftSlotMutations() {
       RemoveUserFromShiftSlotVariables
     >(REMOVE_USER_FROM_SHIFT_SLOT_MUTATION)
 
+  const [createShiftSlot, { loading: createShiftSlotLoading }] = useMutation<
+    CreateShiftSlotReturns,
+    CreateShiftSlotVariables
+  >(CREATE_SHIFT_SLOT_MUTATION)
+
+  const [deleteShiftSlot, { loading: deleteShiftSlotLoading }] = useMutation<
+    DeleteMutationReturns,
+    DeleteMutationVariables
+  >(DELETE_SHIFT_SLOT_MUTATION)
+
   return {
+    createShiftSlot,
+    createShiftSlotLoading,
+    deleteShiftSlot,
+    deleteShiftSlotLoading,
     addUserToShiftSlot,
     addUserToShiftSlotLoading,
     removeUserFromShiftSlot,
@@ -139,7 +160,14 @@ export function useShiftMutations() {
     DeleteMutationVariables
   >(DELETE_SHIFT_MUTATION)
 
+  const [createShift, { loading: createShiftLoading }] = useMutation<
+    CreateShiftMutationReturns,
+    CreateShiftMutationVariables
+  >(CREATE_SHIFT_MUTATION)
+
   return {
+    createShift,
+    createShiftLoading,
     deleteShift,
     deleteShiftLoading,
     generateShiftsFromTemplate,

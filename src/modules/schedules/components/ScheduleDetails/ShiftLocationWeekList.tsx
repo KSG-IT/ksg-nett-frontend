@@ -4,10 +4,12 @@ import { ShiftLocationWeekCard } from './ShiftLocationWeekCard'
 
 interface ShiftLocationWeekListProps {
   shiftLocationWeeks: ShiftLocationWeek[]
+  scheduleId: string
 }
 
 export const ShiftLocationWeekList: React.FC<ShiftLocationWeekListProps> = ({
   shiftLocationWeeks,
+  scheduleId,
 }) => {
   if (shiftLocationWeeks.length === 0) {
     return <div>Ingen vakter den valgte uken</div>
@@ -18,6 +20,7 @@ export const ShiftLocationWeekList: React.FC<ShiftLocationWeekListProps> = ({
         <ShiftLocationWeekCard
           key={index}
           shiftLocationWeek={shiftLocationWeek}
+          scheduleId={scheduleId}
         />
       ))}
     </Stack>

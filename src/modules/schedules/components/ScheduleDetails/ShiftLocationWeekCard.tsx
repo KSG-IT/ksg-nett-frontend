@@ -1,15 +1,27 @@
-import { createStyles, Group, Paper, Stack, Text, Title } from '@mantine/core'
+import {
+  Button,
+  createStyles,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core'
+import { IconPlus } from '@tabler/icons'
 import { ShiftLocationWeek } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import { format } from 'util/date-fns'
+import { CreateShiftPopover } from './CreateShiftPopover'
 import { ShiftCard } from './ShiftCard'
 
 interface ShiftLocationWeekCardProps {
   shiftLocationWeek: ShiftLocationWeek
+  scheduleId: string
 }
 
 export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
   shiftLocationWeek,
+  scheduleId,
 }) => {
   /**
    * This component renders the schedule using a location-centric approach. Meaning
@@ -39,6 +51,10 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
                   ))}
                 </div>
               ))}
+              <CreateShiftPopover
+                scheduleId={scheduleId}
+                date={shiftLocationWeek.date}
+              />
             </Group>
           </Paper>
         </Stack>

@@ -209,3 +209,30 @@ export interface GenerateShiftsFromTemplateVariables {
   startDate: string
   numberOfWeeks: number
 }
+
+export interface CreateShiftMutationReturns {
+  shift: Pick<ShiftNode, 'id'>
+}
+
+type CreateShiftInput = {
+  schedule: string
+  location?: LocationValues | null
+  name?: string
+  datetimeStart: Date
+  datetimeEnd: Date
+}
+export interface CreateShiftMutationVariables {
+  input: CreateShiftInput
+}
+
+export interface CreateShiftSlotReturns {
+  shiftSlot: Pick<ShiftSlotNode, 'id'>
+}
+
+type CreateShiftSlotInput = {
+  shift: string
+  role: RoleValues
+}
+export interface CreateShiftSlotVariables {
+  input: CreateShiftSlotInput
+}

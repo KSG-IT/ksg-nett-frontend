@@ -47,10 +47,12 @@ export const ShiftRenderer: React.FC<ShiftRendererProps> = ({
   return displayMode === ScheduleDisplayModeValues.SINGLE_LOCATION ? (
     <ShiftDayWeekList
       shiftDayWeeks={data.normalizedShiftsFromRange as ShiftDayWeek[]}
+      scheduleId={id}
     />
   ) : (
     <ShiftLocationWeekList
       shiftLocationWeeks={data.normalizedShiftsFromRange as ShiftLocationWeek[]}
+      scheduleId={id}
     />
   )
 }

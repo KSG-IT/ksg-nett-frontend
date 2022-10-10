@@ -1,4 +1,4 @@
-import { Select } from '@mantine/core'
+import { Select, SelectProps } from '@mantine/core'
 import { RoleValues } from '../consts'
 import { parseShiftRole } from '../util'
 
@@ -61,7 +61,8 @@ const shiftRoleData = [
   },
 ]
 
-interface ShiftRoleSelectProps {
+interface ShiftRoleSelectProps
+  extends Omit<SelectProps, 'value' | 'onChange' | 'data'> {
   value: RoleValues
   onChangeCallback: (val: RoleValues) => void
 }
@@ -69,8 +70,14 @@ interface ShiftRoleSelectProps {
 export const ShiftRoleSelect: React.FC<ShiftRoleSelectProps> = ({
   value,
   onChangeCallback,
+  ...rest
 }) => {
   return (
-    <Select value={value} onChange={onChangeCallback} data={shiftRoleData} />
+    <Select
+      value={value}
+      onChange={onChangeCallback}
+      data={shiftRoleData}
+      {...rest}
+    />
   )
 }

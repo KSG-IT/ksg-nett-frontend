@@ -1,4 +1,5 @@
 import {
+  Button,
   createStyles,
   Group,
   Popover,
@@ -25,11 +26,8 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
   const { classes } = useShiftCardSlotStyles()
   const [opened, setOpened] = useState(false)
 
-  const {
-    addUserToShiftSlot,
-
-    removeUserFromShiftSlot,
-  } = useShiftSlotMutations()
+  const { addUserToShiftSlot, removeUserFromShiftSlot, deleteShiftSlot } =
+    useShiftSlotMutations()
 
   function handleRemoveUserFromShiftSlot(shiftSlotId: string) {
     removeUserFromShiftSlot({
@@ -47,7 +45,6 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
   }
 
   function handleAddUserToShift(val: string) {
-    console.log(val)
     addUserToShiftSlot({
       variables: {
         shiftSlotId: shiftSlot.id,
@@ -59,6 +56,21 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
       },
       onCompleted() {
         setOpened(false)
+      },
+    })
+  }
+
+  function handleDeleteShiftSlot() {
+    deleteShiftSlot({
+      variables: {
+        id: shiftSlot.id,
+      },
+      refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
+      onError() {
+        toast.error('Noe gikk galt')
+      },
+      onCompleted() {
+        toast.success('Vakt fjernet')
       },
     })
   }
@@ -88,7 +100,12 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
       </Popover.Target>
       <Popover.Dropdown>
         <Stack spacing="xs" className={classes.wrapper}>
-          <label>Velg bruker for skift</label>
+          <Group position="apart" align="flex-end">
+            <label>Velg bruker for skift</label>
+            <Button color="red" onClick={handleDeleteShiftSlot}>
+              Slett
+            </Button>
+          </Group>
           <UserSelect setUserCallback={handleAddUserToShift} />
         </Stack>
       </Popover.Dropdown>

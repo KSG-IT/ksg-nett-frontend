@@ -1,4 +1,10 @@
-import { createStyles, Group, Text, UnstyledButton } from '@mantine/core'
+import {
+  Button,
+  createStyles,
+  Group,
+  Text,
+  UnstyledButton,
+} from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import {
@@ -9,6 +15,7 @@ import { ShiftNode } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
+import { AddShiftSlotPopover } from './AddShiftSlotPopover'
 import { ShiftCardSlot } from './ShiftCardSlot'
 
 interface ShiftCardProps {
@@ -52,6 +59,7 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
       {shift.slots.map(slot => (
         <ShiftCardSlot key={slot.id} shiftSlot={slot} />
       ))}
+      <AddShiftSlotPopover shift={shift} />
     </div>
   )
 }
