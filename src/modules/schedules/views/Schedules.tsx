@@ -7,14 +7,6 @@ import { SchedulesTable } from '../components/Schedules'
 import { ALL_SCHEDULES } from '../queries'
 import { AllSchedulesReturns } from '../types.graphql'
 
-const useSchedulesStyles = createStyles(theme => ({
-  wrapper: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'column',
-  },
-}))
-
 export const Schedules: React.FC = () => {
   const { classes } = useSchedulesStyles()
   const { data, loading, error } = useQuery<AllSchedulesReturns>(ALL_SCHEDULES)
@@ -27,13 +19,22 @@ export const Schedules: React.FC = () => {
 
   return (
     <div className={classes.wrapper}>
-      <Group>
+      <Group position="apart" align="center">
         <Title>Vaktplaner</Title>
         <Link to="/schedules/templates">
-          <Button color="samfundet-red">Vaktplanmaler</Button>
+          <Button color="samfundet-red">Se vaktplanmaler</Button>
         </Link>
       </Group>
       <SchedulesTable schedules={allSchedules} />
     </div>
   )
 }
+
+const useSchedulesStyles = createStyles(theme => ({
+  wrapper: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'column',
+    gap: theme.spacing.md,
+  },
+}))
