@@ -266,7 +266,7 @@ export const AppRoutes: React.FC = () => {
             <Route index element={<MyUpcomingShifts />} />
             <Route path="history" element={<AllMyShifts />} />
           </Route>
-          <Route path="whaddup" element={<AllShifts />} />
+          <Route path="all-shifts" element={<AllShifts />} />
 
           <Route path="templates">
             <Route

@@ -6,7 +6,6 @@ import { FullContentLoader } from 'components/Loading'
 import { format } from 'date-fns'
 import { useState } from 'react'
 import { UserShiftCardList } from '../components'
-import { ShiftCard } from '../components/ScheduleDetails'
 import { ALL_SHIFTS } from '../queries'
 import { AllShiftsReturns, AllShiftsVariables } from '../types.graphql'
 
