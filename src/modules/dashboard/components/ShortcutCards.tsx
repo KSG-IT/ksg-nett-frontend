@@ -2,6 +2,7 @@ import { Card, createStyles, SimpleGrid, Stack, Text } from '@mantine/core'
 import {
   IconBabyCarriage,
   IconBriefcase,
+  IconCalendarTime,
   IconCreditCard,
   IconEdit,
   IconQuote,
@@ -32,6 +33,13 @@ const shortcuts = [
     icon: IconBriefcase,
     color: 'samfundet-red',
     link: '/schedules/me',
+  },
+
+  {
+    title: 'Tilgjengelighet',
+    icon: IconCalendarTime,
+    color: 'samfundet-red',
+    link: '/schedules/me/availability',
   },
   {
     title: 'Nytt referat',

@@ -1,4 +1,5 @@
 export * from './MyUpcomingShifts'
+export * from './MyAvailability'
 export * from './AllMyShifts'
 export * from './ScheduleTemplates'
 export * from './ScheduleTemplateDetails'
