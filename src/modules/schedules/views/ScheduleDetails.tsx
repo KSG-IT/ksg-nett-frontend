@@ -12,7 +12,7 @@ import {
   ScheduleSettingsModal,
   WeekController,
 } from '../components/ScheduleDetails'
-import { CreateShiftModal } from '../components/ScheduleDetails/CreateShiftModal'
+
 import { ShiftRenderer } from '../components/ScheduleDetails/ShiftRenderer'
 import { SCHEDULE_QUERY } from '../queries'
 
@@ -26,7 +26,6 @@ export const ScheduleDetails: React.FC = () => {
     keyof ScheduleDetailsParams
   >() as ScheduleDetailsParams
   const [applyTemplateModalOpen, setApplyTemplateModalOpen] = useState(false)
-  const [createShiftModalOpen, setCreateShiftModalOpen] = useState(false)
   const [scheduleSettingsModalOpen, setScheduleSettingsModalOpen] =
     useState(false)
   const [shiftsFrom, setShiftsFrom] = useState<Date>(new Date())
@@ -93,10 +92,7 @@ export const ScheduleDetails: React.FC = () => {
         isOpen={applyTemplateModalOpen}
         onCloseCallback={() => setApplyTemplateModalOpen(false)}
       />
-      <CreateShiftModal
-        isOpen={createShiftModalOpen}
-        onCloseCallback={() => setCreateShiftModalOpen(false)}
-      />
+
       <ScheduleSettingsModal
         isOpen={scheduleSettingsModalOpen}
         schedule={schedule}
