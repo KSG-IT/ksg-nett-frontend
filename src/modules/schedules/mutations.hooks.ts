@@ -13,6 +13,7 @@ import {
   DELETE_SHIFT_SLOT_TEMPLATE_MUTATION,
   DELETE_SHIFT_TEMPLATE_MUTATION,
   GENERATE_SHIFTS_FROM_TEMPLATE_MUTATION,
+  PATCH_SCHEDULE_MUTATION,
   PATCH_SCHEDULE_TEMPLATE_MUTATION,
   PATCH_SHIFT_SLOT_TEMPLATE_MUTATION,
   REMOVE_USER_FROM_SHIFT_SLOT_MUTATION,
@@ -32,8 +33,10 @@ import {
   CreateShiftTemplateVariables,
   GenerateShiftsFromTemplateReturns,
   GenerateShiftsFromTemplateVariables,
+  PatchScheduleReturns,
   PatchScheduleTemplateReturns,
   PatchScheduleTemplateVariables,
+  PatchScheduleVariables,
   PatchShiftSlotTemplateReturns,
   PatchShiftSlotTemplateVariables,
   RemoveUserFromShiftSlotReturns,
@@ -63,6 +66,18 @@ export function useScheduleTemplateMutations() {
     patchScheduleTemplateLoading,
     deleteScheduleTemplate,
     deleteScheduleTemplateLoading,
+  }
+}
+
+export function useScheduleMutations() {
+  const [patchSchedule, { loading: patchScheduleLoading }] = useMutation<
+    PatchScheduleReturns,
+    PatchScheduleVariables
+  >(PATCH_SCHEDULE_MUTATION)
+
+  return {
+    patchSchedule,
+    patchScheduleLoading,
   }
 }
 

@@ -141,6 +141,19 @@ export interface PatchScheduleTemplateVariables {
   input: PatchScheduleTemplateInput
 }
 
+export interface PatchScheduleReturns {
+  schedule: Pick<ScheduleNode, 'id'>
+}
+
+type PatchScheduleInput = {
+  name: string
+  displayMode: ScheduleDisplayModeValues
+}
+export interface PatchScheduleVariables {
+  id: string
+  input: PatchScheduleInput
+}
+
 export interface PatchShiftSlotTemplateReturns {
   patchShiftSlotTemplate: Pick<ShiftSlotTemplateNode, 'id'>
 }

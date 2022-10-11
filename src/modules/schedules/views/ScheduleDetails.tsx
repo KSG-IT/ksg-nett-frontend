@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {
   ApplyScheduleTemplateModal,
+  ScheduleSettingsModal,
   WeekController,
 } from '../components/ScheduleDetails'
 import { CreateShiftModal } from '../components/ScheduleDetails/CreateShiftModal'
@@ -26,6 +27,8 @@ export const ScheduleDetails: React.FC = () => {
   >() as ScheduleDetailsParams
   const [applyTemplateModalOpen, setApplyTemplateModalOpen] = useState(false)
   const [createShiftModalOpen, setCreateShiftModalOpen] = useState(false)
+  const [scheduleSettingsModalOpen, setScheduleSettingsModalOpen] =
+    useState(false)
   const [shiftsFrom, setShiftsFrom] = useState<Date>(new Date())
   const [numberOfWeeks, setNumberOfWeeks] = useState(2)
 
@@ -63,7 +66,11 @@ export const ScheduleDetails: React.FC = () => {
             nextWeekCallback={handleNextWeek}
           />
 
-          <Button color="samfundet-red" leftIcon={<IconSettings />} disabled>
+          <Button
+            color="samfundet-red"
+            leftIcon={<IconSettings />}
+            onClick={() => setScheduleSettingsModalOpen(true)}
+          >
             Innstillinger
           </Button>
         </Group>
@@ -89,6 +96,11 @@ export const ScheduleDetails: React.FC = () => {
       <CreateShiftModal
         isOpen={createShiftModalOpen}
         onCloseCallback={() => setCreateShiftModalOpen(false)}
+      />
+      <ScheduleSettingsModal
+        isOpen={scheduleSettingsModalOpen}
+        schedule={schedule}
+        onCloseCallback={() => setScheduleSettingsModalOpen(false)}
       />
     </Stack>
   )

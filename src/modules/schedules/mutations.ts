@@ -33,6 +33,18 @@ export const DELETE_SCHEDULE_TEMPLATE_MUTATION = gql`
   }
 `
 
+// ==== SCHEDULE ====
+
+export const PATCH_SCHEDULE_MUTATION = gql`
+  mutation PatchSchedule($id: ID!, $input: PatchScheduleInput!) {
+    patchSchedule(id: $id, input: $input) {
+      schedule {
+        id
+      }
+    }
+  }
+`
+
 // ==== SHIFT TEMPLATE ====
 
 export const CREATE_SHIFT_TEMPLATE_MUTATION = gql`
