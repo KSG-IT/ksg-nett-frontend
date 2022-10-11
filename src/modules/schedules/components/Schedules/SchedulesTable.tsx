@@ -15,10 +15,18 @@ export const SchedulesTable: React.FC<SchedulesTableProps> = ({
       <td>{schedule.name}</td>
       <td>
         <Link to={`${schedule.id}`}>
-          <Button variant="subtle" leftIcon={<IconEye />}>
-            Detaljvisning
-          </Button>
+          <Button color="samfundet-red">Se vakter</Button>
         </Link>
+      </td>
+      <td>
+        <Button color="samfundet-red" variant="subtle" disabled>
+          Gjør jobben min for meg
+        </Button>
+      </td>
+      <td>
+        <Button color="samfundet-red" variant="subtle" disabled>
+          Vaktbytteforespørsler
+        </Button>
       </td>
     </tr>
   ))
@@ -28,6 +36,8 @@ export const SchedulesTable: React.FC<SchedulesTableProps> = ({
         <thead>
           <tr>
             <th>Navn</th>
+            <th></th>
+            <th></th>
             <th></th>
           </tr>
         </thead>

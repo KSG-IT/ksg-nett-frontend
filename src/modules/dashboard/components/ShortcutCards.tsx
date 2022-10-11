@@ -1,17 +1,11 @@
+import { Card, createStyles, SimpleGrid, Stack, Text } from '@mantine/core'
 import {
-  Card,
-  createStyles,
-  MediaQuery,
-  SimpleGrid,
-  Stack,
-  Text,
-} from '@mantine/core'
-import {
+  IconBabyCarriage,
   IconBriefcase,
+  IconCalendarTime,
   IconCreditCard,
   IconEdit,
   IconQuote,
-  IconUsers,
 } from '@tabler/icons'
 import { ShortcutCardItem } from './ShortcutCardItem'
 
@@ -23,22 +17,29 @@ const shortcuts = [
     link: '/economy/deposits/create',
   },
   {
-    title: 'Interngjeng',
-    icon: IconUsers,
-    color: 'samfundet-red',
-    link: '/internal-groups',
-  },
-  {
     title: 'Legg til sitat',
     icon: IconQuote,
     color: 'samfundet-red',
     link: '/quotes/create',
   },
   {
+    title: 'Alle vakter',
+    icon: IconBabyCarriage,
+    color: 'samfundet-red',
+    link: '/schedules/all-shifts',
+  },
+  {
     title: 'Mine vakter',
     icon: IconBriefcase,
     color: 'samfundet-red',
     link: '/schedules/me',
+  },
+
+  {
+    title: 'Tilgjengelighet',
+    icon: IconCalendarTime,
+    color: 'samfundet-red',
+    link: '/schedules/me/availability',
   },
   {
     title: 'Nytt referat',

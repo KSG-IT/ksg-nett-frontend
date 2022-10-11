@@ -1,5 +1,10 @@
 import { UserNode } from 'modules/users/types'
-import { DayValues, LocationValues, RoleValues } from './consts'
+import {
+  DayValues,
+  LocationValues,
+  RoleValues,
+  ScheduleDisplayModeValues,
+} from './consts'
 
 // === NODES ===
 export type ShiftSlotNode = {
@@ -20,6 +25,8 @@ export type ShiftNode = {
   users: Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>[]
   slots: ShiftSlotNode[]
   filledSlots: FilledShiftSlotNode[]
+  isFilled: boolean
+  name: string
 
   datetimeStart: string
   datetimeEnd: string
@@ -30,6 +37,34 @@ export type ScheduleNode = {
   id: string
   name: string
   templates: Pick<ScheduleTemplateNode, 'id'>[]
+  displayMode: ScheduleDisplayModeValues
+}
+
+// NORMALIZED SHIFT NODES
+
+export type ShiftDay = {
+  date: string
+  shifts: ShiftNode[]
+}
+
+export type ShiftDayWeek = {
+  date: string
+  shiftDays: ShiftDay[]
+}
+
+export type ShiftLocationDayGroup = {
+  location: LocationValues | null
+  shifts: ShiftNode[]
+}
+
+export type ShiftLocationDay = {
+  date: string
+  locations: ShiftLocationDayGroup[]
+}
+
+export type ShiftLocationWeek = {
+  date: string
+  shiftDays: ShiftLocationDay[]
 }
 
 // TEMPLATE NODES
@@ -67,6 +102,16 @@ export interface AllMyShiftsReturns {
   allMyShifts: ShiftNode[]
 }
 
+export interface AllShiftsReturns {
+  allShifts: Pick<
+    ShiftNode,
+    'id' | 'datetimeStart' | 'name' | 'filledSlots' | 'location'
+  >[]
+}
+
+export interface AllShiftsVariables {
+  date: string
+}
 export interface AllSchedulesReturns {
   allSchedules: ScheduleNode[]
 }
@@ -94,6 +139,19 @@ export interface PatchScheduleTemplateReturns {
 export interface PatchScheduleTemplateVariables {
   id: string
   input: PatchScheduleTemplateInput
+}
+
+export interface PatchScheduleReturns {
+  schedule: Pick<ScheduleNode, 'id'>
+}
+
+type PatchScheduleInput = {
+  name: string
+  displayMode: ScheduleDisplayModeValues
+}
+export interface PatchScheduleVariables {
+  id: string
+  input: PatchScheduleInput
 }
 
 export interface PatchShiftSlotTemplateReturns {
@@ -148,4 +206,56 @@ type CreateScheduleTemplateInput = {
 }
 export interface CreateScheduleTemplateVariables {
   input: CreateScheduleTemplateInput
+}
+
+export interface AddUserToShiftSlotReturns {
+  shiftSlot: Pick<ShiftSlotNode, 'id'>
+}
+export interface AddUserToShiftSlotVariables {
+  shiftSlotId: string
+  userId: string
+}
+
+export interface RemoveUserFromShiftSlotReturns {
+  shiftSlot: Pick<ShiftSlotNode, 'id'>
+}
+
+export interface RemoveUserFromShiftSlotVariables {
+  shiftSlotId: string
+}
+
+export interface GenerateShiftsFromTemplateReturns {
+  shiftsCreated: number
+}
+export interface GenerateShiftsFromTemplateVariables {
+  scheduleTemplateId: string
+  startDate: string
+  numberOfWeeks: number
+}
+
+export interface CreateShiftMutationReturns {
+  shift: Pick<ShiftNode, 'id'>
+}
+
+type CreateShiftInput = {
+  schedule: string
+  location?: LocationValues | null
+  name?: string
+  datetimeStart: Date
+  datetimeEnd: Date
+}
+export interface CreateShiftMutationVariables {
+  input: CreateShiftInput
+}
+
+export interface CreateShiftSlotReturns {
+  shiftSlot: Pick<ShiftSlotNode, 'id'>
+}
+
+type CreateShiftSlotInput = {
+  shift: string
+  role: RoleValues
+}
+export interface CreateShiftSlotVariables {
+  input: CreateShiftSlotInput
 }

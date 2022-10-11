@@ -40,3 +40,8 @@ export enum DayValues {
   SATURDAY = 'SATURDAY',
   SUNDAY = 'SUNDAY',
 }
+
+export enum ScheduleDisplayModeValues {
+  SINGLE_LOCATION = 'SINGLE_LOCATION',
+  MULTIPLE_LOCATIONS = 'MULTIPLE_LOCATIONS',
+}

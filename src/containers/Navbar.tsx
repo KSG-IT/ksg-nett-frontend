@@ -94,7 +94,7 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
       p="md"
       hiddenBreakpoint="sm"
       hidden={!isOpen}
-      width={{ sm: 200, lg: 300 }}
+      width={{ sm: 200, lg: 250 }}
       style={{ backgroundColor: 'white', overflowY: 'scroll' }}
     >
       <NavBarMeSection />

@@ -11,7 +11,7 @@ const useUserShiftCardStyles = createStyles(theme => ({
 }))
 
 interface UserShiftCardProps {
-  shift: ShiftNode
+  shift: Pick<ShiftNode, 'id' | 'location' | 'datetimeStart' | 'filledSlots'>
 }
 export const UserShiftCard: React.FC<UserShiftCardProps> = ({ shift }) => {
   const { classes } = useUserShiftCardStyles()

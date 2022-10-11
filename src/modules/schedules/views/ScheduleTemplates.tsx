@@ -33,7 +33,11 @@ export const ScheduleTemplates: React.FC = () => {
         <PermissionGate
           permissions={PERMISSIONS.schedules.add.scheduleTemplate}
         >
-          <Button leftIcon={<IconPlus />} onClick={() => setModalOpen(true)}>
+          <Button
+            color="samfundet-red"
+            leftIcon={<IconPlus />}
+            onClick={() => setModalOpen(true)}
+          >
             Opprett ny mal
           </Button>
         </PermissionGate>
