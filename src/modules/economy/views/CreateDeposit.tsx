@@ -1,5 +1,6 @@
 import { Card, Container, createStyles, Title } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
+import { useMediaQuery } from 'util/hooks'
 import { CreateDepositForm } from '../components'
 
 interface DepositProps {}
@@ -16,9 +17,10 @@ const useStyles = createStyles(theme => ({
 
 export const CreateDeposit: React.FC<DepositProps> = () => {
   const { classes } = useStyles()
+  const mobileSize = useMediaQuery('(max-width: 600px)')
   const navigate = useNavigate()
   return (
-    <Container size={'xs'}>
+    <Container size={'sm'} p={mobileSize ? 0 : 'xl'}>
       <Title
         my={'lg'}
         transform="uppercase"
