@@ -22,6 +22,7 @@ import { usersToSelectOption, UserOption } from 'util/user'
 interface UserMultiSelectProps {
   users?: string[]
   width?: string
+  placeholder?: string
   label?: React.ReactNode
   size?: MantineSize | undefined
   fullwidth?: boolean
@@ -32,6 +33,7 @@ export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
   users = [],
   size,
   label,
+  placeholder,
   setUsersCallback,
 }) => {
   const { classes } = useStyles()
@@ -50,7 +52,9 @@ export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
       className={classes.select}
       closeMenuOnSelect={false}
       isMulti={true}
+      placeholder={placeholder}
       isLoading={loading}
+      menuPortalTarget={document.body}
       onInputChange={setInputValue}
       defaultValue={initialValue}
       options={options}
@@ -65,5 +69,11 @@ const useStyles = createStyles(theme => ({
   select: {
     width: '100%',
     height: '100%',
+    fontSize: theme.fontSizes.sm,
+    '& .react-select__control': {
+      height: '100%',
+      minHeight: '100%',
+      borderRadius: theme.radius.sm,
+    },
   },
 }))
