@@ -54,25 +54,11 @@ export const ALL_SCHEDULES = gql`
 `
 
 export const SCHEDULE_QUERY = gql`
-  query Schedule($id: ID!, $shiftsFrom: Date!, $numberOfWeeks: Int!) {
+  query Schedule($id: ID!) {
     schedule(id: $id) {
       id
-      shiftsFromRange(shiftsFrom: $shiftsFrom, numberOfWeeks: $numberOfWeeks) {
-        id
-        location
-        datetimeStart
-        datetimeEnd
-        slots {
-          id
-          role
-          user {
-            id
-            initials
-            fullName
-            profileImage
-          }
-        }
-      }
+      name
+      displayMode
     }
   }
 `
@@ -112,6 +98,101 @@ export const SCHEDULE_TEMPLATE_QUERY = gql`
           role
         }
       }
+    }
+  }
+`
+
+export const NORMALIZED_SHIFTS_FROM_RANGE_QUERY = gql`
+  query NormalizedShiftsFromRange(
+    $scheduleId: ID!
+    $shiftsFrom: Date!
+    $numberOfWeeks: Int!
+  ) {
+    normalizedShiftsFromRange(
+      scheduleId: $scheduleId
+      shiftsFrom: $shiftsFrom
+      numberOfWeeks: $numberOfWeeks
+    ) {
+      ... on ShiftDayWeek {
+        date
+        shiftDays {
+          date
+          shifts {
+            id
+            name
+            isFilled
+            schedule {
+              id
+              name
+            }
+            slots {
+              id
+              role
+              user {
+                id
+                initials
+                fullName
+                profileImage
+              }
+            }
+            location
+            datetimeStart
+            datetimeEnd
+          }
+        }
+      }
+      ... on ShiftLocationWeek {
+        date
+        shiftDays {
+          date
+          locations {
+            location
+            shifts {
+              id
+              name
+              isFilled
+              schedule {
+                id
+                name
+              }
+              slots {
+                id
+                role
+                user {
+                  id
+                  initials
+                  fullName
+                  profileImage
+                }
+              }
+              location
+              datetimeStart
+              datetimeEnd
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export const ALL_SHIFTS = gql`
+  query AllShifts($date: Date!) {
+    allShifts(date: $date) {
+      id
+      name
+      location
+      filledSlots {
+        id
+        role
+        user {
+          id
+          initials
+          fullName
+          profileImage
+        }
+      }
+      datetimeStart
     }
   }
 `

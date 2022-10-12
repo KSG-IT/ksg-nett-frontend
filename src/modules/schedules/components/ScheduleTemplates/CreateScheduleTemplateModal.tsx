@@ -54,7 +54,9 @@ export const CreateScheduleTemplateModal: React.FC<
         <Button variant="outline" onClick={onCloseCallback}>
           Avbryt
         </Button>
-        <Button onClick={handleCreateScheduleTemplate}>Opprett</Button>
+        <Button color="samfundet-red" onClick={handleCreateScheduleTemplate}>
+          Opprett
+        </Button>
       </Group>
     </Modal>
   )

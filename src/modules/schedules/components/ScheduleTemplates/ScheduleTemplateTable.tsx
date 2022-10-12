@@ -15,7 +15,7 @@ export const ScheduleTemplateTable: React.FC<ScheduleTemplateTableProps> = ({
       <td>{scheduleTemplate.schedule.name}</td>
       <td>
         <Link to={`${scheduleTemplate.id}`}>
-          <Button>Endre</Button>
+          <Button color="samfundet-red">Endre</Button>
         </Link>
       </td>
     </tr>

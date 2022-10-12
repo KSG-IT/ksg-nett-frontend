@@ -1,4 +1,11 @@
-import { Accordion, Button, Group, Table, Text } from '@mantine/core'
+import {
+  Accordion,
+  Button,
+  createStyles,
+  Group,
+  Table,
+  Text,
+} from '@mantine/core'
 import { IconPlus, IconTrash } from '@tabler/icons'
 import { RoleValues } from 'modules/schedules/consts'
 import {
@@ -19,6 +26,7 @@ interface ShiftTemplateAccordionItemProps {
 export const ShiftTemplateAccordionItem: React.FC<
   ShiftTemplateAccordionItemProps
 > = ({ shiftTemplate }) => {
+  const { classes } = shiftTemplateAccordionItemStyles()
   const [role, setRole] = useState(RoleValues.ARRANGEMENTANSVARLIG)
 
   const { deleteShiftTemplate, deleteShiftTemplateLoading } =
@@ -63,11 +71,19 @@ export const ShiftTemplateAccordionItem: React.FC<
   return (
     <Accordion.Item value={shiftTemplate.id}>
       <Accordion.Control>
-        <Group position="apart">
-          {parseDay(shiftTemplate.day)}
-          <Text>{parseLocation(shiftTemplate.location)}</Text>
-          <Text>{shiftTemplate.timeStart}</Text>
-          <Text>{shiftTemplate.timeEnd}</Text>
+        <Group className={classes.shiftTemplateRow} position="apart">
+          <Text className={classes.shiftTemplateColumnCell}>
+            {parseDay(shiftTemplate.day)}
+          </Text>
+          <Text className={classes.shiftTemplateColumnCell}>
+            {parseLocation(shiftTemplate.location)}
+          </Text>
+          <Text className={classes.shiftTemplateColumnCell}>
+            {shiftTemplate.timeStart}
+          </Text>
+          <Text className={classes.shiftTemplateColumnCell}>
+            {shiftTemplate.timeEnd}
+          </Text>
         </Group>
       </Accordion.Control>
       <Accordion.Panel>
@@ -113,3 +129,15 @@ export const ShiftTemplateAccordionItem: React.FC<
     </Accordion.Item>
   )
 }
+
+const shiftTemplateAccordionItemStyles = createStyles(theme => ({
+  shiftTemplateRow: {
+    ':nth-child(3)': {
+      textAlign: 'right',
+    },
+  },
+  shiftTemplateColumnCell: {
+    width: '120px',
+    textAlign: 'left',
+  },
+}))

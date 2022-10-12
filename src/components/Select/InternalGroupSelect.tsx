@@ -1,27 +1,26 @@
 import { useQuery } from '@apollo/client'
+import { Box, createStyles } from '@mantine/core'
 import { ALL_INTERNAL_GROUPS_QUERY } from 'modules/organization/queries'
 import { AllInternalGroupsReturns } from 'modules/organization/types'
 import Select from 'react-select'
 import styled from 'styled-components'
 import { internalGroupToSelectOptions } from 'util/organization'
 
-interface WrapperProps {
-  fullwidth: boolean
-  width: string
-}
-const Wrapper = styled.div<WrapperProps>`
-  display: flex;
-  width: ${props => (props.fullwidth ? '100%' : props.width)};
-  position: relative;
-  background-color: ${props => props.theme.colors.lightGray};
-  border-radius: 10px;
-  box-shadow: ${props => props.theme.shadow.default};
-  margin: 0;
+const useStyles = createStyles(theme => ({
+  wrapper: {
+    display: 'flex',
+    width: '400px',
+    position: 'relative',
+    backgroundColor: theme.colors.gray[3],
+    borderRadius: theme.radius.md,
+    margin: 0,
 
-  ${props => props.theme.media.mobile} {
-    width: 100%;
-  }
-`
+    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
+      width: '100%',
+    },
+  },
+}))
+
 interface InternalGroupSelectProps {
   internalGroupId?: string
   fullwidth?: boolean
@@ -29,12 +28,11 @@ interface InternalGroupSelectProps {
   setInternalGroupCallback: (slectedId: string) => void
 }
 
-export const InternalGroupSelect: React.VFC<InternalGroupSelectProps> = ({
+export const InternalGroupSelect: React.FC<InternalGroupSelectProps> = ({
   internalGroupId,
-  fullwidth = false,
-  width = '400px',
   setInternalGroupCallback,
 }) => {
+  const { classes } = useStyles()
   const { loading, data } = useQuery<AllInternalGroupsReturns>(
     ALL_INTERNAL_GROUPS_QUERY
   )
@@ -43,7 +41,7 @@ export const InternalGroupSelect: React.VFC<InternalGroupSelectProps> = ({
   const initialValue = options.find(option => option.value == internalGroupId)
 
   return (
-    <Wrapper fullwidth={fullwidth} width={width}>
+    <Box className={classes.wrapper}>
       <Select
         isLoading={loading}
         defaultValue={initialValue}
@@ -52,6 +50,6 @@ export const InternalGroupSelect: React.VFC<InternalGroupSelectProps> = ({
         onChange={option => option && setInternalGroupCallback(option.value)}
         styles={{ container: () => ({ width: '100%' }) }}
       />
-    </Wrapper>
+    </Box>
   )
 }

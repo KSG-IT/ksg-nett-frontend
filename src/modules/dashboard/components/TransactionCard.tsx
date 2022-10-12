@@ -26,18 +26,22 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
         </Badge>
       </td>
       <td>
-        <Text align="center">{transaction.amount}</Text>
+        <Text align="right">{transaction.amount},- NOK</Text>
       </td>
       <td>
-        <Text align="center">{transaction.quantity}</Text>
+        <Text align="right">{transaction.quantity}</Text>
       </td>
-      <td>{format(new Date(transaction.timestamp), "d.MMM 'kl' hh:mm")}</td>
+      <td>
+        <Text align="right">
+          {format(new Date(transaction.timestamp), "d.MMM 'kl' hh:mm")}
+        </Text>
+      </td>
     </tr>
   ))
 
-  const Header: React.FC<TextProps> = ({ children }) => (
+  const Header: React.FC<TextProps> = ({ children, ...rest }) => (
     <th>
-      <Text weight={800} size={'sm'} className={classes.tableHeader}>
+      <Text weight={800} size={'sm'} className={classes.tableHeader} {...rest}>
         {children}
       </Text>
     </th>
@@ -52,10 +56,10 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
         <Table>
           <thead>
             <tr className={classes.headerRow}>
-              <Header>Gjenstand</Header>
-              <Header>Pris</Header>
-              <Header>Antall</Header>
-              <Header>Tidspunkt</Header>
+              <Header>Type</Header>
+              <Header align="right">Pris</Header>
+              <Header align="right">Antall</Header>
+              <Header align="right">Tidspunkt</Header>
             </tr>
           </thead>
           <tbody>{rows}</tbody>
