@@ -23,7 +23,7 @@ interface UserMultiSelectProps {
   users?: string[]
   width?: string
   label?: React.ReactNode
-  size: MantineSize | undefined
+  size?: MantineSize | undefined
   fullwidth?: boolean
   setUsersCallback: (users: string[]) => void
 }
