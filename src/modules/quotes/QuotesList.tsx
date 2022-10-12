@@ -1,16 +1,7 @@
 import { useQuery } from '@apollo/client'
-import {
-  Button,
-  Divider,
-  Group,
-  SimpleGrid,
-  Stack,
-  Tabs,
-  Title,
-} from '@mantine/core'
+import { Button, Group, SimpleGrid, Stack, Title } from '@mantine/core'
 import { Search } from 'components/Input'
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { useDebounce } from 'util/hooks/useDebounce'
@@ -80,7 +71,7 @@ export const QuotesList = () => {
           Sitater
         </Title>
         <Search
-          width={400}
+          width={600}
           placeholder="Søk etter innhold..."
           value={query}
           onChange={setQuery}

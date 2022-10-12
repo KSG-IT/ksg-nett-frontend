@@ -2,18 +2,10 @@ import { useQuery } from '@apollo/client'
 import { Group, SimpleGrid, Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { PopularQuotesReturns, QuoteCard } from '.'
 import { QuotesTabs } from './components/QuotesTabs'
 import { POPULAR_QUOTES_QUERY } from './queries'
-
-const CurrentSemesterContainer = styled.div`
-  grid-area: current-semester;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`
 
 const AllTimeContainer = styled.div`
   grid-area: all-time;
@@ -21,8 +13,6 @@ const AllTimeContainer = styled.div`
   flex-direction: column;
   gap: 10px;
 `
-
-const ContainerTitle = styled.h2``
 
 export const PopularQuotes: React.VFC = () => {
   const { data, loading, error } =

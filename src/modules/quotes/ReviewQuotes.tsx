@@ -1,13 +1,13 @@
 import { useMutation, useQuery } from '@apollo/client'
 import {
+  Avatar,
   Button,
   Card,
+  createStyles,
+  Group,
   SimpleGrid,
   Stack,
   Text,
-  Group,
-  Avatar,
-  createStyles,
   Title,
 } from '@mantine/core'
 import {
@@ -16,14 +16,13 @@ import {
   FullPageError,
 } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { format } from 'util/date-fns'
 import { UserThumbnail } from 'modules/users/components'
 import toast from 'react-hot-toast'
-import styled from 'styled-components'
+import { format } from 'util/date-fns'
 import { PatchQuoteReturns, PatchQuoteVariables, PendingQuotesReturns } from '.'
+import { QuotesTabs } from './components/QuotesTabs'
 import { DELETE_QUOTE, PATCH_QUOTE } from './mutations'
 import { PNEDING_QUOTES_QUERY } from './queries'
-import { QuotesTabs } from './components/QuotesTabs'
 
 export const ReviewQuotes: React.FC = () => {
   // IN the future we can split this into multiple views

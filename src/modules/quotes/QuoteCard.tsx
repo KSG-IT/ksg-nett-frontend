@@ -4,7 +4,6 @@ import {
   Badge,
   Card,
   createStyles,
-  Grid,
   Group,
   Stack,
   Text,
@@ -16,7 +15,6 @@ import { UserThumbnail } from 'modules/users/components'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useStore } from 'store'
-import styled from 'styled-components'
 import {
   CreateQuoteVoteReturns,
   CreateQuoteVoteVariables,
