@@ -26,6 +26,7 @@ import {
   QuotesList,
   ReviewQuotes,
 } from 'modules/quotes'
+import { QuotesTabs } from 'modules/quotes/components/QuotesTabs'
 import {
   AllMyShifts,
   MyUpcomingShifts,
@@ -100,6 +101,8 @@ export const AppRoutes: React.FC = () => {
         </Route>
 
         <Route path="quotes">
+          <Route path=":tabValue" element={<QuotesTabs />} />
+          <Route path="popular" element={<PopularQuotes />} />
           <Route index element={<QuotesList />} />
           <Route
             path="review"
