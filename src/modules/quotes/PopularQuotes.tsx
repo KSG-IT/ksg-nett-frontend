@@ -1,28 +1,12 @@
 import { useQuery } from '@apollo/client'
+import { Group, SimpleGrid, Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { PopularQuotesReturns, QuoteCard } from '.'
+import { QuotesTabs } from './components/QuotesTabs'
 import { POPULAR_QUOTES_QUERY } from './queries'
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-  display: grid;
-  grid-template-areas:
-    'title .'
-    'current-semester all-time';
-  grid-template-rows: 40px auto;
-  grid-template-columns: 300px 300px;
-  gap: 15px;
-  overflow-y: scroll;
-
-  ${props => props.theme.media.mobile} {
-    grid-template-areas:
-      'title'
-      'current-semester'
-      'all-time';
-    grid-template-columns: 300px;
-  }
-`
 
 const CurrentSemesterContainer = styled.div`
   grid-area: current-semester;
@@ -40,11 +24,6 @@ const AllTimeContainer = styled.div`
 
 const ContainerTitle = styled.h2``
 
-const Title = styled.h1`
-  grid-area: title;
-  margin: 0;
-`
-
 export const PopularQuotes: React.VFC = () => {
   const { data, loading, error } =
     useQuery<PopularQuotesReturns>(POPULAR_QUOTES_QUERY)
@@ -60,20 +39,29 @@ export const PopularQuotes: React.VFC = () => {
   } = data
 
   return (
-    <Wrapper>
-      <Title>Populære sitater</Title>
-      <CurrentSemesterContainer>
-        <ContainerTitle>{currentSemesterShorthand}</ContainerTitle>
-        {popularQuotesCurrentSemester.map(quote => (
-          <QuoteCard quote={quote} key={quote.id} />
-        ))}
-      </CurrentSemesterContainer>
+    <Stack>
+      <Group position="apart">
+        <Title order={2} color="dimmed">
+          Populære sitater
+        </Title>
+        <QuotesTabs />
+      </Group>
+      <Stack>
+        <Title order={3}>{currentSemesterShorthand}</Title>
+        <SimpleGrid cols={2}>
+          {popularQuotesCurrentSemester.map(quote => (
+            <QuoteCard quote={quote} key={quote.id} />
+          ))}
+        </SimpleGrid>
+      </Stack>
       <AllTimeContainer>
-        <ContainerTitle>Siden tidenes morgen</ContainerTitle>
-        {popularQuotesAllTime.map(quote => (
-          <QuoteCard quote={quote} key={quote.id} displaySemester />
-        ))}
+        <Title order={3}>Siden tidenes morgen</Title>
+        <SimpleGrid cols={2}>
+          {popularQuotesAllTime.map(quote => (
+            <QuoteCard quote={quote} key={quote.id} displaySemester />
+          ))}
+        </SimpleGrid>
       </AllTimeContainer>
-    </Wrapper>
+    </Stack>
   )
 }

@@ -1,4 +1,15 @@
 import { useMutation } from '@apollo/client'
+import {
+  Avatar,
+  Badge,
+  Card,
+  createStyles,
+  Grid,
+  Group,
+  Stack,
+  Text,
+  useMantineTheme,
+} from '@mantine/core'
 import { IconThumbUp } from '@tabler/icons'
 import { QuoteNode } from 'modules/quotes/types'
 import { UserThumbnail } from 'modules/users/components'
@@ -13,74 +24,24 @@ import {
   DeleteUserQuoteVoteVariables,
 } from '.'
 import { CREATE_QUOTE_VOTE, DELETE_USER_QUOTE_VOTE } from './mutations'
-const Wrapper = styled.div`
-  background-color: ${props => props.theme.colors.white};
-  padding: 5px;
-  border-radius: 8px;
-  box-shadow: ${props => props.theme.shadow.default};
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  min-width: 150px;
-  max-width: 300px;
-  height: fit-content;
-`
-
-const QuoteText = styled.span`
-  display: flex;
-  font-size: 14px;
-  font-family: Comic Sans MS, Comic Sans, cursive;
-`
-
-const QuoteContext = styled.span`
-  font-size: 14px;
-  color: ${props => props.theme.colors.gray1};
-  font-style: italic;
-`
-
-const QuoteFooter = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`
-
-const TaggedContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-`
-
-const VoteContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-  justify-content: center;
-  align-items: center;
-`
-
-const SemesterLabel = styled.span`
-  margin: 0;
-  color: ${props => props.theme.colors.gray1};
-  border: 1px solid ${props => props.theme.colors.gray1};
-  display: flex;
-  padding: 1px;
-  font-size: 14px;
-  align-items: center;
-  justify-content: center;
-`
 
 interface VoteIconProps {
-  $upvoted: boolean
+  upvoted: boolean
+  onClick: () => void
 }
 
-const UpvoteIcon = styled(IconThumbUp)<VoteIconProps>`
-  // Transient prop forwarding
-  color: ${props => (props.$upvoted ? props.theme.colors.success : 'black')};
-  :hover {
-    cursor: pointer;
-    color: ${props => (props.$upvoted ? 'black' : props.theme.colors.success)};
-  }
-`
+const UpvoteIcon: React.FC<VoteIconProps> = ({ upvoted, onClick }) => {
+  const theme = useMantineTheme()
+  return (
+    <IconThumbUp
+      color={upvoted ? `${theme.colors.brand}` : 'gray'}
+      size={24}
+      strokeWidth={upvoted ? 2 : 1}
+      style={{ cursor: 'pointer' }}
+      onClick={onClick}
+    />
+  )
+}
 
 interface QuoteCardProps {
   quote: Pick<
@@ -89,10 +50,11 @@ interface QuoteCardProps {
   >
   displaySemester?: boolean
 }
-export const QuoteCard: React.VFC<QuoteCardProps> = ({
+export const QuoteCard: React.FC<QuoteCardProps> = ({
   quote,
   displaySemester = false,
 }) => {
+  const { classes } = useStyles()
   const me = useStore(state => state.user)!
   const [upvoted, setUpvoted] = useState(me.upvotedQuoteIds.includes(quote.id))
   const [voteSum, setVoteSum] = useState(quote.sum)
@@ -140,23 +102,44 @@ export const QuoteCard: React.VFC<QuoteCardProps> = ({
   }
 
   return (
-    <Wrapper>
-      <QuoteText>{quote.text}</QuoteText>
-      <QuoteContext>{quote.context}</QuoteContext>
-      <QuoteFooter>
-        <TaggedContainer>
-          {quote.tagged.map(user => (
-            <UserThumbnail user={user} size="sm" key={user.id} />
-          ))}
-        </TaggedContainer>
-        <VoteContainer>
-          {displaySemester && <SemesterLabel>{quote.semester}</SemesterLabel>}
-          <span>{voteSum}</span>
-          <span>
-            <UpvoteIcon $upvoted={upvoted} onClick={handleUpvote} />
-          </span>
-        </VoteContainer>
-      </QuoteFooter>
-    </Wrapper>
+    <Card className={classes.card} key={quote.id} withBorder>
+      <Stack justify={'space-between'} spacing={0} className={classes.card}>
+        <Text size={'sm'} className={classes.quoteText}>
+          {quote.text}
+        </Text>
+
+        <Text size={'xs'} color={'gray'}>
+          {quote.context}
+        </Text>
+        <Group position="apart" spacing={'xs'}>
+          <Avatar.Group spacing={5}>
+            {quote.tagged.map(user => (
+              <UserThumbnail size={'sm'} key={user.id} user={user} />
+            ))}
+          </Avatar.Group>
+
+          <Group spacing={'xs'}>
+            {displaySemester && (
+              <Badge variant="outline" color="samfundet-red">
+                {quote.semester}
+              </Badge>
+            )}
+            <Text size={'sm'}>{voteSum}</Text>
+            <UpvoteIcon upvoted={upvoted} onClick={handleUpvote} />
+          </Group>
+        </Group>
+      </Stack>
+    </Card>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  quoteText: {
+    color: theme.colors.gray[7],
+    fontWeight: 500,
+  },
+  card: {
+    width: '100%',
+    height: '100%',
+  },
+}))
