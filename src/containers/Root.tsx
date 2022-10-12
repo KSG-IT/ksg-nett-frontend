@@ -19,7 +19,7 @@ const mtheme: MantineThemeOverride = {
       '#d77578',
       '#ca4e52',
       '#b13538',
-      '#8a282c',
+      '#A03033',
       '#641b1e',
       '#3e0f11',
       '#1d0202',
