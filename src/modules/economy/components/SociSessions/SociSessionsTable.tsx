@@ -12,7 +12,7 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
 }) => {
   const rows = sociSessions.map(sociSession => (
     <tr key={sociSession.id}>
-      <td>{sociSession.name}</td>
+      <td>{sociSession.getNameDisplay}</td>
       <td>{sociSession.type}</td>
       <td>
         <Badge color="samfundet-red">

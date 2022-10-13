@@ -79,7 +79,7 @@ export const ALL_SOCI_SESSIONS = gql`
         cursor
         node {
           id
-          name
+          getNameDisplay
           closed
           type
           moneySpent
@@ -97,7 +97,7 @@ export const SOCI_SESSION_QUERY = gql`
   query SociSession($id: ID!) {
     sociSession(id: $id) {
       id
-      name
+      getNameDisplay
       closed
       type
       moneySpent

@@ -6,7 +6,13 @@ import { numberWithSpaces } from 'util/parsing'
 interface MetaDataDisplayProps {
   sociSession: Pick<
     SociSessionNode,
-    'id' | 'name' | 'type' | 'moneySpent' | 'closed' | 'createdBy' | 'closedAt'
+    | 'id'
+    | 'getNameDisplay'
+    | 'type'
+    | 'moneySpent'
+    | 'closed'
+    | 'createdBy'
+    | 'closedAt'
   >
 }
 

@@ -60,7 +60,7 @@ export const SociSessionDetail: React.FC = () => {
   return (
     <Stack>
       <Group position="apart">
-        <Title>Krysseliste</Title>
+        <Title>{sociSession.getNameDisplay}</Title>
         <PermissionGate permissions={PERMISSIONS.economy.change.sociSession}>
           <Button
             color="samfundet-red"

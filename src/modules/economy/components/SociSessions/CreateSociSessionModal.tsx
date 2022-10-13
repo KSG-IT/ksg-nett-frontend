@@ -33,16 +33,26 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
   const { createSociSession } = useSociSessionMutations()
 
   function handleSubmit() {
-    if (name === '') {
-      return
+    type Input = {
+      name: string | null
+      type: SociSessionType
+      creationDate: string
     }
+    const input: Input = {
+      name: name.trim(),
+      type,
+      creationDate: format(date, 'yyyy-MM-dd'),
+    }
+
+    if (type === SociSessionType.STILLETIME) {
+      input.name = null
+    }
+
+    if (name.trim() === '') return
+
     createSociSession({
       variables: {
-        input: {
-          name,
-          type,
-          creationDate: format(date, 'yyyy-MM-dd'),
-        },
+        input,
       },
       refetchQueries: [ALL_SOCI_SESSIONS],
       onError() {

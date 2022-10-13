@@ -62,7 +62,7 @@ export interface SociBankAccountNode {
 
 export interface SociSessionNode {
   id: string
-  name: string
+  getNameDisplay: string
   createdBy: UserNode
   type: SociSessionType
   closed: boolean
@@ -221,7 +221,7 @@ export interface CreateSociSessionReturns {
 }
 
 type CreateSociSessionInput = {
-  name: string
+  name: string | null
   type: Omit<SociSessionType, 'SOCIETETEN'>
   creationDate: string
 }
