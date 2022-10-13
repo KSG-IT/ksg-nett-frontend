@@ -33,7 +33,7 @@ interface UserSelectProps {
   setUserCallback: (slectedId: string) => void
 }
 
-export const UserSelect: React.VFC<UserSelectProps> = ({
+export const UserSelect: React.FC<UserSelectProps> = ({
   userId,
   width = '400px',
   fullwidth = false,

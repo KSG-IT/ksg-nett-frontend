@@ -1,8 +1,12 @@
 import { UserNode } from 'modules/users/types'
-import { RelayEdges } from 'types/graphql'
+import { RelayEdges, RelayEdgesWithPageInfo } from 'types/graphql'
 
 // General typing
-export type SociSessionType = 'stilletime' | 'krysseliste' | 'societeten'
+export enum SociSessionType {
+  SOCIETETEN = 'SOCIETETEN',
+  STILLETIME = 'STILLETIME',
+  KRYSSELISTE = 'KRYSSELISTE',
+}
 
 // balance typing
 export type Liquidity =
@@ -40,6 +44,7 @@ export interface BankAccountActivity {
 }
 
 export interface SociProductNode {
+  id: string
   skuNumber: string
   name: string
   price: number
@@ -56,17 +61,24 @@ export interface SociBankAccountNode {
 }
 
 export interface SociSessionNode {
+  id: string
   name: string
-  signedOffBy: UserNode
+  createdBy: UserNode
   type: SociSessionType
   closed: boolean
+  closedAt: Date
+  moneySpent: number
+  productOrders: ProductOrderNode[]
 }
 
 export interface ProductOrderNode {
+  id: string
   product: SociProductNode
   orderSize: number
   source: SociBankAccountNode
   session: SociSessionNode
+  cost: number
+  purchasedAt: Date
 }
 
 export interface TransferNode {
@@ -133,6 +145,22 @@ export interface MyExpendituresVariables {
   dateRange: ExpenditureDateRangeEnum
 }
 
+export interface AllSociSessionsReturns {
+  allSociSessions: RelayEdgesWithPageInfo<SociSessionNode>
+}
+
+export interface AllSociSessionsVariables {
+  first: number
+  after?: string
+}
+
+export interface SociSessionReturns {
+  sociSession: SociSessionNode
+}
+
+export interface AllSociProductsReturns {
+  allSociProducts: SociProductNode[]
+}
 // Mutation
 
 export interface CreateDepositInput {
@@ -160,4 +188,43 @@ export interface PatchSociBankAccountReturns {
 export interface PatchSociBankAccountVariables {
   id: string
   input: SociBankAccountInput
+}
+
+export interface CloseSociSessionReturns {
+  sociSession: Pick<SociSessionNode, 'id'>
+}
+
+export interface CloseSociSessionVariables {
+  id: string
+}
+
+export interface UndoProductOrderReturns {
+  found: boolean
+}
+
+export interface UndoProductOrderVariables {
+  id: string
+}
+
+export interface PlaceProductOrderReturns {
+  productOrder: Pick<ProductOrderNode, 'id'>
+}
+export interface PlaceProductOrderVariables {
+  sociSessionId: string
+  userId: string
+  productId: string
+  orderSize: number
+}
+
+export interface CreateSociSessionReturns {
+  sociSession: Pick<SociSessionNode, 'id'>
+}
+
+type CreateSociSessionInput = {
+  name: string
+  type: Omit<SociSessionType, 'SOCIETETEN'>
+  creationDate: string
+}
+export interface CreateSociSessionVariables {
+  input: CreateSociSessionInput
 }

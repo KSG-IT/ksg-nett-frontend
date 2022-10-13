@@ -3,6 +3,7 @@ import {
   IconAffiliate,
   IconBlockquote,
   IconCalendarTime,
+  IconClipboardList,
   IconCreditCard,
   IconDisabled,
   IconEdit,
@@ -66,13 +67,13 @@ const routes: RouteGroup[] = [
         label: 'Innskudd',
       },
       {
-        icon: IconShoppingCart,
-        link: '/economy/soci-products',
-        label: 'Soci produker',
-      },
-      {
         icon: IconReportMoney,
         link: '/economy/soci-sessions',
+        label: 'Innkryssinger',
+      },
+      {
+        icon: IconClipboardList,
+        link: '/economy/lists',
         label: 'Krysselister',
       },
     ],

@@ -65,3 +65,76 @@ export const MY_EXPENDITURES = gql`
     }
   }
 `
+
+export const ALL_SOCI_SESSIONS = gql`
+  query AllSociSessions {
+    allSociSessions {
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          id
+          name
+          closed
+          type
+          moneySpent
+          createdBy {
+            id
+            fullName
+          }
+        }
+      }
+    }
+  }
+`
+
+export const SOCI_SESSION_QUERY = gql`
+  query SociSession($id: ID!) {
+    sociSession(id: $id) {
+      id
+      name
+      closed
+      type
+      moneySpent
+      closedAt
+      createdBy {
+        id
+        fullName
+      }
+      productOrders {
+        cost
+        orderSize
+        purchasedAt
+        source {
+          id
+          user {
+            id
+            fullName
+          }
+        }
+        product {
+          id
+          name
+          price
+          description
+          icon
+        }
+      }
+    }
+  }
+`
+
+export const ALL_SOCI_PRODUCTS = gql`
+  query AllSociProducts {
+    allSociProducts {
+      id
+      name
+      price
+    }
+  }
+`
