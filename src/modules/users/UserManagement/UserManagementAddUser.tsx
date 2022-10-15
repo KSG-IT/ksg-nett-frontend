@@ -72,7 +72,7 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
     <Wrapper>
       <Title>Gi bruker nytt verv</Title>
       <label>Bruker</label>
-      <UserSelect setUserCallback={setSelectedUser} />
+      <UserSelect setUserCallback={option => setSelectedUser(option.value)} />
       <label>Verv</label>
       <InternalGroupPositionSelect
         setInternalGroupPositionCallback={setInternalGroupPositionId}

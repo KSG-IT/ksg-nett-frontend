@@ -171,7 +171,7 @@ export const CreateSummary = () => {
               <UserSelect
                 fullwidth
                 userId={getValues('reporter')}
-                setUserCallback={handleUpdateReporter}
+                setUserCallback={option => handleUpdateReporter(option.value)}
               />
             </ReporterContainer>
             <ParticipantsContainer>
