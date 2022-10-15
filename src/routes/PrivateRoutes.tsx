@@ -21,6 +21,8 @@ import {
   CreateDeposit,
   Deposits,
   MyEconomy,
+  PrintLists,
+  PrintWorkingToday,
   SociSessionDetail,
   SosiSessions,
 } from 'modules/economy/views'
@@ -252,6 +254,28 @@ export const AppRoutes: React.FC = () => {
           <Route path="deposits" element={<Deposits />} />
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
+          <Route path="print">
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.economy.view.sociSession}
+                >
+                  <PrintLists />
+                </RestrictedRoute>
+              }
+            />
+            <Route
+              path="working-today"
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.economy.view.sociSession}
+                >
+                  <PrintWorkingToday />
+                </RestrictedRoute>
+              }
+            />
+          </Route>
 
           <Route path="soci-sessions">
             <Route

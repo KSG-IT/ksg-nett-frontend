@@ -5,6 +5,7 @@ import {
   IconChartArea,
   IconGlass,
   IconPlus,
+  IconPrinter,
 } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -27,7 +28,7 @@ export const SosiSessions: React.FC = () => {
   const { classes } = useSociSessionsStyles()
   const [createModalOpen, setCreateModalOpen] = useState(false)
 
-  const { data, loading, error, fetchMore, updateQuery } = useQuery<
+  const { data, loading, error, fetchMore } = useQuery<
     AllSociSessionsReturns,
     AllSociSessionsVariables
   >(ALL_SOCI_SESSIONS, {
@@ -77,7 +78,7 @@ export const SosiSessions: React.FC = () => {
   return (
     <div className={classes.wrapper}>
       <Group position="apart">
-        <Title>SosiSessions</Title>
+        <Title>Innkryssinger</Title>
         <Group>
           <PermissionGate permissions={PERMISSIONS.economy.add.sociSession}>
             <Button
@@ -99,6 +100,13 @@ export const SosiSessions: React.FC = () => {
             <Link to="/economy/soci-products">
               <Button color="samfundet-red" leftIcon={<IconGlass />}>
                 Vareutvalg
+              </Button>
+            </Link>
+          </PermissionGate>
+          <PermissionGate permissions={PERMISSIONS.economy.view.sociSession}>
+            <Link to="/economy/print">
+              <Button color="samfundet-red" leftIcon={<IconPrinter />}>
+                Skriv ut lister
               </Button>
             </Link>
           </PermissionGate>

@@ -73,7 +73,7 @@ const routes: RouteGroup[] = [
       },
       {
         icon: IconClipboardList,
-        link: '/economy/lists',
+        link: '/economy/print',
         label: 'Krysselister',
       },
     ],

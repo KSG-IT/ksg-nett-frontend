@@ -222,7 +222,7 @@ export const EditSummary: React.VFC = () => {
               <UserSelect
                 fullwidth
                 userId={getValues('reporter')}
-                setUserCallback={handleUpdateReporter}
+                setUserCallback={option => handleUpdateReporter(option.value)}
               />
               <ErrorMessage
                 errors={errors}

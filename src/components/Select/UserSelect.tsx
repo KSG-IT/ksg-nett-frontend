@@ -6,7 +6,7 @@ import {
 } from 'modules/users/types'
 import Select from 'react-select'
 import styled from 'styled-components'
-import { usersToSelectOption } from 'util/user'
+import { UserOption, usersToSelectOption } from 'util/user'
 
 interface WrapperProps {
   fullwidth: boolean
@@ -30,7 +30,7 @@ interface UserSelectProps {
   userId?: string
   fullwidth?: boolean
   width?: string
-  setUserCallback: (slectedId: string) => void
+  setUserCallback: (slectedId: UserOption) => void
 }
 
 export const UserSelect: React.FC<UserSelectProps> = ({
@@ -53,7 +53,7 @@ export const UserSelect: React.FC<UserSelectProps> = ({
         isLoading={loading}
         defaultValue={initialValue}
         options={options}
-        onChange={option => option && setUserCallback(option.value)}
+        onChange={option => option && setUserCallback(option)}
         styles={{ container: () => ({ width: '100%' }) }}
       />
     </Wrapper>

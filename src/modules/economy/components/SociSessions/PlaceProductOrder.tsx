@@ -43,7 +43,7 @@ export const PlaceProductOrder: React.FC<PlaceProductOrderProps> = ({
   return (
     <Paper p="md">
       <Group position="apart">
-        <UserSelect setUserCallback={setUserId} />
+        <UserSelect setUserCallback={option => setUserId(option.value)} />
         <ProductSelect value={productId} onChangeCallback={setProductId} />
         <NumberInput
           placeholder="Antall"
