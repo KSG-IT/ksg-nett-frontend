@@ -1,9 +1,13 @@
-import { createStyles, Paper, Table } from '@mantine/core'
+import { createStyles, Paper, Table, UnstyledButton } from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
+import { useProductOrderMutations } from 'modules/economy/mutations.hooks'
+import { SOCI_SESSION_QUERY } from 'modules/economy/queries'
 import {
   ProductOrderNode,
   SociSessionNode,
 } from 'modules/economy/types.graphql'
+import { ME_QUERY } from 'modules/users/queries'
+import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
 import { numberWithSpaces } from 'util/parsing'
 
@@ -18,6 +22,24 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
 }) => {
   const { classes } = useProductOrderStyles()
   const { productOrders, closed } = sociSession
+
+  const { undoProductOrder } = useProductOrderMutations()
+
+  const handleUndoProductOrder = (productOrderId: string) => {
+    undoProductOrder({
+      variables: {
+        id: productOrderId,
+      },
+      refetchQueries: [SOCI_SESSION_QUERY, ME_QUERY],
+      onError() {
+        toast.error('Noe gikk galt')
+      },
+      onCompleted() {
+        toast.success('Bestillingen ble slettet')
+      },
+    })
+  }
+
   const rows = productOrders.map(productOrder => (
     <tr key={productOrder.id}>
       <td>{format(new Date(productOrder.purchasedAt), 'yyyy.MM.dd HH:mm')}</td>
@@ -25,7 +47,15 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
       <td>{productOrder.orderSize}</td>
       <td>{numberWithSpaces(productOrder.product.price)},- NOK</td>
       <td>{numberWithSpaces(productOrder.cost)},- NOK</td>
-      <td>{!closed && <IconTrash />}</td>
+      <td>
+        {!closed && (
+          <UnstyledButton
+            onClick={() => handleUndoProductOrder(productOrder.id)}
+          >
+            <IconTrash />
+          </UnstyledButton>
+        )}
+      </td>
     </tr>
   ))
 

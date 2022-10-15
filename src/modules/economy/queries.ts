@@ -107,6 +107,7 @@ export const SOCI_SESSION_QUERY = gql`
         fullName
       }
       productOrders {
+        id
         cost
         orderSize
         purchasedAt
