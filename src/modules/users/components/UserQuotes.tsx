@@ -1,6 +1,6 @@
-import { createStyles, SimpleGrid } from '@mantine/core'
+import { SimpleGrid } from '@mantine/core'
 import { QuoteCard } from 'modules/quotes/components'
-import { QuoteNode } from 'modules/quotes/types'
+import { QuoteNode } from 'modules/quotes/types.graphql'
 
 interface UserQuotesProps {
   quotes: QuoteNode[]
