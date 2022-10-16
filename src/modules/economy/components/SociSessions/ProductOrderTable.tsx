@@ -44,6 +44,7 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
     <tr key={productOrder.id}>
       <td>{format(new Date(productOrder.purchasedAt), 'yyyy.MM.dd HH:mm')}</td>
       <td>{productOrder.source.user.fullName}</td>
+      <td>{productOrder.product.name}</td>
       <td>{productOrder.orderSize}</td>
       <td>{numberWithSpaces(productOrder.product.price)},- NOK</td>
       <td>{numberWithSpaces(productOrder.cost)},- NOK</td>
@@ -65,6 +66,7 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
       <td></td>
       <td></td>
       <td></td>
+      <td></td>
       <td>{numberWithSpaces(sociSession.moneySpent)},- NOK</td>
       <td></td>
     </tr>
@@ -77,6 +79,7 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
           <tr>
             <th>Tidsstempel</th>
             <th>Navn</th>
+            <th>Vare</th>
             <th>Antall</th>
             <th>Pris</th>
             <th>Total</th>
