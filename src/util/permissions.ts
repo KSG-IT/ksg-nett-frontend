@@ -16,6 +16,18 @@ export const PERMISSIONS = {
       admission: 'admissions.view_admission',
     },
   },
+  economy: {
+    add: {
+      sociSession: 'economy.add_socisession',
+    },
+    view: {
+      sociSession: 'economy.view_socisession',
+    },
+    change: {
+      sociSession: 'economy.change_socisession',
+      sociProduct: 'economy.change_sociproduct',
+    },
+  },
   quotes: {
     add: {
       quote: 'quotes.add_quote',

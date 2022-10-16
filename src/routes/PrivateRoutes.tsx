@@ -17,7 +17,15 @@ import {
   MyInterviews,
 } from 'modules/admissions/views'
 import { Dashboard } from 'modules/dashboard/Dashboard'
-import { CreateDeposit, Deposits, MyEconomy } from 'modules/economy/views'
+import {
+  CreateDeposit,
+  Deposits,
+  MyEconomy,
+  PrintLists,
+  PrintWorkingToday,
+  SociSessionDetail,
+  SosiSessions,
+} from 'modules/economy/views'
 import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
 import { InternalGroups } from 'modules/organization/InternalGroups'
 import {
@@ -249,8 +257,51 @@ export const AppRoutes: React.FC = () => {
           <Route path="deposits" element={<Deposits />} />
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
+          <Route path="print">
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.economy.view.sociSession}
+                >
+                  <PrintLists />
+                </RestrictedRoute>
+              }
+            />
+            <Route
+              path="working-today"
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.economy.view.sociSession}
+                >
+                  <PrintWorkingToday />
+                </RestrictedRoute>
+              }
+            />
+          </Route>
 
-          <Route path="soci-sessions" element={<h2>Suh duh 2</h2>} />
+          <Route path="soci-sessions">
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.economy.view.sociSession}
+                >
+                  <SosiSessions />
+                </RestrictedRoute>
+              }
+            />
+            <Route
+              path=":id"
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.economy.view.sociSession}
+                >
+                  <SociSessionDetail />
+                </RestrictedRoute>
+              }
+            />
+          </Route>
           <Route path="*" element={<FullPage404 />} />
         </Route>
 

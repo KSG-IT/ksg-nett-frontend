@@ -29,7 +29,7 @@ export const CreateDeposit: React.FC<DepositProps> = () => {
       </Title>
       <Card radius={'md'} withBorder className={classes.card}>
         <CreateDepositForm
-          onCompletedCallback={() => navigate('/economy/deposits')}
+          onCompletedCallback={() => navigate('/economy/me')}
         />
       </Card>
     </Container>

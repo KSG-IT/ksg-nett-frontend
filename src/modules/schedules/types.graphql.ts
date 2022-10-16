@@ -1,3 +1,4 @@
+import { SociProductNode } from 'modules/economy/types.graphql'
 import { UserNode } from 'modules/users/types'
 import {
   DayValues,
@@ -125,6 +126,11 @@ export interface ScheduleTemplateQueryVariables {
 }
 export interface ScheduleTemplateQueryReturns {
   scheduleTemplate: ScheduleTemplateNode | null
+}
+
+export interface AllUsersWorkingTodayReturns {
+  allUsersWorkingToday: Pick<UserNode, 'id' | 'fullName' | 'initials'>[]
+  defaultSociProducts: Pick<SociProductNode, 'id' | 'name'>[]
 }
 
 // === MUTATIONS ===
