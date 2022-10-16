@@ -27,3 +27,7 @@ export interface PatchMutationVariables<NodeType> {
   id: string
   input: Partial<Omit<NodeType, 'id'>>
 }
+
+export interface DetailQueryVariables {
+  id: string
+}
