@@ -6,6 +6,7 @@ import {
   SimpleGrid,
   Text,
 } from '@mantine/core'
+import { QuoteCard } from 'modules/quotes'
 import { QuoteNode } from 'modules/quotes/types'
 import { UserThumbnail } from './UserThumbnail'
 
@@ -35,17 +36,7 @@ export const UserQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
   return (
     <SimpleGrid cols={2} py={'sm'}>
       {quotes.map(quote => (
-        <Card className={classes.card} key={quote.id} radius="lg" shadow={'xs'}>
-          <Card.Section p={'md'}>
-            <Text className={classes.quoteText}>{quote.text}</Text>
-            <Text className={classes.quoteContext}>{quote.context}</Text>
-            <Group spacing={5}>
-              {quote.tagged.map(user => (
-                <UserThumbnail key={user.id} user={user} />
-              ))}
-            </Group>
-          </Card.Section>
-        </Card>
+        <QuoteCard quote={quote} />
       ))}
     </SimpleGrid>
   )
