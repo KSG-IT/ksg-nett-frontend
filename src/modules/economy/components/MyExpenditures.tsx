@@ -10,6 +10,8 @@ import {
   MyExpendituresReturns,
   MyExpendituresVariables,
 } from '../types.graphql'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
 
 const TotalRow = styled.div`
   display: flex;
@@ -24,7 +26,13 @@ const TotalValue = styled.span`
   font-weight: 600;
 `
 
-export const MyExpenditures: React.VFC = () => {
+interface MyExpendituresProps {
+  moneySpent: number
+}
+
+export const MyExpenditures: React.FC<MyExpendituresProps> = ({
+  moneySpent,
+}) => {
   const { loading, error, data } = useQuery<
     MyExpendituresReturns,
     MyExpendituresVariables
@@ -32,10 +40,9 @@ export const MyExpenditures: React.VFC = () => {
     variables: { dateRange: ExpenditureDateRangeEnum['THIS_MONTH'] },
   })
 
-  if (error) return <span>Error lol</span>
+  if (error) return <FullPageError />
 
-  if (loading || !data) return <span>Loading lol</span>
-
+  if (loading || !data) return <FullContentLoader />
   const dateRangeOptions = [
     {
       value: ExpenditureDateRangeEnum['THIS_MONTH'],
@@ -77,7 +84,7 @@ export const MyExpenditures: React.VFC = () => {
 
       <TotalRow>
         <TotalLabel>Sum</TotalLabel>
-        <TotalValue>{numberWithSpaces(3420)},- NOK </TotalValue>
+        <TotalValue>{numberWithSpaces(moneySpent)},- NOK </TotalValue>
       </TotalRow>
     </Paper>
   )

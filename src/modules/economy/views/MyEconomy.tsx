@@ -82,7 +82,7 @@ export const MyEconomy: React.VFC = () => {
       </SectionContainer>
       <SectionContainer gridArea="expenditure">
         <SubTitle>Forbruk</SubTitle>
-        <MyExpenditures />
+        <MyExpenditures moneySpent={data.myBankAccount.user.moneySpent} />
       </SectionContainer>
       <SectionContainer gridArea="deposits">
         <SubTitle>Innskudd</SubTitle>
