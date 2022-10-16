@@ -3,6 +3,7 @@ import { PatchApplicantReturns } from 'modules/admissions/types.graphql'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { OnFormSubmit } from 'types/forms'
+import { FILE_SIZE } from 'util/consts'
 import * as yup from 'yup'
 
 export type RegisterInformationFormData = {
@@ -25,7 +26,14 @@ const RegisterInformationSchema = yup.object().shape({
   study: yup.string().required('Studie må fylles ut'),
   dateOfBirth: yup.date().required('Fødselsdato må fylles ut'),
   phone: yup.string().required('Telefonnummer må fylles ut'),
-  image: yup.mixed().required('Bildet må lastes opp'),
+  image: yup
+    .mixed()
+    .required('Bildet må lastes opp')
+    .test(
+      'FILE_SIZE',
+      'Uploaded file is too big.',
+      value => !value || (value && value.size <= FILE_SIZE)
+    ),
   wantsDigitalInterview: yup.boolean().required(),
 })
 
