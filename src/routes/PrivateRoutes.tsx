@@ -254,7 +254,14 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="economy">
           <Route path="deposits/create" element={<CreateDeposit />} />
-          <Route path="deposits" element={<Deposits />} />
+          <Route
+            path="deposits"
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.economy.change.deposit}>
+                <Deposits />
+              </RestrictedRoute>
+            }
+          />
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
           <Route path="print">

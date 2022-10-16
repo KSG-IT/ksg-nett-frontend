@@ -1,4 +1,5 @@
 export const PERMISSIONS = {
+  // ===== ADMISSIONS ======
   admissions: {
     add: {
       admission: 'admissions.add.admission',
@@ -16,6 +17,7 @@ export const PERMISSIONS = {
       admission: 'admissions.view_admission',
     },
   },
+  // ===== ECONOMY ======
   economy: {
     add: {
       sociSession: 'economy.add_socisession',
@@ -26,8 +28,10 @@ export const PERMISSIONS = {
     change: {
       sociSession: 'economy.change_socisession',
       sociProduct: 'economy.change_sociproduct',
+      deposit: 'economy.change_deposit',
     },
   },
+  // ===== QUOTES ======
   quotes: {
     add: {
       quote: 'quotes.add_quote',
