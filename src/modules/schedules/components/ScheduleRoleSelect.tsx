@@ -77,6 +77,7 @@ export const ShiftRoleSelect: React.FC<ShiftRoleSelectProps> = ({
       value={value}
       onChange={onChangeCallback}
       data={shiftRoleData}
+      searchable
       {...rest}
     />
   )
