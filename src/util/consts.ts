@@ -1,1 +1,2 @@
 export const DEFAULT_PAGINATION_SIZE = 50
+export const FILE_SIZE = 1000000

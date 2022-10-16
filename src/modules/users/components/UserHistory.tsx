@@ -11,12 +11,12 @@ export const UserHistory: React.FC<UserHistoryProps> = ({ memberships }) => {
   const fields = memberships.map(
     ({ id, position, membershipStart, membershipEnd }) => (
       <Timeline.Item
-        bulletSize={37}
+        bulletSize={28}
         bullet={
           <ThemeIcon
-            size={35}
-            variant="gradient"
-            gradient={{ from: `${theme.colors.brand}`, to: 'coral' }}
+            size={30}
+            variant="filled"
+            color={'samfundet-red.4'}
             radius="xl"
           >
             <IconUsers size={20} />

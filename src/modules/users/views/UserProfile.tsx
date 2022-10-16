@@ -100,10 +100,6 @@ const useStyles = createStyles(theme => ({
     maxWidth: 900,
   },
   memberships: {
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-      marginLeft: theme.spacing.md,
-      marginRight: theme.spacing.md,
-    },
     marginLeft: theme.spacing.xl,
   },
 }))
@@ -139,7 +135,7 @@ export const UserProfile: React.FC = () => {
   return (
     <Group align={'flex-start'} className={classes.wrapper}>
       <Stack align={'flex-start'}>
-        <Card shadow={'sm'} radius={'md'} className={classes.card}>
+        <Card withBorder radius={'md'} className={classes.card}>
           <Grid p={'xl'}>
             <Grid.Col xs={6} lg={6}>
               <Text className={classes.role}>{user.ksgStatus}</Text>
@@ -202,7 +198,7 @@ export const UserProfile: React.FC = () => {
           <UserQuotes quotes={user.taggedAndVerifiedQuotes} />
         </Stack>
       </Stack>
-      <Stack justify={'flex-end'} className={classes.memberships}>
+      <Stack className={classes.memberships}>
         <Title order={3} className={classes.title}>
           Vervhistorikk
         </Title>
@@ -212,7 +208,11 @@ export const UserProfile: React.FC = () => {
       <Modal
         opened={editUserModalOpen}
         onClose={() => setEditUserModalOpen(false)}
-        title="Rediger profilinformasjon"
+        title={
+          <Title color={'dimmed'} order={3}>
+            Rediger profilinfo
+          </Title>
+        }
         size="lg"
         padding="xl"
       >

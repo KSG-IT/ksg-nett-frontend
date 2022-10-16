@@ -11,6 +11,10 @@ export function useEditProfileAPI(user: UserNode) {
     const input = {
       ...data,
     }
+
+    if (!input.profileImage) {
+      delete input.profileImage
+    }
     return patchUser({
       variables: {
         id: id,
@@ -29,6 +33,7 @@ export function useEditProfileAPI(user: UserNode) {
     phone: user?.phone ?? '',
     email: user?.email ?? '',
     biography: user?.biography ?? '',
+    profileImage: null,
   }
   return {
     defaultValues,

@@ -3,6 +3,7 @@ import { PatchUserReturns } from 'modules/users/types'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { OnFormSubmit } from 'types/forms'
+import { FILE_SIZE } from 'util/consts'
 import { format } from 'util/date-fns'
 import * as yup from 'yup'
 
@@ -15,6 +16,7 @@ export type UserProfileFormData = {
   phone: string
   email: string
   biography: string
+  profileImage?: File | null
 }
 
 export type UserProfileCleanedData = Omit<
@@ -33,6 +35,15 @@ const UserEditSchema = yup.object().shape({
   phone: yup.string().required('Telefonnummer må fylles ut'),
   email: yup.string().required('E-post må fylles ut'),
   biography: yup.string().required('Biografi må fylles ut'),
+  profileImage: yup
+    .mixed()
+    .nullable()
+    .notRequired()
+    .test(
+      'FILE_SIZE',
+      'Uploaded file is too big.',
+      value => !value || (value && value.size <= FILE_SIZE)
+    ),
 })
 
 interface UseEditLogicInput {

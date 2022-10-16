@@ -66,6 +66,7 @@ export const USER_QUERY = gql`
       taggedAndVerifiedQuotes {
         id
         text
+        sum
         verifiedBy {
           id
         }
