@@ -1,85 +1,30 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button } from '@mantine/core'
+import {
+  Avatar,
+  Button,
+  Card,
+  createStyles,
+  Group,
+  SimpleGrid,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core'
 import {
   FullPage404,
   FullPageEmpty,
   FullPageError,
 } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { format } from 'util/date-fns'
 import { UserThumbnail } from 'modules/users/components'
 import toast from 'react-hot-toast'
-import styled from 'styled-components'
+import { format } from 'util/date-fns'
 import { PatchQuoteReturns, PatchQuoteVariables, PendingQuotesReturns } from '.'
+import { QuotesTabs } from './components/QuotesTabs'
 import { DELETE_QUOTE, PATCH_QUOTE } from './mutations'
 import { PNEDING_QUOTES_QUERY } from './queries'
 
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-  gap: 15px;
-  overflow-y: scroll;
-`
-
-const QuoteReviewCard = styled.div`
-  display: grid;
-  wdith: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  background-color: ${props => props.theme.colors.white};
-  grid-template-areas:
-    'content content'
-    'context context'
-    'tagged tagged'
-    'sentby sentby'
-    'timestamp actions';
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto;
-  grid-row-gap: 5px;
-  ${props => props.theme.shadow.default};
-`
-
-const QutoeText = styled.div`
-  grid-area: content;
-
-  font-size: 18px;
-  font-weight: 500;
-`
-
-const QuoteContext = styled.div`
-  grid-area: context;
-
-  font-size: 16px;
-  color: ${props => props.theme.colors.gray1};
-  font-style: italic;
-`
-
-const QuoteTagged = styled.div`
-  grid-area: tagged;
-
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-`
-
-const QuoteSentBy = styled.div`
-  grid-area: sentby;
-`
-
-const QuoteTimestamp = styled.div`
-  grid-area: timestamp;
-`
-
-const QuoteActions = styled.div`
-  grid-area: actions;
-  display: flex;
-  flex-direction: row;
-`
-
-const Title = styled.h1`
-  margin-top: 0;
-`
-
-export const ReviewQuotes = () => {
+export const ReviewQuotes: React.FC = () => {
   // IN the future we can split this into multiple views
   // * approving unapproved quotes
   // * See reported quotes
@@ -87,6 +32,7 @@ export const ReviewQuotes = () => {
   // be able to see more details for sent in quotes. Who sent in. Who approved etc.?
   // Ability to delete quotes or review them
   // Maybe everyone should be able to report a quote?
+  const { classes } = useStyles()
   const { data, loading, error } = useQuery<PendingQuotesReturns>(
     PNEDING_QUOTES_QUERY,
     { fetchPolicy: 'network-only' }
@@ -134,38 +80,85 @@ export const ReviewQuotes = () => {
 
   if (pendingQuotes.length === 0)
     return (
-      <Wrapper>
+      <Stack>
         <Title>Innsendte sitater</Title>
         <FullPageEmpty />
-      </Wrapper>
+      </Stack>
     )
 
   return (
-    <Wrapper>
-      <Title>Innsendte sitater</Title>
-      {pendingQuotes.map(quote => (
-        <QuoteReviewCard>
-          <QutoeText>{quote.text}</QutoeText>
-          <QuoteContext>{quote.context}</QuoteContext>
-          <QuoteTagged>
-            {quote.tagged.map(user => (
-              <UserThumbnail user={user} size="sm" key={user.id} />
-            ))}
-          </QuoteTagged>
-          <QuoteSentBy>{quote.reportedBy.fullName}</QuoteSentBy>
-          <QuoteTimestamp>
-            Sendt inn {format(new Date(quote.createdAt), 'eeee H:mm')}
-          </QuoteTimestamp>
-          <QuoteActions>
-            <Button onClick={() => handleDeleteQuote(quote.id)} color="gray">
-              Slett
-            </Button>
-            <Button onClick={() => handleApproveQuote(quote.id)}>
-              Godkjenn
-            </Button>
-          </QuoteActions>
-        </QuoteReviewCard>
-      ))}
-    </Wrapper>
+    <Stack>
+      <Group position="apart">
+        <Title order={2} color="dimmed">
+          Godkjenning av sitater
+        </Title>
+        <QuotesTabs />
+      </Group>
+      <SimpleGrid
+        cols={3}
+        breakpoints={[{ maxWidth: 'sm', cols: 1, spacing: 'sm' }]}
+      >
+        {pendingQuotes.map(quote => (
+          <Card className={classes.card} key={quote.id} withBorder>
+            <Group position="apart">
+              <Stack justify={'space-between'} spacing={'xs'}>
+                <Card withBorder>
+                  <Text size={'sm'} className={classes.quoteText}>
+                    {quote.text}
+                  </Text>
+
+                  <Text size={'xs'} color={'gray'}>
+                    {quote.context}
+                  </Text>
+                  <Group position="apart" spacing={'xs'}>
+                    <Avatar.Group spacing={5}>
+                      {quote.tagged.map(user => (
+                        <UserThumbnail size={'sm'} key={user.id} user={user} />
+                      ))}
+                    </Avatar.Group>
+                  </Group>
+                </Card>
+
+                <Stack spacing={0}>
+                  <Text size="sm" color="dark">
+                    Sendt inn av: {quote.reportedBy.fullName}
+                  </Text>
+                  <Text size="sm" color="dark">
+                    Klokken {format(new Date(quote.createdAt), 'eeee H:mm')}
+                  </Text>
+                </Stack>
+              </Stack>
+
+              <Stack>
+                <Button
+                  color={'samfundet-red'}
+                  onClick={() => handleApproveQuote(quote.id)}
+                >
+                  Godkjenn
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => handleDeleteQuote(quote.id)}
+                  color="gray"
+                >
+                  Slett
+                </Button>
+              </Stack>
+            </Group>
+          </Card>
+        ))}
+      </SimpleGrid>
+    </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  quoteText: {
+    color: theme.colors.gray[7],
+    fontWeight: 500,
+  },
+  card: {
+    width: '100%',
+    height: '100%',
+  },
+}))

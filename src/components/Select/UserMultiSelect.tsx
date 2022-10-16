@@ -1,65 +1,79 @@
 import { useQuery } from '@apollo/client'
+import {
+  Avatar,
+  createStyles,
+  Group,
+  MantineSize,
+  MultiSelect,
+  Text,
+} from '@mantine/core'
+import { IconUser } from '@tabler/icons'
+import { UserThumbnail } from 'modules/users/components'
 import { ALL_ACTIVE_USERS_SHALLOW_QUERY } from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
+  UserNode,
 } from 'modules/users/types'
+import { forwardRef, useState } from 'react'
 import Select from 'react-select'
-import styled from 'styled-components'
-import { usersToSelectOption } from 'util/user'
-
-interface WrapperProps {
-  fullwidth: boolean
-  width: string
-}
-
-const Wrapper = styled.div<WrapperProps>`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: ${props => (props.fullwidth ? '100%' : props.width)};
-  background-color: ${props => props.theme.colors.lightGray};
-  border-radius: 10px;
-
-  box-shadow: ${props => props.theme.shadow.default};
-  ${props => props.theme.media.mobile} {
-    width: 100%;
-  }
-`
+import { usersToSelectOption, UserOption } from 'util/user'
 
 interface UserMultiSelectProps {
   users?: string[]
   width?: string
+  placeholder?: string
+  label?: React.ReactNode
+  size?: MantineSize | undefined
   fullwidth?: boolean
   setUsersCallback: (users: string[]) => void
 }
-export const UserMultiSelect: React.VFC<UserMultiSelectProps> = ({
+
+export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
   users = [],
-  width = '400px',
-  fullwidth = false,
+  size,
+  label,
+  placeholder,
   setUsersCallback,
 }) => {
+  const { classes } = useStyles()
+  const [inputValue, setInputValue] = useState('')
   const { data, loading } = useQuery<
     AllUsersShallowQueryReturns,
     AllUsersShallowQueryVariables
-  >(ALL_ACTIVE_USERS_SHALLOW_QUERY)
+  >(ALL_ACTIVE_USERS_SHALLOW_QUERY, { variables: { q: inputValue } })
 
   const options = usersToSelectOption(data?.allActiveUsers)
-
   const initialValue = options.filter(option => users.includes(option.value))
 
+  console.log(initialValue)
   return (
-    <Wrapper fullwidth={fullwidth} width={width}>
-      <Select
-        closeMenuOnSelect={false}
-        isMulti={true}
-        isLoading={loading}
-        defaultValue={initialValue}
-        options={options}
-        onChange={options =>
-          setUsersCallback(options.map(option => option.value))
-        }
-      />
-    </Wrapper>
+    <Select
+      className={classes.select}
+      closeMenuOnSelect={false}
+      isMulti={true}
+      placeholder={placeholder}
+      isLoading={loading}
+      menuPortalTarget={document.body}
+      onInputChange={setInputValue}
+      defaultValue={initialValue}
+      options={options}
+      onChange={options =>
+        setUsersCallback(options.map(option => option.value))
+      }
+    />
   )
 }
+
+const useStyles = createStyles(theme => ({
+  select: {
+    width: '100%',
+    height: '100%',
+    fontSize: theme.fontSizes.sm,
+    '& .react-select__control': {
+      height: '100%',
+      minHeight: '100%',
+      borderRadius: theme.radius.sm,
+    },
+  },
+}))
