@@ -9,18 +9,13 @@ import {
   TextInput,
 } from '@mantine/core'
 import { IconCashBanknote, IconNote, IconUpload } from '@tabler/icons'
+import { Link } from 'react-router-dom'
+import { useMediaQuery } from 'util/hooks'
 
 import { useCreateDepositAPI } from './useCreateDepositAPI'
 import { useCreateDepositLogic } from './useCreateDepositLogic'
 
-const useStyles = createStyles(theme => ({
-  button: {
-    backgroundColor: theme.colors.brand,
-    '&:hover': {
-      transform: 'scale(1.03)',
-    },
-  },
-}))
+const useStyles = createStyles(theme => ({}))
 
 interface CreateDepositViewProps {
   onCompletedCallback: () => void
@@ -34,16 +29,17 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
     onCompletedCallback,
   })
   const { classes } = useStyles()
+  const mobileSize = useMediaQuery('(max-width: 600px)')
   const { formState, register, handleSubmit, getValues, setValue } = form
   const { errors, isSubmitting } = formState
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={'lg'} p={'xl'}>
+      <Stack spacing={'lg'} p={mobileSize ? 'xs' : 'xl'}>
         <SimpleGrid cols={1} spacing={'md'}>
           <NumberInput
             hideControls
-            size="md"
+            size={mobileSize ? 'xs' : 'sm'}
             variant="filled"
             error={errors?.amount?.message}
             label="Beløp"
@@ -52,7 +48,7 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             onChange={value => value && setValue('amount', value)}
           />
           <TextInput
-            size="md"
+            size={mobileSize ? 'xs' : 'sm'}
             variant="filled"
             label="Beskrivelse"
             placeholder="Skriv en beskrivelse av innskuddet"
@@ -60,19 +56,26 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             {...register('description')}
           />
           <FileInput
-            size="md"
-            withAsterisk
+            mt={'sm'}
+            size={mobileSize ? 'sm' : 'md'}
             placeholder="Skjermbilde av bankoverføring"
             icon={<IconUpload size={14} />}
             accept="image/png,image/jpeg,image/jpg"
             onChange={value => value && setValue('receipt', value)}
           />
         </SimpleGrid>
-        <Group position="right" mt={'md'}>
+        <Group position="apart" mt={'md'}>
           <Button
-            color={'brand'}
-            className={classes.button}
-            size="md"
+            variant="outline"
+            color={'samfundet-red'}
+            component={Link}
+            to="/dashboard"
+          >
+            Avbryt
+          </Button>
+          <Button
+            color={'samfundet-red'}
+            size={mobileSize ? 'sm' : 'md'}
             disabled={isSubmitting}
             type="submit"
           >
