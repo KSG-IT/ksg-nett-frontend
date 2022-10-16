@@ -1,4 +1,4 @@
-import { QuoteNode } from 'modules/quotes/types'
+import { QuoteNode } from 'modules/quotes/types.graphql'
 import { SummaryNode } from 'modules/summaries'
 import { WantedUser } from './components/WantedList'
 
