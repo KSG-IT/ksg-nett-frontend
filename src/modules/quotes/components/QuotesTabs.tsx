@@ -6,8 +6,6 @@ interface LinkButtonProps extends ButtonProps {
   children: React.ReactNode
 }
 
-interface QuotesTabsProps {}
-
 const LinkButton: React.FC<LinkButtonProps> = ({ to, children, variant }) => (
   <Button
     color={'samfundet-red'}
@@ -19,9 +17,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({ to, children, variant }) => (
   </Button>
 )
 
-export const QuotesTabs: React.FC<QuotesTabsProps> = () => {
-  const navigate = useNavigate()
-  const { tabValue } = useParams()
+export const QuotesTabs: React.FC = () => {
   return (
     <Group>
       <LinkButton variant="outline" to="review">

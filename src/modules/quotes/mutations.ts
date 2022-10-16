@@ -10,6 +10,26 @@ export const CREATE_QUOTE = gql`
   }
 `
 
+export const APPROVE_QUOTE_MUTATION = gql`
+  mutation ApproveQuote($quoteId: ID!) {
+    approveQuote(quoteId: $quoteId) {
+      quote {
+        id
+      }
+    }
+  }
+`
+
+export const INVALIDATE_QUOTE_MUTATION = gql`
+  mutation InvalidateQuote($quoteId: ID!) {
+    invalidateQuote(quoteId: $quoteId) {
+      quote {
+        id
+      }
+    }
+  }
+`
+
 export const DELETE_USER_QUOTE_VOTE = gql`
   mutation DeleteUserQuoteVote($quoteId: ID!) {
     deleteUserQuoteVote(quoteId: $quoteId) {

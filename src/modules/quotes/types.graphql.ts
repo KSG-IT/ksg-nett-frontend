@@ -96,3 +96,17 @@ export interface CreateQuoteVoteReturns {
     }
   }
 }
+
+export interface ApproveQuoteReturns {
+  quote: Pick<QuoteNode, 'id'>
+}
+export interface ApproveQuoteVariables {
+  quoteId: string
+}
+
+export interface InvalidateQuoteReturns {
+  quote: Pick<QuoteNode, 'id'>
+}
+export interface InvalidateQuoteVariables {
+  quoteId: string
+}

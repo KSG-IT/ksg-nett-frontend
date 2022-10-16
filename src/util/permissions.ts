@@ -39,6 +39,9 @@ export const PERMISSIONS = {
     change: {
       quote: 'quotes.change_quote',
     },
+    delete: {
+      quote: 'quotes.delete_quote',
+    },
   },
   users: {
     change: {

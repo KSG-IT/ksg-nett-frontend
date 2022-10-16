@@ -6,7 +6,7 @@ import {
   Stack,
   Text,
 } from '@mantine/core'
-import { QuoteNode } from 'modules/quotes/types'
+import { QuoteNode } from 'modules/quotes/types.graphql'
 import { UserThumbnail } from 'modules/users/components/UserThumbnail'
 
 interface UserQuotesProps {

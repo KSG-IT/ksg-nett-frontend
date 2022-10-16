@@ -5,10 +5,13 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { useDebounce } from 'util/hooks/useDebounce'
-import { ApprovedQuotesReturns, ApprovedQuotesVariables } from '.'
-import { QuotesTabs } from './components/QuotesTabs'
-import { APPROVED_QUOTES_QUERY } from './queries'
-import { QuoteCard } from './QuoteCard'
+import { QuoteCard } from '../components/QuoteCard'
+import { QuotesTabs } from '../components/QuotesTabs'
+import { APPROVED_QUOTES_QUERY } from '../queries'
+import {
+  ApprovedQuotesReturns,
+  ApprovedQuotesVariables,
+} from '../types.graphql'
 
 const FetchMoreArea = styled.div`
   grid-area: fetchmore;
