@@ -1,10 +1,18 @@
-import { Badge, createStyles, Table, Text, TextProps } from '@mantine/core'
+import {
+  Badge,
+  createStyles,
+  Paper,
+  Table,
+  Text,
+  TextProps,
+} from '@mantine/core'
 import { ManageInternalGroupUser } from './types'
 import { UserManagementTableRow } from './UserManagementTableRow'
 import { getInternalGroupPositionTypeLabel } from './util'
 
 interface UserManagementTableProps {
   usersData: ManageInternalGroupUser[]
+  activeMemberships?: boolean
 }
 
 const useStyles = createStyles(theme => ({
@@ -23,6 +31,7 @@ const useStyles = createStyles(theme => ({
 
 export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   usersData,
+  activeMemberships = false,
 }) => {
   const { classes } = useStyles()
   const TableData: React.FC<TextProps> = ({ children, color, weight }) => (
@@ -45,7 +54,11 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
         )}
       </TableData>
       <TableData>{membership.dateJoinedSemesterShorthand}</TableData>
-      <UserManagementTableRow userData={membership} />
+      {activeMemberships ? (
+        <UserManagementTableRow userData={membership} />
+      ) : (
+        <td>{membership.dateEndedSemesterShorthand}</td>
+      )}
     </tr>
   ))
   const Header: React.FC<TextProps> = ({ children, align }) => (
@@ -62,18 +75,28 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   )
 
   return (
-    <Table>
-      {/* Should parse data in here and show loading state here */}
-      <thead>
-        <tr>
-          <Header>Navn</Header>
-          <Header align="center">Stilling</Header>
-          <Header>Gruppe</Header>
-          <Header>Startet</Header>
-          <Header>Sett verv</Header>
-        </tr>
-      </thead>
-      <tbody>{tableRows}</tbody>
-    </Table>
+    <Paper withBorder radius={'md'} p="md" my="md">
+      <Table>
+        {/* Should parse data in here and show loading state here */}
+        <thead>
+          <tr>
+            <Header>Navn</Header>
+            <Header align="center">Stilling</Header>
+            <Header>Gruppe</Header>
+            <Header>Startet</Header>
+            {activeMemberships ? (
+              <>
+                <Header>Sett verv</Header>
+                <th></th>
+                <th></th>
+              </>
+            ) : (
+              <Header>Sluttet</Header>
+            )}
+          </tr>
+        </thead>
+        <tbody>{tableRows}</tbody>
+      </Table>
+    </Paper>
   )
 }
