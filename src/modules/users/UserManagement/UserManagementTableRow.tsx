@@ -1,18 +1,17 @@
 import { useMutation } from '@apollo/client'
 import { Button, Group } from '@mantine/core'
+import { useInternalGroupPositionMembershipMutations } from 'modules/organization/mutations.hooks'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
+import { MANAGE_USERS_DATA_QUERY } from '../queries'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from './mutations'
-import { MANAGE_USERS_DATA_QUERY } from '../queries'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
   InternalGroupPositionTypeOption,
   ManageInternalGroupUser,
 } from './types'
-import { useInternalGroupPositionMembershipMutations } from 'modules/organization/mutations.hooks'
-import { format } from 'util/date-fns'
 
 interface UserManagementTableRowProp {
   userData: ManageInternalGroupUser

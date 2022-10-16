@@ -18,6 +18,8 @@ export type InternalGroupPositionMembershipNode = {
   internalGroupPositionType: InternalGroupPositionType
   dateJoined: string
   dateEnded: string
+  membershipStart: string
+  membershipEnd: string
   fullName: string
 }
 
