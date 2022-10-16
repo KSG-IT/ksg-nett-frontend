@@ -19,24 +19,13 @@ import { FullContentLoader } from 'components/Loading'
 import { UserThumbnail } from 'modules/users/components'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
-import {
-  PatchQuoteReturns,
-  PatchQuoteVariables,
-  PendingQuotesReturns,
-} from '..'
-import { useQuoteMutations } from '../mutations.hooks'
 import { QuotesTabs } from '../components/QuotesTabs'
-import { DELETE_QUOTE, PATCH_QUOTE } from '../mutations'
+import { DELETE_QUOTE } from '../mutations'
+import { useQuoteMutations } from '../mutations.hooks'
 import { APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY } from '../queries'
+import { PendingQuotesReturns } from '../types.graphql'
 
 export const ReviewQuotes: React.FC = () => {
-  // IN the future we can split this into multiple views
-  // * approving unapproved quotes
-  // * See reported quotes
-  // Be able to see quotes up for review
-  // be able to see more details for sent in quotes. Who sent in. Who approved etc.?
-  // Ability to delete quotes or review them
-  // Maybe everyone should be able to report a quote?
   const { classes } = useStyles()
   const { data, loading, error } = useQuery<PendingQuotesReturns>(
     PNEDING_QUOTES_QUERY,

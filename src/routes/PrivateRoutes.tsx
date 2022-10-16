@@ -28,9 +28,13 @@ import {
 } from 'modules/economy/views'
 import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
 import { InternalGroups } from 'modules/organization/InternalGroups'
-import { CreateQuote, PopularQuotes, QuotesList } from 'modules/quotes'
-import { ReviewQuotes } from 'modules/quotes/views'
 import { QuotesTabs } from 'modules/quotes/components/QuotesTabs'
+import {
+  CreateQuote,
+  PopularQuotes,
+  QuotesList,
+  ReviewQuotes,
+} from 'modules/quotes/views'
 import {
   AllMyShifts,
   AllShifts,
@@ -107,7 +111,6 @@ export const AppRoutes: React.FC = () => {
         </Route>
 
         <Route path="quotes">
-          <Route path=":tabValue" element={<QuotesTabs />} />
           <Route path="popular" element={<PopularQuotes />} />
           <Route index element={<QuotesList />} />
           <Route

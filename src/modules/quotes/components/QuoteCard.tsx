@@ -5,27 +5,26 @@ import {
   Card,
   createStyles,
   Group,
-  Menu,
   Stack,
   Text,
   UnstyledButton,
   useMantineTheme,
 } from '@mantine/core'
-import { IconHash, IconThumbUp, IconX } from '@tabler/icons'
+import { IconHash, IconThumbUp } from '@tabler/icons'
 import { QuoteNode } from 'modules/quotes/types'
 import { UserThumbnail } from 'modules/users/components'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useStore } from 'store'
+import { CREATE_QUOTE_VOTE, DELETE_USER_QUOTE_VOTE } from '../mutations'
+import { useQuoteMutations } from '../mutations.hooks'
+import { APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY } from '../queries'
 import {
   CreateQuoteVoteReturns,
   CreateQuoteVoteVariables,
   DeleteUserQuoteVoteReturns,
   DeleteUserQuoteVoteVariables,
-} from '.'
-import { CREATE_QUOTE_VOTE, DELETE_USER_QUOTE_VOTE } from './mutations'
-import { useQuoteMutations } from './mutations.hooks'
-import { APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY } from './queries'
+} from '../types.graphql'
 
 interface VoteIconProps {
   upvoted: boolean

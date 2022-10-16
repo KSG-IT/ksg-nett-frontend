@@ -18,8 +18,8 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
-import { CreateQuoteReturns, CreateQuoteVariables } from '.'
-import { CREATE_QUOTE } from './mutations'
+import { CreateQuoteReturns, CreateQuoteVariables } from '../types.graphql'
+import { CREATE_QUOTE } from '../mutations'
 
 const quoteTextPlaceholder =
   'Wow, du har sykt myke hender! Vanligvis når en jente gir meg en håndjob, sier jeg du kan jo suge meg i stedet, men de hendene'

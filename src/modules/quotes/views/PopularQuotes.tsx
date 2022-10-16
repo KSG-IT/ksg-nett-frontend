@@ -3,9 +3,10 @@ import { Group, SimpleGrid, Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import styled from 'styled-components'
-import { PopularQuotesReturns, QuoteCard } from '.'
-import { QuotesTabs } from './components/QuotesTabs'
-import { POPULAR_QUOTES_QUERY } from './queries'
+import { QuoteCard } from '../components'
+import { QuotesTabs } from '../components/QuotesTabs'
+import { POPULAR_QUOTES_QUERY } from '../queries'
+import { PopularQuotesReturns } from '../types.graphql'
 
 const AllTimeContainer = styled.div`
   grid-area: all-time;
