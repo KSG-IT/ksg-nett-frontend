@@ -5,11 +5,13 @@ import {
   Card,
   createStyles,
   Group,
+  Menu,
   Stack,
   Text,
+  UnstyledButton,
   useMantineTheme,
 } from '@mantine/core'
-import { IconThumbUp } from '@tabler/icons'
+import { IconHash, IconThumbUp, IconX } from '@tabler/icons'
 import { QuoteNode } from 'modules/quotes/types'
 import { UserThumbnail } from 'modules/users/components'
 import { useEffect, useState } from 'react'
@@ -22,6 +24,8 @@ import {
   DeleteUserQuoteVoteVariables,
 } from '.'
 import { CREATE_QUOTE_VOTE, DELETE_USER_QUOTE_VOTE } from './mutations'
+import { useQuoteMutations } from './mutations.hooks'
+import { APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY } from './queries'
 
 interface VoteIconProps {
   upvoted: boolean
@@ -69,6 +73,8 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
     refetchQueries: ['PopularQuotes', 'ApprovedQuotes', 'Me'],
   })
 
+  const { invalidateQuote } = useQuoteMutations()
+
   useEffect(() => {
     const isUpvoted = me.upvotedQuoteIds.includes(quote.id)
     setUpvoted(isUpvoted)
@@ -99,34 +105,53 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
     }
   }
 
+  function handleInvalidateQuote() {
+    invalidateQuote({
+      variables: { quoteId: quote.id },
+      refetchQueries: [APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY],
+      onError() {
+        toast.error('Noe gikk galt')
+      },
+      onCompleted() {
+        toast.success('Sitat underkjent')
+      },
+    })
+  }
+
   return (
     <Card className={classes.card} key={quote.id} withBorder>
-      <Stack justify={'space-between'} spacing={0} className={classes.card}>
-        <Text size={'sm'} className={classes.quoteText}>
-          {quote.text}
-        </Text>
+      <div className={classes.row}>
+        <Stack justify={'space-between'} spacing={0} className={classes.card}>
+          <Text size={'sm'} className={classes.quoteText}>
+            {quote.text}
+          </Text>
 
-        <Text size={'xs'} color={'gray'}>
-          {quote.context}
-        </Text>
-        <Group position="apart" spacing={'xs'}>
-          <Avatar.Group spacing={5}>
-            {quote.tagged.map(user => (
-              <UserThumbnail size={'sm'} key={user.id} user={user} />
-            ))}
-          </Avatar.Group>
+          <Text size={'xs'} color={'gray'}>
+            {quote.context}
+          </Text>
+          <Group position="apart" spacing={'xs'}>
+            <Avatar.Group spacing={5}>
+              {quote.tagged.map(user => (
+                <UserThumbnail size={'sm'} key={user.id} user={user} />
+              ))}
+            </Avatar.Group>
 
-          <Group spacing={'xs'}>
-            {displaySemester && (
-              <Badge variant="outline" color="samfundet-red">
-                {quote.semester}
-              </Badge>
-            )}
-            <Text size={'sm'}>{voteSum}</Text>
-            <UpvoteIcon upvoted={upvoted} onClick={handleUpvote} />
+            <Group spacing={'xs'}>
+              {displaySemester && (
+                <Badge variant="outline" color="samfundet-red">
+                  {quote.semester}
+                </Badge>
+              )}
+              <Text size={'sm'}>{voteSum}</Text>
+              <UpvoteIcon upvoted={upvoted} onClick={handleUpvote} />
+            </Group>
           </Group>
-        </Group>
-      </Stack>
+        </Stack>
+
+        <UnstyledButton onClick={handleInvalidateQuote}>
+          <IconHash size={18} />
+        </UnstyledButton>
+      </div>
     </Card>
   )
 }
@@ -139,5 +164,10 @@ const useStyles = createStyles(theme => ({
   card: {
     width: '100%',
     height: '100%',
+  },
+  row: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
 }))

@@ -19,10 +19,15 @@ import { FullContentLoader } from 'components/Loading'
 import { UserThumbnail } from 'modules/users/components'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
-import { PatchQuoteReturns, PatchQuoteVariables, PendingQuotesReturns } from '.'
-import { QuotesTabs } from './components/QuotesTabs'
-import { DELETE_QUOTE, PATCH_QUOTE } from './mutations'
-import { PNEDING_QUOTES_QUERY } from './queries'
+import {
+  PatchQuoteReturns,
+  PatchQuoteVariables,
+  PendingQuotesReturns,
+} from '..'
+import { useQuoteMutations } from '../mutations.hooks'
+import { QuotesTabs } from '../components/QuotesTabs'
+import { DELETE_QUOTE, PATCH_QUOTE } from '../mutations'
+import { APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY } from '../queries'
 
 export const ReviewQuotes: React.FC = () => {
   // IN the future we can split this into multiple views
@@ -38,13 +43,10 @@ export const ReviewQuotes: React.FC = () => {
     { fetchPolicy: 'network-only' }
   )
 
-  const [approveQuote] = useMutation<PatchQuoteReturns, PatchQuoteVariables>(
-    PATCH_QUOTE,
-    { refetchQueries: ['PendingQuotes', 'ApprovedQuotes', 'SidebarQuery'] }
-  )
+  const { approveQuote } = useQuoteMutations()
 
   const [deleteQuote] = useMutation(DELETE_QUOTE, {
-    refetchQueries: ['PendingQuotes', 'SidebarQuery'],
+    refetchQueries: [PNEDING_QUOTES_QUERY, APPROVED_QUOTES_QUERY],
   })
 
   const handleDeleteQuote = (quoteId: string) => {
@@ -59,9 +61,9 @@ export const ReviewQuotes: React.FC = () => {
     toast.promise(
       approveQuote({
         variables: {
-          id: quoteId,
-          input: {},
+          quoteId: quoteId,
         },
+        refetchQueries: [PNEDING_QUOTES_QUERY, APPROVED_QUOTES_QUERY],
       }),
       {
         success: 'Sitat godkjent',

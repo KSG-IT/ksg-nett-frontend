@@ -28,12 +28,8 @@ import {
 } from 'modules/economy/views'
 import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
 import { InternalGroups } from 'modules/organization/InternalGroups'
-import {
-  CreateQuote,
-  PopularQuotes,
-  QuotesList,
-  ReviewQuotes,
-} from 'modules/quotes'
+import { CreateQuote, PopularQuotes, QuotesList } from 'modules/quotes'
+import { ReviewQuotes } from 'modules/quotes/views'
 import { QuotesTabs } from 'modules/quotes/components/QuotesTabs'
 import {
   AllMyShifts,
