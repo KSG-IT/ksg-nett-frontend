@@ -115,6 +115,7 @@ export interface AllDepositsQuery {
 export interface AllDepositsVariables {
   q: string
   unverifiedOnly: boolean
+  first?: number
 }
 
 export interface AllProductOrdersQuery {
@@ -228,4 +229,20 @@ type CreateSociSessionInput = {
 }
 export interface CreateSociSessionVariables {
   input: CreateSociSessionInput
+}
+
+export interface ApproveDepositReturns {
+  deposit: Pick<DepositNode, 'id'>
+}
+
+export interface ApproveDepositVariables {
+  depositId: string
+}
+
+export interface InvalidateDepositReturns {
+  deposit: Pick<DepositNode, 'id'>
+}
+
+export interface InvalidateDepositVariables {
+  depositId: string
 }

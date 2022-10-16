@@ -83,3 +83,23 @@ export const UNDO_PRODUCT_ORDER_MUTATION = gql`
     }
   }
 `
+
+export const APPROVE_DEPOSIT_MUTATION = gql`
+  mutation ApproveDeposit($depositId: ID!) {
+    approveDeposit(depositId: $depositId) {
+      deposit {
+        id
+      }
+    }
+  }
+`
+
+export const INVALIDATE_DEPOSIT_MUTATION = gql`
+  mutation InvalidateDeposit($depositId: ID!) {
+    invalidateDeposit(depositId: $depositId) {
+      deposit {
+        id
+      }
+    }
+  }
+`
