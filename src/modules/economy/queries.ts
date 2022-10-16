@@ -42,12 +42,14 @@ export const ALL_DEPOSITS = gql`
               id
               fullName
               profileImage
+              initials
             }
           }
           signedOffBy {
             id
             initials
             profileImage
+            fullName
           }
         }
       }
