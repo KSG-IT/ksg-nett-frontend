@@ -106,7 +106,9 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
               Slett
             </Button>
           </Group>
-          <UserSelect setUserCallback={handleAddUserToShift} />
+          <UserSelect
+            setUserCallback={option => handleAddUserToShift(option.value)}
+          />
         </Stack>
       </Popover.Dropdown>
     </Popover>

@@ -29,13 +29,6 @@ const shortcuts = [
     link: '/schedules/all-shifts',
   },
   {
-    title: 'Mine vakter',
-    icon: IconBriefcase,
-    color: 'samfundet-red',
-    link: '/schedules/me',
-  },
-
-  {
     title: 'Tilgjengelighet',
     icon: IconCalendarTime,
     color: 'samfundet-red',
