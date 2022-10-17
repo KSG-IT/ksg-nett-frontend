@@ -1,14 +1,5 @@
 import { useLazyQuery } from '@apollo/client'
-import {
-  Button,
-  Group,
-  Modal,
-  Paper,
-  ScrollArea,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core'
+import { Button, Group, Modal, Stack, Title } from '@mantine/core'
 import { MessageBox } from 'components/MessageBox'
 import { InternalGroupSelect } from 'components/Select'
 import React, { useEffect, useState } from 'react'
