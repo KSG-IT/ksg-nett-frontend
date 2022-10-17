@@ -21,6 +21,7 @@ export type InternalGroupPositionMembershipNode = {
   membershipStart: string
   membershipEnd: string
   fullName: string
+  getTypeDisplay: string
 }
 
 export type ManageInternalGroupUser = {
@@ -28,7 +29,11 @@ export type ManageInternalGroupUser = {
   membershipId: string
   position: InternalGroupPositionNode
   internalGroupPositionType: InternalGroupPositionType
-  internalGroupPositionMembership: InternalGroupPositionMembershipNode
+  // Better typing on this
+  internalGroupPositionMembership: Pick<
+    InternalGroupPositionMembershipNode,
+    'id' | 'getTypeDisplay' | 'position'
+  >
   dateJoinedSemesterShorthand: string
   dateEndedSemesterShorthand: string | null
   fullName: string

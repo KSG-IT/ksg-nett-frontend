@@ -49,9 +49,7 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
         <Badge color={'samfundet-red'}>{membership.positionName}</Badge>
       </td>
       <TableData>
-        {getInternalGroupPositionTypeLabel(
-          membership.internalGroupPositionType
-        )}
+        {membership.internalGroupPositionMembership.getTypeDisplay}
       </TableData>
       <TableData>{membership.dateJoinedSemesterShorthand}</TableData>
       {activeMemberships ? (
