@@ -38,7 +38,10 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <SimpleGrid cols={2}>
+      <SimpleGrid
+        cols={2}
+        breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
+      >
         <TextInput
           icon={<IconSignature size={14} />}
           error={errors?.firstName?.message}
