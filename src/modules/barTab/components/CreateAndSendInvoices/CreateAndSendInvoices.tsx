@@ -99,6 +99,10 @@ export const CreateAndSendInvoices: React.FC = ({}) => {
         mulig å slette den genererte PDF'en.
       </MessageBox>
       <InvoiceTable invoices={activeBarTab.invoices} />
+      <MessageBox type="info">
+        Det er ikke mulig å avslutte BSF før epost har blitt sent ut til hver
+        enkelt gjeng
+      </MessageBox>
       <Button
         disabled={bsfFinishedDisabled}
         loading={finalizeBarTabLoading}
