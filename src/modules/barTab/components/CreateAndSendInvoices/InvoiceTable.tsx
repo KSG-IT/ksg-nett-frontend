@@ -37,9 +37,9 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
     <tr key={invoice.id}>
       <td>{invoice.customer.name}</td>
       <td>{invoice.customer.email}</td>
-      <td>{numberWithSpaces(invoice.amount)},- NOK</td>
       <td>{numberWithSpaces(invoice.weOwe)},- NOK</td>
       <td>{numberWithSpaces(invoice.theyOwe)},- NOK</td>
+      <td>{numberWithSpaces(invoice.amount)},- NOK</td>
       <td>
         {invoice.pdf ? (
           <a href={invoice.pdf} target="_blank">
