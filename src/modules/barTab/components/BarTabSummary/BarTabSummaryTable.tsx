@@ -62,9 +62,7 @@ export const BarTabSummaryTable: React.FC<BarTabSummaryTableProps> = ({
 }
 
 const useBarTabSummaryTableStyles = createStyles(theme => ({
-  wrapper: {
-    maxWidth: '900px',
-  },
+  wrapper: {},
   table: {
     tr: {
       'last-of-type:td': {

@@ -37,8 +37,8 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
     <tr key={invoice.id}>
       <td>{invoice.customer.name}</td>
       <td>{invoice.customer.email}</td>
-      <td>{numberWithSpaces(invoice.weOwe)},- NOK</td>
       <td>{numberWithSpaces(invoice.theyOwe)},- NOK</td>
+      <td>{numberWithSpaces(invoice.weOwe)},- NOK</td>
       <td>{numberWithSpaces(invoice.amount)},- NOK</td>
       <td>
         {invoice.pdf ? (
@@ -87,8 +87,8 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
           <tr>
             <th>Navn</th>
             <th>Epost</th>
-            <th>Borte</th>
             <th>Hjemme</th>
+            <th>Borte</th>
             <th>Differanse</th>
             <th></th>
             <th></th>

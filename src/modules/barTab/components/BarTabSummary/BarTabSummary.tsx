@@ -59,7 +59,5 @@ export const BarTabSummary: React.FC<BarTabSummaryProps> = ({ barTab }) => {
 }
 
 const useBarTabSummaryStyles = createStyles(theme => ({
-  wrapper: {
-    maxWidth: '900px',
-  },
+  wrapper: {},
 }))
