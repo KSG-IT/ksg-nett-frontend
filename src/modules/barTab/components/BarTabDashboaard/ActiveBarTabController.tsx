@@ -1,4 +1,4 @@
-import { Button, Group, Stack, Text } from '@mantine/core'
+import { Button, Group, Stack } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { MessageBox } from 'components/MessageBox'
 import { BarTabStatusValues } from 'modules/barTab/enums'
@@ -8,7 +8,7 @@ import { BarTabNode } from 'modules/barTab/types.graphql'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { BarTabSummary } from '../BarTabSummary'
-import { CreateAndSendInvoices } from '../CreateAndSendInvoices/CreateAndSendInvoices'
+import { CreateAndSendInvoices } from '../CreateAndSendInvoices'
 import { RegisterProductOrders } from './RegisterProductOrders'
 
 interface ActiveBarTablControllerProps {
