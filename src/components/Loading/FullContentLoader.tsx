@@ -1,15 +1,10 @@
-import { Loader } from '@mantine/core'
-import styled from 'styled-components'
-const Wrapper = styled.div`
-  margin: auto;
-  font-size: 28px;
-  font-weight: 600;
-`
+import { Center, Loader, useMantineTheme } from '@mantine/core'
 
-export const FullContentLoader: React.VFC = () => {
+export const FullContentLoader: React.FC = () => {
+  const theme = useMantineTheme()
   return (
-    <Wrapper>
-      <Loader />
-    </Wrapper>
+    <Center style={{ height: '100%', width: '100%' }}>
+      <Loader size="lg" color="samfundet-red" />
+    </Center>
   )
 }

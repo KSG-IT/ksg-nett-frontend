@@ -31,6 +31,20 @@ export const PERMISSIONS = {
       deposit: 'economy.change_deposit',
     },
   },
+  // ===== BARTABS ======
+  barTab: {
+    view: {
+      barTab: 'bar_tab.view_bartab',
+      barTabCustomer: 'bar_tab.view_bartabcustomer',
+    },
+    add: {},
+    change: {
+      barTab: 'bar_tab.change_bartab',
+    },
+    delete: {
+      barTab: 'bar_tab.delete_bartab',
+    },
+  },
   // ===== QUOTES ======
   quotes: {
     add: {
