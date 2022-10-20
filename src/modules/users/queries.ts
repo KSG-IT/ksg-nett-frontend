@@ -97,3 +97,40 @@ export const ALL_ACTIVE_USERS_SHALLOW_QUERY = gql`
     }
   }
 `
+
+export const MANAGE_USERS_DATA_QUERY = gql`
+  query ManageUsersDataQuery($internalGroupId: ID!) {
+    manageUsersData(internalGroupId: $internalGroupId) {
+      activeMemberships {
+        userId
+        fullName
+        dateJoinedSemesterShorthand
+        dateEndedSemesterShorthand
+        internalGroupPositionMembership {
+          id
+          getTypeDisplay
+          position {
+            id
+          }
+        }
+        internalGroupPositionType
+        positionName
+      }
+      allMemberships {
+        userId
+        fullName
+        dateJoinedSemesterShorthand
+        dateEndedSemesterShorthand
+        internalGroupPositionMembership {
+          id
+          getTypeDisplay
+          position {
+            id
+          }
+        }
+        internalGroupPositionType
+        positionName
+      }
+    }
+  }
+`

@@ -1,6 +1,5 @@
 import Select from 'react-select'
 import { internalGroupPositionTypeOptions } from './consts'
-import { InternalGroupPositionType } from './types'
 import { InternalGroupPositionTypeOption } from './types'
 
 interface InternalGroupPositionTypeSelectProps {

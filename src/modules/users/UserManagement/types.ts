@@ -16,25 +16,39 @@ export type InternalGroupPositionMembershipNode = {
   id: string
   position: InternalGroupPositionNode
   internalGroupPositionType: InternalGroupPositionType
+  dateJoined: string
+  dateEnded: string
   membershipStart: string
   membershipEnd: string
   fullName: string
+  getTypeDisplay: string
 }
 
 export type ManageInternalGroupUser = {
   userId: string
+  membershipId: string
   position: InternalGroupPositionNode
   internalGroupPositionType: InternalGroupPositionType
-  internalGroupPositionMembership: InternalGroupPositionMembershipNode
+  // Better typing on this
+  internalGroupPositionMembership: Pick<
+    InternalGroupPositionMembershipNode,
+    'id' | 'getTypeDisplay' | 'position'
+  >
   dateJoinedSemesterShorthand: string
+  dateEndedSemesterShorthand: string | null
   fullName: string
   positionName: string
+}
+
+export type ManageInternalGroupData = {
+  activeMemberships: ManageInternalGroupUser[]
+  allMemberships: ManageInternalGroupUser[]
 }
 
 // ==== Query typing ===
 
 export interface ManageUsersDataReturns {
-  manageUsersData: ManageInternalGroupUser[]
+  manageUsersData: ManageInternalGroupData
 }
 
 export interface ManageUsersDataVariables {

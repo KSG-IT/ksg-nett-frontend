@@ -1,10 +1,11 @@
 import { useMutation } from '@apollo/client'
 import { Button, Group } from '@mantine/core'
+import { useInternalGroupPositionMembershipMutations } from 'modules/organization/mutations.hooks'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
+import { MANAGE_USERS_DATA_QUERY } from '../queries'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from './mutations'
-import { MANAGE_USERS_DATA_QUERY } from './queries'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
@@ -29,6 +30,9 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
   >(ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP, {
     refetchQueries: ['ManageUsersDataQuery'],
   })
+
+  const { patchInternalGroupPositionMembership, quitKSG } =
+    useInternalGroupPositionMembershipMutations()
 
   const handleAssignNewPosition = () => {
     if (selectedInternalGroupPositionType === null) return
@@ -56,6 +60,21 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
     })
   }
 
+  function handleQuitKSG() {
+    quitKSG({
+      variables: {
+        membershipId: userData.internalGroupPositionMembership.id,
+      },
+      refetchQueries: [MANAGE_USERS_DATA_QUERY],
+      onError() {
+        toast.error('Noe gikk galt')
+      },
+      onCompleted() {
+        toast.success('Bruker oppdatert!')
+      },
+    })
+  }
+
   return (
     <>
       <td>
@@ -64,7 +83,6 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
           selected={selectedInternalGroupPositionType}
         />
       </td>
-
       <td>
         <Group>
           <Button
@@ -74,10 +92,13 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
             }}
             disabled={loading}
           >
-            Endre status
+            Oppdater status
           </Button>
-          {/* Button should set the date ended for this membership to now */}
-          <Button variant="outline" color="samfundet-red">
+          <Button
+            variant="outline"
+            color="samfundet-red"
+            onClick={handleQuitKSG}
+          >
             Ferdig med KSG
           </Button>
         </Group>

@@ -1,18 +1,10 @@
 import { useLazyQuery } from '@apollo/client'
-import {
-  Button,
-  Group,
-  Modal,
-  Paper,
-  ScrollArea,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core'
+import { Button, Group, Modal, Stack, Title } from '@mantine/core'
+import { MessageBox } from 'components/MessageBox'
 import { InternalGroupSelect } from 'components/Select'
 import React, { useEffect, useState } from 'react'
+import { MANAGE_USERS_DATA_QUERY } from '../queries'
 import { UserManagementAddUser } from '../UserManagement'
-import { MANAGE_USERS_DATA_QUERY } from '../UserManagement/queries'
 import {
   ManageUsersDataReturns,
   ManageUsersDataVariables,
@@ -23,7 +15,7 @@ export const ManageUsers: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const [internalGroupId, setInternalGroupId] = useState('')
 
-  const [getUserData, { error, loading, data }] = useLazyQuery<
+  const [getUserData, { data }] = useLazyQuery<
     ManageUsersDataReturns,
     ManageUsersDataVariables
   >(MANAGE_USERS_DATA_QUERY, {
@@ -38,44 +30,43 @@ export const ManageUsers: React.FC = () => {
     getUserData()
   }, [internalGroupId])
 
-  const manageUsersData = data?.manageUsersData || []
+  const manageUsersData = data?.manageUsersData
+  const active = manageUsersData?.activeMemberships ?? []
+  const all = manageUsersData?.allMemberships ?? []
 
   return (
-    <ScrollArea style={{ width: '100%' }} p="lg">
-      <Stack>
-        <Title color={'dimmed'}>Administrer verv </Title>
-        <Paper withBorder p="md">
-          <Text>Velg gjeng</Text>
-          <Group position="apart">
-            <Group>
-              <InternalGroupSelect
-                internalGroupId={internalGroupId}
-                setInternalGroupCallback={setInternalGroupId}
-              />
-            </Group>
-            <Button color={'samfundet-red'} onClick={() => setModalOpen(true)}>
-              Tilegn nytt verv
-            </Button>
-          </Group>
-        </Paper>
-        <Title order={2} color="dimmed">
-          Aktive medlemskap
-        </Title>
-        <Paper withBorder radius={'md'} p="md" my="md">
-          <UserManagementTable usersData={manageUsersData} />
-        </Paper>
+    <Stack>
+      <Group position="apart">
+        <Group>
+          <Title order={2} color="dimmed">
+            Aktive medlemskap
+          </Title>
+          <InternalGroupSelect
+            internalGroupId={internalGroupId}
+            setInternalGroupCallback={setInternalGroupId}
+          />
+        </Group>
+        <Button color={'samfundet-red'} onClick={() => setModalOpen(true)}>
+          Tilegn nytt verv
+        </Button>
+      </Group>
+      <MessageBox type="info">
+        Her har du mulighet til å administrere aktive medlemskap i gjengen din.
+        Om noen tar permisjon eller blir aktiv pang er det mulig å dette direkte
+        i tabellen. Om personen har fått et nytt verv f.eks Barista til KA må du
+        bruke knappen over. <b>Obs!</b> Funksjonærer vil bli gitt tilgang til
+        opptakssystemet her også, denne mister de når du endrer til en annen
+        type
+      </MessageBox>
+      <UserManagementTable usersData={active} activeMemberships />
 
-        <Title order={2} color="dimmed">
-          Tidligere medlemskap
-        </Title>
-        <Paper withBorder radius={'md'} p="md" my="md">
-          <UserManagementTable usersData={[]} />
-        </Paper>
-
-        <Modal opened={modalOpen} onClose={() => setModalOpen(false)}>
-          <UserManagementAddUser setModalOpen={setModalOpen} />
-        </Modal>
-      </Stack>
-    </ScrollArea>
+      <Title order={2} color="dimmed">
+        Tidligere medlemskap
+      </Title>
+      <UserManagementTable usersData={all} />
+      <Modal opened={modalOpen} onClose={() => setModalOpen(false)}>
+        <UserManagementAddUser setModalOpen={setModalOpen} />
+      </Modal>
+    </Stack>
   )
 }

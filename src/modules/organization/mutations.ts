@@ -9,3 +9,26 @@ export const PATCH_INTERNAL_GROUP = gql`
     }
   }
 `
+
+export const PATCH_INTERNAL_GROUP_POSITION_MEMBERSHIP_MUTATION = gql`
+  mutation PatchInternalGroupPositionMembership(
+    $id: ID!
+    $input: PatchInternalGroupPositionMembershipInput!
+  ) {
+    patchInternalGroupPositionMembership(id: $id, input: $input) {
+      internalGroupPositionMembership {
+        id
+      }
+    }
+  }
+`
+
+export const QUIT_KSG_MUTATION = gql`
+  mutation QuitKSG($membershipId: ID!) {
+    quitKsg(membershipId: $membershipId) {
+      internalGroupPositionMembership {
+        id
+      }
+    }
+  }
+`
