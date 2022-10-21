@@ -16,7 +16,11 @@ import {
   InternalGroupDiscussion,
   MyInterviews,
 } from 'modules/admissions/views'
-import { BarTabCustomers, BarTabDashboard } from 'modules/barTab/views'
+import {
+  BarTabCustomers,
+  BarTabDashboard,
+  PreviousBarTabs,
+} from 'modules/barTab/views'
 import { Dashboard } from 'modules/dashboard/Dashboard'
 import {
   CreateDeposit,
@@ -101,6 +105,15 @@ export const AppRoutes: React.FC = () => {
             element={
               <RestrictedRoute permissions={PERMISSIONS.barTab.view.barTab}>
                 <BarTabDashboard />
+              </RestrictedRoute>
+            }
+          />
+
+          <Route
+            path="previous"
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.barTab.view.barTab}>
+                <PreviousBarTabs />
               </RestrictedRoute>
             }
           />

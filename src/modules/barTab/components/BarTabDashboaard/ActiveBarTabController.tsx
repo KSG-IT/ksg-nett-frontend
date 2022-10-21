@@ -47,6 +47,10 @@ export const ActiveBarTablController: React.FC<
           <Link to="customers">
             <Button color="samfundet-red">De andre gjengene</Button>
           </Link>
+
+          <Link to="previous">
+            <Button color="samfundet-red">Tidligere BSF'er</Button>
+          </Link>
         </Group>
       </Stack>
     )

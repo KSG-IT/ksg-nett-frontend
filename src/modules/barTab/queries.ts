@@ -100,3 +100,30 @@ export const ACTIVE_BAR_TAB_INVOICES_QUERY = gql`
     }
   }
 `
+
+export const PREVIOUS_BAR_TABS_QUERY = gql`
+  query PreviousBarTabsQuery($first: Int, $after: String) {
+    previousBarTabs(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          datetimeOpened
+          datetimeClosed
+          datetimeReviewed
+          reviewedBy {
+            id
+            fullName
+            initials
+            profileImage
+          }
+        }
+      }
+    }
+  }
+`

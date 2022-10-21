@@ -1,4 +1,5 @@
 import { UserNode } from 'modules/users/types'
+import { RelayEdgesWithPageInfo } from 'types/graphql'
 import { BarTabOrderTypeValues, BarTabStatusValues } from './enums'
 
 export type BarTabNode = {
@@ -102,6 +103,10 @@ export interface ActiveBarTabInvoicesReturns {
       'id' | 'amount' | 'customer' | 'weOwe' | 'theyOwe' | 'pdf' | 'emailSent'
     >[]
   }
+}
+
+export interface PreviousBarTabsReturns {
+  previousBarTabs: RelayEdgesWithPageInfo<BarTabNode>
 }
 // ==== MUTATION ====
 type CreateBarTabInput = {}
