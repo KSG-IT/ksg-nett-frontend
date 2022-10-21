@@ -31,3 +31,7 @@ export interface PatchMutationVariables<NodeType> {
 export interface DetailQueryVariables {
   id: string
 }
+
+export interface OkMutationReturns {
+  ok: boolean
+}

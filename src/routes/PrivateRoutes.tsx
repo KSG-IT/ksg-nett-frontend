@@ -16,6 +16,11 @@ import {
   InternalGroupDiscussion,
   MyInterviews,
 } from 'modules/admissions/views'
+import {
+  BarTabCustomers,
+  BarTabDashboard,
+  PreviousBarTabs,
+} from 'modules/barTab/views'
 import { Dashboard } from 'modules/dashboard/Dashboard'
 import {
   CreateDeposit,
@@ -28,7 +33,6 @@ import {
 } from 'modules/economy/views'
 import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
 import { InternalGroups } from 'modules/organization/InternalGroups'
-import { QuotesTabs } from 'modules/quotes/components/QuotesTabs'
 import {
   CreateQuote,
   PopularQuotes,
@@ -95,6 +99,35 @@ export const AppRoutes: React.FC = () => {
         <Route path="events" element={<p>Hello Events</p>} />
         <Route path="*" element={<FullPage404 />} />
 
+        <Route path="bar-tab">
+          <Route
+            index
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.barTab.view.barTab}>
+                <BarTabDashboard />
+              </RestrictedRoute>
+            }
+          />
+
+          <Route
+            path="previous"
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.barTab.view.barTab}>
+                <PreviousBarTabs />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="customers"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.barTab.view.barTabCustomer}
+              >
+                <BarTabCustomers />
+              </RestrictedRoute>
+            }
+          />
+        </Route>
         <Route path="summaries">
           <Route index element={<Summaries />} />
           <Route path="create" element={<CreateSummary />} />

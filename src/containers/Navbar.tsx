@@ -3,6 +3,7 @@ import {
   IconAffiliate,
   IconBlockquote,
   IconCalendarTime,
+  IconChartAreaLine,
   IconClipboardList,
   IconCreditCard,
   IconDisabled,
@@ -11,7 +12,6 @@ import {
   IconPhoto,
   IconQuestionMark,
   IconReportMoney,
-  IconShoppingCart,
   IconUserPlus,
   IconUsers,
 } from '@tabler/icons'
@@ -59,7 +59,12 @@ const routes: RouteGroup[] = [
       {
         icon: IconUserPlus,
         link: '/admissions',
-        label: 'Opptak',
+        label: 'Orvik',
+      },
+      {
+        icon: IconChartAreaLine,
+        link: '/bar-tab',
+        label: 'BSF',
       },
       {
         icon: IconCreditCard,
