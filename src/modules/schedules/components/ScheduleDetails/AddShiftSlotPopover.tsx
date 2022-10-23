@@ -3,7 +3,7 @@ import { RoleValues } from 'modules/schedules/consts'
 import { useShiftSlotMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
 import { ShiftNode } from 'modules/schedules/types.graphql'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { ShiftRoleSelect } from '../ScheduleRoleSelect'
 
@@ -18,6 +18,12 @@ export const AddShiftSlotPopover: React.FC<AddShiftSlotPopoverProps> = ({
   const [role, setRole] = useState<RoleValues>(RoleValues.ARRANGEMENTANSVARLIG)
 
   const { createShiftSlot } = useShiftSlotMutations()
+
+  function handleAddShiftClick(e: React.MouseEvent) {
+    e.stopPropagation()
+    e.preventDefault()
+    return setIsOpen(true)
+  }
 
   function handleAddShiftSlot() {
     createShiftSlot({
@@ -38,9 +44,17 @@ export const AddShiftSlotPopover: React.FC<AddShiftSlotPopoverProps> = ({
     })
   }
   return (
-    <Popover opened={isOpen} onClose={() => setIsOpen(false)}>
+    <Popover withinPortal opened={isOpen} onClose={() => setIsOpen(false)}>
       <Popover.Target>
-        <Button onClick={() => setIsOpen(true)} mt="sm">
+        <Button
+          onClickCapture={handleAddShiftClick}
+          size="md"
+          variant="outline"
+          compact
+          color={'gray'}
+          onClick={() => setIsOpen(true)}
+          mt="sm"
+        >
           Legg til skift
         </Button>
       </Popover.Target>
@@ -50,6 +64,7 @@ export const AddShiftSlotPopover: React.FC<AddShiftSlotPopoverProps> = ({
             value={role}
             label="Velg rolle"
             onChangeCallback={setRole}
+            onClickCapture={handleAddShiftClick}
           />
           <Button onClick={handleAddShiftSlot}>Legg til</Button>
         </Stack>
