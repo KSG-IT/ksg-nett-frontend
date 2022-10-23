@@ -1,4 +1,5 @@
 export const PERMISSIONS = {
+  // ===== ADMISSIONS ======
   admissions: {
     add: {
       admission: 'admissions.add.admission',
@@ -16,6 +17,7 @@ export const PERMISSIONS = {
       admission: 'admissions.view_admission',
     },
   },
+  // ===== ECONOMY ======
   economy: {
     add: {
       sociSession: 'economy.add_socisession',
@@ -26,14 +28,33 @@ export const PERMISSIONS = {
     change: {
       sociSession: 'economy.change_socisession',
       sociProduct: 'economy.change_sociproduct',
+      deposit: 'economy.change_deposit',
     },
   },
+  // ===== BARTABS ======
+  barTab: {
+    view: {
+      barTab: 'bar_tab.view_bartab',
+      barTabCustomer: 'bar_tab.view_bartabcustomer',
+    },
+    add: {},
+    change: {
+      barTab: 'bar_tab.change_bartab',
+    },
+    delete: {
+      barTab: 'bar_tab.delete_bartab',
+    },
+  },
+  // ===== QUOTES ======
   quotes: {
     add: {
       quote: 'quotes.add_quote',
     },
     change: {
       quote: 'quotes.change_quote',
+    },
+    delete: {
+      quote: 'quotes.delete_quote',
     },
   },
   users: {

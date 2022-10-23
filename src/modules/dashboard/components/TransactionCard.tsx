@@ -33,7 +33,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
       </td>
       <td>
         <Text align="right">
-          {format(new Date(transaction.timestamp), "d.MMM 'kl' hh:mm")}
+          {format(new Date(transaction.timestamp), "d.MMM 'kl' HH:mm")}
         </Text>
       </td>
     </tr>

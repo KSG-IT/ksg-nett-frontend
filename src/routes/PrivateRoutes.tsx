@@ -16,6 +16,11 @@ import {
   InternalGroupDiscussion,
   MyInterviews,
 } from 'modules/admissions/views'
+import {
+  BarTabCustomers,
+  BarTabDashboard,
+  PreviousBarTabs,
+} from 'modules/barTab/views'
 import { Dashboard } from 'modules/dashboard/Dashboard'
 import {
   CreateDeposit,
@@ -33,8 +38,7 @@ import {
   PopularQuotes,
   QuotesList,
   ReviewQuotes,
-} from 'modules/quotes'
-import { QuotesTabs } from 'modules/quotes/components/QuotesTabs'
+} from 'modules/quotes/views'
 import {
   AllMyShifts,
   AllShifts,
@@ -95,6 +99,35 @@ export const AppRoutes: React.FC = () => {
         <Route path="events" element={<p>Hello Events</p>} />
         <Route path="*" element={<FullPage404 />} />
 
+        <Route path="bar-tab">
+          <Route
+            index
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.barTab.view.barTab}>
+                <BarTabDashboard />
+              </RestrictedRoute>
+            }
+          />
+
+          <Route
+            path="previous"
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.barTab.view.barTab}>
+                <PreviousBarTabs />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="customers"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.barTab.view.barTabCustomer}
+              >
+                <BarTabCustomers />
+              </RestrictedRoute>
+            }
+          />
+        </Route>
         <Route path="summaries">
           <Route index element={<Summaries />} />
           <Route path="create" element={<CreateSummary />} />
@@ -111,7 +144,6 @@ export const AppRoutes: React.FC = () => {
         </Route>
 
         <Route path="quotes">
-          <Route path=":tabValue" element={<QuotesTabs />} />
           <Route path="popular" element={<PopularQuotes />} />
           <Route index element={<QuotesList />} />
           <Route
@@ -254,7 +286,14 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="economy">
           <Route path="deposits/create" element={<CreateDeposit />} />
-          <Route path="deposits" element={<Deposits />} />
+          <Route
+            path="deposits"
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.economy.change.deposit}>
+                <Deposits />
+              </RestrictedRoute>
+            }
+          />
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
           <Route path="print">
