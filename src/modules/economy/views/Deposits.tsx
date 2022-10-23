@@ -1,39 +1,14 @@
-import { useMutation, useQuery } from '@apollo/client'
-import {
-  Button,
-  Checkbox,
-  Group,
-  Paper,
-  Table,
-  TextInput,
-  Title,
-} from '@mantine/core'
-import {
-  IconFileSymlink,
-  IconLoader,
-  IconLoader2,
-  IconRefresh,
-  IconSearch,
-} from '@tabler/icons'
+import { useQuery } from '@apollo/client'
+import { Button, Checkbox, Group, Paper, TextInput, Title } from '@mantine/core'
+import { IconRefresh, IconSearch } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
-import { FullContentLoader } from 'components/Loading'
-import { ME_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
-import { useStore } from 'store'
 import styled from 'styled-components'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
-import { format } from 'util/date-fns'
-import { MEDIA_URL } from 'util/env'
 import { useDebounce } from 'util/hooks'
-import { numberWithSpaces } from 'util/parsing'
 import { DepositsTable } from '../components/Deposits'
-import { PATCH_DEPOSIT } from '../mutations'
 import { ALL_DEPOSITS } from '../queries'
-import {
-  AllDepositsQuery,
-  AllDepositsVariables,
-  DepositNode,
-} from '../types.graphql'
+import { AllDepositsQuery, AllDepositsVariables } from '../types.graphql'
 
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};
