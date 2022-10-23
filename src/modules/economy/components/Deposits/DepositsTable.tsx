@@ -96,7 +96,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
   ))
 
   return (
-    <Paper p="sm">
+    <Paper p="sm" className={classes.paper}>
       <Table>
         <thead>
           <tr>
@@ -128,5 +128,8 @@ const useDepositsTableStyles = createStyles(theme => ({
   previewImage: {
     width: '100%',
     height: '100%',
+  },
+  paper: {
+    overflowX: 'scroll',
   },
 }))

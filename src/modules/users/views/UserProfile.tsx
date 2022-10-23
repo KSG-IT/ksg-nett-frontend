@@ -1,43 +1,107 @@
 import { useQuery } from '@apollo/client'
 import {
-  Avatar,
   Button,
-  Card,
-  Center,
   createStyles,
-  Divider,
   Grid,
   Group,
   Modal,
   Stack,
-  Text,
-  ThemeIcon,
   Title,
 } from '@mantine/core'
-import {
-  IconAt,
-  IconBook,
-  IconCake,
-  IconMapPin,
-  IconPhone,
-  IconSchool,
-} from '@tabler/icons'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
-import {
-  IconWithData,
-  UserEditForm,
-  UserHistory,
-  UserQuotes,
-} from 'modules/users/components'
+import { UserEditForm, UserHistory, UserQuotes } from 'modules/users/components'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
 import { PERMISSIONS } from 'util/permissions'
+import { UserDetails } from '../components/UserDetails'
 
 import { USER_QUERY } from '../queries'
 import { UserQueryReturns, UserQueryVariables } from '../types'
+
+interface UserProfileParams {
+  userId: string
+}
+
+export const UserProfile: React.FC = () => {
+  const { classes } = useStyles()
+  const isMobile = useMediaQuery('(max-width: 800px)')
+  const [editUserModalOpen, setEditUserModalOpen] = useState(false)
+
+  const { userId } = useParams<keyof UserProfileParams>() as UserProfileParams
+  const { data, loading, error } = useQuery<
+    UserQueryReturns,
+    UserQueryVariables
+  >(USER_QUERY, {
+    variables: { id: userId },
+  })
+
+  if (error) return <FullPageError />
+
+  if (loading || !data) return <FullContentLoader />
+
+  const fullUser = data.user
+  const {
+    user: { internalGroupPositionMembershipHistory: memberships, ...user },
+  } = data
+
+  if (user === null || user === undefined) return <FullPage404 />
+
+  const editButton = (
+    <PermissionGate permissions={PERMISSIONS.users.change.user}>
+      <Button
+        variant="light"
+        color={'samfundet-red'}
+        onClick={() => setEditUserModalOpen(true)}
+      >
+        Endre
+      </Button>
+    </PermissionGate>
+  )
+
+  return (
+    <>
+      <Grid align={'flex-start'}>
+        <Grid.Col md={12} lg={9}>
+          <UserDetails user={user} onClick={() => setEditUserModalOpen(true)} />
+          <Stack mt={'xl'} className={classes.memberships}>
+            <Title order={3} className={classes.title}>
+              Sitater
+            </Title>
+            <UserQuotes quotes={user.taggedAndVerifiedQuotes} />
+          </Stack>
+        </Grid.Col>
+        <Grid.Col span={'auto'}>
+          <Stack ml={'lg'} mt={'md'}>
+            <Title order={3} className={classes.title}>
+              Vervhistorikk
+            </Title>
+            <UserHistory memberships={memberships} />
+          </Stack>
+        </Grid.Col>
+        <Stack align={'flex-start'}></Stack>
+      </Grid>
+      <Modal
+        opened={editUserModalOpen}
+        onClose={() => setEditUserModalOpen(false)}
+        title={
+          <Title color={'dimmed'} order={3}>
+            Rediger profilinfo
+          </Title>
+        }
+        size="lg"
+        padding="xl"
+      >
+        <UserEditForm
+          user={fullUser}
+          onCompletedCallback={() => setEditUserModalOpen(false)}
+        />
+      </Modal>
+    </>
+  )
+}
 
 const useStyles = createStyles(theme => ({
   title: {
@@ -97,130 +161,11 @@ const useStyles = createStyles(theme => ({
     marginTop: theme.spacing.md,
   },
   card: {
-    maxWidth: 900,
+    width: '70%',
   },
-  memberships: {
-    marginLeft: theme.spacing.xl,
+  memberships: {},
+  bio: {
+    minWidth: 412,
+    minHeight: 74,
   },
 }))
-
-interface UserProfileParams {
-  userId: string
-}
-
-export const UserProfile: React.FC = () => {
-  const { classes } = useStyles()
-  const isMobile = useMediaQuery('(min-width: 800px)')
-  const [editUserModalOpen, setEditUserModalOpen] = useState(false)
-
-  const { userId } = useParams<keyof UserProfileParams>() as UserProfileParams
-  const { data, loading, error } = useQuery<
-    UserQueryReturns,
-    UserQueryVariables
-  >(USER_QUERY, {
-    variables: { id: userId },
-  })
-
-  if (error) return <FullPageError />
-
-  if (loading || !data) return <FullContentLoader />
-
-  const fullUser = data.user
-  const {
-    user: { internalGroupPositionMembershipHistory: memberships, ...user },
-  } = data
-
-  if (user === null || user === undefined) return <FullPage404 />
-
-  return (
-    <Group align={'flex-start'} className={classes.wrapper}>
-      <Stack align={'flex-start'}>
-        <Card withBorder radius={'md'} className={classes.card}>
-          <Grid p={'xl'}>
-            <Grid.Col xs={6} lg={6}>
-              <Text className={classes.role}>{user.ksgStatus}</Text>
-              {isMobile ? null : (
-                <Center mt={'xs'}>
-                  <Avatar src={user.profileImage} size="xl" radius={60} />
-                </Center>
-              )}
-
-              <Text className={classes.name} mt={'sm'}>
-                {user.fullName}
-              </Text>
-              <Divider my={'sm'} />
-              <IconWithData icon={IconAt} userData={user.email} />
-              <IconWithData icon={IconPhone} userData={user.phone} />
-              <IconWithData icon={IconMapPin} userData={user.studyAddress} />
-              <IconWithData icon={IconSchool} userData={user.study} />
-              <IconWithData icon={IconCake} userData={user.dateOfBirth} />
-              <Group noWrap spacing={10} mt={'xl'}>
-                <ThemeIcon variant="light" color={'samfundet-red'}>
-                  <IconBook stroke={1.2} />
-                </ThemeIcon>
-                <Text className={classes.aboutMe}>Om meg</Text>
-              </Group>
-              <Text mt={'xs'}>{user.biography}</Text>
-            </Grid.Col>
-            {isMobile ? (
-              <Grid.Col xs={5} lg={5} offset={1}>
-                <Stack
-                  justify={'space-between'}
-                  style={{ height: '100%' }}
-                  align="flex-end"
-                >
-                  <Avatar
-                    src={user.profileImage}
-                    radius={'lg'}
-                    classNames={{
-                      image: classes.profileImage,
-                      root: classes.avatar,
-                    }}
-                  />
-                  <PermissionGate permissions={PERMISSIONS.users.change.user}>
-                    <Button
-                      variant="light"
-                      color={'samfundet-red'}
-                      onClick={() => setEditUserModalOpen(true)}
-                    >
-                      Endre
-                    </Button>
-                  </PermissionGate>
-                </Stack>
-              </Grid.Col>
-            ) : null}
-          </Grid>
-        </Card>
-        <Stack ml={'sm'} mt={'md'}>
-          <Title order={3} className={classes.title}>
-            Sitater
-          </Title>
-          <UserQuotes quotes={user.taggedAndVerifiedQuotes} />
-        </Stack>
-      </Stack>
-      <Stack className={classes.memberships}>
-        <Title order={3} className={classes.title}>
-          Vervhistorikk
-        </Title>
-        <UserHistory memberships={memberships} />
-      </Stack>
-
-      <Modal
-        opened={editUserModalOpen}
-        onClose={() => setEditUserModalOpen(false)}
-        title={
-          <Title color={'dimmed'} order={3}>
-            Rediger profilinfo
-          </Title>
-        }
-        size="lg"
-        padding="xl"
-      >
-        <UserEditForm
-          user={fullUser}
-          onCompletedCallback={() => setEditUserModalOpen(false)}
-        />
-      </Modal>
-    </Group>
-  )
-}

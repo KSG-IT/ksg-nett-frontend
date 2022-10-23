@@ -34,14 +34,17 @@ const UserEditSchema = yup.object().shape({
   dateOfBirth: yup.date().required('Fødselsdato må fylles ut'),
   phone: yup.string().required('Telefonnummer må fylles ut'),
   email: yup.string().required('E-post må fylles ut'),
-  biography: yup.string().required('Biografi må fylles ut'),
+  biography: yup
+    .string()
+    .required('Biografi må fylles ut')
+    .test('len', 'Maks antall ord: 150 ', val => !val || val.length <= 150),
   profileImage: yup
     .mixed()
     .nullable()
     .notRequired()
     .test(
       'FILE_SIZE',
-      'Uploaded file is too big.',
+      'Filstørrelse for stor, 1 MB maks.',
       value => !value || (value && value.size <= FILE_SIZE)
     ),
 })

@@ -73,6 +73,7 @@ const useStyles = createStyles(theme => ({
   card: {
     backgroundColor: theme.colors.white,
     borderTop: `5px solid ${theme.colors.brand}`,
+    overflowX: 'scroll',
   },
   tableHeader: {
     color: theme.colors.gray[7],
