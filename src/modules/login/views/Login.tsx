@@ -1,7 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
-  Anchor,
   Button,
   createStyles,
   Paper,
@@ -12,6 +11,7 @@ import {
 } from '@mantine/core'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { Link } from 'react-router-dom'
 import { useStore } from 'store'
 import { setLoginToken } from 'util/auth'
 import * as yup from 'yup'
@@ -73,7 +73,7 @@ export const Login: React.FC = () => {
   } = useForm<LoginInput>({ resolver: yupResolver(schema) })
   const setUser = useStore(state => state.setUser)
 
-  const { login } = useLoginMutations()
+  const { login, loginLoading } = useLoginMutations()
 
   function handleLogin(data: LoginInput) {
     const { username, password } = data
@@ -137,20 +137,23 @@ export const Login: React.FC = () => {
             error={errors.password?.message}
             {...register('password')}
           />
-          <Button type="submit" fullWidth mt="xl" size="md">
+          <Button
+            type="submit"
+            color="samfundet-red"
+            fullWidth
+            mt="xl"
+            size="md"
+            loading={loginLoading}
+          >
             Login
           </Button>
         </form>
 
         <Text align="center" mt="md">
           Glemt passordet ditt?{' '}
-          <Anchor<'a'>
-            href="#"
-            weight={700}
-            onClick={event => event.preventDefault()}
-          >
+          <Link to="/forgot-password" color="samfundet-red">
             Trykk her
-          </Anchor>
+          </Link>
         </Text>
       </Paper>
     </div>

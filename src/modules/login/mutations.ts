@@ -32,3 +32,23 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `
+
+export const RESET_My_PASSWORD_MUTATION = gql`
+  mutation ResetMyPasswordMutation($username: String!) {
+    resetMyPassword(username: $username) {
+      ok
+    }
+  }
+`
+
+export const RESET_PASSWORD_BY_TOKEN_MUTATION = gql`
+  mutation ResetPasswordByTokenMutation(
+    $newPassword: String!
+    $token: String!
+  ) {
+    resetPasswordByToken(token: $token, newPassword: $newPassword) {
+      ok
+      loginToken
+    }
+  }
+`
