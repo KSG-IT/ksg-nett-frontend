@@ -1,6 +1,7 @@
 import { ApplicantPortal } from 'modules/admissions'
 import { ReSendApplicantTokenForm } from 'modules/admissions/components/ApplicantPortal'
-import { Login } from 'modules/login/views'
+import { Login, ForgotPassword } from 'modules/login/views'
+import { ChangePasswordWithToken } from 'modules/login/views/ChangePasswordWithToken'
 import { Route, Routes } from 'react-router-dom'
 
 const PublicRoutes: React.FC = () => {
@@ -10,6 +11,8 @@ const PublicRoutes: React.FC = () => {
         <Route index element={<ReSendApplicantTokenForm />} />
         <Route path=":applicantToken" element={<ApplicantPortal />} />
       </Route>
+      <Route path="forgot-password" element={<ForgotPassword />} />
+      <Route path="reset-password" element={<ChangePasswordWithToken />} />
       <Route path="login" element={<Login />} />
       <Route path="*" element={<Login />} />
     </Routes>
