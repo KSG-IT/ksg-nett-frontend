@@ -6,6 +6,7 @@ import {
   Text,
   TextProps,
 } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import { ManageInternalGroupUser } from './types'
 import { UserManagementTableRow } from './UserManagementTableRow'
 import { getInternalGroupPositionTypeLabel } from './util'
@@ -73,28 +74,26 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   )
 
   return (
-    <Paper withBorder radius={'md'} p="md" my="md">
-      <Table>
-        {/* Should parse data in here and show loading state here */}
-        <thead>
-          <tr>
-            <Header>Navn</Header>
-            <Header align="center">Stilling</Header>
-            <Header>Gruppe</Header>
-            <Header>Startet</Header>
-            {activeMemberships ? (
-              <>
-                <Header>Sett verv</Header>
-                <th></th>
-                <th></th>
-              </>
-            ) : (
-              <Header>Sluttet</Header>
-            )}
-          </tr>
-        </thead>
-        <tbody>{tableRows}</tbody>
-      </Table>
-    </Paper>
+    <CardTable>
+      {/* Should parse data in here and show loading state here */}
+      <thead>
+        <tr>
+          <Header>Navn</Header>
+          <Header align="center">Stilling</Header>
+          <Header>Gruppe</Header>
+          <Header>Startet</Header>
+          {activeMemberships ? (
+            <>
+              <Header>Sett verv</Header>
+              <th></th>
+              <th></th>
+            </>
+          ) : (
+            <Header>Sluttet</Header>
+          )}
+        </tr>
+      </thead>
+      <tbody>{tableRows}</tbody>
+    </CardTable>
   )
 }

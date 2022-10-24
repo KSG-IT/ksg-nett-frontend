@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Paper, Stack, Table, Text, Title } from '@mantine/core'
 import { IconFileDownload } from '@tabler/icons'
+import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { UserSelect } from 'components/Select'
@@ -85,19 +86,17 @@ export const PrintWorkingToday: React.FC = ({}) => {
         </Button>
       </Group>
 
-      <Paper p="md">
-        <Table withColumnBorders withBorder>
-          <thead>
-            <tr>
-              <th>Navn</th>
-              {productNames.map((productName, index) => (
-                <th key={index}>{productName}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </Paper>
+      <CardTable withColumnBorders withBorder>
+        <thead>
+          <tr>
+            <th>Navn</th>
+            {productNames.map((productName, index) => (
+              <th key={index}>{productName}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </CardTable>
       <Group>
         <Text>Mangler det noen?</Text>
         <UserSelect setUserCallback={handleAddUserId} />
