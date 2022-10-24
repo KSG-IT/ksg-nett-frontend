@@ -1,5 +1,6 @@
-import { Button, Card, Menu, Modal, Table } from '@mantine/core'
+import { Button, Menu, Modal } from '@mantine/core'
 import { IconDots, IconEye, IconTrash } from '@tabler/icons'
+import { CardTable } from 'components/CardTable'
 import { PermissionGate } from 'components/PermissionGate'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { parseApplicantPriorityInternalGroupPosition } from 'modules/admissions/parsing'
@@ -90,8 +91,8 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
   ))
 
   return (
-    <Card>
-      <Table>
+    <>
+      <CardTable>
         <thead>
           <tr>
             <th>Navn</th>
@@ -104,7 +105,7 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
           </tr>
         </thead>
         <tbody>{rows}</tbody>
-      </Table>
+      </CardTable>
       <Modal
         opened={deleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}
@@ -116,6 +117,6 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
           closeModalCallback={() => setDeleteModalOpen(false)}
         />
       </Modal>
-    </Card>
+    </>
   )
 }
