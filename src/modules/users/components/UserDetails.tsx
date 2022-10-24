@@ -1,20 +1,21 @@
 import {
   Avatar,
+  Button,
   Card,
   Center,
+  createStyles,
   Divider,
   Grid,
   Group,
   Stack,
   Text,
   ThemeIcon,
-  createStyles,
-  Button,
 } from '@mantine/core'
 import {
   IconAt,
   IconBook,
   IconCake,
+  IconHome,
   IconMapPin,
   IconPhone,
   IconSchool,
@@ -55,8 +56,9 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
             {user.fullName}
           </Text>
           <Divider my={'sm'} />
-          <IconWithData icon={IconAt} userData={user.email} />
-          <IconWithData icon={IconPhone} userData={user.phone} />
+          <IconWithData icon={IconAt} userData={user.email} type="email" />
+          <IconWithData icon={IconPhone} userData={user.phone} type="tel" />
+          <IconWithData icon={IconHome} userData={user.homeTown} />
           <IconWithData icon={IconMapPin} userData={user.studyAddress} />
           <IconWithData icon={IconSchool} userData={user.study} />
           <IconWithData icon={IconCake} userData={user.dateOfBirth} />

@@ -11,6 +11,7 @@ export type UserProfileFormData = {
   firstName: string
   lastName: string
   studyAddress: string
+  homeTown: string
   study: string
   dateOfBirth: Date
   phone: string
@@ -30,6 +31,7 @@ const UserEditSchema = yup.object().shape({
   firstName: yup.string().required('Fornavn må fylles ut'),
   lastName: yup.string().required('Etternavn må fylles ut'),
   studyAddress: yup.string().required('Adresse må fylles ut'),
+  homeTown: yup.string().required('Hjemby må fylles ut'),
   study: yup.string().required('Studie må fylles ut'),
   dateOfBirth: yup.date().required('Fødselsdato må fylles ut'),
   phone: yup.string().required('Telefonnummer må fylles ut'),

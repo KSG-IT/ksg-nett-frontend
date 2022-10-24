@@ -15,7 +15,7 @@ export const ME_QUERY = gql`
       dateOfBirth
       biography
       studyAddress
-      homeAddress
+      homeTown
       phone
       upvotedQuoteIds
 
@@ -42,8 +42,7 @@ export const USER_QUERY = gql`
       firstName
       lastName
       biography
-      studyAddress
-      homeAddress
+      homeTown
       dateOfBirth
       ksgStatus
       study
