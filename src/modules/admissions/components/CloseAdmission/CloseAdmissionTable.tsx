@@ -1,4 +1,5 @@
 import { Table } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { ToggleApplicantTableRow } from './ToggleApplicantTableRow'
 
@@ -14,21 +15,21 @@ export const CloseAdmissionTable: React.VFC<CloseAdmissionTableProps> = ({
   ))
 
   return (
-    <Table>
+    <CardTable>
       <thead>
         <tr>
-          <th key={1}>Navn</th>
-          <th key={2}>Førstevalg</th>
-          <th key={3}></th>
-          <th key={4}>Andrevalg</th>
-          <th key={5}></th>
-          <th key={6}>Tredjevalg</th>
-          <th key={7}></th>
-          <th key={8}>Ja?</th>
+          <th>Navn</th>
+          <th>Førstevalg</th>
+          <th></th>
+          <th>Andrevalg</th>
+          <th></th>
+          <th>Tredjevalg</th>
+          <th></th>
+          <th>Ja?</th>
           {/* <th>Får hvilket verv</th> */}
         </tr>
       </thead>
       <tbody>{applicantRows}</tbody>
-    </Table>
+    </CardTable>
   )
 }

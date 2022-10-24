@@ -1,4 +1,5 @@
 import { createStyles, Paper, Stack, Table, Title } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import { BarTabCustomerData } from 'modules/barTab/types.graphql'
 import { numberWithSpaces } from 'util/parsing'
 
@@ -25,44 +26,45 @@ export const BarTabSummaryTable: React.FC<BarTabSummaryTableProps> = ({
   return (
     <Stack className={classes.wrapper}>
       <Title order={2}>{customer.name}</Title>
-      <Paper my="md" p="sm">
-        <Table className={classes.table} withColumnBorders>
-          <thead>
-            <tr>
-              <th>Hvem</th>
-              <th>Hvor</th>
-              <th>Produkt</th>
-              <th>Kvantitet</th>
-              <th>Pris</th>
-              <th>Sum</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orderRows}
-            <tr className={classes.summaryRow}>
-              <td>De har krysset hos oss</td>
-              <td colSpan={4}></td>
-              <td>{numberWithSpaces(total)},- NOK</td>
-            </tr>
-            <tr className={classes.summaryRow}>
-              <td>Vi har krysset hos de</td>
-              <td colSpan={4}></td>
-              <td>-{numberWithSpaces(weOwe)},- NOK</td>
-            </tr>
-            <tr className={classes.summaryRow}>
-              <td>Differanse</td>
-              <td colSpan={4}></td>
-              <td>{numberWithSpaces(debt)},- NOK</td>
-            </tr>
-          </tbody>
-        </Table>
-      </Paper>
+      <CardTable>
+        <thead>
+          <tr>
+            <th>Hvem</th>
+            <th>Hvor</th>
+            <th>Produkt</th>
+            <th>Kvantitet</th>
+            <th>Pris</th>
+            <th>Sum</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orderRows}
+          <tr className={classes.summaryRow}>
+            <td>De har krysset hos oss</td>
+            <td colSpan={4}></td>
+            <td>{numberWithSpaces(total)},- NOK</td>
+          </tr>
+          <tr className={classes.summaryRow}>
+            <td>Vi har krysset hos de</td>
+            <td colSpan={4}></td>
+            <td>-{numberWithSpaces(weOwe)},- NOK</td>
+          </tr>
+          <tr className={classes.summaryRow}>
+            <td>Differanse</td>
+            <td colSpan={4}></td>
+            <td>{numberWithSpaces(debt)},- NOK</td>
+          </tr>
+        </tbody>
+      </CardTable>
     </Stack>
   )
 }
 
 const useBarTabSummaryTableStyles = createStyles(theme => ({
   wrapper: {},
+  card: {
+    overflowX: 'scroll',
+  },
   table: {
     tr: {
       'last-of-type:td': {

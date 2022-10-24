@@ -1,6 +1,15 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { IconTrash } from '@tabler/icons'
-import { Card } from 'components/Card'
+import {
+  Button,
+  Card,
+  Group,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+  UnstyledButton,
+} from '@mantine/core'
+import { IconPlus, IconTrash } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import {
@@ -24,17 +33,6 @@ type WizardStage =
   | 'AVAILABLE_POSITIONS'
   | 'SUMMARY'
 
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 900px;
-`
-
-const Title = styled.h1`
-  margin: 0;
-`
 const StatementContainerTitle = styled.h2`
   margin: 0;
 `
@@ -147,11 +145,11 @@ export const ConfigureInterviewTemplate: React.VFC<
   } = data
 
   return (
-    <Wrapper>
+    <Stack>
       <Title>Intervjumal spørsmål</Title>
       <Card>
         <StatementContainer>
-          <StatementContainerTitle>Ja/Nei spørsmål</StatementContainerTitle>
+          <Title order={2}>Ja/Nei spørsmål</Title>
           {interviewBooleanEvaluationStatements.map(node => (
             <StatementRow key={node.id}>
               <span>{node.statement}</span>
@@ -164,54 +162,69 @@ export const ConfigureInterviewTemplate: React.VFC<
           ))}
         </StatementContainer>
       </Card>
-      <AddStatementContainer>
-        <label>Legg til ja/nei spørsmål</label>
-        <input
+      <Group align="flex-end">
+        <Text>Legg til ja/nei spørsmål</Text>
+        <TextInput
           value={interviewBooleanEvaluation}
           onChange={evt => setInterviewBooleanEvaluation(evt.target.value)}
         />
-        <button onClick={handleCreateInterviewBooleanEvaluation}>
+        <Button
+          color="samfundet-red"
+          variant="subtle"
+          leftIcon={<IconPlus />}
+          onClick={handleCreateInterviewBooleanEvaluation}
+        >
           Legg til
-        </button>
-      </AddStatementContainer>
+        </Button>
+      </Group>
       <Card>
-        <StatementContainer>
-          <StatementContainerTitle>Vurderingsspørsmål</StatementContainerTitle>
+        <Stack>
+          <Title order={3}>Vurderingsspørsmål</Title>
           {interviewAdditionalEvaluationStatements.map(node => (
-            <StatementRow key={node.id}>
-              <span>{node.statement}</span>
-              <IconTrash
-                size="sm"
-                onClick={() =>
-                  handleDeleteInterviewAdditionalEvaluationStatements(node.id)
-                }
-              />
-            </StatementRow>
+            <Group key={node.id}>
+              <Text>{node.statement}</Text>
+              <UnstyledButton>
+                <IconTrash
+                  onClick={() =>
+                    handleDeleteInterviewAdditionalEvaluationStatements(node.id)
+                  }
+                />
+              </UnstyledButton>
+            </Group>
           ))}
-        </StatementContainer>
+        </Stack>
       </Card>
-      <AddStatementContainer>
-        <label>Vurderingsspørsmål</label>
-        <input
+      <Group align="flex-end">
+        <Text>Vurderingsspørsmål</Text>
+        <TextInput
           value={interviewAdditionalEvaluationStatement}
           onChange={evt =>
             setInterviewAdditionalEvaluationStatement(evt.target.value)
           }
         />
-        <button onClick={handleCreateInterviewAdditionalEvaluationStatement}>
+        <Button
+          color="samfundet-red"
+          variant="subtle"
+          leftIcon={<IconPlus />}
+          onClick={handleCreateInterviewAdditionalEvaluationStatement}
+        >
           Legg til
-        </button>
-      </AddStatementContainer>
-      <NavigationContainer>
-        <button
+        </Button>
+      </Group>
+      <Group>
+        <Button
+          color="samfundet-red"
           onClick={() => setStageCallback('INTERVIEW_LOCATION_AVAILABILITY')}
         >
           Forrige steg
-        </button>
-        <button onClick={() => setStageCallback('AVAILABLE_POSITIONS')}>
+        </Button>
+        <Button
+          color="samfundet-red"
+          onClick={() => setStageCallback('AVAILABLE_POSITIONS')}
+        >
           Neste steg
-        </button>
-      </NavigationContainer>
-    </Wrapper>
+        </Button>
+      </Group>
+    </Stack>
   )
 }

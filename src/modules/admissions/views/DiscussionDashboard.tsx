@@ -12,7 +12,7 @@ import { useAdmissionMutations } from '../mutations.hooks'
 import { ALL_INTERNAL_GROUP_APPLICANT_DATA } from '../queries'
 import { AllInternalGroupsAcceptingApplicantsReturns } from '../types.graphql'
 
-export const DiscussionDashboard: React.VFC = () => {
+export const DiscussionDashboard: React.FC = () => {
   /**
    * This component should show show some overall progress statistics of the different groups
    * Should also list shortcuts to internal group dashboards
@@ -46,12 +46,12 @@ export const DiscussionDashboard: React.VFC = () => {
   }
   const { allInternalGroupApplicantData } = data
   return (
-    <Stack style={{ overflowY: 'scroll', width: '900px' }} p="lg">
+    <Stack>
       <AdmissionsShortcutPanel />
       <Group position="apart" mb="md">
         <Title>Fordelingsmøtet</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
-          <Button onClick={handleLockAdmission}>
+          <Button color="samfundet-red" onClick={handleLockAdmission}>
             Fordelingsmøtet er ferdig
           </Button>
         </PermissionGate>

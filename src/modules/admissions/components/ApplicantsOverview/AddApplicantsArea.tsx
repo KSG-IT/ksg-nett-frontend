@@ -2,6 +2,7 @@ import { Button, Group, Stack, Textarea, Title } from '@mantine/core'
 import { IconFileUpload, IconPlane } from '@tabler/icons'
 import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
+import { CURRENT_APPLICANTS_QUERY } from 'modules/admissions/queries'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { UploadAdmissionCSVModal } from './UploadAdmissionCSVModal'
@@ -18,11 +19,17 @@ export const AddApplicantsArea: React.FC = () => {
       .filter(emailString => emailString !== '')
       .map(emailString => emailString.trim())
 
-    toast.promise(createApplicants({ variables: { emails: parsedEmails } }), {
-      loading: 'Oppretter søknader',
-      error: 'Noe gikk galt',
-      success: 'søknader opprettet',
-    })
+    toast.promise(
+      createApplicants({
+        variables: { emails: parsedEmails },
+        refetchQueries: [CURRENT_APPLICANTS_QUERY],
+      }),
+      {
+        loading: 'Oppretter søknader',
+        error: 'Noe gikk galt',
+        success: 'søknader opprettet',
+      }
+    )
     setEmails('')
   }
   return (
@@ -41,13 +48,18 @@ export const AddApplicantsArea: React.FC = () => {
       />
       <Group>
         <Button
+          color="samfundet-red"
           leftIcon={<IconPlane />}
           onClick={handleCreateApplicants}
           disabled={createApplicantsLoading}
         >
           Legg til søkere
         </Button>
-        <Button leftIcon={<IconFileUpload />} onClick={() => setOpen(true)}>
+        <Button
+          color="samfundet-red"
+          leftIcon={<IconFileUpload />}
+          onClick={() => setOpen(true)}
+        >
           Last opp fil
         </Button>
         <UploadAdmissionCSVModal opened={open} onClose={() => setOpen(false)} />

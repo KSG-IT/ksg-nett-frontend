@@ -6,6 +6,9 @@ import { format } from 'util/date-fns'
 import { gql } from 'graphql-tag'
 import { useNavigate } from 'react-router-dom'
 import { InterviewNode } from '../types.graphql'
+import { CardTable } from 'components/CardTable'
+import { BackButton } from 'components/BackButton'
+import { IconEye } from '@tabler/icons'
 
 interface MyInterviewsReturns {
   myInterviews: Pick<
@@ -62,31 +65,33 @@ export const MyInterviews: React.VFC = () => {
       <td>{interview.location.name}</td>
       <td>
         <Button
+          color="samfundet-red"
+          leftIcon={<IconEye />}
           onClick={() => {
             handleRedirectToInterview(interview.applicant.id)
           }}
         >
-          Detaljer
+          Mer info
         </Button>
       </td>
     </tr>
   ))
 
   return (
-    <Stack style={{ overflowY: 'scroll', width: '100%' }} p="lg">
+    <Stack>
+      <BackButton to="/admissions" />
       <Title>Mine intervjuer</Title>
-      <Paper p="md">
-        <Table>
-          <thead>
-            <tr>
-              <td>Navn</td>
-              <td>Tidspunkt</td>
-              <td>Sted</td>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </Paper>
+      <CardTable>
+        <thead>
+          <tr>
+            <th>Navn</th>
+            <th>Tidspunkt</th>
+            <th>Sted</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </CardTable>
     </Stack>
   )
 }

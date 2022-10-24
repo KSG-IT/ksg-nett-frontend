@@ -1,9 +1,11 @@
 import { useQuery } from '@apollo/client'
-import { Paper, Stack, Title } from '@mantine/core'
+import { Button, Group, Paper, Stack, Title } from '@mantine/core'
 import { IconCircleCheck, IconCircleX } from '@tabler/icons'
+import { BackButton } from 'components/BackButton'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
+import { SynCButton } from 'components/SyncButton'
 import { useParams } from 'react-router-dom'
 import { ApplicantsTable } from '../components/InternalGroupApplicants/ApplicantsTable'
 import { INTERNAL_GROUP_APPLICANTS_DATA } from '../queries'
@@ -20,7 +22,7 @@ export const InternalGroupApplicants: React.VFC = ({}) => {
   const { internalGroupId } = useParams<
     keyof InternalGroupApplicantsParams
   >() as InternalGroupApplicantsParams
-  const { data, loading, error } = useQuery<
+  const { data, loading, error, refetch } = useQuery<
     InternalGroupApplicantsDataReturns,
     InternalGroupApplicantsDataVariables
   >(INTERNAL_GROUP_APPLICANTS_DATA, {
@@ -54,7 +56,11 @@ export const InternalGroupApplicants: React.VFC = ({}) => {
 
   return (
     <Stack>
-      <Title>Søkeroversikt {internalGroupName}</Title>
+      <BackButton to="/admissions" />
+      <Group position="apart">
+        <Title>Søkeroversikt {internalGroupName}</Title>
+        <SynCButton refetchCallback={refetch} refetchLoading={loading} />
+      </Group>
       <MessageBox type="info">
         <IconCircleX color="red" /> indikerer ingen fra{' '}
         {internalGroupName.toLocaleLowerCase()} er på intervjuet.{' '}

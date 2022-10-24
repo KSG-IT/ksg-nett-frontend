@@ -178,6 +178,7 @@ export const APPLICANT_QUERY = gql`
           id
           initials
           profileImage
+          fullName
         }
       }
     }

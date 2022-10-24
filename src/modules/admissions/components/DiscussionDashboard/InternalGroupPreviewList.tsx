@@ -2,7 +2,7 @@ import { Stack } from '@mantine/core'
 import { InternalGroupApplicantData } from 'modules/admissions/types.graphql'
 import { InternalGroupPreviewCard } from './InternalGroupPreviewCard'
 
-export const InternalGroupPreviewList: React.VFC<{
+export const InternalGroupPreviewList: React.FC<{
   allInternalGroupApplicantData: InternalGroupApplicantData[]
 }> = ({ allInternalGroupApplicantData }) => {
   return (

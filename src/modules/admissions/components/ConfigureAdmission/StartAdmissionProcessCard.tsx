@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { Button, Text, Title } from '@mantine/core'
+import { Button, Group, Stack, Text, Title } from '@mantine/core'
 import { PermissionGate } from 'components/PermissionGate'
 import { AdmissionStatusValues } from 'modules/admissions/consts'
 import { CREATE_ADMISSION } from 'modules/admissions/mutations'
@@ -7,10 +7,7 @@ import {
   CreateAdmissionReturns,
   CreateAdmissionVariables,
 } from 'modules/admissions/types.graphql'
-import styled from 'styled-components'
 import { PERMISSIONS } from 'util/permissions'
-
-const Wrapper = styled.div``
 
 type WizardStage =
   | 'START'
@@ -47,7 +44,7 @@ export const StartAdmissionProcessCard: React.VFC<
     })
   }
   return (
-    <Wrapper>
+    <Stack>
       <Title>Opptak</Title>
       <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
         <Text>
@@ -56,10 +53,14 @@ export const StartAdmissionProcessCard: React.VFC<
           glemt å registrere på et opptak? Isåfall vil du bruke{' '}
           <b>Legg til ny bruker</b>
         </Text>
-        <Button onClick={handleOpenAdmission}>Start nytt opptak</Button>
+        <Group>
+          <Button color="samfundet-red" onClick={handleOpenAdmission}>
+            Start nytt opptak
+          </Button>
+        </Group>
         <div>Noen du har glemt å legge til?</div>
-        <Button>Legg til ny bruker</Button>
+        <Button color="samfundet-red">Legg til ny bruker</Button>
       </PermissionGate>
-    </Wrapper>
+    </Stack>
   )
 }

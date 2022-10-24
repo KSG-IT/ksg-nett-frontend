@@ -1,5 +1,5 @@
-import { Avatar, AvatarProps, Tooltip } from '@mantine/core'
-import { UserNode, UserThumbnailProps } from 'modules/users/types'
+import { Avatar, Tooltip } from '@mantine/core'
+import { UserThumbnailProps } from 'modules/users/types'
 import { Link } from 'react-router-dom'
 
 export const UserThumbnail: React.FC<UserThumbnailProps> = ({
@@ -10,7 +10,7 @@ export const UserThumbnail: React.FC<UserThumbnailProps> = ({
   const { profileImage, initials, fullName } = user
   const hasprofileImage = profileImage !== null
   return (
-    <Tooltip label={fullName} withArrow>
+    <Tooltip label={fullName} withArrow withinPortal>
       <Avatar
         size={size}
         component={Link}

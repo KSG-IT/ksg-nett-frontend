@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import { Stack, Title } from '@mantine/core'
 import { InterviewScheduleForm } from '../AdmissionConfiguration/InterviewScheduleForm'
 
 type WizardStage =
@@ -8,12 +8,6 @@ type WizardStage =
   | 'INTERVIEW_TEMPLATE'
   | 'AVAILABLE_POSITIONS'
   | 'SUMMARY'
-
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-`
-
-const Title = styled.h1``
 
 interface ConfigureInterviewScheduleProps {
   setStageCallback: (stage: WizardStage) => void
@@ -27,12 +21,9 @@ export const ConfigureInterviewSchedule: React.VFC<
   }
 
   return (
-    <Wrapper>
+    <Stack>
       <Title>Innstillinger intervjuperiode</Title>
-      <InterviewScheduleForm
-        // interviewSchedule={interviewSchedule}
-        nextStageCallback={nextStage}
-      />
-    </Wrapper>
+      <InterviewScheduleForm nextStageCallback={nextStage} />
+    </Stack>
   )
 }

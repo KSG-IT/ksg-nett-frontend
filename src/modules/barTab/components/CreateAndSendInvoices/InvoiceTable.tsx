@@ -81,8 +81,8 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
   ))
 
   return (
-    <Paper>
-      <Table className={classes.table}>
+    <Paper className={classes.card}>
+      <Table>
         <thead>
           <tr>
             <th>Navn</th>
@@ -104,7 +104,9 @@ const useInvoiceTableStyles = createStyles({
   wrapper: {
     width: '100%',
   },
-  table: {},
+  card: {
+    overflowX: 'scroll',
+  },
   summaryRow: {
     fontWeight: 'bold',
   },

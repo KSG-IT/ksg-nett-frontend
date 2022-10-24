@@ -10,6 +10,7 @@ import {
 import {
   ApplicantNotices,
   ApplicantsOverview,
+  AssignInterview,
   ConfigurationWizard,
   DiscussionDashboard,
   InternalGroupApplicants,
@@ -220,6 +221,17 @@ export const AppRoutes: React.FC = () => {
                 permissions={PERMISSIONS.admissions.view.admission}
               >
                 <ApplicantNotices />
+              </RestrictedRoute>
+            }
+          />
+
+          <Route
+            path="assign-interview"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <AssignInterview />
               </RestrictedRoute>
             }
           />

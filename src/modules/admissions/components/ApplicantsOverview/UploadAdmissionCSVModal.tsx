@@ -1,5 +1,6 @@
 import { Button, FileInput, Modal, Stack, Table } from '@mantine/core'
 import { IconFileCode, IconUpload, IconUserPlus } from '@tabler/icons'
+import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { ApplicantCSVData } from 'modules/admissions/types.graphql'
@@ -78,6 +79,7 @@ export const UploadAdmissionCSVModal: React.FC<
           clearable
         />
         <Button
+          color="samfundet-red"
           leftIcon={<IconUpload />}
           disabled={!file}
           type="submit"
@@ -87,6 +89,7 @@ export const UploadAdmissionCSVModal: React.FC<
         </Button>
       </Stack>
       <Button
+        color="samfundet-red"
         disabled={result.length === 0 || !file}
         loading={createApplicantsFromCSVLoading}
         leftIcon={<IconUserPlus />}
@@ -96,7 +99,7 @@ export const UploadAdmissionCSVModal: React.FC<
         Lag brukere for søkere
       </Button>
 
-      <Table>
+      <CardTable>
         <thead>
           <tr>
             <th>Navn</th>
@@ -113,7 +116,7 @@ export const UploadAdmissionCSVModal: React.FC<
             </tr>
           ))}
         </tbody>
-      </Table>
+      </CardTable>
     </Modal>
   )
 }

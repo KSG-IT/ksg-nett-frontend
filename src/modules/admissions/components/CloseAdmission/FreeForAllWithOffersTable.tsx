@@ -1,4 +1,5 @@
 import { Button, Table } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import {
   useGiveApplicantToInternalGroupMutation,
   useResetApplicantInternalGroupPositionOffer,
@@ -67,7 +68,7 @@ export const FreeForAllWithOffersTable: React.VFC<{
   ))
 
   return (
-    <Table>
+    <CardTable>
       <thead>
         <tr>
           <th key={1}>Navn</th>
@@ -77,7 +78,7 @@ export const FreeForAllWithOffersTable: React.VFC<{
           <th key={5}>Nullstill</th>
         </tr>
       </thead>
-      <tbody style={{ width: '100%' }}>{interestRows}</tbody>
-    </Table>
+      <tbody>{interestRows}</tbody>
+    </CardTable>
   )
 }

@@ -1,12 +1,16 @@
 import { Card, Group, Stack, Text } from '@mantine/core'
-import { IconUsers, IconUserSearch, IconWheelchair } from '@tabler/icons'
+import {
+  Icon3dCubeSphere,
+  IconUsers,
+  IconUserSearch,
+  IconWheelchair,
+} from '@tabler/icons'
 import { Link } from 'react-router-dom'
 
-export const AdmissionsShortcutPanel: React.VFC<{}> = () => {
+export const AdmissionsShortcutPanel: React.FC<{}> = () => {
   return (
     <Stack>
       <Group mt="sm">
-        {/* Rewrite to list compnent */}
         <Link to="/admissions/my-interviews">
           <Card
             p="sm"
@@ -41,6 +45,19 @@ export const AdmissionsShortcutPanel: React.VFC<{}> = () => {
           >
             <Stack m="auto" align={'center'}>
               <IconUserSearch />
+              <Text weight={'bold'}>Oppfølging</Text>
+            </Stack>
+          </Card>
+        </Link>
+
+        <Link to="/admissions/assign-interview">
+          <Card
+            p="sm"
+            style={{ width: '145px', height: '145px', borderRadius: '16px' }}
+            withBorder
+          >
+            <Stack m="auto" align={'center'}>
+              <Icon3dCubeSphere />
               <Text weight={'bold'}>Oppfølging</Text>
             </Stack>
           </Card>

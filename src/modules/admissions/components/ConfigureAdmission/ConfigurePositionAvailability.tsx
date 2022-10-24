@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Card, Table, Text, Title } from '@mantine/core'
+import { Button, Card, Group, Stack, Table, Text, Title } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -17,24 +18,6 @@ type WizardStage =
   | 'INTERVIEW_TEMPLATE'
   | 'AVAILABLE_POSITIONS'
   | 'SUMMARY'
-
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-  display: flex;
-  flex-direction: column;
-`
-
-const AvailablePositionsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const AvailablePositionsRow = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
-const NavigationContainer = styled.div``
 
 interface ExternallyAvailableInternalGroupPositionsReturns {
   currentAdmissionInternalGroupPositionData: AdmissionAvailableInternalGroupPositionData[]
@@ -97,49 +80,70 @@ export const ConfigurePosistionAvailability: React.VFC<
   const { currentAdmissionInternalGroupPositionData } = data
 
   return (
-    <Wrapper>
-      <Title my="md">Tilgjengelige verv</Title>
+    <Stack>
+      <Title>Tilgjengelige verv</Title>
       <MessageBox type="info">
         Her kan du velge verv som skal være mulig å søke på og hvor mange vi tar
         opp i hver av stillingene.
       </MessageBox>
-      <Card my="md">
-        {currentAdmissionInternalGroupPositionData.map(position => (
-          <PositionAvailabilityInput
-            availablePosition={position}
-            key={position.id}
-          />
-        ))}
-      </Card>
-
+      <CardTable>
+        <thead>
+          <tr>
+            <th>Stilling</th>
+            <th>Type</th>
+            <th>Antall</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentAdmissionInternalGroupPositionData.map(position => (
+            <PositionAvailabilityInput
+              availablePosition={position}
+              key={position.id}
+            />
+          ))}
+        </tbody>
+      </CardTable>
       <Title order={3}>Legg til verv</Title>
-      <Card>
-        <Table>
-          <thead>
-            <td>Verv</td>
-          </thead>
-          <tbody>
-            {availablePositionsToAdd.map(position => (
-              <tr>
-                <td>
-                  <Text>{position.name}</Text>
-                </td>
-                <td>
-                  <Button onClick={() => handleAddPosition(position.id)}>
-                    Gjør tilgjengelig
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Card>
-      <NavigationContainer>
-        <button onClick={() => setStageCallback('INTERVIEW_TEMPLATE')}>
+      <CardTable>
+        <thead>
+          <tr>
+            <th>Verv</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {availablePositionsToAdd.map(position => (
+            <tr key={position.id}>
+              <td>
+                <Text>{position.name}</Text>
+              </td>
+              <td>
+                <Button
+                  color="samfundet-red"
+                  onClick={() => handleAddPosition(position.id)}
+                >
+                  Gjør tilgjengelig
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </CardTable>
+      <Group>
+        <Button
+          color="samfundet-red"
+          onClick={() => setStageCallback('INTERVIEW_TEMPLATE')}
+        >
           Forrige steg
-        </button>
-        <button onClick={() => setStageCallback('SUMMARY')}>Neste steg</button>
-      </NavigationContainer>
-    </Wrapper>
+        </Button>
+        <Button
+          color="samfundet-red"
+          onClick={() => setStageCallback('SUMMARY')}
+        >
+          Neste steg
+        </Button>
+      </Group>
+    </Stack>
   )
 }

@@ -1,5 +1,13 @@
 import { useMutation } from '@apollo/client'
-import { Button, Group, NumberInput, Select, Text } from '@mantine/core'
+import {
+  Button,
+  Group,
+  NumberInput,
+  Select,
+  Text,
+  UnstyledButton,
+} from '@mantine/core'
+import { IconTrash } from '@tabler/icons'
 import {
   DELETE_ADMISSION_AVAILABLE_INTERNAL_GROUP_POSITION_DATA,
   PATCH_ADMISSION_AVAILABLE_INTERNAL_GROUP_POSITION_DATA,
@@ -71,22 +79,29 @@ export const PositionAvailabilityInput: React.VFC<
   }
 
   return (
-    <Group>
-      <Text>{availablePosition.internalGroupPosition.name}</Text>
-      <Select
-        data={[
-          { label: 'Funksjonær', value: 'FUNCTIONARY' },
-          { label: 'Gjengmedlem', value: 'GANG_MEMBER' },
-        ]}
-        onChange={handleMembershipTypeChange}
-        defaultValue={availablePosition.membershipType}
-      />
-      <NumberInput
-        value={availabilityNumber}
-        onChange={handleAvailableNumberChange}
-      />
-
-      <Button onClick={handleRemovePosition}>Fjern verv</Button>
-    </Group>
+    <tr>
+      <td>{availablePosition.internalGroupPosition.name}</td>
+      <td>
+        <Select
+          data={[
+            { label: 'Funksjonær', value: 'FUNCTIONARY' },
+            { label: 'Gjengmedlem', value: 'GANG_MEMBER' },
+          ]}
+          onChange={handleMembershipTypeChange}
+          defaultValue={availablePosition.membershipType}
+        />
+      </td>
+      <td>
+        <NumberInput
+          value={availabilityNumber}
+          onChange={handleAvailableNumberChange}
+        />
+      </td>
+      <td>
+        <UnstyledButton onClick={handleRemovePosition}>
+          <IconTrash />
+        </UnstyledButton>
+      </td>
+    </tr>
   )
 }

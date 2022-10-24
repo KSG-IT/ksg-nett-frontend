@@ -1,4 +1,5 @@
 import { Button, Paper, Table } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
 import {
   useCreateApplicantInterest,
@@ -121,21 +122,21 @@ export const FreeForAllApplicantsTable: React.FC<
   ))
 
   return (
-    <Paper p="md">
-      <Table>
-        <thead>
-          <td>Navn</td>
-          <td>Førstevalg</td>
-          <td></td>
-          <td>Andrevalg</td>
-          <td></td>
-          <td>Tredjevalg</td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
-    </Paper>
+    <CardTable>
+      <thead>
+        <tr>
+          <th>Navn</th>
+          <th>Førstevalg</th>
+          <th></th>
+          <th>Andrevalg</th>
+          <th></th>
+          <th>Tredjevalg</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </CardTable>
   )
 }

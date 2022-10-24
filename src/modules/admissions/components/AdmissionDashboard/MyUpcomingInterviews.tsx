@@ -5,6 +5,7 @@ import { MessageBox } from 'components/MessageBox'
 import { format } from 'util/date-fns'
 import { InterviewNode } from 'modules/admissions/types.graphql'
 import { useNavigate } from 'react-router-dom'
+import { CardTable } from 'components/CardTable'
 
 interface MyInterviewsReturns {
   myUpcomingInterviews: Pick<
@@ -70,20 +71,18 @@ export const MyUpcomingInterviews: React.VFC = () => {
   return (
     <Stack>
       <Title order={2}>Mine kommende intervjuer</Title>
-      <Paper p="sm" mb="md">
-        <Table>
-          <thead>
-            <tr>
-              <th>Søker</th>
-              <th>Tidspunkt</th>
-              <th>Lokale</th>
-              <th>Intervjuere</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </Paper>
+      <CardTable>
+        <thead>
+          <tr>
+            <th>Søker</th>
+            <th>Tidspunkt</th>
+            <th>Lokale</th>
+            <th>Intervjuere</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </CardTable>
     </Stack>
   )
 }
