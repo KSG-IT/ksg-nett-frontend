@@ -1,32 +1,30 @@
 import { useQuery } from '@apollo/client'
 import {
-  Avatar,
   createStyles,
-  Group,
   MantineSize,
   MultiSelect,
-  Text,
+  MultiSelectProps,
 } from '@mantine/core'
-import { IconUser } from '@tabler/icons'
-import { UserThumbnail } from 'modules/users/components'
-import { ALL_ACTIVE_USERS_SHALLOW_QUERY } from 'modules/users/queries'
+import {
+  ALL_ACTIVE_USERS_LIST_QUERY,
+  ALL_ACTIVE_USERS_SHALLOW_QUERY,
+} from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
-  UserNode,
 } from 'modules/users/types'
-import { forwardRef, useState } from 'react'
-import Select from 'react-select'
-import { usersToSelectOption, UserOption } from 'util/user'
+import { useState } from 'react'
+import { usersToSelectOption } from 'util/user'
 
-interface UserMultiSelectProps {
+interface UserMultiSelectProps
+  extends Omit<MultiSelectProps, 'data' | 'value'> {
   users?: string[]
   width?: string
   placeholder?: string
   label?: React.ReactNode
   size?: MantineSize | undefined
   fullwidth?: boolean
-  setUsersCallback: (users: string[]) => void
+  setUsersCallback?: (users: string[]) => void
 }
 
 export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
@@ -35,32 +33,50 @@ export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
   label,
   placeholder,
   setUsersCallback,
+  ...rest
 }) => {
   const { classes } = useStyles()
   const [inputValue, setInputValue] = useState('')
   const { data, loading } = useQuery<
     AllUsersShallowQueryReturns,
     AllUsersShallowQueryVariables
-  >(ALL_ACTIVE_USERS_SHALLOW_QUERY, { variables: { q: inputValue } })
+  >(ALL_ACTIVE_USERS_LIST_QUERY, { variables: { q: inputValue } })
 
-  const options = usersToSelectOption(data?.allActiveUsers)
+  const options = usersToSelectOption(data?.allActiveUsersList)
   const initialValue = options.filter(option => users.includes(option.value))
 
-  console.log(initialValue)
+  function handleSelectChange(value: string[]) {
+    console.table(users)
+    console.table(value)
+    //add user to options
+    //add user to value
+    setUsersCallback && setUsersCallback([...users, value[value.length - 1]])
+  }
+
+  function debug(input: any) {
+    console.log(input)
+  }
   return (
-    <Select
+    <MultiSelect
+      value={users}
+      searchValue={inputValue}
+      onSearchChange={setInputValue}
       className={classes.select}
-      closeMenuOnSelect={false}
-      isMulti={true}
       placeholder={placeholder}
-      isLoading={loading}
-      menuPortalTarget={document.body}
-      onInputChange={setInputValue}
-      defaultValue={initialValue}
-      options={options}
-      onChange={options =>
-        setUsersCallback(options.map(option => option.value))
-      }
+      onChange={handleSelectChange}
+      limit={50}
+      data={options}
+      withinPortal
+      searchable
+      defaultValue={initialValue.map(option => option.value)}
+      nothingFound="Ingen brukere funnet"
+      /**
+       onSelect={options =>
+         setUsersCallback(options.map(option => option.value))
+       }
+       * 
+       */
+      {...rest}
     />
   )
 }

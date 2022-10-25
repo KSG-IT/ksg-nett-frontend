@@ -44,7 +44,7 @@ export const UserSelect: React.FC<UserSelectProps> = ({
     AllUsersShallowQueryVariables
   >(ALL_ACTIVE_USERS_SHALLOW_QUERY)
 
-  const options = usersToSelectOption(data?.allActiveUsers)
+  const options = usersToSelectOption(data?.allActiveUsersList)
   const initialValue = options.find(option => option.value == userId)
 
   return (
