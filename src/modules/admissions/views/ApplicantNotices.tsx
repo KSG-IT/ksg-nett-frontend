@@ -1,9 +1,10 @@
 import { useQuery } from '@apollo/client'
-import { Stack, Title } from '@mantine/core'
+import { Group, Stack, Title } from '@mantine/core'
 import { BackButton } from 'components/BackButton'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
+import { SynCButton } from 'components/SyncButton'
 import { NoticeTable } from '../components/ApplicantNotices/NoticeTable'
 import { APPLICANT_NOTICES_QUERY } from '../queries'
 
@@ -23,7 +24,9 @@ export const ApplicantNotices: React.VFC = () => {
   return (
     <Stack>
       <BackButton to="/admissions" />
-      <Title>Søkere å følge opp</Title>
+      <Group>
+        <Title>Søkere å følge opp</Title>
+      </Group>
       <MessageBox type="info">
         Her har du oversikt over alle søkerne som ikke har registrert et ønske
         hos en interngjeng. Det er mulig å se når de sist gjorde en aktivitet og

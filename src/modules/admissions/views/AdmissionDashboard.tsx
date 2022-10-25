@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { Button, Group, Stack, Title } from '@mantine/core'
 import { IconClock } from '@tabler/icons'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
@@ -25,6 +26,11 @@ import {
   PatchAdmissionInput,
   PatchAdmissionReturns,
 } from '../types.graphql'
+
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Opptak', path: '/admissions' },
+]
 
 export const AdmissionDashboard: React.FC = () => {
   const { data, loading, error } = useQuery<ActiveAdmissioneturns>(
@@ -72,6 +78,7 @@ export const AdmissionDashboard: React.FC = () => {
 
   return (
     <Stack>
+      <Breadcrumbs items={breadcrumbsItems} />
       <Group position="apart">
         <Title>Kontrollpanel opptak</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>

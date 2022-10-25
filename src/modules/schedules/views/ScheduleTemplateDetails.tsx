@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Title } from '@mantine/core'
+import { Button, Group, Title } from '@mantine/core'
 import { IconPlus, IconTrash } from '@tabler/icons'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -19,6 +20,13 @@ import {
   ScheduleTemplateQueryReturns,
   ScheduleTemplateQueryVariables,
 } from '../types.graphql'
+
+const breadcrumbItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Vaktlister', path: '/schedules' },
+  { label: 'Vaktplanmaler', path: '/schedules/templates' },
+]
+
 interface ScheduleTemplateDetailsParams {
   templateId: string
 }
@@ -66,8 +74,17 @@ export const ScheduleTemplateDetails: React.FC = () => {
 
   const { shiftTemplates } = scheduleTemplate
 
+  const overloadedItems = [
+    ...breadcrumbItems,
+    {
+      label: `${scheduleTemplate.name} ${scheduleTemplate.schedule.name}`,
+      path: '',
+    },
+  ]
+
   return (
     <div>
+      <Breadcrumbs items={overloadedItems} />
       <Group position="apart" my="md">
         <Title>
           {scheduleTemplate.name} {scheduleTemplate.schedule.name}

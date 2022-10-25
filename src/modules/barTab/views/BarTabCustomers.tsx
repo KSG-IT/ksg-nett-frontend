@@ -1,11 +1,17 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Title } from '@mantine/core'
+import { createStyles, Title } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { Link } from 'react-router-dom'
 import { BarTabCustomerTable } from '../components/BarTabCustomers'
 import { SHALLOW_ALL_CUSTOMERS_QUERY } from '../queries'
 import { ShallowAllCustomersReturns } from '../types.graphql'
+
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'BSF', path: '/bar-tab' },
+  { label: 'Andre gjenger', path: '/bartab/customers' },
+]
 
 export const BarTabCustomers: React.FC = ({}) => {
   const { classes } = useBarTabCustomersStyles()
@@ -22,13 +28,8 @@ export const BarTabCustomers: React.FC = ({}) => {
 
   return (
     <div className={classes.wrapper}>
-      <Group position="apart">
-        <Title>Andre gjenger</Title>
-        <Link to="/bar-tab">
-          <Button color="samfundet-red">Tilbake</Button>
-        </Link>
-      </Group>
-
+      <Breadcrumbs items={breadcrumbsItems} />
+      <Title>Andre gjenger</Title>
       <BarTabCustomerTable barTabCustomers={allBarTabCustomers} />
     </div>
   )

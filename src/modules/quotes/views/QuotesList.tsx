@@ -1,5 +1,13 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, SimpleGrid, Stack, Title } from '@mantine/core'
+import {
+  Button,
+  Container,
+  Group,
+  SimpleGrid,
+  Stack,
+  Title,
+} from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { Search } from 'components/Input'
 import { useState } from 'react'
 import styled from 'styled-components'
@@ -13,12 +21,10 @@ import {
   ApprovedQuotesVariables,
 } from '../types.graphql'
 
-const FetchMoreArea = styled.div`
-  grid-area: fetchmore;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
+const breadCrumbItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Sitater', path: '/quotes' },
+]
 
 export const QuotesList = () => {
   const [query, setQuery] = useState('')
@@ -69,6 +75,7 @@ export const QuotesList = () => {
 
   return (
     <Stack>
+      <Breadcrumbs items={breadCrumbItems} />
       <Group position="apart">
         <Title order={2} color="dimmed">
           Sitater
@@ -92,11 +99,11 @@ export const QuotesList = () => {
           <QuoteCard quote={quote} key={quote.id} displaySemester />
         ))}
       </SimpleGrid>
-      <FetchMoreArea>
+      <Container>
         {hasNextPage && (
           <Button onClick={handleFetchMore}>Hent flere sitater</Button>
         )}
-      </FetchMoreArea>
+      </Container>
     </Stack>
   )
 }

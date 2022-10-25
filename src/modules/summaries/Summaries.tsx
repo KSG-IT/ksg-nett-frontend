@@ -1,29 +1,23 @@
 import { useQuery } from '@apollo/client'
-import {
-  Anchor,
-  Avatar,
-  Breadcrumbs,
-  Button,
-  Group,
-  Paper,
-  Stack,
-  Table,
-  TextInput,
-  Title,
-} from '@mantine/core'
+import { Avatar, Button, Group, Stack, TextInput, Title } from '@mantine/core'
 import { IconPlus, IconSearch } from '@tabler/icons'
+import { Breadcrumbs } from 'components/Breadcrumbs'
+import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
-import { format } from 'util/date-fns'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
+import { format } from 'util/date-fns'
 import { useDebounce } from 'util/hooks/useDebounce'
 import { AllSummariesQueryReturns, AllSummariesQueryVariables } from '.'
 import { ALL_SUMMARIES } from './queries'
-import { CardTable } from 'components/CardTable'
 
-export const Summaries = () => {
+const breadCrumbItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Referater', path: '/summaries' },
+]
+
+export const Summaries: React.FC = () => {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query)
   const navigate = useNavigate()
@@ -96,14 +90,7 @@ export const Summaries = () => {
 
   return (
     <Stack>
-      <Breadcrumbs separator=">">
-        <Anchor color="samfundet-red" href="/dashboard">
-          Hjem
-        </Anchor>
-        <Anchor color="samfundet-red" href="/summaries">
-          Referater
-        </Anchor>
-      </Breadcrumbs>
+      <Breadcrumbs items={breadCrumbItems} />
       <Group position="apart" align={'baseline'}>
         <Title>Referater</Title>
         <Button

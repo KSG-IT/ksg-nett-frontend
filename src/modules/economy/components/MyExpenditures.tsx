@@ -1,8 +1,10 @@
 import { useQuery } from '@apollo/client'
 import { Paper, Select } from '@mantine/core'
-import { format } from 'util/date-fns'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
 import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts'
 import styled from 'styled-components'
+import { format } from 'util/date-fns'
 import { numberWithSpaces } from 'util/parsing'
 import { MY_EXPENDITURES } from '../queries'
 import {
@@ -10,8 +12,6 @@ import {
   MyExpendituresReturns,
   MyExpendituresVariables,
 } from '../types.graphql'
-import { FullPageError } from 'components/FullPageComponents'
-import { FullContentLoader } from 'components/Loading'
 
 const TotalRow = styled.div`
   display: flex;
@@ -68,7 +68,7 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
   }))
 
   return (
-    <Paper shadow={'lg'} p="md">
+    <Paper shadow={'lg'} p="md" style={{ overflowX: 'scroll' }}>
       <Select
         label={'Periode'}
         data={dateRangeOptions}
