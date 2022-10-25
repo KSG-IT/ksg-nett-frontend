@@ -85,7 +85,7 @@ export const QuotesList = () => {
         cols={4}
         breakpoints={[
           { maxWidth: 'md', cols: 3, spacing: 'md' },
-          { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
         ]}
       >
         {quotes.map(quote => (

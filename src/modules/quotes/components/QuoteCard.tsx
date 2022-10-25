@@ -4,6 +4,7 @@ import {
   Badge,
   Card,
   createStyles,
+  Grid,
   Group,
   Menu,
   Stack,
@@ -141,8 +142,8 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
 
   return (
     <Card className={classes.card} key={quote.id} withBorder>
-      <div className={classes.row}>
-        <Stack justify={'space-between'} spacing={0} className={classes.card}>
+      <Stack justify={'space-between'} spacing={'xs'} className={classes.card}>
+        <Stack spacing={'xs'}>
           <Text size={'sm'} className={classes.quoteText}>
             {quote.text}
           </Text>
@@ -150,50 +151,50 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
           <Text size={'xs'} color={'gray'}>
             {quote.context}
           </Text>
-          <Group position="apart" spacing={'xs'}>
-            <Avatar.Group spacing={5}>
-              {quote.tagged.map(user => (
-                <UserThumbnail size={'sm'} key={user.id} user={user} />
-              ))}
-            </Avatar.Group>
-
-            <Group spacing={'xs'}>
-              {displaySemester && (
-                <Badge variant="outline" color="samfundet-red">
-                  {quote.semester}
-                </Badge>
-              )}
-              <Text size={'sm'}>{voteSum}</Text>
-              <UpvoteIcon upvoted={upvoted} onClick={handleUpvote} />
-            </Group>
-          </Group>
         </Stack>
-        <PermissionGate permissions={PERMISSIONS.quotes.change.quote}>
-          <Menu>
-            <Menu.Target>
-              <UnstyledButton>
-                <IconHash size={18} />
-              </UnstyledButton>
-              {/* onClick={handleInvalidateQuote} */}
-            </Menu.Target>
-            <Menu.Dropdown style={{ zIndex: 9000 }}>
-              <PermissionGate permissions={PERMISSIONS.quotes.change.quote}>
-                <Menu.Item
-                  icon={<IconArrowBackUp />}
-                  onClick={handleInvalidateQuote}
-                >
-                  Underkjenn
-                </Menu.Item>
-              </PermissionGate>
-              <PermissionGate permissions={PERMISSIONS.quotes.delete.quote}>
-                <Menu.Item icon={<IconTrash />} onClick={handleDeleteQuote}>
-                  Slett
-                </Menu.Item>
-              </PermissionGate>
-            </Menu.Dropdown>
-          </Menu>
-        </PermissionGate>
-      </div>
+        <Group position="apart" spacing={'xs'}>
+          <Avatar.Group spacing={5}>
+            {quote.tagged.map(user => (
+              <UserThumbnail size={'sm'} key={user.id} user={user} />
+            ))}
+          </Avatar.Group>
+
+          <Group spacing={'xs'}>
+            <PermissionGate permissions={PERMISSIONS.quotes.change.quote}>
+              <Menu>
+                <Menu.Target>
+                  <UnstyledButton>
+                    <IconHash size={18} color="lightgray" />
+                  </UnstyledButton>
+                  {/* onClick={handleInvalidateQuote} */}
+                </Menu.Target>
+                <Menu.Dropdown style={{ zIndex: 9000 }}>
+                  <PermissionGate permissions={PERMISSIONS.quotes.change.quote}>
+                    <Menu.Item
+                      icon={<IconArrowBackUp />}
+                      onClick={handleInvalidateQuote}
+                    >
+                      Underkjenn
+                    </Menu.Item>
+                  </PermissionGate>
+                  <PermissionGate permissions={PERMISSIONS.quotes.delete.quote}>
+                    <Menu.Item icon={<IconTrash />} onClick={handleDeleteQuote}>
+                      Slett
+                    </Menu.Item>
+                  </PermissionGate>
+                </Menu.Dropdown>
+              </Menu>
+            </PermissionGate>
+            {displaySemester && (
+              <Badge variant="outline" color="samfundet-red">
+                {quote.semester}
+              </Badge>
+            )}
+            <Text size={'sm'}>{voteSum}</Text>
+            <UpvoteIcon upvoted={upvoted} onClick={handleUpvote} />
+          </Group>
+        </Group>
+      </Stack>
     </Card>
   )
 }
