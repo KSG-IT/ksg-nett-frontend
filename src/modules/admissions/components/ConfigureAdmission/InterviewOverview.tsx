@@ -1,10 +1,9 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Group, ScrollArea, Stack, Title } from '@mantine/core'
+import { Button, Card, Group, Stack, Title } from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { format } from 'util/date-fns'
 import { AdmissionStatusValues } from 'modules/admissions/consts'
 import {
   DELETE_ALL_INTERVIEWS,
@@ -19,8 +18,8 @@ import {
 } from 'modules/admissions/types.graphql'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
 import { PatchMutationVariables } from 'types/graphql'
+import { format } from 'util/date-fns'
 import { InterviewLocationInterviewsCard } from './InterviewLocationInterviewsCard'
 
 type WizardStage =
@@ -30,20 +29,6 @@ type WizardStage =
   | 'INTERVIEW_TEMPLATE'
   | 'AVAILABLE_POSITIONS'
   | 'SUMMARY'
-
-const InterviewLocationGroupingContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 15px;
-`
-
-const InterviewDayCard = styled.div`
-  border-radius: 10px;
-  background-color: ${props => props.theme.colors.white};
-  box-shadow: ${props => props.theme.shadow.default};
-  padding: 5px;
-`
 
 interface InterviewOverviewProps {
   setStageCallback: (stage: WizardStage) => void
@@ -62,15 +47,8 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
     INTERVIEW_OVERVIEW_QUERY
   )
 
-  const [generateInterviews] = useMutation<GenerateInterviewsReturns>(
-    GENERATE_INTERVIEWS,
-    {
-      refetchQueries: ['InterviewOverviewQuery'],
-      onCompleted: () => {
-        toast.success('Genererte intervjuer!')
-      },
-    }
-  )
+  const [generateInterviews, { loading: generateLoading }] =
+    useMutation<GenerateInterviewsReturns>(GENERATE_INTERVIEWS, {})
 
   const [deleteAllInterviews] = useMutation(DELETE_ALL_INTERVIEWS, {
     refetchQueries: ['InterviewOverviewQuery'],
@@ -86,10 +64,14 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
   if (loading || !data) return <FullContentLoader />
 
   const handleGenerateInterviews = () => {
-    toast.promise(generateInterviews(), {
-      loading: 'Genererer intervjuer...',
-      error: 'Noe gikk galt',
-      success: 'Intervjuer generert',
+    generateInterviews({
+      refetchQueries: [INTERVIEW_OVERVIEW_QUERY],
+      onError() {
+        toast.error('Noe gikk galt')
+      },
+      onCompleted() {
+        toast.success('Genererte intervjuer')
+      },
     })
   }
 
@@ -99,13 +81,20 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
 
   if (interviewDayGroupings.length === 0)
     return (
-      <Stack p="lg">
+      <Stack>
         <Title>Genererte intervjuer</Title>
         <Group>
-          <Button onClick={() => setStageCallback('AVAILABLE_POSITIONS')}>
+          <Button
+            color="samfundet-red"
+            onClick={() => setStageCallback('AVAILABLE_POSITIONS')}
+          >
             Forrige steg
           </Button>
-          <Button onClick={handleGenerateInterviews}>
+          <Button
+            color="samfundet-red"
+            onClick={handleGenerateInterviews}
+            loading={generateLoading}
+          >
             Generer interjuer basert på innstillinger
           </Button>
         </Group>
@@ -118,11 +107,15 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
         id: admissionId,
         input: { status: AdmissionStatusValues.OPEN },
       },
-    }).then(() => navigate('/admissions'))
+      onCompleted() {
+        toast.success('Åpnet opptaket')
+        navigate('/admissions')
+      },
+    })
   }
 
   return (
-    <ScrollArea style={{ width: '100%' }} p="lg">
+    <Stack>
       <Group>
         <Title my="md">Genererte intervjuer</Title>
         <Button
@@ -141,25 +134,30 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
         {interviewDayGroupings.map(interviewDayGroup => (
           <div key={format(new Date(interviewDayGroup.date), 'y-M-d')}>
             <h2>{format(new Date(interviewDayGroup.date), 'EEEE d LLLL')}</h2>
-            <InterviewDayCard>
-              <InterviewLocationGroupingContainer>
+            <Card>
+              <Group>
                 {interviewDayGroup.locations.map(grouping => (
                   <InterviewLocationInterviewsCard
                     key={grouping.name}
                     interviewlocationGrouping={grouping}
                   />
                 ))}
-              </InterviewLocationGroupingContainer>
-            </InterviewDayCard>
+              </Group>
+            </Card>
           </div>
         ))}
       </Stack>
       <Group>
-        <Button onClick={() => setStageCallback('AVAILABLE_POSITIONS')}>
+        <Button
+          color="samfundet-red"
+          onClick={() => setStageCallback('AVAILABLE_POSITIONS')}
+        >
           Forrige steg
         </Button>
-        <Button onClick={handleOpenAdmission}>Åpne opptaket</Button>
+        <Button color="samfundet-red" onClick={handleOpenAdmission}>
+          Åpne opptaket
+        </Button>
       </Group>
-    </ScrollArea>
+    </Stack>
   )
 }

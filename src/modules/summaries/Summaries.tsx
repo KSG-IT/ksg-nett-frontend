@@ -1,5 +1,16 @@
 import { useQuery } from '@apollo/client'
-import { Avatar, Button, Group, Paper, Table, TextInput } from '@mantine/core'
+import {
+  Anchor,
+  Avatar,
+  Breadcrumbs,
+  Button,
+  Group,
+  Paper,
+  Stack,
+  Table,
+  TextInput,
+  Title,
+} from '@mantine/core'
 import { IconPlus, IconSearch } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { format } from 'util/date-fns'
@@ -10,29 +21,7 @@ import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { useDebounce } from 'util/hooks/useDebounce'
 import { AllSummariesQueryReturns, AllSummariesQueryVariables } from '.'
 import { ALL_SUMMARIES } from './queries'
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  height: 100%;
-  padding: 32px 72px;
-  overflow-y: scroll;
-  ${props => props.theme.media.mobile} {
-    padding: 12px;
-  }
-`
-
-const Title = styled.h1`
-  margin: 0;
-`
-
-const TableRow = styled.tr`
-  :hover {
-    cursor: pointer;
-  }
-`
+import { CardTable } from 'components/CardTable'
 
 export const Summaries = () => {
   const [query, setQuery] = useState('')
@@ -54,10 +43,7 @@ export const Summaries = () => {
   const hasNextPage = data?.allSummaries.pageInfo.hasNextPage ?? false
 
   const rows = summaries.map(summary => (
-    <TableRow
-      onClick={() => navigate(`/summaries/${summary.id}`)}
-      key={summary.id}
-    >
+    <tr onClick={() => navigate(`/summaries/${summary.id}`)} key={summary.id}>
       <td>{format(new Date(summary.date), 'MM.dd')}</td>
       <td>{summary.type}</td>
       <td>
@@ -72,7 +58,7 @@ export const Summaries = () => {
           {summary.reporter.initials}
         </Avatar>
       </td>
-    </TableRow>
+    </tr>
   ))
 
   const handleFetchMore = async () => {
@@ -109,11 +95,20 @@ export const Summaries = () => {
   }
 
   return (
-    <Wrapper>
+    <Stack>
+      <Breadcrumbs separator=">">
+        <Anchor color="samfundet-red" href="/dashboard">
+          Hjem
+        </Anchor>
+        <Anchor color="samfundet-red" href="/summaries">
+          Referater
+        </Anchor>
+      </Breadcrumbs>
       <Group position="apart" align={'baseline'}>
         <Title>Referater</Title>
         <Button
           size="md"
+          color="samfundet-red"
           onClick={() => {
             navigate('/summaries/create')
           }}
@@ -128,19 +123,18 @@ export const Summaries = () => {
         icon={<IconSearch />}
         onChange={evt => setQuery(evt.target.value)}
       />
-      <Paper p="sm">
-        <Table highlightOnHover>
-          <thead>
-            <td>Dato</td>
-            <td>Type</td>
-            <td>Deltakere</td>
-            <td>Referent</td>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </Paper>
+
+      <CardTable highlightOnHover>
+        <thead>
+          <td>Dato</td>
+          <td>Type</td>
+          <td>Deltakere</td>
+          <td>Referent</td>
+        </thead>
+        <tbody>{rows}</tbody>
+      </CardTable>
 
       {hasNextPage && <Button onClick={handleFetchMore}>Hent fler</Button>}
-    </Wrapper>
+    </Stack>
   )
 }

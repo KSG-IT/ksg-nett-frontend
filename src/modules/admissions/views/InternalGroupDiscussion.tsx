@@ -1,8 +1,10 @@
 import { useQuery } from '@apollo/client'
-import { Paper, Stack, Text, Title } from '@mantine/core'
+import { Group, Paper, Stack, Text, Title } from '@mantine/core'
+import { BackButton } from 'components/BackButton'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
+import { SynCButton } from 'components/SyncButton'
 import { useParams } from 'react-router-dom'
 import {
   DiscussApplicantsTable,
@@ -20,13 +22,14 @@ export const InternalGroupDiscussion: React.FC = () => {
     keyof InternalGroupDiscussionParams
   >() as InternalGroupDiscussionParams
 
-  const { error, loading, data } = useQuery<InternalGroupDiscussionDataReturns>(
-    INTERNAL_GROUP_DISCUSSION_DATA,
-    {
-      variables: { internalGroupId: internalGroupId },
-      pollInterval: 1000 * 30, // polls every half minute
-    }
-  )
+  const { error, loading, data, refetch } =
+    useQuery<InternalGroupDiscussionDataReturns>(
+      INTERNAL_GROUP_DISCUSSION_DATA,
+      {
+        variables: { internalGroupId: internalGroupId },
+        pollInterval: 1000 * 30, // polls every half minute
+      }
+    )
 
   if (error) return <FullPageError />
 
@@ -42,8 +45,11 @@ export const InternalGroupDiscussion: React.FC = () => {
 
   return (
     <Stack>
-      <Title>Fordelingsmøte {internalGroup.name}</Title>
-
+      <BackButton to="/admissions" />
+      <Group position="apart">
+        <Title>Fordelingsmøte {internalGroup.name}</Title>
+        <SynCButton refetchCallback={refetch} refetchLoading={loading} />
+      </Group>
       <Title order={2}>Kandidater tilgjengelige for vurdering</Title>
       <MessageBox type="info">
         Søkere blir fortløpende oppdatert i denne tabellen. Her har du mulighet
@@ -58,12 +64,10 @@ export const InternalGroupDiscussion: React.FC = () => {
           Obs! Du markerer ønsker på vegne av {internalGroup.name}
         </Text>
       </MessageBox>
-      <Paper p="md">
-        <DiscussApplicantsTable
-          internalGroup={internalGroup}
-          applicants={applicants}
-        />
-      </Paper>
+      <DiscussApplicantsTable
+        internalGroup={internalGroup}
+        applicants={applicants}
+      />
 
       <Title order={2}>Kandidater åpne for andre verv</Title>
       <FreeForAllApplicantsTable

@@ -120,7 +120,7 @@ export const DiscussApplicantTableRows: React.VFC<
       <td>
         <Menu position="left-start">
           <Menu.Target>
-            <Button variant="outline" loading={loading}>
+            <Button variant="outline" loading={loading} color="samfundet-red">
               <IconDots />
             </Button>
           </Menu.Target>

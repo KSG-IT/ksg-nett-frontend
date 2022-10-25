@@ -10,7 +10,7 @@ export type UserNode = {
   lastName: string
   fullName: string
   phone: string
-  hometown: string
+  homeTown: string
   biography: string
   initials: string
   username: string

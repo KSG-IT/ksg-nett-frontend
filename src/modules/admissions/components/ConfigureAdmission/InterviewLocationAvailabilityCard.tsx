@@ -1,5 +1,13 @@
 import { useMutation } from '@apollo/client'
-import { Button, Group, Paper, Title } from '@mantine/core'
+import {
+  Button,
+  Group,
+  Paper,
+  Stack,
+  Table,
+  Title,
+  UnstyledButton,
+} from '@mantine/core'
 import { DatePicker, TimeRangeInput } from '@mantine/dates'
 import { IconX } from '@tabler/icons'
 import {
@@ -83,30 +91,44 @@ export const InterviewLocationAvailabilityCard: React.VFC<
 
   concatenateDateAndTime()
   return (
-    <Paper p="lg">
-      <Group>
-        <Title order={3}>{interviewLocation.name}</Title>
-        <IconX onClick={handleDeleteInterviewLocation} />
-      </Group>
-      {/* Refactor this into a mantine table */}
-      {interviewLocation.availability.map(availability => (
-        <InterviewLocationAvailabilityInline
-          availability={availability}
-          key={availability.id}
-        />
-      ))}
-      <Group>
-        <DatePicker value={date} onChange={setDate} />
-        <TimeRangeInput
-          value={from}
-          onChange={setFrom}
-          // onChange={evt => setFrom(evt.target.value)}
-        />
-      </Group>
+    <Paper p="sm">
+      <Stack>
+        <Group position="apart">
+          <Title order={3}>{interviewLocation.name}</Title>
+          <UnstyledButton onClick={handleDeleteInterviewLocation}>
+            <IconX />
+          </UnstyledButton>
+        </Group>
+        <Table>
+          <thead>
+            <tr>
+              <th>Dato</th>
+              <th>Fra</th>
+              <th>Til</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {interviewLocation.availability.map(availability => (
+              <InterviewLocationAvailabilityInline
+                availability={availability}
+                key={availability.id}
+              />
+            ))}
+          </tbody>
+        </Table>
+        <Group>
+          <DatePicker value={date} onChange={setDate} />
+          <TimeRangeInput value={from} onChange={setFrom} />
+        </Group>
 
-      <Button onClick={handleCreateInterviewLocationAvailability}>
-        Legg til intervall
-      </Button>
+        <Button
+          color="samfundet-red"
+          onClick={handleCreateInterviewLocationAvailability}
+        >
+          Legg til intervall
+        </Button>
+      </Stack>
     </Paper>
   )
 }

@@ -14,7 +14,7 @@ export const FinalOverlookModal: React.VFC<{
   const handleCloseAdmission = () => {
     closeAdmission({
       onCompleted() {
-        navigate('/users/newbies')
+        navigate('/admissions')
       },
     })
   }
@@ -22,16 +22,16 @@ export const FinalOverlookModal: React.VFC<{
     <Modal
       onClose={onClose}
       opened={opened}
+      size="xl"
       title={<Title order={3}>Almost there</Title>}
     >
-      <Stack
-        style={{ overflowY: 'scroll', height: '600px' }}
-        justify="space-evenly"
-      >
+      <Stack>
         <ResultPreview />
-        <Button onClick={handleCloseAdmission}>Avslutt opptaket</Button>
+        <Button color="samfundet-red" onClick={handleCloseAdmission}>
+          Avslutt opptaket
+        </Button>
       </Stack>
-      <LoadingOverlay visible={closeAdmissionLoading} />
+      <LoadingOverlay color="samfundet-red" visible={closeAdmissionLoading} />
     </Modal>
   )
 }

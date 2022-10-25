@@ -10,6 +10,7 @@ import {
   Text,
   Title,
 } from '@mantine/core'
+import { BackButton } from 'components/BackButton'
 import {
   FullPage404,
   FullPageEmpty,
@@ -72,6 +73,7 @@ export const ReviewQuotes: React.FC = () => {
   if (pendingQuotes.length === 0)
     return (
       <Stack>
+        <BackButton to="/quotes" />
         <Title>Innsendte sitater</Title>
         <FullPageEmpty />
       </Stack>
@@ -79,6 +81,7 @@ export const ReviewQuotes: React.FC = () => {
 
   return (
     <Stack>
+      <BackButton to="/quotes" />
       <Group position="apart">
         <Title order={2} color="dimmed">
           Godkjenning av sitater

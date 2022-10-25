@@ -10,6 +10,7 @@ import { DatePicker } from '@mantine/dates'
 import {
   IconAt,
   IconCake,
+  IconHome,
   IconMapPin,
   IconPhone,
   IconSchool,
@@ -53,6 +54,12 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
           label="Etternavn"
           error={errors?.lastName?.message}
           {...register('lastName')}
+        />
+        <TextInput
+          label="Hjemby"
+          icon={<IconHome size={14} />}
+          error={errors?.homeTown?.message}
+          {...register('homeTown')}
         />
         <TextInput
           label="Adresse"

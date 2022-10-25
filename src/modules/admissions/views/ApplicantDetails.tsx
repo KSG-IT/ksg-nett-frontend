@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { ScrollArea, Title } from '@mantine/core'
+import { ScrollArea, Stack, Title } from '@mantine/core'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useParams } from 'react-router-dom'
@@ -46,11 +46,11 @@ export const ApplicantDetails: React.VFC = () => {
   const cannotEdit = interviewFinished || didNotShowUp
 
   return (
-    <ScrollArea style={{ width: '100%' }} p="lg">
+    <Stack>
       <Title order={2}>Kandidatdetaljer</Title>
       <PersonalDetailsCard applicant={applicant} />
       <InterviewDetails applicant={applicant} canEdit={!cannotEdit} />
       <ApplicantComments applicant={applicant} />
-    </ScrollArea>
+    </Stack>
   )
 }

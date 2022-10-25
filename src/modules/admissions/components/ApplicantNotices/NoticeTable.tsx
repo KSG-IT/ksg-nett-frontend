@@ -11,6 +11,7 @@ import { UserThumbnail } from 'modules/users/components/UserThumbnail'
 import { useStore } from 'store'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { ApplicantNoticeCommentInput } from './ApplicantNoticeCommentInput'
+import { CardTable } from 'components/CardTable'
 
 interface NoticeTableProps {
   applicants: Pick<
@@ -28,7 +29,7 @@ interface NoticeTableProps {
   >[]
 }
 
-export const NoticeTable: React.VFC<NoticeTableProps> = ({ applicants }) => {
+export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
   const { patchApplicant } = useApplicantMutations()
   const me = useStore(state => state.user)
 
@@ -75,9 +76,9 @@ export const NoticeTable: React.VFC<NoticeTableProps> = ({ applicants }) => {
         {applicant.noticeUser && <UserThumbnail user={applicant.noticeUser} />}
       </td>
       <td>
-        <Menu position="left-start">
+        <Menu position="left-start" withinPortal>
           <Menu.Target>
-            <Button variant="outline">
+            <Button variant="outline" color="samfundet-red">
               <IconDots />
             </Button>
           </Menu.Target>
@@ -119,24 +120,22 @@ export const NoticeTable: React.VFC<NoticeTableProps> = ({ applicants }) => {
   ))
 
   return (
-    <Card my="md">
-      <Table>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th>Epost</th>
-            <th>Telefon</th>
-            <th>Status</th>
-            <th>Sist aktiv</th>
-            <th>Sist varslet</th>
-            <th>Varslingsmetode</th>
-            <th>Kommentar</th>
-            <th>Varslet av</th>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
-    </Card>
+    <CardTable>
+      <thead>
+        <tr>
+          <th>Navn</th>
+          <th>Epost</th>
+          <th>Telefon</th>
+          <th>Status</th>
+          <th>Sist aktiv</th>
+          <th>Sist varslet</th>
+          <th>Varslingsmetode</th>
+          <th>Kommentar</th>
+          <th>Varslet av</th>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </CardTable>
   )
 }

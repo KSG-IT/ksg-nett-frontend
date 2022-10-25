@@ -1,5 +1,6 @@
-import { Button, Card, Menu, Modal, Table } from '@mantine/core'
+import { Button, Menu, Modal } from '@mantine/core'
 import { IconDots, IconEye, IconTrash } from '@tabler/icons'
+import { CardTable } from 'components/CardTable'
 import { PermissionGate } from 'components/PermissionGate'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { parseApplicantPriorityInternalGroupPosition } from 'modules/admissions/parsing'
@@ -9,9 +10,13 @@ import { useNavigate } from 'react-router-dom'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { DeleteApplicantModal } from './DeleteApplicantModal'
 
-export const ApplicantsTable: React.FC<{
+interface ApplicantsTableProps {
   applicants: CoreApplicantNode[]
-}> = ({ applicants }) => {
+}
+
+export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
+  applicants,
+}) => {
   const navigate = useNavigate()
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [applicantToDelete, setApplicantToDelete] =
@@ -53,7 +58,7 @@ export const ApplicantsTable: React.FC<{
       <td>
         <Menu position="left-start">
           <Menu.Target>
-            <Button variant="outline">
+            <Button variant="outline" color="samfundet-red">
               <IconDots />
             </Button>
           </Menu.Target>
@@ -86,8 +91,8 @@ export const ApplicantsTable: React.FC<{
   ))
 
   return (
-    <Card>
-      <Table>
+    <>
+      <CardTable>
         <thead>
           <tr>
             <th>Navn</th>
@@ -100,7 +105,7 @@ export const ApplicantsTable: React.FC<{
           </tr>
         </thead>
         <tbody>{rows}</tbody>
-      </Table>
+      </CardTable>
       <Modal
         opened={deleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}
@@ -112,6 +117,6 @@ export const ApplicantsTable: React.FC<{
           closeModalCallback={() => setDeleteModalOpen(false)}
         />
       </Modal>
-    </Card>
+    </>
   )
 }

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Paper, Stack, Title } from '@mantine/core'
+import { IconFileAnalytics } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -12,17 +13,8 @@ import {
 } from '../components/CloseAdmission'
 import { VALID_APPLICANTS_QUERY } from '../queries'
 
-/**
- * This component should be moved to its own route.
- * We protect the route behind some PermissionGate and then we
- * add a link/button which is hidden for anyone but admin to access
- * from the main dashboard.
- *
- * Can also do a redirect or something
- */
-export const CloseAdmission: React.VFC = () => {
+export const CloseAdmission: React.FC = () => {
   const [previewModalOpen, setPreviewModalOpen] = useState(false)
-  // Missing typing
   const { error, loading, data } = useQuery(VALID_APPLICANTS_QUERY)
 
   if (error) return <FullPageError />
@@ -34,8 +26,7 @@ export const CloseAdmission: React.VFC = () => {
   } = data
 
   return (
-    <Stack style={{ overflowY: 'scroll' }} p="lg">
-      {/* Here we can display the priorities and how each of the internal groups prioritizes/evaluates them? */}
+    <Stack>
       <Title mb="sm">Fullføring av opptak</Title>
       <MessageBox type="info">
         Dette er siste delen av opptaket. Her har du tilgang på to tabeller. Den
@@ -53,9 +44,7 @@ export const CloseAdmission: React.VFC = () => {
         Søkere vil bli tilegnet et verv automatisk avhengig av den gjengen med
         øverste prioritet som har sagt at de har lyst på kandidaten.
       </MessageBox>
-      <Paper p="md" mt="sm">
-        <CloseAdmissionTable applicants={validApplicants} />
-      </Paper>
+      <CloseAdmissionTable applicants={validApplicants} />
 
       <Title order={2}> Kandidater med tilbud fra andre gjenger</Title>
       <MessageBox type="info">
@@ -65,15 +54,15 @@ export const CloseAdmission: React.VFC = () => {
         på knappen i tabellen gir du kandidaten til en av gjengene. Dette kan du
         endre på så mye du vil fram til opptaket stenges.
       </MessageBox>
-      <Paper p="sm">
-        <FreeForAllWithOffersTable applicantInterests={applicantInterests} />
-      </Paper>
+      <FreeForAllWithOffersTable applicantInterests={applicantInterests} />
       <Group>
-        <Button onClick={() => setPreviewModalOpen(true)}>
+        <Button color="samfundet-red" onClick={() => setPreviewModalOpen(true)}>
           Fullfør opptak
         </Button>
         <a href={`${API_URL}/admissions/callsheet`} target="_blank">
-          <Button>Last ned ringeliste</Button>
+          <Button leftIcon={<IconFileAnalytics />} color="samfundet-red">
+            Last ned ringeliste
+          </Button>
         </a>
       </Group>
       <FinalOverlookModal

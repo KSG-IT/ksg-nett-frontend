@@ -149,14 +149,13 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
   return (
     <Stack className={classes.wrapper}>
       <Group position="apart">
-        <Title order={3}>Aktiv BSF</Title>
         <Group>
           <Button color="samfundet-red" onClick={handleLockBarTab}>
             Lås BSF
           </Button>
         </Group>
       </Group>
-      <Card>
+      <Card className={classes.card}>
         <Table>
           <thead>
             <tr>
@@ -238,6 +237,9 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
 
 const useRegisterProductOrdersStyles = createStyles(theme => ({
   wrapper: {},
+  card: {
+    overflowX: 'scroll',
+  },
   addOrderWrapper: {
     overflow: 'visible',
   },

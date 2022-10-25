@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Stack, Table } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -37,7 +38,7 @@ const useAdmissionApplicantPreview = () => {
   )
 }
 
-export const ResultPreview: React.VFC<{}> = ({}) => {
+export const ResultPreview: React.FC = () => {
   /**
    * This preview should query the final admission result. This should
    * be grouped together per internal group in the future but for now
@@ -79,19 +80,19 @@ export const ResultPreview: React.VFC<{}> = ({}) => {
         Her ser du hvordan det endelig opptaket kommer til å se ut når du
         avslutter det.
       </MessageBox>
-      <Table>
+      <CardTable>
         <thead>
           <tr>
-            <td key="name">Navn</td>
-            <td key="position-offered">Stilling tilbudt</td>
-            <td key="applicant-priority">Søker prioritet</td>
+            <th key="name">Navn</th>
+            <th key="position-offered">Stilling tilbudt</th>
+            <th key="applicant-priority">Søker prioritet</th>
           </tr>
         </thead>
         <tbody>
           {applicantPreviewRows}
           {summaryRow}
         </tbody>
-      </Table>
+      </CardTable>
     </Stack>
   )
 }

@@ -1,4 +1,5 @@
 import { Badge, Button, Paper, Table } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import { SociSessionNode } from 'modules/economy/types.graphql'
 import { Link } from 'react-router-dom'
 import { numberWithSpaces } from 'util/parsing'
@@ -29,19 +30,17 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
   ))
 
   return (
-    <Paper>
-      <Table>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th>Type</th>
-            <th>Status</th>
-            <th>Forbruk</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
-    </Paper>
+    <CardTable>
+      <thead>
+        <tr>
+          <th>Navn</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Forbruk</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </CardTable>
   )
 }

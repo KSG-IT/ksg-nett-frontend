@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Stack, Title } from '@mantine/core'
+import { BackButton } from 'components/BackButton'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -21,6 +22,7 @@ export const ApplicantNotices: React.VFC = () => {
 
   return (
     <Stack>
+      <BackButton to="/admissions" />
       <Title>Søkere å følge opp</Title>
       <MessageBox type="info">
         Her har du oversikt over alle søkerne som ikke har registrert et ønske

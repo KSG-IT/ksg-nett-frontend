@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { AppRoutes } from 'routes'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'theme'
+import { ModalsProvider } from '@mantine/modals'
 
 // TODO: Move this
 const mtheme: MantineThemeOverride = {
@@ -32,10 +33,12 @@ function Root() {
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
         <MantineProvider theme={mtheme}>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
-          <Toaster />
+          <ModalsProvider>
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
+            <Toaster />
+          </ModalsProvider>
         </MantineProvider>
       </ThemeProvider>
     </ApolloProvider>

@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Paper, Stack, Table, Title } from '@mantine/core'
 import { IconArrowLeft } from '@tabler/icons'
+import { BackButton } from 'components/BackButton'
+import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { UserThumbnail } from 'modules/users/components'
@@ -69,9 +71,10 @@ export const PreviousBarTabs: React.FC = () => {
 
   return (
     <Stack>
+      <BackButton to="/bar-tab" />
       <Group position="apart">
         <Title>Tidligere BSF'er</Title>
-        <Link to="/bar-tab">
+        {/* <Link to="/bar-tab">
           <Button
             color="samfundet-red"
             leftIcon={<IconArrowLeft />}
@@ -79,22 +82,20 @@ export const PreviousBarTabs: React.FC = () => {
           >
             Tilbake
           </Button>
-        </Link>
+        </Link> */}
       </Group>
 
-      <Paper p="sm">
-        <Table>
-          <thead>
-            <tr>
-              <th>BSF ID</th>
-              <th>Startet</th>
-              <th>Sluttet</th>
-              <th>Opprettet av</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </Paper>
+      <CardTable>
+        <thead>
+          <tr>
+            <th>BSF ID</th>
+            <th>Startet</th>
+            <th>Sluttet</th>
+            <th>Opprettet av</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </CardTable>
 
       {hasNextPage && (
         <Button color="samfundet-red" onClick={handleFetchMore}>

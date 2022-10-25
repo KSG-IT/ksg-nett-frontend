@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Group, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { IconClock } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -16,19 +16,17 @@ import {
 import { AdmissionsShortcutPanel } from '../components/AdmissionDashboard/AdmissionsShortcutPanel'
 import { AdmissionStatusValues } from '../consts'
 import { PATCH_ADMISSION } from '../mutations'
-import { ACTIVE_ADMISSION_QUERY } from '../queries'
+import {
+  ACTIVE_ADMISSION_QUERY,
+  ALL_INTERNAL_GROUP_APPLICANT_DATA,
+} from '../queries'
 import {
   ActiveAdmissioneturns,
   PatchAdmissionInput,
   PatchAdmissionReturns,
 } from '../types.graphql'
 
-export const AdmissionDashboard: React.VFC = () => {
-  // Should display information about ongoing admission
-  // admins should be able to open up a new admission if it does not exist
-  const [emails, setEmails] = useState('')
-
-  // Rename this to some admission dashboard query instead
+export const AdmissionDashboard: React.FC = () => {
   const { data, loading, error } = useQuery<ActiveAdmissioneturns>(
     ACTIVE_ADMISSION_QUERY
   )
@@ -49,7 +47,7 @@ export const AdmissionDashboard: React.VFC = () => {
           id: admissionId,
           input: { status: AdmissionStatusValues.IN_SESSION },
         },
-        refetchQueries: ['ActiveAdmission'],
+        refetchQueries: [ALL_INTERNAL_GROUP_APPLICANT_DATA],
       }),
       {
         error: 'Noe gikk galt',
@@ -73,13 +71,14 @@ export const AdmissionDashboard: React.VFC = () => {
   }
 
   return (
-    <>
+    <Stack>
       <Group position="apart">
         <Title>Kontrollpanel opptak</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
           <Button
             leftIcon={<IconClock />}
             disabled={nextPhaseLoading}
+            color="samfundet-red"
             onClick={() => {
               handleAdmissionNextPhase(activeAdmission.id)
             }}
@@ -91,6 +90,6 @@ export const AdmissionDashboard: React.VFC = () => {
       <AdmissionsShortcutPanel />
       <InternalGroupsNav />
       <MyUpcomingInterviews />
-    </>
+    </Stack>
   )
 }
