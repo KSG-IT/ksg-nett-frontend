@@ -16,7 +16,7 @@ export const LOGIN_MUTATION = gql`
         email
         balance
         biography
-        studyAddress
+        homeTown
         homeAddress
         phone
         upvotedQuoteIds
