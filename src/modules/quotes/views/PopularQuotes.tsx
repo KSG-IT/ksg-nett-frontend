@@ -39,7 +39,13 @@ export const PopularQuotes: React.VFC = () => {
       </Group>
       <Stack>
         <Title order={3}>{currentSemesterShorthand}</Title>
-        <SimpleGrid cols={2}>
+        <SimpleGrid
+          cols={3}
+          breakpoints={[
+            { maxWidth: 'lg', cols: 2, spacing: 'md' },
+            { maxWidth: 'sm', cols: 1, spacing: 'sm' },
+          ]}
+        >
           {popularQuotesCurrentSemester.map(quote => (
             <QuoteCard quote={quote} key={quote.id} />
           ))}
@@ -47,7 +53,13 @@ export const PopularQuotes: React.VFC = () => {
       </Stack>
       <AllTimeContainer>
         <Title order={3}>Siden tidenes morgen</Title>
-        <SimpleGrid cols={2}>
+        <SimpleGrid
+          cols={3}
+          breakpoints={[
+            { maxWidth: 'lg', cols: 2, spacing: 'md' },
+            { maxWidth: 'sm', cols: 1, spacing: 'sm' },
+          ]}
+        >
           {popularQuotesAllTime.map(quote => (
             <QuoteCard quote={quote} key={quote.id} displaySemester />
           ))}
