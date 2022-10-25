@@ -32,7 +32,6 @@ export const UserPlaceholder: UserNode = {
   taggedAndVerifiedQuotes: [],
   internalGroupPositionMembershipHistory: [],
   hometown: '',
-  homeAddress: '',
 }
 
 interface Store {

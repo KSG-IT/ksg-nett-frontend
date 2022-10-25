@@ -15,7 +15,6 @@ export const ME_QUERY = gql`
       dateOfBirth
       biography
       studyAddress
-      homeAddress
       phone
       upvotedQuoteIds
 
@@ -43,7 +42,7 @@ export const USER_QUERY = gql`
       lastName
       biography
       studyAddress
-      homeAddress
+      homeTown
       dateOfBirth
       ksgStatus
       study
@@ -94,6 +93,18 @@ export const ALL_ACTIVE_USERS_SHALLOW_QUERY = gql`
           phone
         }
       }
+    }
+  }
+`
+
+export const ALL_ACTIVE_USERS_LIST_QUERY = gql`
+  query AllActiveUsersList($q: String) {
+    allActiveUsersList(q: $q) {
+      id
+      fullName
+      profileImage
+      initials
+      phone
     }
   }
 `

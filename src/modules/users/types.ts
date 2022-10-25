@@ -11,7 +11,6 @@ export type UserNode = {
   fullName: string
   phone: string
   hometown: string
-  homeAddress: string
   biography: string
   initials: string
   username: string
@@ -55,9 +54,10 @@ export interface AllUsersShallowQueryVariables {
 }
 
 export interface AllUsersShallowQueryReturns {
-  allActiveUsers: RelayEdges<
-    Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>
-  >
+  allActiveUsersList: Pick<
+    UserNode,
+    'id' | 'fullName' | 'profileImage' | 'initials'
+  >[]
 }
 
 export interface PatchUserReturns {
