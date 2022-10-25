@@ -35,7 +35,6 @@ export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
   setUsersCallback,
   ...rest
 }) => {
-  const { classes } = useStyles()
   const [inputValue, setInputValue] = useState('')
   const { data, loading } = useQuery<
     AllUsersShallowQueryReturns,
@@ -46,22 +45,13 @@ export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
   const initialValue = options.filter(option => users.includes(option.value))
 
   function handleSelectChange(value: string[]) {
-    console.table(users)
-    console.table(value)
-    //add user to options
-    //add user to value
     setUsersCallback && setUsersCallback([...users, value[value.length - 1]])
-  }
-
-  function debug(input: any) {
-    console.log(input)
   }
   return (
     <MultiSelect
       value={users}
       searchValue={inputValue}
       onSearchChange={setInputValue}
-      className={classes.select}
       placeholder={placeholder}
       onChange={handleSelectChange}
       limit={50}
@@ -70,26 +60,7 @@ export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
       searchable
       defaultValue={initialValue.map(option => option.value)}
       nothingFound="Ingen brukere funnet"
-      /**
-       onSelect={options =>
-         setUsersCallback(options.map(option => option.value))
-       }
-       * 
-       */
       {...rest}
     />
   )
 }
-
-const useStyles = createStyles(theme => ({
-  select: {
-    width: '100%',
-    height: '100%',
-    fontSize: theme.fontSizes.sm,
-    '& .react-select__control': {
-      height: '100%',
-      minHeight: '100%',
-      borderRadius: theme.radius.sm,
-    },
-  },
-}))
