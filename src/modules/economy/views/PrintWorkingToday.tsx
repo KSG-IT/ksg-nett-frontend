@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Paper, Stack, Table, Text, Title } from '@mantine/core'
 import { IconFileDownload } from '@tabler/icons'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -12,6 +13,13 @@ import { useStore } from 'store'
 import { format } from 'util/date-fns'
 import { API_URL } from 'util/env'
 import { UserOption } from 'util/user'
+
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Innkryssinger', path: '/economy/soci-sessions' },
+  { label: 'Lister å printe', path: '/economy/print' },
+  { label: 'De på jobb', path: '/economy/print/working-today' },
+]
 
 export const PrintWorkingToday: React.FC = ({}) => {
   const [userIds, setUserIds] = useState<string[]>([])
@@ -75,6 +83,7 @@ export const PrintWorkingToday: React.FC = ({}) => {
 
   return (
     <Stack>
+      <Breadcrumbs items={breadcrumbsItems} />
       <Group position="apart">
         <Title>Krysseliste for jobbende</Title>
         <Button

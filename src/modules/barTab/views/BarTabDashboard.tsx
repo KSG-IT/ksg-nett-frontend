@@ -1,12 +1,16 @@
 import { useQuery } from '@apollo/client'
 import { createStyles, Title } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import toast from 'react-hot-toast'
 import { ActiveBarTablController } from '../components/BarTabDashboaard'
-import { useBarTabMutations } from '../mutations.hooks'
 import { ACTIVE_BAR_TAB_QUERY } from '../queries'
 import { ActiveBarTabReturns } from '../types.graphql'
+
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'BSF', path: '/bar-tab' },
+]
 
 export const BarTabDashboard: React.FC = () => {
   const { classes } = useBarTabDashboardStyles()
@@ -22,6 +26,7 @@ export const BarTabDashboard: React.FC = () => {
 
   return (
     <div className={classes.wrapper}>
+      <Breadcrumbs items={breadcrumbsItems} />
       <Title>BSF</Title>
       <ActiveBarTablController barTab={activeBarTab} />
     </div>

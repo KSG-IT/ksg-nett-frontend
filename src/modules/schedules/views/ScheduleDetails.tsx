@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
 import { IconSettings } from '@tabler/icons'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -15,6 +16,10 @@ import {
 
 import { ShiftRenderer } from '../components/ScheduleDetails/ShiftRenderer'
 import { SCHEDULE_QUERY } from '../queries'
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Vaktlister', path: '/schedules' },
+]
 
 interface ScheduleDetailsParams {
   id: string
@@ -54,8 +59,14 @@ export const ScheduleDetails: React.FC = () => {
   }
 
   const { schedule } = data
+
+  const overloadedBreadcrumbs = [
+    ...breadcrumbsItems,
+    { label: schedule.name, path: `` },
+  ]
   return (
     <Stack>
+      <Breadcrumbs items={overloadedBreadcrumbs} />
       <Group position="apart">
         <Group position="apart">
           <Title>Vaktplan {schedule.name}</Title>

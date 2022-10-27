@@ -1,12 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Button, createStyles, Group, Title } from '@mantine/core'
-import {
-  IconChartArcs,
-  IconChartArea,
-  IconGlass,
-  IconPlus,
-  IconPrinter,
-} from '@tabler/icons'
+import { IconChartArea, IconGlass, IconPlus, IconPrinter } from '@tabler/icons'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
@@ -23,6 +18,11 @@ import {
   AllSociSessionsReturns,
   AllSociSessionsVariables,
 } from '../types.graphql'
+
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Innkryssinger', path: '/economy/soci-sessions' },
+]
 
 export const SosiSessions: React.FC = () => {
   const { classes } = useSociSessionsStyles()
@@ -77,6 +77,7 @@ export const SosiSessions: React.FC = () => {
 
   return (
     <div className={classes.wrapper}>
+      <Breadcrumbs items={breadcrumbsItems} />
       <Group position="apart">
         <Title>Innkryssinger</Title>
         <Group>

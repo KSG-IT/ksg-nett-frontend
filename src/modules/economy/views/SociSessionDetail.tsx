@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
@@ -15,6 +16,11 @@ import { MetaDataDisplay } from '../components/SociSessions/MetaDataDisplay'
 import { useSociSessionMutations } from '../mutations.hooks'
 import { SOCI_SESSION_QUERY } from '../queries'
 import { SociSessionReturns } from '../types.graphql'
+
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Innkryssinger', path: '/economy/soci-sessions' },
+]
 
 type SociSessionDetasilParams = {
   id: string
@@ -56,9 +62,14 @@ export const SociSessionDetail: React.FC = () => {
   }
 
   const { sociSession } = data
+  const overloadedBreadcrumbs = [
+    ...breadcrumbsItems,
+    { label: sociSession.getNameDisplay, path: `` },
+  ]
 
   return (
     <Stack>
+      <Breadcrumbs items={overloadedBreadcrumbs} />
       <Group position="apart">
         <Title>{sociSession.getNameDisplay}</Title>
         <PermissionGate permissions={PERMISSIONS.economy.change.sociSession}>

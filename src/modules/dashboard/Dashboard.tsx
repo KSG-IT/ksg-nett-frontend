@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import {
+  Anchor,
   createStyles,
   Grid,
   Group,
@@ -17,6 +18,9 @@ import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
 import { DashboardDataQueryReturns } from './types.graphql'
 import { useMediaQuery } from 'util/hooks'
+import { Breadcrumbs } from 'components/Breadcrumbs'
+
+const breadCrumbItems = [{ label: 'Hjem', path: '/dashboard' }]
 
 export const Dashboard = () => {
   const { classes } = useStyles()
@@ -39,6 +43,7 @@ export const Dashboard = () => {
 
   return (
     <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
+      <Breadcrumbs items={breadCrumbItems} />
       <ShortcutCards />
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
