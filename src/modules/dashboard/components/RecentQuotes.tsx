@@ -6,32 +6,20 @@ import {
   Stack,
   Text,
 } from '@mantine/core'
+import { QuoteCard } from 'modules/quotes/components'
 import { QuoteNode } from 'modules/quotes/types.graphql'
 import { UserThumbnail } from 'modules/users/components/UserThumbnail'
 
 interface UserQuotesProps {
-  quotes: Pick<QuoteNode, 'text' | 'tagged' | 'id' | 'context'>[]
+  quotes: Pick<
+    QuoteNode,
+    'text' | 'tagged' | 'id' | 'context' | 'sum' | 'semester'
+  >[]
 }
 
 export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
   const { classes } = useStyles()
-  const fields = quotes.map(quote => (
-    <Card className={classes.card} key={quote.id} shadow={'xs'}>
-      <Card.Section p={'sm'}>
-        <Text size={'sm'} className={classes.quoteText}>
-          {quote.text}
-        </Text>
-        <Avatar.Group spacing={5}>
-          {quote.tagged.map(user => (
-            <UserThumbnail size={'sm'} key={user.id} user={user} />
-          ))}
-        </Avatar.Group>
-        <Text size={'xs'} color={'gray'}>
-          {quote.context}
-        </Text>
-      </Card.Section>
-    </Card>
-  ))
+  const cards = quotes.map(quote => <QuoteCard key={quote.id} quote={quote} />)
   return (
     <Stack>
       <Text color={'dimmed'} weight={700}>
@@ -39,13 +27,13 @@ export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
       </Text>
       <SimpleGrid
         mt={'sm'}
-        cols={3}
+        cols={2}
         breakpoints={[
-          { maxWidth: 'md', cols: 3, spacing: 'md' },
-          { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+          { maxWidth: 'md', cols: 2, spacing: 'md' },
+          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
         ]}
       >
-        {fields}
+        {cards}
       </SimpleGrid>
     </Stack>
   )

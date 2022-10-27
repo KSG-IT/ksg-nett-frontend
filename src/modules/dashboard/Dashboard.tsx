@@ -6,13 +6,14 @@ import {
   createStyles,
   Grid,
   Group,
+  SimpleGrid,
   Stack,
   useMantineTheme,
 } from '@mantine/core'
 import { useStore } from 'store'
 import { ShortcutCards } from './components/ShortcutCards'
 import { FutureShifts } from './components/FutureShifts'
-import { RecentQuotes } from './components/QuotesGrid'
+import { RecentQuotes } from './components/RecentQuotes'
 import { TransactionCard } from './components/TransactionCard'
 import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
@@ -54,9 +55,16 @@ export const Dashboard = () => {
           <TransactionCard user={user} />
         </Grid.Col>
       </Grid>
-      <Group>
+      <SimpleGrid
+        cols={2}
+        breakpoints={[
+          { maxWidth: 'md', cols: 1, spacing: 'md' },
+          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
+        ]}
+      >
         <RecentQuotes quotes={lastQuotes} />
-      </Group>
+        <div></div>
+      </SimpleGrid>
     </Stack>
   )
 }

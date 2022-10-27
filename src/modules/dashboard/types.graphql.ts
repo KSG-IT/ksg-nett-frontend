@@ -17,7 +17,10 @@ export type UpcomingShiftNode = {
 export interface DashboardDataQueryReturns {
   dashboardData: {
     lastSummaries: Pick<SummaryNode, 'date' | 'type' | 'id'>[]
-    lastQuotes: Pick<QuoteNode, 'text' | 'tagged' | 'id' | 'context'>[]
+    lastQuotes: Pick<
+      QuoteNode,
+      'text' | 'tagged' | 'id' | 'context' | 'sum' | 'semester'
+    >[]
     wantedList: WantedUser[]
     myUpcomingShifts: {
       roleDisplay: string

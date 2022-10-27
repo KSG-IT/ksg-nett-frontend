@@ -166,7 +166,6 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
                   <UnstyledButton>
                     <IconHash size={18} color="lightgray" />
                   </UnstyledButton>
-                  {/* onClick={handleInvalidateQuote} */}
                 </Menu.Target>
                 <Menu.Dropdown style={{ zIndex: 9000 }}>
                   <PermissionGate permissions={PERMISSIONS.quotes.change.quote}>
