@@ -60,6 +60,7 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             size={mobileSize ? 'sm' : 'md'}
             placeholder="Skjermbilde av bankoverføring"
             icon={<IconUpload size={14} />}
+            error={errors?.receipt?.message}
             accept="image/png,image/jpeg,image/jpg"
             onChange={value => value && setValue('receipt', value)}
           />

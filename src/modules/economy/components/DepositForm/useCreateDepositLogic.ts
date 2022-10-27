@@ -3,6 +3,7 @@ import { CreateDepositMutationReturns } from 'modules/economy/types.graphql'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { OnFormSubmit } from 'types/forms'
+import { FILE_SIZE } from 'util/consts'
 import * as yup from 'yup'
 
 export type CreateDepositFormData = {
@@ -15,7 +16,14 @@ export type CreateDepositFormData = {
 const DepositCreateSchema = yup.object().shape({
   amount: yup.number().required('Amount is required'),
   description: yup.string().required('Description is required'),
-  receipt: yup.mixed().required('File is required'),
+  receipt: yup
+    .mixed()
+    .notRequired()
+    .test(
+      'FILE_SIZE',
+      'Filstørrelse for stor, 1 MB maks.',
+      value => !value || (value && value.size <= FILE_SIZE)
+    ),
 })
 
 interface UseCreateDepositLogicInput {
