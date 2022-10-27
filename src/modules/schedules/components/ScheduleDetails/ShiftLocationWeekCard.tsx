@@ -51,10 +51,6 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
                   ))}
                 </div>
               ))}
-              <CreateShiftPopover
-                scheduleId={scheduleId}
-                date={shiftLocationWeek.date}
-              />
             </Group>
           </Paper>
         </Stack>
@@ -72,7 +68,6 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    border: '1px solid red',
     width: '200px',
   },
 }))
