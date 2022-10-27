@@ -141,7 +141,7 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
   }
 
   return (
-    <Card className={classes.card} key={quote.id} withBorder>
+    <Card radius={'md'} className={classes.card} key={quote.id} withBorder>
       <Stack justify={'space-between'} spacing={'xs'} className={classes.card}>
         <Stack spacing={'xs'}>
           <Text size={'sm'} className={classes.quoteText}>

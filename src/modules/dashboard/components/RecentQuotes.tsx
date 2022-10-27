@@ -18,18 +18,17 @@ interface UserQuotesProps {
 }
 
 export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
-  const { classes } = useStyles()
   const cards = quotes.map(quote => <QuoteCard key={quote.id} quote={quote} />)
   return (
     <Stack>
-      <Text color={'dimmed'} weight={700}>
+      <Text py={'xs'} color={'dimmed'} weight={700}>
         Siste sitater
       </Text>
       <SimpleGrid
         mt={'sm'}
         cols={2}
         breakpoints={[
-          { maxWidth: 'md', cols: 2, spacing: 'md' },
+          { maxWidth: 'md', cols: 1, spacing: 'md' },
           { maxWidth: 'sm', cols: 1, spacing: 'sm' },
         ]}
       >

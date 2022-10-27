@@ -51,7 +51,13 @@ export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
         Neste vakter
       </Text>
       <Card withBorder radius={'md'} className={classes.card}>
-        <Group>{shiftCards}</Group>
+        {shiftCards.length > 0 ? (
+          <Group>{shiftCards}</Group>
+        ) : (
+          <Text p={'lg'} align="center" color={'dimmed'}>
+            Du har ingen vakter for øyeblikket.
+          </Text>
+        )}
       </Card>
     </Stack>
   )

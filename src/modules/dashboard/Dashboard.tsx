@@ -48,23 +48,14 @@ export const Dashboard = () => {
       <ShortcutCards />
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
-        <Grid.Col sm={12} lg={mediaQuery ? 5 : 6}>
+        <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>
           <FutureShifts shifts={myUpcomingShifts} />
-        </Grid.Col>
-        <Grid.Col sm={12} lg={mediaQuery ? 5 : 6}>
           <TransactionCard user={user} />
         </Grid.Col>
+        <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>
+          <RecentQuotes quotes={lastQuotes} />
+        </Grid.Col>
       </Grid>
-      <SimpleGrid
-        cols={2}
-        breakpoints={[
-          { maxWidth: 'md', cols: 1, spacing: 'md' },
-          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
-        ]}
-      >
-        <RecentQuotes quotes={lastQuotes} />
-        <div></div>
-      </SimpleGrid>
     </Stack>
   )
 }
