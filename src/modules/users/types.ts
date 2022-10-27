@@ -58,6 +58,9 @@ export interface AllUsersShallowQueryReturns {
     UserNode,
     'id' | 'fullName' | 'profileImage' | 'initials'
   >[]
+  allActiveUsers: RelayEdges<
+    Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>
+  >
 }
 
 export interface PatchUserReturns {
