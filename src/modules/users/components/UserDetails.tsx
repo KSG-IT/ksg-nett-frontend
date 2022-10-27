@@ -50,7 +50,7 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
 
   const overloadedBreadcrumbs = [
     ...breadcrumbsItems,
-    { label: user.fullName, path: '' },
+    { label: user.getFullWithNickName, path: '' },
   ]
 
   return (
@@ -67,7 +67,7 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
             )}
 
             <Text className={classes.name} mt={'sm'}>
-              {user.fullName}
+              {user.getFullWithNickName}
             </Text>
             <Divider my={'sm'} />
             <IconWithData icon={IconAt} userData={user.email} type="email" />

@@ -9,3 +9,33 @@ export const PATCH_USER_MUTATION = gql`
     }
   }
 `
+
+export const UPDATE_MY_INFO_MUTATION = gql`
+  mutation UpdateMyInfo(
+    $firstName: String
+    $nickname: String
+    $lastName: String
+    $email: String
+    $phone: String
+    $study: String
+    $studyAddress: String
+    $homeTown: String
+    $dateOfBirth: Date
+  ) {
+    updateMyInfo(
+      firstName: $firstName
+      nickname: $nickname
+      lastName: $lastName
+      email: $email
+      phone: $phone
+      study: $study
+      studyAddress: $studyAddress
+      homeTown: $homeTown
+      dateOfBirth: $dateOfBirth
+    ) {
+      user {
+        id
+      }
+    }
+  }
+`

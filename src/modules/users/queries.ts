@@ -18,7 +18,7 @@ export const ME_QUERY = gql`
       homeTown
       phone
       upvotedQuoteIds
-
+      requiresMigrationWizard
       lastTransactions {
         # Is this an issue if we cache the activity?
         # This will become large at some point
@@ -39,6 +39,7 @@ export const USER_QUERY = gql`
     user(id: $id) {
       id
       fullName
+      getFullWithNickName
       firstName
       lastName
       biography

@@ -58,7 +58,7 @@ import {
 } from 'modules/summaries'
 import { ME_QUERY } from 'modules/users/queries'
 import { MeQueryReturns } from 'modules/users/types'
-import { ManageUsers, UserProfile } from 'modules/users/views'
+import { MigrationWizard, ManageUsers, UserProfile } from 'modules/users/views'
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useStore } from 'store'
@@ -86,9 +86,20 @@ export const AppRoutes: React.FC = () => {
     )
 
   const { me } = data
+
   if (me == null || me === undefined) {
     return <PublicRoutes />
   }
+
+  if (me.requiresMigrationWizard) {
+    return (
+      <Routes>
+        <Route path="migration-wizard" element={<MigrationWizard />} />
+        <Route path="*" element={<Navigate to="/migration-wizard" />} />
+      </Routes>
+    )
+  }
+
   setUser(me)
 
   return (
@@ -161,7 +172,14 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="users">
           <Route path=":userId" element={<UserProfile />} />
-          <Route path="manage" element={<ManageUsers />} />
+          <Route
+            path="manage"
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.users.change.user}>
+                <ManageUsers />
+              </RestrictedRoute>
+            }
+          />
         </Route>
 
         <Route path="gallery">

@@ -1,5 +1,12 @@
 import { InternalGroupPositionMembershipNode } from 'modules/users/UserManagement/types'
 
+export type LegacyUserrWorkHistoryNode = {
+  id: string
+  identifyingId: string
+  dateFrom: string
+  dateTo: string
+}
+
 export interface PatchInternalGroupPositionMembershipReturns {
   internalGroupPositionMembership: Pick<
     InternalGroupPositionMembershipNode,
