@@ -1,22 +1,9 @@
-import {
-  Button,
-  Card,
-  createStyles,
-  Group,
-  Paper,
-  Stack,
-  Text,
-  Title,
-  UnstyledButton,
-} from '@mantine/core'
-import { IconPlus, IconTrash } from '@tabler/icons'
+import { Card, createStyles, Group, Paper, Stack, Title } from '@mantine/core'
+import { IconDotsVertical } from '@tabler/icons'
 import { ShiftDayWeek } from 'modules/schedules/types.graphql'
-import { parseLocation } from 'modules/schedules/util'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
-import { CreateShiftPopover } from './CreateShiftPopover'
 import { ShiftCard } from './ShiftCard'
-import { ShiftWeek } from './ShiftWeek'
 
 interface ShiftDayWeekCardProps {
   shiftDayWeek: ShiftDayWeek
@@ -60,19 +47,21 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
             key={shiftDay.date}
           >
             <Stack>
-              <Title
-                transform="uppercase"
-                color="gray.9"
-                weight={900}
-                order={5}
-              >
-                {format(new Date(shiftDay.date), 'EEEE dd.MM')}
-              </Title>
+              <Group position="apart">
+                <Title
+                  transform="capitalize"
+                  color="gray.9"
+                  weight={900}
+                  order={5}
+                >
+                  {format(new Date(shiftDay.date), 'EEEE dd.MM')}
+                </Title>
+                <IconDotsVertical />
+              </Group>
               {shiftDay.shifts.map(shift => (
                 <ShiftCard key={shift.id} shift={shift} />
               ))}
             </Stack>
-            <CreateShiftPopover scheduleId={scheduleId} date={shiftDay.date} />
           </Card>
         ))}
       </Paper>
@@ -97,7 +86,7 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
   dayColumn: {
     display: 'flex',
     flexDirection: 'column',
-    minWidth: '250px',
+    minWidth: '270px',
     backgroundColor: theme.colors.gray[1],
     borderRadius: theme.radius.md,
   },

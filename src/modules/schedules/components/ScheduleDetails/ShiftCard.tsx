@@ -3,15 +3,18 @@ import {
   Badge,
   Button,
   Card,
+  Container,
   createStyles,
   Divider,
   Group,
   Modal,
+  Popover,
   Text,
+  Tooltip,
   UnstyledButton,
   useMantineTheme,
 } from '@mantine/core'
-import { IconClock, IconTrash } from '@tabler/icons'
+import { IconAlertTriangle, IconClock, IconTrash } from '@tabler/icons'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import {
   MY_UPCOMING_SHIFTS,
@@ -20,20 +23,18 @@ import {
 import { ShiftNode } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import { UserThumbnail } from 'modules/users/components'
-import { useState } from 'react'
+import { FC, PropsWithChildren, useState } from 'react'
 import toast from 'react-hot-toast'
-import { theme } from 'theme'
 import { format } from 'util/date-fns'
-import { AddShiftSlotPopover } from './AddShiftSlotPopover'
 import { ShiftCardModal } from './ShiftCardModal'
-import { ShiftCardSlot } from './ShiftCardSlot'
 
 interface ShiftCardProps {
   shift: ShiftNode
 }
+
 export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
   const [opened, setOpened] = useState(false)
-  const { classes } = useShiftCardStyles({ shift: shift })
+  const { classes } = useShiftCardStyles()
   const theme = useMantineTheme()
 
   const { deleteShift } = useShiftMutations()
@@ -60,18 +61,9 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
         onClick={() => setOpened(true)}
       >
         <Group position="apart" align={'flex-end'}>
-          <Text weight={600} size="lg">
-            {shift.name}
-          </Text>
-          <UnstyledButton>
-            <IconTrash
-              size="18px"
-              onClick={handleDeleteShift}
-              color="lightgray"
-            />
-          </UnstyledButton>
+          <Text className={classes.title}>{shift.name}</Text>
         </Group>
-        <Group mt="xs" position="apart">
+        <Group position="apart" className={classes.roster}>
           <Badge variant="filled" color="red.1" size="sm" radius="sm">
             <Text weight={700} transform={'uppercase'} color="red.9">
               {parseLocation(shift.location)}
@@ -95,12 +87,23 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
           </Avatar.Group>
         </Group>
         <Divider mt="md" mb="xs" />
-        <Group position="right" spacing="xs">
-          <IconClock size="20" color="gray" />
-          <Text color="gray">
-            {format(new Date(shift.datetimeStart), 'HH:mm')} -{' '}
-            {format(new Date(shift.datetimeEnd), 'HH:mm')}
-          </Text>
+        <Group position="apart">
+          {!shift.isFilled ? (
+            <Tooltip label="Skiftet er ikke fult">
+              <i className={classes.isFilled}>
+                <IconAlertTriangle />
+              </i>
+            </Tooltip>
+          ) : (
+            <div />
+          )}
+          <div className={classes.shiftTime}>
+            <IconClock size="20" color="gray" />
+            <Text className={classes.timeText}>
+              {format(new Date(shift.datetimeStart), 'HH:mm')} -{' '}
+              {format(new Date(shift.datetimeEnd), 'HH:mm')}
+            </Text>
+          </div>
         </Group>
       </Card>
       <Modal
@@ -118,7 +121,12 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
   )
 }
 
-const useShiftCardStyles = createStyles((theme, { shift }: ShiftCardProps) => ({
+const useShiftCardStyles = createStyles(theme => ({
+  title: {
+    fontWeight: 600,
+    fontSize: theme.fontSizes.lg,
+    color: theme.colors.gray[9],
+  },
   shift: {
     display: 'flex',
     flexDirection: 'column',
@@ -127,8 +135,27 @@ const useShiftCardStyles = createStyles((theme, { shift }: ShiftCardProps) => ({
     boxShadow: theme.shadows.xs,
     marginBottom: theme.spacing.sm,
     borderRadius: theme.radius.md,
-    backgroundColor: shift.isFilled ? theme.white : theme.colors.red[0],
+    backgroundColor: theme.white,
     color: theme.black,
+  },
+  roster: {
+    marginTop: theme.spacing.xs,
+    minHeight: '26px',
+  },
+  shiftTime: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  timeText: {
+    marginLeft: '4px',
+    color: theme.colors.gray[6],
+    fontWeight: 500,
+  },
+  isFilled: {
+    display: 'flex',
+    alignItems: 'center',
+    color: theme.colors.yellow[5],
   },
 }))
 
