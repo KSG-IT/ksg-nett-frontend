@@ -1,5 +1,6 @@
 import { AvatarProps } from '@mantine/core'
 import { BankAccountActivity } from 'modules/economy/types.graphql'
+import { LegacyUserrWorkHistoryNode } from 'modules/organization/types.graphql'
 import { QuoteNode } from 'modules/quotes/types.graphql'
 import { RelayEdges } from 'types/graphql'
 import { InternalGroupPositionMembershipNode } from './UserManagement/types'
@@ -8,7 +9,9 @@ export type UserNode = {
   id: string
   firstName: string
   lastName: string
+  nickname: string
   fullName: string
+  getFullWithNickName: string
   phone: string
   homeTown: string
   biography: string
@@ -26,15 +29,19 @@ export type UserNode = {
   isSuperuser: boolean
   isActive: boolean
   inRelationship: boolean
-  needsPasswordChange: boolean
+  requiresMigrationWizard: boolean
   isAdministrator: boolean
   bankAccountActivity: BankAccountActivity[]
   lastTransactions: BankAccountActivity[]
   upvotedQuoteIds: string[]
   internalGroupPositionMembershipHistory: InternalGroupPositionMembershipNode[]
-
+  legacyWorkHistory: LegacyUserrWorkHistoryNode[]
   allPermissions: string[]
   isSuperUser: boolean
+  bankAccount: {
+    id: string
+    cardUuid: string
+  }
 }
 
 export interface UserQueryReturns {
@@ -56,6 +63,26 @@ export interface AllUsersShallowQueryVariables {
 export interface AllUsersShallowQueryReturns {
   allActiveUsers: RelayEdges<
     Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>
+  >
+}
+
+//MY_WIZARD_QUERY
+
+export interface MyWizardQueryReturns {
+  me: Pick<
+    UserNode,
+    | 'id'
+    | 'firstName'
+    | 'lastName'
+    | 'email'
+    | 'phone'
+    | 'dateOfBirth'
+    | 'homeTown'
+    | 'studyAddress'
+    | 'study'
+    | 'legacyWorkHistory'
+    | 'nickname'
+    | 'bankAccount'
   >
 }
 
