@@ -26,6 +26,7 @@ const mtheme: MantineThemeOverride = {
       '#1d0202',
     ],
   },
+  fontFamily: '"Inter"',
 }
 
 function Root() {

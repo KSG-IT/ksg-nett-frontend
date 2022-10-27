@@ -11,7 +11,7 @@ import {
   UnstyledButton,
   useMantineTheme,
 } from '@mantine/core'
-import { IconTrash } from '@tabler/icons'
+import { IconClock, IconTrash } from '@tabler/icons'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import {
   MY_UPCOMING_SHIFTS,
@@ -60,41 +60,48 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
         onClick={() => setOpened(true)}
       >
         <Group position="apart" align={'flex-end'}>
-          <Text>{shift.name}</Text>
+          <Text weight={600} size="lg">
+            {shift.name}
+          </Text>
           <UnstyledButton>
             <IconTrash
               size="18px"
               onClick={handleDeleteShift}
-              color={'lightgray'}
+              color="lightgray"
             />
           </UnstyledButton>
         </Group>
-        <Group>
-          <Text>{format(new Date(shift.datetimeStart), 'HH:mm')}</Text>
-          <Badge variant="filled" color={'samfundet-red.4'} size="sm">
-            {' '}
-            <Text weight={800} transform={'uppercase'}>
+        <Group mt="xs" position="apart">
+          <Badge variant="filled" color="red.1" size="sm" radius="sm">
+            <Text weight={700} transform={'uppercase'} color="red.9">
               {parseLocation(shift.location)}
             </Text>
           </Badge>
+          <Avatar.Group>
+            {shift.slots.map(slot => {
+              if (slot.user) {
+                return <UserThumbnail user={slot.user} size="sm" />
+              } else {
+                return (
+                  <Avatar
+                    color={'samfundet-red'}
+                    size={'sm'}
+                    radius={'xl'}
+                    placeholder="https://m.media-amazon.com/images/M/MV5BMjA5NTE4NTE5NV5BMl5BanBnXkFtZTcwMTcyOTY5Mw@@._V1_.jpg"
+                  />
+                )
+              }
+            })}
+          </Avatar.Group>
         </Group>
-        <Divider my="xs" />
-        <Avatar.Group mt={'xs'}>
-          {shift.slots.map(slot => {
-            if (slot.user) {
-              return <UserThumbnail user={slot.user} size="sm" />
-            } else {
-              return (
-                <Avatar
-                  color={'samfundet-red'}
-                  size={'sm'}
-                  radius={'xl'}
-                  placeholder="https://m.media-amazon.com/images/M/MV5BMjA5NTE4NTE5NV5BMl5BanBnXkFtZTcwMTcyOTY5Mw@@._V1_.jpg"
-                />
-              )
-            }
-          })}
-        </Avatar.Group>
+        <Divider mt="md" mb="xs" />
+        <Group position="right" spacing="xs">
+          <IconClock size="20" color="gray" />
+          <Text color="gray">
+            {format(new Date(shift.datetimeStart), 'HH:mm')} -{' '}
+            {format(new Date(shift.datetimeEnd), 'HH:mm')}
+          </Text>
+        </Group>
       </Card>
       <Modal
         size={'md'}
@@ -116,8 +123,9 @@ const useShiftCardStyles = createStyles((theme, { shift }: ShiftCardProps) => ({
     display: 'flex',
     flexDirection: 'column',
     fontSize: '14px',
+    padding: theme.spacing.md,
     boxShadow: theme.shadows.xs,
-    marginBottom: theme.spacing.xs,
+    marginBottom: theme.spacing.sm,
     borderRadius: theme.radius.md,
     backgroundColor: shift.isFilled ? theme.white : theme.colors.red[0],
     color: theme.black,

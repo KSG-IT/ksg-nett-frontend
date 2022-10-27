@@ -60,7 +60,12 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
             key={shiftDay.date}
           >
             <Stack>
-              <Title transform="uppercase" color={'dimmed'} order={5}>
+              <Title
+                transform="uppercase"
+                color="gray.9"
+                weight={900}
+                order={5}
+              >
                 {format(new Date(shiftDay.date), 'EEEE dd.MM')}
               </Title>
               {shiftDay.shifts.map(shift => (
@@ -75,20 +80,24 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
   )
 }
 
+// #F6F5F8
+// #F1F3F5
 const useShiftDayWeekCardStyles = createStyles(theme => ({
   wrapper: {
     width: '100%',
   },
   card: {
     width: '100%',
-    display: 'inline-grid',
-    gridTemplateColumns: 'repeat(7, 1fr)',
+    display: 'flex',
     gap: '2px',
     backgroundColor: theme.colors.gray[0],
+    overflow: 'scroll',
   },
+
   dayColumn: {
     display: 'flex',
     flexDirection: 'column',
+    minWidth: '250px',
     backgroundColor: theme.colors.gray[1],
     borderRadius: theme.radius.md,
   },
