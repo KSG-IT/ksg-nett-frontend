@@ -36,7 +36,7 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
         Uke {format(new Date(shiftLocationWeek.date), 'w')}
       </Title>
       {shiftLocationWeek.shiftDays.map(shiftDay => (
-        <Stack key={shiftDay.date}>
+        <Stack key={shiftDay.date} className={classes.week}>
           <Title order={4}>
             {format(new Date(shiftDay.date), 'EEEE dd.MM')}
           </Title>
@@ -64,10 +64,13 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     width: '100%',
     display: 'inline-grid',
   },
+  week: {
+    overflow: 'scroll',
+  },
   locationColumn: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    width: '200px',
+    width: '270px',
   },
 }))
