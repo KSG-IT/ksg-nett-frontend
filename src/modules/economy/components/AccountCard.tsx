@@ -1,5 +1,13 @@
 import { useMutation } from '@apollo/client'
-import { Card } from '@mantine/core'
+import {
+  ActionIcon,
+  Card,
+  Title,
+  Text,
+  createStyles,
+  Group,
+  TextInput,
+} from '@mantine/core'
 import { IconEdit } from '@tabler/icons'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -11,14 +19,6 @@ import {
   PatchSociBankAccountVariables,
   SociBankAccountNode,
 } from '../types.graphql'
-
-const EditIcon = styled(IconEdit)`
-  :hover {
-    cursor: pointer;
-    opacity: 0.8;
-  }
-`
-
 const Label = styled.label`
   margin-right: 10px;
 `
@@ -49,6 +49,7 @@ interface AccountCardProps {
 }
 
 export const AccountCard: React.VFC<AccountCardProps> = ({ account }) => {
+  const { classes } = useStyles()
   const [cardUuid, setCardUuid] = useState(account.cardUuid)
   const [editable, setEditable] = useState(false)
 
@@ -78,23 +79,41 @@ export const AccountCard: React.VFC<AccountCardProps> = ({ account }) => {
   }
 
   return (
-    <Card>
-      <Card.Section m="xs">
-        <Label>Saldo:</Label>
-        <Balance>{numberWithSpaces(account.balance)},- NOK</Balance>
+    <Card className={classes.card}>
+      <Card.Section p={'md'}>
+        <Title
+          align="center"
+          order={6}
+          transform={'uppercase'}
+          color={'gray.3'}
+        >
+          Saldo i KR
+        </Title>
+        <Title align="center" weight={'lighter'} color={'gray.0'}>
+          {numberWithSpaces(account.balance)}
+        </Title>
       </Card.Section>
       <Card.Section m="xs">
-        <Label>Kortnummer:</Label>
-        <CardInputContainer>
-          <input
+        <Text align="center">Kortnummer</Text>
+        <Group position="center">
+          <TextInput
             value={cardUuid}
             disabled={!editable}
             onChange={evt => setCardUuid(evt.target.value)}
             onBlur={toggleEditable}
           />
-          <EditIcon onClick={toggleEditable} />
-        </CardInputContainer>
+          <ActionIcon onClick={toggleEditable}>
+            <IconEdit stroke={1.4} color="white" />
+          </ActionIcon>
+        </Group>
       </Card.Section>
     </Card>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  card: {
+    backgroundColor: theme.colors['samfundet-red'][5],
+    color: theme.white,
+  },
+}))

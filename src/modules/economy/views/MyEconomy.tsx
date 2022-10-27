@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client'
+import { Card, createStyles, Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import styled from 'styled-components'
@@ -11,54 +12,8 @@ import {
 import { MY_BANK_ACCOUNT_QUERY } from '../queries'
 import { MyBankAccountReturns } from '../types.graphql'
 
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-  display: grid;
-  grid-template-areas:
-    'title .'
-    'deposits account'
-    'activity activity'
-    'expenditure expenditure';
-  grid-template-columns: 1fr 2fr;
-  grid-gap: 10px;
-  grid-template-rows: 70px auto auto auto;
-  max-width: 900px;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-`
-const Title = styled.h1`
-  grid-area: title;
-  margin: 0;
-`
-
-const SubTitle = styled.h2`
-  margin: 0;
-`
-
-const AccountActivityCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  background-color: ${props => props.theme.colors.white};
-  box-shadow: ${props => props.theme.shadow.default};
-  padding: 15px;
-`
-
-interface SectionProps {
-  gridArea: string
-}
-
-const SectionContainer = styled.div<SectionProps>`
-  display: flex;
-  flex-direction: column;
-  grid-area: ${props => props.gridArea};
-  width: 100%;
-  height: 100%;
-  gap: 5px;
-`
-
-export const MyEconomy: React.VFC = () => {
+export const MyEconomy: React.FC = () => {
+  const { classes } = useStyles()
   const { data, loading, error } = useQuery<MyBankAccountReturns>(
     MY_BANK_ACCOUNT_QUERY
   )
@@ -68,26 +23,35 @@ export const MyEconomy: React.VFC = () => {
   if (loading || !data) return <FullContentLoader />
 
   return (
-    <Wrapper>
+    <Stack>
       <Title>Min økonomi</Title>
-      <SectionContainer gridArea="account">
-        <SubTitle>Konto</SubTitle>
+      <Card withBorder className={classes.balanceCard}>
+        <Title order={4}>Konto</Title>
         <AccountCard account={data.myBankAccount} />
-      </SectionContainer>
-      <SectionContainer gridArea="activity">
-        <SubTitle>Siste kontoaktivitet</SubTitle>
-        <AccountActivityCard>
-          <MyPurchases activities={data.myBankAccount.user.lastTransactions} />
-        </AccountActivityCard>
-      </SectionContainer>
-      <SectionContainer gridArea="expenditure">
-        <SubTitle>Forbruk</SubTitle>
+      </Card>
+      <Card withBorder className={classes.cardWithBorder}>
+        <Title order={4}>Siste kontoaktivitet</Title>
+        <MyPurchases activities={data.myBankAccount.user.lastTransactions} />
+      </Card>
+      <Card withBorder className={classes.card}>
+        <Title order={4}>Forbruk</Title>
         <MyExpenditures moneySpent={data.myBankAccount.user.moneySpent} />
-      </SectionContainer>
-      <SectionContainer gridArea="deposits">
-        <SubTitle>Innskudd</SubTitle>
+      </Card>
+      <Card withBorder className={classes.cardWithBorder}>
+        <Title order={4}>Innskudd</Title>
         <MyDeposits deposits={data.myBankAccount.lastDeposits} />
-      </SectionContainer>
-    </Wrapper>
+      </Card>
+    </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  cardWithBorder: {
+    borderTop: `5px solid ${theme.colors.brand}`,
+  },
+  balanceCard: {
+    backgroundColor: theme.colors['samfundet-red'][5],
+    color: theme.white,
+    maxWidth: 450,
+  },
+}))

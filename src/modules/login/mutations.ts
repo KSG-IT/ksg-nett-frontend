@@ -17,7 +17,7 @@ export const LOGIN_MUTATION = gql`
         balance
         biography
         homeTown
-        homeAddress
+        studyAddress
         phone
         upvotedQuoteIds
         lastTransactions {
