@@ -47,7 +47,7 @@ export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
   )
   return (
     <Stack>
-      <Text color={'dimmed'} weight={700} py={'xs'}>
+      <Text color={'dimmed'} weight={700}>
         Neste vakter
       </Text>
       <Card withBorder radius={'md'} className={classes.card}>

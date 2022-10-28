@@ -1,5 +1,6 @@
 import { Button, createStyles, Paper, Table, Text } from '@mantine/core'
 import { IconDownload, IconFilePlus, IconMailbox } from '@tabler/icons'
+import { CardTable } from 'components/CardTable'
 import { useInvoiceMutations } from 'modules/barTab/mutations.hooks'
 import { ACTIVE_BAR_TAB_INVOICES_QUERY } from 'modules/barTab/queries'
 import { BarTabInvoiceNode } from 'modules/barTab/types.graphql'
@@ -81,22 +82,20 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
   ))
 
   return (
-    <Paper className={classes.card}>
-      <Table>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th>Epost</th>
-            <th>Hjemme</th>
-            <th>Borte</th>
-            <th>Differanse</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{invoiceRows}</tbody>
-      </Table>
-    </Paper>
+    <CardTable>
+      <thead>
+        <tr>
+          <th>Navn</th>
+          <th>Epost</th>
+          <th>Hjemme</th>
+          <th>Borte</th>
+          <th>Differanse</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>{invoiceRows}</tbody>
+    </CardTable>
   )
 }
 

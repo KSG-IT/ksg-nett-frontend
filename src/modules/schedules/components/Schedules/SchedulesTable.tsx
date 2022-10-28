@@ -1,5 +1,6 @@
 import { Button, Paper, Table } from '@mantine/core'
 import { IconEye } from '@tabler/icons'
+import { CardTable } from 'components/CardTable'
 import { ScheduleNode } from 'modules/schedules/types.graphql'
 import { Link } from 'react-router-dom'
 
@@ -31,18 +32,16 @@ export const SchedulesTable: React.FC<SchedulesTableProps> = ({
     </tr>
   ))
   return (
-    <Paper>
-      <Table>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
-    </Paper>
+    <CardTable>
+      <thead>
+        <tr>
+          <th>Navn</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </CardTable>
   )
 }

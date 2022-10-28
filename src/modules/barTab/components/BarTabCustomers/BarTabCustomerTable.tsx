@@ -1,4 +1,5 @@
-import { createStyles, Paper, Table } from '@mantine/core'
+import { createStyles } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import { BarTabCustomerNode } from 'modules/barTab/types.graphql'
 
 interface BarTabCustomerTableProps {
@@ -18,18 +19,16 @@ export const BarTabCustomerTable: React.FC<BarTabCustomerTableProps> = ({
   ))
 
   return (
-    <Paper className={classes.card} p="sm">
-      <Table>
-        <thead>
-          <tr>
-            <th>Gjeng</th>
-            <th>Kortnavn</th>
-            <th>Epost for BSF kvittering</th>
-          </tr>
-        </thead>
-        <tbody>{customerRows}</tbody>
-      </Table>
-    </Paper>
+    <CardTable>
+      <thead>
+        <tr>
+          <th>Gjeng</th>
+          <th>Kortnavn</th>
+          <th>Epost for BSF kvittering</th>
+        </tr>
+      </thead>
+      <tbody>{customerRows}</tbody>
+    </CardTable>
   )
 }
 

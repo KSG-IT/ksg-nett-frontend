@@ -1,25 +1,17 @@
 import { useQuery } from '@apollo/client'
+import { createStyles, Grid, Stack, useMantineTheme } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import {
-  Anchor,
-  createStyles,
-  Grid,
-  Group,
-  SimpleGrid,
-  Stack,
-  useMantineTheme,
-} from '@mantine/core'
 import { useStore } from 'store'
-import { ShortcutCards } from './components/ShortcutCards'
+import { useMediaQuery } from 'util/hooks'
 import { FutureShifts } from './components/FutureShifts'
 import { RecentQuotes } from './components/RecentQuotes'
+import { ShortcutCards } from './components/ShortcutCards'
 import { TransactionCard } from './components/TransactionCard'
 import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
 import { DashboardDataQueryReturns } from './types.graphql'
-import { useMediaQuery } from 'util/hooks'
-import { Breadcrumbs } from 'components/Breadcrumbs'
 
 const breadCrumbItems = [{ label: 'Hjem', path: '/dashboard' }]
 
@@ -64,7 +56,6 @@ const useStyles = createStyles(theme => ({
   wrapper: {
     width: '100%',
     maxWidth: '1600px',
-    padding: theme.spacing.md,
 
     [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
       padding: 0,

@@ -1,4 +1,5 @@
 import { Button, createStyles, Image, Modal, Paper, Table } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import { FullContentLoader } from 'components/Loading'
 import { useDepositMutations } from 'modules/economy/mutations.hooks'
 import { ALL_DEPOSITS } from 'modules/economy/queries'
@@ -96,8 +97,8 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
   ))
 
   return (
-    <Paper p="sm" className={classes.paper}>
-      <Table>
+    <>
+      <CardTable>
         <thead>
           <tr>
             <th>Tidsstempel</th>
@@ -109,7 +110,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
           </tr>
         </thead>
         <tbody>{rows}</tbody>
-      </Table>
+      </CardTable>
       <Modal
         fullScreen
         title="Kvittering"
@@ -120,7 +121,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
           <Image className={classes.previewImage} src={getPreviewImage()} />
         )}
       </Modal>
-    </Paper>
+    </>
   )
 }
 

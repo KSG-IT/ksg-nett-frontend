@@ -21,11 +21,10 @@ export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
   const cards = quotes.map(quote => <QuoteCard key={quote.id} quote={quote} />)
   return (
     <Stack>
-      <Text py={'xs'} color={'dimmed'} weight={700}>
+      <Text color={'dimmed'} weight={700}>
         Siste sitater
       </Text>
       <SimpleGrid
-        mt={'sm'}
         cols={2}
         breakpoints={[
           { maxWidth: 'md', cols: 1, spacing: 'md' },

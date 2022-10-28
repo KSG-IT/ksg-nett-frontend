@@ -7,6 +7,7 @@ import {
   Text,
   TextProps,
 } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import { format } from 'date-fns'
 import { UserNode } from 'modules/users/types'
 import React from 'react'
@@ -52,19 +53,17 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
       <Text color={'dimmed'} weight={700} p={'xs'}>
         Siste transaksjoner
       </Text>
-      <Card py={'xl'} radius={'md'} className={classes.card} withBorder>
-        <Table>
-          <thead>
-            <tr className={classes.headerRow}>
-              <Header>Type</Header>
-              <Header align="right">Pris</Header>
-              <Header align="right">Antall</Header>
-              <Header align="right">Tidspunkt</Header>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </Card>
+      <CardTable>
+        <thead>
+          <tr className={classes.headerRow}>
+            <Header>Type</Header>
+            <Header align="right">Pris</Header>
+            <Header align="right">Antall</Header>
+            <Header align="right">Tidspunkt</Header>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </CardTable>
     </Stack>
   )
 }
