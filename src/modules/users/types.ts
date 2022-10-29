@@ -12,6 +12,7 @@ export type UserNode = {
   nickname: string
   fullName: string
   getFullWithNickName: string
+  getCleanFullName: string
   phone: string
   homeTown: string
   biography: string

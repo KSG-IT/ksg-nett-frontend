@@ -12,15 +12,14 @@ import {
   Title,
 } from '@mantine/core'
 import { IconHash, IconQuote } from '@tabler/icons'
-import { MultiSelect, SelectItem } from '@mantine/core'
+import { UserMultiSelect } from 'components/Select'
 import { formatISO } from 'date-fns'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
-import { CreateQuoteReturns, CreateQuoteVariables } from '../types.graphql'
 import { CREATE_QUOTE } from '../mutations'
-import { UserMultiSelect, UserSelect } from 'components/Select'
+import { CreateQuoteReturns, CreateQuoteVariables } from '../types.graphql'
 
 const quoteTextPlaceholder =
   'Wow, du har sykt myke hender! Vanligvis når en jente gir meg en håndjob, sier jeg du kan jo suge meg i stedet, men de hendene'
