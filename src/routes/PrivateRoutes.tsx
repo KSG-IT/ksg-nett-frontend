@@ -58,7 +58,13 @@ import {
 } from 'modules/summaries'
 import { ME_QUERY } from 'modules/users/queries'
 import { MeQueryReturns } from 'modules/users/types'
-import { MigrationWizard, ManageUsers, UserProfile } from 'modules/users/views'
+import {
+  MigrationWizard,
+  ManageUsers,
+  UserProfile,
+  UserTypes,
+  UserTypeDetail,
+} from 'modules/users/views'
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useStore } from 'store'
@@ -172,6 +178,24 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="users">
           <Route path=":userId" element={<UserProfile />} />
+          <Route path="user-types">
+            <Route
+              index
+              element={
+                <RestrictedRoute permissions={PERMISSIONS.users.view.userType}>
+                  <UserTypes />
+                </RestrictedRoute>
+              }
+            />
+            <Route
+              path=":userTypeId"
+              element={
+                <RestrictedRoute permissions={PERMISSIONS.users.view.userType}>
+                  <UserTypeDetail />
+                </RestrictedRoute>
+              }
+            />
+          </Route>
           <Route
             path="manage"
             element={

@@ -3,6 +3,7 @@ import { BankAccountActivity } from 'modules/economy/types.graphql'
 import { LegacyUserrWorkHistoryNode } from 'modules/organization/types.graphql'
 import { QuoteNode } from 'modules/quotes/types.graphql'
 import { RelayEdges } from 'types/graphql'
+import { UserTypeLogEntryActionValues } from './enums'
 import { InternalGroupPositionMembershipNode } from './UserManagement/types'
 
 export type UserNode = {
@@ -45,6 +46,23 @@ export type UserNode = {
   }
 }
 
+export type UserTypeLogEntryNode = {
+  id: string
+  user: Pick<UserNode, 'id' | 'getCleanFullName'>
+  timestamp: string
+  doneBy: Pick<UserNode, 'id' | 'getCleanFullName'>
+  action: UserTypeLogEntryActionValues
+}
+
+export type UserTypeNode = {
+  id: string
+  name: string
+  description: string
+  permissions: string[]
+  users: Pick<UserNode, 'id' | 'getCleanFullName'>[]
+  changelog: UserTypeLogEntryNode[]
+}
+
 export interface UserQueryReturns {
   user: UserNode
 }
@@ -64,14 +82,20 @@ export interface AllUsersShallowQueryVariables {
 export interface AllUsersShallowQueryReturns {
   allActiveUsersList: Pick<
     UserNode,
-    'id' | 'fullName' | 'profileImage' | 'initials'
+    'id' | 'profileImage' | 'initials' | 'getCleanFullName'
   >[]
   allActiveUsers: RelayEdges<
-    Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>
+    Pick<UserNode, 'id' | 'getCleanFullName' | 'profileImage' | 'initials'>
   >
 }
 
-//MY_WIZARD_QUERY
+export interface AllUserTypesQueryReturns {
+  allUserTypes: Pick<UserTypeNode, 'id' | 'name'>[]
+}
+
+export interface UserTypeDetailQueryReturns {
+  userType: UserTypeNode
+}
 
 export interface MyWizardQueryReturns {
   me: Pick<
@@ -99,4 +123,21 @@ export interface PatchUserReturns {
 
 export interface UserThumbnailProps extends AvatarProps {
   user: Pick<UserNode, 'id' | 'profileImage' | 'initials' | 'fullName'>
+}
+
+export interface AddUserToUserTypeReturns {
+  user: Pick<UserNode, 'id'>
+}
+export interface AddUserToUserTypeVariables {
+  userId: string
+  userTypeId: string
+}
+
+export interface RemoveUserFromUserTypeReturns {
+  user: Pick<UserNode, 'id'>
+}
+
+export interface RemoveUserFromUserTypeVariables {
+  userId: string
+  userTypeId: string
 }
