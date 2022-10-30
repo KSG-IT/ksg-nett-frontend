@@ -12,6 +12,7 @@ export const UserPlaceholder: UserNode = {
   initials: '',
   nickname: '',
   getFullWithNickName: '',
+  getCleanFullName: '',
   username: '',
   balance: 0,
   email: '',
