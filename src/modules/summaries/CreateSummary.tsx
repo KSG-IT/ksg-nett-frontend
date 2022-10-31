@@ -117,7 +117,7 @@ export const CreateSummary = () => {
           <Group>
             <UserSelect
               userId={getValues('reporter')}
-              setUserCallback={option => handleUpdateReporter(option.value)}
+              setUserCallback={handleUpdateReporter}
             />
             <UserMultiSelect
               label="Deltakere"

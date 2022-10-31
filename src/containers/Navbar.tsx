@@ -8,6 +8,7 @@ import {
   IconCreditCard,
   IconDisabled,
   IconEdit,
+  IconHandMiddleFinger,
   IconHome,
   IconPhoto,
   IconQuestionMark,
@@ -65,6 +66,11 @@ const routes: RouteGroup[] = [
         icon: IconChartAreaLine,
         link: '/bar-tab',
         label: 'BSF',
+      },
+      {
+        icon: IconHandMiddleFinger,
+        link: '/users/user-types',
+        label: 'Tilganger',
       },
       {
         icon: IconCreditCard,

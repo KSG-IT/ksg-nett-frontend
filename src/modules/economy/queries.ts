@@ -107,7 +107,7 @@ export const SOCI_SESSION_QUERY = gql`
       closedAt
       createdBy {
         id
-        fullName
+        getCleanFullName
       }
       productOrders {
         id

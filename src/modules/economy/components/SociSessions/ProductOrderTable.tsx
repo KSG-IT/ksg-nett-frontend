@@ -1,5 +1,6 @@
 import { createStyles, Paper, Table, UnstyledButton } from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
+import { CardTable } from 'components/CardTable'
 import { useProductOrderMutations } from 'modules/economy/mutations.hooks'
 import { SOCI_SESSION_QUERY } from 'modules/economy/queries'
 import {
@@ -73,25 +74,23 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
   )
 
   return (
-    <Paper>
-      <Table p="sm">
-        <thead>
-          <tr>
-            <th>Tidsstempel</th>
-            <th>Navn</th>
-            <th>Vare</th>
-            <th>Antall</th>
-            <th>Pris</th>
-            <th>Total</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows}
-          {summaryRow}
-        </tbody>
-      </Table>
-    </Paper>
+    <CardTable>
+      <thead>
+        <tr>
+          <th>Tidsstempel</th>
+          <th>Navn</th>
+          <th>Vare</th>
+          <th>Antall</th>
+          <th>Pris</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows}
+        {summaryRow}
+      </tbody>
+    </CardTable>
   )
 }
 

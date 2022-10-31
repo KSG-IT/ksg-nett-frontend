@@ -77,38 +77,41 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
 
   const renderedText =
     shiftSlot.user === null ? (
-      <Text className={classes.hoverable} onClick={() => setOpened(true)}>
+      <Text className={classes.hoverableRed} onClick={() => setOpened(true)}>
         {shiftSlot.role}
       </Text>
     ) : (
       <Group position="apart">
-        <Text className={classes.hoverable} onClick={() => setOpened(true)}>
+        <Text
+          className={classes.hoverableGreen}
+          onClick={() => setOpened(true)}
+        >
           {shiftSlot.user.fullName}
         </Text>
         <UnstyledButton
           onClick={() => handleRemoveUserFromShiftSlot(shiftSlot.id)}
         >
-          <IconX size="16px" />
+          <IconX size="16px" color="white" />
         </UnstyledButton>
       </Group>
     )
 
   return (
-    <Popover opened={opened} onChange={setOpened}>
+    <Popover opened={opened} onChange={setOpened} withinPortal>
       <Popover.Target>
-        <div>{renderedText}</div>
+        <Text color={'white'}>{renderedText}</Text>
       </Popover.Target>
       <Popover.Dropdown>
         <Stack spacing="xs" className={classes.wrapper}>
           <Group position="apart" align="flex-end">
-            <label>Velg bruker for skift</label>
-            <Button color="red" onClick={handleDeleteShiftSlot}>
+            <Text transform="uppercase" color={'dimmed'}>
+              Velg bruker for skift
+            </Text>
+            <Button color="samfundet-red" onClick={handleDeleteShiftSlot}>
               Slett
             </Button>
           </Group>
-          <UserSelect
-            setUserCallback={option => handleAddUserToShift(option.value)}
-          />
+          <UserSelect width="90%" setUserCallback={handleAddUserToShift} />
         </Stack>
       </Popover.Dropdown>
     </Popover>
@@ -116,10 +119,21 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
 }
 
 const useShiftCardSlotStyles = createStyles(theme => ({
-  hoverable: {
+  hoverableGreen: {
+    color: theme.colors.green[7],
     ':hover': {
       cursor: 'pointer',
-      backgroundColor: theme.colors.gray[6],
+      backgroundColor: theme.colors.green[1],
+      borderRadius: theme.radius.sm,
+    },
+  },
+  hoverableRed: {
+    color: theme.colors.gray[4],
+    fontWeight: 800,
+    ':hover': {
+      cursor: 'pointer',
+      backgroundColor: theme.colors.gray[0],
+      borderRadius: theme.radius.sm,
     },
   },
   wrapper: {

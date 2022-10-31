@@ -10,7 +10,6 @@ import {
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { Search } from 'components/Input'
 import { useState } from 'react'
-import styled from 'styled-components'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { useDebounce } from 'util/hooks/useDebounce'
 import { QuoteCard } from '../components/QuoteCard'
@@ -30,7 +29,8 @@ export const QuotesList = () => {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query)
 
-  const { data, fetchMore } = useQuery<
+  // Move query to own component that executes query and loading to get rid of lag
+  const { data, fetchMore, loading } = useQuery<
     ApprovedQuotesReturns,
     ApprovedQuotesVariables
   >(APPROVED_QUOTES_QUERY, {
@@ -91,8 +91,8 @@ export const QuotesList = () => {
       <SimpleGrid
         cols={4}
         breakpoints={[
-          { maxWidth: 'md', cols: 3, spacing: 'md' },
-          { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+          { maxWidth: 'lg', cols: 3, spacing: 'md' },
+          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
         ]}
       >
         {quotes.map(quote => (
@@ -101,7 +101,13 @@ export const QuotesList = () => {
       </SimpleGrid>
       <Container>
         {hasNextPage && (
-          <Button onClick={handleFetchMore}>Hent flere sitater</Button>
+          <Button
+            color="samfundet-red"
+            loading={loading}
+            onClick={handleFetchMore}
+          >
+            Hent flere sitater
+          </Button>
         )}
       </Container>
     </Stack>

@@ -1,5 +1,6 @@
 import {
   Button,
+  Card,
   createStyles,
   Group,
   Paper,
@@ -50,11 +51,16 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
     <Stack className={classes.wrapper}>
       <Title order={3}>Uke {format(new Date(shiftDayWeek.date), 'w')}</Title>
 
-      <Paper className={classes.card}>
+      <Paper p={'xs'} className={classes.card}>
         {shiftDayWeek.shiftDays.map(shiftDay => (
-          <div className={classes.dayColumn} key={shiftDay.date}>
+          <Card
+            ml={'xs'}
+            p={'xs'}
+            className={classes.dayColumn}
+            key={shiftDay.date}
+          >
             <Stack>
-              <Title order={4}>
+              <Title transform="uppercase" color={'dimmed'} order={5}>
                 {format(new Date(shiftDay.date), 'EEEE dd.MM')}
               </Title>
               {shiftDay.shifts.map(shift => (
@@ -62,7 +68,7 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
               ))}
             </Stack>
             <CreateShiftPopover scheduleId={scheduleId} date={shiftDay.date} />
-          </div>
+          </Card>
         ))}
       </Paper>
     </Stack>
@@ -78,10 +84,12 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     display: 'inline-grid',
     gridTemplateColumns: 'repeat(7, 1fr)',
     gap: '2px',
+    backgroundColor: theme.colors.gray[0],
   },
   dayColumn: {
     display: 'flex',
     flexDirection: 'column',
-    border: '1px solid red',
+    backgroundColor: theme.colors.gray[1],
+    borderRadius: theme.radius.md,
   },
 }))

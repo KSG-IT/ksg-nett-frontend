@@ -39,3 +39,23 @@ export const UPDATE_MY_INFO_MUTATION = gql`
     }
   }
 `
+
+export const ADD_USER_TO_USER_TYPE_MUTATION = gql`
+  mutation AddUserToUserType($userTypeId: ID!, $userId: ID!) {
+    addUserToUserType(userTypeId: $userTypeId, userId: $userId) {
+      user {
+        id
+      }
+    }
+  }
+`
+
+export const REMOVE_USER_FROM_USER_TYPE_MUTATION = gql`
+  mutation RemoveUserFromUserType($userTypeId: ID!, $userId: ID!) {
+    removeUserFromUserType(userTypeId: $userTypeId, userId: $userId) {
+      user {
+        id
+      }
+    }
+  }
+`

@@ -15,6 +15,7 @@ import {
   UnstyledButton,
 } from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
+import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
 import { BarTabOrderTypeValues } from 'modules/barTab/enums'
 import {
@@ -155,23 +156,23 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
           </Button>
         </Group>
       </Group>
-      <Card className={classes.card}>
-        <Table>
-          <thead>
-            <tr>
-              <th>Navn</th>
-              <th>Gjeng</th>
-              <th>Sted</th>
-              <th>Vare</th>
-              <th>Pris</th>
-              <th>Antall</th>
-              <th>Totalpris</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </Card>
+
+      <CardTable>
+        <thead>
+          <tr>
+            <th>Navn</th>
+            <th>Gjeng</th>
+            <th>Sted</th>
+            <th>Vare</th>
+            <th>Pris</th>
+            <th>Antall</th>
+            <th>Totalpris</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </CardTable>
+
       <Title order={3}>Registrer kryss</Title>
       <MessageBox type="info">
         Kryss borte er kryss vi har gjort hos andre gjenger. Fjern verdien for å

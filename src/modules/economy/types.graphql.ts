@@ -63,7 +63,7 @@ export interface SociBankAccountNode {
 export interface SociSessionNode {
   id: string
   getNameDisplay: string
-  createdBy: UserNode
+  createdBy: Pick<UserNode, 'id' | 'getCleanFullName'>
   type: SociSessionType
   closed: boolean
   closedAt: Date

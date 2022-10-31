@@ -1,6 +1,17 @@
 import { useMutation } from '@apollo/client'
-import { PATCH_USER_MUTATION, UPDATE_MY_INFO_MUTATION } from './mutations'
-import { UserNode } from './types'
+import {
+  ADD_USER_TO_USER_TYPE_MUTATION,
+  PATCH_USER_MUTATION,
+  REMOVE_USER_FROM_USER_TYPE_MUTATION,
+  UPDATE_MY_INFO_MUTATION,
+} from './mutations'
+import {
+  AddUserToUserTypeReturns,
+  AddUserToUserTypeVariables,
+  RemoveUserFromUserTypeReturns,
+  RemoveUserFromUserTypeVariables,
+  UserNode,
+} from './types'
 
 type PatchUserInput = Partial<
   Omit<UserNode, 'id' | 'dateOfBirth' | 'profileImage'>
@@ -48,5 +59,24 @@ export function useUserMutations() {
     updateMyInfo,
     updateMyInfoLoading,
     updateMyInfoError,
+  }
+}
+
+export function useUserTypeMutations() {
+  const [addUserToUserType, { loading: addUserToUserTypeLoading }] =
+    useMutation<AddUserToUserTypeReturns, AddUserToUserTypeVariables>(
+      ADD_USER_TO_USER_TYPE_MUTATION
+    )
+
+  const [removeUserFromUserType, { loading: removeUserFromUserTypeLoading }] =
+    useMutation<RemoveUserFromUserTypeReturns, RemoveUserFromUserTypeVariables>(
+      REMOVE_USER_FROM_USER_TYPE_MUTATION
+    )
+
+  return {
+    addUserToUserType,
+    addUserToUserTypeLoading,
+    removeUserFromUserType,
+    removeUserFromUserTypeLoading,
   }
 }
