@@ -7,7 +7,7 @@ export enum SummaryType {
   DAGLIGHALLEN = 'DAGLIGHALLEN',
   STYRET = 'STYRET',
   SPRITBARSJEF = 'SPRITBARSJEF',
-  HOVMESTER = 'HOVMSTER',
+  HOVMESTER = 'HOVMESTER',
   KAFEANSVARLIG = 'KAFEANSVARLIG',
   SOUSCHEF = 'SOUSCHEF',
   ARRANGEMENT = 'ARRANGEMENT',
@@ -82,14 +82,7 @@ export interface PatchSummaryMutationVariables {
 }
 
 export interface PatchSummaryMutationReturns {
-  patchSummary: {
-    summary: {
-      id: string
-      contents: string
-      participants: string[]
-      report: string[]
-      date: Date
-      type: SummaryType
-    }
+  summary: {
+    id: string
   }
 }
