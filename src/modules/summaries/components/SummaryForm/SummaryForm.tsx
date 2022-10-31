@@ -1,5 +1,5 @@
 import { SummaryNode } from '../../types'
-import { useSummaryLogic } from './SummaryLogic'
+import { useSummaryLogic } from './useSummaryLogic'
 import { useSummaryEditAPI } from './SummaryEditAPI'
 import { Button, Card, Group, Select, Stack, Textarea } from '@mantine/core'
 import { UserMultiSelect, UserSelect } from '../../../../components/Select'
@@ -13,7 +13,7 @@ interface SummaryFormProps {
   onCompletedCallback: () => void
 }
 
-export const SummaryForm: React.FC<SummaryFormProps> = ({
+export const UseSummaryForm: React.FC<SummaryFormProps> = ({
   summary,
   onCompletedCallback,
 }) => {

@@ -1,6 +1,6 @@
 import { SummaryNode } from '../../types'
 import { SUMMARY_QUERY } from '../../queries'
-import { SummaryCleanedData, SummaryFormData } from './SummaryLogic'
+import { SummaryCleanedData, SummaryFormData } from './useSummaryLogic'
 import { usePatchSummaryMutations } from '../../mutations'
 
 export function useSummaryEditAPI(summary: SummaryNode) {
