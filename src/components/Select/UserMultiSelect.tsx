@@ -15,6 +15,7 @@ import {
 } from 'modules/users/types'
 import { useState } from 'react'
 import { usersToSelectOption } from 'util/user'
+import { Item, Value } from './SelectLabel'
 
 interface UserMultiSelectProps
   extends Omit<MultiSelectProps, 'data' | 'value'> {
@@ -39,22 +40,21 @@ export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
   const { data, loading } = useQuery<
     AllUsersShallowQueryReturns,
     AllUsersShallowQueryVariables
-  >(ALL_ACTIVE_USERS_LIST_QUERY, { variables: { q: inputValue } })
+  >(ALL_ACTIVE_USERS_LIST_QUERY, { variables: { q: '' } })
 
   const options = usersToSelectOption(data?.allActiveUsersList)
   const initialValue = options.filter(option => users.includes(option.value))
-
-  function handleSelectChange(value: string[]) {
-    setUsersCallback && setUsersCallback([...users, value[value.length - 1]])
-  }
   return (
     <MultiSelect
       value={users}
+      itemComponent={Item}
+      valueComponent={Value}
       searchValue={inputValue}
       onSearchChange={setInputValue}
       placeholder={placeholder}
-      onChange={handleSelectChange}
-      limit={50}
+      onChange={setUsersCallback}
+      limit={30}
+      clearable
       data={options}
       withinPortal
       searchable
