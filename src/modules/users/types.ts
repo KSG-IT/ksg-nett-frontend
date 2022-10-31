@@ -84,9 +84,6 @@ export interface AllUsersShallowQueryReturns {
     UserNode,
     'id' | 'profileImage' | 'initials' | 'getCleanFullName'
   >[]
-  allActiveUsers: RelayEdges<
-    Pick<UserNode, 'id' | 'getCleanFullName' | 'profileImage' | 'initials'>
-  >
 }
 
 export interface AllUserTypesQueryReturns {

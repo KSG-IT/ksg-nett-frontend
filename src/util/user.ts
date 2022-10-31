@@ -10,5 +10,5 @@ export const usersToSelectOption = (
 ): UserOption[] =>
   allActiveUsers?.map(node => ({
     value: node.id,
-    label: node.fullName,
+    label: node.getCleanFullName,
   })) || []

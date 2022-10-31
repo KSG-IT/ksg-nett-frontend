@@ -23,10 +23,7 @@ export const AddUserToUserTypeModal: React.FC<AddUserToUserTypeModalProps> = ({
   opened,
   onClose,
 }) => {
-  const [selectedUser, setSelectedUser] = useState<{
-    value: string
-    label: string
-  } | null>(null)
+  const [selectedUser, setSelectedUser] = useState('')
   const { addUserToUserType, addUserToUserTypeLoading } = useUserTypeMutations()
 
   function handleAddUser() {
@@ -34,7 +31,7 @@ export const AddUserToUserTypeModal: React.FC<AddUserToUserTypeModalProps> = ({
     addUserToUserType({
       variables: {
         userTypeId,
-        userId: selectedUser.value,
+        userId: selectedUser,
       },
       refetchQueries: [USER_TYPE_DETAIL_QUERY],
       onCompleted() {

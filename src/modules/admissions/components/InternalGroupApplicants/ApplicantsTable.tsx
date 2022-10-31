@@ -5,6 +5,7 @@ import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { UserThumbnail } from 'modules/users/components'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { ApplicantTableRowMenu } from './ApplicantTableRowMenu'
+import { CardTable } from 'components/CardTable'
 
 const parseApplicantName = (applicant: CoreApplicantNode) => {
   if (applicant.fullName === ' ') return 'Mangler data'
@@ -54,7 +55,7 @@ export const ApplicantsTable: React.VFC<{
   ))
 
   return (
-    <Table highlightOnHover>
+    <CardTable highlightOnHover>
       <thead>
         <tr>
           <td>Navn</td>
@@ -67,6 +68,6 @@ export const ApplicantsTable: React.VFC<{
         </tr>
       </thead>
       <tbody>{rows}</tbody>
-    </Table>
+    </CardTable>
   )
 }

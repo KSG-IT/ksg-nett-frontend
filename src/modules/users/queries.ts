@@ -103,7 +103,7 @@ export const ALL_ACTIVE_USERS_LIST_QUERY = gql`
   query AllActiveUsersList($q: String) {
     allActiveUsersList(q: $q) {
       id
-      fullName
+      getCleanFullName
       profileImage
       initials
       phone

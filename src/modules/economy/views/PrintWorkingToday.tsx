@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Paper, Stack, Table, Text, Title } from '@mantine/core'
+import { Button, Group, Stack, Text, Title } from '@mantine/core'
 import { IconFileDownload } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
@@ -12,7 +12,6 @@ import { useState } from 'react'
 import { useStore } from 'store'
 import { format } from 'util/date-fns'
 import { API_URL } from 'util/env'
-import { UserOption } from 'util/user'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -42,7 +41,7 @@ export const PrintWorkingToday: React.FC = ({}) => {
   function handleFetchList() {
     const formData = new FormData()
     formData.append('user_ids', JSON.stringify(userIds))
-    formData.append('product_ids', JSON.stringify([1, 2, 3, 4, 5, 6]))
+    formData.append('product_ids', JSON.stringify(productIds))
     formData.append('printed_by', me.id)
 
     fetch(`${API_URL}/economy/print-list`, {
@@ -63,9 +62,9 @@ export const PrintWorkingToday: React.FC = ({}) => {
       })
   }
 
-  function handleAddUserId(userOption: UserOption) {
-    setUserIds([...userIds, userOption.value])
-    setUserNames([...userNames, userOption.label])
+  function handleAddUserId(userId: string) {
+    setUserIds([...userIds, userId])
+    setUserNames([...userNames, userId])
   }
 
   if (error) return <FullPageError />
