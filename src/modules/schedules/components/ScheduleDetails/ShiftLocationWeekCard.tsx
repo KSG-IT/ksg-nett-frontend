@@ -45,7 +45,7 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
             <Group align="flex-start">
               {shiftDay.locations.map(location => (
                 <div className={classes.locationColumn} key={location.location}>
-                  <Text>{parseLocation(location.location)}</Text>
+                  <Text>{parseLocation(location.location).name}</Text>
                   {location.shifts.map(shift => (
                     <ShiftCard key={shift.id} shift={shift} />
                   ))}

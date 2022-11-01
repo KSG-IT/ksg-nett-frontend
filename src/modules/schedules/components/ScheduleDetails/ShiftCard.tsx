@@ -49,6 +49,7 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
     })
   }
 
+  const { name: location, color } = parseLocation(shift.location)
   return (
     <>
       <Card
@@ -60,9 +61,9 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
           <Text className={classes.title}>{shift.name}</Text>
         </Group>
         <Group position="apart" className={classes.roster}>
-          <Badge variant="filled" color="red.1" size="sm" radius="sm">
-            <Text weight={700} transform={'uppercase'} color="red.9">
-              {parseLocation(shift.location)}
+          <Badge variant="filled" color={`${color}.1`} size="sm" radius="sm">
+            <Text weight={700} transform={'uppercase'} color={`${color}.9`}>
+              {location}
             </Text>
           </Badge>
           <Avatar.Group>
