@@ -32,7 +32,7 @@ export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
   users = [],
   size,
   label,
-  placeholder,
+  placeholder = 'Velg brukere',
   setUsersCallback,
   ...rest
 }) => {
