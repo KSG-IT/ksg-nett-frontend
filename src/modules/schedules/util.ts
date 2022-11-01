@@ -20,7 +20,7 @@ export function parseLocation(location: LocationValues | null) {
     case LocationValues.LYCHE_BAR:
       return { name: 'Lyche bar', color: 'yellow' }
     case LocationValues.LYCHE_KJOKKEN:
-      return { name: 'Lyche kjøkken', color: 'gray' }
+      return { name: 'Lyche kjøkken', color: 'lime' }
     case LocationValues.RUNDHALLEN:
       return { name: 'Rundhallen', color: 'cyan' }
     case LocationValues.SELSKAPSSIDEN:
@@ -30,7 +30,7 @@ export function parseLocation(location: LocationValues | null) {
     case LocationValues.STROSSA:
       return { name: 'Strossa', color: 'pink' }
     default:
-      return { name: '', color: '' }
+      return { name: '', color: 'gray' }
   }
 }
 
