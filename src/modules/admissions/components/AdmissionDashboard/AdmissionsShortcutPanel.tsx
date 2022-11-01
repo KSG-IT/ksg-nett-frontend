@@ -58,7 +58,7 @@ export const AdmissionsShortcutPanel: React.FC<{}> = () => {
           >
             <Stack m="auto" align={'center'}>
               <Icon3dCubeSphere />
-              <Text weight={'bold'}>Oppfølging</Text>
+              <Text weight={'bold'}>Intervjuallokerring</Text>
             </Stack>
           </Card>
         </Link>

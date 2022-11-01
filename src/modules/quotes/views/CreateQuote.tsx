@@ -12,6 +12,7 @@ import {
   Title,
 } from '@mantine/core'
 import { IconHash, IconQuote } from '@tabler/icons'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { UserMultiSelect } from 'components/Select'
 import { formatISO } from 'date-fns'
 import { useState } from 'react'
@@ -25,6 +26,12 @@ const quoteTextPlaceholder =
   'Wow, du har sykt myke hender! Vanligvis når en jente gir meg en håndjob, sier jeg du kan jo suge meg i stedet, men de hendene'
 
 const quoteContextPlaceholder = ' Fulle Elias som blir leid til do'
+
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Sitater', path: '/quotes' },
+  { label: 'Legg til sitat', path: '' },
+]
 export const CreateQuote: React.FC = () => {
   const { classes } = useStyles()
   const mobileSize = useMediaQuery('(max-width: 600px)')
@@ -72,6 +79,7 @@ export const CreateQuote: React.FC = () => {
   }
   return (
     <Container size={'sm'} p={mobileSize ? 0 : 'sm'}>
+      <Breadcrumbs items={breadcrumbsItems} />
       <Title
         my={'lg'}
         transform="uppercase"

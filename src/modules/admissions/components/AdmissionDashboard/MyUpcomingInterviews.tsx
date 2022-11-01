@@ -1,11 +1,11 @@
 import { gql, useQuery } from '@apollo/client'
-import { Button, Paper, Stack, Table, Title } from '@mantine/core'
+import { Button, Stack, Title } from '@mantine/core'
+import { CardTable } from 'components/CardTable'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { format } from 'util/date-fns'
 import { InterviewNode } from 'modules/admissions/types.graphql'
 import { useNavigate } from 'react-router-dom'
-import { CardTable } from 'components/CardTable'
+import { format } from 'util/date-fns'
 
 interface MyInterviewsReturns {
   myUpcomingInterviews: Pick<
@@ -58,6 +58,7 @@ export const MyUpcomingInterviews: React.VFC = () => {
       <td>{interview.location.name}</td>
       <td>
         <Button
+          color="samfundet-red"
           onClick={() => {
             handleRedirectToInterview(interview.applicant.id)
           }}

@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import { Button, Group, Paper, Stack, Title } from '@mantine/core'
 import { IconCircleCheck, IconCircleX } from '@tabler/icons'
 import { BackButton } from 'components/BackButton'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -18,7 +19,7 @@ interface InternalGroupApplicantsParams {
   internalGroupId: string
 }
 
-export const InternalGroupApplicants: React.VFC = ({}) => {
+export const InternalGroupApplicants: React.FC = ({}) => {
   const { internalGroupId } = useParams<
     keyof InternalGroupApplicantsParams
   >() as InternalGroupApplicantsParams
@@ -54,9 +55,15 @@ export const InternalGroupApplicants: React.VFC = ({}) => {
     internalGroup: { name: internalGroupName },
   } = internalGroupApplicantsData
 
+  const breadcrumbsItems = [
+    { label: 'Home', path: '/dashboard' },
+    { label: 'Orvik', path: '/admissions' },
+    { label: `Søkeroversikt ${internalGroupName}`, path: '' },
+  ]
+
   return (
     <Stack>
-      <BackButton to="/admissions" />
+      <Breadcrumbs items={breadcrumbsItems} />
       <Group position="apart">
         <Title>Søkeroversikt {internalGroupName}</Title>
         <SynCButton refetchCallback={refetch} refetchLoading={loading} />
