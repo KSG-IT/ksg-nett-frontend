@@ -63,6 +63,7 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
   card: {
     width: '100%',
     display: 'inline-grid',
+    backgroundColor: '#F8F9FA',
   },
   week: {
     overflow: 'scroll',
