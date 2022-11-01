@@ -23,8 +23,8 @@ export type InterviewAdditionalEvaluationStatementNode = {
 
 export type InterviewNode = {
   id: string
-  interviewStart: Date
-  interviewEnd: Date
+  interviewStart: string
+  interviewEnd: string
   interviewers: Pick<
     UserNode,
     'id' | 'initials' | 'profileImage' | 'fullName'
@@ -271,6 +271,20 @@ export interface GetApplicantFromTokenVariables {}
 
 export interface GetApplicantFromTokenReturns {
   applicant: ApplicantNode
+}
+
+export interface AllAvailableInterviewsReturns {
+  allAvailableInterviews: Pick<
+    InterviewNode,
+    'id' | 'location' | 'interviewStart' | 'interviewEnd'
+  >[]
+}
+
+export interface AllApplicantsAvailableForRebookingReturns {
+  allApplicantsAvailableForRebooking: Pick<
+    ApplicantNode,
+    'id' | 'fullName' | 'email' | 'phone' | 'status'
+  >[]
 }
 
 // === Query typings ===
@@ -558,13 +572,18 @@ export interface CreateApplicantsFromCSVDataVariables {
   applicants: ApplicantCSVData[]
 }
 
-//   UpdateInternalGroupPositionPriorityOrderReturns,
-// UpdateInternalGroupPositionPriorityOrderVariables
-
 export interface UpdateInternalGroupPositionPriorityOrderReturns {
   priorityOrder: Pick<InternalGroupPositionPriorityNode, 'id'>[]
 }
 export interface UpdateInternalGroupPositionPriorityOrderVariables {
   applicantId: string
   priorityOrder: string[]
+}
+
+export interface AssignApplicantNewInterviewReturns {
+  success: boolean
+}
+export interface AssignApplicantNewInterviewVariables {
+  applicantId: string
+  interviewId: string
 }

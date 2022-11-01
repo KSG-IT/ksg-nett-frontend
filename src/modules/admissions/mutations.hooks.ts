@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import { ApplicantStatusValues, InterviewTotalEvaluationValues } from './consts'
 import {
+  ASSIGN_APPLICANT_NEW_INTERVIEW_MUTATION,
   CLOSE_ADMISSION_MUTATION,
   CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION,
   CREATE_APPLICANT_COMMENT_MUTATION,
@@ -20,6 +21,8 @@ import {
 import {
   ApplicantInterestNode,
   ApplicantNode,
+  AssignApplicantNewInterviewReturns,
+  AssignApplicantNewInterviewVariables,
   CreateApplicantCommentReturns,
   CreateApplicantCommentVariables,
   CreateApplicantsFromCSVDataReturns,
@@ -138,6 +141,7 @@ export const usePatchApplicant = () => {
   return {
     patchApplicant: patchApplicant,
     loading: loading,
+    error: error,
   }
 }
 
@@ -334,6 +338,14 @@ export const useApplicantMutations = () => {
     UpdateInternalGroupPositionPriorityOrderVariables
   >(UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION)
 
+  const [
+    assignApplicantNewInterview,
+    { loading: assignApplicantNewInterviewLoading },
+  ] = useMutation<
+    AssignApplicantNewInterviewReturns,
+    AssignApplicantNewInterviewVariables
+  >(ASSIGN_APPLICANT_NEW_INTERVIEW_MUTATION)
+
   return {
     patchApplicant,
     patchApplicantLoading,
@@ -347,6 +359,8 @@ export const useApplicantMutations = () => {
 
     updateInternalGroupPositionPriorityOrder,
     updateInternalGroupPositionPriorityOrderLoading,
+    assignApplicantNewInterview,
+    assignApplicantNewInterviewLoading,
   }
 }
 
