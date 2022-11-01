@@ -57,11 +57,19 @@ export const PERMISSIONS = {
       quote: 'quotes.delete_quote',
     },
   },
+  // ===== USERS ======
   users: {
     change: {
       user: 'users.change_user',
+      userType: 'users.change_usertype',
+    },
+    view: {
+      user: 'users.view_user',
+      userType: 'users.view_usertype',
     },
   },
+
+  // ===== SCHEDULES ======
   schedules: {
     add: {
       schedule: 'schedules.add_schedule',

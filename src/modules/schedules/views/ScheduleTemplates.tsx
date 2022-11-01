@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Button, createStyles, Group, Title } from '@mantine/core'
 import { IconPlus } from '@tabler/icons'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
@@ -12,6 +13,12 @@ import {
 } from '../components/ScheduleTemplates'
 import { ALL_SCHEDULE_TEMPLATES } from '../queries'
 import { AllScheduleTemplatesReturns } from '../types.graphql'
+
+const breadcrumbItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Vaktlister', path: '/schedules' },
+  { label: 'Vaktplanmaler', path: '/schedules/templates' },
+]
 
 export const ScheduleTemplates: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
@@ -28,6 +35,7 @@ export const ScheduleTemplates: React.FC = () => {
 
   return (
     <div className={classes.wrapper}>
+      <Breadcrumbs items={breadcrumbItems} />
       <Group position="apart" my="md">
         <Title>Vaktplan maler</Title>
         <PermissionGate

@@ -1,24 +1,27 @@
 import { useQuery } from '@apollo/client'
-import { Button, Checkbox, Group, Paper, TextInput, Title } from '@mantine/core'
+import {
+  Button,
+  Checkbox,
+  Group,
+  Paper,
+  Stack,
+  TextInput,
+  Title,
+} from '@mantine/core'
 import { IconRefresh, IconSearch } from '@tabler/icons'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { useState } from 'react'
-import styled from 'styled-components'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { useDebounce } from 'util/hooks'
 import { DepositsTable } from '../components/Deposits'
 import { ALL_DEPOSITS } from '../queries'
 import { AllDepositsQuery, AllDepositsVariables } from '../types.graphql'
 
-const Wrapper = styled.div`
-  ${props => props.theme.layout.default};
-  overflow-y: scroll;
-
-  ${props => props.theme.media.mobile} {
-    display: flex;
-    flex-direction: column;
-  }
-`
+const breadCrumbItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Innskudd', path: '/deposits' },
+]
 
 export const Deposits: React.FC = () => {
   const [unverifiedOnly, setUnverifiedOnly] = useState(true)
@@ -41,7 +44,8 @@ export const Deposits: React.FC = () => {
   const deposits = data?.allDeposits.edges.map(edge => edge.node) ?? []
 
   return (
-    <Wrapper>
+    <Stack>
+      <Breadcrumbs items={breadCrumbItems} />
       <Group position="apart">
         <Title>Innskudd</Title>
         <Button
@@ -68,6 +72,6 @@ export const Deposits: React.FC = () => {
         </Group>
       </Paper>
       <DepositsTable deposits={deposits} queryLoading={loading} />
-    </Wrapper>
+    </Stack>
   )
 }

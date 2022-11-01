@@ -1,19 +1,16 @@
 import { Card, Container, createStyles, Title } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
 import { CreateDepositForm } from '../components'
 
-interface DepositProps {}
+const breadCrumbItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Min økonomi', path: '/economy/me' },
+  { label: 'Innskudd', path: '/economy/deposits/create' },
+]
 
-const useStyles = createStyles(theme => ({
-  title: {
-    color: theme.colors.gray[6],
-    fontWeight: 'bold',
-  },
-  card: {
-    borderTop: `5px solid ${theme.colors.brand}`,
-  },
-}))
+interface DepositProps {}
 
 export const CreateDeposit: React.FC<DepositProps> = () => {
   const { classes } = useStyles()
@@ -21,6 +18,7 @@ export const CreateDeposit: React.FC<DepositProps> = () => {
   const navigate = useNavigate()
   return (
     <Container size={'sm'} p={mobileSize ? 0 : 'xl'}>
+      <Breadcrumbs items={breadCrumbItems} />
       <Title
         my={'lg'}
         transform="uppercase"
@@ -37,3 +35,13 @@ export const CreateDeposit: React.FC<DepositProps> = () => {
     </Container>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  title: {
+    color: theme.colors.gray[6],
+    fontWeight: 'bold',
+  },
+  card: {
+    borderTop: `5px solid ${theme.colors.brand}`,
+  },
+}))

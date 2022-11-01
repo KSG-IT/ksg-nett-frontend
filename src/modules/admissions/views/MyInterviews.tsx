@@ -9,6 +9,13 @@ import { InterviewNode } from '../types.graphql'
 import { CardTable } from 'components/CardTable'
 import { BackButton } from 'components/BackButton'
 import { IconEye } from '@tabler/icons'
+import { Breadcrumbs } from 'components/Breadcrumbs'
+
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Opptak', path: '/admissions' },
+  { label: 'Mine intervjuer', path: '/admissions/my-interviews' },
+]
 
 interface MyInterviewsReturns {
   myInterviews: Pick<
@@ -79,7 +86,7 @@ export const MyInterviews: React.VFC = () => {
 
   return (
     <Stack>
-      <BackButton to="/admissions" />
+      <Breadcrumbs items={breadcrumbsItems} />
       <Title>Mine intervjuer</Title>
       <CardTable>
         <thead>

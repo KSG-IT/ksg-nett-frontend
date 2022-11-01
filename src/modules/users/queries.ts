@@ -18,7 +18,7 @@ export const ME_QUERY = gql`
       homeTown
       phone
       upvotedQuoteIds
-
+      requiresMigrationWizard
       lastTransactions {
         # Is this an issue if we cache the activity?
         # This will become large at some point
@@ -39,6 +39,7 @@ export const USER_QUERY = gql`
     user(id: $id) {
       id
       fullName
+      getFullWithNickName
       firstName
       lastName
       biography
@@ -88,11 +89,24 @@ export const ALL_ACTIVE_USERS_SHALLOW_QUERY = gql`
         node {
           id
           fullName
+          getCleanFullName
           profileImage
           initials
           phone
         }
       }
+    }
+  }
+`
+
+export const ALL_ACTIVE_USERS_LIST_QUERY = gql`
+  query AllActiveUsersList($q: String) {
+    allActiveUsersList(q: $q) {
+      id
+      getCleanFullName
+      profileImage
+      initials
+      phone
     }
   }
 `
@@ -129,6 +143,41 @@ export const MANAGE_USERS_DATA_QUERY = gql`
         }
         internalGroupPositionType
         positionName
+      }
+    }
+  }
+`
+
+export const ALL_USER_TYPES_QUERY = gql`
+  query AllUserTypes {
+    allUserTypes {
+      id
+      name
+    }
+  }
+`
+
+export const USER_TYPE_DETAIL_QUERY = gql`
+  query UserTypeDetail($id: ID!) {
+    userType(id: $id) {
+      id
+      name
+      users {
+        id
+        getCleanFullName
+      }
+      changelog {
+        id
+        timestamp
+        action
+        doneBy {
+          id
+          getCleanFullName
+        }
+        user {
+          id
+          getCleanFullName
+        }
       }
     }
   }

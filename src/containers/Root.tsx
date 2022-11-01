@@ -7,6 +7,7 @@ import { AppRoutes } from 'routes'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'theme'
 import { ModalsProvider } from '@mantine/modals'
+import { NotificationsProvider } from '@mantine/notifications'
 
 // TODO: Move this
 const mtheme: MantineThemeOverride = {
@@ -35,10 +36,12 @@ function Root() {
       <ThemeProvider theme={theme}>
         <MantineProvider theme={mtheme}>
           <ModalsProvider>
-            <BrowserRouter>
-              <AppRoutes />
-            </BrowserRouter>
-            <Toaster />
+            <NotificationsProvider>
+              <BrowserRouter>
+                <AppRoutes />
+              </BrowserRouter>
+              <Toaster />
+            </NotificationsProvider>
           </ModalsProvider>
         </MantineProvider>
       </ThemeProvider>

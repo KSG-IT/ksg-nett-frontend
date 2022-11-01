@@ -10,6 +10,9 @@ export const UserPlaceholder: UserNode = {
   phone: '',
   biography: '',
   initials: '',
+  nickname: '',
+  getFullWithNickName: '',
+  getCleanFullName: '',
   username: '',
   balance: 0,
   email: '',
@@ -18,7 +21,7 @@ export const UserPlaceholder: UserNode = {
   isActive: false,
   isStaff: false,
   inRelationship: false,
-  needsPasswordChange: false,
+  requiresMigrationWizard: false,
   isAdministrator: false,
   bankAccountActivity: [],
   lastTransactions: [],
@@ -31,7 +34,12 @@ export const UserPlaceholder: UserNode = {
   study: '',
   taggedAndVerifiedQuotes: [],
   internalGroupPositionMembershipHistory: [],
+  legacyWorkHistory: [],
   homeTown: '',
+  bankAccount: {
+    id: '',
+    cardUuid: '',
+  },
 }
 
 interface Store {

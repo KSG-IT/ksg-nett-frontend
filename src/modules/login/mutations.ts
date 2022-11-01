@@ -11,11 +11,11 @@ export const LOGIN_MUTATION = gql`
         firstName
         lastName
         profileImage
-        fullName
         initials
         email
         balance
         biography
+        homeTown
         studyAddress
         phone
         upvotedQuoteIds

@@ -43,8 +43,14 @@ export const MetaDataDisplay: React.FC<MetaDataDisplayProps> = ({
           <Badge color="samfundet-red">{sociSession.type}</Badge>
         </Group>
         <Group>
-          <Text className={classes.label}>Opprettet av:</Text>
-          <Badge color="samfundet-red">{sociSession.createdBy.fullName}</Badge>
+          {sociSession.createdBy && (
+            <>
+              <Text className={classes.label}>Opprettet av:</Text>
+              <Badge color="samfundet-red">
+                {sociSession.createdBy.getCleanFullName}
+              </Badge>
+            </>
+          )}
         </Group>
       </Group>
     </Paper>

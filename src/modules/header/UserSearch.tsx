@@ -1,7 +1,10 @@
 import { useLazyQuery } from '@apollo/client'
 import { IconSearch } from '@tabler/icons'
 import { UserThumbnail } from 'modules/users/components'
-import { ALL_ACTIVE_USERS_SHALLOW_QUERY } from 'modules/users/queries'
+import {
+  ALL_ACTIVE_USERS_LIST_QUERY,
+  ALL_ACTIVE_USERS_SHALLOW_QUERY,
+} from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
@@ -67,7 +70,7 @@ export const UserSearch: React.VFC = () => {
   const [execute, { loading, data }] = useLazyQuery<
     AllUsersShallowQueryReturns,
     AllUsersShallowQueryVariables
-  >(ALL_ACTIVE_USERS_SHALLOW_QUERY, { variables: { q: debounceQuery } })
+  >(ALL_ACTIVE_USERS_LIST_QUERY, { variables: { q: debounceQuery } })
 
   useEffect(() => {
     if (debounceQuery) {
@@ -86,10 +89,10 @@ export const UserSearch: React.VFC = () => {
     [setUserQuery, history]
   )
   const options: UserSearchOption[] =
-    data?.allActiveUsers.edges.map(({ node }) => ({
-      value: node.id,
-      label: node.fullName,
-      user: node as UserNode,
+    data?.allActiveUsersList.map(user => ({
+      value: user.id,
+      label: user.getCleanFullName,
+      user: user as UserNode,
     })) || []
 
   return (

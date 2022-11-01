@@ -6,9 +6,9 @@ export interface UserOption {
 }
 
 export const usersToSelectOption = (
-  allActiveUsers?: AllUsersShallowQueryReturns['allActiveUsers']
+  allActiveUsers?: AllUsersShallowQueryReturns['allActiveUsersList']
 ): UserOption[] =>
-  allActiveUsers?.edges.map(({ node }) => ({
+  allActiveUsers?.map(node => ({
     value: node.id,
-    label: node.fullName,
+    label: node.getCleanFullName,
   })) || []

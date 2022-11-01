@@ -4,6 +4,7 @@ import { format } from 'util/date-fns'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { DepositNode } from '../types.graphql'
+import { CardTable } from 'components/CardTable'
 
 const DepositCell = styled.td`
   user-select: none;
@@ -23,20 +24,15 @@ export const MyDeposits: React.VFC<MyDepositsProps> = ({ deposits }) => {
     </tr>
   ))
   return (
-    <Paper p="md">
-      <Table>
-        <thead>
-          <tr>
-            <th>Dato</th>
-            <th>Mengde</th>
-            <th>Godkjent</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
-      <Link to="/economy/me/deposit-history">
-        Fullstendig historikk {<IconArrowRight />}
-      </Link>
-    </Paper>
+    <CardTable>
+      <thead>
+        <tr>
+          <th>Dato</th>
+          <th>Mengde</th>
+          <th>Godkjent</th>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </CardTable>
   )
 }

@@ -1,7 +1,9 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { MessageBox } from 'components/MessageBox'
 import { PermissionGate } from 'components/PermissionGate'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
@@ -14,7 +16,12 @@ import {
 import { MetaDataDisplay } from '../components/SociSessions/MetaDataDisplay'
 import { useSociSessionMutations } from '../mutations.hooks'
 import { SOCI_SESSION_QUERY } from '../queries'
-import { SociSessionReturns } from '../types.graphql'
+import { SociSessionReturns, SociSessionType } from '../types.graphql'
+
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Innkryssinger', path: '/economy/soci-sessions' },
+]
 
 type SociSessionDetasilParams = {
   id: string
@@ -56,26 +63,40 @@ export const SociSessionDetail: React.FC = () => {
   }
 
   const { sociSession } = data
+  const overloadedBreadcrumbs = [
+    ...breadcrumbsItems,
+    { label: sociSession.getNameDisplay, path: `` },
+  ]
+
+  const closable =
+    !sociSession.closed && sociSession.type !== SociSessionType.SOCIETETEN
 
   return (
     <Stack>
+      <Breadcrumbs items={overloadedBreadcrumbs} />
       <Group position="apart">
         <Title>{sociSession.getNameDisplay}</Title>
         <PermissionGate permissions={PERMISSIONS.economy.change.sociSession}>
           <Button
             color="samfundet-red"
-            disabled={sociSession.closed}
+            disabled={!closable}
             onClick={handleCloseSession}
           >
             Steng liste
           </Button>
         </PermissionGate>
       </Group>
+      {!closable && (
+        <MessageBox type="warning">
+          Krysselister fra Soci er automatisk ikke mulig å redigere gjennom
+          KSG-nett. En stengt liste er heller ikke redigerbar.
+        </MessageBox>
+      )}
       <MetaDataDisplay sociSession={sociSession} />
       <Title order={2}>Innkryssinger</Title>
       <ProductOrderTable sociSession={sociSession} />
 
-      {!sociSession.closed && (
+      {closable && (
         <>
           <Title order={2}>Legg til kryss</Title>
 

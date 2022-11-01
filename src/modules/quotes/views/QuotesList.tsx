@@ -1,8 +1,15 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, SimpleGrid, Stack, Title } from '@mantine/core'
+import {
+  Button,
+  Container,
+  Group,
+  SimpleGrid,
+  Stack,
+  Title,
+} from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { Search } from 'components/Input'
 import { useState } from 'react'
-import styled from 'styled-components'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { useDebounce } from 'util/hooks/useDebounce'
 import { QuoteCard } from '../components/QuoteCard'
@@ -13,18 +20,17 @@ import {
   ApprovedQuotesVariables,
 } from '../types.graphql'
 
-const FetchMoreArea = styled.div`
-  grid-area: fetchmore;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
+const breadCrumbItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Sitater', path: '/quotes' },
+]
 
 export const QuotesList = () => {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query)
 
-  const { data, fetchMore } = useQuery<
+  // Move query to own component that executes query and loading to get rid of lag
+  const { data, fetchMore, loading } = useQuery<
     ApprovedQuotesReturns,
     ApprovedQuotesVariables
   >(APPROVED_QUOTES_QUERY, {
@@ -69,6 +75,7 @@ export const QuotesList = () => {
 
   return (
     <Stack>
+      <Breadcrumbs items={breadCrumbItems} />
       <Group position="apart">
         <Title order={2} color="dimmed">
           Sitater
@@ -84,19 +91,25 @@ export const QuotesList = () => {
       <SimpleGrid
         cols={4}
         breakpoints={[
-          { maxWidth: 'md', cols: 3, spacing: 'md' },
-          { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+          { maxWidth: 'lg', cols: 3, spacing: 'md' },
+          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
         ]}
       >
         {quotes.map(quote => (
           <QuoteCard quote={quote} key={quote.id} displaySemester />
         ))}
       </SimpleGrid>
-      <FetchMoreArea>
+      <Container>
         {hasNextPage && (
-          <Button onClick={handleFetchMore}>Hent flere sitater</Button>
+          <Button
+            color="samfundet-red"
+            loading={loading}
+            onClick={handleFetchMore}
+          >
+            Hent flere sitater
+          </Button>
         )}
-      </FetchMoreArea>
+      </Container>
     </Stack>
   )
 }

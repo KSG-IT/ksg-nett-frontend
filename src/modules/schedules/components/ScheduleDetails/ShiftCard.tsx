@@ -1,20 +1,16 @@
 import {
   Avatar,
   Badge,
-  Button,
   Card,
-  Container,
   createStyles,
   Divider,
   Group,
   Modal,
-  Popover,
   Text,
   Tooltip,
-  UnstyledButton,
   useMantineTheme,
 } from '@mantine/core'
-import { IconAlertTriangle, IconClock, IconTrash } from '@tabler/icons'
+import { IconAlertTriangle, IconClock } from '@tabler/icons'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import {
   MY_UPCOMING_SHIFTS,
@@ -23,7 +19,7 @@ import {
 import { ShiftNode } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import { UserThumbnail } from 'modules/users/components'
-import { FC, PropsWithChildren, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
 import { ShiftCardModal } from './ShiftCardModal'
@@ -158,11 +154,3 @@ const useShiftCardStyles = createStyles(theme => ({
     color: theme.colors.yellow[5],
   },
 }))
-
-/*
-
-      {shift.slots.map(slot => (
-        <ShiftCardSlot key={slot.id} shiftSlot={slot} />
-      ))}
-
-*/

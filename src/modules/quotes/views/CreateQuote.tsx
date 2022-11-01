@@ -18,8 +18,8 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
-import { CreateQuoteReturns, CreateQuoteVariables } from '../types.graphql'
 import { CREATE_QUOTE } from '../mutations'
+import { CreateQuoteReturns, CreateQuoteVariables } from '../types.graphql'
 
 const quoteTextPlaceholder =
   'Wow, du har sykt myke hender! Vanligvis når en jente gir meg en håndjob, sier jeg du kan jo suge meg i stedet, men de hendene'
@@ -102,13 +102,7 @@ export const CreateQuote: React.FC = () => {
               onChange={evt => setContext(evt.target.value)}
               placeholder={quoteContextPlaceholder}
             />
-            <UserMultiSelect
-              size={'sm'}
-              label={'Tagg'}
-              placeholder={'Tagget: Elias'}
-              fullwidth
-              setUsersCallback={setTagged}
-            />
+            <UserMultiSelect users={tagged} setUsersCallback={setTagged} />
           </SimpleGrid>
           <Group position="apart">
             <Button
@@ -140,5 +134,8 @@ const useStyles = createStyles(theme => ({
   },
   card: {
     borderTop: `5px solid ${theme.colors.brand}`,
+  },
+  select: {
+    color: 'green',
   },
 }))
