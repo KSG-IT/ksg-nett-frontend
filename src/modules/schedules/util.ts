@@ -16,7 +16,7 @@ export function parseLocation(location: LocationValues | null) {
     case LocationValues.EDGAR:
       return { name: 'Edgar', color: 'red' }
     case LocationValues.KLUBBEN:
-      return { name: 'Klubben', color: 'dark' }
+      return { name: 'Klubben', color: 'blue' }
     case LocationValues.LYCHE_BAR:
       return { name: 'Lyche bar', color: 'yellow' }
     case LocationValues.LYCHE_KJOKKEN:
