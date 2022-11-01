@@ -133,6 +133,10 @@ const useShiftCardStyles = createStyles(theme => ({
     borderRadius: theme.radius.md,
     backgroundColor: theme.white,
     color: theme.black,
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor: theme.colors.gray[0],
+    },
   },
   roster: {
     marginTop: theme.spacing.xs,
