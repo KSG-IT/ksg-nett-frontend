@@ -11,9 +11,9 @@ import {
 } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { format } from 'util/date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { format } from 'util/date-fns'
 import { InterviewBooking } from '../components/ApplicantPortal/InterviewBooking'
 import { RegisterInformationForm } from '../components/ApplicantPortal/RegisterInformationForm'
 import { ReSendApplicantTokenForm } from '../components/ApplicantPortal/ReSendApplicantTokenForm'
@@ -107,10 +107,7 @@ export const ApplicantPortal: React.FC = () => {
         <Group>
           <Stepper color="samfundet-red" active={active} breakpoint="sm">
             <Stepper.Step allowStepClick={false} label="Registrer personalia">
-              <RegisterInformationForm
-                nextStepCallback={nextStep}
-                applicant={applicant}
-              />
+              <RegisterInformationForm applicant={applicant} />
             </Stepper.Step>
             <Stepper.Step
               allowStepClick={false}
