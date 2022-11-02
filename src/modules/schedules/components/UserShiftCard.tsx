@@ -22,7 +22,7 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({ shift }) => {
           {shift.location && (
             <Text>
               <Text weight={'bold'}>Hvor: </Text>
-              {parseLocation(shift.location)}
+              {parseLocation(shift.location).name}
             </Text>
           )}
           <Text>

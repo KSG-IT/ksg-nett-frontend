@@ -1,17 +1,16 @@
 import {
   Avatar,
   Badge,
-  Button,
   Card,
   createStyles,
   Divider,
   Group,
   Modal,
   Text,
-  UnstyledButton,
+  Tooltip,
   useMantineTheme,
 } from '@mantine/core'
-import { IconTrash } from '@tabler/icons'
+import { IconAlertTriangle, IconClock } from '@tabler/icons'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import {
   MY_UPCOMING_SHIFTS,
@@ -22,18 +21,16 @@ import { parseLocation } from 'modules/schedules/util'
 import { UserThumbnail } from 'modules/users/components'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { theme } from 'theme'
 import { format } from 'util/date-fns'
-import { AddShiftSlotPopover } from './AddShiftSlotPopover'
 import { ShiftCardModal } from './ShiftCardModal'
-import { ShiftCardSlot } from './ShiftCardSlot'
 
 interface ShiftCardProps {
   shift: ShiftNode
 }
+
 export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
   const [opened, setOpened] = useState(false)
-  const { classes } = useShiftCardStyles({ shift: shift })
+  const { classes } = useShiftCardStyles()
   const theme = useMantineTheme()
 
   const { deleteShift } = useShiftMutations()
@@ -52,6 +49,7 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
     })
   }
 
+  const { name: location, color } = parseLocation(shift.location)
   return (
     <>
       <Card
@@ -60,41 +58,50 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
         onClick={() => setOpened(true)}
       >
         <Group position="apart" align={'flex-end'}>
-          <Text>{shift.name}</Text>
-          <UnstyledButton>
-            <IconTrash
-              size="18px"
-              onClick={handleDeleteShift}
-              color={'lightgray'}
-            />
-          </UnstyledButton>
+          <Text className={classes.title}>{shift.name}</Text>
         </Group>
-        <Group>
-          <Text>{format(new Date(shift.datetimeStart), 'HH:mm')}</Text>
-          <Badge variant="filled" color={'samfundet-red.4'} size="sm">
-            {' '}
-            <Text weight={800} transform={'uppercase'}>
-              {parseLocation(shift.location)}
+        <Group position="apart" className={classes.roster}>
+          <Badge variant="filled" color={`${color}.1`} size="sm" radius="sm">
+            <Text weight={700} transform={'uppercase'} color={`${color}.9`}>
+              {location}
             </Text>
           </Badge>
+          <Avatar.Group>
+            {shift.slots.map(slot => {
+              if (slot.user) {
+                return <UserThumbnail user={slot.user} size="sm" />
+              } else {
+                return (
+                  <Avatar
+                    color={'samfundet-red'}
+                    size={'sm'}
+                    radius={'xl'}
+                    placeholder="https://m.media-amazon.com/images/M/MV5BMjA5NTE4NTE5NV5BMl5BanBnXkFtZTcwMTcyOTY5Mw@@._V1_.jpg"
+                  />
+                )
+              }
+            })}
+          </Avatar.Group>
         </Group>
-        <Divider my="xs" />
-        <Avatar.Group mt={'xs'}>
-          {shift.slots.map(slot => {
-            if (slot.user) {
-              return <UserThumbnail user={slot.user} size="sm" />
-            } else {
-              return (
-                <Avatar
-                  color={'samfundet-red'}
-                  size={'sm'}
-                  radius={'xl'}
-                  placeholder="https://m.media-amazon.com/images/M/MV5BMjA5NTE4NTE5NV5BMl5BanBnXkFtZTcwMTcyOTY5Mw@@._V1_.jpg"
-                />
-              )
-            }
-          })}
-        </Avatar.Group>
+        <Divider mt="md" mb="xs" />
+        <Group position="apart">
+          {!shift.isFilled ? (
+            <Tooltip label="Skiftet er ikke fult">
+              <i className={classes.isFilled}>
+                <IconAlertTriangle />
+              </i>
+            </Tooltip>
+          ) : (
+            <div />
+          )}
+          <div className={classes.shiftTime}>
+            <IconClock size="20" color="gray" />
+            <Text className={classes.timeText}>
+              {format(new Date(shift.datetimeStart), 'HH:mm')} -{' '}
+              {format(new Date(shift.datetimeEnd), 'HH:mm')}
+            </Text>
+          </div>
+        </Group>
       </Card>
       <Modal
         size={'md'}
@@ -111,23 +118,44 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
   )
 }
 
-const useShiftCardStyles = createStyles((theme, { shift }: ShiftCardProps) => ({
+const useShiftCardStyles = createStyles(theme => ({
+  title: {
+    fontWeight: 600,
+    fontSize: theme.fontSizes.lg,
+    color: theme.colors.gray[9],
+  },
   shift: {
     display: 'flex',
     flexDirection: 'column',
     fontSize: '14px',
+    padding: theme.spacing.md,
     boxShadow: theme.shadows.xs,
-    marginBottom: theme.spacing.xs,
+    marginBottom: theme.spacing.sm,
     borderRadius: theme.radius.md,
-    backgroundColor: shift.isFilled ? theme.white : theme.colors.red[0],
+    backgroundColor: theme.white,
     color: theme.black,
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor: theme.colors.gray[0],
+    },
+  },
+  roster: {
+    marginTop: theme.spacing.xs,
+    minHeight: '26px',
+  },
+  shiftTime: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  timeText: {
+    marginLeft: '4px',
+    color: theme.colors.gray[6],
+    fontWeight: 500,
+  },
+  isFilled: {
+    display: 'flex',
+    alignItems: 'center',
+    color: theme.colors.yellow[5],
   },
 }))
-
-/*
-
-      {shift.slots.map(slot => (
-        <ShiftCardSlot key={slot.id} shiftSlot={slot} />
-      ))}
-
-*/
