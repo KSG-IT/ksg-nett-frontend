@@ -129,6 +129,7 @@ export type ApplicantNode = {
   willBeAdmitted: boolean
   canCommitThreeSemesters: boolean
   openForOtherPositions: boolean
+  gdprConsent: boolean
   internalGroupInterests: ApplicantInterestNode[]
   comments: ApplicantCommentNode[]
 

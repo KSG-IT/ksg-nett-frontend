@@ -18,18 +18,16 @@ import { useRegisterInformationLogic } from './useRegisterInformationLogic'
 
 interface ResisterInformationViewProps {
   applicant: ApplicantNode
-  nextStepCallback: () => void
 }
 
 export const RegisterInformationForm: React.FC<
   ResisterInformationViewProps
-> = ({ applicant, nextStepCallback }) => {
+> = ({ applicant }) => {
   const { form, onSubmit } = useRegisterInformationLogic(
-    useRegisterInformationAPI({ applicant, nextStepCallback })
+    useRegisterInformationAPI({ applicant })
   )
   const { formState, register, handleSubmit, getValues, setValue } = form
   const { errors, isSubmitting } = formState
-  const [gdprConsent, setGdprConsent] = useState(false)
   const [doesNotWantImage, setDoesNotWantImage] = useState(false)
 
   return (
@@ -91,10 +89,9 @@ export const RegisterInformationForm: React.FC<
           </MessageBox>
 
           <Checkbox
-            checked={gdprConsent}
             color="samfundet-red"
             label="Samtykke om personopplysninger"
-            onChange={() => setGdprConsent(!gdprConsent)}
+            {...register('gdprConsent')}
           />
           <Group>
             <FileButton
@@ -131,11 +128,8 @@ export const RegisterInformationForm: React.FC<
 
           <Group position="right" mt="md">
             <Button
-              disabled={
-                isSubmitting ||
-                !gdprConsent ||
-                (!doesNotWantImage && !getValues('image'))
-              }
+              loading={isSubmitting}
+              disabled={!doesNotWantImage && !getValues('image')}
               type="submit"
               color="samfundet-red"
             >

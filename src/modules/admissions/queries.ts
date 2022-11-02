@@ -398,6 +398,7 @@ export const GET_APPLICATION_FROM_TOKEN = gql`
       study
       hometown
       address
+      gdprConsent
       priorities {
         id
         internalGroupPosition {

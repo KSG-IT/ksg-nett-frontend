@@ -7,12 +7,10 @@ import { RegisterInformationFormData } from './useRegisterInformationLogic'
 
 interface UseRegisterInformationAPIInput {
   applicant: ApplicantNode
-  nextStepCallback: () => void
 }
 
 export function useRegisterInformationAPI({
   applicant,
-  nextStepCallback,
 }: UseRegisterInformationAPIInput) {
   const { patchApplicant } = useApplicantMutations()
 
@@ -41,13 +39,13 @@ export function useRegisterInformationAPI({
     address: applicant?.address ?? '',
     hometown: applicant?.hometown ?? '',
     study: applicant?.study ?? '',
+    gdprConsent: applicant?.gdprConsent ?? false,
     dateOfBirth: new Date(1996, 10, 11),
     phone: applicant?.phone ?? '',
     wantsDigitalInterview: applicant?.wantsDigitalInterview ?? false,
   }
   return {
     defaultValues,
-    nextStepCallback,
     onSubmit: handleSubmit,
   }
 }
