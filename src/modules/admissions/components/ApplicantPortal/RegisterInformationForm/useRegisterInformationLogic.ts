@@ -28,7 +28,6 @@ const RegisterInformationSchema = yup.object().shape({
   phone: yup.string().required('Telefonnummer må fylles ut'),
   image: yup
     .mixed()
-    .required('Bildet må lastes opp')
     .test(
       'FILE_SIZE',
       'Uploaded file is too big.',

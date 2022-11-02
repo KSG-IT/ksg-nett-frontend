@@ -30,6 +30,7 @@ export const RegisterInformationForm: React.FC<
   const { formState, register, handleSubmit, getValues, setValue } = form
   const { errors, isSubmitting } = formState
   const [gdprConsent, setGdprConsent] = useState(false)
+  const [doesNotWantImage, setDoesNotWantImage] = useState(false)
 
   return (
     <Stack>
@@ -114,9 +115,27 @@ export const RegisterInformationForm: React.FC<
             {errors?.image && <Text color="red">Bilde må lastes opp</Text>}
           </Group>
 
+          <Checkbox
+            checked={doesNotWantImage}
+            color="samfundet-red"
+            label="Jeg ønsker ikke å laste opp et bilde"
+            onChange={() => setDoesNotWantImage(!doesNotWantImage)}
+          />
+          {doesNotWantImage && (
+            <MessageBox type="warning">
+              Bilde hjelper oss med å sette ansikt på kandidatene og gjøre
+              opptaksprosessen mindre upersonlig. Bilder vil også bli slettet i
+              etterkant av opptaket om du ikke blir tatt opp.
+            </MessageBox>
+          )}
+
           <Group position="right" mt="md">
             <Button
-              disabled={isSubmitting || !gdprConsent}
+              disabled={
+                isSubmitting ||
+                !gdprConsent ||
+                (!doesNotWantImage && !getValues('image'))
+              }
               type="submit"
               color="samfundet-red"
             >

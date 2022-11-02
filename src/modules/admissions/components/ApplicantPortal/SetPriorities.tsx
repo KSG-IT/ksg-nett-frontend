@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { Alert, Button, Group, Stack, Text, Title } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconTrash } from '@tabler/icons'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import {
@@ -16,18 +17,6 @@ import {
   InternalGroupPositionsAvailableForApplicantReturns,
 } from 'modules/admissions/types.graphql'
 import { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
-import styled from 'styled-components'
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const PriorityContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`
 
 interface InternalGroupPosition {
   id: string
@@ -125,8 +114,17 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
       },
       refetchQueries: ['GetApplicantFromToken'],
       onCompleted() {
+        showNotification({
+          title: 'Lagret prioriteringer',
+          message: 'Du har nå lagret dine prioriteringer',
+        })
         nextStepCallback()
-        toast.success('Lagret prioriteringer!')
+      },
+      onError() {
+        showNotification({
+          title: 'Kunne ikke lagre prioriteringer',
+          message: 'Noe gikk galt under lagring av prioriteringer',
+        })
       },
     })
   }
@@ -136,7 +134,7 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
   const canAddPriority = priorities.length < 3
 
   return (
-    <Stack>
+    <Stack style={{ maxWidth: 900 }}>
       <Alert color="blue">
         Du må minst ha 1 stilling før du kan booke intervju, og kan ikke ha mer
         enn 3.
@@ -175,7 +173,11 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
         </Group>
       </Stack>
 
-      <Button onClick={handleNextStep} disabled={!canMoveOn}>
+      <Button
+        onClick={handleNextStep}
+        disabled={!canMoveOn}
+        color="samfundet-red"
+      >
         Book intervju
       </Button>
     </Stack>
