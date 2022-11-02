@@ -4,18 +4,17 @@
 
 ## Overview
 
-This is the fontend repo containing source code for the webapplication KSG-nett. This is a [React](https://reactjs.org/) + [Typescript](https://www.typescriptlang.org/) application made with [CRA](https://create-react-app.dev/).
+This is the fontend repo containing source code for the webapplication KSG-nett. This is a [React](https://reactjs.org/) + [Typescript](https://www.typescriptlang.org/) application uses [vite](https://vitejs.dev/) as a bundler
 
 ### Support libraries
 
-| Library                            | Function                    | website                                                               |
-| ---------------------------------- | --------------------------- | --------------------------------------------------------------------- |
-| Apollo client                      | Graphql queries and caching | [Apollo docs](https://www.apollographql.com/docs/)                    |
-| Styled components                  | Styling library             | [Styled components basics](https://styled-components.com/docs/basics) |
-| React hot toast                    | Toast component provider    | [Website](https://react-hot-toast.com/)                               |
-| AirBnB React outside click handler | Outside click detection     | [github](https://github.com/airbnb/react-outside-click-handler)       |
-| React hook form                    | Form handling               | [Website](https://react-hook-form.com/)                               |
-| Yup                                | Form validation             | [github](https://github.com/jquense/yup)                              |
+| Library         | Function                    | website                                            |
+| --------------- | --------------------------- | -------------------------------------------------- |
+| Apollo client   | Graphql queries and caching | [Apollo docs](https://www.apollographql.com/docs/) |
+| Mantine         | Component library           | [Mantine docs](https://mantine.dev/)               |
+| React hot toast | Toast component provider    | [Website](https://react-hot-toast.com/)            |
+| React hook form | Form handling               | [Website](https://react-hook-form.com/)            |
+| Yup             | Form validation             | [github](https://github.com/jquense/yup)           |
 
 In order for this app to function the backend part of the application needs to be running in the background. Follow the instructions in this [repo](https://www.github.com/KSG-IT/ksg-nett).
 
@@ -46,10 +45,8 @@ In most cases when creating a new component you would want to declare it in the 
 
 ```ts
 interface NewComponentProps {...}
-const NewComponent = React.VFC<NewComponentProps> = ({...}) => {}
+const NewComponent = React.FC<NewComponentProps> = ({...}) => {}
 ```
-
-`React.VFC` is a functional component type which does not inject `children` implicitly, see [this](https://www.mydatahack.com/using-react-vfc-instead-of-react-fc/) for further details. Otherwise, if making a component making use of `children` replace `React.VFC` with `React.FC`.
 
 ### Named export
 
@@ -62,6 +59,37 @@ export const ProfilePage = () => {...}
 //index.ts
 export * from './ProfilePage`
 ```
+
+### Module structure
+
+When creating a new module, try to keep the structure as follows
+
+```
+src/modules
+├── moduleName
+│   ├── components/
+│   │   ├── Component1.tsx
+│   │   ├── Component2.tsx
+│   │   ├── View2/
+│   │   │   ├── View2Component1.tsx
+│   │   │   ├── View2Component2.tsx
+│   │   │   └── index.ts
+│   │   └── index.ts
+│   ├── views/
+│   │   ├── View1.tsx
+│   │   ├── View2.tsx
+│   │   └── index.ts
+│   ├── enums.ts
+│   ├── types.ts
+│   ├── types.graphql.ts
+│   ├── utils.ts
+│   ├── queries.ts
+│   ├── mutations.ts
+│   └── mutations.hooks.ts
+└── moduleName2/
+```
+
+Where the index files uses barrel export. Components can be isolated to their own folder if the components structure in a specific view becomes fairly large and is only scoped to that module.
 
 ### Apollo queries and mutations
 
@@ -86,7 +114,7 @@ const USER_QUERY = gql`
   }
 `
 
-//types.ts
+//types.graphql.ts
 type UserNode = {
   id: string
   fullName: string
@@ -110,7 +138,7 @@ import { useQuery } from '@apollo/client'
 import { USER_QUERY } from './queries'
 import { UserQueryVariables, UserQueryReturns } from './types'
 
-const UserProfile: React.VFC = () => {
+const UserProfile: React.FC = () => {
   const { data, loading, error } = useQuery<
     UserQueryReturns,
     UserQueryVariables
@@ -175,7 +203,7 @@ The greatest difference between `useMutation` and `useQeury` is the returnvalue 
 
 ```tsx
 // PatchUser.tsx
-const PatchUser: React.VFC = () => {
+const PatchUser: React.FC = () => {
   const [patchUser, {data, loading} = useMutation<
     PatchUserMutationReturns,
     PatchUserMutationVariables
@@ -204,6 +232,89 @@ return (
 
 This is a very simple mutation, in most cases we want do this in tandem with form handling which is covered in the next section (someday). Another thing to note is that triggering mutations also requries us to update the local state of data. This is done with the `refetchQueries` option in `useMutation`.
 
+#### Mutations hooks
+
+In order to make mutation use flexible we wrap them into hooks.
+
+```ts
+
+export function useUserMutations() {
+  const [createUser, {loading: createUserLoading}] = useMutation<
+    CreateUserMutationReturns,
+    CreateUserMutationVariables
+  >(CREATE_USER)
+
+  const [patchUser, {loading: patchUserLoading}] = useMutation<
+    PatchUserMutationReturns,
+    PatchUserMutationVariables
+  >(PATCH_USER)
+
+  const [deleteUser, {loading: deleteUserLoading}] = useMutation<
+    DeleteUserMutationReturns,
+    DeleteUserMutationVariables
+  >(DELETE_USER)
+
+  return {
+    createUser,
+    createUserLoading,
+    patchUser,
+    patchUserLoading,
+    deleteUser
+    deleteUserLoading
+  }
+}
+```
+
+This way we can simply use them like this
+
+```tsx
+const { createUser, createUserLoading } = useUserMutations()
+```
+
 ### Form handling
 
-`ToDo`
+For most forms we try to make use of a 3-layered form design where we delegate different tasks to different layers. We have a visual form layer, a logic layer dealing with form state and validation and an API/data layer dealing with the mutation of data and fetching.
+
+We use `react-hook-form` for form handling with `yup` as a schema validator.
+
+A form component then has 3 files
+
+```
+- MyForm.tsx
+- useMyFormLogic.ts
+- useMyFormAPI.ts
+- index.ts
+```
+
+index only exports the Form component giving us a simple import/export API
+
+```tsx
+// MyForm.tsx
+import { useMyFormLogic } from './useMyFormLogic'
+import { useMyFormAPI } from './useMyFormApi'
+
+export const MyForm: React.FC = () => {
+  const { formState, formErrors, handleFormChange, handleFormSubmit } =
+    useMyFormLogic(useMyFormAPI())
+
+  return (
+    <form onSubmit={handleFormSubmit}>
+      <input
+        type="text"
+        name="firstName"
+        value={formState.firstName}
+        onChange={handleFormChange}
+      />
+      <input
+        type="text"
+        name="lastName"
+        value={formState.lastName}
+        onChange={handleFormChange}
+      />
+      <button type="submit">Create user</button>
+    </form>
+  )
+}
+```
+
+The inspiration for this design is taken from this [article](https://dev.to/spencerpauly/the-1-best-design-pattern-for-managing-forms-in-react-4215).
