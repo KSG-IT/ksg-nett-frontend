@@ -44,7 +44,8 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
       onCompleted() {
         showNotification({
           title: 'Intervju tilbudt',
-          message: 'Intervjuet er tilbudt til søkeren',
+          message:
+            'Intervjuet er tilbudt til søkeren. Søker mottar bekreftelse på epost',
           color: 'green',
         })
         setApplicantId(null)
@@ -54,7 +55,7 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
         showNotification({
           title: 'Noe gikk galt',
           message:
-            'Kan hende noen andre har booket samme intervju. Prøv med noe annet',
+            'Kan hende noen andre har booket samme intervju. Prøv et annet intervju annet',
           color: 'red',
         })
       },

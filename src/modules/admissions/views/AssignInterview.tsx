@@ -69,7 +69,10 @@ export const AssignInterview: React.FC = () => {
       <Breadcrumbs items={breadcrumbsItems} />
       <Group position="apart">
         <Title>Intervjuallokerring</Title>
-        <SynCButton refetchCallback={refetch} refetchLoading={loading} />
+        <SynCButton
+          refetchCallback={() => refetch()}
+          refetchLoading={loading}
+        />
       </Group>
       <MessageBox type="info">
         Her har du mulighet til å gi noen et nytt intervju. Det kan hende at du

@@ -66,7 +66,10 @@ export const InternalGroupApplicants: React.FC = ({}) => {
       <Breadcrumbs items={breadcrumbsItems} />
       <Group position="apart">
         <Title>Søkeroversikt {internalGroupName}</Title>
-        <SynCButton refetchCallback={refetch} refetchLoading={loading} />
+        <SynCButton
+          refetchCallback={() => refetch()}
+          refetchLoading={loading}
+        />
       </Group>
       <MessageBox type="info">
         <IconCircleX color="red" /> indikerer ingen fra{' '}

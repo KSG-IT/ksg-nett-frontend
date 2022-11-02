@@ -36,7 +36,10 @@ export const ApplicantsOverview: React.FC<{}> = ({}) => {
       <Breadcrumbs items={breadcrumbsItems} />
       <Group position="apart">
         <Title>Søkeroversikt</Title>
-        <SynCButton refetchCallback={refetch} refetchLoading={loading} />
+        <SynCButton
+          refetchCallback={() => refetch()}
+          refetchLoading={loading}
+        />
       </Group>
       <PermissionGate permissions={PERMISSIONS.admissions.add.applicant}>
         <AddApplicantsArea />
