@@ -71,8 +71,8 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
     <Modal title="Tilby ny intervjutid" {...props}>
       <Stack>
         <MessageBox type="info">
-          Søkere som ikke har svart på epost eller har hatt intervju dukker ikke
-          opp her
+          Søkere som ikke har svart på epost eller satt prioriteringer dukker
+          ikke opp her.
         </MessageBox>
         {interview && (
           <Stack spacing="xs">
