@@ -1,5 +1,6 @@
 import { Badge, Button, Paper, Table } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
+import { format } from 'util/date-fns'
 import { SociSessionNode } from 'modules/economy/types.graphql'
 import { Link } from 'react-router-dom'
 import { numberWithSpaces } from 'util/parsing'
@@ -14,6 +15,7 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
   const rows = sociSessions.map(sociSession => (
     <tr key={sociSession.id}>
       <td>{sociSession.getNameDisplay}</td>
+      <td>{format(new Date(sociSession.createdAt), 'yyyy.MM.dd')}</td>
       <td>{sociSession.type}</td>
       <td>
         <Badge color="samfundet-red">
@@ -34,6 +36,7 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
       <thead>
         <tr>
           <th>Navn</th>
+          <th>Opprettet</th>
           <th>Type</th>
           <th>Status</th>
           <th>Forbruk</th>
