@@ -398,6 +398,7 @@ export const GET_APPLICATION_FROM_TOKEN = gql`
       study
       hometown
       address
+      gdprConsent
       priorities {
         id
         internalGroupPosition {
@@ -546,6 +547,33 @@ export const APPLICANT_NOTICES_QUERY = gql`
         initials
         profileImage
       }
+    }
+  }
+`
+
+export const ALL_AVAILABLE_INTERVIEWS_QUERY = gql`
+  query AllAvailableInterviewsQuery {
+    allAvailableInterviews {
+      id
+      interviewStart
+      interviewEnd
+      location {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const ALL_APPLICANTS_AVAILABLE_FOR_REBOOKING_QUERY = gql`
+  query AllApplicantsAvailableForRebookingQuery {
+    allApplicantsAvailableForRebooking {
+      id
+      fullName
+      phone
+      status
+      hometown
+      email
     }
   }
 `

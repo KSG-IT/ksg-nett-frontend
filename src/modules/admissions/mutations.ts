@@ -378,3 +378,14 @@ export const CREATE_APPLICANT_COMMENT_MUTATION = gql`
     }
   }
 `
+
+export const ASSIGN_APPLICANT_NEW_INTERVIEW_MUTATION = gql`
+  mutation AssignApplicantNewInterview($applicantId: ID!, $interviewId: ID!) {
+    assignApplicantNewInterview(
+      applicantId: $applicantId
+      interviewId: $interviewId
+    ) {
+      success
+    }
+  }
+`

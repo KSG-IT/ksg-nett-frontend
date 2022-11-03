@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { showNotification } from '@mantine/notifications'
 import { PatchApplicantReturns } from 'modules/admissions/types.graphql'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -12,6 +13,7 @@ export type RegisterInformationFormData = {
   address: string
   hometown: string
   study: string
+  gdprConsent: boolean
   dateOfBirth: Date
   phone: string
   wantsDigitalInterview: boolean
@@ -23,12 +25,14 @@ const RegisterInformationSchema = yup.object().shape({
   lastName: yup.string().required('Etternavn må fylles ut'),
   address: yup.string().required('Adresse må fylles ut'),
   hometown: yup.string().required('Hjemby må fylles ut'),
+  gpdrConsent: yup
+    .boolean()
+    .oneOf([true], 'Du må godta behandling av personopplysninger'),
   study: yup.string().required('Studie må fylles ut'),
   dateOfBirth: yup.date().required('Fødselsdato må fylles ut'),
   phone: yup.string().required('Telefonnummer må fylles ut'),
   image: yup
     .mixed()
-    .required('Bildet må lastes opp')
     .test(
       'FILE_SIZE',
       'Uploaded file is too big.',
@@ -39,14 +43,13 @@ const RegisterInformationSchema = yup.object().shape({
 
 interface UseRegisterInformationLogicInput {
   defaultValues: RegisterInformationFormData
-  nextStepCallback: () => void
   onSubmit: OnFormSubmit<RegisterInformationFormData, PatchApplicantReturns>
 }
 
 export function useRegisterInformationLogic(
   input: UseRegisterInformationLogicInput
 ) {
-  const { defaultValues, onSubmit, nextStepCallback } = input
+  const { defaultValues, onSubmit } = input
   const form = useForm<RegisterInformationFormData>({
     mode: 'onSubmit',
     defaultValues,
@@ -54,6 +57,15 @@ export function useRegisterInformationLogic(
   })
 
   const handleSubmit = async (data: RegisterInformationFormData) => {
+    const { gdprConsent } = data
+
+    if (!gdprConsent) {
+      showNotification({
+        message: 'Du må godta behandling av personopplysninger',
+        color: 'yellow',
+      })
+      return
+    }
     await toast.promise(onSubmit(data), {
       success: 'Informasjonen er lagret',
       loading: 'Lagrer...',

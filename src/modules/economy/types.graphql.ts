@@ -64,6 +64,7 @@ export interface SociSessionNode {
   id: string
   getNameDisplay: string
   createdBy: Pick<UserNode, 'id' | 'getCleanFullName'>
+  createdAt: string
   type: SociSessionType
   closed: boolean
   closedAt: Date

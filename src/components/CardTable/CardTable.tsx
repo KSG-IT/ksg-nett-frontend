@@ -12,7 +12,7 @@ export const CardTable: React.FC<CardTableProps> = ({
 }) => {
   const { classes } = useCardTableStyles()
   return (
-    <Paper className={classes.card} p={p}>
+    <Paper className={`${classes.card} ${className}`} p={p}>
       <Table {...rest}>{children}</Table>
     </Paper>
   )

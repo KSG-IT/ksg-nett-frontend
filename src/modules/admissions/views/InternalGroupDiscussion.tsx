@@ -48,7 +48,10 @@ export const InternalGroupDiscussion: React.FC = () => {
       <BackButton to="/admissions" />
       <Group position="apart">
         <Title>Fordelingsmøte {internalGroup.name}</Title>
-        <SynCButton refetchCallback={refetch} refetchLoading={loading} />
+        <SynCButton
+          refetchCallback={() => refetch()}
+          refetchLoading={loading}
+        />
       </Group>
       <Title order={2}>Kandidater tilgjengelige for vurdering</Title>
       <MessageBox type="info">

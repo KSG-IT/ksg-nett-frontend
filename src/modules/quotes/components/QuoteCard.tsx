@@ -204,8 +204,8 @@ const useStyles = createStyles(theme => ({
     fontWeight: 500,
   },
   card: {
-    width: '100%',
-    height: '100%',
+    width: 'auto',
+    height: 'auto',
     overflow: 'visible',
   },
   row: {
