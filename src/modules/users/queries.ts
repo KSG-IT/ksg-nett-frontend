@@ -17,6 +17,7 @@ export const ME_QUERY = gql`
       studyAddress
       homeTown
       phone
+      icalToken
       upvotedQuoteIds
       requiresMigrationWizard
       lastTransactions {

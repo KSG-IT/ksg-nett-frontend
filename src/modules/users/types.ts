@@ -32,6 +32,7 @@ export type UserNode = {
   isActive: boolean
   inRelationship: boolean
   requiresMigrationWizard: boolean
+  icalToken: string
   isAdministrator: boolean
   bankAccountActivity: BankAccountActivity[]
   lastTransactions: BankAccountActivity[]
