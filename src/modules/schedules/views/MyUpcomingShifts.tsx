@@ -29,8 +29,6 @@ export const MyUpcomingShifts: React.FC = () => {
 
   const { myUpcomingShifts } = data
 
-  const icalEnabled = me.icalToken !== null
-
   return (
     <Stack className={classes.container} spacing="xs">
       <Breadcrumbs items={breadcrumbsItems} />
