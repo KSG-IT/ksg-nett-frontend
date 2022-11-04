@@ -39,7 +39,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const uploadLink = createUploadLink({
-  uri: 'https://ksg-nett.samfundet.no/graphql/', //API_URL + '/graphql/',
+  uri: API_URL + '/graphql/',
 })
 
 const client = new ApolloClient({
