@@ -37,6 +37,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     )
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
+console.log(import.meta.env)
 
 const uploadLink = createUploadLink({
   uri: API_URL + '/graphql/',
