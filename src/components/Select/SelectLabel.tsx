@@ -1,30 +1,11 @@
 import { forwardRef } from 'react'
 import {
-  MultiSelect,
-  MultiSelectProps,
   Box,
   CloseButton,
-  SelectItemProps,
   MultiSelectValueProps,
+  SelectItemProps,
 } from '@mantine/core'
-import {
-  Icon2fa,
-  IconBox,
-  IconFlag,
-  IconUser,
-  IconUserCircle,
-  IconUserPlus,
-} from '@tabler/icons'
-
-const countriesData = [
-  { label: 'United States', value: 'US' },
-  { label: 'Great Britain', value: 'GB' },
-  { label: 'Finland', value: 'FI' },
-  { label: 'France', value: 'FR' },
-  { label: 'Russia', value: 'RU' },
-]
-
-const flags = {}
+import { IconUser, IconUserPlus } from '@tabler/icons'
 
 export function Value({
   value,
