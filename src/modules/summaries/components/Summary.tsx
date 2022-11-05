@@ -10,13 +10,9 @@ import { SummaryNode } from '../types'
 
 interface SummaryProps {
   summary: SummaryNode
-  onEditCallback?: () => void
 }
 
-export const Summary: React.FC<SummaryProps> = ({
-  summary,
-  onEditCallback,
-}: SummaryProps) => {
+export const Summary: React.FC<SummaryProps> = ({ summary }: SummaryProps) => {
   return (
     <>
       <Group>
