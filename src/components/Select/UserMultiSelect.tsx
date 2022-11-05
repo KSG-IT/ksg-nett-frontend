@@ -22,16 +22,12 @@ interface UserMultiSelectProps
   users?: string[]
   width?: string
   placeholder?: string
-  label?: React.ReactNode
-  size?: MantineSize | undefined
   fullwidth?: boolean
   setUsersCallback?: (users: string[]) => void
 }
 
 export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
   users = [],
-  size,
-  label,
   placeholder,
   setUsersCallback,
   ...rest

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Select } from '@mantine/core'
+import { Select, SelectProps } from '@mantine/core'
 import { ALL_ACTIVE_USERS_LIST_QUERY } from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
@@ -8,7 +8,7 @@ import {
 import styled from 'styled-components'
 import { usersToSelectOption } from 'util/user'
 
-interface UserSelectProps {
+interface UserSelectProps extends Omit<SelectProps, 'data' | 'value'> {
   userId?: string
   fullwidth?: boolean
   width?: string
@@ -18,6 +18,7 @@ interface UserSelectProps {
 export const UserSelect: React.FC<UserSelectProps> = ({
   userId,
   setUserCallback,
+  ...rest
 }) => {
   const { loading, data } = useQuery<
     AllUsersShallowQueryReturns,
@@ -35,6 +36,7 @@ export const UserSelect: React.FC<UserSelectProps> = ({
       defaultValue={initialValue?.value}
       data={options}
       onChange={setUserCallback}
+      {...rest}
     />
   )
 }

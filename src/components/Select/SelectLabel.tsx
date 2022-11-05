@@ -7,7 +7,14 @@ import {
   SelectItemProps,
   MultiSelectValueProps,
 } from '@mantine/core'
-import { Icon2fa, IconBox, IconFlag, IconUserCircle } from '@tabler/icons'
+import {
+  Icon2fa,
+  IconBox,
+  IconFlag,
+  IconUser,
+  IconUserCircle,
+  IconUserPlus,
+} from '@tabler/icons'
 
 const countriesData = [
   { label: 'United States', value: 'US' },
@@ -45,8 +52,8 @@ export function Value({
           borderRadius: 4,
         })}
       >
-        <Box mr={10}>
-          <IconUserCircle />
+        <Box mt={4} mr={5}>
+          <IconUser color={'lightgray'} />
         </Box>
         <Box sx={{ lineHeight: 1, fontSize: 12 }}>{label}</Box>
         <CloseButton
@@ -68,7 +75,7 @@ export const Item = forwardRef<HTMLDivElement, SelectItemProps>(
       <div ref={ref} {...others}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Box mr={10}>
-            <IconFlag />
+            <IconUserPlus color={'lightgray'} />
           </Box>
           <div>{label}</div>
         </Box>
@@ -76,19 +83,3 @@ export const Item = forwardRef<HTMLDivElement, SelectItemProps>(
     )
   }
 )
-
-function Demo(props: Partial<MultiSelectProps>) {
-  return (
-    <MultiSelect
-      data={countriesData}
-      limit={20}
-      valueComponent={Value}
-      itemComponent={Item}
-      searchable
-      defaultValue={['US', 'FI']}
-      placeholder="Pick countries"
-      label="Which countries you visited last year?"
-      {...props}
-    />
-  )
-}
