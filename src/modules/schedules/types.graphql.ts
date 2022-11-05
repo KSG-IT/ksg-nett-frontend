@@ -17,7 +17,7 @@ export type ShiftSlotNode = {
 // Is there a better way to do this?
 type FilledShiftSlotNode = {
   id: string
-  user: Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>
+  user: UserThumbnailProps['user']
   role: RoleValues
 }
 
