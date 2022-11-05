@@ -28,6 +28,7 @@ const mtheme: MantineThemeOverride = {
     ],
   },
   primaryColor: 'samfundet-red',
+  fontFamily: '"Inter"',
 }
 
 function Root() {

@@ -31,6 +31,7 @@ export const UserSelect: React.FC<UserSelectProps> = ({
   return (
     <Select
       value={userId}
+      placeholder={'Velg bruker'}
       searchable
       limit={20}
       defaultValue={initialValue?.value}

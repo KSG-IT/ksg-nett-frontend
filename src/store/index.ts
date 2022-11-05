@@ -32,6 +32,7 @@ export const UserPlaceholder: UserNode = {
   studyAddress: '',
   ksgStatus: '',
   study: '',
+  icalToken: '',
   taggedAndVerifiedQuotes: [],
   internalGroupPositionMembershipHistory: [],
   legacyWorkHistory: [],

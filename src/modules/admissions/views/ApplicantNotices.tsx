@@ -1,12 +1,17 @@
 import { useQuery } from '@apollo/client'
 import { Group, Stack, Title } from '@mantine/core'
-import { BackButton } from 'components/BackButton'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { SynCButton } from 'components/SyncButton'
 import { NoticeTable } from '../components/ApplicantNotices/NoticeTable'
 import { APPLICANT_NOTICES_QUERY } from '../queries'
+
+const breadcrumbsItems = [
+  { label: 'Home', path: '/dashboard' },
+  { label: 'Orvik', path: '/admissions' },
+  { label: 'Oppfølging', path: '' },
+]
 
 export const ApplicantNotices: React.VFC = () => {
   const { data, loading, error } = useQuery(APPLICANT_NOTICES_QUERY, {
@@ -23,7 +28,7 @@ export const ApplicantNotices: React.VFC = () => {
 
   return (
     <Stack>
-      <BackButton to="/admissions" />
+      <Breadcrumbs items={breadcrumbsItems} />
       <Group>
         <Title>Søkere å følge opp</Title>
       </Group>

@@ -91,18 +91,14 @@ export const SosiSessions: React.FC = () => {
             </Button>
           </PermissionGate>
           <PermissionGate permissions={PERMISSIONS.economy.view.sociSession}>
-            <Link to="/economy/statistics">
-              <Button color="samfundet-red" leftIcon={<IconChartArea />}>
-                Statistikk
-              </Button>
-            </Link>
+            <Button disabled color="samfundet-red" leftIcon={<IconChartArea />}>
+              Statistikk
+            </Button>
           </PermissionGate>
           <PermissionGate permissions={PERMISSIONS.economy.change.sociProduct}>
-            <Link to="/economy/soci-products">
-              <Button color="samfundet-red" leftIcon={<IconGlass />}>
-                Vareutvalg
-              </Button>
-            </Link>
+            <Button disabled color="samfundet-red" leftIcon={<IconGlass />}>
+              Vareutvalg
+            </Button>
           </PermissionGate>
           <PermissionGate permissions={PERMISSIONS.economy.view.sociSession}>
             <Link to="/economy/print">

@@ -80,7 +80,7 @@ export const ReviewQuotes: React.FC = () => {
   if (pendingQuotes.length === 0)
     return (
       <Stack>
-        <BackButton to="/quotes" />
+        <Breadcrumbs items={breadcrumbsItems} />
         <Title>Innsendte sitater</Title>
         <FullPageEmpty />
       </Stack>

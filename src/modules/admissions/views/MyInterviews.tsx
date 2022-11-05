@@ -1,15 +1,15 @@
 import { useQuery } from '@apollo/client'
-import { Button, Paper, Stack, Table, Title } from '@mantine/core'
-import { FullPageError } from 'components/FullPageComponents'
-import { FullContentLoader } from 'components/Loading'
-import { format } from 'util/date-fns'
-import { gql } from 'graphql-tag'
-import { useNavigate } from 'react-router-dom'
-import { InterviewNode } from '../types.graphql'
-import { CardTable } from 'components/CardTable'
-import { BackButton } from 'components/BackButton'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { IconEye } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
+import { CardTable } from 'components/CardTable'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
+import { SynCButton } from 'components/SyncButton'
+import { gql } from 'graphql-tag'
+import { useNavigate } from 'react-router-dom'
+import { format } from 'util/date-fns'
+import { InterviewNode } from '../types.graphql'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -42,17 +42,18 @@ const MY_INTERVIEWS_QUERY = gql`
 `
 
 const useMyInterviews = () => {
-  const { error, loading, data } =
+  const { error, loading, data, refetch } =
     useQuery<MyInterviewsReturns>(MY_INTERVIEWS_QUERY)
   return {
     error,
     loading,
     data,
+    refetch,
   }
 }
 
-export const MyInterviews: React.VFC = () => {
-  const { error, data, loading } = useMyInterviews()
+export const MyInterviews: React.FC = () => {
+  const { error, data, loading, refetch } = useMyInterviews()
   const navigate = useNavigate()
 
   if (error) return <FullPageError />
@@ -67,7 +68,11 @@ export const MyInterviews: React.VFC = () => {
 
   const rows = myInterviews.map(interview => (
     <tr>
-      <td>{interview.applicant.fullName}</td>
+      <td>
+        {interview.applicant !== null
+          ? interview.applicant.fullName
+          : 'Ingen søker'}
+      </td>
       <td>{format(new Date(interview.interviewStart), 'iii d MMM HH:mm')}</td>
       <td>{interview.location.name}</td>
       <td>
@@ -87,7 +92,13 @@ export const MyInterviews: React.VFC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Title>Mine intervjuer</Title>
+      <Group position="apart">
+        <Title>Mine intervjuer</Title>
+        <SynCButton
+          refetchCallback={() => refetch()}
+          refetchLoading={loading}
+        />
+      </Group>
       <CardTable>
         <thead>
           <tr>
