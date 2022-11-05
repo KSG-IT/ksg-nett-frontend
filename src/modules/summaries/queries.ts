@@ -9,6 +9,7 @@ export const SUMMARY_QUERY = gql`
         id
         profileImage
         initials
+        getFullWithNickName
       }
       type
       date
@@ -17,6 +18,7 @@ export const SUMMARY_QUERY = gql`
         id
         profileImage
         initials
+        getFullWithNickName
       }
     }
   }

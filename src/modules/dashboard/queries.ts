@@ -6,7 +6,8 @@ export const DASHBOARD_DATA_QUERY = gql`
       wantedList {
         id
         balance
-        fullName
+        getCleanFullName
+        getFullWithNickName
         initials
         profileImage
       }
@@ -24,6 +25,7 @@ export const DASHBOARD_DATA_QUERY = gql`
           profileImage
           initials
           getFullWithNickName
+          getCleanFullName
         }
         semester
         sum

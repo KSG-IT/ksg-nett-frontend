@@ -35,7 +35,7 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({ shift }) => {
             <Stack spacing="xs">
               <UserThumbnail user={slot.user} size="xl" />
               <Text my={0}>{parseShiftRole(slot.role)}</Text>
-              <Text my={0}>{slot.user.fullName}</Text>
+              <Text my={0}>{slot.user.getFullWithNickName}</Text>
             </Stack>
           ))}
         </Group>
