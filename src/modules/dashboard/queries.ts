@@ -23,6 +23,7 @@ export const DASHBOARD_DATA_QUERY = gql`
           id
           profileImage
           initials
+          getFullWithNickName
         }
         semester
         sum

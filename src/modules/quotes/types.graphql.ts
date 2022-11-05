@@ -1,4 +1,4 @@
-import { UserNode } from 'modules/users/types'
+import { UserNode, UserThumbnailProps } from 'modules/users/types'
 import { RelayEdgesWithPageInfo } from 'types/graphql'
 
 export interface QuoteNode {
@@ -6,7 +6,7 @@ export interface QuoteNode {
   text: string
   // Legacy quotes have no reportedBy
   reportedBy: UserNode | null
-  tagged: Pick<UserNode, 'id' | 'profileImage' | 'initials' | 'fullName'>[]
+  tagged: UserThumbnailProps['user'][]
   verifiedBy: UserNode | null
   context: string
   sum: number
