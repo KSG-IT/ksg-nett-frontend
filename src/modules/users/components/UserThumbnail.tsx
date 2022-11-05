@@ -6,18 +6,20 @@ export const UserThumbnail: React.FC<UserThumbnailProps> = ({
   size,
   user,
   radius,
+  className,
 }) => {
-  const { profileImage, initials, fullName } = user
+  const { profileImage, initials, getFullWithNickName } = user
   const hasprofileImage = profileImage !== null
   return (
-    <Tooltip label={fullName} withArrow withinPortal>
+    <Tooltip label={getFullWithNickName} withArrow withinPortal>
       <Avatar
         size={size}
         component={Link}
-        color="violet"
+        color="samfundet-red"
         to={`/users/${user.id}`}
         src={hasprofileImage ? profileImage : ''}
         radius={radius ? radius : 'xl'}
+        className={className}
       >
         {initials}
       </Avatar>
