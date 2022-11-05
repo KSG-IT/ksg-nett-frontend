@@ -36,11 +36,15 @@ export const ALL_SUMMARIES = gql`
             id
             profileImage
             initials
+            getCleanFullName
+            getFullWithNickName
           }
           participants {
             id
             profileImage
             initials
+            getCleanFullName
+            getFullWithNickName
           }
           type
           date

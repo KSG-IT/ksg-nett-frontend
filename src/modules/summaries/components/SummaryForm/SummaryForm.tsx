@@ -1,97 +1,125 @@
 import { SummaryNode } from '../../types'
 import { useSummaryLogic } from './useSummaryLogic'
-import { useSummaryEditAPI } from './SummaryEditAPI'
-import { Button, Card, Group, Select, Stack, Textarea } from '@mantine/core'
+import { useSummaryFormAPI } from './useSummaryFormAPI'
+import {
+  Button,
+  Card,
+  Group,
+  Select,
+  SimpleGrid,
+  Stack,
+  Textarea,
+  Title,
+} from '@mantine/core'
 import { UserMultiSelect, UserSelect } from '../../../../components/Select'
 import { useState } from 'react'
 import { summaryTypeChoices } from '../../conts'
 import { DatePicker } from '@mantine/dates'
-import { IconCake, IconCalendar } from '@tabler/icons'
+import { IconCalendar } from '@tabler/icons'
 
 interface SummaryFormProps {
-  summary: SummaryNode
+  summary?: SummaryNode
   onCompletedCallback: () => void
 }
 
-export const UseSummaryForm: React.FC<SummaryFormProps> = ({
+export const SummaryForm: React.FC<SummaryFormProps> = ({
   summary,
   onCompletedCallback,
 }) => {
   const { form, onSubmit } = useSummaryLogic({
-    ...useSummaryEditAPI(summary),
+    ...useSummaryFormAPI(summary),
     onCompletedCallback,
   })
+
   const { formState, register, handleSubmit, getValues, setValue } = form
   const { errors, isSubmitting } = formState
   const [reporter, setReporter] = useState<string>(getValues('reporter'))
   const [participants, setParticipants] = useState<string[]>(
     getValues('participants')
   )
+  const [summaryType, setSummaryType] = useState<string>(getValues('type'))
 
   function handleCallback(values: string[]) {
     setParticipants(values)
     setValue('participants', values)
-    console.log('UPDATED PARTICIPANTS', getValues('participants'))
+  }
+
+  function handleSelectType(value: string) {
+    const index = summaryTypeChoices.findIndex(choice => choice.value === value)
+    setSummaryType(value)
+    setValue('type', summaryTypeChoices[index].value)
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack>
-        <Card>
-          <Group>
+        <Card withBorder>
+          <SimpleGrid
+            cols={2}
+            breakpoints={[
+              { maxWidth: 755, cols: 1, spacing: 'sm' },
+              { maxWidth: 600, cols: 1, spacing: 'sm' },
+            ]}
+          >
             <div>
-              <label>Referent</label>
               <UserSelect
+                withinPortal
+                label={
+                  <Title order={5} color={'dimmed'}>
+                    Referent
+                  </Title>
+                }
                 userId={reporter}
                 setUserCallback={value => {
                   setReporter(value)
                   setValue('reporter', value)
                 }}
               />
-            </div>
-            <div>
-              <label>Deltakere</label>
-              <UserMultiSelect
-                users={participants}
-                setUsersCallback={handleCallback}
-              />
-            </div>
-          </Group>
-          <Group>
-            <div>
-              <label>Type referat</label>
-              <select {...register('type')}>
-                {summaryTypeChoices.map((choice, i) => (
-                  <option value={choice.value.toUpperCase()} key={i}>
-                    {choice.label.toUpperCase()}
-                  </option>
-                ))}
-              </select>
+
               <Select
-                defaultValue={getValues('type')}
-                data={summaryTypeChoices.map(choice => ({
-                  label: choice.label.toUpperCase(),
-                  value: choice.value.toUpperCase(),
-                }))}
-                onChange={value => value && console.log(value)}
+                label={
+                  <Title order={5} color={'dimmed'}>
+                    Type
+                  </Title>
+                }
+                value={summaryType}
+                data={summaryTypeChoices}
+                error={errors.type?.message}
+                onChange={handleSelectType}
+                withinPortal
               />
+              <div>
+                <DatePicker
+                  withinPortal
+                  label={
+                    <Title order={5} color={'dimmed'}>
+                      Dato
+                    </Title>
+                  }
+                  placeholder="Velg en dato"
+                  icon={<IconCalendar size={14} />}
+                  error={errors?.date?.message}
+                  defaultValue={getValues('date')}
+                  onChange={date => date && setValue('date', new Date(date))}
+                  allowFreeInput
+                />
+              </div>
             </div>
-            <div>
-              <DatePicker
-                label="Referatdato"
-                placeholder="Velg en dato"
-                icon={<IconCalendar size={14} />}
-                error={errors?.date?.message}
-                defaultValue={getValues('date')}
-                onChange={date => date && setValue('date', new Date(date))}
-                allowFreeInput
-              />
-            </div>
-          </Group>
+            <UserMultiSelect
+              label={
+                <Title order={5} color={'dimmed'}>
+                  Deltakere
+                </Title>
+              }
+              users={participants}
+              setUsersCallback={handleCallback}
+            />
+          </SimpleGrid>
+          <Group></Group>
         </Card>
-        <Textarea {...register('contents')} />
-        <Button disabled={isSubmitting} type={'submit'}>
-          Fæddi
+        <Textarea autosize minRows={5} {...register('contents')} />
+        <Button color={'samfundet-red'} disabled={isSubmitting} type={'submit'}>
+          Lagre
         </Button>
       </Stack>
     </form>
