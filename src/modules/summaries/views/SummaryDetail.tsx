@@ -62,16 +62,7 @@ export const SummaryDetail = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbItems} />
-      <Group position={'apart'}>
-        <div>
-          <Title order={4} color={'dimmed'}>
-            Type:
-            <span style={{ color: 'black' }}>
-              {' '}
-              {getSummaryTypeLabel(summary.type)}
-            </span>
-          </Title>
-        </div>
+      <Group position={'right'}>
         <ActionIcon onClick={() => setEditMode(!editMode)}>
           {!editMode ? <IconEdit color={'gray'} /> : <IconX color={'gray'} />}
         </ActionIcon>
