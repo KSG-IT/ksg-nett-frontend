@@ -115,9 +115,8 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
               setUsersCallback={handleCallback}
             />
           </SimpleGrid>
-          <Group></Group>
         </Card>
-        <Textarea autosize minRows={5} {...register('contents')} />
+        <Textarea autosize minRows={24} {...register('contents')} />
         <Button color={'samfundet-red'} disabled={isSubmitting} type={'submit'}>
           Lagre
         </Button>
