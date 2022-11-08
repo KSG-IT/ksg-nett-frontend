@@ -10,7 +10,6 @@ interface SummaryProps {
 }
 
 export const Summary: React.FC<SummaryProps> = ({ summary }: SummaryProps) => {
-  console.log(summary)
   return (
     <>
       <Group position={'left'}>
