@@ -1,4 +1,5 @@
 import {
+  Affix,
   Anchor,
   AppShell,
   Burger,
@@ -10,6 +11,7 @@ import {
   Header,
   Image,
   MediaQuery,
+  Popover,
   Text,
   useMantineTheme,
 } from '@mantine/core'
@@ -97,6 +99,29 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     >
       {/* Main content being rendered */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Affix position={{ bottom: 20, right: 20 }}>
+          <Popover>
+            <Popover.Target>
+              <Button variant={'light'} radius={'xl'} size={'sm'}>
+                Noe som ikke funker?
+              </Button>
+            </Popover.Target>
+            <Popover.Dropdown>
+              <Text size={'sm'}>
+                Send inn feil eller mangler gjennom dette skjemaet!
+              </Text>
+              <Button
+                variant={'subtle'}
+                compact
+                component={'a'}
+                href={'https://forms.gle/6ofXcwWEKmB8JXWP6'}
+                target="_blank"
+              >
+                Tilbakemeldingsskjema
+              </Button>
+            </Popover.Dropdown>
+          </Popover>
+        </Affix>
         {children}
       </ErrorBoundary>
     </AppShell>

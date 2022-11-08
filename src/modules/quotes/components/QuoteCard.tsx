@@ -142,7 +142,7 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
 
   return (
     <Card radius={'md'} className={classes.card} key={quote.id} withBorder>
-      <Stack justify={'space-between'} spacing={'xs'} className={classes.card}>
+      <Stack justify={'space-between'} spacing={'xs'} className={classes.quote}>
         <Stack spacing={'xs'}>
           <Text size={'sm'} className={classes.quoteText}>
             {quote.text}
@@ -207,6 +207,9 @@ const useStyles = createStyles(theme => ({
     width: 'auto',
     height: 'auto',
     overflow: 'visible',
+  },
+  quote: {
+    height: '100%',
   },
   row: {
     display: 'flex',
