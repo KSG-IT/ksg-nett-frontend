@@ -1,6 +1,5 @@
 import {
   Button,
-  createStyles,
   FileInput,
   Group,
   NumberInput,
@@ -15,8 +14,6 @@ import { useMediaQuery } from 'util/hooks'
 import { useCreateDepositAPI } from './useCreateDepositAPI'
 import { useCreateDepositLogic } from './useCreateDepositLogic'
 
-const useStyles = createStyles(theme => ({}))
-
 interface CreateDepositViewProps {
   onCompletedCallback: () => void
 }
@@ -28,9 +25,8 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
     ...useCreateDepositAPI(),
     onCompletedCallback,
   })
-  const { classes } = useStyles()
   const mobileSize = useMediaQuery('(max-width: 600px)')
-  const { formState, register, handleSubmit, getValues, setValue } = form
+  const { formState, register, handleSubmit, setValue } = form
   const { errors, isSubmitting } = formState
 
   return (
@@ -43,6 +39,8 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             variant="filled"
             error={errors?.amount?.message}
             label="Beløp"
+            min={1}
+            max={30000}
             placeholder="Hvor mye socistøv du vil konvertere"
             icon={<IconCashBanknote size={14} />}
             onChange={value => value && setValue('amount', value)}

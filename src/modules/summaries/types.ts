@@ -51,7 +51,7 @@ export interface AllSummariesQueryVariables {
 
 type CreateSummaryInput = {
   contents: string
-  participants: String[]
+  participants: string[]
   reporter: string
   type: SummaryType
   date: string
@@ -69,9 +69,9 @@ export interface CreateSummaryMutationVariables {
 }
 
 export interface CreateSummaryMutationReturns {
-  createSummary: {
+  patchSummary: {
     summary: {
-      id: String
+      id: string
     }
   }
 }
@@ -82,7 +82,9 @@ export interface PatchSummaryMutationVariables {
 }
 
 export interface PatchSummaryMutationReturns {
-  summary: {
-    id: string
+  createSummary: {
+    summary: {
+      id: string
+    }
   }
 }

@@ -1,5 +1,15 @@
 import { useQuery } from '@apollo/client'
-import { Avatar, Button, Group, Stack, TextInput, Title } from '@mantine/core'
+import {
+  Avatar,
+  Badge,
+  Button,
+  createStyles,
+  Group,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core'
 import { IconPlus, IconSearch } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
@@ -9,8 +19,9 @@ import { useNavigate } from 'react-router-dom'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { format } from 'util/date-fns'
 import { useDebounce } from 'util/hooks/useDebounce'
-import { AllSummariesQueryReturns, AllSummariesQueryVariables } from '.'
-import { ALL_SUMMARIES } from './queries'
+import { AllSummariesQueryReturns, AllSummariesQueryVariables } from '../index'
+import { ALL_SUMMARIES } from '../queries'
+import { UserThumbnail } from '../../users/components'
 
 const breadCrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -21,6 +32,7 @@ export const Summaries: React.FC = () => {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query)
   const navigate = useNavigate()
+  const { classes } = useStyles()
 
   const { data, error, fetchMore } = useQuery<
     AllSummariesQueryReturns,
@@ -37,20 +49,30 @@ export const Summaries: React.FC = () => {
   const hasNextPage = data?.allSummaries.pageInfo.hasNextPage ?? false
 
   const rows = summaries.map(summary => (
-    <tr onClick={() => navigate(`/summaries/${summary.id}`)} key={summary.id}>
-      <td>{format(new Date(summary.date), 'MM.dd')}</td>
-      <td>{summary.type}</td>
+    <tr
+      className={classes.tableRow}
+      onClick={() => navigate(`/summaries/${summary.id}`)}
+      key={summary.id}
+    >
       <td>
-        <Avatar.Group>
+        <Text color={'dimmed'} weight={'bold'}>
+          {format(new Date(summary.date), 'dd.MM.yy')}
+        </Text>
+      </td>
+      <td>
+        <Badge variant={'filled'} color={'samfundet-red'}>
+          {summary.type}
+        </Badge>
+      </td>
+      <td>
+        <Avatar.Group spacing={'sm'}>
           {summary.participants.map(user => (
-            <Avatar color={'red'}>{user.initials}</Avatar>
+            <UserThumbnail user={user} />
           ))}
         </Avatar.Group>
       </td>
       <td>
-        <Avatar color={'blue'} radius={'lg'}>
-          {summary.reporter.initials}
-        </Avatar>
+        <UserThumbnail user={summary.reporter} />
       </td>
     </tr>
   ))
@@ -95,7 +117,6 @@ export const Summaries: React.FC = () => {
         <Title>Referater</Title>
         <Button
           size="md"
-          color="samfundet-red"
           onClick={() => {
             navigate('/summaries/create')
           }}
@@ -111,7 +132,7 @@ export const Summaries: React.FC = () => {
         onChange={evt => setQuery(evt.target.value)}
       />
 
-      <CardTable highlightOnHover>
+      <CardTable className={classes.card} highlightOnHover>
         <thead>
           <td>Dato</td>
           <td>Type</td>
@@ -125,3 +146,12 @@ export const Summaries: React.FC = () => {
     </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  card: {
+    border: `1px solid ${theme.colors.gray[3]}`,
+  },
+  tableRow: {
+    cursor: 'pointer',
+  },
+}))

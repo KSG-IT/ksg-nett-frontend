@@ -1,13 +1,5 @@
 import { useQuery } from '@apollo/client'
-import {
-  Button,
-  createStyles,
-  Grid,
-  Group,
-  Modal,
-  Stack,
-  Title,
-} from '@mantine/core'
+import { Button, createStyles, Grid, Modal, Stack, Title } from '@mantine/core'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'

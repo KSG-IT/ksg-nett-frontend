@@ -13,7 +13,12 @@ interface BreadcrumbsProps {
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
   return (
-    <BreadcrumbsBase separator={<IconChevronRight size={16} />}>
+    <BreadcrumbsBase
+      separator={
+        <IconChevronRight size={16} style={{ marginBottom: '0.5rem' }} />
+      }
+      style={{ flexWrap: 'wrap' }}
+    >
       {items.map((item, index) => (
         <Anchor
           key={index}
@@ -21,6 +26,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
           to={item.path}
           color="samfundet-red"
           weight={500}
+          style={{ marginBottom: '0.5rem' }}
         >
           {item.label}
         </Anchor>

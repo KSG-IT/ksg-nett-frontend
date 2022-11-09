@@ -120,7 +120,10 @@ export interface PatchUserReturns {
 }
 
 export interface UserThumbnailProps extends AvatarProps {
-  user: Pick<UserNode, 'id' | 'profileImage' | 'initials' | 'fullName'>
+  user: Pick<
+    UserNode,
+    'id' | 'profileImage' | 'initials' | 'getFullWithNickName'
+  >
 }
 
 export interface AddUserToUserTypeReturns {

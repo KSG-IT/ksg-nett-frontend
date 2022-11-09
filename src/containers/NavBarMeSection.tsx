@@ -31,7 +31,7 @@ export const NavBarMeSection: React.FC = () => {
       <Group>
         <UserThumbnail user={me} />
         <Stack spacing={0}>
-          <Text>{me.fullName}</Text>
+          <Text>{me.getFullWithNickName}</Text>
           <Group spacing={0} align="center">
             <IconPigMoney />
             <Text size={'md'} weight={500} color={liquidityColor(me.balance)}>

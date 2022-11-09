@@ -1,11 +1,14 @@
-import { PatchSummaryMutationReturns, SummaryType } from '../../types'
+import {
+  CreateSummaryMutationReturns,
+  PatchSummaryMutationReturns,
+  SummaryType,
+} from '../../types'
 import * as yup from 'yup'
 import { OnFormSubmit } from '../../../../types/forms'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { formatISO } from 'date-fns'
-import { UserNode } from '../../../users/types'
 
 export type SummaryFormData = {
   contents: string
@@ -29,7 +32,10 @@ const SummarySchema = yup.object().shape({
 
 interface SummaryLogicInput {
   defaultValues: SummaryFormData
-  onSubmit: OnFormSubmit<SummaryCleanedData, PatchSummaryMutationReturns>
+  onSubmit: OnFormSubmit<
+    SummaryCleanedData,
+    PatchSummaryMutationReturns | CreateSummaryMutationReturns
+  >
   onCompletedCallback: () => void
 }
 

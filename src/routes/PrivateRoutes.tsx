@@ -50,12 +50,7 @@ import {
   ScheduleTemplateDetails,
   ScheduleTemplates,
 } from 'modules/schedules/views'
-import {
-  CreateSummary,
-  EditSummary,
-  Summaries,
-  SummaryDetail,
-} from 'modules/summaries'
+import { CreateSummary, Summaries, SummaryDetail } from 'modules/summaries'
 import { ME_QUERY } from 'modules/users/queries'
 import { MeQueryReturns } from 'modules/users/types'
 import {
@@ -151,7 +146,6 @@ export const AppRoutes: React.FC = () => {
           <Route path="create" element={<CreateSummary />} />
           <Route path=":summaryId">
             <Route index element={<SummaryDetail />} />
-            <Route path="edit" element={<EditSummary />} />
           </Route>
           <Route path="*" element={<FullPage404 />} />
         </Route>

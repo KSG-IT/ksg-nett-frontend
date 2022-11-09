@@ -86,7 +86,7 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
           className={classes.hoverableGreen}
           onClick={() => setOpened(true)}
         >
-          {shiftSlot.user.fullName}
+          {shiftSlot.user.getFullWithNickName}
         </Text>
         <UnstyledButton
           onClick={() => handleRemoveUserFromShiftSlot(shiftSlot.id)}

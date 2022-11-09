@@ -17,7 +17,7 @@ export const ApplicantCommentCard: React.VFC<ApplicantCommentCardProps> = ({
         <Group align={'flex-start'}>
           <UserThumbnail user={user} />
           <Stack spacing={'xs'}>
-            <Text>{user.fullName}</Text>
+            <Text>{user.getFullWithNickName}</Text>
             <Text size="sm" color="gray">
               Skrevet {format(new Date(createdAt), 'dd. MMM yyyy hh:mm')}
             </Text>
