@@ -1,5 +1,5 @@
 import { SociProductNode } from 'modules/economy/types.graphql'
-import { UserNode } from 'modules/users/types'
+import { UserNode, UserThumbnailProps } from 'modules/users/types'
 import {
   DayValues,
   LocationValues,
@@ -10,20 +10,20 @@ import {
 // === NODES ===
 export type ShiftSlotNode = {
   id: string
-  user: Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'> | null
+  user: UserThumbnailProps['user'] | null
   role: RoleValues
 }
 
 // Is there a better way to do this?
 type FilledShiftSlotNode = {
   id: string
-  user: Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>
+  user: UserThumbnailProps['user']
   role: RoleValues
 }
 
 export type ShiftNode = {
   id: string
-  users: Pick<UserNode, 'id' | 'fullName' | 'profileImage' | 'initials'>[]
+  users: UserThumbnailProps['user'][]
   slots: ShiftSlotNode[]
   filledSlots: FilledShiftSlotNode[]
   isFilled: boolean

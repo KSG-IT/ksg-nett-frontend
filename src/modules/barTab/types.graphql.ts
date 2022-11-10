@@ -1,4 +1,4 @@
-import { UserNode } from 'modules/users/types'
+import { UserNode, UserThumbnailProps } from 'modules/users/types'
 import { RelayEdgesWithPageInfo } from 'types/graphql'
 import { BarTabOrderTypeValues, BarTabStatusValues } from './enums'
 
@@ -9,9 +9,9 @@ export type BarTabNode = {
   datetimeReviewed: string | null
   status: BarTabStatusValues
 
-  createdBy: Pick<UserNode, 'id' | 'fullName' | 'initials' | 'profileImage'>
-  openedBy: Pick<UserNode, 'id' | 'fullName' | 'initials' | 'profileImage'>
-  reviewedBy: Pick<UserNode, 'id' | 'fullName' | 'initials' | 'profileImage'>
+  createdBy: UserThumbnailProps['user']
+  openedBy: UserThumbnailProps['user']
+  reviewedBy: UserThumbnailProps['user']
 
   orders: BarTabProductOrderNode[]
 }

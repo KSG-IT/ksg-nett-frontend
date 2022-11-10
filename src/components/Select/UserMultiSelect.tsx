@@ -1,14 +1,6 @@
 import { useQuery } from '@apollo/client'
-import {
-  createStyles,
-  MantineSize,
-  MultiSelect,
-  MultiSelectProps,
-} from '@mantine/core'
-import {
-  ALL_ACTIVE_USERS_LIST_QUERY,
-  ALL_ACTIVE_USERS_SHALLOW_QUERY,
-} from 'modules/users/queries'
+import { MultiSelect, MultiSelectProps } from '@mantine/core'
+import { ALL_ACTIVE_USERS_LIST_QUERY } from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
@@ -22,16 +14,12 @@ interface UserMultiSelectProps
   users?: string[]
   width?: string
   placeholder?: string
-  label?: React.ReactNode
-  size?: MantineSize | undefined
   fullwidth?: boolean
   setUsersCallback?: (users: string[]) => void
 }
 
 export const UserMultiSelect: React.FC<UserMultiSelectProps> = ({
   users = [],
-  size,
-  label,
   placeholder = 'Velg brukere',
   setUsersCallback,
   ...rest

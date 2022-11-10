@@ -53,7 +53,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
       <Text color={'dimmed'} weight={700} p={'xs'}>
         Siste transaksjoner
       </Text>
-      <CardTable>
+      <CardTable className={classes.card}>
         <thead>
           <tr className={classes.headerRow}>
             <Header>Type</Header>
@@ -71,8 +71,8 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
 const useStyles = createStyles(theme => ({
   card: {
     backgroundColor: theme.colors.white,
+    border: `1px solid ${theme.colors.gray[3]}`,
     borderTop: `5px solid ${theme.colors.brand}`,
-    overflowX: 'scroll',
   },
   tableHeader: {
     color: theme.colors.gray[7],

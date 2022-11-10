@@ -2,7 +2,7 @@ import {
   InternalGroupNode,
   InternalGroupPositionNode,
 } from 'modules/organization/types'
-import { UserNode } from 'modules/users/types'
+import { UserNode, UserThumbnailProps } from 'modules/users/types'
 import {
   AdmissionStatusValues,
   ApplicantStatusValues,
@@ -25,10 +25,7 @@ export type InterviewNode = {
   id: string
   interviewStart: string
   interviewEnd: string
-  interviewers: Pick<
-    UserNode,
-    'id' | 'initials' | 'profileImage' | 'fullName'
-  >[]
+  interviewers: UserThumbnailProps['user'][]
   location: Pick<InterviewLocationNode, 'id' | 'name' | 'locationDescription'>
   notes: string
   discussion: string
@@ -106,7 +103,7 @@ export type ApplicantCommentNode = {
   id: string
   text: string
   createdAt: Date
-  user: Pick<UserNode, 'id' | 'initials' | 'profileImage' | 'fullName'>
+  user: UserThumbnailProps['user']
 }
 
 export type ApplicantNode = {
@@ -124,7 +121,7 @@ export type ApplicantNode = {
   dateOfBirth: Date | string
   priorities: InternalGroupPositionPriority[]
   interview: InterviewNode | null
-  interviewers: Pick<UserNode, 'id' | 'profileImage' | 'initials' | 'fullName'>
+  interviewers: UserThumbnailProps['user'][]
   wantsDigitalInterview: boolean
   willBeAdmitted: boolean
   canCommitThreeSemesters: boolean
@@ -137,10 +134,7 @@ export type ApplicantNode = {
   lastNotice: Date | null
   noticeMethod: NoticeMethodValues | null
   noticeComment: string
-  noticeUser: Pick<
-    UserNode,
-    'id' | 'initials' | 'profileImage' | 'fullName'
-  > | null
+  noticeUser: UserThumbnailProps['user'] | null
 }
 
 export type ApplicantCSVData = {

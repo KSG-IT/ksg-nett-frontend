@@ -9,6 +9,7 @@ export const ME_QUERY = gql`
       lastName
       profileImage
       fullName
+      getFullWithNickName
       initials
       email
       balance
@@ -39,8 +40,8 @@ export const USER_QUERY = gql`
   query User($id: ID!) {
     user(id: $id) {
       id
-      fullName
       getFullWithNickName
+      getCleanFullName
       firstName
       lastName
       biography
@@ -77,6 +78,7 @@ export const USER_QUERY = gql`
           initials
           profileImage
           fullName
+          getFullWithNickName
         }
       }
     }

@@ -66,7 +66,7 @@ export const ChangePasswordWithToken: React.FC = () => {
           size="md"
           onClick={handleResetPassword}
         >
-          Nullstill passord
+          Lagre nytt passord
         </Button>
       </Paper>
     </div>
