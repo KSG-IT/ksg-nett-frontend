@@ -76,7 +76,7 @@ export const ShiftTemplateAccordionItem: React.FC<
             {parseDay(shiftTemplate.day)}
           </Text>
           <Text className={classes.shiftTemplateColumnCell}>
-            {parseLocation(shiftTemplate.location)}
+            {parseLocation(shiftTemplate.location).name}
           </Text>
           <Text className={classes.shiftTemplateColumnCell}>
             {shiftTemplate.timeStart}

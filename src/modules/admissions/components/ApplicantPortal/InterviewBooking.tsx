@@ -1,36 +1,35 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { Button, Container, Group, Stack, Text, Title } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { format } from 'util/date-fns'
 import { BOOK_INTERRVIEW_MUTATION } from 'modules/admissions/mutations'
 import { INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY } from 'modules/admissions/queries'
 import { InterviewsAvailableForBookingReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import { toast } from 'react-hot-toast'
+import { format } from 'util/date-fns'
 
 interface InterviewBookingProps {
   applicantToken: string
 }
 
-export const InterviewBooking: React.VFC<InterviewBookingProps> = ({
+export const InterviewBooking: React.FC<InterviewBookingProps> = ({
   applicantToken,
 }) => {
   const [dayOffset, setDayOffset] = useState(0)
+
   const { data, error, loading } =
     useQuery<InterviewsAvailableForBookingReturns>(
       INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY,
       {
-        pollInterval: 20000, // polls every 30 seconds
+        pollInterval: 20000,
         variables: {
           dayOffset: dayOffset,
         },
       }
     )
-  const [bookInterview] = useMutation(BOOK_INTERRVIEW_MUTATION, {
-    refetchQueries: ['GetApplicantFromToken'],
-  })
+  const [bookInterview] = useMutation(BOOK_INTERRVIEW_MUTATION)
 
   if (error) return <FullPageError />
 
@@ -42,15 +41,22 @@ export const InterviewBooking: React.VFC<InterviewBookingProps> = ({
         interviewIds: interviewIds,
         applicantToken: applicantToken,
       },
-    }).then(res => {
-      const {
-        data: {
-          bookInterview: { ok },
-        },
-      } = res
-      if (!ok) {
-        toast.error('Noe gikk galt, prøv igjen')
-      }
+      refetchQueries: ['GetApplicantFromToken'],
+      onCompleted() {
+        showNotification({
+          title: 'Intervjuet er booket',
+          message: 'Intervjuet er booket',
+          color: 'green',
+        })
+      },
+      onError() {
+        showNotification({
+          title: 'Noe gikk galt',
+          message:
+            'Kan hende noen andre har booket samme intervju. Prøv et annet intervju annet',
+          color: 'red',
+        })
+      },
     })
   }
   return (
@@ -64,6 +70,7 @@ export const InterviewBooking: React.VFC<InterviewBookingProps> = ({
           For at vi ikke skal glemme å sette opp intervjuere er det tidligst
           mulig å booke et intervju neste dag.
         </Text>
+        <Text>Helst book et intevju så tidlig som mulig.</Text>
       </MessageBox>
       {data.interviewsAvailableForBooking.map(day => {
         return (
@@ -101,6 +108,7 @@ export const InterviewBooking: React.VFC<InterviewBookingProps> = ({
       <Group>
         <Button
           disabled={dayOffset === 0}
+          color="samfundet-red"
           onClick={() => {
             setDayOffset(dayOffset - 2)
           }}
@@ -108,6 +116,7 @@ export const InterviewBooking: React.VFC<InterviewBookingProps> = ({
           -2 dager
         </Button>
         <Button
+          color="samfundet-red"
           onClick={() => {
             setDayOffset(dayOffset + 2)
           }}

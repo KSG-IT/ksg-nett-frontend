@@ -1,15 +1,19 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Paper, Stack, Table, Title } from '@mantine/core'
-import { IconArrowLeft } from '@tabler/icons'
-import { BackButton } from 'components/BackButton'
+import { Button, Stack, Title } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { UserThumbnail } from 'modules/users/components'
-import { Link } from 'react-router-dom'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { PREVIOUS_BAR_TABS_QUERY } from '../queries'
 import { BarTabNode, PreviousBarTabsReturns } from '../types.graphql'
+
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'BSF', path: '/bar-tab' },
+  { label: 'Tidligere BSF', path: '/bar-tab/previous' },
+]
 
 export const PreviousBarTabs: React.FC = () => {
   const { data, loading, error, fetchMore } = useQuery<PreviousBarTabsReturns>(
@@ -71,20 +75,8 @@ export const PreviousBarTabs: React.FC = () => {
 
   return (
     <Stack>
-      <BackButton to="/bar-tab" />
-      <Group position="apart">
-        <Title>Tidligere BSF'er</Title>
-        {/* <Link to="/bar-tab">
-          <Button
-            color="samfundet-red"
-            leftIcon={<IconArrowLeft />}
-            variant="subtle"
-          >
-            Tilbake
-          </Button>
-        </Link> */}
-      </Group>
-
+      <Breadcrumbs items={breadcrumbsItems} />
+      <Title>Tidligere BSF'er</Title>
       <CardTable>
         <thead>
           <tr>

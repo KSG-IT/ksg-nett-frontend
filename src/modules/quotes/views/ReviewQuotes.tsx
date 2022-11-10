@@ -11,6 +11,7 @@ import {
   Title,
 } from '@mantine/core'
 import { BackButton } from 'components/BackButton'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import {
   FullPage404,
   FullPageEmpty,
@@ -25,6 +26,12 @@ import { DELETE_QUOTE } from '../mutations'
 import { useQuoteMutations } from '../mutations.hooks'
 import { APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY } from '../queries'
 import { PendingQuotesReturns } from '../types.graphql'
+
+const breadcrumbsItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Sitater', path: '/quotes' },
+  { label: 'Godkjenn', path: '/quotes/review' },
+]
 
 export const ReviewQuotes: React.FC = () => {
   const { classes } = useStyles()
@@ -73,7 +80,7 @@ export const ReviewQuotes: React.FC = () => {
   if (pendingQuotes.length === 0)
     return (
       <Stack>
-        <BackButton to="/quotes" />
+        <Breadcrumbs items={breadcrumbsItems} />
         <Title>Innsendte sitater</Title>
         <FullPageEmpty />
       </Stack>
@@ -81,7 +88,7 @@ export const ReviewQuotes: React.FC = () => {
 
   return (
     <Stack>
-      <BackButton to="/quotes" />
+      <Breadcrumbs items={breadcrumbsItems} />
       <Group position="apart">
         <Title order={2} color="dimmed">
           Godkjenning av sitater
@@ -118,7 +125,8 @@ export const ReviewQuotes: React.FC = () => {
 
                 <Stack spacing={0}>
                   <Text size="sm" color="dark">
-                    Sendt inn av: {quote.reportedBy.fullName}
+                    {/* Legacy quotes have no reported by */}
+                    Sendt inn av: {quote?.reportedBy?.fullName}
                   </Text>
                   <Text size="sm" color="dark">
                     Klokken {format(new Date(quote.createdAt), 'eeee H:mm')}

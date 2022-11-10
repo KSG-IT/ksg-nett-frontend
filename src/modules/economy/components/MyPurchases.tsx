@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { numberWithSpaces } from 'util/parsing'
 import { BankAccountActivity } from '../types.graphql'
+import { CardTable } from 'components/CardTable'
 
 const ActivityCell = styled.td`
   user-select: none;
@@ -26,21 +27,16 @@ export const MyPurchases: React.VFC<MyPurchasesProps> = ({ activities }) => {
     </tr>
   ))
   return (
-    <Paper p="md">
-      <Table>
-        <thead>
-          <tr>
-            <th>Dato</th>
-            <th>Type</th>
-            <th>Kvantitet</th>
-            <th>Kostnad</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
-      <Link to="/economy/me/purchase-history">
-        Fullstendig historikk {<IconArrowRight />}
-      </Link>
-    </Paper>
+    <CardTable>
+      <thead>
+        <tr>
+          <th>Dato</th>
+          <th>Type</th>
+          <th>Kvantitet</th>
+          <th>Kostnad</th>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </CardTable>
   )
 }

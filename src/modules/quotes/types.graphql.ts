@@ -4,7 +4,8 @@ import { RelayEdgesWithPageInfo } from 'types/graphql'
 export interface QuoteNode {
   id: string
   text: string
-  reportedBy: UserNode
+  // Legacy quotes have no reportedBy
+  reportedBy: UserNode | null
   tagged: Pick<UserNode, 'id' | 'profileImage' | 'initials' | 'fullName'>[]
   verifiedBy: UserNode | null
   context: string
@@ -13,9 +14,14 @@ export interface QuoteNode {
   createdAt: Date
 }
 
+export type ShallowQuoteNode = Pick<
+  QuoteNode,
+  'id' | 'text' | 'context' | 'sum' | 'semester' | 'tagged'
+>
+
 /* ==== QUERY TYPING === */
 export interface ApprovedQuotesReturns {
-  approvedQuotes: RelayEdgesWithPageInfo<QuoteNode>
+  approvedQuotes: RelayEdgesWithPageInfo<ShallowQuoteNode>
 }
 
 export interface ApprovedQuotesVariables {
@@ -29,8 +35,8 @@ export interface PendingQuotesReturns {
 }
 
 export interface PopularQuotesReturns {
-  popularQuotesCurrentSemester: QuoteNode[]
-  popularQuotesAllTime: QuoteNode[]
+  popularQuotesCurrentSemester: ShallowQuoteNode[]
+  popularQuotesAllTime: ShallowQuoteNode[]
   currentSemesterShorthand: `${'H' | 'V'}${number}`
 }
 

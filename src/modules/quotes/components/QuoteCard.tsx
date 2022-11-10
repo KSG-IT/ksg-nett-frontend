@@ -141,7 +141,7 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
   }
 
   return (
-    <Card className={classes.card} key={quote.id} withBorder>
+    <Card radius={'md'} className={classes.card} key={quote.id} withBorder>
       <Stack justify={'space-between'} spacing={'xs'} className={classes.card}>
         <Stack spacing={'xs'}>
           <Text size={'sm'} className={classes.quoteText}>
@@ -166,7 +166,6 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
                   <UnstyledButton>
                     <IconHash size={18} color="lightgray" />
                   </UnstyledButton>
-                  {/* onClick={handleInvalidateQuote} */}
                 </Menu.Target>
                 <Menu.Dropdown style={{ zIndex: 9000 }}>
                   <PermissionGate permissions={PERMISSIONS.quotes.change.quote}>
@@ -205,8 +204,8 @@ const useStyles = createStyles(theme => ({
     fontWeight: 500,
   },
   card: {
-    width: '100%',
-    height: '100%',
+    width: 'auto',
+    height: 'auto',
     overflow: 'visible',
   },
   row: {

@@ -10,27 +10,27 @@ export function parseShiftRole(role: RoleValues) {
 export function parseLocation(location: LocationValues | null) {
   switch (location) {
     case LocationValues.BODEGAEN:
-      return 'Bodegaen'
+      return { name: 'Bodegaen', color: 'green' }
     case LocationValues.DAGLIGHALLEN_BAR:
-      return 'Daglighallen bar'
+      return { name: 'Daglighallen bar', color: 'orange' }
     case LocationValues.EDGAR:
-      return 'Edgar'
+      return { name: 'Edgar', color: 'red' }
     case LocationValues.KLUBBEN:
-      return 'Klubben'
+      return { name: 'Klubben', color: 'blue' }
     case LocationValues.LYCHE_BAR:
-      return 'Lyche bar'
+      return { name: 'Lyche bar', color: 'yellow' }
     case LocationValues.LYCHE_KJOKKEN:
-      return 'Lyche kjøkken'
+      return { name: 'Lyche kjøkken', color: 'lime' }
     case LocationValues.RUNDHALLEN:
-      return 'Rundhallen'
+      return { name: 'Rundhallen', color: 'cyan' }
     case LocationValues.SELSKAPSSIDEN:
-      return 'Selskapssiden'
+      return { name: 'Selskapssiden', color: 'indigo' }
     case LocationValues.STORSALEN:
-      return 'Storsalen'
+      return { name: 'Storsalen', color: 'grape' }
     case LocationValues.STROSSA:
-      return 'Strossa'
+      return { name: 'Strossa', color: 'pink' }
     default:
-      return ''
+      return { name: '', color: 'gray' }
   }
 }
 

@@ -70,8 +70,8 @@ export const MY_EXPENDITURES = gql`
 `
 
 export const ALL_SOCI_SESSIONS = gql`
-  query AllSociSessions {
-    allSociSessions {
+  query AllSociSessions($first: Int, $after: String) {
+    allSociSessions(first: $first, after: $after) {
       pageInfo {
         startCursor
         endCursor
@@ -86,6 +86,7 @@ export const ALL_SOCI_SESSIONS = gql`
           closed
           type
           moneySpent
+          createdAt
           createdBy {
             id
             fullName
@@ -107,7 +108,7 @@ export const SOCI_SESSION_QUERY = gql`
       closedAt
       createdBy {
         id
-        fullName
+        getCleanFullName
       }
       productOrders {
         id

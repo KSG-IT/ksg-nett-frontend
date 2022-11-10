@@ -24,6 +24,8 @@ export const DASHBOARD_DATA_QUERY = gql`
           profileImage
           initials
         }
+        semester
+        sum
       }
       myUpcomingShifts {
         roleDisplay

@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/client'
-import { ALL_ACTIVE_USERS_SHALLOW_QUERY } from 'modules/users/queries'
+import { Select } from '@mantine/core'
+import { ALL_ACTIVE_USERS_LIST_QUERY } from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
 } from 'modules/users/types'
-import Select from 'react-select'
 import styled from 'styled-components'
-import { UserOption, usersToSelectOption } from 'util/user'
+import { usersToSelectOption } from 'util/user'
 
 interface WrapperProps {
   fullwidth: boolean
@@ -30,32 +30,30 @@ interface UserSelectProps {
   userId?: string
   fullwidth?: boolean
   width?: string
-  setUserCallback: (slectedId: UserOption) => void
+  setUserCallback?: (userId: string) => void
 }
 
 export const UserSelect: React.FC<UserSelectProps> = ({
   userId,
-  width = '400px',
-  fullwidth = false,
   setUserCallback,
 }) => {
   const { loading, data } = useQuery<
     AllUsersShallowQueryReturns,
     AllUsersShallowQueryVariables
-  >(ALL_ACTIVE_USERS_SHALLOW_QUERY)
+  >(ALL_ACTIVE_USERS_LIST_QUERY, { variables: { q: '' } })
 
   const options = usersToSelectOption(data?.allActiveUsersList)
   const initialValue = options.find(option => option.value == userId)
 
   return (
-    <Wrapper fullwidth={fullwidth} width={width}>
-      <Select
-        isLoading={loading}
-        defaultValue={initialValue}
-        options={options}
-        onChange={option => option && setUserCallback(option)}
-        styles={{ container: () => ({ width: '100%' }) }}
-      />
-    </Wrapper>
+    <Select
+      value={userId}
+      placeholder={'Velg bruker'}
+      searchable
+      limit={20}
+      defaultValue={initialValue?.value}
+      data={options}
+      onChange={setUserCallback}
+    />
   )
 }

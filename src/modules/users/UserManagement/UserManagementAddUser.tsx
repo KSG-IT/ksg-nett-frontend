@@ -1,10 +1,9 @@
 import { useMutation } from '@apollo/client'
-import { Button, Group } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
 import { MANAGE_USERS_DATA_QUERY } from '../queries'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from './mutations'
@@ -14,24 +13,12 @@ import {
   InternalGroupPositionTypeOption,
 } from './types'
 
-const Wrapper = styled.div``
-
-const Title = styled.h1`
-  margin: 0;
-`
-
 interface UserManagementAddUserProps {
   setModalOpen: (open: boolean) => void
 }
 export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
   setModalOpen,
 }) => {
-  /**
-   * 1. Select user
-   * 2. Select internal group position
-   * 3. Select status
-   * 4. Submit and redirect to table
-   */
   const [selectedUser, setSelectedUser] = useState('')
   const [internalGroupPositionId, setInternalGroupPositionId] = useState('')
   const [
@@ -52,6 +39,8 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
   const handleAssignNewPosition = () => {
     if (selectedInternalGroupPositionType === null) return
 
+    console.log(selectedInternalGroupPositionType)
+
     assignNewPosition({
       variables: {
         userId: selectedUser,
@@ -69,10 +58,10 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
   }
 
   return (
-    <Wrapper>
+    <Stack>
       <Title>Gi bruker nytt verv</Title>
       <label>Bruker</label>
-      <UserSelect setUserCallback={option => setSelectedUser(option.value)} />
+      <UserSelect setUserCallback={setSelectedUser} />
       <label>Verv</label>
       <InternalGroupPositionSelect
         setInternalGroupPositionCallback={setInternalGroupPositionId}
@@ -94,6 +83,6 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
           Lagre
         </Button>
       </Group>
-    </Wrapper>
+    </Stack>
   )
 }

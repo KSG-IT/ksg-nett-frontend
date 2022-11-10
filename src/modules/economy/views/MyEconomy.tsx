@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Card, createStyles, Stack, Title } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import styled from 'styled-components'
@@ -14,6 +15,12 @@ import { MyBankAccountReturns } from '../types.graphql'
 
 export const MyEconomy: React.FC = () => {
   const { classes } = useStyles()
+const breadCrumbItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Min økonomi', path: '/economy/me' },
+]
+
+export const MyEconomy: React.VFC = () => {
   const { data, loading, error } = useQuery<MyBankAccountReturns>(
     MY_BANK_ACCOUNT_QUERY
   )
@@ -24,6 +31,7 @@ export const MyEconomy: React.FC = () => {
 
   return (
     <Stack>
+      <Breadcrumbs items={breadCrumbItems} />
       <Title>Min økonomi</Title>
       <Card withBorder className={classes.balanceCard}>
         <Title order={4}>Konto</Title>
