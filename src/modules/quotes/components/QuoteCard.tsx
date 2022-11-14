@@ -19,15 +19,21 @@ import {
   IconTrash,
 } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
+import { DASHBOARD_DATA_QUERY } from 'modules/dashboard/queries'
 
 import { UserThumbnail } from 'modules/users/components'
+import { ME_QUERY, USER_QUERY } from 'modules/users/queries'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
 import { CREATE_QUOTE_VOTE, DELETE_USER_QUOTE_VOTE } from '../mutations'
 import { useQuoteMutations } from '../mutations.hooks'
-import { APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY } from '../queries'
+import {
+  APPROVED_QUOTES_QUERY,
+  PNEDING_QUOTES_QUERY,
+  POPULAR_QUOTES_QUERY,
+} from '../queries'
 import {
   CreateQuoteVoteReturns,
   CreateQuoteVoteVariables,
@@ -66,6 +72,13 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
   displaySemester = false,
 }) => {
   const { classes } = useStyles()
+  const refetchQueries = [
+    POPULAR_QUOTES_QUERY,
+    APPROVED_QUOTES_QUERY,
+    ME_QUERY,
+    USER_QUERY,
+  ]
+
   const me = useStore(state => state.user)!
   const [upvoted, setUpvoted] = useState(me.upvotedQuoteIds.includes(quote.id))
   const [voteSum, setVoteSum] = useState(quote.sum)
@@ -73,13 +86,13 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
     CreateQuoteVoteReturns,
     CreateQuoteVoteVariables
   >(CREATE_QUOTE_VOTE, {
-    refetchQueries: ['PopularQuotes', 'ApprovedQuotes', 'Me'],
+    refetchQueries,
   })
   const [deleteUpvote] = useMutation<
     DeleteUserQuoteVoteReturns,
     DeleteUserQuoteVoteVariables
   >(DELETE_USER_QUOTE_VOTE, {
-    refetchQueries: ['PopularQuotes', 'ApprovedQuotes', 'Me'],
+    refetchQueries,
   })
 
   const { invalidateQuote, deleteQuote } = useQuoteMutations()
