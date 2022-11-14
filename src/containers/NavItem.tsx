@@ -1,5 +1,6 @@
 import { createStyles, Text } from '@mantine/core'
 import { TablerIcon } from '@tabler/icons'
+import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
 import { useStore } from 'store'
 
@@ -8,7 +9,7 @@ export interface RouteItem {
   link: string
   icon: TablerIcon
   onClick?: () => void
-  permissions?: string | string[]
+  permissions: string | string[]
 }
 
 export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
@@ -19,10 +20,12 @@ export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
     toggle()
   }
   return (
-    <Link to={props.link} className={classes.navItem} onClick={handleClick}>
-      <props.icon className={cx(classes.icon)} data-active={props.active} />
-      <Text className={classes.text}>{props.label}</Text>
-    </Link>
+    <PermissionGate permissions={props.permissions}>
+      <Link to={props.link} className={classes.navItem} onClick={handleClick}>
+        <props.icon className={cx(classes.icon)} data-active={props.active} />
+        <Text className={classes.text}>{props.label}</Text>
+      </Link>
+    </PermissionGate>
   )
 }
 

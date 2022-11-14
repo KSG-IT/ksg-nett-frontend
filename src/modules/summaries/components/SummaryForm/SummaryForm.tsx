@@ -1,21 +1,23 @@
-import { SummaryNode } from '../../types'
-import { useSummaryLogic } from './useSummaryLogic'
-import { useSummaryFormAPI } from './useSummaryFormAPI'
 import {
   Button,
   Card,
-  Group,
-  Select,
   SimpleGrid,
   Stack,
   Textarea,
+  TextInput,
   Title,
 } from '@mantine/core'
-import { UserMultiSelect, UserSelect } from '../../../../components/Select'
-import { useState } from 'react'
-import { summaryTypeChoices } from '../../conts'
 import { DatePicker } from '@mantine/dates'
 import { IconCalendar } from '@tabler/icons'
+import {
+  InternalGroupSelect,
+  UserMultiSelect,
+  UserSelect,
+} from 'components/Select'
+import { SummaryNode } from 'modules/summaries/types'
+import { useState } from 'react'
+import { useSummaryFormAPI } from './useSummaryFormAPI'
+import { useSummaryLogic } from './useSummaryLogic'
 
 interface SummaryFormProps {
   summary?: SummaryNode
@@ -31,29 +33,22 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
     onCompletedCallback,
   })
 
-  const { formState, register, handleSubmit, getValues, setValue } = form
+  const { formState, register, handleSubmit, getValues, setValue, watch } = form
   const { errors, isSubmitting } = formState
   const [reporter, setReporter] = useState<string>(getValues('reporter'))
   const [participants, setParticipants] = useState<string[]>(
     getValues('participants')
   )
-  const [summaryType, setSummaryType] = useState<string>(getValues('type'))
 
   function handleCallback(values: string[]) {
     setParticipants(values)
     setValue('participants', values)
   }
 
-  function handleSelectType(value: string) {
-    const index = summaryTypeChoices.findIndex(choice => choice.value === value)
-    setSummaryType(value)
-    setValue('type', summaryTypeChoices[index].value)
-  }
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack>
-        <Card withBorder>
+        <Card withBorder style={{ overflow: 'visible' }}>
           <SimpleGrid
             cols={2}
             breakpoints={[
@@ -75,19 +70,23 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
                   setValue('reporter', value)
                 }}
               />
+              <div>
+                <InternalGroupSelect
+                  withOtherOption
+                  setInternalGroupCallback={value =>
+                    setValue('internalGroup', value)
+                  }
+                />
+              </div>
 
-              <Select
-                label={
-                  <Title order={5} color={'dimmed'}>
-                    Type
-                  </Title>
-                }
-                value={summaryType}
-                data={summaryTypeChoices}
-                error={errors.type?.message}
-                onChange={handleSelectType}
-                withinPortal
-              />
+              <div>
+                <TextInput
+                  label="Tittel"
+                  {...register('title')}
+                  disabled={!(watch('internalGroup') === 'other')}
+                />
+              </div>
+
               <div>
                 <DatePicker
                   withinPortal
