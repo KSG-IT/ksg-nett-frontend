@@ -39,8 +39,6 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             variant="filled"
             error={errors?.amount?.message}
             label="Beløp"
-            min={1}
-            max={30000}
             placeholder="Hvor mye socistøv du vil konvertere"
             icon={<IconCashBanknote size={14} />}
             onChange={value => value && setValue('amount', value)}
