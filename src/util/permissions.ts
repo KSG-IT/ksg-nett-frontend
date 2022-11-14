@@ -68,6 +68,39 @@ export const PERMISSIONS = {
       userType: 'users.view_usertype',
     },
   },
+  // ===== ORGANIZATION =====
+  /**
+   *           "organization.add_internalgrouppositionmembership",
+            "organization.change_internalgrouppositionmembership",
+            "organization.delete_internalgrouppositionmembership",
+            "organization.view_internalgrouppositionmembership",
+   */
+  organization: {
+    change: {
+      internalGroup: 'organization.change_internalgroup',
+      internalGroupPosition: 'organization.change_internalgroupposition',
+      internalGroupPositionMembership:
+        'organization.change_internalgrouppositionmembership',
+    },
+    add: {
+      internalGroup: 'organization.add_internalgroup',
+      internalGroupPosition: 'organization.add_internalgroupposition',
+      internalGroupPositionMembership:
+        'organization.add_internalgrouppositionmembership',
+    },
+    delete: {
+      internalGroup: 'organization.delete_internalgroup',
+      internalGroupPosition: 'organization.delete_internalgroupposition',
+      internalGroupPositionMembership:
+        'organization.delete_internalgrouppositionmembership',
+    },
+    view: {
+      internalGroup: 'organization.view_internalgroup',
+      internalGroupPosition: 'organization.view_internalgroupposition',
+      internalGroupPositionMembership:
+        'organization.view_internalgrouppositionmembership',
+    },
+  },
 
   // ===== SCHEDULES ======
   schedules: {

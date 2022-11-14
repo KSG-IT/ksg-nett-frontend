@@ -38,12 +38,6 @@ const routes: RouteGroup[] = [
         permissions: [],
       },
       {
-        icon: IconDisabled,
-        link: '/events',
-        label: 'Arrangement',
-        permissions: [],
-      },
-      {
         icon: IconEdit,
         link: '/summaries',
         label: 'Møtereferater',
@@ -66,8 +60,6 @@ const routes: RouteGroup[] = [
         label: 'Sitater',
         permissions: [],
       },
-      // { icon: IconQuestionMark, link: '/quiz', label: 'Quiz', pe },
-      // { icon: IconPhoto, link: '/gallery', label: 'Galleri' },
     ],
   },
   {
@@ -83,7 +75,8 @@ const routes: RouteGroup[] = [
         icon: IconUsers,
         link: '/users/manage',
         label: 'Personal',
-        permissions: PERMISSIONS.users.change.user,
+        permissions:
+          PERMISSIONS.organization.change.internalGroupPositionMembership,
       },
       {
         icon: IconUserPlus,
