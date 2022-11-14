@@ -22,6 +22,8 @@ import { useDebounce } from 'util/hooks/useDebounce'
 import { AllSummariesQueryReturns, AllSummariesQueryVariables } from '../index'
 import { ALL_SUMMARIES } from '../queries'
 import { UserThumbnail } from '../../users/components'
+import { PermissionGate } from 'components/PermissionGate'
+import { PERMISSIONS } from 'util/permissions'
 
 const breadCrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -115,15 +117,17 @@ export const Summaries: React.FC = () => {
       <Breadcrumbs items={breadCrumbItems} />
       <Group position="apart" align={'baseline'}>
         <Title>Referater</Title>
-        <Button
-          size="md"
-          onClick={() => {
-            navigate('/summaries/create')
-          }}
-          leftIcon={<IconPlus />}
-        >
-          Nytt referat
-        </Button>
+        <PermissionGate permissions={PERMISSIONS.summaries.view.summary}>
+          <Button
+            size="md"
+            onClick={() => {
+              navigate('/summaries/create')
+            }}
+            leftIcon={<IconPlus />}
+          >
+            Nytt referat
+          </Button>
+        </PermissionGate>
       </Group>
       <TextInput
         value={query}

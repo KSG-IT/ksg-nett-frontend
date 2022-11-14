@@ -31,6 +31,19 @@ export const PERMISSIONS = {
       deposit: 'economy.change_deposit',
     },
   },
+  // ===== SUMMARIES ======
+  summaries: {
+    add: {
+      summary: 'summaries.add_summary',
+    },
+    change: {
+      summary: 'summaries.change_summary',
+    },
+    view: {
+      summary: 'summaries.view_summary',
+    },
+  },
+
   // ===== BARTABS ======
   barTab: {
     view: {

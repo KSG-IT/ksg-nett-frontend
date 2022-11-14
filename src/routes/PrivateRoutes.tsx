@@ -54,11 +54,11 @@ import { CreateSummary, Summaries, SummaryDetail } from 'modules/summaries'
 import { ME_QUERY } from 'modules/users/queries'
 import { MeQueryReturns } from 'modules/users/types'
 import {
-  MigrationWizard,
   ManageUsers,
+  MigrationWizard,
   UserProfile,
-  UserTypes,
   UserTypeDetail,
+  UserTypes,
 } from 'modules/users/views'
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
@@ -143,7 +143,14 @@ export const AppRoutes: React.FC = () => {
         </Route>
         <Route path="summaries">
           <Route index element={<Summaries />} />
-          <Route path="create" element={<CreateSummary />} />
+          <Route
+            path="create"
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.summaries.add.summary}>
+                <CreateSummary />
+              </RestrictedRoute>
+            }
+          />
           <Route path=":summaryId">
             <Route index element={<SummaryDetail />} />
           </Route>
