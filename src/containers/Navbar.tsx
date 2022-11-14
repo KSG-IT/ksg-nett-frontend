@@ -16,6 +16,7 @@ import {
 } from '@tabler/icons'
 import { useLocation } from 'react-router-dom'
 import { useStore } from 'store'
+import { Z_INDEX } from 'util/consts'
 import { usePermissions } from 'util/hooks/usePermissions'
 import { PERMISSIONS } from 'util/permissions'
 import { NavBarMeSection } from './NavBarMeSection'
@@ -173,5 +174,8 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
 const useNavbarStyles = createStyles(t => ({
   group: {
     paddingBottom: t.spacing.sm,
+  },
+  navbar: {
+    zIndex: Z_INDEX.NAVBAR,
   },
 }))

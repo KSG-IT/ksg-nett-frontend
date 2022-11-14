@@ -49,12 +49,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const toggleSidebar = useStore(state => state.toggleSidebarOpen)
   const sidebarOpen = useStore(state => state.sidebarOpen)
   const { classes } = useStyles()
-  const [, setScrollLocked] = useScrollLock()
-
-  function handleSidebarToggle() {
-    setScrollLocked(sidebarOpen)
-    toggleSidebar()
-  }
 
   return (
     <AppShell
@@ -77,7 +71,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={sidebarOpen}
-                onClick={handleSidebarToggle}
+                onClick={toggleSidebar}
                 size="sm"
                 color={theme.colors.gray[6]}
                 mr="xl"
