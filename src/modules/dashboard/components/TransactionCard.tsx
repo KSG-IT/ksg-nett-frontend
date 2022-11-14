@@ -8,7 +8,7 @@ import {
   TextProps,
 } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { UserNode } from 'modules/users/types'
 import React from 'react'
 
