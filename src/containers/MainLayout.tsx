@@ -1,12 +1,10 @@
 import {
   Affix,
-  Anchor,
   AppShell,
   Burger,
   Button,
   Container,
   createStyles,
-  Footer,
   Group,
   Header,
   Image,
@@ -15,8 +13,9 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core'
+import { useScrollLock } from '@mantine/hooks'
 import { UserSearch } from 'modules/header/UserSearch'
-import React, { useState } from 'react'
+import React from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Link } from 'react-router-dom'
 import { useStore } from 'store'
@@ -50,6 +49,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const toggleSidebar = useStore(state => state.toggleSidebarOpen)
   const sidebarOpen = useStore(state => state.sidebarOpen)
   const { classes } = useStyles()
+  const [, setScrollLocked] = useScrollLock()
+
+  function handleSidebarToggle() {
+    setScrollLocked(sidebarOpen)
+    toggleSidebar()
+  }
+
   return (
     <AppShell
       styles={{
@@ -71,7 +77,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={sidebarOpen}
-                onClick={toggleSidebar}
+                onClick={handleSidebarToggle}
                 size="sm"
                 color={theme.colors.gray[6]}
                 mr="xl"
