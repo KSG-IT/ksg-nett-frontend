@@ -61,7 +61,7 @@ export const Summaries: React.FC = () => {
       </td>
       <td>
         <Badge variant={'filled'} color={'samfundet-red'}>
-          {summary.type}
+          {summary.displayName}
         </Badge>
       </td>
       <td>

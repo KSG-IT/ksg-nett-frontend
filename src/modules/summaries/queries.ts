@@ -5,13 +5,18 @@ export const SUMMARY_QUERY = gql`
     summary(id: $id) {
       id
       contents
+      title
       participants {
         id
         profileImage
         initials
         getFullWithNickName
       }
-      type
+      internalGroup {
+        id
+        name
+      }
+      displayName
       date
       updatedAt
       reporter {
@@ -34,6 +39,7 @@ export const ALL_SUMMARIES = gql`
       edges {
         node {
           id
+          displayName
           reporter {
             id
             profileImage
@@ -48,7 +54,6 @@ export const ALL_SUMMARIES = gql`
             getCleanFullName
             getFullWithNickName
           }
-          type
           date
           updatedAt
         }
