@@ -2,6 +2,7 @@ import { Button, ButtonProps, Group } from '@mantine/core'
 import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
+import { PendingQuotesButton } from './PendingQuotesButton'
 
 interface LinkButtonProps extends ButtonProps {
   to: string
@@ -23,9 +24,7 @@ export const QuotesTabs: React.FC = () => {
   return (
     <Group>
       <PermissionGate permissions={PERMISSIONS.quotes.change.quote}>
-        <LinkButton variant="outline" to="review">
-          Innsendt
-        </LinkButton>
+        <PendingQuotesButton to="/quotes/review" />
       </PermissionGate>
       <LinkButton unstyled variant="subtle" to="popular">
         Populær
