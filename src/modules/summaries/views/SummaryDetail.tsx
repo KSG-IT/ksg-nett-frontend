@@ -47,7 +47,7 @@ export const SummaryDetail = () => {
   if (summary === null) return <FullPage404 />
 
   breadcrumbItems.push({
-    label: `${format(new Date(summary.date), 'dd.MM.yy')} - ${
+    label: `${format(new Date(summary.date), 'yyyy.MM.dd')} - ${
       summary.displayName
     }`,
     path: `/summaries/${params.summaryId}`,
