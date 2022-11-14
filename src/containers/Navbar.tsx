@@ -16,6 +16,7 @@ import {
 } from '@tabler/icons'
 import { useLocation } from 'react-router-dom'
 import { useStore } from 'store'
+import { usePermissions } from 'util/hooks/usePermissions'
 import { PERMISSIONS } from 'util/permissions'
 import { NavBarMeSection } from './NavBarMeSection'
 import { NavItem, RouteItem } from './NavItem'
@@ -130,6 +131,7 @@ interface AppNavbarProps {
 export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
   const location = useLocation()
   const isOpen = useStore(state => state.sidebarOpen)
+  const { hasPermissions } = usePermissions()
 
   const { classes } = useNavbarStyles()
 
@@ -142,20 +144,28 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
       style={{ backgroundColor: 'white', overflowY: 'scroll' }}
     >
       <NavBarMeSection />
-      {routes.map((routeGroup, index) => (
-        <div className={classes.group} key={index}>
-          <Text weight={600} mb="xs">
-            {routeGroup.title}
-          </Text>
-          {routeGroup.items.map((item, index) => (
-            <NavItem
-              {...item}
-              active={location.pathname === item.link}
-              key={index}
-            />
-          ))}
-        </div>
-      ))}
+      {routes.map((routeGroup, index) => {
+        const hasAny = routeGroup.items.some(item =>
+          hasPermissions(item.permissions)
+        )
+        if (!hasAny) return null
+        return (
+          <div className={classes.group} key={index}>
+            <Text weight={600} mb="xs">
+              {routeGroup.title}
+            </Text>
+            {routeGroup.items.map((item, index) => {
+              return (
+                <NavItem
+                  {...item}
+                  active={location.pathname === item.link}
+                  key={index}
+                />
+              )
+            })}
+          </div>
+        )
+      })}
     </Navbar>
   )
 }
