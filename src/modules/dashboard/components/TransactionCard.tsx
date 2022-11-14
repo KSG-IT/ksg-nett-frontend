@@ -50,7 +50,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
 
   return (
     <Stack>
-      <Text color={'dimmed'} weight={700} p={'xs'}>
+      <Text color={'dimmed'} weight={700} pt={'xs'}>
         Siste transaksjoner
       </Text>
       <CardTable className={classes.card}>
