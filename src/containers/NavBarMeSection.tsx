@@ -26,6 +26,13 @@ function liquidityColor(balance: number) {
 export const NavBarMeSection: React.FC = () => {
   const me = useStore(store => store.user)
 
+  function handleLogoutAlert() {
+    if (confirm('Er du sikker på at du vil logge ut?')) {
+      removeLoginToken()
+      window.location.reload()
+    }
+  }
+
   return (
     <Navbar.Section>
       <Group>
@@ -45,28 +52,29 @@ export const NavBarMeSection: React.FC = () => {
         link={`/users/${me.id}`}
         icon={IconUser}
         active={false}
+        permissions={[]}
       />
       <NavItem
         label="Min Økonomi"
         link="/economy/me"
         icon={IconCashBanknote}
         active={false}
+        permissions={[]}
       />
       <NavItem
         label="Min vaktplan"
         link="/schedules/me"
         icon={IconJumpRope}
         active={false}
+        permissions={[]}
       />
       <NavItem
         label="Logg ut"
-        link="/"
+        link="#"
         icon={IconLogout}
         active={false}
-        onClick={() => {
-          removeLoginToken()
-          window.location.reload()
-        }}
+        permissions={[]}
+        onClick={handleLogoutAlert}
       />
     </Navbar.Section>
   )
