@@ -165,6 +165,7 @@ export const USER_TYPE_DETAIL_QUERY = gql`
     userType(id: $id) {
       id
       name
+      description
       users {
         id
         getCleanFullName
