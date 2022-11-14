@@ -9,7 +9,7 @@ export const PendingQuotesButton: React.FC<LinkProps> = ({ ...rest }) => {
     fetchPolicy: 'network-only',
   })
 
-  const pendingCount = data?.pendingQuotes?.length
+  const pendingCount = data?.pendingQuotes?.length ?? 0
 
   return (
     <Link {...rest} style={{ overflow: 'visible' }}>

@@ -10,7 +10,6 @@ import {
   Text,
   Title,
 } from '@mantine/core'
-import { BackButton } from 'components/BackButton'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import {
   FullPage404,
@@ -129,7 +128,7 @@ export const ReviewQuotes: React.FC = () => {
                     Sendt inn av: {quote?.reportedBy?.fullName}
                   </Text>
                   <Text size="sm" color="dark">
-                    Klokken {format(new Date(quote.createdAt), 'eeee H:mm')}
+                    Tidspunkt: {format(new Date(quote.createdAt), 'eeee HH:mm')}
                   </Text>
                 </Stack>
               </Stack>

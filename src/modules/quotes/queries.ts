@@ -19,6 +19,7 @@ export const APPROVED_QUOTES_QUERY = gql`
             initials
             profileImage
             fullName
+            getFullWithNickName
           }
         }
       }
@@ -44,6 +45,7 @@ export const PNEDING_QUOTES_QUERY = gql`
         initials
         profileImage
         fullName
+        getFullWithNickName
       }
     }
   }
@@ -62,6 +64,7 @@ export const POPULAR_QUOTES_QUERY = gql`
         id
         initials
         profileImage
+        getFullWithNickName
       }
     }
     popularQuotesAllTime {
@@ -74,6 +77,7 @@ export const POPULAR_QUOTES_QUERY = gql`
         id
         initials
         profileImage
+        getFullWithNickName
       }
     }
   }
@@ -91,6 +95,7 @@ export const POPULAR_QUOTES_ALL_TIME_QUERY = gql`
         id
         initials
         profileImage
+        getFullWithNickName
       }
     }
   }
