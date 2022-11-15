@@ -69,15 +69,11 @@ export const USER_QUERY = gql`
         id
         text
         sum
-        verifiedBy {
-          id
-        }
         context
         tagged {
           id
           initials
           profileImage
-          fullName
           getFullWithNickName
         }
       }
