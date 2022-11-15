@@ -4,32 +4,19 @@ export const ME_QUERY = gql`
   query Me {
     me {
       id
-      username
-      firstName
-      lastName
       profileImage
-      fullName
       getFullWithNickName
       initials
-      email
       balance
-      dateOfBirth
-      biography
-      studyAddress
-      homeTown
-      phone
       icalToken
       upvotedQuoteIds
       requiresMigrationWizard
       lastTransactions {
-        # Is this an issue if we cache the activity?
-        # This will become large at some point
         name
         amount
         quantity
         timestamp
       }
-
       isSuperuser
       allPermissions
     }
