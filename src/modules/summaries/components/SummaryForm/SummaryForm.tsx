@@ -82,6 +82,7 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
               <div>
                 <TextInput
                   label="Tittel"
+                  description="Trengs bare om man velger 'Annet'"
                   {...register('title')}
                   disabled={!(watch('internalGroup') === 'other')}
                 />
