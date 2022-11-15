@@ -22,5 +22,6 @@ export const CardTable: React.FC<CardTableProps> = ({
 const useCardTableStyles = createStyles(theme => ({
   card: {
     overflowX: 'scroll',
+    overflowY: 'visible',
   },
 }))

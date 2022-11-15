@@ -72,13 +72,6 @@ const routes: RouteGroup[] = [
         permissions: PERMISSIONS.schedules.view.schedule,
       },
       {
-        icon: IconUsers,
-        link: '/users/manage',
-        label: 'Personal',
-        permissions:
-          PERMISSIONS.organization.change.internalGroupPositionMembership,
-      },
-      {
         icon: IconUserPlus,
         link: '/admissions',
         label: 'Orvik',

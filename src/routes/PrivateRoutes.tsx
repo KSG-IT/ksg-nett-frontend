@@ -32,8 +32,11 @@ import {
   SociSessionDetail,
   SosiSessions,
 } from 'modules/economy/views'
-import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
-import { InternalGroups } from 'modules/organization/InternalGroups'
+import {
+  ManageInternalGroup,
+  InternalGroups,
+  InternalGroupDetail,
+} from 'modules/organization/views'
 import {
   CreateQuote,
   PopularQuotes,
@@ -54,7 +57,6 @@ import { CreateSummary, Summaries, SummaryDetail } from 'modules/summaries'
 import { ME_QUERY } from 'modules/users/queries'
 import { MeQueryReturns } from 'modules/users/types'
 import {
-  ManageUsers,
   MigrationWizard,
   UserProfile,
   UserTypeDetail,
@@ -159,7 +161,22 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="internal-groups">
           <Route index element={<InternalGroups />} />
-          <Route path=":internalGroupId" element={<InternalGroupDetail />} />
+          <Route path=":internalGroupId">
+            <Route index element={<InternalGroupDetail />} />
+            <Route
+              path="manage"
+              element={
+                <RestrictedRoute
+                  permissions={
+                    PERMISSIONS.organization.change
+                      .internalGroupPositionMembership
+                  }
+                >
+                  <ManageInternalGroup />
+                </RestrictedRoute>
+              }
+            />
+          </Route>
         </Route>
 
         <Route path="quotes">
@@ -197,14 +214,6 @@ export const AppRoutes: React.FC = () => {
               }
             />
           </Route>
-          <Route
-            path="manage"
-            element={
-              <RestrictedRoute permissions={PERMISSIONS.users.change.user}>
-                <ManageUsers />
-              </RestrictedRoute>
-            }
-          />
         </Route>
 
         <Route path="gallery">

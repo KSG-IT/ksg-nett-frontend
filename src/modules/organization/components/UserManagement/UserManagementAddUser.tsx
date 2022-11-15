@@ -1,17 +1,17 @@
 import { useMutation } from '@apollo/client'
 import { Button, Group, Stack, Title } from '@mantine/core'
 import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
-import { useState } from 'react'
-import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
-import { MANAGE_USERS_DATA_QUERY } from '../queries'
-import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
-import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from './mutations'
+import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
   InternalGroupPositionTypeOption,
-} from './types'
+} from 'modules/organization/types.graphql'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import { MANAGE_USERS_DATA_QUERY } from '../../../users/queries'
+import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 
 interface UserManagementAddUserProps {
   setModalOpen: (open: boolean) => void

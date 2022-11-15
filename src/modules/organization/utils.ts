@@ -1,5 +1,5 @@
 import { internalGroupPositionTypeOptions } from './consts'
-import { InternalGroupPositionType } from './types'
+import { InternalGroupPositionType } from './types.graphql'
 
 export function getInternalGroupPositionTypeLabel(
   internalGroupPositionType: InternalGroupPositionType

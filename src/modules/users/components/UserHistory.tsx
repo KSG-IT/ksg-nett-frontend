@@ -1,6 +1,6 @@
 import { Text, ThemeIcon, Timeline, useMantineTheme } from '@mantine/core'
 import { IconUsers } from '@tabler/icons'
-import { InternalGroupPositionMembershipNode } from '../UserManagement/types'
+import { InternalGroupPositionMembershipNode } from 'modules/organization/types.graphql'
 
 interface UserHistoryProps {
   memberships: InternalGroupPositionMembershipNode[]

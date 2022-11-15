@@ -1,7 +1,7 @@
 import {
   InternalGroupPositionType,
   InternalGroupPositionTypeOption,
-} from './types'
+} from './types.graphql'
 
 export const internalGroupPositionTypeOptions: InternalGroupPositionTypeOption[] =
   [

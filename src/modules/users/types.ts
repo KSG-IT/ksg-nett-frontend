@@ -1,10 +1,11 @@
 import { AvatarProps } from '@mantine/core'
 import { BankAccountActivity } from 'modules/economy/types.graphql'
-import { LegacyUserrWorkHistoryNode } from 'modules/organization/types.graphql'
+import {
+  InternalGroupPositionMembershipNode,
+  LegacyUserrWorkHistoryNode,
+} from 'modules/organization/types.graphql'
 import { QuoteNode } from 'modules/quotes/types.graphql'
-import { RelayEdges } from 'types/graphql'
 import { UserTypeLogEntryActionValues } from './enums'
-import { InternalGroupPositionMembershipNode } from './UserManagement/types'
 
 export type UserNode = {
   id: string
