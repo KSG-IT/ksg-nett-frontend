@@ -42,7 +42,7 @@ export const MyUpcomingShifts: React.FC = () => {
       <MessageBox type="info">
         Arbeidskalenderen din er også tilgjengelig i iCal format gjennom
         nettadressen{' '}
-        <b>
+        <b className={classes.icalUrl}>
           {API_URL}/schedules/{me.icalToken}
         </b>
         .
@@ -56,5 +56,8 @@ export const MyUpcomingShifts: React.FC = () => {
 const useMyUpcomingShiftStyles = createStyles(theme => ({
   container: {
     maxWidth: 900,
+  },
+  icalUrl: {
+    wordBreak: 'break-word',
   },
 }))
