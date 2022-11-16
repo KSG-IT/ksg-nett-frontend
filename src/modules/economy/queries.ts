@@ -45,7 +45,7 @@ export const ALL_DEPOSITS = gql`
               initials
             }
           }
-          signedOffBy {
+          approvedBy {
             id
             initials
             profileImage
