@@ -5,6 +5,7 @@ import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { useState } from 'react'
+import { Navigate } from 'react-router-dom'
 import { API_URL } from 'util/env'
 import {
   CloseAdmissionTable,
@@ -22,8 +23,16 @@ export const CloseAdmission: React.FC = () => {
   if (loading || !data) return <FullContentLoader />
 
   const {
-    closeAdmissionData: { validApplicants, applicantInterests },
+    closeAdmissionData: {
+      validApplicants,
+      applicantInterests,
+      activeAdmission,
+    },
   } = data
+
+  if (activeAdmission === null || activeAdmission.status !== 'CLOSED') {
+    return <Navigate to="/admission" />
+  }
 
   return (
     <Stack>
