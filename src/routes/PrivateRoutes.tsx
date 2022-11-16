@@ -1,18 +1,17 @@
 import { useQuery } from '@apollo/client'
 import { Center } from '@mantine/core'
 import { FullContentLoader } from 'components/Loading'
+
 import {
   AdmissionDashboard,
   ApplicantDetails,
-  CloseAdmission,
-  EditInterview,
-} from 'modules/admissions'
-import {
   ApplicantNotices,
   ApplicantsOverview,
   AssignInterview,
+  CloseAdmission,
   ConfigurationWizard,
   DiscussionDashboard,
+  EditInterview,
   InternalGroupApplicants,
   InternalGroupDiscussion,
   MyInterviews,
@@ -33,9 +32,9 @@ import {
   SosiSessions,
 } from 'modules/economy/views'
 import {
-  ManageInternalGroup,
-  InternalGroups,
   InternalGroupDetail,
+  InternalGroups,
+  ManageInternalGroup,
 } from 'modules/organization/views'
 import {
   CreateQuote,

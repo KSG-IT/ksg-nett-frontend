@@ -1,6 +1,6 @@
-import { ApplicantPortal } from 'modules/admissions'
 import { ReSendApplicantTokenForm } from 'modules/admissions/components/ApplicantPortal'
-import { Login, ForgotPassword } from 'modules/login/views'
+import { ApplicantPortal } from 'modules/admissions/views'
+import { ForgotPassword, Login } from 'modules/login/views'
 import { ChangePasswordWithToken } from 'modules/login/views/ChangePasswordWithToken'
 import { Route, Routes } from 'react-router-dom'
 
