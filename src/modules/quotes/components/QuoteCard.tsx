@@ -173,7 +173,7 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
           </Avatar.Group>
 
           <Group spacing={'xs'}>
-            <PermissionGate permissions={PERMISSIONS.quotes.change.quote}>
+            <PermissionGate permissions={PERMISSIONS.quotes.invalidate.quote}>
               <Menu>
                 <Menu.Target>
                   <UnstyledButton>
@@ -181,7 +181,9 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
                   </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown style={{ zIndex: 9000 }}>
-                  <PermissionGate permissions={PERMISSIONS.quotes.change.quote}>
+                  <PermissionGate
+                    permissions={PERMISSIONS.quotes.invalidate.quote}
+                  >
                     <Menu.Item
                       icon={<IconArrowBackUp />}
                       onClick={handleInvalidateQuote}

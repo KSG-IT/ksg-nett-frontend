@@ -23,7 +23,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({ to, children, variant }) => (
 export const QuotesTabs: React.FC = () => {
   return (
     <Group>
-      <PermissionGate permissions={PERMISSIONS.quotes.change.quote}>
+      <PermissionGate permissions={PERMISSIONS.quotes.approve.quote}>
         <PendingQuotesButton to="/quotes/review" />
       </PermissionGate>
       <LinkButton unstyled variant="subtle" to="popular">

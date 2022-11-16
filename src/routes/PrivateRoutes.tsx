@@ -184,7 +184,7 @@ export const AppRoutes: React.FC = () => {
           <Route
             path="review"
             element={
-              <RestrictedRoute permissions={PERMISSIONS.quotes.change.quote}>
+              <RestrictedRoute permissions={PERMISSIONS.quotes.approve.quote}>
                 <ReviewQuotes />
               </RestrictedRoute>
             }

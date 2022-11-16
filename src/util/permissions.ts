@@ -69,6 +69,15 @@ export const PERMISSIONS = {
     delete: {
       quote: 'quotes.delete_quote',
     },
+    approve: {
+      quote: 'quotes.approve_quote',
+    },
+    invalidate: {
+      quote: 'quotes.invalidate_quote',
+    },
+    view: {
+      quote: 'quotes.view_quote',
+    },
   },
   // ===== USERS ======
   users: {
