@@ -37,7 +37,10 @@ export const ConfigurePosistionAvailability: React.VFC<
 
   const { loading, error, data } =
     useQuery<ExternallyAvailableInternalGroupPositionsReturns>(
-      EXTERNALLY_AVAILABLE_INTERNAL_GROUP_POSITIONS_QUERY
+      EXTERNALLY_AVAILABLE_INTERNAL_GROUP_POSITIONS_QUERY,
+      {
+        fetchPolicy: 'network-only',
+      }
     )
 
   const [addInternalGroupPosition] = useMutation(

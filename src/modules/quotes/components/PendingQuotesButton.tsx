@@ -13,7 +13,7 @@ export const PendingQuotesButton: React.FC<LinkProps> = ({ ...rest }) => {
 
   return (
     <Link {...rest} style={{ overflow: 'visible' }}>
-      <Indicator label={pendingCount} showZero={false} size={20}>
+      <Indicator label={pendingCount} showZero={false} size={20} zIndex={1}>
         <Button variant="outline">Innsendt</Button>
       </Indicator>
     </Link>

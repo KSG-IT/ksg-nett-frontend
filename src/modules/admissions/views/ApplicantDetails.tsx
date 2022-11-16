@@ -27,7 +27,11 @@ export const ApplicantDetails: React.VFC = () => {
   const { data, loading, error } = useQuery<
     ApplicantQueryReturns,
     ApplicantQueryVariables
-  >(APPLICANT_QUERY, { variables: { id: applicantId }, pollInterval: 10000 })
+  >(APPLICANT_QUERY, {
+    variables: { id: applicantId },
+    pollInterval: 10_000,
+    fetchPolicy: 'network-only',
+  })
 
   if (error) return <FullPageError />
 

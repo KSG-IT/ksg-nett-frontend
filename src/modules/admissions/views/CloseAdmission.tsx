@@ -16,7 +16,9 @@ import { VALID_APPLICANTS_QUERY } from '../queries'
 
 export const CloseAdmission: React.FC = () => {
   const [previewModalOpen, setPreviewModalOpen] = useState(false)
-  const { error, loading, data } = useQuery(VALID_APPLICANTS_QUERY)
+  const { error, loading, data } = useQuery(VALID_APPLICANTS_QUERY, {
+    fetchPolicy: 'network-only',
+  })
 
   if (error) return <FullPageError />
 

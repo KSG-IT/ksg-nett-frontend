@@ -25,7 +25,10 @@ export const AssignInterview: React.FC = () => {
     'id' | 'location' | 'interviewStart' | 'interviewEnd'
   > | null>(null)
   const { loading, error, data, refetch } =
-    useQuery<AllAvailableInterviewsReturns>(ALL_AVAILABLE_INTERVIEWS_QUERY)
+    useQuery<AllAvailableInterviewsReturns>(ALL_AVAILABLE_INTERVIEWS_QUERY, {
+      fetchPolicy: 'network-only',
+      pollInterval: 20_000,
+    })
 
   if (error) return <FullPageError />
 

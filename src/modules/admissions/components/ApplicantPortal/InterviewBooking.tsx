@@ -23,7 +23,8 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
     useQuery<InterviewsAvailableForBookingReturns>(
       INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY,
       {
-        pollInterval: 20000,
+        pollInterval: 20_000,
+        fetchPolicy: 'network-only',
         variables: {
           dayOffset: dayOffset,
         },

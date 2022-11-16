@@ -16,6 +16,7 @@ const breadcrumbsItems = [
 export const ApplicantNotices: React.VFC = () => {
   const { data, loading, error } = useQuery(APPLICANT_NOTICES_QUERY, {
     pollInterval: 30000,
+    fetchPolicy: 'network-only',
   })
 
   if (error) return <FullPageError />

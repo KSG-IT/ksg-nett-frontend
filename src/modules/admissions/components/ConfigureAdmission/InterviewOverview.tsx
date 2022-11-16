@@ -44,7 +44,10 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
 }) => {
   const navigate = useNavigate()
   const { data, error, loading } = useQuery<InterviewOverviewReturns>(
-    INTERVIEW_OVERVIEW_QUERY
+    INTERVIEW_OVERVIEW_QUERY,
+    {
+      fetchPolicy: 'network-only',
+    }
   )
 
   const [generateInterviews, { loading: generateLoading }] =

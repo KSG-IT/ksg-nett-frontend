@@ -21,7 +21,8 @@ export const ApplicantsOverview: React.FC<{}> = ({}) => {
   const { data, loading, error, refetch } = useQuery<CurrentApplicantsReturns>(
     CURRENT_APPLICANTS_QUERY,
     {
-      pollInterval: 20000,
+      pollInterval: 20_000,
+      fetchPolicy: 'network-only',
     }
   )
 
