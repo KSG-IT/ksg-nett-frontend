@@ -40,7 +40,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
   const [name, setName] = useState('')
   const [productId, setProductId] = useState('')
   const [quantity, setQuantity] = useState(1)
-  const [away, setAway] = useState(true)
+  const [away, setAway] = useState(false)
   const [orderType, setOrderType] = useState(BarTabOrderTypeValues.LIST)
   const { classes } = useRegisterProductOrdersStyles()
 
