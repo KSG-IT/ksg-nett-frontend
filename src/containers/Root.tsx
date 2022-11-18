@@ -30,9 +30,8 @@ const mtheme: MantineThemeOverride = {
   primaryColor: 'samfundet-red',
   fontFamily: '"Inter"',
 }
-function Root() {
-  console.log(import.meta.env)
 
+function Root() {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
