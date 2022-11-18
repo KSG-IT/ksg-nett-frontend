@@ -1,80 +1,150 @@
-import styled, { css } from 'styled-components'
-import { useState } from 'react'
-import { AuthRoutes } from 'containers//AuthRoutes'
-import { Sidebar } from 'modules/sidebar'
-import { Header } from 'modules/header'
-import { useRenderMobile } from 'util/isMobile'
-interface WrapperProps {
-  sidebarOpen: boolean
+import {
+  Affix,
+  AppShell,
+  Burger,
+  Button,
+  Container,
+  createStyles,
+  Group,
+  Header,
+  Image,
+  MediaQuery,
+  Popover,
+  Text,
+  useMantineTheme,
+} from '@mantine/core'
+import { useScrollLock } from '@mantine/hooks'
+import { UserSearch } from 'modules/header/UserSearch'
+import React from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+import { Link } from 'react-router-dom'
+import { useStore } from 'store'
+import logoUrl from '../assets/images/548spaghetti_100786.png'
+import { AppNavbar } from './Navbar'
+
+interface ErrorFallbackProps {
+  error: Error
+  resetErrorBoundary: () => void
 }
 
-const Wrapper = styled.div<WrapperProps>`
-  display: grid;
-  width: 100%;
-  grid-template-columns: 300px auto;
-  grid-template-rows: 80px auto;
-  grid-template-areas:
-    'sidebar header'
-    'sidebar main';
-
-  ${props => props.theme.media.mobile} {
-    display: flex;
-    flex-direction: column;
-    ${props =>
-      props.sidebarOpen &&
-      css`
-        overflow-y: auto;
-      `};
-  }
-`
-
-interface ContentWrapperProps {
-  visible: boolean
-}
-
-const ContentWrapper = styled.div<ContentWrapperProps>`
-  grid-area: main;
-  display: ${props => (props.visible ? 'none' : 'flex')};
-  background-color: ${props => props.theme.colors.background};
-`
-
-const HeaderWrapper = styled.div`
-  grid-area: header;
-  width: 100%;
-  height: 100%;
-`
-
-const SidebarWrapper = styled.div`
-  grid-area: sidebar;
-  background-color: green;
-`
-
-const MainLayout: React.FC = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const isMobile = useRenderMobile()
-
-  const shouldNotRenderContent = isMobile && sidebarOpen
-
-  const toggleSidebarCallback = () => {
-    setSidebarOpen(!sidebarOpen)
-  }
-
+const ErrorFallback: React.FC<ErrorFallbackProps> = ({
+  error,
+  resetErrorBoundary,
+}) => {
   return (
-    <Wrapper sidebarOpen={true}>
-      <HeaderWrapper>
-        <Header toggleSidebar={toggleSidebarCallback}></Header>
-      </HeaderWrapper>
-      <SidebarWrapper>
-        <Sidebar
-          sidebarOpen={sidebarOpen}
-          toggleSidebarCallback={toggleSidebarCallback}
-        />
-      </SidebarWrapper>
-      <ContentWrapper visible={shouldNotRenderContent}>
-        <AuthRoutes />
-      </ContentWrapper>
-    </Wrapper>
+    <Container role="alert">
+      <Text>Something went wrong:</Text>
+      <Text>{error.message}</Text>
+      <Button onClick={resetErrorBoundary}>Try again</Button>
+    </Container>
   )
 }
+
+interface MainLayoutProps {
+  children: React.ReactNode
+}
+
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  const theme = useMantineTheme()
+  const toggleSidebar = useStore(state => state.toggleSidebarOpen)
+  const sidebarOpen = useStore(state => state.sidebarOpen)
+  const { classes } = useStyles()
+
+  return (
+    <AppShell
+      styles={{
+        root: {
+          fontFamily: 'Inter',
+        },
+        main: {
+          background: theme.colors.gray[0],
+        },
+      }}
+      navbarOffsetBreakpoint="sm"
+      asideOffsetBreakpoint="sm"
+      navbar={<AppNavbar opened={sidebarOpen} />}
+      header={
+        <Header height={70} p="md">
+          <div
+            style={{ display: 'flex', alignItems: 'center', height: '100%' }}
+          >
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+              <Burger
+                opened={sidebarOpen}
+                onClick={toggleSidebar}
+                size="sm"
+                color={theme.colors.gray[6]}
+                mr="xl"
+              />
+            </MediaQuery>
+
+            <Group className={classes.header}>
+              <MediaQuery smallerThan={'md'} styles={{ display: 'none' }}>
+                <Group>
+                  <Link to="/dashboard">
+                    <Image src={logoUrl} width={48} height={48} />
+                  </Link>
+                  <Link to="/dashboard">
+                    <Text weight={700} size="lg">
+                      Kafe- og serveringsnett
+                    </Text>
+                  </Link>
+                </Group>
+              </MediaQuery>
+              <UserSearch />
+            </Group>
+          </div>
+        </Header>
+      }
+    >
+      {/* Main content being rendered */}
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Affix position={{ bottom: 20, right: 20 }}>
+          <Popover>
+            <Popover.Target>
+              <Button
+                color={'blue'}
+                variant={'light'}
+                radius={'xl'}
+                size={'sm'}
+              >
+                Noe som ikke funker?
+              </Button>
+            </Popover.Target>
+            <Popover.Dropdown>
+              <Text size={'sm'}>
+                Send inn feil eller mangler gjennom dette skjemaet!
+              </Text>
+              <Button
+                variant={'subtle'}
+                compact
+                component={'a'}
+                href={'https://forms.gle/6ofXcwWEKmB8JXWP6'}
+                target="_blank"
+              >
+                Tilbakemeldingsskjema
+              </Button>
+            </Popover.Dropdown>
+          </Popover>
+        </Affix>
+        {children}
+      </ErrorBoundary>
+    </AppShell>
+  )
+}
+
+const useStyles = createStyles(t => ({
+  header: {
+    width: '100%',
+    justifyContent: 'space-between',
+    [`@media (max-width: ${t.breakpoints.sm}px)`]: {
+      flexDirection: 'row-reverse',
+    },
+  },
+  footer: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+}))
 
 export default MainLayout

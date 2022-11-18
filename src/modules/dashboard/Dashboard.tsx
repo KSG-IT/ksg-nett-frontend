@@ -1,103 +1,64 @@
-import styled from 'styled-components'
+import { useQuery } from '@apollo/client'
+import { createStyles, Grid, Stack, useMantineTheme } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
+import { useStore } from 'store'
+import { useMediaQuery } from 'util/hooks'
+import { FutureShifts } from './components/FutureShifts'
+import { RecentQuotes } from './components/RecentQuotes'
+import { ShortcutCards } from './components/ShortcutCards'
+import { TransactionCard } from './components/TransactionCard'
+import { WantedList } from './components/WantedList'
+import { DASHBOARD_DATA_QUERY } from './queries'
+import { DashboardDataQueryReturns } from './types.graphql'
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 32px 18px;
-`
-
-const CardRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 32px;
-  justify-content: space-between;
-`
-
-interface CardProps {
-  width: string
-  height: string
-}
-
-const Card = styled.div<CardProps>`
-  display: flex;
-  flex-direction: column;
-  padding: 20px 10px;
-  width: ${props => props.width};
-  height: ${props => props.height};
-  margin: 0 20px;
-  background-color: ${props => props.theme.colors.white};
-  border-radius: 10px;
-  box-shadow: ${props => props.theme.shadow.default};
-`
-const CardTitle = styled.h3`
-  margin: 0;
-`
-
-const TransactionSpan = styled.div`
-  display: inline-flex;
-  justify-content: space-between;
-  margin-top: 10px;
-`
-
-// open events on top
-// area for messages if need be
-//
+const breadCrumbItems = [{ label: 'Hjem', path: '/dashboard' }]
 
 export const Dashboard = () => {
+  const { classes } = useStyles()
+  const theme = useMantineTheme()
+  const mediaQuery = useMediaQuery(
+    `(min-width: ${theme.breakpoints.xl + 300}px)`
+  )
+  const user = useStore(state => state.user)!
+
+  const { data, loading, error } =
+    useQuery<DashboardDataQueryReturns>(DASHBOARD_DATA_QUERY)
+
+  if (error) return <FullPageError />
+
+  if (loading || data === undefined) return <FullContentLoader />
+
+  const {
+    dashboardData: { wantedList, lastQuotes, myUpcomingShifts },
+  } = data
+
   return (
-    <Wrapper>
-      <CardRow>
-        <Card width="450px" height="300px">
-          <CardTitle>Siste transaksjoner</CardTitle>
-          <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
-          </TransactionSpan>
-          <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
-          </TransactionSpan>{' '}
-          <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
-          </TransactionSpan>{' '}
-          <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
-          </TransactionSpan>{' '}
-          <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
-          </TransactionSpan>{' '}
-          <TransactionSpan>
-            <span>29.11</span>
-            <span>Tuborg</span>
-            <span>6</span>
-            <span>25 kr</span>
-            <span>150 kr</span>
-          </TransactionSpan>
-        </Card>
-        <Card width="450px" height="300px">
-          test
-        </Card>
-      </CardRow>
-    </Wrapper>
+    <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
+      <Breadcrumbs items={breadCrumbItems} />
+      <ShortcutCards />
+      {wantedList.length >= 1 && <WantedList users={wantedList} />}
+      <Grid justify={'space-between'}>
+        <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>
+          <FutureShifts shifts={myUpcomingShifts} />
+          <TransactionCard user={user} />
+        </Grid.Col>
+        <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>
+          <RecentQuotes quotes={lastQuotes} />
+        </Grid.Col>
+      </Grid>
+    </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  wrapper: {
+    width: '100%',
+    maxWidth: '1600px',
+
+    [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
+      padding: 0,
+    },
+  },
+}))

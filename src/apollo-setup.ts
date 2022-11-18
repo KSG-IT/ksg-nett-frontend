@@ -1,8 +1,9 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client'
-import { createUploadLink } from 'apollo-upload-client'
-import { onError } from '@apollo/client/link/error'
 import { setContext } from '@apollo/client/link/context'
+import { onError } from '@apollo/client/link/error'
+import { createUploadLink } from 'apollo-upload-client'
 import { getLoginToken } from 'util/auth'
+import { API_URL } from 'util/env'
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -12,6 +13,16 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : '',
+    },
+  }
+})
+const languageLink = setContext((_, { headers }) => {
+  const lang = '' // Can read this from localstorage when we implement some translation provider
+
+  return {
+    headers: {
+      ...headers,
+      'Accept-Language': lang ? lang : '',
     },
   }
 })
@@ -28,11 +39,17 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const uploadLink = createUploadLink({
-  uri: process.env.REACT_APP_API_URL
+  uri: API_URL + '/graphql/',
 })
 
 const client = new ApolloClient({
-  link: ApolloLink.from([errorLink, authLink.concat(uploadLink)]),
+  link: ApolloLink.from([
+    authLink,
+    errorLink,
+    languageLink,
+    //@ts-ignore
+    uploadLink,
+  ]),
   cache: new InMemoryCache(),
 })
 
