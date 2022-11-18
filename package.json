@@ -54,12 +54,15 @@
   },
   "scripts": {
     "local": "vite",
-    "start": "vite --mode development",
+    "start": "vite",
     "build": "tsc && vite build",
     "prepare": "husky install",
     "build:development": "vite build --mode development",
-    "push:development": "./deploy.sh development",
     "deploy:development": "npm run build:development && npm run push:development",
+    "push:development": "./deploy.sh development",
+    "build:production": "vite build --mode production",
+    "deploy:production": "npm run build:production && npm run push:production",
+    "push:production": "./deploy.sh production",
     "test": "jest src"
   },
   "husky": {
