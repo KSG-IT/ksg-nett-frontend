@@ -1,5 +1,6 @@
-import { UserNode } from 'modules/users/types'
+import { UserNode, UserThumbnailProps } from 'modules/users/types'
 import { RelayEdges, RelayEdgesWithPageInfo } from 'types/graphql'
+import { SociOrderSessionStatusValues, SociProductTypeValues } from './enums'
 
 // General typing
 export enum SociSessionType {
@@ -80,6 +81,7 @@ export interface ProductOrderNode {
   session: SociSessionNode
   cost: number
   purchasedAt: Date
+  type: SociProductTypeValues | null
 }
 
 export interface TransferNode {
@@ -107,6 +109,28 @@ export interface DepositCommentNode {
   comment: string
 }
 
+export type SociOrderSessionNode = {
+  id: string
+  status: SociOrderSessionStatusValues
+  createdAt: Date
+  closedAt: Date | null
+  createdBy: UserThumbnailProps
+  closedBy: UserThumbnailProps | null
+  invitedUsers: UserThumbnailProps[]
+  orderPdf: string | null
+  foodOrders: SociOrderSessionOrder[]
+}
+
+export type SociOrderSessionOrder = {
+  id: string
+  product: SociProductNode
+  amount: number
+  user: {
+    id: string
+    getCleanFullName: string
+  }
+  session: SociOrderSessionNode
+}
 // QUERIES
 
 export interface AllDepositsQuery {
@@ -164,7 +188,26 @@ export interface SociSessionReturns {
 export interface AllSociProductsReturns {
   allSociProducts: SociProductNode[]
 }
-// Mutation
+
+export interface ActiveSociOrderSessionReturns {
+  activeSociOrderSession: SociOrderSessionNode | null
+}
+
+// type will not be null here
+export interface DefaultSociOrderSessionFoodProductsReturns {
+  defaultSociOrderSessionFoodProducts: SociProductNode[]
+}
+
+// type will not be null here
+export interface DefaultSociOrderSessionDrinkProductsReturns {
+  defaultSociOrderSessionDrinkProducts: SociProductNode[]
+}
+
+export interface MySessionProductOrdersReturns {
+  mySessionProductOrders: ProductOrderNode[]
+}
+
+// ===== MUTATIONS =====
 
 export interface CreateDepositInput {
   amount: number
@@ -246,4 +289,29 @@ export interface InvalidateDepositReturns {
 
 export interface InvalidateDepositVariables {
   depositId: string
+}
+
+export interface CreateSociOrderSessionReturns {
+  sociOrderSession: Pick<SociOrderSessionNode, 'id'>
+}
+
+export interface SociOrderSessionNextStatusReturns {
+  sociOrderSession: Pick<SociOrderSessionNode, 'id'>
+}
+
+export interface PlaceSociOrderSessionOrderReturns {
+  sociOrderSessionOrder: Pick<SociOrderSessionOrder, 'id'>
+}
+
+export interface PlaceSociOrderSessionOrderVariables {
+  productId: string
+  amount: number
+}
+
+export interface DeleteSociOrderSessionFoodOrderReturns {
+  found: boolean
+}
+
+export interface DeleteSociOrderSessionFoodOrderVariables {
+  orderId: string
 }

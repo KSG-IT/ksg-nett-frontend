@@ -1,8 +1,15 @@
 import { useQuery } from '@apollo/client'
-import { createStyles, Grid, Stack, useMantineTheme } from '@mantine/core'
+import {
+  Button,
+  createStyles,
+  Grid,
+  Stack,
+  useMantineTheme,
+} from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { Link } from 'react-router-dom'
 import { useStore } from 'store'
 import { useMediaQuery } from 'util/hooks'
 import { FutureShifts } from './components/FutureShifts'
@@ -31,12 +38,24 @@ export const Dashboard = () => {
   if (loading || data === undefined) return <FullContentLoader />
 
   const {
-    dashboardData: { wantedList, lastQuotes, myUpcomingShifts },
+    dashboardData: {
+      wantedList,
+      lastQuotes,
+      myUpcomingShifts,
+      sociOrderSession,
+    },
   } = data
 
   return (
     <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
+      {sociOrderSession && (
+        <Stack>
+          <Link to="/economy/soci-sessions/live">
+            <Button>Stilletime</Button>
+          </Link>
+        </Stack>
+      )}
       <ShortcutCards />
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>

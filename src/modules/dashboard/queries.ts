@@ -11,6 +11,9 @@ export const DASHBOARD_DATA_QUERY = gql`
         initials
         profileImage
       }
+      sociOrderSession {
+        id
+      }
       lastQuotes {
         id
         text

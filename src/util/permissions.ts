@@ -21,6 +21,7 @@ export const PERMISSIONS = {
   economy: {
     add: {
       sociSession: 'economy.add_socisession',
+      sociOrderSession: 'economy.add_sociordersession',
     },
     view: {
       sociSession: 'economy.view_socisession',
@@ -29,6 +30,7 @@ export const PERMISSIONS = {
       sociSession: 'economy.change_socisession',
       sociProduct: 'economy.change_sociproduct',
       deposit: 'economy.change_deposit',
+      sociOrderSession: 'economy.add_sociordersession',
     },
   },
   // ===== SUMMARIES ======

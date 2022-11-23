@@ -143,3 +143,91 @@ export const ALL_SOCI_PRODUCTS = gql`
     }
   }
 `
+
+export const ACTIVE_SOCI_ORDER_SESSION = gql`
+  query ActiveSociOrderSession {
+    activeSociOrderSession {
+      id
+      status
+      createdAt
+      createdBy {
+        id
+        fullName
+      }
+      closedAt
+      closedBy {
+        id
+        fullName
+      }
+      invitedUsers {
+        id
+        fullName
+      }
+      foodOrders {
+        id
+        user {
+          id
+          getCleanFullName
+        }
+        product {
+          id
+          name
+        }
+        amount
+      }
+      orderPdf
+    }
+  }
+`
+
+export const DEFAULT_SOCI_ORDER_SESSION_DRINK_PRODUCTS = gql`
+  query DefaultSociOrderSessionDrinkProducts {
+    defaultSociOrderSessionDrinkProducts {
+      id
+      name
+      price
+    }
+  }
+`
+
+export const DEFAULT_SOCI_ORDER_SESSION_FOOD_PRODUCTS = gql`
+  query DefaultSociOrderSessionFoodProducts {
+    defaultSociOrderSessionFoodProducts {
+      id
+      name
+      price
+    }
+  }
+`
+
+export const MY_SESSION_PRODUCT_ORDERS_QUERY = gql`
+  query MySessionProductOrders {
+    mySessionProductOrders {
+      id
+      amount
+      product {
+        id
+        name
+        price
+      }
+    }
+  }
+`
+
+export const ALL_SOCI_ORDERR_SESSION_DRINK_ORDERS_QUERY = gql`
+  query AllSociOrderSessionDrinkOrders {
+    allSociOrderSessionDrinkOrders {
+      id
+      amount
+      user {
+        id
+        getCleanFullName
+      }
+      product {
+        id
+        name
+        price
+      }
+    }
+  }
+`

@@ -28,6 +28,7 @@ import {
   MyEconomy,
   PrintLists,
   PrintWorkingToday,
+  SociOrderSession,
   SociSessionDetail,
   SosiSessions,
 } from 'modules/economy/views'
@@ -393,6 +394,8 @@ export const AppRoutes: React.FC = () => {
                 </RestrictedRoute>
               }
             />
+            <Route path="live" element={<SociOrderSession />} />
+
             <Route
               path=":id"
               element={
@@ -416,6 +419,16 @@ export const AppRoutes: React.FC = () => {
                 permissions={PERMISSIONS.schedules.change.schedule}
               >
                 <Schedules />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path=":id"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleDetails />
               </RestrictedRoute>
             }
           />
@@ -450,17 +463,6 @@ export const AppRoutes: React.FC = () => {
               />
             </Route>
           </Route>
-
-          <Route
-            path=":id"
-            element={
-              <RestrictedRoute
-                permissions={PERMISSIONS.schedules.change.schedule}
-              >
-                <ScheduleDetails />
-              </RestrictedRoute>
-            }
-          />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" />} />
