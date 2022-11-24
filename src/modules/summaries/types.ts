@@ -1,3 +1,4 @@
+import { InternalGroupNode } from 'modules/organization/types'
 import { UserNode } from 'modules/users/types'
 import { RelayEdgesWithPageInfo } from 'types/graphql'
 
@@ -24,6 +25,9 @@ export interface SummaryNode {
   reporter: UserNode
   updatedAt: Date
   type: SummaryType
+  internalGroup: Pick<InternalGroupNode, 'id' | 'name'>
+  title: string
+  displayName: string
 }
 
 export type SummaryNodeShallow = Omit<SummaryNode, 'contents'>
@@ -53,7 +57,8 @@ type CreateSummaryInput = {
   contents: string
   participants: string[]
   reporter: string
-  type: SummaryType
+  internalGroup?: string
+  title?: string
   date: string
 }
 
@@ -61,7 +66,8 @@ export type PatchSummaryInput = {
   contents: string
   participants: string[]
   reporter: string
-  type: SummaryType
+  internalGroup: string | null
+  title?: string
   date: string
 }
 export interface CreateSummaryMutationVariables {

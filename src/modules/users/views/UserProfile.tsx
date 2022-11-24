@@ -1,13 +1,10 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Grid, Modal, Stack, Title } from '@mantine/core'
+import { createStyles, Grid, Modal, Stack, Title } from '@mantine/core'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { PermissionGate } from 'components/PermissionGate'
 import { UserEditForm, UserHistory, UserQuotes } from 'modules/users/components'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useMediaQuery } from 'util/hooks'
-import { PERMISSIONS } from 'util/permissions'
 import { UserDetails } from '../components/UserDetails'
 
 import { USER_QUERY } from '../queries'
@@ -19,7 +16,6 @@ interface UserProfileParams {
 
 export const UserProfile: React.FC = () => {
   const { classes } = useStyles()
-  const isMobile = useMediaQuery('(max-width: 800px)')
   const [editUserModalOpen, setEditUserModalOpen] = useState(false)
 
   const { userId } = useParams<keyof UserProfileParams>() as UserProfileParams
@@ -41,18 +37,6 @@ export const UserProfile: React.FC = () => {
 
   if (user === null || user === undefined) return <FullPage404 />
 
-  const editButton = (
-    <PermissionGate permissions={PERMISSIONS.users.change.user}>
-      <Button
-        variant="light"
-        color={'samfundet-red'}
-        onClick={() => setEditUserModalOpen(true)}
-      >
-        Endre
-      </Button>
-    </PermissionGate>
-  )
-
   return (
     <>
       <Grid align={'flex-start'}>
@@ -66,7 +50,7 @@ export const UserProfile: React.FC = () => {
           </Stack>
         </Grid.Col>
         <Grid.Col span={'auto'}>
-          <Stack ml={'lg'} mt={'md'}>
+          <Stack mt={'md'}>
             <Title order={3} className={classes.title}>
               Vervhistorikk
             </Title>

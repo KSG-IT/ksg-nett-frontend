@@ -4,32 +4,19 @@ export const ME_QUERY = gql`
   query Me {
     me {
       id
-      username
-      firstName
-      lastName
       profileImage
-      fullName
       getFullWithNickName
       initials
-      email
       balance
-      dateOfBirth
-      biography
-      studyAddress
-      homeTown
-      phone
       icalToken
       upvotedQuoteIds
       requiresMigrationWizard
       lastTransactions {
-        # Is this an issue if we cache the activity?
-        # This will become large at some point
         name
         amount
         quantity
         timestamp
       }
-
       isSuperuser
       allPermissions
     }
@@ -69,15 +56,11 @@ export const USER_QUERY = gql`
         id
         text
         sum
-        verifiedBy {
-          id
-        }
         context
         tagged {
           id
           initials
           profileImage
-          fullName
           getFullWithNickName
         }
       }
@@ -165,6 +148,7 @@ export const USER_TYPE_DETAIL_QUERY = gql`
     userType(id: $id) {
       id
       name
+      description
       users {
         id
         getCleanFullName

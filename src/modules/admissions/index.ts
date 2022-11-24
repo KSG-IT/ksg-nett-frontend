@@ -1,6 +1,0 @@
-export * from './views/AdmissionConfiguration'
-export * from './views/AdmissionDashboard'
-export * from './views/ApplicantDetails'
-export * from './views/ApplicantPortal'
-export * from './views/CloseAdmission'
-export * from './views/EditInterview'

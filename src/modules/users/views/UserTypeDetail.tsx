@@ -5,6 +5,7 @@ import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { MessageBox } from 'components/MessageBox'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { DetailQueryVariables } from 'types/graphql'
@@ -109,6 +110,10 @@ export const UserTypeDetail: React.FC = ({}) => {
           Legg til bruker
         </Button>
       </Group>
+      {userType.description && (
+        <MessageBox type="info">{userType.description}</MessageBox>
+      )}
+
       <Title order={2}>Aktive medlemskap</Title>
       <CardTable>
         <thead>

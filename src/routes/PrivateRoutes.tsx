@@ -1,18 +1,17 @@
 import { useQuery } from '@apollo/client'
 import { Center } from '@mantine/core'
 import { FullContentLoader } from 'components/Loading'
+
 import {
   AdmissionDashboard,
   ApplicantDetails,
-  CloseAdmission,
-  EditInterview,
-} from 'modules/admissions'
-import {
   ApplicantNotices,
   ApplicantsOverview,
   AssignInterview,
+  CloseAdmission,
   ConfigurationWizard,
   DiscussionDashboard,
+  EditInterview,
   InternalGroupApplicants,
   InternalGroupDiscussion,
   MyInterviews,
@@ -32,8 +31,11 @@ import {
   SociSessionDetail,
   SosiSessions,
 } from 'modules/economy/views'
-import { InternalGroupDetail } from 'modules/organization/InternalGroupDetail'
-import { InternalGroups } from 'modules/organization/InternalGroups'
+import {
+  InternalGroupDetail,
+  InternalGroups,
+  ManageInternalGroup,
+} from 'modules/organization/views'
 import {
   CreateQuote,
   PopularQuotes,
@@ -55,10 +57,9 @@ import { ME_QUERY } from 'modules/users/queries'
 import { MeQueryReturns } from 'modules/users/types'
 import {
   MigrationWizard,
-  ManageUsers,
   UserProfile,
-  UserTypes,
   UserTypeDetail,
+  UserTypes,
 } from 'modules/users/views'
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
@@ -143,7 +144,14 @@ export const AppRoutes: React.FC = () => {
         </Route>
         <Route path="summaries">
           <Route index element={<Summaries />} />
-          <Route path="create" element={<CreateSummary />} />
+          <Route
+            path="create"
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.summaries.add.summary}>
+                <CreateSummary />
+              </RestrictedRoute>
+            }
+          />
           <Route path=":summaryId">
             <Route index element={<SummaryDetail />} />
           </Route>
@@ -152,7 +160,22 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="internal-groups">
           <Route index element={<InternalGroups />} />
-          <Route path=":internalGroupId" element={<InternalGroupDetail />} />
+          <Route path=":internalGroupId">
+            <Route index element={<InternalGroupDetail />} />
+            <Route
+              path="manage"
+              element={
+                <RestrictedRoute
+                  permissions={
+                    PERMISSIONS.organization.change
+                      .internalGroupPositionMembership
+                  }
+                >
+                  <ManageInternalGroup />
+                </RestrictedRoute>
+              }
+            />
+          </Route>
         </Route>
 
         <Route path="quotes">
@@ -161,7 +184,7 @@ export const AppRoutes: React.FC = () => {
           <Route
             path="review"
             element={
-              <RestrictedRoute permissions={PERMISSIONS.quotes.change.quote}>
+              <RestrictedRoute permissions={PERMISSIONS.quotes.approve.quote}>
                 <ReviewQuotes />
               </RestrictedRoute>
             }
@@ -190,14 +213,6 @@ export const AppRoutes: React.FC = () => {
               }
             />
           </Route>
-          <Route
-            path="manage"
-            element={
-              <RestrictedRoute permissions={PERMISSIONS.users.change.user}>
-                <ManageUsers />
-              </RestrictedRoute>
-            }
-          />
         </Route>
 
         <Route path="gallery">

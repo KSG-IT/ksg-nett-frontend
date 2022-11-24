@@ -2,9 +2,9 @@ import { useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import styled from 'styled-components'
-import { InternalGroupCard } from './InternalGroupCard'
-import { ALL_INTERNAL_GROUPS_BY_TYPE_QUERY } from './queries'
-import { AllInternalGroupsByTypeReturns, InternalGroupNode } from './types'
+import { InternalGroupCard } from '../components/InternalGroupCard'
+import { ALL_INTERNAL_GROUPS_BY_TYPE_QUERY } from '../queries'
+import { AllInternalGroupsByTypeReturns, InternalGroupNode } from '../types'
 
 const Wrapper = styled.div`
   ${props => props.theme.layout.default};

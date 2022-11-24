@@ -40,7 +40,10 @@ export const ConfigureInterviewLocationAvailability: React.VFC<
   const isMobile = useMediaQuery('(max-width: 600px)')
 
   const { data, loading, error } = useQuery<AllInterviewLocationsReturns>(
-    ALL_INTERVIEW_LOCATIONS_QUERY
+    ALL_INTERVIEW_LOCATIONS_QUERY,
+    {
+      fetchPolicy: 'network-only',
+    }
   )
   const interviewLocations = data?.allInterviewLocations || []
 

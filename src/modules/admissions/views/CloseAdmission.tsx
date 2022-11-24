@@ -5,6 +5,7 @@ import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { useState } from 'react'
+import { Navigate } from 'react-router-dom'
 import { API_URL } from 'util/env'
 import {
   CloseAdmissionTable,
@@ -15,15 +16,25 @@ import { VALID_APPLICANTS_QUERY } from '../queries'
 
 export const CloseAdmission: React.FC = () => {
   const [previewModalOpen, setPreviewModalOpen] = useState(false)
-  const { error, loading, data } = useQuery(VALID_APPLICANTS_QUERY)
+  const { error, loading, data } = useQuery(VALID_APPLICANTS_QUERY, {
+    fetchPolicy: 'network-only',
+  })
 
   if (error) return <FullPageError />
 
   if (loading || !data) return <FullContentLoader />
 
   const {
-    closeAdmissionData: { validApplicants, applicantInterests },
+    closeAdmissionData: {
+      validApplicants,
+      applicantInterests,
+      activeAdmission,
+    },
   } = data
+
+  if (activeAdmission === null || activeAdmission.status !== 'CLOSED') {
+    return <Navigate to="/admission" />
+  }
 
   return (
     <Stack>

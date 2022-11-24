@@ -54,7 +54,10 @@ export const ConfigurationWizard: React.FC = () => {
 
   // query admission
   const { loading, error, data } = useQuery<ActiveAdmissioneturns>(
-    ACTIVE_ADMISSION_QUERY
+    ACTIVE_ADMISSION_QUERY,
+    {
+      fetchPolicy: 'network-only',
+    }
   )
 
   useEffect(() => {

@@ -34,7 +34,10 @@ const breadcrumbsItems = [
 
 export const AdmissionDashboard: React.FC = () => {
   const { data, loading, error } = useQuery<ActiveAdmissioneturns>(
-    ACTIVE_ADMISSION_QUERY
+    ACTIVE_ADMISSION_QUERY,
+    {
+      fetchPolicy: 'network-only',
+    }
   )
 
   const [admissionNextPhase, { loading: nextPhaseLoading }] = useMutation<

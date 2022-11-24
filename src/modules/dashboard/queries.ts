@@ -11,11 +11,6 @@ export const DASHBOARD_DATA_QUERY = gql`
         initials
         profileImage
       }
-      lastSummaries {
-        id
-        date
-        type
-      }
       lastQuotes {
         id
         text

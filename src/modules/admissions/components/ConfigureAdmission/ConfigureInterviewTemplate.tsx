@@ -80,6 +80,7 @@ export const ConfigureInterviewTemplate: React.VFC<
     {
       variables: { input: { statement: interviewBooleanEvaluation } },
       refetchQueries: ['InterviewTemplateQuery'],
+      fetchPolicy: 'network-only',
     }
   )
   const [createInterviewAdditionalEvaluationStatement] = useMutation(

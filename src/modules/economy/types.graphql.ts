@@ -94,8 +94,8 @@ export interface DepositNode {
   description: string
   amount: number
   receipt: string | null // string with image url
-  signedOffBy: UserNode | null
-  signedOffTime: Date | null
+  approvedBy: UserNode | null
+  approvedAt: Date | null
   approved: boolean
   comments: DepositCommentNode[]
   createdAt: Date

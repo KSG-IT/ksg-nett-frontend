@@ -78,8 +78,8 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
         </Button>
       </td>
       <td>
-        {deposit.signedOffBy ? (
-          <UserThumbnail user={deposit.signedOffBy} />
+        {deposit.approvedBy ? (
+          <UserThumbnail user={deposit.approvedBy} />
         ) : null}
       </td>
       <td>

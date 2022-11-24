@@ -10,7 +10,6 @@ import {
   Text,
   Title,
 } from '@mantine/core'
-import { BackButton } from 'components/BackButton'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import {
   FullPage404,
@@ -18,9 +17,11 @@ import {
   FullPageError,
 } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { PermissionGate } from 'components/PermissionGate'
 import { UserThumbnail } from 'modules/users/components'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
+import { PERMISSIONS } from 'util/permissions'
 import { QuotesTabs } from '../components/QuotesTabs'
 import { DELETE_QUOTE } from '../mutations'
 import { useQuoteMutations } from '../mutations.hooks'
@@ -129,25 +130,29 @@ export const ReviewQuotes: React.FC = () => {
                     Sendt inn av: {quote?.reportedBy?.fullName}
                   </Text>
                   <Text size="sm" color="dark">
-                    Klokken {format(new Date(quote.createdAt), 'eeee H:mm')}
+                    Tidspunkt: {format(new Date(quote.createdAt), 'eeee HH:mm')}
                   </Text>
                 </Stack>
               </Stack>
 
               <Stack>
-                <Button
-                  color={'samfundet-red'}
-                  onClick={() => handleApproveQuote(quote.id)}
-                >
-                  Godkjenn
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => handleDeleteQuote(quote.id)}
-                  color="gray"
-                >
-                  Slett
-                </Button>
+                <PermissionGate permissions={PERMISSIONS.quotes.approve.quote}>
+                  <Button
+                    color={'samfundet-red'}
+                    onClick={() => handleApproveQuote(quote.id)}
+                  >
+                    Godkjenn
+                  </Button>
+                </PermissionGate>
+                <PermissionGate permissions={PERMISSIONS.quotes.delete.quote}>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleDeleteQuote(quote.id)}
+                    color="gray"
+                  >
+                    Slett
+                  </Button>
+                </PermissionGate>
               </Stack>
             </Group>
           </Card>

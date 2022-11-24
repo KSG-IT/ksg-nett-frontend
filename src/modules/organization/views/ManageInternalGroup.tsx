@@ -1,21 +1,30 @@
-import { useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { Button, Group, Modal, Stack, Title } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { InternalGroupSelect } from 'components/Select'
-import React, { useEffect, useState } from 'react'
-import { MANAGE_USERS_DATA_QUERY } from '../queries'
-import { UserManagementAddUser } from '../UserManagement'
+import { UserManagementAddUser } from 'modules/organization/components/UserManagement'
+import { UserManagementTable } from 'modules/organization/components/UserManagement/UserManagementTable'
 import {
   ManageUsersDataReturns,
   ManageUsersDataVariables,
-} from '../UserManagement/types'
-import { UserManagementTable } from '../UserManagement/UserManagementTable'
+} from 'modules/organization/types.graphql'
+import { MANAGE_USERS_DATA_QUERY } from 'modules/users/queries'
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-export const ManageUsers: React.FC = () => {
+interface ManageInternalGroupParams {
+  internalGroupId: string
+}
+
+export const ManageInternalGroup: React.FC = () => {
+  const { internalGroupId } = useParams<
+    keyof ManageInternalGroupParams
+  >() as ManageInternalGroupParams
   const [modalOpen, setModalOpen] = useState(false)
-  const [internalGroupId, setInternalGroupId] = useState('')
 
-  const [getUserData, { data }] = useLazyQuery<
+  const { data, loading, error } = useQuery<
     ManageUsersDataReturns,
     ManageUsersDataVariables
   >(MANAGE_USERS_DATA_QUERY, {
@@ -25,26 +34,28 @@ export const ManageUsers: React.FC = () => {
     },
   })
 
-  useEffect(() => {
-    if (internalGroupId === '') return
-    getUserData()
-  }, [internalGroupId])
+  if (error) return <FullPageError />
 
-  const manageUsersData = data?.manageUsersData
-  const active = manageUsersData?.activeMemberships ?? []
-  const all = manageUsersData?.allMemberships ?? []
+  if (loading || !data) return <FullContentLoader />
+
+  const { manageUsersData } = data
+  const active = manageUsersData?.activeMemberships
+  const all = manageUsersData?.allMemberships
+
+  const breadcrumbs = [
+    { label: 'Hjem', path: '/dashboard' },
+    { label: 'Interngjengene', path: '/internal-groups' },
+  ]
 
   return (
     <Stack>
+      <Breadcrumbs items={breadcrumbs} />
+      <Title>Administrer medlemskap</Title>
       <Group position="apart">
         <Group>
           <Title order={2} color="dimmed">
             Aktive medlemskap
           </Title>
-          <InternalGroupSelect
-            internalGroupId={internalGroupId}
-            setInternalGroupCallback={setInternalGroupId}
-          />
         </Group>
         <Button color={'samfundet-red'} onClick={() => setModalOpen(true)}>
           Tilegn nytt verv

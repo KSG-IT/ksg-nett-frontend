@@ -1,8 +1,8 @@
-import { SummaryNode, SummaryType } from '../../types'
-import { SummaryCleanedData } from './useSummaryLogic'
+import { useNavigate } from 'react-router-dom'
 import { usePatchSummaryMutations } from '../../mutations'
 import { ALL_SUMMARIES, SUMMARY_QUERY } from '../../queries'
-import { useNavigate } from 'react-router-dom'
+import { SummaryNode } from '../../types'
+import { SummaryCleanedData } from './useSummaryLogic'
 
 export function useSummaryFormAPI(summary?: SummaryNode) {
   const { patchSummary, createSummary } = usePatchSummaryMutations()
@@ -42,12 +42,18 @@ export function useSummaryFormAPI(summary?: SummaryNode) {
     }
   }
 
+  // let initialInternalGroupValue = summary?.internalGroup?.id ?? ''
+
+  // if (initialInternalGroupValue === '' && summary?.title !== '') {
+  //   initialInternalGroupValue = 'other'
+  // }
+
   const defaultValues = {
     contents: summary?.contents ?? '',
-    type: summary?.type ?? SummaryType.ARRANGEMENT,
+    internalGroup: summary?.internalGroup?.id ?? 'other',
+    title: summary?.title ?? '',
     participants: summary?.participants.map(user => user.id) ?? [],
     reporter: summary?.reporter.id ?? '',
-    //date: new Date(summary?.date ?? `${new Date()}`) ?? new Date(),
     date: (summary?.date && new Date(summary.date)) ?? new Date(),
   }
   return {

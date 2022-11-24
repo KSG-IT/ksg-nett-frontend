@@ -31,6 +31,19 @@ export const PERMISSIONS = {
       deposit: 'economy.change_deposit',
     },
   },
+  // ===== SUMMARIES ======
+  summaries: {
+    add: {
+      summary: 'summaries.add_summary',
+    },
+    change: {
+      summary: 'summaries.change_summary',
+    },
+    view: {
+      summary: 'summaries.view_summary',
+    },
+  },
+
   // ===== BARTABS ======
   barTab: {
     view: {
@@ -56,6 +69,15 @@ export const PERMISSIONS = {
     delete: {
       quote: 'quotes.delete_quote',
     },
+    approve: {
+      quote: 'quotes.approve_quote',
+    },
+    invalidate: {
+      quote: 'quotes.invalidate_quote',
+    },
+    view: {
+      quote: 'quotes.view_quote',
+    },
   },
   // ===== USERS ======
   users: {
@@ -66,6 +88,39 @@ export const PERMISSIONS = {
     view: {
       user: 'users.view_user',
       userType: 'users.view_usertype',
+    },
+  },
+  // ===== ORGANIZATION =====
+  /**
+   *           "organization.add_internalgrouppositionmembership",
+            "organization.change_internalgrouppositionmembership",
+            "organization.delete_internalgrouppositionmembership",
+            "organization.view_internalgrouppositionmembership",
+   */
+  organization: {
+    change: {
+      internalGroup: 'organization.change_internalgroup',
+      internalGroupPosition: 'organization.change_internalgroupposition',
+      internalGroupPositionMembership:
+        'organization.change_internalgrouppositionmembership',
+    },
+    add: {
+      internalGroup: 'organization.add_internalgroup',
+      internalGroupPosition: 'organization.add_internalgroupposition',
+      internalGroupPositionMembership:
+        'organization.add_internalgrouppositionmembership',
+    },
+    delete: {
+      internalGroup: 'organization.delete_internalgroup',
+      internalGroupPosition: 'organization.delete_internalgroupposition',
+      internalGroupPositionMembership:
+        'organization.delete_internalgrouppositionmembership',
+    },
+    view: {
+      internalGroup: 'organization.view_internalgroup',
+      internalGroupPosition: 'organization.view_internalgroupposition',
+      internalGroupPositionMembership:
+        'organization.view_internalgrouppositionmembership',
     },
   },
 

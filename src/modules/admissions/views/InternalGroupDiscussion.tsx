@@ -27,7 +27,8 @@ export const InternalGroupDiscussion: React.FC = () => {
       INTERNAL_GROUP_DISCUSSION_DATA,
       {
         variables: { internalGroupId: internalGroupId },
-        pollInterval: 1000 * 30, // polls every half minute
+        pollInterval: 20_000,
+        fetchPolicy: 'network-only',
       }
     )
 

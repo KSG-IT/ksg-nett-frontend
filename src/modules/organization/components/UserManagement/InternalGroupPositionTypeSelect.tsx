@@ -1,6 +1,6 @@
+import { internalGroupPositionTypeOptions } from 'modules/organization/consts'
+import { InternalGroupPositionTypeOption } from 'modules/organization/types.graphql'
 import Select from 'react-select'
-import { internalGroupPositionTypeOptions } from './consts'
-import { InternalGroupPositionTypeOption } from './types'
 
 interface InternalGroupPositionTypeSelectProps {
   defaultValue?: InternalGroupPositionTypeOption | null

@@ -8,7 +8,7 @@ import {
   TextProps,
 } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
-import { format } from 'date-fns'
+import { format } from 'util/date-fns'
 import { UserNode } from 'modules/users/types'
 import React from 'react'
 
@@ -34,7 +34,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
       </td>
       <td>
         <Text align="right">
-          {format(new Date(transaction.timestamp), "d.MMM 'kl' HH:mm")}
+          {format(new Date(transaction.timestamp), 'yyyy.MM.dd HH:mm')}
         </Text>
       </td>
     </tr>
@@ -50,7 +50,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
 
   return (
     <Stack>
-      <Text color={'dimmed'} weight={700} p={'xs'}>
+      <Text color={'dimmed'} weight={700} pt={'xs'}>
         Siste transaksjoner
       </Text>
       <CardTable className={classes.card}>
