@@ -1,9 +1,16 @@
 import { useQuery } from '@apollo/client'
-import { Card, createStyles, Stack, Title } from '@mantine/core'
+import {
+  Card,
+  createStyles,
+  Group,
+  SimpleGrid,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import styled from 'styled-components'
 import {
   MyDeposits,
   MyExpenditures,
@@ -12,18 +19,19 @@ import {
 } from '../components'
 import { MY_BANK_ACCOUNT_QUERY } from '../queries'
 import { MyBankAccountReturns } from '../types.graphql'
+import { TransactionCard } from '../../dashboard/components/TransactionCard'
+import React from 'react'
+import { IconCreditCard } from '@tabler/icons'
 
 export const MyEconomy: React.FC = () => {
   const { classes } = useStyles()
-const breadCrumbItems = [
-  { label: 'Hjem', path: '/dashboard' },
-  { label: 'Min økonomi', path: '/economy/me' },
-]
-
-export const MyEconomy: React.VFC = () => {
   const { data, loading, error } = useQuery<MyBankAccountReturns>(
     MY_BANK_ACCOUNT_QUERY
   )
+  const breadCrumbItems = [
+    { label: 'Hjem', path: '/dashboard' },
+    { label: 'Min økonomi', path: '/economy/me' },
+  ]
 
   if (error) return <FullPageError />
 
@@ -33,22 +41,40 @@ export const MyEconomy: React.VFC = () => {
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
       <Title>Min økonomi</Title>
-      <Card withBorder className={classes.balanceCard}>
-        <Title order={4}>Konto</Title>
-        <AccountCard account={data.myBankAccount} />
-      </Card>
-      <Card withBorder className={classes.cardWithBorder}>
-        <Title order={4}>Siste kontoaktivitet</Title>
-        <MyPurchases activities={data.myBankAccount.user.lastTransactions} />
-      </Card>
-      <Card withBorder className={classes.card}>
-        <Title order={4}>Forbruk</Title>
-        <MyExpenditures moneySpent={data.myBankAccount.user.moneySpent} />
-      </Card>
-      <Card withBorder className={classes.cardWithBorder}>
-        <Title order={4}>Innskudd</Title>
-        <MyDeposits deposits={data.myBankAccount.lastDeposits} />
-      </Card>
+
+      <AccountCard
+        className={classes.balanceCard}
+        account={data.myBankAccount}
+      />
+      <SimpleGrid
+        cols={2}
+        breakpoints={[
+          { maxWidth: 'md', cols: 1, spacing: 'md' },
+          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
+        ]}
+      >
+        <Stack>
+          {' '}
+          <Text color={'dimmed'} weight={700} p={'xs'}>
+            Forbruk
+          </Text>
+          <Card withBorder className={classes.cardWithBorder}>
+            <MyExpenditures moneySpent={data.myBankAccount.user.moneySpent} />
+          </Card>
+        </Stack>
+
+        <TransactionCard
+          activities={data.myBankAccount.user.lastTransactions}
+        />
+        <Stack>
+          <Text color={'dimmed'} weight={700} p={'xs'}>
+            Innskudd
+          </Text>
+          <Card withBorder className={classes.cardWithBorder}>
+            <MyDeposits deposits={data.myBankAccount.lastDeposits} />
+          </Card>
+        </Stack>
+      </SimpleGrid>
     </Stack>
   )
 }
@@ -58,8 +84,10 @@ const useStyles = createStyles(theme => ({
     borderTop: `5px solid ${theme.colors.brand}`,
   },
   balanceCard: {
-    backgroundColor: theme.colors['samfundet-red'][5],
+    backgroundImage: theme.fn.gradient({ from: 'cyan.8', to: 'cyan.4' }),
     color: theme.white,
     maxWidth: 450,
+    maxHeight: 300,
+    borderRadius: theme.radius.lg,
   },
 }))
