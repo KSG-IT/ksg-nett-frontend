@@ -119,6 +119,13 @@ export const SociOrderSession: React.FC = ({}) => {
           >
             Burgerliste
           </Button>
+          {activeSociOrderSession.orderPdf && (
+            <a href={activeSociOrderSession.orderPdf} target="_blank">
+              <Button variant="outline" leftIcon={<IconDownload />}>
+                Last ned
+              </Button>
+            </a>
+          )}
           <PermissionGate
             permissions={PERMISSIONS.economy.change.sociOrderSession}
           >
