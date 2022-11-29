@@ -29,8 +29,11 @@ export const SociOrderSession: React.FC = ({}) => {
     }
   )
 
-  const { createSociOrderSession, sociOrderSessionNextStatus } =
-    useSociOrderSessionMutations()
+  const {
+    createSociOrderSession,
+    sociOrderSessionNextStatus,
+    sociOrderSessionNextStatusLoading,
+  } = useSociOrderSessionMutations()
 
   function handleCreateOrderSession() {
     createSociOrderSession({
@@ -82,7 +85,12 @@ export const SociOrderSession: React.FC = ({}) => {
           <PermissionGate
             permissions={PERMISSIONS.economy.change.sociOrderSession}
           >
-            <Button onClick={handleNextStatus}>Steng bestillinger</Button>
+            <Button
+              loading={sociOrderSessionNextStatusLoading}
+              onClick={handleNextStatus}
+            >
+              Steng bestillinger
+            </Button>
           </PermissionGate>
         </Group>
 
@@ -129,7 +137,12 @@ export const SociOrderSession: React.FC = ({}) => {
           <PermissionGate
             permissions={PERMISSIONS.economy.change.sociOrderSession}
           >
-            <Button onClick={handleNextStatus}>Avslutt stilletime</Button>
+            <Button
+              loading={sociOrderSessionNextStatusLoading}
+              onClick={handleNextStatus}
+            >
+              Avslutt stilletime
+            </Button>
           </PermissionGate>
         </Group>
 
