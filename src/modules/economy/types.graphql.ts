@@ -125,6 +125,7 @@ export type SociOrderSessionOrder = {
   id: string
   product: SociProductNode
   amount: number
+  orderedAt: string
   user: {
     id: string
     getCleanFullName: string

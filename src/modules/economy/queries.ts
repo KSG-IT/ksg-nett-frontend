@@ -219,6 +219,7 @@ export const ALL_SOCI_ORDERR_SESSION_DRINK_ORDERS_QUERY = gql`
     allSociOrderSessionDrinkOrders {
       id
       amount
+      orderedAt
       user {
         id
         getCleanFullName
