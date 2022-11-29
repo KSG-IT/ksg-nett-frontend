@@ -6,6 +6,7 @@ import {
   MY_SESSION_PRODUCT_ORDERS_QUERY,
 } from 'modules/economy/queries'
 import { useState } from 'react'
+import { showNotification } from '@mantine/notifications'
 
 export const FoodOrderingForm: React.FC = ({}) => {
   const [selectedProduct, setSelectedProduct] = useState('')
@@ -30,7 +31,17 @@ export const FoodOrderingForm: React.FC = ({}) => {
       },
       refetchQueries: [MY_SESSION_PRODUCT_ORDERS_QUERY],
       onCompleted() {
+        showNotification({
+          title: 'Bestilling lagt inn',
+          message: 'Bestillingen din er nå lagt inn i systemet',
+        })
         setSelectedProduct('')
+      },
+      onError(data) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message: data.message,
+        })
       },
     })
   }
