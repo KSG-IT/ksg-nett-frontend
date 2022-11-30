@@ -37,28 +37,30 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
   if (loading || !data) return <FullContentLoader />
 
   const handleBookInterview = (interviewIds: string[]) => {
-    bookInterview({
-      variables: {
-        interviewIds: interviewIds,
-        applicantToken: applicantToken,
-      },
-      refetchQueries: ['GetApplicantFromToken'],
-      onCompleted() {
-        showNotification({
-          title: 'Intervjuet er booket',
-          message: 'Intervjuet er booket',
-          color: 'green',
-        })
-      },
-      onError() {
-        showNotification({
-          title: 'Noe gikk galt',
-          message:
-            'Kan hende noen andre har booket samme intervju. Prøv et annet intervju annet',
-          color: 'red',
-        })
-      },
-    })
+    if (confirm('Er du sikker på dette tidspunktet?')) {
+      bookInterview({
+        variables: {
+          interviewIds: interviewIds,
+          applicantToken: applicantToken,
+        },
+        refetchQueries: ['GetApplicantFromToken'],
+        onCompleted() {
+          showNotification({
+            title: 'Intervjuet er booket',
+            message: 'Intervjuet er booket',
+            color: 'green',
+          })
+        },
+        onError() {
+          showNotification({
+            title: 'Noe gikk galt',
+            message:
+              'Kan hende noen andre har booket samme intervju. Prøv et annet intervju annet',
+            color: 'red',
+          })
+        },
+      })
+    }
   }
   return (
     <Stack>

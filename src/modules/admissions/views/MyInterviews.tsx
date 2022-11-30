@@ -24,7 +24,7 @@ interface MyInterviewsReturns {
   >[]
 }
 
-const MY_INTERVIEWS_QUERY = gql`
+export const MY_INTERVIEWS_QUERY = gql`
   query MyInterviews {
     myInterviews {
       id

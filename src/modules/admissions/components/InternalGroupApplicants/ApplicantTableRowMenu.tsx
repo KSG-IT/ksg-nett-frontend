@@ -1,11 +1,14 @@
 import { Button, Menu } from '@mantine/core'
 import { IconDots, IconEye, IconUserMinus, IconUserPlus } from '@tabler/icons'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
+import { INTERNAL_GROUP_APPLICANTS_DATA } from 'modules/admissions/queries'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
+import { MY_INTERVIEWS_QUERY } from 'modules/admissions/views'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { MY_UPCOMING_INTERVIEWS_QUERY } from '../AdmissionDashboard'
 
-export const ApplicantTableRowMenu: React.VFC<{
+export const ApplicantTableRowMenu: React.FC<{
   applicant: CoreApplicantNode
 }> = ({ applicant }) => {
   const navigate = useNavigate()
@@ -42,9 +45,9 @@ export const ApplicantTableRowMenu: React.VFC<{
     handler({
       variables: { interviewId: interview.id },
       refetchQueries: [
-        'InternalGroupApplicantsDataQuery',
-        'MyInterviews',
-        'MyUpcomingInterviews',
+        MY_UPCOMING_INTERVIEWS_QUERY,
+        INTERNAL_GROUP_APPLICANTS_DATA,
+        MY_INTERVIEWS_QUERY,
       ],
     })
   }

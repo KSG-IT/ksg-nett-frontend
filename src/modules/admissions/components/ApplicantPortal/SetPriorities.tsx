@@ -105,28 +105,34 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
   }
 
   const handleNextStep = () => {
-    patchApplicant({
-      variables: {
-        id: applicant.id,
-        input: {
-          status: ApplicantStatusValues.HAS_SET_PRIORITIES,
+    if (
+      confirm(
+        'Vil du låse dine prioriteter? Det er mulig å omprioriterre under intervjuet.'
+      )
+    ) {
+      patchApplicant({
+        variables: {
+          id: applicant.id,
+          input: {
+            status: ApplicantStatusValues.HAS_SET_PRIORITIES,
+          },
         },
-      },
-      refetchQueries: ['GetApplicantFromToken'],
-      onCompleted() {
-        showNotification({
-          title: 'Lagret prioriteringer',
-          message: 'Du har nå lagret dine prioriteringer',
-        })
-        nextStepCallback()
-      },
-      onError() {
-        showNotification({
-          title: 'Kunne ikke lagre prioriteringer',
-          message: 'Noe gikk galt under lagring av prioriteringer',
-        })
-      },
-    })
+        refetchQueries: ['GetApplicantFromToken'],
+        onCompleted() {
+          showNotification({
+            title: 'Lagret prioriteringer',
+            message: 'Du har nå lagret dine prioriteringer',
+          })
+          nextStepCallback()
+        },
+        onError() {
+          showNotification({
+            title: 'Kunne ikke lagre prioriteringer',
+            message: 'Noe gikk galt under lagring av prioriteringer',
+          })
+        },
+      })
+    }
   }
 
   // ToDo move this to local state and update in useEffect

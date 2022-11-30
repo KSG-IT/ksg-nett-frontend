@@ -92,11 +92,13 @@ export const EditInterview: React.VFC = () => {
       <ApplicantPrioritiesField applicant={interview.applicant} />
 
       {/* Interview and discussion Notes */}
+      <Title order={2}>Intervjunotater</Title>
       <InterviewNoteBox
         interviewId={interview.id}
         field="notes"
         initialValue={interview.notes}
       />
+      <Title order={2}>Diskusjonsnotater</Title>
       <InterviewNoteBox
         interviewId={interview.id}
         field="discussion"
