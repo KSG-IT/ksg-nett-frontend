@@ -47,7 +47,6 @@ export const MyEconomy: React.FC = () => {
         ]}
       >
         <Stack>
-          {' '}
           <Text color={'dimmed'} weight={700} p={'xs'}>
             Forbruk
           </Text>
