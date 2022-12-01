@@ -3,7 +3,7 @@ import { CardTable } from 'components/CardTable'
 import { format } from 'util/date-fns'
 import { numberWithSpaces } from 'util/parsing'
 import { DepositNode } from '../types.graphql'
-import { IconCheck } from '@tabler/icons'
+import { IconCheck, IconX } from '@tabler/icons'
 
 interface MyDepositsProps {
   deposits: DepositNode[]
@@ -20,7 +20,11 @@ export const MyDeposits: React.VFC<MyDepositsProps> = ({ deposits }) => {
         </Text>
       </td>
       <td align={'center'}>
-        {deposit.approved ? <IconCheck color={'green'} /> : '❌'}
+        {deposit.approved ? (
+          <IconCheck color={'green'} />
+        ) : (
+          <IconX color={'darkred'} />
+        )}
       </td>
     </tr>
   ))

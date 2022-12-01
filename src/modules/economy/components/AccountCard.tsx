@@ -10,6 +10,7 @@ import {
   CardProps,
   Badge,
   Button,
+  Container,
 } from '@mantine/core'
 import { IconCash, IconCreditCard, IconEdit, IconPlus } from '@tabler/icons'
 import React, { useState } from 'react'
@@ -72,7 +73,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
           Socibanken
         </Title>
       </Group>
-      <Card className={classes.cardInner}>
+      <Container px={'md'} py={'sm'}>
         <Group position={'apart'}>
           <Card.Section p={'lg'}>
             <Badge color={'samfundet-red'} size={'sm'}>
@@ -108,7 +109,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
             </Group>
           </Card.Section>
         </Group>
-      </Card>
+      </Container>
     </Card>
   )
 }
@@ -119,18 +120,13 @@ const useStyles = createStyles(theme => ({
   },
   balanceCard: {
     backgroundImage: theme.fn.gradient({
-      from: 'samfundet-red.8',
+      from: 'samfundet-red.7',
       to: 'samfundet-red.4',
-      deg: 30,
+      deg: 360,
     }),
     color: theme.white,
-    maxWidth: 450,
+    maxWidth: 420,
     maxHeight: 300,
     borderRadius: theme.radius.lg,
-  },
-  cardInner: {
-    backgroundColor: 'rgba(255,255,255,0.03)',
-    borderRadius: theme.radius.lg,
-    color: theme.white,
   },
 }))

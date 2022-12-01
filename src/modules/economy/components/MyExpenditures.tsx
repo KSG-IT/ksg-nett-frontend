@@ -84,8 +84,13 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
         data={dateRangeOptions}
         defaultValue={dateRangeOptions[0].value}
       />
-      <ResponsiveContainer width={'90%'} height={400}>
-        <BarChart data={parsedData} width={300} height={400}>
+      <ResponsiveContainer width={'95%'} height={400}>
+        <BarChart
+          data={parsedData}
+          width={300}
+          height={400}
+          className={classes.barChart}
+        >
           <XAxis dataKey={'name'} />
           <YAxis />
           <Tooltip filterNull />
@@ -105,5 +110,9 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
 const useStyles = createStyles(theme => ({
   totalRow: {
     maxWidth: '700px',
+  },
+  barChart: {
+    padding: '0px',
+    margin: '0px',
   },
 }))

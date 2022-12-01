@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client'
 import {
   Card,
   createStyles,
-  Group,
   SimpleGrid,
   Stack,
   Text,
@@ -11,17 +10,11 @@ import {
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import {
-  MyDeposits,
-  MyExpenditures,
-  MyPurchases,
-  AccountCard,
-} from '../components'
+import { AccountCard, MyDeposits, MyExpenditures } from '../components'
 import { MY_BANK_ACCOUNT_QUERY } from '../queries'
 import { MyBankAccountReturns } from '../types.graphql'
 import { TransactionCard } from '../../dashboard/components/TransactionCard'
 import React from 'react'
-import { IconCreditCard } from '@tabler/icons'
 
 export const MyEconomy: React.FC = () => {
   const { classes } = useStyles()
@@ -82,6 +75,9 @@ export const MyEconomy: React.FC = () => {
 const useStyles = createStyles(theme => ({
   cardWithBorder: {
     borderTop: `5px solid ${theme.colors.brand}`,
+    '@media (max-width: 800px)': {
+      padding: theme.spacing.xs,
+    },
   },
   balanceCard: {
     backgroundImage: theme.fn.gradient({ from: 'cyan.8', to: 'cyan.4' }),
