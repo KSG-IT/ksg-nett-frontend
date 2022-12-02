@@ -1,8 +1,17 @@
 import { useQuery } from '@apollo/client'
-import { Paper, Select } from '@mantine/core'
+import { createStyles, Paper, Select } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 import styled from 'styled-components'
 import { format } from 'util/date-fns'
 import { numberWithSpaces } from 'util/parsing'
@@ -33,6 +42,7 @@ interface MyExpendituresProps {
 export const MyExpenditures: React.FC<MyExpendituresProps> = ({
   moneySpent,
 }) => {
+  const { classes } = useStyles()
   const { loading, error, data } = useQuery<
     MyExpendituresReturns,
     MyExpendituresVariables
@@ -63,29 +73,46 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
   ]
 
   const parsedData = data.myExpenditures.data.map(day => ({
-    name: format(new Date(day.day), 'd MMM'),
-    value: day.sum,
+    date: format(new Date(day.day), 'd MMM'),
+    sum: day.sum,
   }))
 
   return (
-    <Paper shadow={'lg'} p="md" style={{ overflowX: 'scroll' }}>
+    <>
       <Select
         label={'Periode'}
         data={dateRangeOptions}
         defaultValue={dateRangeOptions[0].value}
       />
+      <ResponsiveContainer width={'95%'} height={400}>
+        <BarChart
+          data={parsedData}
+          width={300}
+          height={400}
+          className={classes.barChart}
+        >
+          <XAxis dataKey={'date'} />
+          <YAxis />
+          <Tooltip filterNull />
+          <Legend />
+          <Bar dataKey={'sum'} fill={'maroon'} />
+        </BarChart>
+      </ResponsiveContainer>
 
-      <BarChart width={700} height={300} data={parsedData}>
-        <Bar dataKey={'value'} fill={'hotpink'} unit=",- NOK" />
-        <XAxis dataKey={'name'} />
-        <YAxis dataKey={'value'} />
-        <Tooltip filterNull />
-      </BarChart>
-
-      <TotalRow>
+      <TotalRow className={classes.totalRow}>
         <TotalLabel>Sum</TotalLabel>
-        <TotalValue>{numberWithSpaces(moneySpent)},- NOK </TotalValue>
+        <TotalValue>{numberWithSpaces(moneySpent)} kr</TotalValue>
       </TotalRow>
-    </Paper>
+    </>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  totalRow: {
+    maxWidth: '700px',
+  },
+  barChart: {
+    padding: '0px',
+    margin: '0px',
+  },
+}))
