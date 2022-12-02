@@ -1,7 +1,19 @@
 import { useMutation } from '@apollo/client'
-import { Card } from '@mantine/core'
-import { IconEdit } from '@tabler/icons'
-import { useState } from 'react'
+import {
+  ActionIcon,
+  Card,
+  Title,
+  Text,
+  createStyles,
+  Group,
+  TextInput,
+  CardProps,
+  Badge,
+  Button,
+  Container,
+} from '@mantine/core'
+import { IconCash, IconCreditCard, IconEdit, IconPlus } from '@tabler/icons'
+import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
 import { numberWithSpaces } from 'util/parsing'
@@ -11,44 +23,17 @@ import {
   PatchSociBankAccountVariables,
   SociBankAccountNode,
 } from '../types.graphql'
+import { Link } from 'react-router-dom'
 
-const EditIcon = styled(IconEdit)`
-  :hover {
-    cursor: pointer;
-    opacity: 0.8;
-  }
-`
-
-const Label = styled.label`
-  margin-right: 10px;
-`
-
-const Balance = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-`
-
-const CardRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: space-between;
-`
-
-const CardInputContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  input {
-    margin-right: 5px;
-  }
-`
-
-interface AccountCardProps {
+interface AccountCardProps extends Omit<CardProps, 'children'> {
   account: Pick<SociBankAccountNode, 'balance' | 'cardUuid' | 'id'>
 }
 
-export const AccountCard: React.VFC<AccountCardProps> = ({ account }) => {
+export const AccountCard: React.FC<AccountCardProps> = ({
+  account,
+  className,
+}) => {
+  const { classes } = useStyles()
   const [cardUuid, setCardUuid] = useState(account.cardUuid)
   const [editable, setEditable] = useState(false)
 
@@ -78,23 +63,70 @@ export const AccountCard: React.VFC<AccountCardProps> = ({ account }) => {
   }
 
   return (
-    <Card>
-      <Card.Section m="xs">
-        <Label>Saldo:</Label>
-        <Balance>{numberWithSpaces(account.balance)},- NOK</Balance>
-      </Card.Section>
-      <Card.Section m="xs">
-        <Label>Kortnummer:</Label>
-        <CardInputContainer>
-          <input
-            value={cardUuid}
-            disabled={!editable}
-            onChange={evt => setCardUuid(evt.target.value)}
-            onBlur={toggleEditable}
-          />
-          <EditIcon onClick={toggleEditable} />
-        </CardInputContainer>
-      </Card.Section>
+    <Card withBorder className={classes.balanceCard}>
+      <Group position={'right'}>
+        <Title
+          order={4}
+          variant={'gradient'}
+          gradient={{ from: 'samfundet-red.0', to: 'samfundet-red.2', deg: 30 }}
+        >
+          Socibanken
+        </Title>
+      </Group>
+      <Container px={'md'} py={'sm'}>
+        <Group position={'apart'}>
+          <Card.Section p={'lg'}>
+            <Badge color={'samfundet-red'} size={'sm'}>
+              Saldo
+            </Badge>
+            <Title align="center" weight={'lighter'} color={'gray.0'}>
+              {numberWithSpaces(account.balance)} kr
+            </Title>
+          </Card.Section>
+          <Button
+            component={Link}
+            to={'/economy/deposits/create'}
+            variant={'light'}
+            color={'samfundet-red'}
+          >
+            <IconCash />
+            <IconPlus />
+          </Button>
+        </Group>
+        <Group position={'center'}>
+          <Card.Section>
+            <Text align="center">Kortnummer</Text>
+            <Group position="center">
+              <TextInput
+                value={cardUuid}
+                disabled={!editable}
+                onChange={evt => setCardUuid(evt.target.value)}
+                onBlur={toggleEditable}
+              />
+              <ActionIcon onClick={toggleEditable}>
+                <IconEdit stroke={1.4} color="white" />
+              </ActionIcon>
+            </Group>
+          </Card.Section>
+        </Group>
+      </Container>
     </Card>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  cardWithBorder: {
+    borderTop: `5px solid ${theme.colors.brand}`,
+  },
+  balanceCard: {
+    backgroundImage: theme.fn.gradient({
+      from: 'samfundet-red.7',
+      to: 'samfundet-red.4',
+      deg: 360,
+    }),
+    color: theme.white,
+    maxWidth: 420,
+    maxHeight: 300,
+    borderRadius: theme.radius.lg,
+  },
+}))

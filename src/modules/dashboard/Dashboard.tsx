@@ -61,7 +61,7 @@ export const Dashboard = () => {
       <Grid justify={'space-between'}>
         <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>
           <FutureShifts shifts={myUpcomingShifts} />
-          <TransactionCard user={user} />
+          <TransactionCard activities={user.lastTransactions} />
         </Grid.Col>
         <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>
           <RecentQuotes quotes={lastQuotes} />

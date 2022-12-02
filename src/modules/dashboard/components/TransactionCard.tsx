@@ -11,30 +11,39 @@ import { CardTable } from 'components/CardTable'
 import { format } from 'util/date-fns'
 import { UserNode } from 'modules/users/types'
 import React from 'react'
+import { BankAccountActivity } from '../../economy/types.graphql'
 
 interface TransactionCardProps {
-  user: UserNode
+  activities: BankAccountActivity[]
 }
 
-export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
+export const TransactionCard: React.FC<TransactionCardProps> = ({
+  activities,
+}) => {
   const { classes } = useStyles()
 
-  const rows = user.lastTransactions.map((transaction, index) => (
+  const rows = activities.map((transaction, index) => (
     <tr key={index}>
       <td>
-        <Badge variant="outline" color={'lime'}>
+        <Badge variant="outline" color={'green'}>
           {transaction.name}
         </Badge>
       </td>
       <td>
-        <Text align="right">{transaction.amount},- NOK</Text>
+        <Text align="center">{transaction.quantity}</Text>
       </td>
       <td>
-        <Text align="right">{transaction.quantity}</Text>
+        <Text align="right" color={'samfundet-red.7'}>
+          {transaction.quantity
+            ? transaction.amount * transaction.quantity
+            : transaction.amount}{' '}
+          kr
+        </Text>
       </td>
+
       <td>
-        <Text align="right">
-          {format(new Date(transaction.timestamp), 'yyyy.MM.dd HH:mm')}
+        <Text align="right" color={'dimmed'}>
+          {format(new Date(transaction.timestamp), 'd.MMM')}
         </Text>
       </td>
     </tr>
@@ -50,15 +59,15 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({ user }) => {
 
   return (
     <Stack>
-      <Text color={'dimmed'} weight={700} pt={'xs'}>
+      <Text color={'dimmed'} weight={700} p={'xs'}>
         Siste transaksjoner
       </Text>
       <CardTable className={classes.card}>
         <thead>
           <tr className={classes.headerRow}>
             <Header>Type</Header>
+            <Header align="left">Antall</Header>
             <Header align="right">Pris</Header>
-            <Header align="right">Antall</Header>
             <Header align="right">Tidspunkt</Header>
           </tr>
         </thead>
