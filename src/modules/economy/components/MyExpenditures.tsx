@@ -73,8 +73,8 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
   ]
 
   const parsedData = data.myExpenditures.data.map(day => ({
-    name: format(new Date(day.day), 'd MMM'),
-    value: day.sum,
+    date: format(new Date(day.day), 'd MMM'),
+    sum: day.sum,
   }))
 
   return (
@@ -91,11 +91,11 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
           height={400}
           className={classes.barChart}
         >
-          <XAxis dataKey={'name'} />
+          <XAxis dataKey={'date'} />
           <YAxis />
           <Tooltip filterNull />
           <Legend />
-          <Bar dataKey={'kr'} fill={'maroon'} />
+          <Bar dataKey={'sum'} fill={'maroon'} />
         </BarChart>
       </ResponsiveContainer>
 

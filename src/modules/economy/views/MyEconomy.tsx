@@ -16,15 +16,16 @@ import { MyBankAccountReturns } from '../types.graphql'
 import { TransactionCard } from '../../dashboard/components/TransactionCard'
 import React from 'react'
 
+const breadCrumbItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Min økonomi', path: '/economy/me' },
+]
+
 export const MyEconomy: React.FC = () => {
   const { classes } = useStyles()
   const { data, loading, error } = useQuery<MyBankAccountReturns>(
     MY_BANK_ACCOUNT_QUERY
   )
-  const breadCrumbItems = [
-    { label: 'Hjem', path: '/dashboard' },
-    { label: 'Min økonomi', path: '/economy/me' },
-  ]
 
   if (error) return <FullPageError />
 
