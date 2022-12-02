@@ -6,6 +6,7 @@ export const ME_QUERY = gql`
       id
       profileImage
       getFullWithNickName
+      getCleanFullName
       initials
       balance
       icalToken

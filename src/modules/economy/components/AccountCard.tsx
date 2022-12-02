@@ -11,8 +11,15 @@ import {
   Badge,
   Button,
   Container,
+  Stack,
 } from '@mantine/core'
-import { IconCash, IconCreditCard, IconEdit, IconPlus } from '@tabler/icons'
+import {
+  IconCash,
+  IconCheck,
+  IconCreditCard,
+  IconEdit,
+  IconPlus,
+} from '@tabler/icons'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
@@ -24,6 +31,8 @@ import {
   SociBankAccountNode,
 } from '../types.graphql'
 import { Link } from 'react-router-dom'
+import { showNotification } from '@mantine/notifications'
+import { useMe } from '../../../util/hooks'
 
 interface AccountCardProps extends Omit<CardProps, 'children'> {
   account: Pick<SociBankAccountNode, 'balance' | 'cardUuid' | 'id'>
@@ -36,6 +45,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
   const { classes } = useStyles()
   const [cardUuid, setCardUuid] = useState(account.cardUuid)
   const [editable, setEditable] = useState(false)
+  const user = useMe()
 
   const [changeCardUuid] = useMutation<
     PatchSociBankAccountReturns,
@@ -44,7 +54,12 @@ export const AccountCard: React.FC<AccountCardProps> = ({
     variables: { id: account.id, input: { cardUuid: cardUuid } },
     refetchQueries: ['Me', 'MyBankAccount'],
     onCompleted() {
-      toast.success('Kortnummer oppdatert!')
+      showNotification({
+        title: 'Kortnummeret ble oppdatert',
+        message: 'Kortnummeret ble oppdatert',
+        color: 'teal',
+        icon: <IconCheck />,
+      })
     },
   })
 
@@ -64,7 +79,10 @@ export const AccountCard: React.FC<AccountCardProps> = ({
 
   return (
     <Card withBorder className={classes.balanceCard}>
-      <Group position={'right'}>
+      <Group position={'apart'}>
+        <Title order={4} color={'samfundet-red.0'}>
+          {user.getCleanFullName}
+        </Title>
         <Title
           order={4}
           variant={'gradient'}
@@ -74,28 +92,35 @@ export const AccountCard: React.FC<AccountCardProps> = ({
         </Title>
       </Group>
       <Container px={'md'} py={'sm'}>
-        <Group position={'apart'}>
-          <Card.Section p={'lg'}>
-            <Badge color={'samfundet-red'} size={'sm'}>
-              Saldo
-            </Badge>
-            <Title align="center" weight={'lighter'} color={'gray.0'}>
-              {numberWithSpaces(account.balance)} kr
-            </Title>
+        <Group p={'md'} position={'apart'}>
+          <Card.Section>
+            <div>
+              <Badge>Saldo</Badge>
+              <Text size={30} weight={'bold'} color={'samfundet-red.0'}>
+                {numberWithSpaces(account.balance)} kr
+              </Text>
+            </div>
           </Card.Section>
-          <Button
-            component={Link}
-            to={'/economy/deposits/create'}
-            variant={'light'}
-            color={'samfundet-red'}
-          >
-            <IconCash />
-            <IconPlus />
-          </Button>
+          <Card.Section>
+            <Text align={'center'} size={'sm'} color={'samfundet-red.1'}>
+              Fyll på
+            </Text>
+            <Button
+              component={Link}
+              to={'/economy/deposits/create'}
+              variant={'light'}
+              color={'samfundet-red'}
+            >
+              <IconCash />
+              <IconPlus />
+            </Button>
+          </Card.Section>
         </Group>
         <Group position={'center'}>
           <Card.Section>
-            <Text align="center">Kortnummer</Text>
+            <Text align="left" color={'samfundet-red.0'}>
+              Kortnummer
+            </Text>
             <Group position="center">
               <TextInput
                 value={cardUuid}
@@ -103,8 +128,8 @@ export const AccountCard: React.FC<AccountCardProps> = ({
                 onChange={evt => setCardUuid(evt.target.value)}
                 onBlur={toggleEditable}
               />
-              <ActionIcon onClick={toggleEditable}>
-                <IconEdit stroke={1.4} color="white" />
+              <ActionIcon color={'samfundet-red.0'} onClick={toggleEditable}>
+                <IconEdit stroke={1.4} />
               </ActionIcon>
             </Group>
           </Card.Section>
