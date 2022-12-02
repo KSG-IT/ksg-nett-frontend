@@ -76,7 +76,7 @@ export const EditInterview: React.VFC = () => {
   }
 
   return (
-    <Stack style={{ overflowY: 'scroll', width: '100%', padding: '32px' }}>
+    <Stack>
       <Title>Intervjunotater: {interview.applicant.fullName}</Title>
       <MessageBox type="danger">
         <b>Obs!</b> Det skal aldri være mer enn én person som fører notater. Det

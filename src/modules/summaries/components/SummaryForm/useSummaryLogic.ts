@@ -8,6 +8,9 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { OnFormSubmit } from 'types/forms'
 import * as yup from 'yup'
+import { RichTextEditor, Link } from '@mantine/tiptap'
+import { useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
 
 export type SummaryFormData = {
   contents: string
@@ -23,7 +26,6 @@ export type SummaryCleanedData = Omit<SummaryFormData, 'date'> & {
 }
 
 const SummarySchema = yup.object().shape({
-  contents: yup.string().required('Innhold er påkrevd'),
   internalGroup: yup.string(),
   title: yup.string(),
   participants: yup.array().of(yup.string()).required('Deltakere er påkrevd'),
@@ -37,11 +39,16 @@ interface SummaryLogicInput {
     SummaryCleanedData,
     PatchSummaryMutationReturns | CreateSummaryMutationReturns
   >
-  onCompletedCallback: () => void
 }
 
 export function useSummaryLogic(input: SummaryLogicInput) {
-  const { defaultValues, onSubmit, onCompletedCallback } = input
+  const { defaultValues, onSubmit } = input
+
+  const editor = useEditor({
+    extensions: [StarterKit, Link],
+    content: defaultValues.contents,
+  })
+
   const form = useForm<SummaryFormData>({
     mode: 'onSubmit',
     defaultValues,
@@ -49,10 +56,17 @@ export function useSummaryLogic(input: SummaryLogicInput) {
   })
 
   const handleSubmit = async (data: SummaryFormData) => {
-    console.table(data)
+    if (!editor) return
+
+    if (editor.getHTML() === '<p><br></p>') {
+      toast.error('Du må skrive noe i referatet')
+      return
+    }
+
     const cleanedData: SummaryCleanedData = {
       ...data,
       date: format(new Date(data.date), 'yyyy-MM-dd'),
+      contents: editor.getHTML(),
     }
 
     if (cleanedData.internalGroup === 'other') {
@@ -63,16 +77,11 @@ export function useSummaryLogic(input: SummaryLogicInput) {
       cleanedData.internalGroup = null
     }
 
-    await toast
-      .promise(onSubmit(cleanedData), {
-        loading: 'Lagrer referat',
-        success: 'Referat lagret',
-        error: 'Noe gikk galt',
-      })
-      .then(onCompletedCallback)
+    await onSubmit(cleanedData)
   }
   return {
     form,
+    editor,
     onSubmit: handleSubmit,
   }
 }
