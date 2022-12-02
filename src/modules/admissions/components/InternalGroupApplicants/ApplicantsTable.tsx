@@ -27,7 +27,7 @@ const InterviewCoveredBadge: React.FC<{ covered: boolean }> = ({ covered }) => {
   return <Badge color={color}>{icon}</Badge>
 }
 
-export const ApplicantsTable: React.VFC<{
+export const ApplicantsTable: React.FC<{
   applicants: CoreApplicantNode[]
 }> = ({ applicants }) => {
   const rows = applicants.map(applicant => (

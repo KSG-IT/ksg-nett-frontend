@@ -29,7 +29,7 @@ import {
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
-  { label: 'Opptak', path: '/admissions' },
+  { label: 'Orvik', path: '/admissions' },
 ]
 
 export const AdmissionDashboard: React.FC = () => {
