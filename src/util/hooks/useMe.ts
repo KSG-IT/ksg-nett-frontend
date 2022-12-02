@@ -1,5 +1,5 @@
-import { useStore } from '../../store'
+import { useStore } from 'store'
 
-export const useMe = () => {
+export function useMe() {
   return useStore(state => state.user)
 }

@@ -13,7 +13,7 @@ import { InterviewNode } from '../types.graphql'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
-  { label: 'Opptak', path: '/admissions' },
+  { label: 'Orvik', path: '/admissions' },
   { label: 'Mine intervjuer', path: '/admissions/my-interviews' },
 ]
 
@@ -24,7 +24,7 @@ interface MyInterviewsReturns {
   >[]
 }
 
-const MY_INTERVIEWS_QUERY = gql`
+export const MY_INTERVIEWS_QUERY = gql`
   query MyInterviews {
     myInterviews {
       id

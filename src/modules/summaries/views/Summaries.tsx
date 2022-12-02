@@ -24,6 +24,7 @@ import { ALL_SUMMARIES } from '../queries'
 import { UserThumbnail } from '../../users/components'
 import { PermissionGate } from 'components/PermissionGate'
 import { PERMISSIONS } from 'util/permissions'
+import { FullContentLoader } from 'components/Loading'
 
 const breadCrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -36,7 +37,7 @@ export const Summaries: React.FC = () => {
   const navigate = useNavigate()
   const { classes } = useStyles()
 
-  const { data, error, fetchMore } = useQuery<
+  const { data, error, loading, fetchMore } = useQuery<
     AllSummariesQueryReturns,
     AllSummariesQueryVariables
   >(ALL_SUMMARIES, {
@@ -46,6 +47,8 @@ export const Summaries: React.FC = () => {
   })
 
   if (error) return <FullPageError />
+
+  if (loading || !data) return <FullContentLoader />
 
   const summaries = data?.allSummaries.edges.map(edge => edge.node) ?? []
   const hasNextPage = data?.allSummaries.pageInfo.hasNextPage ?? false

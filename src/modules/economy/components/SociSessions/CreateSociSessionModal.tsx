@@ -90,10 +90,6 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
               label: SociSessionType.KRYSSELISTE,
               value: SociSessionType.KRYSSELISTE,
             },
-            {
-              label: SociSessionType.STILLETIME,
-              value: SociSessionType.STILLETIME,
-            },
           ]}
           onChange={val => val && setType(val as SociSessionType)}
         />

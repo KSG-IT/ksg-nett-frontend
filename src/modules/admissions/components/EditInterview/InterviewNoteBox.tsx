@@ -1,4 +1,7 @@
-import { Textarea } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
+import { Link, RichTextEditor } from '@mantine/tiptap'
+import { useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import React, { useEffect, useState } from 'react'
 import { useDebounce } from 'util/hooks'
@@ -18,9 +21,13 @@ export const InterviewNoteBox: React.VFC<InterviewNoteBoxProps> = ({
    * Executes a mutation saving the contents of the textarea to the database
    * after a given timeout from the last change.
    */
-  const [value, setValue] = useState(initialValue)
+  const editor = useEditor({
+    extensions: [StarterKit, Link],
+    content: initialValue,
+  })
+
   const [lastSavedValue, setLastSavedValue] = useState(initialValue)
-  const debouncedValue = useDebounce(value, 5000)
+  const debouncedValue = useDebounce(editor?.getHTML() ?? '', 5000)
 
   const { patchInterview } = useInterviewMutations()
 
@@ -35,16 +42,63 @@ export const InterviewNoteBox: React.VFC<InterviewNoteBoxProps> = ({
     if (lastSavedValue === debouncedValue) {
       return
     }
-    patchInterview({ variables: { id: interviewId, input: input } }).then(() =>
-      setLastSavedValue(debouncedValue)
-    )
+    patchInterview({
+      variables: { id: interviewId, input: input },
+      onCompleted() {
+        setLastSavedValue(debouncedValue)
+      },
+      onError() {
+        showNotification({
+          title: 'Noe gikk galt',
+          message: 'Kunne ikke lagre intervjunotater',
+        })
+      },
+    })
   }, [debouncedValue])
 
   return (
-    <Textarea
-      minRows={12}
-      value={value}
-      onChange={evt => setValue(evt.target.value)}
-    />
+    <RichTextEditor editor={editor}>
+      <RichTextEditor.Toolbar sticky stickyOffset={60}>
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.Bold />
+          <RichTextEditor.Italic />
+          <RichTextEditor.Underline />
+          <RichTextEditor.Strikethrough />
+          <RichTextEditor.ClearFormatting />
+          <RichTextEditor.Highlight />
+          <RichTextEditor.Code />
+        </RichTextEditor.ControlsGroup>
+
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.H1 />
+          <RichTextEditor.H2 />
+          <RichTextEditor.H3 />
+          <RichTextEditor.H4 />
+        </RichTextEditor.ControlsGroup>
+
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.Blockquote />
+          <RichTextEditor.Hr />
+          <RichTextEditor.BulletList />
+          <RichTextEditor.OrderedList />
+          <RichTextEditor.Subscript />
+          <RichTextEditor.Superscript />
+        </RichTextEditor.ControlsGroup>
+
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.Link />
+          <RichTextEditor.Unlink />
+        </RichTextEditor.ControlsGroup>
+
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.AlignLeft />
+          <RichTextEditor.AlignCenter />
+          <RichTextEditor.AlignJustify />
+          <RichTextEditor.AlignRight />
+        </RichTextEditor.ControlsGroup>
+      </RichTextEditor.Toolbar>
+
+      <RichTextEditor.Content />
+    </RichTextEditor>
   )
 }

@@ -78,15 +78,15 @@ export const InternalGroupApplicants: React.FC = ({}) => {
         {internalGroupName.toLocaleLowerCase()} på intervjuet.
       </MessageBox>
       <Title order={2}>Førstevalg</Title>
-      <Paper p="md">
+      <Paper>
         <ApplicantsTable applicants={firstPriorities} />
       </Paper>
       <Title order={2}>Andrevalg</Title>
-      <Paper p="md">
+      <Paper>
         <ApplicantsTable applicants={secondPriorities} />
-      </Paper>{' '}
+      </Paper>
       <Title order={2}>Tredjevalg</Title>
-      <Paper p="md">
+      <Paper>
         <ApplicantsTable applicants={thirdPriorities} />
       </Paper>
     </Stack>

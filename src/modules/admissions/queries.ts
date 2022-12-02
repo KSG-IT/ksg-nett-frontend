@@ -141,7 +141,7 @@ export const APPLICANT_QUERY = gql`
         id
         user {
           id
-          fullName
+          getFullWithNickName
           initials
           profileImage
         }
@@ -178,7 +178,7 @@ export const APPLICANT_QUERY = gql`
           id
           initials
           profileImage
-          fullName
+          getFullWithNickName
         }
       }
     }
@@ -506,6 +506,7 @@ export const CORE_APPLICANT_FIELDS = gql`
         id
         profileImage
         initials
+        getFullWithNickName
       }
     }
   }

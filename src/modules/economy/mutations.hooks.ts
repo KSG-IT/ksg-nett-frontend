@@ -3,9 +3,13 @@ import {
   APPROVE_DEPOSIT_MUTATION,
   CLOSE_SOCI_SESSION_MUTATION,
   CREATE_DEPOSIT_MUTATION,
+  CREATE_SOCI_ORDER_SESSION_MUTATION,
   CREATE_SOCI_SESSION_MUTATION,
+  DELETE_SOCI_ORDER_SESSION_FOOD_ORDER_MUTATION,
   INVALIDATE_DEPOSIT_MUTATION,
   PLACE_PROUCT_ORDER_MUTATION,
+  PLACE_SOCI_ORDER_SESSION_ORDER_MUTATION,
+  SOCI_ORDER_SESSION_NEXT_STATUS_MUTATION,
   UNDO_PRODUCT_ORDER_MUTATION,
 } from './mutations'
 import {
@@ -14,12 +18,18 @@ import {
   CloseSociSessionReturns,
   CloseSociSessionVariables,
   CreateDepositMutationReturns,
+  CreateSociOrderSessionReturns,
   CreateSociSessionReturns,
   CreateSociSessionVariables,
+  DeleteSociOrderSessionFoodOrderReturns,
+  DeleteSociOrderSessionFoodOrderVariables,
   InvalidateDepositReturns,
   InvalidateDepositVariables,
   PlaceProductOrderReturns,
   PlaceProductOrderVariables,
+  PlaceSociOrderSessionOrderReturns,
+  PlaceSociOrderSessionOrderVariables,
+  SociOrderSessionNextStatusReturns,
   UndoProductOrderReturns,
   UndoProductOrderVariables,
 } from './types.graphql'
@@ -83,5 +93,46 @@ export function useSociSessionMutations() {
     closeSociSessionsLoading,
     createSociSession,
     createSociSessionLoading,
+  }
+}
+
+export function useSociOrderSessionMutations() {
+  const [createSociOrderSession, { loading: createSociOrderSessionLoading }] =
+    useMutation<CreateSociOrderSessionReturns>(
+      CREATE_SOCI_ORDER_SESSION_MUTATION
+    )
+
+  const [
+    sociOrderSessionNextStatus,
+    { loading: sociOrderSessionNextStatusLoading },
+  ] = useMutation<SociOrderSessionNextStatusReturns>(
+    SOCI_ORDER_SESSION_NEXT_STATUS_MUTATION
+  )
+
+  const [
+    placeSociOrderSessionOrder,
+    { loading: placeSociOrderSessionOrderLoading },
+  ] = useMutation<
+    PlaceSociOrderSessionOrderReturns,
+    PlaceSociOrderSessionOrderVariables
+  >(PLACE_SOCI_ORDER_SESSION_ORDER_MUTATION)
+
+  const [
+    deleteSociOrderSessionFoodOrder,
+    { loading: deleteSociOrderSessionFoodOrderLoading },
+  ] = useMutation<
+    DeleteSociOrderSessionFoodOrderReturns,
+    DeleteSociOrderSessionFoodOrderVariables
+  >(DELETE_SOCI_ORDER_SESSION_FOOD_ORDER_MUTATION)
+
+  return {
+    createSociOrderSession,
+    createSociOrderSessionLoading,
+    placeSociOrderSessionOrder,
+    placeSociOrderSessionOrderLoading,
+    sociOrderSessionNextStatus,
+    sociOrderSessionNextStatusLoading,
+    deleteSociOrderSessionFoodOrder,
+    deleteSociOrderSessionFoodOrderLoading,
   }
 }

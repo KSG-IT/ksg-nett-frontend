@@ -1,8 +1,8 @@
-import { Badge, Button, Paper, Table } from '@mantine/core'
+import { Badge, Button } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
-import { format } from 'util/date-fns'
 import { SociSessionNode } from 'modules/economy/types.graphql'
 import { Link } from 'react-router-dom'
+import { format } from 'util/date-fns'
 import { numberWithSpaces } from 'util/parsing'
 
 interface SociSessionsTableProps {
