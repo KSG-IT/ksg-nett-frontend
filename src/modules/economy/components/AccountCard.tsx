@@ -93,7 +93,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
             </div>
           </Card.Section>
           <Card.Section>
-            <Text align={'center'} size={'sm'} color={'samfundet-red.1'}>
+            <Text pb="xs" size={'sm'} color={'samfundet-red.1'}>
               Fyll på
             </Text>
             <Button
@@ -107,7 +107,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
             </Button>
           </Card.Section>
         </Group>
-        <Group position={'center'}>
+        <Group px="md">
           <Card.Section>
             <Text align="left" color={'samfundet-red.0'}>
               Kortnummer
