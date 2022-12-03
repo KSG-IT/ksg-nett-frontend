@@ -1,61 +1,39 @@
+import { Card, createStyles, Title } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
 import { InternalGroupNode } from '../types'
-
-const Wrapper = styled.div`
-  display: flex;
-  background: white;
-  color: black;
-  height: 120px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 6px;
-  padding: 1.618em;
-  box-shadow: ${props => props.theme.shadow.default};
-
-  :hover {
-    cursor: pointer;
-    background-color: ${props => props.theme.colors.lightGray};
-    transform: scale(0.98);
-  }
-`
-interface GroupIconProps {
-  src: string
-}
-
-const GroupName = styled.h2``
-
-const GroupIcon = styled.div<GroupIconProps>`
-  width: 60px;
-  height: 80px;
-  background-image: url('${props => props.src}');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  border-radius: 4px;
-`
 
 interface InternalGroupCardProps {
   internalGroup: InternalGroupNode
 }
 
-export const InternalGroupCard: React.VFC<InternalGroupCardProps> = ({
+export const InternalGroupCard: React.FC<InternalGroupCardProps> = ({
   internalGroup,
 }) => {
   const navigate = useNavigate()
+  const { classes } = useStyles()
   return (
-    <Wrapper
+    <Card
+      className={classes.card}
       onClick={() => {
         navigate(`/internal-groups/${internalGroup.id}`)
       }}
     >
-      <GroupName>{internalGroup.name}</GroupName>
-      <GroupIcon
-        src={
-          internalGroup.groupIcon ??
-          'https://static.wikia.nocookie.net/roblox/images/3/3b/NOOB!.png'
-        }
-      />
-    </Wrapper>
+      <Title order={3}>{internalGroup.name}</Title>
+    </Card>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  card: {
+    display: 'flex',
+    height: '100px',
+    alignItems: 'center',
+
+    boxShadow: theme.shadows.sm,
+    ':hover': {
+      cursor: 'pointer',
+      backgroundColor: theme.colors.lightGray,
+      transform: 'scale(0.98)',
+    },
+  },
+}))

@@ -22,7 +22,6 @@ import { INTERVIEW_TEMPLATE_QUERY } from 'modules/admissions/queries'
 import { InterviewTemplateReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import styled from 'styled-components'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 
 type WizardStage =
@@ -32,34 +31,6 @@ type WizardStage =
   | 'INTERVIEW_TEMPLATE'
   | 'AVAILABLE_POSITIONS'
   | 'SUMMARY'
-
-const StatementContainerTitle = styled.h2`
-  margin: 0;
-`
-
-const StatementContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const StatementRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-`
-
-const NavigationContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-`
-
-const AddStatementContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 10px;
-`
 
 interface ConfigureInterviewTemplateProps {
   setStageCallback: (stage: WizardStage) => void
@@ -149,19 +120,19 @@ export const ConfigureInterviewTemplate: React.VFC<
     <Stack>
       <Title>Intervjumal spørsmål</Title>
       <Card>
-        <StatementContainer>
+        <Stack>
           <Title order={2}>Ja/Nei spørsmål</Title>
           {interviewBooleanEvaluationStatements.map(node => (
-            <StatementRow key={node.id}>
+            <Group key={node.id}>
               <span>{node.statement}</span>
               <IconTrash
                 onClick={() =>
                   handleDeleteInterviewBooleanEvaluationStatements(node.id)
                 }
               />
-            </StatementRow>
+            </Group>
           ))}
-        </StatementContainer>
+        </Stack>
       </Card>
       <Group align="flex-end">
         <Text>Legg til ja/nei spørsmål</Text>

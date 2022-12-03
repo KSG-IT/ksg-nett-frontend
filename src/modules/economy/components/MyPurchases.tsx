@@ -1,15 +1,7 @@
-import { Paper, Table } from '@mantine/core'
-import { IconArrowRight } from '@tabler/icons'
+import { CardTable } from 'components/CardTable'
 import { format } from 'util/date-fns'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 import { numberWithSpaces } from 'util/parsing'
 import { BankAccountActivity } from '../types.graphql'
-import { CardTable } from 'components/CardTable'
-
-const ActivityCell = styled.td`
-  user-select: none;
-`
 
 interface MyPurchasesProps {
   activities: BankAccountActivity[]
@@ -18,12 +10,10 @@ interface MyPurchasesProps {
 export const MyPurchases: React.VFC<MyPurchasesProps> = ({ activities }) => {
   const rows = activities.map((activity, index) => (
     <tr key={index}>
-      <ActivityCell>
-        {format(new Date(activity.timestamp), 'yy.MM.dd')}
-      </ActivityCell>
-      <ActivityCell>{activity.name}</ActivityCell>
-      <ActivityCell>{activity.quantity}</ActivityCell>
-      <ActivityCell>{numberWithSpaces(activity.amount)},- NOK</ActivityCell>
+      <td>{format(new Date(activity.timestamp), 'yy.MM.dd')}</td>
+      <td>{activity.name}</td>
+      <td>{activity.quantity}</td>
+      <td>{numberWithSpaces(activity.amount)},- NOK</td>
     </tr>
   ))
   return (

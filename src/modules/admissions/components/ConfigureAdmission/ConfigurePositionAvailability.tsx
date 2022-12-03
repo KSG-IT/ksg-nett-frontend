@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Card, Group, Stack, Table, Text, Title } from '@mantine/core'
+import { Button, Group, Stack, Text, Title } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -9,7 +9,6 @@ import { EXTERNALLY_AVAILABLE_INTERNAL_GROUP_POSITIONS_QUERY } from 'modules/adm
 import { AdmissionAvailableInternalGroupPositionData } from 'modules/admissions/types.graphql'
 import { InternalGroupPositionNode } from 'modules/organization/types'
 import { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { PositionAvailabilityInput } from './PositionAvailabilityInput'
 type WizardStage =
   | 'START'

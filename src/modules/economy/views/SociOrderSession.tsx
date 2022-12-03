@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Modal, Stack, Title } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconDownload, IconMeat } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
@@ -36,8 +37,20 @@ export const SociOrderSession: React.FC = ({}) => {
   } = useSociOrderSessionMutations()
 
   function handleCreateOrderSession() {
+    const confirmed = confirm(
+      'Er du sikker på at du vil starte digital stilletime?'
+    )
+
+    if (!confirmed) return
+
     createSociOrderSession({
       refetchQueries: [ACTIVE_SOCI_ORDER_SESSION],
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
     })
   }
 
@@ -62,9 +75,14 @@ export const SociOrderSession: React.FC = ({}) => {
             { label: 'Stilletime', path: '/economy/soci-sessions/live' },
           ]}
         />
-        <Title order={2}>Ingen stilletime</Title>
+        <Title order={2}>Stilletime</Title>
+        <MessageBox type="info">
+          Det er foreløpig ingen aktiv stilletime.
+        </MessageBox>
         <PermissionGate permissions={PERMISSIONS.economy.add.sociOrderSession}>
-          <Button onClick={handleCreateOrderSession}>Start stilletime</Button>
+          <Group>
+            <Button onClick={handleCreateOrderSession}>Start stilletime</Button>
+          </Group>
         </PermissionGate>
       </Stack>
     )

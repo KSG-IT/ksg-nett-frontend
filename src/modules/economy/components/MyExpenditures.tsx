@@ -1,18 +1,16 @@
 import { useQuery } from '@apollo/client'
-import { createStyles, Paper, Select } from '@mantine/core'
+import { createStyles, Group, Select, Text } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import {
   Bar,
   BarChart,
-  CartesianGrid,
   Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from 'recharts'
-import styled from 'styled-components'
 import { format } from 'util/date-fns'
 import { numberWithSpaces } from 'util/parsing'
 import { MY_EXPENDITURES } from '../queries'
@@ -21,19 +19,6 @@ import {
   MyExpendituresReturns,
   MyExpendituresVariables,
 } from '../types.graphql'
-
-const TotalRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`
-
-const TotalLabel = styled.label``
-
-const TotalValue = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-`
 
 interface MyExpendituresProps {
   moneySpent: number
@@ -99,10 +84,10 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
         </BarChart>
       </ResponsiveContainer>
 
-      <TotalRow className={classes.totalRow}>
-        <TotalLabel>Sum</TotalLabel>
-        <TotalValue>{numberWithSpaces(moneySpent)} kr</TotalValue>
-      </TotalRow>
+      <Group position="apart">
+        <Text weight={'bold'}>Sum</Text>
+        <Text weight="bold">{numberWithSpaces(moneySpent)} kr</Text>
+      </Group>
     </>
   )
 }

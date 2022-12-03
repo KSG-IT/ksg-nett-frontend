@@ -17,7 +17,6 @@ import {
 } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import styled from 'styled-components'
 import { useMediaQuery } from 'util/hooks'
 import { ALL_INTERVIEW_LOCATIONS_QUERY } from '../../queries'
 import { InterviewLocationAvailabilityCard } from './InterviewLocationAvailabilityCard'
