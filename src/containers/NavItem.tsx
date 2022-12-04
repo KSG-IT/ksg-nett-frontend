@@ -1,8 +1,10 @@
 import { createStyles, Text } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { TablerIcon } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
 import { useStore } from 'store'
+import { useSidebar } from 'util/hooks'
 
 export interface RouteItem {
   label: string
@@ -14,10 +16,22 @@ export interface RouteItem {
 
 export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
   const { classes, cx } = useNavItemStyles({ active: props.active })
-  const toggle = useStore(state => state.toggleSidebarOpen)
+
+  const { sidebarOpen, toggleSidebar } = useSidebar()
+  const isMobile = useMediaQuery('(max-width: 750px)')
+
   function handleClick() {
     props.onClick && props.onClick()
-    toggle()
+
+    if (sidebarOpen && isMobile) {
+      // I hate ios safari
+      const main = document.querySelector('main')
+      if (main) {
+        main.style.display = 'block'
+      }
+    }
+
+    toggleSidebar()
   }
   return (
     <PermissionGate permissions={props.permissions}>

@@ -1,3 +1,4 @@
 export * from './useDebounce'
-export * from './useMedia'
 export * from './useMe'
+export * from './useMedia'
+export * from './useSidebar'

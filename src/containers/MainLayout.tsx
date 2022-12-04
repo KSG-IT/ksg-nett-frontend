@@ -56,7 +56,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     if (!sidebarOpen && isMobile) {
       // setScrollLocked(true)
       const main = document.querySelector('main')
-      console.log(main)
       if (main) {
         main.style.display = 'none'
       }
@@ -65,7 +64,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     if (sidebarOpen && isMobile) {
       // setScrollLocked(false)
       const main = document.querySelector('main')
-      console.log(main)
       if (main) {
         main.style.display = 'block'
       }
