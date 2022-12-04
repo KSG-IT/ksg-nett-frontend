@@ -23,5 +23,8 @@ const useCardTableStyles = createStyles(theme => ({
   card: {
     overflowX: 'scroll',
     overflowY: 'visible',
+    td: {
+      whiteSpace: 'nowrap',
+    },
   },
 }))
