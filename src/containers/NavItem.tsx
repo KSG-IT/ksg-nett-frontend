@@ -1,9 +1,9 @@
 import { createStyles, Text } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
+import { useScrollLock } from '@mantine/hooks'
 import { TablerIcon } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
-import { useSidebar } from 'util/hooks'
+import { useIsMobile, useSidebar } from 'util/hooks'
 
 export interface RouteItem {
   label: string
@@ -15,9 +15,10 @@ export interface RouteItem {
 
 export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
   const { classes, cx } = useNavItemStyles({ active: props.active })
+  const [, setScrollLock] = useScrollLock()
 
   const { sidebarOpen, toggleSidebar } = useSidebar()
-  const isMobile = useMediaQuery('(max-width: 750px)')
+  const isMobile = useIsMobile()
 
   function handleClick() {
     props.onClick && props.onClick()
@@ -25,9 +26,8 @@ export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
     if (sidebarOpen && isMobile) {
       // I hate ios safari
       const main = document.querySelector('main')
-      if (main) {
-        main.style.display = 'block'
-      }
+      main && (main.style.display = 'block')
+      setScrollLock(false)
     }
 
     toggleSidebar()

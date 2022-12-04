@@ -1,5 +1,4 @@
 import {
-  Affix,
   AppShell,
   Burger,
   Button,
@@ -9,16 +8,15 @@ import {
   Header,
   Image,
   MediaQuery,
-  Popover,
   Text,
   useMantineTheme,
 } from '@mantine/core'
-import { useMediaQuery, useScrollLock } from '@mantine/hooks'
+import { useScrollLock } from '@mantine/hooks'
 import { UserSearch } from 'modules/header/UserSearch'
 import React from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Link } from 'react-router-dom'
-import { useStore } from 'store'
+import { useIsMobile, useSidebar } from 'util/hooks'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
 
@@ -46,27 +44,23 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const theme = useMantineTheme()
-  const toggleSidebar = useStore(state => state.toggleSidebarOpen)
-  const sidebarOpen = useStore(state => state.sidebarOpen)
+  const { sidebarOpen, toggleSidebar } = useSidebar()
   const { classes } = useStyles()
-  const isMobile = useMediaQuery('(max-width: 750px)')
-  const [, setScrollLocked] = useScrollLock()
+  const isMobile = useIsMobile()
+  const [, setScrollLock] = useScrollLock()
 
   function handleToggle() {
+    // An attempt to handle ios scroll context issue
     if (!sidebarOpen && isMobile) {
-      // setScrollLocked(true)
       const main = document.querySelector('main')
-      if (main) {
-        main.style.display = 'none'
-      }
+      main && (main.style.display = 'none')
+      setScrollLock(true)
     }
 
     if (sidebarOpen && isMobile) {
-      // setScrollLocked(false)
       const main = document.querySelector('main')
-      if (main) {
-        main.style.display = 'block'
-      }
+      main && (main.style.display = 'block')
+      setScrollLock(false)
     }
 
     toggleSidebar()
@@ -80,8 +74,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         },
         main: {
           background: theme.colors.gray[0],
-          '-webkit-overflow-scrolling': 'touch',
-          overflowY: 'scroll',
         },
       }}
       navbarOffsetBreakpoint="sm"
@@ -123,7 +115,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     >
       {/* Main content being rendered */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <Affix position={{ bottom: 20, right: 20 }}>
+        {/* <Affix position={{ bottom: 20, right: 20 }}>
           <Popover>
             <Popover.Target>
               <Button
@@ -150,7 +142,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               </Button>
             </Popover.Dropdown>
           </Popover>
-        </Affix>
+        </Affix> */}
         {children}
       </ErrorBoundary>
     </AppShell>
@@ -164,10 +156,6 @@ const useStyles = createStyles(t => ({
     [`@media (max-width: ${t.breakpoints.sm}px)`]: {
       flexDirection: 'row-reverse',
     },
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'center',
   },
 }))
 
