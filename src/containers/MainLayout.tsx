@@ -13,7 +13,7 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core'
-import { useScrollLock } from '@mantine/hooks'
+import { useMediaQuery, useScrollLock } from '@mantine/hooks'
 import { UserSearch } from 'modules/header/UserSearch'
 import React from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -49,6 +49,20 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const toggleSidebar = useStore(state => state.toggleSidebarOpen)
   const sidebarOpen = useStore(state => state.sidebarOpen)
   const { classes } = useStyles()
+  const isMobile = useMediaQuery('(max-width: 750px)')
+  const [, setScrollLocked] = useScrollLock()
+
+  function handleToggle() {
+    if (!sidebarOpen && isMobile) {
+      setScrollLocked(true)
+    }
+
+    if (sidebarOpen && isMobile) {
+      setScrollLocked(false)
+    }
+
+    toggleSidebar()
+  }
 
   return (
     <AppShell
@@ -71,7 +85,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={sidebarOpen}
-                onClick={toggleSidebar}
+                onClick={handleToggle}
                 size="sm"
                 color={theme.colors.gray[6]}
                 mr="xl"
@@ -127,7 +141,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             </Popover.Dropdown>
           </Popover>
         </Affix>
-        {children}
+        <div id="scroll-lock">{children}</div>
       </ErrorBoundary>
     </AppShell>
   )
