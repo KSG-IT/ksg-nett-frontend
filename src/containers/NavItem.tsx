@@ -27,9 +27,9 @@ export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
       // I hate ios safari
       const main = document.querySelector('main')
       main && (main.style.display = 'block')
-      setScrollLock(false)
     }
 
+    setScrollLock(false)
     toggleSidebar()
   }
   return (
