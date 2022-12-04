@@ -1,19 +1,14 @@
 import { useQuery } from '@apollo/client'
-import {
-  Button,
-  createStyles,
-  Grid,
-  Stack,
-  useMantineTheme,
-} from '@mantine/core'
+import { createStyles, Grid, Stack, useMantineTheme } from '@mantine/core'
+import { IconMeat } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { Link } from 'react-router-dom'
 import { useStore } from 'store'
 import { useMediaQuery } from 'util/hooks'
 import { FutureShifts } from './components/FutureShifts'
 import { RecentQuotes } from './components/RecentQuotes'
+import { ShortcutCardItem } from './components/ShortcutCardItem'
 import { ShortcutCards } from './components/ShortcutCards'
 import { TransactionCard } from './components/TransactionCard'
 import { WantedList } from './components/WantedList'
@@ -49,14 +44,7 @@ export const Dashboard = () => {
   return (
     <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
-      {sociOrderSession && (
-        <Stack>
-          <Link to="/economy/soci-sessions/live">
-            <Button>Stilletime</Button>
-          </Link>
-        </Stack>
-      )}
-      <ShortcutCards />
+      <ShortcutCards sociOrderSession={!!sociOrderSession} />
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
         <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>

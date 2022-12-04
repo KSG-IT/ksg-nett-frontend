@@ -1,10 +1,10 @@
 import { Card, createStyles, SimpleGrid, Stack, Text } from '@mantine/core'
 import {
   IconBabyCarriage,
-  IconBriefcase,
   IconCalendarTime,
   IconCreditCard,
   IconEdit,
+  IconMeat,
   IconQuote,
 } from '@tabler/icons'
 import { ShortcutCardItem } from './ShortcutCardItem'
@@ -39,10 +39,17 @@ const shortcuts = [
     icon: IconEdit,
     color: 'samfundet-red',
     link: '/summaries/create',
+    permissions: ['summaries.add.summary'],
   },
 ]
 
-export const ShortcutCards: React.FC = () => {
+interface ShortcutCardsProps {
+  sociOrderSession: boolean
+}
+
+export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
+  sociOrderSession,
+}) => {
   const { classes } = useStyles()
 
   return (
@@ -50,6 +57,15 @@ export const ShortcutCards: React.FC = () => {
       <Text color="dimmed" className={classes.title}>
         Snarveier
       </Text>
+      <Stack px="md">
+        <ShortcutCardItem
+          title="Stilletime"
+          icon={IconMeat}
+          color="samfundet-red"
+          link="/economy/soci-sessions/live"
+        />
+      </Stack>
+
       <Card py={0} className={classes.card}>
         <SimpleGrid
           cols={5}
