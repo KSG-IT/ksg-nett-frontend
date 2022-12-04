@@ -149,7 +149,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             </Popover.Dropdown>
           </Popover>
         </Affix>
-        <div id="scroll-lock">{children}</div>
+        {children}
       </ErrorBoundary>
     </AppShell>
   )

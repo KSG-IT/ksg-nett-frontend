@@ -3,7 +3,6 @@ import { useMediaQuery } from '@mantine/hooks'
 import { TablerIcon } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
-import { useStore } from 'store'
 import { useSidebar } from 'util/hooks'
 
 export interface RouteItem {
