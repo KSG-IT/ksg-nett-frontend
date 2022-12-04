@@ -6,13 +6,11 @@ import {
   IconChartAreaLine,
   IconClipboardList,
   IconCreditCard,
-  IconDisabled,
   IconEdit,
   IconHandMiddleFinger,
   IconHome,
   IconReportMoney,
   IconUserPlus,
-  IconUsers,
 } from '@tabler/icons'
 import { useLocation } from 'react-router-dom'
 import { useStore } from 'store'
@@ -102,9 +100,9 @@ const routes: RouteGroup[] = [
       },
       {
         icon: IconClipboardList,
-        link: '/economy/print',
-        label: 'Krysselister',
-        permissions: PERMISSIONS.economy.view.sociSession,
+        link: '/economy/soci-sessions/live',
+        label: 'Stilletime',
+        permissions: PERMISSIONS.economy.add.sociOrderSession,
       },
     ],
   },

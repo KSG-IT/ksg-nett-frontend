@@ -26,8 +26,6 @@ import {
   CreateDeposit,
   Deposits,
   MyEconomy,
-  PrintLists,
-  PrintWorkingToday,
   SociOrderSession,
   SociSessionDetail,
   SosiSessions,
@@ -111,9 +109,9 @@ export const AppRoutes: React.FC = () => {
         <Route index element={<Navigate to="/dashboard" replace />} />
 
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="events" element={<p>Hello Events</p>} />
         <Route path="*" element={<FullPage404 />} />
 
+        {/* ==== BAR TAB MODULE ==== */}
         <Route path="bar-tab">
           <Route
             index
@@ -143,6 +141,8 @@ export const AppRoutes: React.FC = () => {
             }
           />
         </Route>
+
+        {/* ==== SUMMARY MODULE ==== */}
         <Route path="summaries">
           <Route index element={<Summaries />} />
           <Route
@@ -158,7 +158,7 @@ export const AppRoutes: React.FC = () => {
           </Route>
           <Route path="*" element={<FullPage404 />} />
         </Route>
-
+        {/* ==== INTERNAL GROUPS MODULE ==== */}
         <Route path="internal-groups">
           <Route index element={<InternalGroups />} />
           <Route path=":internalGroupId">
@@ -179,6 +179,7 @@ export const AppRoutes: React.FC = () => {
           </Route>
         </Route>
 
+        {/* ==== QUOTES MODULE ==== */}
         <Route path="quotes">
           <Route path="popular" element={<PopularQuotes />} />
           <Route index element={<QuotesList />} />
@@ -193,7 +194,7 @@ export const AppRoutes: React.FC = () => {
           <Route path="popular" element={<PopularQuotes />} />
           <Route path="create" element={<CreateQuote />} />
         </Route>
-
+        {/* ==== USERS MODULE ==== */}
         <Route path="users">
           <Route path=":userId" element={<UserProfile />} />
           <Route path="user-types">
@@ -216,14 +217,7 @@ export const AppRoutes: React.FC = () => {
           </Route>
         </Route>
 
-        <Route path="gallery">
-          <Route index element={<p>Hello Gallery</p>} />
-        </Route>
-
-        <Route path="quiz">
-          <Route index element={<p>Hello Quiz</p>} />
-        </Route>
-
+        {/* ==== ADMISSIONS MODULE ==== */}
         <Route path="admissions">
           <Route
             index
@@ -348,6 +342,7 @@ export const AppRoutes: React.FC = () => {
           </Route>
         </Route>
 
+        {/* ==== ECONOMY MODULE ==== */}
         <Route path="economy">
           <Route path="deposits/create" element={<CreateDeposit />} />
           <Route
@@ -360,28 +355,6 @@ export const AppRoutes: React.FC = () => {
           />
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
-          <Route path="print">
-            <Route
-              index
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.economy.view.sociSession}
-                >
-                  <PrintLists />
-                </RestrictedRoute>
-              }
-            />
-            <Route
-              path="working-today"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.economy.view.sociSession}
-                >
-                  <PrintWorkingToday />
-                </RestrictedRoute>
-              }
-            />
-          </Route>
 
           <Route path="soci-sessions">
             <Route

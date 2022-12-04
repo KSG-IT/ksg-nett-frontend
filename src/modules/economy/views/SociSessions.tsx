@@ -100,13 +100,6 @@ export const SosiSessions: React.FC = () => {
               Vareutvalg
             </Button>
           </PermissionGate>
-          <PermissionGate permissions={PERMISSIONS.economy.view.sociSession}>
-            <Link to="/economy/print">
-              <Button color="samfundet-red" leftIcon={<IconPrinter />}>
-                Skriv ut lister
-              </Button>
-            </Link>
-          </PermissionGate>
         </Group>
       </Group>
       <SociSessionsTable sociSessions={sociSessions} />
