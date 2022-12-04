@@ -8,6 +8,7 @@ import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { PermissionGate } from 'components/PermissionGate'
+import { ME_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
 import { PERMISSIONS } from 'util/permissions'
 import {
@@ -55,8 +56,12 @@ export const SociOrderSession: React.FC = ({}) => {
   }
 
   function handleNextStatus() {
+    const confirmed = confirm('Sikker på at du vil stenge?')
+
+    if (!confirmed) return
+
     sociOrderSessionNextStatus({
-      refetchQueries: [ACTIVE_SOCI_ORDER_SESSION],
+      refetchQueries: [ACTIVE_SOCI_ORDER_SESSION, ME_QUERY],
     })
   }
 
