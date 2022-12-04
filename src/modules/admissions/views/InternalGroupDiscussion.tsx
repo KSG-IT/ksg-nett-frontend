@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { Group, Paper, Stack, Text, Title } from '@mantine/core'
-import { BackButton } from 'components/BackButton'
+import { Group, Stack, Text, Title } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -44,9 +44,15 @@ export const InternalGroupDiscussion: React.FC = () => {
     },
   } = data
 
+  const breadcrumbsItems = [
+    { label: 'Hjem', path: '/dashboard' },
+    { label: 'Orvik', path: '/admissions' },
+    { label: `Diskusjon ${internalGroup.name}`, path: '' },
+  ]
+
   return (
     <Stack>
-      <BackButton to="/admissions" />
+      <Breadcrumbs items={breadcrumbsItems} />
       <Group position="apart">
         <Title>Fordelingsmøte {internalGroup.name}</Title>
         <SynCButton
