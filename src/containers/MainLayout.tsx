@@ -18,11 +18,6 @@ import { Link } from 'react-router-dom'
 import { useIsMobile, useSidebar } from 'util/hooks'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
-import {
-  disableBodyScroll,
-  enableBodyScroll,
-  clearAllBodyScrollLocks,
-} from 'body-scroll-lock'
 
 interface ErrorFallbackProps {
   error: Error
@@ -56,14 +51,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     // An attempt to handle ios scroll context issue
     if (!sidebarOpen && isMobile) {
       const main = document.querySelector('main')
-      // main && (main.style.display = 'none')
-      disableBodyScroll(main)
+      main && (main.style.display = 'none')
     }
 
     if (sidebarOpen && isMobile) {
       const main = document.querySelector('main')
-      // main && (main.style.display = 'block')
-      enableBodyScroll(main)
+      main && (main.style.display = 'block')
     }
 
     toggleSidebar()
