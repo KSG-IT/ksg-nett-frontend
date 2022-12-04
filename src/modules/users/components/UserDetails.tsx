@@ -22,7 +22,7 @@ import {
 } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { PermissionGate } from 'components/PermissionGate'
-import { useMediaQuery } from 'util/hooks'
+import { useIsMobile, useMediaQuery } from 'util/hooks'
 import { PERMISSIONS } from 'util/permissions'
 import { UserNode } from '../types'
 import { IconWithData } from './IconWithData'
@@ -39,7 +39,7 @@ interface UserDetailsProps {
 
 export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
   const { classes } = useStyles()
-  const isMobile = useMediaQuery('(max-width: 800px)')
+  const isMobile = useIsMobile()
   const editButton = (
     <PermissionGate permissions={PERMISSIONS.users.change.user}>
       <Button variant="light" color={'samfundet-red'} onClick={onClick}>
@@ -61,8 +61,18 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
           <Grid.Col xs={6} lg={6}>
             <Text className={classes.role}>{user.ksgStatus}</Text>
             {isMobile && (
-              <Center mt={'xs'}>
-                <Avatar src={user.profileImage} size="xl" radius={60} />
+              <Center>
+                <Avatar
+                  src={
+                    user.profileImage ||
+                    'https://m.media-amazon.com/images/M/MV5BMjA5NTE4NTE5NV5BMl5BanBnXkFtZTcwMTcyOTY5Mw@@._V1_.jpg'
+                  }
+                  radius={'lg'}
+                  classNames={{
+                    image: classes.profileImage,
+                    root: classes.avatar,
+                  }}
+                />
               </Center>
             )}
 
