@@ -54,11 +54,21 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   function handleToggle() {
     if (!sidebarOpen && isMobile) {
-      setScrollLocked(true)
+      // setScrollLocked(true)
+      const main = document.querySelector('main')
+      console.log(main)
+      if (main) {
+        main.style.display = 'none'
+      }
     }
 
     if (sidebarOpen && isMobile) {
-      setScrollLocked(false)
+      // setScrollLocked(false)
+      const main = document.querySelector('main')
+      console.log(main)
+      if (main) {
+        main.style.display = 'block'
+      }
     }
 
     toggleSidebar()
