@@ -80,6 +80,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         },
         main: {
           background: theme.colors.gray[0],
+          '-webkit-overflow-scrolling': 'touch',
+          overflowY: 'scroll',
         },
       }}
       navbarOffsetBreakpoint="sm"
