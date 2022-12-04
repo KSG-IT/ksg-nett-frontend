@@ -23,6 +23,7 @@
     "@tiptap/react": "^2.0.0-beta.204",
     "@tiptap/starter-kit": "^2.0.0-beta.204",
     "apollo-upload-client": "^17.0.0",
+    "body-scroll-lock": "^4.0.0-beta.0",
     "date-fns": "^2.21.1",
     "dayjs": "^1.11.1",
     "dotenv": "^16.0.0",
