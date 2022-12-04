@@ -24,7 +24,10 @@ export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
     if (sidebarOpen && isMobile) {
       // I hate ios safari
       const main = document.querySelector('main')
-      main && (main.style.display = 'block')
+      if (main) {
+        main.style.display = 'block'
+        main.style.overflow = 'auto'
+      }
     }
 
     toggleSidebar()

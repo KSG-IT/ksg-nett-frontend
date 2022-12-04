@@ -51,12 +51,18 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     // An attempt to handle ios scroll context issue
     if (!sidebarOpen && isMobile) {
       const main = document.querySelector('main')
-      main && (main.style.display = 'none')
+      if (main) {
+        main.style.display = 'none'
+        main.style.overflow = 'hidden'
+      }
     }
 
     if (sidebarOpen && isMobile) {
       const main = document.querySelector('main')
-      main && (main.style.display = 'block')
+      if (main) {
+        main.style.display = 'block'
+        main.style.overflow = 'auto'
+      }
     }
 
     toggleSidebar()
