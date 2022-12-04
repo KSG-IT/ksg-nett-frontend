@@ -1,11 +1,13 @@
-import { Center } from '@mantine/core'
+import { Center, Stack, Title } from '@mantine/core'
 import { IconHourglassEmpty } from '@tabler/icons'
 
-export const FullPageEmpty: React.VFC = () => {
+export const FullPageEmpty: React.FC = () => {
   return (
     <Center style={{ width: '100%', height: '100%' }}>
-      <IconHourglassEmpty size={200} />
-      Oi, her var det tomt.
+      <Stack align={'center'} spacing={0}>
+        <IconHourglassEmpty size={200} />
+        <Title order={2}>Oi, her var det tomt.</Title>
+      </Stack>
     </Center>
   )
 }
