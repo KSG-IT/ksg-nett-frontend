@@ -1,20 +1,11 @@
+import { Center } from '@mantine/core'
 import { IconHourglassEmpty } from '@tabler/icons'
-import styled from 'styled-components'
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: auto;
-  color: ${props => props.theme.colors.gray2};
-  font-size: 28px;
-  font-weight: 600;
-`
 export const FullPageEmpty: React.VFC = () => {
   return (
-    <Wrapper>
+    <Center style={{ width: '100%', height: '100%' }}>
       <IconHourglassEmpty size={200} />
       Oi, her var det tomt.
-    </Wrapper>
+    </Center>
   )
 }
