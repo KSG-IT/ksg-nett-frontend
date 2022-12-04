@@ -11,7 +11,6 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core'
-import { useScrollLock } from '@mantine/hooks'
 import { UserSearch } from 'modules/header/UserSearch'
 import React from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -47,20 +46,17 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { sidebarOpen, toggleSidebar } = useSidebar()
   const { classes } = useStyles()
   const isMobile = useIsMobile()
-  const [, setScrollLock] = useScrollLock()
 
   function handleToggle() {
     // An attempt to handle ios scroll context issue
     if (!sidebarOpen && isMobile) {
       const main = document.querySelector('main')
       main && (main.style.display = 'none')
-      setScrollLock(true)
     }
 
     if (sidebarOpen && isMobile) {
       const main = document.querySelector('main')
       main && (main.style.display = 'block')
-      setScrollLock(false)
     }
 
     toggleSidebar()

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Center } from '@mantine/core'
+import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 
 import {
@@ -77,7 +78,7 @@ export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
   const setUser = useStore(state => state.setUser)
 
-  if (error) return <span>Error {error.message}</span>
+  if (error) return <FullPageError />
 
   if (loading || data === undefined)
     return (
