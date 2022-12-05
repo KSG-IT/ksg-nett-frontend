@@ -15,10 +15,10 @@ import { UserSearch } from 'modules/header/UserSearch'
 import React from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Link } from 'react-router-dom'
+import { lock, unlock } from 'tua-body-scroll-lock'
 import { useIsMobile, useSidebar } from 'util/hooks'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
-import { lock, unlock } from 'tua-body-scroll-lock'
 interface ErrorFallbackProps {
   error: Error
   resetErrorBoundary: () => void
@@ -51,23 +51,23 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     // An attempt to handle ios scroll context issue
     if (!sidebarOpen && isMobile) {
       const main = document.querySelector('main')
+
       if (main) {
         main.style.display = 'none'
         main.style.overflow = 'hidden'
         lock(main)
       }
+      const scrollAnchoringPoint = document.getElementById('Generelt')
+      scrollAnchoringPoint && scrollAnchoringPoint.click()
     }
 
     if (sidebarOpen && isMobile) {
       const main = document.querySelector('main')
-      const scrollAnchoringPoint = document.getElementById('Generelt')
       if (main) {
         main.style.display = 'block'
         main.style.overflow = 'auto'
         unlock(main)
       }
-
-      scrollAnchoringPoint && scrollAnchoringPoint.click()
     }
 
     toggleSidebar()
