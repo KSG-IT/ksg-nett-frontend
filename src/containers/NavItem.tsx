@@ -2,8 +2,8 @@ import { createStyles, Text } from '@mantine/core'
 import { TablerIcon } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
+import { unlock } from 'tua-body-scroll-lock'
 import { useIsMobile, useSidebar } from 'util/hooks'
-
 export interface RouteItem {
   label: string
   link: string
@@ -27,6 +27,7 @@ export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
       if (main) {
         main.style.display = 'block'
         main.style.overflow = 'auto'
+        unlock(main)
       }
     }
 

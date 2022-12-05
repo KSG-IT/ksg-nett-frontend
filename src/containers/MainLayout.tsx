@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom'
 import { useIsMobile, useSidebar } from 'util/hooks'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
-
+import { lock, unlock } from 'tua-body-scroll-lock'
 interface ErrorFallbackProps {
   error: Error
   resetErrorBoundary: () => void
@@ -54,6 +54,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       if (main) {
         main.style.display = 'none'
         main.style.overflow = 'hidden'
+        lock(main)
       }
     }
 
@@ -62,6 +63,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       if (main) {
         main.style.display = 'block'
         main.style.overflow = 'auto'
+        unlock(main)
       }
     }
 
