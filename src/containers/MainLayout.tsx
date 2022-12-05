@@ -55,10 +55,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       if (main) {
         main.style.display = 'none'
         main.style.overflow = 'hidden'
-        lock(main)
+        // const scrollAnchoringPoint = document.getElementById('Generelt')
+        // scrollAnchoringPoint && scrollAnchoringPoint.click()
       }
-      const scrollAnchoringPoint = document.getElementById('Generelt')
-      scrollAnchoringPoint && scrollAnchoringPoint.click()
     }
 
     if (sidebarOpen && isMobile) {
@@ -66,7 +65,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       if (main) {
         main.style.display = 'block'
         main.style.overflow = 'auto'
-        unlock(main)
       }
     }
 
