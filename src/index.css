@@ -4,6 +4,7 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  overscroll-behavior-y: contain;
 }
 
 html,
@@ -19,6 +20,10 @@ body {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: contain;
+}
+main {
+  overflow: hidden;
 }
 
 input[type='text'],

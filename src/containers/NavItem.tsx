@@ -27,6 +27,7 @@ export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
       if (main) {
         main.style.display = 'block'
         main.style.overflow = 'auto'
+        main.style.position = 'relative'
         // unlock(main)
       }
     }
@@ -36,7 +37,11 @@ export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
   return (
     <PermissionGate permissions={props.permissions}>
       <Link to={props.link} className={classes.navItem} onClick={handleClick}>
-        <props.icon className={cx(classes.icon)} data-active={props.active} />
+        <props.icon
+          className={cx(classes.icon)}
+          data-active={props.active}
+          size={16}
+        />
         <Text className={classes.text}>{props.label}</Text>
       </Link>
     </PermissionGate>
@@ -56,7 +61,7 @@ const useNavItemStyles = createStyles((t, { active }: { active: boolean }) => ({
     display: 'flex',
     width: '100%',
     borderRadius: t.radius.sm,
-    padding: `${t.spacing.xs}px ${t.spacing.sm}px`,
+    padding: `8px 4px`,
     backgroundColor: active ? t.colors.brand : t.colors.white,
     '&:hover': {
       backgroundColor: !active ? t.colors.red[0] : 'none',

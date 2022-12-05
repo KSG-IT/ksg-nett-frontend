@@ -36,14 +36,14 @@ export const NavBarMeSection: React.FC = () => {
   return (
     <Navbar.Section>
       <Group>
-        <UserThumbnail user={me} />
+        <UserThumbnail user={me} size="md" />
         <Stack spacing={0}>
-          <Text style={{ textOverflow: 'ellipsis' }} size="sm">
+          <Text style={{ textOverflow: 'ellipsis' }} size="xs">
             {me.getFullWithNickName}
           </Text>
           <Group spacing={0} align="center">
-            <IconPigMoney />
-            <Text size={'sm'} weight={500} color={liquidityColor(me.balance)}>
+            <IconPigMoney size={16} />
+            <Text size={'xs'} weight={500} color={liquidityColor(me.balance)}>
               {me.balance},- NOK
             </Text>
           </Group>

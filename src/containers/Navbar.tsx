@@ -129,6 +129,7 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
         backgroundColor: 'white',
         overflowY: 'auto',
         overscrollBehavior: 'contain',
+        fontSize: '12px',
       }}
     >
       <NavBarMeSection />

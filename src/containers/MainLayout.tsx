@@ -49,22 +49,25 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   function handleToggle() {
     // An attempt to handle ios scroll context issue
+    const main = document.querySelector('main')
+    const nav = document.querySelector('nav')
     if (!sidebarOpen && isMobile) {
-      const main = document.querySelector('main')
-
       if (main) {
-        main.style.display = 'none'
+        main.style.display = 'block'
         main.style.overflow = 'hidden'
+        main.style.position = 'fixed'
+        nav && (nav.style.overscrollBehaviorY = 'contain')
         // const scrollAnchoringPoint = document.getElementById('Generelt')
         // scrollAnchoringPoint && scrollAnchoringPoint.click()
       }
     }
 
     if (sidebarOpen && isMobile) {
-      const main = document.querySelector('main')
       if (main) {
         main.style.display = 'block'
         main.style.overflow = 'auto'
+        main.style.position = 'relative'
+        nav && (nav.style.overscrollBehaviorY = 'auto')
       }
     }
 

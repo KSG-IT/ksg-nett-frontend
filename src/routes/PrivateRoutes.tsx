@@ -78,7 +78,7 @@ export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
   const setUser = useStore(state => state.setUser)
 
-  if (error) return <FullPageError />
+  if (error) return <FullPageError error={error} />
 
   if (loading || data === undefined)
     return (
