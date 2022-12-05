@@ -125,7 +125,11 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
       hiddenBreakpoint="sm"
       hidden={!isOpen}
       width={{ sm: 200, lg: 250 }}
-      style={{ backgroundColor: 'white', overflowY: 'auto', zIndex: 999 }}
+      style={{
+        backgroundColor: 'white',
+        overflowY: 'auto',
+        overscrollBehavior: 'contain',
+      }}
     >
       <NavBarMeSection />
       {routes.map((routeGroup, index) => {
