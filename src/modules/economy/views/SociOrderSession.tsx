@@ -8,6 +8,7 @@ import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { PermissionGate } from 'components/PermissionGate'
+import { DASHBOARD_DATA_QUERY } from 'modules/dashboard/queries'
 import { ME_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
 import { PERMISSIONS } from 'util/permissions'
@@ -19,7 +20,7 @@ import {
 } from '../components/SociOrderSession'
 import { SociOrderSessionStatusValues } from '../enums'
 import { useSociOrderSessionMutations } from '../mutations.hooks'
-import { ACTIVE_SOCI_ORDER_SESSION } from '../queries'
+import { ACTIVE_SOCI_ORDER_SESSION, ALL_SOCI_SESSIONS } from '../queries'
 import { ActiveSociOrderSessionReturns } from '../types.graphql'
 
 export const SociOrderSession: React.FC = ({}) => {
@@ -45,7 +46,7 @@ export const SociOrderSession: React.FC = ({}) => {
     if (!confirmed) return
 
     createSociOrderSession({
-      refetchQueries: [ACTIVE_SOCI_ORDER_SESSION],
+      refetchQueries: [ACTIVE_SOCI_ORDER_SESSION, DASHBOARD_DATA_QUERY],
       onError({ message }) {
         showNotification({
           title: 'Noe gikk galt',
@@ -61,7 +62,12 @@ export const SociOrderSession: React.FC = ({}) => {
     if (!confirmed) return
 
     sociOrderSessionNextStatus({
-      refetchQueries: [ACTIVE_SOCI_ORDER_SESSION, ME_QUERY],
+      refetchQueries: [
+        ACTIVE_SOCI_ORDER_SESSION,
+        ME_QUERY,
+        DASHBOARD_DATA_QUERY,
+        ALL_SOCI_SESSIONS,
+      ],
     })
   }
 

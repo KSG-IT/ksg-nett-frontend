@@ -57,16 +57,16 @@ export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
       <Text color="dimmed" className={classes.title}>
         Snarveier
       </Text>
-      <Stack px="md">
-        <ShortcutCardItem
-          title="Stilletime"
-          icon={IconMeat}
-          color="samfundet-red"
-          link="/economy/soci-sessions/live"
-        />
-      </Stack>
-
       <Card py={0} className={classes.card}>
+        {sociOrderSession && (
+          <ShortcutCardItem
+            title="Stilletime"
+            icon={IconMeat}
+            color="samfundet-red"
+            link="/economy/soci-sessions/live"
+          />
+        )}
+
         <SimpleGrid
           cols={5}
           my={'xl'}

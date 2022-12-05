@@ -7,6 +7,7 @@ import {
   IconUser,
 } from '@tabler/icons'
 import { UserThumbnail } from 'modules/users/components'
+import { Link } from 'react-router-dom'
 import { useStore } from 'store'
 import { removeLoginToken } from 'util/auth'
 import { NavItem } from './NavItem'
@@ -35,20 +36,22 @@ export const NavBarMeSection: React.FC = () => {
 
   return (
     <Navbar.Section>
-      <Group>
-        <UserThumbnail user={me} size="md" />
-        <Stack spacing={0}>
-          <Text style={{ textOverflow: 'ellipsis' }} size="xs">
-            {me.getFullWithNickName}
-          </Text>
-          <Group spacing={0} align="center">
-            <IconPigMoney size={16} />
-            <Text size={'xs'} weight={500} color={liquidityColor(me.balance)}>
-              {me.balance},- NOK
+      <Link to={`/users/${me.id}`}>
+        <Group>
+          <UserThumbnail user={me} size="md" />
+          <Stack spacing={0}>
+            <Text style={{ textOverflow: 'ellipsis' }} size="xs">
+              {me.getFullWithNickName}
             </Text>
-          </Group>
-        </Stack>
-      </Group>
+            <Group spacing={0} align="center">
+              <IconPigMoney size={16} />
+              <Text size={'xs'} weight={500} color={liquidityColor(me.balance)}>
+                {me.balance} kr
+              </Text>
+            </Group>
+          </Stack>
+        </Group>
+      </Link>
       <NavItem
         label="Min profil"
         link={`/users/${me.id}`}
