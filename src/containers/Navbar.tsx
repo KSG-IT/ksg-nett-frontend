@@ -139,7 +139,7 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
         if (!hasAny) return null
         return (
           <div className={classes.group} key={index}>
-            <Text weight={600} mb="xs">
+            <Text weight={600} mb="xs" id={routeGroup.title}>
               {routeGroup.title}
             </Text>
             {routeGroup.items.map((item, index) => {

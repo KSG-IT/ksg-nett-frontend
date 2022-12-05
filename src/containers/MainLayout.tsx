@@ -60,14 +60,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
     if (sidebarOpen && isMobile) {
       const main = document.querySelector('main')
-      const nav = document.querySelector('nav')
+      const scrollAnchoringPoint = document.getElementById('Generelt')
       if (main) {
         main.style.display = 'block'
         main.style.overflow = 'auto'
         unlock(main)
       }
 
-      nav && nav.click()
+      scrollAnchoringPoint && scrollAnchoringPoint.click()
     }
 
     toggleSidebar()
