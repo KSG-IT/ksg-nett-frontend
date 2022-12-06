@@ -41,7 +41,6 @@ export const AsyncShiftSlotSelect: FC<AsyncShiftSlotSelectProps> = props => {
         if (result.allActiveUsersList) {
           const users = [...data]
           for (const u of result.allActiveUsersList) {
-            console.log(u)
             if (!users.find(user => user.value === u.id)) {
               users.push({
                 label: u.getCleanFullName,
