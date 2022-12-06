@@ -84,7 +84,7 @@ export interface AllUsersShallowQueryVariables {
 export interface AllUsersShallowQueryReturns {
   allActiveUsersList: Pick<
     UserNode,
-    'id' | 'profileImage' | 'initials' | 'getCleanFullName' | 'fullName'
+    'id' | 'profileImage' | 'initials' | 'getCleanFullName'
   >[]
 }
 

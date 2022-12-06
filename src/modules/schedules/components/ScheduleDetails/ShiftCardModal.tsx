@@ -1,6 +1,6 @@
-import { createStyles, MultiSelect, Select, TextInput } from '@mantine/core'
-import { DatePicker, TimeInput, TimeRangeInput } from '@mantine/dates'
-import { locationOptions } from 'modules/schedules/consts'
+import { Button, createStyles, Select, TextInput } from '@mantine/core'
+import { DatePicker, TimeRangeInput } from '@mantine/dates'
+import { locationOptions, LocationValues } from 'modules/schedules/consts'
 import { ShiftNode } from 'modules/schedules/types.graphql'
 import { Controller, useForm } from 'react-hook-form'
 import { AsyncShiftSlotSelect } from '../Form/AsyncShiftSlotSelect'
@@ -9,10 +9,19 @@ interface ShiftCardModalProps {
   shift: ShiftNode
 }
 
+export interface ShiftFormValues {
+  title: string
+  location: LocationValues | null
+  day: Date
+  time: [Date, Date]
+  slots: string[]
+}
+
 export const ShiftCardModal: React.FC<ShiftCardModalProps> = ({ shift }) => {
   const { classes } = useStyles()
   const start = new Date(shift.datetimeStart)
-  const { register, control } = useForm({
+
+  const { register, control, handleSubmit } = useForm<ShiftFormValues>({
     defaultValues: {
       title: shift.name,
       location: shift.location,
@@ -24,9 +33,9 @@ export const ShiftCardModal: React.FC<ShiftCardModalProps> = ({ shift }) => {
 
   return (
     <div className={classes.container}>
-      <form>
+      {/* TODO: mutate */}
+      <form onSubmit={handleSubmit(data => console.log(data))}>
         <TextInput {...register('title')} label="Navn på vakt" />
-        {/* <Select {...reigster("")}  label="Dag i uken"/> */}
         <Controller
           name="location"
           control={control}
@@ -46,7 +55,10 @@ export const ShiftCardModal: React.FC<ShiftCardModalProps> = ({ shift }) => {
             <TimeRangeInput {...field} label="Vakt varighet" />
           )}
         />
-        <AsyncShiftSlotSelect shift={shift} />
+        <AsyncShiftSlotSelect name="slots" shift={shift} control={control} />
+        <Button type="submit" mt="md">
+          Submit
+        </Button>
       </form>
     </div>
   )
@@ -55,5 +67,6 @@ export const ShiftCardModal: React.FC<ShiftCardModalProps> = ({ shift }) => {
 const useStyles = createStyles((theme, _params, getRef) => ({
   container: {
     width: '100%',
+    height: '100%',
   },
 }))
