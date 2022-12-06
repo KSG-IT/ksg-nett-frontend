@@ -54,3 +54,21 @@ export function parseDay(day: DayValues) {
       return ''
   }
 }
+
+export const dayAndTimeToDateTime = (shiftDate: Date, time: [Date, Date]) => {
+  const [start, end] = time
+  const datetimeStart = new Date(shiftDate)
+  datetimeStart.setHours(start.getHours())
+  datetimeStart.setMinutes(start.getMinutes())
+
+  const datetimeEnd = new Date(shiftDate)
+  datetimeEnd.setHours(end.getHours())
+  datetimeEnd.setMinutes(end.getMinutes())
+
+  // if end is less than start it means it's the next day
+  if (end < start) {
+    end.setDate(end.getDate() + 1)
+  }
+
+  return { datetimeStart, datetimeEnd }
+}

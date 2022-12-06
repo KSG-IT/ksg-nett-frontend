@@ -265,3 +265,20 @@ type CreateShiftSlotInput = {
 export interface CreateShiftSlotVariables {
   input: CreateShiftSlotInput
 }
+
+type PatchShiftInput = {
+  name: ShiftNode['name']
+  location: ShiftNode['location']
+  datetimeStart: ShiftNode['datetimeStart']
+  datetimeEnd: ShiftNode['datetimeEnd']
+  slots: string[]
+}
+
+export interface PatchShiftMutationVariables {
+  id: string
+  input: PatchShiftInput
+}
+
+export interface PatchShiftMutationReturns {
+  shift: Pick<ShiftNode, 'id' | 'name'>
+}

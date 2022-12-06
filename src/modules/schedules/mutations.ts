@@ -168,3 +168,14 @@ export const DELETE_SHIFT_SLOT_MUTATION = gql`
     }
   }
 `
+
+export const PATCH_SHIFT_MUTATION = gql`
+  mutation PatchShift($id: ID!, $input: PatchShiftInput!) {
+    patchShift(id: $id, input: $input) {
+      shift {
+        id
+        name
+      }
+    }
+  }
+`
