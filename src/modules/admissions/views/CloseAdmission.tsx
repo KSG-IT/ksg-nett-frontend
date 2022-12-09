@@ -32,7 +32,7 @@ export const CloseAdmission: React.FC = () => {
     },
   } = data
 
-  if (activeAdmission === null || activeAdmission.status !== 'CLOSED') {
+  if (activeAdmission === null || activeAdmission.status !== 'LOCKED') {
     return <Navigate to="/admission" />
   }
 
