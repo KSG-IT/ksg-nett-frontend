@@ -18,7 +18,6 @@ export function useRegisterInformationAPI({
     const { id } = applicant
     const input = {
       ...data,
-      image: data.image,
       dateOfBirth: format(new Date(data.dateOfBirth), 'yyyy-MM-dd'),
       status: ApplicantStatusValues.HAS_REGISTERED_PROFILE,
       lastActivity: new Date(),

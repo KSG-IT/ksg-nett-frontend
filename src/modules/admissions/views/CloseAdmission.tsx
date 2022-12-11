@@ -33,7 +33,7 @@ export const CloseAdmission: React.FC = () => {
   } = data
 
   if (activeAdmission === null || activeAdmission.status !== 'LOCKED') {
-    return <Navigate to="/admission" />
+    return <span>Opptaket er enten ikke startet eller låst</span>
   }
 
   return (

@@ -1,10 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { showNotification } from '@mantine/notifications'
 import { PatchApplicantReturns } from 'modules/admissions/types.graphql'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
 import { OnFormSubmit } from 'types/forms'
-import { FILE_SIZE } from 'util/consts'
 import * as yup from 'yup'
 
 export type RegisterInformationFormData = {
@@ -17,7 +16,6 @@ export type RegisterInformationFormData = {
   dateOfBirth: Date
   phone: string
   wantsDigitalInterview: boolean
-  image?: File
 }
 
 const RegisterInformationSchema = yup.object().shape({
@@ -31,13 +29,6 @@ const RegisterInformationSchema = yup.object().shape({
   study: yup.string().required('Studie må fylles ut'),
   dateOfBirth: yup.date().required('Fødselsdato må fylles ut'),
   phone: yup.string().required('Telefonnummer må fylles ut'),
-  image: yup
-    .mixed()
-    .test(
-      'FILE_SIZE',
-      'Uploaded file is too big.',
-      value => !value || (value && value.size <= FILE_SIZE)
-    ),
   wantsDigitalInterview: yup.boolean().required(),
 })
 
@@ -56,6 +47,10 @@ export function useRegisterInformationLogic(
     resolver: yupResolver(RegisterInformationSchema),
   })
 
+  // Very hacky fix because upload file does not trigger re-render so UX is bad
+  const [file, setFile] = useState<File | null>(null)
+  const [doesNotWantImage, setDoesNotWantImage] = useState(false)
+
   const handleSubmit = async (data: RegisterInformationFormData) => {
     const { gdprConsent } = data
 
@@ -66,15 +61,33 @@ export function useRegisterInformationLogic(
       })
       return
     }
-    await toast.promise(onSubmit(data), {
-      success: 'Informasjonen er lagret',
-      loading: 'Lagrer...',
-      error: 'Noe gikk galt',
-    })
+
+    const mutationdata = {
+      ...data,
+      image: file,
+    }
+
+    if (!file) {
+      if (doesNotWantImage) {
+        mutationdata.image = null
+      } else {
+        showNotification({
+          message: 'Du må laste opp bilde',
+          color: 'yellow',
+        })
+        return
+      }
+    }
+
+    await onSubmit(mutationdata)
   }
 
   return {
     form,
+    file,
+    setFile,
+    doesNotWantImage,
+    setDoesNotWantImage,
     onSubmit: handleSubmit,
   }
 }

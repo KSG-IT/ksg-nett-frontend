@@ -1,18 +1,16 @@
 import {
   Button,
   Checkbox,
-  FileButton,
+  FileInput,
   Group,
   Stack,
-  Text,
   TextInput,
   Title,
 } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
-import { IconUpload } from '@tabler/icons'
+import { IconFileCode } from '@tabler/icons'
 import { MessageBox } from 'components/MessageBox'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
-import { useState } from 'react'
 import { useRegisterInformationAPI } from './useRegisterInformationAPI'
 import { useRegisterInformationLogic } from './useRegisterInformationLogic'
 
@@ -23,12 +21,16 @@ interface ResisterInformationViewProps {
 export const RegisterInformationForm: React.FC<
   ResisterInformationViewProps
 > = ({ applicant }) => {
-  const { form, onSubmit } = useRegisterInformationLogic(
-    useRegisterInformationAPI({ applicant })
-  )
+  const {
+    form,
+    file,
+    setFile,
+    doesNotWantImage,
+    setDoesNotWantImage,
+    onSubmit,
+  } = useRegisterInformationLogic(useRegisterInformationAPI({ applicant }))
   const { formState, register, handleSubmit, getValues, setValue } = form
   const { errors, isSubmitting } = formState
-  const [doesNotWantImage, setDoesNotWantImage] = useState(false)
 
   return (
     <Stack>
@@ -94,7 +96,17 @@ export const RegisterInformationForm: React.FC<
             {...register('gdprConsent')}
           />
           <Group>
-            <FileButton
+            <FileInput
+              value={file}
+              onChange={setFile}
+              label="Velg en opptaksfil"
+              accept="image/png,image/jpeg,image/jpg"
+              placeholder="Trykk her"
+              icon={<IconFileCode />}
+              clearable
+            />
+
+            {/* <FileButton
               accept="image/png,image/jpeg,image/jpg"
               onChange={file => setValue('image', file ?? undefined)}
             >
@@ -109,7 +121,7 @@ export const RegisterInformationForm: React.FC<
               )}
             </FileButton>
             {getValues('image') && (getValues('image')?.name ?? '')}
-            {errors?.image && <Text color="red">Bilde må lastes opp</Text>}
+            {errors?.image && <Text color="red">Bilde må lastes opp</Text>} */}
           </Group>
 
           <Checkbox
@@ -129,7 +141,7 @@ export const RegisterInformationForm: React.FC<
           <Group position="right" mt="md">
             <Button
               loading={isSubmitting}
-              disabled={!doesNotWantImage && !getValues('image')}
+              disabled={!doesNotWantImage && !file}
               type="submit"
               color="samfundet-red"
             >
