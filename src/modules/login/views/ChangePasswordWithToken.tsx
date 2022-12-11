@@ -3,11 +3,10 @@ import {
   createStyles,
   Paper,
   PasswordInput,
-  TextInput,
   Title,
 } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { setLoginToken } from 'util/auth'
 import { useJwtTokenFromQueryString } from '../hooks'
@@ -16,6 +15,7 @@ import { useLoginMutations } from '../mutations.hooks'
 export const ChangePasswordWithToken: React.FC = () => {
   const { classes } = useStyles()
   const [newPassword, setNewPassword] = useState('')
+  const [repeatNewPassword, setRepeatNewPassword] = useState('')
   const { token } = useJwtTokenFromQueryString()
   const navigate = useNavigate()
 
@@ -23,18 +23,29 @@ export const ChangePasswordWithToken: React.FC = () => {
     useLoginMutations()
 
   function handleResetPassword() {
+    if (newPassword !== repeatNewPassword) {
+      showNotification({
+        title: 'Passordfeil',
+        message: 'Passordene er ikke like',
+      })
+      return
+    }
+
     resetPasswordByToken({
       variables: {
         token,
         newPassword: newPassword,
       },
       onCompleted({ resetPasswordByToken }) {
-        console.log(resetPasswordByToken)
         setLoginToken(resetPasswordByToken.loginToken)
-        navigate('/login')
+        navigate('/dashboard')
+        window.location.reload()
       },
-      onError() {
-        toast.error('Noe gikk galt')
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message: message,
+        })
       },
     })
   }
@@ -56,6 +67,12 @@ export const ChangePasswordWithToken: React.FC = () => {
           label="Nytt passord"
           size="md"
           onChange={evt => setNewPassword(evt.target.value)}
+        />
+        <PasswordInput
+          value={repeatNewPassword}
+          label="Gjenta nytt passord"
+          size="md"
+          onChange={evt => setRepeatNewPassword(evt.target.value)}
         />
         <Button
           color="samfundet-red"
