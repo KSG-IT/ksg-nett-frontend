@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
-import { Container, createStyles, Title } from '@mantine/core'
+import { Container, createStyles, Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -44,15 +44,18 @@ export const MigrationWizard: React.FC = () => {
 
   return (
     <Container className={classes.container}>
-      <Title>Velkommen til KSG-nett</Title>
-      <MessageBox type="info">
-        Den første gangen du logger inn her har du mulighet til å korrigere
-        informasjon. Vi flytter over kallenavn til en egen kolonne slik at det
-        skal bli lettere for de som holder på med krysselister å kunne finne
-        riktige navn på listene. Gjerne flytt eventuelle kallenavn til
-        kallenavn-feltet.
-      </MessageBox>
-      <UserMigrationWizardForm user={me} />
+      <Stack>
+        <Title>Velkommen til KSG-nett</Title>
+        <MessageBox type="info">
+          Den første gangen du logger inn her har du mulighet til å korrigere
+          informasjon. Vi flytter over kallenavn til en egen kolonne slik at det
+          skal bli lettere for de som holder på med krysselister å kunne finne
+          riktige navn på listene. Gjerne flytt eventuelle kallenavn til
+          kallenavn-feltet.
+        </MessageBox>
+
+        <UserMigrationWizardForm user={me} />
+      </Stack>
     </Container>
   )
 }
