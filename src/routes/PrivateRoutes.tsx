@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import { Center } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { mn } from 'date-fns/locale'
 
 import {
   AdmissionDashboard,
@@ -61,6 +62,7 @@ import {
   UserTypeDetail,
   UserTypes,
 } from 'modules/users/views'
+import { FirstTimeLogin } from 'modules/users/views/FirstTImeLogin'
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useStore } from 'store'
@@ -78,7 +80,7 @@ export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
   const setUser = useStore(state => state.setUser)
 
-  if (error) return <FullPageError error={error} />
+  if (error) return <FullPageError />
 
   if (loading || data === undefined)
     return (
@@ -91,6 +93,17 @@ export const AppRoutes: React.FC = () => {
 
   if (me == null || me === undefined) {
     return <PublicRoutes />
+  }
+
+  console.log(me)
+  // Registration wizard
+  if (me.firstTimeLogin) {
+    return (
+      <Routes>
+        <Route path="registration" element={<FirstTimeLogin />} />
+        <Route path="*" element={<Navigate to="/registration" />} />
+      </Routes>
+    )
   }
 
   if (me.requiresMigrationWizard) {

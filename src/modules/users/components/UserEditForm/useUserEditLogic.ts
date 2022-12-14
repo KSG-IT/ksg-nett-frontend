@@ -16,7 +16,6 @@ export type UserProfileFormData = {
   dateOfBirth: Date
   phone: string
   email: string
-  biography: string
   profileImage?: File | null
 }
 
@@ -36,10 +35,6 @@ const UserEditSchema = yup.object().shape({
   dateOfBirth: yup.date().required('Fødselsdato må fylles ut'),
   phone: yup.string().required('Telefonnummer må fylles ut'),
   email: yup.string().required('E-post må fylles ut'),
-  biography: yup
-    .string()
-    .required('Biografi må fylles ut')
-    .test('len', 'Maks antall ord: 150 ', val => !val || val.length <= 150),
   profileImage: yup
     .mixed()
     .nullable()

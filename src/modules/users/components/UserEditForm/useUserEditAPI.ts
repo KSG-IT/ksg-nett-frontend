@@ -33,7 +33,6 @@ export function useEditProfileAPI(user: UserNode) {
     dateOfBirth: new Date(user?.dateOfBirth) ?? new Date(),
     phone: user?.phone ?? '',
     email: user?.email ?? '',
-    biography: user?.biography ?? '',
     profileImage: null,
   }
   return {

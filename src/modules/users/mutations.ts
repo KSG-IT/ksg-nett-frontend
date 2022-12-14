@@ -59,3 +59,13 @@ export const REMOVE_USER_FROM_USER_TYPE_MUTATION = gql`
     }
   }
 `
+
+export const UPDATE_ABOUT_ME_MUTATION = gql`
+  mutation UpdateAboutMe($aboutMe: String) {
+    updateAboutMe(aboutMe: $aboutMe) {
+      user {
+        id
+      }
+    }
+  }
+`

@@ -1,11 +1,4 @@
-import {
-  Button,
-  FileInput,
-  Group,
-  SimpleGrid,
-  Textarea,
-  TextInput,
-} from '@mantine/core'
+import { Button, FileInput, Group, SimpleGrid, TextInput } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import {
   IconAt,
@@ -104,12 +97,6 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
           onChange={value => value && setValue('profileImage', value)}
         />
       </SimpleGrid>
-      <Textarea
-        autosize
-        label="Om meg"
-        error={errors?.biography?.message}
-        {...register('biography')}
-      />
 
       <Group position="apart" mt="md">
         <Button

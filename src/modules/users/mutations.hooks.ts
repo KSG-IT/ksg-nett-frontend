@@ -3,6 +3,7 @@ import {
   ADD_USER_TO_USER_TYPE_MUTATION,
   PATCH_USER_MUTATION,
   REMOVE_USER_FROM_USER_TYPE_MUTATION,
+  UPDATE_ABOUT_ME_MUTATION,
   UPDATE_MY_INFO_MUTATION,
 } from './mutations'
 import {
@@ -10,6 +11,8 @@ import {
   AddUserToUserTypeVariables,
   RemoveUserFromUserTypeReturns,
   RemoveUserFromUserTypeVariables,
+  UpdateAboutMeReturns,
+  UpdateAboutMeVariables,
   UserNode,
 } from './types'
 
@@ -52,6 +55,11 @@ export function useUserMutations() {
     UPDATE_MY_INFO_MUTATION
   )
 
+  const [updateAboutMe, { loading: updateAboutMeLoading }] = useMutation<
+    UpdateAboutMeReturns,
+    UpdateAboutMeVariables
+  >(UPDATE_ABOUT_ME_MUTATION)
+
   return {
     patchUser,
     patchUserLoading,
@@ -59,6 +67,8 @@ export function useUserMutations() {
     updateMyInfo,
     updateMyInfoLoading,
     updateMyInfoError,
+    updateAboutMe,
+    updateAboutMeLoading,
   }
 }
 

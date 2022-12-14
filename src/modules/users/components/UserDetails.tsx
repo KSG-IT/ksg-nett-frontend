@@ -6,14 +6,11 @@ import {
   createStyles,
   Divider,
   Grid,
-  Group,
   Stack,
   Text,
-  ThemeIcon,
 } from '@mantine/core'
 import {
   IconAt,
-  IconBook,
   IconCake,
   IconHome,
   IconMapPin,
@@ -22,7 +19,7 @@ import {
 } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { PermissionGate } from 'components/PermissionGate'
-import { useIsMobile, useMediaQuery } from 'util/hooks'
+import { useIsMobile } from 'util/hooks'
 import { PERMISSIONS } from 'util/permissions'
 import { UserNode } from '../types'
 import { IconWithData } from './IconWithData'
@@ -86,13 +83,14 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
             <IconWithData icon={IconMapPin} userData={user.studyAddress} />
             <IconWithData icon={IconSchool} userData={user.study} />
             <IconWithData icon={IconCake} userData={user.dateOfBirth} />
-            <Group spacing={'xs'} className={classes.bio} noWrap mt={'xl'}>
+            {/* <Group spacing={'xs'} className={classes.bio} noWrap mt={'xl'}>
               <Text className={classes.aboutMe}>Om meg</Text>
               <ThemeIcon variant="light" color={'samfundet-red'}>
                 <IconBook stroke={1.2} />
               </ThemeIcon>
-            </Group>
-            <Text mt={'xs'}>{user.biography}</Text>
+            </Group> 
+            <Text mt={'xs'}>{user.aboutMe}</Text>
+            */}
           </Grid.Col>
           {!isMobile && (
             <Grid.Col xs={5} lg={5} offset={1}>

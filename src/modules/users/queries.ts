@@ -12,6 +12,7 @@ export const ME_QUERY = gql`
       icalToken
       upvotedQuoteIds
       requiresMigrationWizard
+      firstTimeLogin
       lastTransactions {
         name
         amount
@@ -32,7 +33,7 @@ export const USER_QUERY = gql`
       getCleanFullName
       firstName
       lastName
-      biography
+      aboutMe
       homeTown
       dateOfBirth
       ksgStatus
