@@ -1,12 +1,12 @@
 import { Card, createStyles, SimpleGrid, Stack, Text } from '@mantine/core'
 import {
   IconBabyCarriage,
-  IconCalendarTime,
   IconCreditCard,
   IconEdit,
   IconMeat,
   IconQuote,
 } from '@tabler/icons'
+import { PERMISSIONS } from 'util/permissions'
 import { ShortcutCardItem } from './ShortcutCardItem'
 
 const shortcuts = [
@@ -29,17 +29,11 @@ const shortcuts = [
     link: '/schedules/all-shifts',
   },
   {
-    title: 'Tilgjengelighet',
-    icon: IconCalendarTime,
-    color: 'samfundet-red',
-    link: '/schedules/me/availability',
-  },
-  {
     title: 'Nytt referat',
     icon: IconEdit,
     color: 'samfundet-red',
     link: '/summaries/create',
-    permissions: ['summaries.add.summary'],
+    permissions: [PERMISSIONS.summaries.add.summary],
   },
 ]
 

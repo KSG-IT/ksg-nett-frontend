@@ -20,7 +20,11 @@ import {
 } from '../components/SociOrderSession'
 import { SociOrderSessionStatusValues } from '../enums'
 import { useSociOrderSessionMutations } from '../mutations.hooks'
-import { ACTIVE_SOCI_ORDER_SESSION, ALL_SOCI_SESSIONS } from '../queries'
+import {
+  ACTIVE_SOCI_ORDER_SESSION,
+  ALL_SOCI_SESSIONS,
+  MY_SESSION_PRODUCT_ORDERS_QUERY,
+} from '../queries'
 import { ActiveSociOrderSessionReturns } from '../types.graphql'
 
 export const SociOrderSession: React.FC = ({}) => {
@@ -67,6 +71,7 @@ export const SociOrderSession: React.FC = ({}) => {
         ME_QUERY,
         DASHBOARD_DATA_QUERY,
         ALL_SOCI_SESSIONS,
+        MY_SESSION_PRODUCT_ORDERS_QUERY,
       ],
     })
   }
