@@ -105,23 +105,6 @@ export const RegisterInformationForm: React.FC<
               icon={<IconFileCode />}
               clearable
             />
-
-            {/* <FileButton
-              accept="image/png,image/jpeg,image/jpg"
-              onChange={file => setValue('image', file ?? undefined)}
-            >
-              {props => (
-                <Button
-                  color="samfundet-red"
-                  leftIcon={<IconUpload />}
-                  {...props}
-                >
-                  Last opp bilde
-                </Button>
-              )}
-            </FileButton>
-            {getValues('image') && (getValues('image')?.name ?? '')}
-            {errors?.image && <Text color="red">Bilde må lastes opp</Text>} */}
           </Group>
 
           <Checkbox

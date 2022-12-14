@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/client'
-import { Button, Card, Group, Image, Stack, Text, Title } from '@mantine/core'
+import { Button, createStyles, Group, Image, Stack, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading/FullContentLoader'
 import { PermissionGate } from 'components/PermissionGate'
-import { UserThumbnail } from 'modules/users/components/UserThumbnail'
 import { Link, useParams } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
+import { InternalGroupTabs } from '../components/InternalGroupDetail'
 import { INTERNAL_GROUP_QUERY } from '../queries'
 import { InternalGroupReturns, InternalGroupVariables } from '../types'
 
@@ -26,6 +26,7 @@ interface InternalGroupDetailParams {
 }
 
 export const InternalGroupDetail: React.FC = () => {
+  const { classes } = useStyles()
   const { internalGroupId } = useParams<
     keyof InternalGroupDetailParams
   >() as InternalGroupDetailParams
@@ -40,6 +41,7 @@ export const InternalGroupDetail: React.FC = () => {
   if (error) return <FullPageError />
 
   if (loading || !data) return <FullContentLoader />
+
   const { internalGroup } = data
 
   if (internalGroup === null) return <FullPage404 />
@@ -55,6 +57,9 @@ export const InternalGroupDetail: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={overloadedBreadcrumbs} />
+      {internalGroup.groupImage && (
+        <Image className={classes.banner} src={internalGroup.groupImage} />
+      )}
       <Group position="apart">
         <Title>{internalGroup.name}</Title>
         <PermissionGate
@@ -67,25 +72,17 @@ export const InternalGroupDetail: React.FC = () => {
           </Link>
         </PermissionGate>
       </Group>
-      <Image src={internalGroup.groupImage ?? ''} />
-
-      <Card>
-        <Title order={2}>Beskrivelse av gjengen</Title>
-        <Text>{internalGroup.description}</Text>
-      </Card>
-      {internalGroup.membershipData.map(position => (
-        <>
-          <Title order={3}>{position.internalGroupPositionName}</Title>
-          <Group>
-            {position.users.map(user => (
-              <Stack>
-                <UserThumbnail user={user} />
-                <Text>{user.fullName}</Text>
-              </Stack>
-            ))}
-          </Group>
-        </>
-      ))}
+      <InternalGroupTabs internalGroup={internalGroup} />
     </Stack>
   )
 }
+
+const useStyles = createStyles(() => ({
+  banner: {
+    minHeight: 200,
+    maxHeight: 250,
+    width: '100%',
+    borderRadius: '10px 10px 0 0',
+    overflow: 'clip',
+  },
+}))

@@ -1,4 +1,4 @@
-import { Card, createStyles, SimpleGrid, Stack, Text } from '@mantine/core'
+import { Card, createStyles, Stack, Text } from '@mantine/core'
 import {
   IconBabyCarriage,
   IconCreditCard,
@@ -6,8 +6,8 @@ import {
   IconMeat,
   IconQuote,
 } from '@tabler/icons'
+import { ShortcutCard, ShortcutCardGrid } from 'components/ShortcutCard'
 import { PERMISSIONS } from 'util/permissions'
-import { ShortcutCardItem } from './ShortcutCardItem'
 
 const shortcuts = [
   {
@@ -47,49 +47,26 @@ export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
   const { classes } = useStyles()
 
   return (
-    <Stack spacing={0}>
+    <Stack>
       <Text color="dimmed" className={classes.title}>
         Snarveier
       </Text>
-      <Card py={0} className={classes.card}>
+      <Card p={0}>
         {sociOrderSession && (
-          <ShortcutCardItem
+          <ShortcutCard
             title="Stilletime"
             icon={IconMeat}
             color="samfundet-red"
             link="/economy/soci-sessions/live"
           />
         )}
-
-        <SimpleGrid
-          cols={5}
-          my={'xl'}
-          breakpoints={[
-            { maxWidth: 980, cols: 3, spacing: 'md' },
-            { maxWidth: 755, cols: 2, spacing: 'sm' },
-            { maxWidth: 600, cols: 2, spacing: 'sm' },
-          ]}
-        >
-          {shortcuts.map((shortcut, index) => (
-            <ShortcutCardItem key={index} {...shortcut} />
-          ))}
-        </SimpleGrid>
       </Card>
+      <ShortcutCardGrid shortcuts={shortcuts} />
     </Stack>
   )
 }
 
 const useStyles = createStyles(theme => ({
-  card: {
-    backgroundColor: theme.colors.gray[0],
-    paddingRight: theme.spacing.md,
-    paddingLeft: theme.spacing.md,
-
-    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
-      padding: 0,
-    },
-  },
-
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontWeight: 700,

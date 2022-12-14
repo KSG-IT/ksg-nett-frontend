@@ -3,14 +3,14 @@ import { TablerIcon } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
 
-interface ShortcutProps {
+export interface ShortcutProps {
   title: string
-  icon: TablerIcon
+  icon?: TablerIcon
   color: string
   link: string
   permissions?: string | string[]
 }
-export const ShortcutCardItem: React.FC<ShortcutProps> = ({
+export const ShortcutCard: React.FC<ShortcutProps> = ({
   title,
   icon: Icon,
   color,
@@ -28,7 +28,7 @@ export const ShortcutCardItem: React.FC<ShortcutProps> = ({
         key={title}
         className={classes.item}
       >
-        <Icon color={theme.colors[color][6]} size={32} />
+        {Icon && <Icon color={theme.colors[color][6]} size={32} />}
         <Text
           size={'md'}
           color={'dimmed'}

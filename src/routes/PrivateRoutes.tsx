@@ -297,7 +297,7 @@ export const AppRoutes: React.FC = () => {
           />
           <Route path="close" element={<CloseAdmission />} />
 
-          <Route path="internal-group-applicants">
+          <Route path="internal-group">
             <Route
               path=":internalGroupId"
               element={<InternalGroupApplicants />}
