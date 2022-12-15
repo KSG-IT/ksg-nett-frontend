@@ -6,8 +6,10 @@ import {
   Text,
   UnstyledButton,
 } from '@mantine/core'
+import { useListState } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
-import { IconCaretDown, IconCaretUp, IconX } from '@tabler/icons'
+import { IconCaretDown, IconCaretUp } from '@tabler/icons'
+import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import {
   APPLICANT_QUERY,
@@ -26,7 +28,10 @@ interface ApplicantPrioritiesFieldProps {
 export const ApplicantPrioritiesField: React.VFC<
   ApplicantPrioritiesFieldProps
 > = ({ applicant }) => {
-  const [priorities, setPriorities] = useState(applicant.priorities)
+  const [priorities, setPriorities] = useState(
+    applicant.priorities.filter(priority => priority !== null)
+  )
+  const [values, handlers] = useListState(priorities)
   const [animationParent] = useAutoAnimate<HTMLUListElement>()
   const [isDirty, setIsDirty] = useState(false)
   const { classes } = useStyles()
@@ -36,10 +41,7 @@ export const ApplicantPrioritiesField: React.VFC<
     deleteInternalGroupPositionPriority,
   } = useApplicantMutations()
 
-  function renderChangePriorityButtons(
-    priority: InternalGroupPositionPriority,
-    index: number
-  ) {
+  function renderChangePriorityButtons(index: number) {
     const moveUp = index > 0
     const moveDown = index < 2
 
@@ -92,20 +94,12 @@ export const ApplicantPrioritiesField: React.VFC<
   }
 
   function handlePriorityChange(index: number, direction: -1 | 1) {
-    const newIndex = index + direction
-
-    const newPriorities = [...priorities]
-    const [oldPriority] = newPriorities.splice(newIndex, 1, priorities[index])
-    newPriorities.splice(index, 1, oldPriority)
-
-    setPriorities(newPriorities)
+    handlers.reorder({ from: index, to: index + direction })
     setIsDirty(true)
   }
 
-  function updatePriorities() {
-    const filteredPriorities = priorities.filter(priority => priority !== null)
-
-    const priorityOrder = filteredPriorities.map(
+  function handleUpdatePriorities() {
+    const priorityOrder = values.map(
       priority => priority!.internalGroupPosition.id
     )
 
@@ -136,18 +130,19 @@ export const ApplicantPrioritiesField: React.VFC<
       <Text size="lg" weight="bold">
         Kandidat prioriteringer
       </Text>
+      <MessageBox type="warning">
+        Husk å lagre endringer til prioriteringer!
+      </MessageBox>
       <ul className={classes.priorityContainer} ref={animationParent}>
-        {priorities
-          .filter(priority => priority !== null)
-          .map((priority, index) => (
-            <li className={classes.priorityCard} key={priority!.id}>
-              <span>{priority?.internalGroupPosition.name}</span>
-              {renderChangePriorityButtons(priority, index)}
-            </li>
-          ))}
+        {values.map((priority, index) => (
+          <li className={classes.priorityCard} key={priority!.id}>
+            <span>{priority?.internalGroupPosition.name}</span>
+            {renderChangePriorityButtons(index)}
+          </li>
+        ))}
       </ul>
-      <Button disabled={!isDirty} onClick={updatePriorities}>
-        Lagre endringer
+      <Button disabled={!isDirty} onClick={handleUpdatePriorities}>
+        Oppdater prioriteter
       </Button>
     </Stack>
   )
