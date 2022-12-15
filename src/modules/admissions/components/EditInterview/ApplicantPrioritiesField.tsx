@@ -1,8 +1,23 @@
-import { Button, Group, Stack, Text } from '@mantine/core'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import {
+  Button,
+  createStyles,
+  Stack,
+  Text,
+  UnstyledButton,
+} from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
+import { IconCaretDown, IconCaretUp, IconX } from '@tabler/icons'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
-import { ApplicantNode } from 'modules/admissions/types.graphql'
+import {
+  APPLICANT_QUERY,
+  INTERVIEW_DETAIL_QUERY,
+} from 'modules/admissions/queries'
+import {
+  ApplicantNode,
+  InternalGroupPositionPriority,
+} from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 
 interface ApplicantPrioritiesFieldProps {
   applicant: Pick<ApplicantNode, 'id' | 'priorities'>
@@ -12,27 +27,68 @@ export const ApplicantPrioritiesField: React.VFC<
   ApplicantPrioritiesFieldProps
 > = ({ applicant }) => {
   const [priorities, setPriorities] = useState(applicant.priorities)
+  const [animationParent] = useAutoAnimate<HTMLUListElement>()
+  const [isDirty, setIsDirty] = useState(false)
+  const { classes } = useStyles()
 
-  const { updateInternalGroupPositionPriorityOrder } = useApplicantMutations()
+  const {
+    updateInternalGroupPositionPriorityOrder,
+    deleteInternalGroupPositionPriority,
+  } = useApplicantMutations()
 
-  const renderChangePriorityButtons = (index: number) => {
+  function renderChangePriorityButtons(
+    priority: InternalGroupPositionPriority,
+    index: number
+  ) {
     const moveUp = index > 0
     const moveDown = index < 2
 
     return (
-      <Group>
-        {moveUp && (
-          <Button onClick={() => handlePriorityChange(index, -1)}>
-            Flytt opp
-          </Button>
-        )}
-        {moveDown && (
-          <Button onClick={() => handlePriorityChange(index, +1)}>
-            Flytt ned
-          </Button>
-        )}
-      </Group>
+      <span>
+        <UnstyledButton
+          disabled={!moveUp}
+          onClick={() => handlePriorityChange(index, -1)}
+        >
+          <IconCaretUp />
+        </UnstyledButton>
+
+        <UnstyledButton
+          disabled={!moveDown}
+          onClick={() => handlePriorityChange(index, 1)}
+        >
+          <IconCaretDown />
+        </UnstyledButton>
+      </span>
     )
+  }
+
+  function handleDeletePriority(priority: InternalGroupPositionPriority) {
+    // Not stable API endpoint yet
+    const confirmed = confirm(
+      `Sikker på at du vil slette ${priority?.internalGroupPosition.name}?`
+    )
+    if (!confirmed || !priority) return
+
+    deleteInternalGroupPositionPriority({
+      variables: {
+        id: priority.id,
+      },
+      refetchQueries: [INTERVIEW_DETAIL_QUERY, APPLICANT_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Prioritet slettet',
+          message: `${priority.internalGroupPosition.name} ble slettet fra listen`,
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
+      },
+    })
   }
 
   function handlePriorityChange(index: number, direction: -1 | 1) {
@@ -43,6 +99,7 @@ export const ApplicantPrioritiesField: React.VFC<
     newPriorities.splice(index, 1, oldPriority)
 
     setPriorities(newPriorities)
+    setIsDirty(true)
   }
 
   function updatePriorities() {
@@ -57,13 +114,21 @@ export const ApplicantPrioritiesField: React.VFC<
         applicantId: applicant.id,
         priorityOrder: priorityOrder,
       },
+      onCompleted() {
+        showNotification({
+          title: 'Prioriteter oppdatert',
+          message: 'Kandidaten har fått oppdatert prioriteringene sine',
+          color: 'teal',
+        })
+        setIsDirty(false)
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Klarte ikke oppdatere prioriteter',
+          message,
+        })
+      },
     })
-      .then(() => {
-        toast.success('Prioriteringene er oppdatert')
-      })
-      .catch(error => {
-        toast.error(error.message)
-      })
   }
 
   return (
@@ -71,19 +136,39 @@ export const ApplicantPrioritiesField: React.VFC<
       <Text size="lg" weight="bold">
         Kandidat prioriteringer
       </Text>
-      {priorities.map((priority, index) => {
-        if (priority === null) return
-        return (
-          <Group key={index}>
-            {index + 1}. {priority?.internalGroupPosition.name}
-            {renderChangePriorityButtons(index)}
-          </Group>
-        )
-      })}
-
-      <Group>
-        <Button onClick={updatePriorities}>Lagre prioriteringer</Button>
-      </Group>
+      <ul className={classes.priorityContainer} ref={animationParent}>
+        {priorities
+          .filter(priority => priority !== null)
+          .map((priority, index) => (
+            <li className={classes.priorityCard} key={priority!.id}>
+              <span>{priority?.internalGroupPosition.name}</span>
+              {renderChangePriorityButtons(priority, index)}
+            </li>
+          ))}
+      </ul>
+      <Button disabled={!isDirty} onClick={updatePriorities}>
+        Lagre endringer
+      </Button>
     </Stack>
   )
 }
+
+const useStyles = createStyles(t => ({
+  priorityContainer: {
+    margin: 0,
+    padding: 0,
+  },
+  priorityCard: {
+    width: 400,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    listStyle: 'none',
+    backgroundColor: t.white,
+    boxShadow: t.shadows.sm,
+    borderRadius: t.radius.sm,
+    padding: t.spacing.sm,
+    margin: '0.5rem',
+  },
+}))

@@ -389,3 +389,11 @@ export const ASSIGN_APPLICANT_NEW_INTERVIEW_MUTATION = gql`
     }
   }
 `
+
+export const DELETE_INTERNAL_GROUP_POSITION_PRIORITY_MUTATION = gql`
+  mutation DeleteInternalGroupPositionPriorityMutation($id: ID!) {
+    deleteInternalGroupPositionPriority(id: $id) {
+      found
+    }
+  }
+`

@@ -11,6 +11,7 @@ import {
   CREATE_APPLICANT_COMMENT_MUTATION,
   CREATE_APPLICATIONS,
   DELETE_APPLICANT,
+  DELETE_INTERNAL_GROUP_POSITION_PRIORITY_MUTATION,
   LOCK_ADMISSION_MUTATION,
   PATCH_INTERVIEW_SCHEDULE_TEMPLATE,
   REMOVE_SELF_AS_INTERVIEWER,
@@ -346,6 +347,13 @@ export const useApplicantMutations = () => {
     AssignApplicantNewInterviewVariables
   >(ASSIGN_APPLICANT_NEW_INTERVIEW_MUTATION)
 
+  const [
+    deleteInternalGroupPositionPriority,
+    { loading: deleteInternalGroupPositionPriorityLoading },
+  ] = useMutation<DeleteMutationReturns, DeleteMutationVariables>(
+    DELETE_INTERNAL_GROUP_POSITION_PRIORITY_MUTATION
+  )
+
   return {
     patchApplicant,
     patchApplicantLoading,
@@ -361,6 +369,9 @@ export const useApplicantMutations = () => {
     updateInternalGroupPositionPriorityOrderLoading,
     assignApplicantNewInterview,
     assignApplicantNewInterviewLoading,
+
+    deleteInternalGroupPositionPriority,
+    deleteInternalGroupPositionPriorityLoading,
   }
 }
 
