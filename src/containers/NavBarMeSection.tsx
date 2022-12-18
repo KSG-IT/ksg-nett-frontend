@@ -4,7 +4,7 @@ import {
   IconJumpRope,
   IconLogout,
   IconPigMoney,
-  IconUser,
+  IconSettings,
 } from '@tabler/icons'
 import { UserThumbnail } from 'modules/users/components'
 import { Link } from 'react-router-dom'
@@ -36,9 +36,9 @@ export const NavBarMeSection: React.FC = () => {
 
   return (
     <Navbar.Section>
-      <Link to={`/users/${me.id}`}>
-        <Group>
-          <UserThumbnail user={me} size="md" />
+      <Group>
+        <UserThumbnail user={me} size="md" />
+        <Link to={`/users/${me.id}`}>
           <Stack spacing={0}>
             <Text style={{ textOverflow: 'ellipsis' }} size="xs">
               {me.getFullWithNickName}
@@ -50,12 +50,12 @@ export const NavBarMeSection: React.FC = () => {
               </Text>
             </Group>
           </Stack>
-        </Group>
-      </Link>
+        </Link>
+      </Group>
       <NavItem
-        label="Min profil"
-        link={`/users/${me.id}`}
-        icon={IconUser}
+        label="Innstillinger"
+        link={`/users/me`}
+        icon={IconSettings}
         active={false}
         permissions={[]}
       />
