@@ -38,6 +38,7 @@ export const ApplicantPrioritiesField: React.VFC<
 
   const {
     updateInternalGroupPositionPriorityOrder,
+    updateInternalGroupPositionPriorityOrderLoading,
     deleteInternalGroupPositionPriority,
   } = useApplicantMutations()
 
@@ -141,7 +142,11 @@ export const ApplicantPrioritiesField: React.VFC<
           </li>
         ))}
       </ul>
-      <Button disabled={!isDirty} onClick={handleUpdatePriorities}>
+      <Button
+        disabled={!isDirty}
+        loading={updateInternalGroupPositionPriorityOrderLoading}
+        onClick={handleUpdatePriorities}
+      >
         Oppdater prioriteter
       </Button>
     </Stack>
