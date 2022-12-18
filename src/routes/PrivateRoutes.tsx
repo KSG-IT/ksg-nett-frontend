@@ -97,8 +97,6 @@ export const AppRoutes: React.FC = () => {
     return <PublicRoutes />
   }
 
-  console.log(me)
-  // Registration wizard
   if (me.firstTimeLogin) {
     return (
       <Routes>
@@ -218,6 +216,14 @@ export const AppRoutes: React.FC = () => {
 
         {/* ==== USERS MODULE ==== */}
         <Route path="users">
+          <Route
+            path="me"
+            element={
+              <span>
+                Coming soon<sup>TM</sup>
+              </span>
+            }
+          />
           <Route path=":userId" element={<UserProfile />} />
           <Route path="user-types">
             <Route

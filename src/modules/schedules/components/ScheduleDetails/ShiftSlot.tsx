@@ -4,6 +4,7 @@ import {
   Avatar,
   Card,
   createStyles,
+  FocusTrap,
   Group,
   Popover,
   Stack,
@@ -122,20 +123,21 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
             onChange={evt => onSearchChange(evt.target.value)}
           />
           {data.length === 0 && <Text color="gray">Her var det tomt</Text>}
-
-          <Stack spacing={0}>
-            {data.map(user => (
-              <UnstyledButton
-                className={classes.selectUserButton}
-                onClick={() => handleSelectUser(user)}
-              >
-                <Group spacing="md">
-                  <Avatar src={user.profileImage} />
-                  <Text>{user.getCleanFullName}</Text>
-                </Group>
-              </UnstyledButton>
-            ))}
-          </Stack>
+          <FocusTrap>
+            <Stack spacing={0}>
+              {data.map(user => (
+                <UnstyledButton
+                  className={classes.selectUserButton}
+                  onClick={() => handleSelectUser(user)}
+                >
+                  <Group spacing="md">
+                    <Avatar src={user.profileImage} />
+                    <Text>{user.getCleanFullName}</Text>
+                  </Group>
+                </UnstyledButton>
+              ))}
+            </Stack>
+          </FocusTrap>
         </Card>
       </Popover.Dropdown>
     </Popover>
@@ -198,22 +200,22 @@ const EmptyShiftSlot: React.FC<ShiftSlotProps> = ({
             placeholder="Søk etter bruker"
             onChange={evt => onSearchChange(evt.target.value)}
           />
-          {data.length === 0 && <Text color="gray">Her var det tomt</Text>}
+          <FocusTrap>
+            <Stack spacing={0}>
+              {data.map(user => (
+                <UnstyledButton
+                  className={classes.selectUserButton}
+                  onClick={() => handleSelectUser(user)}
+                >
+                  <Group spacing="md">
+                    <Avatar src={user.profileImage} />
 
-          <Stack spacing={0}>
-            {data.map(user => (
-              <UnstyledButton
-                className={classes.selectUserButton}
-                onClick={() => handleSelectUser(user)}
-              >
-                <Group spacing="md">
-                  <Avatar src={user.profileImage} />
-
-                  <Text>{user.getCleanFullName}</Text>
-                </Group>
-              </UnstyledButton>
-            ))}
-          </Stack>
+                    <Text>{user.getCleanFullName}</Text>
+                  </Group>
+                </UnstyledButton>
+              ))}
+            </Stack>
+          </FocusTrap>
         </Card>
       </Popover.Dropdown>
     </Popover>

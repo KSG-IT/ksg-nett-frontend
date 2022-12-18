@@ -39,7 +39,6 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
   return (
     <Stack className={classes.wrapper}>
       <Title order={3}>Uke {format(new Date(shiftDayWeek.date), 'w')}</Title>
-
       <Paper p={'xs'} className={classes.card}>
         {shiftDayWeek.shiftDays.map(shiftDay => (
           <Card

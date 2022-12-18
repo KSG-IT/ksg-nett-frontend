@@ -27,6 +27,7 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
       <Title order={3}>
         Uke {format(new Date(shiftLocationWeek.date), 'w')}
       </Title>
+
       {shiftLocationWeek.shiftDays.map(shiftDay => (
         <Stack key={shiftDay.date} className={classes.week}>
           <Title order={4}>
