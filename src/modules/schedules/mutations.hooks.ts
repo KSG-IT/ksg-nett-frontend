@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import {
+  ADD_SLOTS_TO_SHIFT_MUTATION,
   ADD_USER_TO_SHIFT_SLOT_MUTATION,
   CREATE_SCHEDULE_TEMPLATE_MUTATION,
   CREATE_SHIFT_MUTATION,
@@ -19,6 +20,8 @@ import {
   REMOVE_USER_FROM_SHIFT_SLOT_MUTATION,
 } from './mutations'
 import {
+  AddSlotsToShiftReturns,
+  AddSlotsToShiftVariables,
   AddUserToShiftSlotReturns,
   AddUserToShiftSlotVariables,
   CreateScheduleTemplateReturns,
@@ -180,6 +183,11 @@ export function useShiftMutations() {
     CreateShiftMutationVariables
   >(CREATE_SHIFT_MUTATION)
 
+  const [addSlotsToShift, { loading: addSlotsToShiftLoading }] = useMutation<
+    AddSlotsToShiftReturns,
+    AddSlotsToShiftVariables
+  >(ADD_SLOTS_TO_SHIFT_MUTATION)
+
   return {
     createShift,
     createShiftLoading,
@@ -187,5 +195,7 @@ export function useShiftMutations() {
     deleteShiftLoading,
     generateShiftsFromTemplate,
     generateShiftsFromTemplateLoading,
+    addSlotsToShift,
+    addSlotsToShiftLoading,
   }
 }

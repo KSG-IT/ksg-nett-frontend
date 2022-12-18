@@ -59,6 +59,10 @@ const shiftRoleData = [
     value: RoleValues.UGLE,
     label: parseShiftRole(RoleValues.UGLE),
   },
+  {
+    value: RoleValues.SOCIVAKT,
+    label: parseShiftRole(RoleValues.SOCIVAKT),
+  },
 ]
 
 interface ShiftRoleSelectProps
@@ -77,7 +81,6 @@ export const ShiftRoleSelect: React.FC<ShiftRoleSelectProps> = ({
       value={value}
       onChange={onChangeCallback}
       data={shiftRoleData}
-      searchable
       {...rest}
     />
   )

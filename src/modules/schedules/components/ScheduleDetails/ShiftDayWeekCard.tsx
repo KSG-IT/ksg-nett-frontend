@@ -1,6 +1,6 @@
 import { Card, createStyles, Group, Paper, Stack, Title } from '@mantine/core'
 import { IconDotsVertical } from '@tabler/icons'
-import { ShiftDayWeek } from 'modules/schedules/types.graphql'
+import { ShiftDayWeek, ShiftNode } from 'modules/schedules/types.graphql'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
 import { ShiftCard } from './ShiftCard'
@@ -8,10 +8,12 @@ import { ShiftCard } from './ShiftCard'
 interface ShiftDayWeekCardProps {
   shiftDayWeek: ShiftDayWeek
   scheduleId: string
+  setShiftModalCallback: (shift: string | null) => void
 }
 
 export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
   shiftDayWeek,
+  setShiftModalCallback,
   scheduleId,
 }) => {
   /**
@@ -59,7 +61,11 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
                 <IconDotsVertical />
               </Group>
               {shiftDay.shifts.map(shift => (
-                <ShiftCard key={shift.id} shift={shift} />
+                <ShiftCard
+                  key={shift.id}
+                  shift={shift}
+                  setShiftModalCallback={setShiftModalCallback}
+                />
               ))}
             </Stack>
           </Card>

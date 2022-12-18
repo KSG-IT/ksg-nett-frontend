@@ -5,7 +5,6 @@ import {
   createStyles,
   Divider,
   Group,
-  Modal,
   Text,
   Tooltip,
   useMantineTheme,
@@ -22,16 +21,17 @@ import { UserThumbnail } from 'modules/users/components'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
-import { ShiftCardModal } from './ShiftCardModal'
 
 interface ShiftCardProps {
   shift: ShiftNode
+  setShiftModalCallback: (shift: string | null) => void
 }
 
-export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
-  const [opened, setOpened] = useState(false)
+export const ShiftCard: React.FC<ShiftCardProps> = ({
+  shift,
+  setShiftModalCallback,
+}) => {
   const { classes } = useShiftCardStyles()
-  const theme = useMantineTheme()
 
   const { deleteShift } = useShiftMutations()
 
@@ -55,7 +55,7 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
       <Card
         withBorder
         className={classes.shift}
-        onClick={() => setOpened(true)}
+        onClick={() => setShiftModalCallback(shift.id)}
       >
         <Group position="apart" align={'flex-end'}>
           <Text className={classes.title}>{shift.name}</Text>
@@ -85,15 +85,6 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
         </Group>
         <Divider mt="md" mb="xs" />
         <Group position="apart">
-          {!shift.isFilled ? (
-            <Tooltip label="Skiftet er ikke fult">
-              <i className={classes.isFilled}>
-                <IconAlertTriangle />
-              </i>
-            </Tooltip>
-          ) : (
-            <div />
-          )}
           <div className={classes.shiftTime}>
             <IconClock size="20" color="gray" />
             <Text className={classes.timeText}>
@@ -101,19 +92,15 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({ shift }) => {
               {format(new Date(shift.datetimeEnd), 'HH:mm')}
             </Text>
           </div>
+          {!shift.isFilled && (
+            <Tooltip position="top" label="Mangler bemanning">
+              <i className={classes.isFilled}>
+                <IconAlertTriangle color="red" />
+              </i>
+            </Tooltip>
+          )}
         </Group>
       </Card>
-      <Modal
-        size={'md'}
-        overlayColor={theme.colors.gray[2]}
-        overlayOpacity={0.55}
-        overlayBlur={3}
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title="Vakt"
-      >
-        <ShiftCardModal shift={shift} />
-      </Modal>
     </>
   )
 }
@@ -157,5 +144,9 @@ const useShiftCardStyles = createStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     color: theme.colors.yellow[5],
+  },
+  rowReverse: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
   },
 }))

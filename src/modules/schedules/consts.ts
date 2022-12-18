@@ -29,6 +29,7 @@ export enum RoleValues {
   BARVAKT = 'BARVAKT',
   SPRITBARTENDER = 'SPRITBARTENDER',
   SPRITBARSJEF = 'SPRITBARSJEF',
+  SOCIVAKT = 'SOCIVAKT',
 }
 
 export enum DayValues {

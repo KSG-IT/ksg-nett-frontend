@@ -85,7 +85,7 @@ export interface AllUsersShallowQueryVariables {
 export interface AllUsersShallowQueryReturns {
   allActiveUsersList: Pick<
     UserNode,
-    'id' | 'profileImage' | 'initials' | 'getCleanFullName'
+    'id' | 'profileImage' | 'initials' | 'getCleanFullName' | 'phone'
   >[]
 }
 
@@ -124,7 +124,11 @@ export interface PatchUserReturns {
 export interface UserThumbnailProps extends AvatarProps {
   user: Pick<
     UserNode,
-    'id' | 'profileImage' | 'initials' | 'getFullWithNickName'
+    | 'id'
+    | 'profileImage'
+    | 'initials'
+    | 'getFullWithNickName'
+    | 'getCleanFullName'
   >
 }
 

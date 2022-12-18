@@ -12,6 +12,7 @@ export type ShiftSlotNode = {
   id: string
   user: UserThumbnailProps['user'] | null
   role: RoleValues
+  shift: Pick<ShiftNode, 'id'>
 }
 
 // Is there a better way to do this?
@@ -240,7 +241,7 @@ export interface GenerateShiftsFromTemplateVariables {
 }
 
 export interface CreateShiftMutationReturns {
-  shift: Pick<ShiftNode, 'id'>
+  createShift: { shift: Pick<ShiftNode, 'id'> }
 }
 
 type CreateShiftInput = {
@@ -264,4 +265,17 @@ type CreateShiftSlotInput = {
 }
 export interface CreateShiftSlotVariables {
   input: CreateShiftSlotInput
+}
+
+export type AddSlotToShiftInput = {
+  shiftSlotRole: RoleValues
+  count: number
+}
+
+export interface AddSlotsToShiftReturns {
+  shift: Pick<ShiftNode, 'id'>
+}
+export interface AddSlotsToShiftVariables {
+  shiftId: string
+  slots: AddSlotToShiftInput[]
 }
