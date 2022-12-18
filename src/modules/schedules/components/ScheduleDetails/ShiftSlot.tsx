@@ -1,8 +1,8 @@
 import { useLazyQuery } from '@apollo/client'
 import {
+  ActionIcon,
   Avatar,
   Card,
-  Center,
   createStyles,
   Group,
   Popover,
@@ -11,11 +11,10 @@ import {
   TextInput,
   Title,
   UnstyledButton,
-  useMantineTheme,
 } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
-import { IconTrash, IconUserPlus } from '@tabler/icons'
+import { IconTrash, IconUserPlus, IconX } from '@tabler/icons'
 import { RoleValues } from 'modules/schedules/consts'
 import { useShiftSlotMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
@@ -27,7 +26,7 @@ import {
   AllUsersShallowQueryVariables,
   UserThumbnailProps,
 } from 'modules/users/types'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SHIFT_DETAIL_QUERY } from './ShiftCardModal'
 
 type UserType = {
@@ -72,7 +71,7 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
   const { classes } = useStyles()
   const [popoverOpened, setPopoverOpened] = useState(false)
 
-  function handleSelectUser(user: UserType) {
+  function handleSelectUser(user: UserType | null) {
     onSelectUser(user)
     onSearchChange('')
     setPopoverOpened(false)
@@ -91,16 +90,26 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
     >
       <Popover.Target>
         <UnstyledButton className={classes.shiftSlot} onClick={togglePopover}>
-          <Group spacing="md">
-            <div className={classes.iconContainer}>
-              <UserThumbnail user={shiftSlot.user} />
-            </div>
-            <Stack spacing={0}>
-              <Text className={classes.shiftSlotRoleText}>
-                {shiftSlot.role}
-              </Text>
-              <Text>{shiftSlot.user.getFullWithNickName}</Text>
-            </Stack>
+          <Group position="apart">
+            <Group spacing="md">
+              <div className={classes.iconContainer}>
+                <UserThumbnail user={shiftSlot.user} />
+              </div>
+              <Stack spacing={0}>
+                <Text className={classes.shiftSlotRoleText}>
+                  {shiftSlot.role}
+                </Text>
+                <Text>{shiftSlot.user.getFullWithNickName}</Text>
+              </Stack>
+            </Group>
+            <ActionIcon
+              onClick={(evt: React.MouseEvent) => {
+                evt.stopPropagation()
+                handleSelectUser(null)
+              }}
+            >
+              <IconX />
+            </ActionIcon>
           </Group>
         </UnstyledButton>
       </Popover.Target>
@@ -122,12 +131,7 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
               >
                 <Group spacing="md">
                   <Avatar src={user.profileImage} />
-                  <Stack spacing={0}>
-                    <Text className={classes.shiftSlotRoleText}>
-                      {shiftSlot.role}
-                    </Text>
-                    <Text>{user.getCleanFullName}</Text>
-                  </Stack>
+                  <Text>{user.getCleanFullName}</Text>
                 </Group>
               </UnstyledButton>
             ))}
@@ -159,12 +163,17 @@ const EmptyShiftSlot: React.FC<ShiftSlotProps> = ({
     setPopoverOpened(popover => !popover)
   }
 
+  function handleClosePopover() {
+    onSearchChange('')
+    setPopoverOpened(false)
+  }
+
   return (
     <Popover
       width="target"
       position="right-start"
       opened={popoverOpened}
-      onClose={() => setPopoverOpened(false)}
+      onClose={handleClosePopover}
     >
       <Popover.Target>
         <UnstyledButton className={classes.shiftSlot} onClick={togglePopover}>
@@ -199,12 +208,8 @@ const EmptyShiftSlot: React.FC<ShiftSlotProps> = ({
               >
                 <Group spacing="md">
                   <Avatar src={user.profileImage} />
-                  <Stack spacing={0}>
-                    <Text className={classes.shiftSlotRoleText}>
-                      {shiftSlot.role}
-                    </Text>
-                    <Text>{user.getCleanFullName}</Text>
-                  </Stack>
+
+                  <Text>{user.getCleanFullName}</Text>
                 </Group>
               </UnstyledButton>
             ))}
