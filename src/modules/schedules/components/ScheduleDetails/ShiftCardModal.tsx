@@ -1,10 +1,12 @@
 import { gql, useQuery } from '@apollo/client'
 import {
+  createStyles,
   DrawerProps,
   Group,
   LoadingOverlay,
   Modal,
   Stack,
+  Tabs,
   Text,
   Title,
   UnstyledButton,
@@ -13,10 +15,13 @@ import { showNotification } from '@mantine/notifications'
 import { IconTrash } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { LocationValues } from 'modules/schedules/consts'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
 import { ShiftNode } from 'modules/schedules/types.graphql'
+import { useForm } from 'react-hook-form'
 import { AddShiftSlotPopover } from './AddShiftSlotPopover'
+import { EditShiftForm } from './EditShiftForm/EditShiftForm'
 import { ShiftSlot } from './ShiftSlot'
 
 interface ShiftCardDrawerProps extends DrawerProps {
@@ -129,17 +134,29 @@ export const ShiftCardModal: React.FC<ShiftCardDrawerProps> = ({
           </UnstyledButton>
         </Group>
       }
-      size={'md'}
       opened={opened}
       onClose={handleClose}
     >
-      <Stack spacing={'xs'}>
-        {shift.slots.map(slot => (
-          <ShiftSlot shiftSlot={slot} />
-        ))}
+      <Tabs defaultValue="info">
+        <Tabs.List>
+          <Tabs.Tab value="info">Info</Tabs.Tab>
+          <Tabs.Tab value="edit">Innstillinger</Tabs.Tab>
+        </Tabs.List>
 
-        <AddShiftSlotPopover shift={shift as ShiftNode} />
-      </Stack>
+        <Tabs.Panel value="info" pt="xs">
+          <Stack spacing={'xs'}>
+            {shift.slots.map(slot => (
+              <ShiftSlot shiftSlot={slot} />
+            ))}
+
+            <AddShiftSlotPopover shift={shift as ShiftNode} />
+          </Stack>
+        </Tabs.Panel>
+
+        <Tabs.Panel value="edit" pt="xs">
+          <EditShiftForm shift={shift} />
+        </Tabs.Panel>
+      </Tabs>
     </Modal>
   )
 }

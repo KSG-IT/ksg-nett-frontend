@@ -279,3 +279,17 @@ export interface AddSlotsToShiftVariables {
   shiftId: string
   slots: AddSlotToShiftInput[]
 }
+
+type PatchShiftInput = {
+  name?: string
+  datetimeStart?: Date
+  datetimeEnd?: Date
+  location?: LocationValues | null
+}
+export interface PatchShiftReturns {
+  shift: Pick<ShiftNode, 'id'>
+}
+export interface PatchShiftVariables {
+  id: string
+  input: PatchShiftInput
+}

@@ -178,3 +178,13 @@ export const ADD_SLOTS_TO_SHIFT_MUTATION = gql`
     }
   }
 `
+
+export const PATCH_SHIFT_MUTATION = gql`
+  mutation PatchShift($id: ID!, $input: PatchShiftInput!) {
+    patchShift(id: $id, input: $input) {
+      shift {
+        id
+      }
+    }
+  }
+`

@@ -16,6 +16,7 @@ import {
   GENERATE_SHIFTS_FROM_TEMPLATE_MUTATION,
   PATCH_SCHEDULE_MUTATION,
   PATCH_SCHEDULE_TEMPLATE_MUTATION,
+  PATCH_SHIFT_MUTATION,
   PATCH_SHIFT_SLOT_TEMPLATE_MUTATION,
   REMOVE_USER_FROM_SHIFT_SLOT_MUTATION,
 } from './mutations'
@@ -40,8 +41,10 @@ import {
   PatchScheduleTemplateReturns,
   PatchScheduleTemplateVariables,
   PatchScheduleVariables,
+  PatchShiftReturns,
   PatchShiftSlotTemplateReturns,
   PatchShiftSlotTemplateVariables,
+  PatchShiftVariables,
   RemoveUserFromShiftSlotReturns,
   RemoveUserFromShiftSlotVariables,
 } from './types.graphql'
@@ -188,11 +191,18 @@ export function useShiftMutations() {
     AddSlotsToShiftVariables
   >(ADD_SLOTS_TO_SHIFT_MUTATION)
 
+  const [patchShift, { loading: patchShiftLoading }] = useMutation<
+    PatchShiftReturns,
+    PatchShiftVariables
+  >(PATCH_SHIFT_MUTATION)
+
   return {
     createShift,
     createShiftLoading,
     deleteShift,
     deleteShiftLoading,
+    patchShift,
+    patchShiftLoading,
     generateShiftsFromTemplate,
     generateShiftsFromTemplateLoading,
     addSlotsToShift,
