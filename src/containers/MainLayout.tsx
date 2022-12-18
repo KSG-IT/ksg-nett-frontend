@@ -11,8 +11,9 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core'
+import { FullContentLoader } from 'components/Loading'
 import { UserSearch } from 'modules/header/UserSearch'
-import React from 'react'
+import React, { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Link } from 'react-router-dom'
 import { lock, unlock } from 'tua-body-scroll-lock'
@@ -123,35 +124,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     >
       {/* Main content being rendered */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {/* <Affix position={{ bottom: 20, right: 20 }}>
-          <Popover>
-            <Popover.Target>
-              <Button
-                color={'blue'}
-                variant={'light'}
-                radius={'xl'}
-                size={'sm'}
-              >
-                Noe som ikke funker?
-              </Button>
-            </Popover.Target>
-            <Popover.Dropdown>
-              <Text size={'sm'}>
-                Send inn feil eller mangler gjennom dette skjemaet!
-              </Text>
-              <Button
-                variant={'subtle'}
-                compact
-                component={'a'}
-                href={'https://forms.gle/6ofXcwWEKmB8JXWP6'}
-                target="_blank"
-              >
-                Tilbakemeldingsskjema
-              </Button>
-            </Popover.Dropdown>
-          </Popover>
-        </Affix> */}
-        {children}
+        <Suspense fallback={<FullContentLoader />}>{children}</Suspense>
       </ErrorBoundary>
     </AppShell>
   )
