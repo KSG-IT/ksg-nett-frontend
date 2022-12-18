@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client'
 import { Center } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { mn } from 'date-fns/locale'
 
 import {
   AdmissionDashboard,
@@ -75,6 +74,9 @@ const FullPage404 = React.lazy(
 )
 
 const MainContent = React.lazy(() => import('routes/MainContent'))
+
+// ==== Handbook ====
+const Handbook = React.lazy(() => import('modules/handbook/views/Handbook'))
 
 export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
@@ -208,6 +210,12 @@ export const AppRoutes: React.FC = () => {
           <Route path="popular" element={<PopularQuotes />} />
           <Route path="create" element={<CreateQuote />} />
         </Route>
+
+        {/* ==== HANDBOOK MODULE ==== */}
+        <Route path="handbook">
+          <Route index element={<Handbook />} />
+        </Route>
+
         {/* ==== USERS MODULE ==== */}
         <Route path="users">
           <Route path=":userId" element={<UserProfile />} />

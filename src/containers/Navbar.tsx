@@ -2,6 +2,8 @@ import { createStyles, Navbar, Text } from '@mantine/core'
 import {
   IconAffiliate,
   IconBlockquote,
+  IconBook,
+  IconBook2,
   IconCalendarTime,
   IconChartAreaLine,
   IconClipboardList,
@@ -55,6 +57,12 @@ const routes: RouteGroup[] = [
         icon: IconBlockquote,
         link: '/quotes',
         label: 'Sitater',
+        permissions: [],
+      },
+      {
+        icon: IconBook2,
+        link: '/handbook',
+        label: 'Håndboka',
         permissions: [],
       },
     ],
