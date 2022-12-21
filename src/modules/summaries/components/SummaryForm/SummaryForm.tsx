@@ -46,9 +46,13 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
     getValues('participants')
   )
 
-  function handleCallback(values: string[]) {
+  function handleParticipantsCallback(values: string[]) {
     setParticipants(values)
     setValue('participants', values)
+  }
+  function handleInternalGroupCallback(value: string) {
+    setInternalGroup(value)
+    setValue('internalGroup', value)
   }
 
   return (
@@ -78,10 +82,7 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
                   withinPortal
                   withOtherOption
                   internalGroupId={internalGroup}
-                  setInternalGroupCallback={value => {
-                    setInternalGroup(value)
-                    setValue('internalGroup', value)
-                  }}
+                  setInternalGroupCallback={handleInternalGroupCallback}
                 />
               </CustomInputLabel>
               <CustomInputLabel
@@ -112,7 +113,7 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
                 </Title>
               }
               users={participants}
-              setUsersCallback={handleCallback}
+              setUsersCallback={handleParticipantsCallback}
             />
           </SimpleGrid>
         </Card>
