@@ -21,6 +21,7 @@ import { SummaryNode } from 'modules/summaries/types'
 import { useState } from 'react'
 import { useSummaryFormAPI } from './useSummaryFormAPI'
 import { useSummaryLogic } from './useSummaryLogic'
+import { CustomInputLabel } from './CustomInputLabel'
 
 interface SummaryFormProps {
   summary?: SummaryNode
@@ -50,32 +51,6 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
     setValue('participants', values)
   }
 
-  interface InputLeftLabelProps {
-    label: string
-    children: React.ReactNode
-    description?: string
-  }
-  const InputLabelWithDescription: React.FC<InputLeftLabelProps> = ({
-    label,
-    children,
-    description,
-  }) => (
-    <div style={{ maxWidth: '100%' }}>
-      <Group position={'apart'}>
-        <Title size="sm" color={'dimmed'}>
-          {label}
-          {description && (
-            <Text size="xs" weight={'lighter'} color={'gray.6'}>
-              {description}
-            </Text>
-          )}
-        </Title>
-        {children}
-      </Group>
-      <Divider my={'xs'} variant={'dashed'} />
-    </div>
-  )
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack>
@@ -88,7 +63,7 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
             ]}
           >
             <Stack>
-              <InputLabelWithDescription label={'Referent'}>
+              <CustomInputLabel label={'Referent'}>
                 <UserSelect
                   withinPortal
                   userId={reporter}
@@ -97,8 +72,8 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
                     setValue('reporter', value)
                   }}
                 />
-              </InputLabelWithDescription>
-              <InputLabelWithDescription label={'Interngjeng'}>
+              </CustomInputLabel>
+              <CustomInputLabel label={'Interngjeng'}>
                 <InternalGroupSelect
                   withinPortal
                   withOtherOption
@@ -108,8 +83,8 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
                     setValue('internalGroup', value)
                   }}
                 />
-              </InputLabelWithDescription>
-              <InputLabelWithDescription
+              </CustomInputLabel>
+              <CustomInputLabel
                 label={'Tittel'}
                 description={"Trengs kun hvis du har valgt 'Annet'"}
               >
@@ -117,8 +92,8 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
                   {...register('title')}
                   disabled={!(watch('internalGroup') === 'other')}
                 />
-              </InputLabelWithDescription>
-              <InputLabelWithDescription label={'Dato'}>
+              </CustomInputLabel>
+              <CustomInputLabel label={'Dato'}>
                 <DatePicker
                   withinPortal
                   placeholder="Velg en dato"
@@ -128,7 +103,7 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
                   onChange={date => date && setValue('date', new Date(date))}
                   allowFreeInput
                 />
-              </InputLabelWithDescription>
+              </CustomInputLabel>
             </Stack>
             <UserMultiSelect
               label={
