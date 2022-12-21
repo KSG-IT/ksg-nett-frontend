@@ -27,6 +27,7 @@ export function useEditProfileAPI(user: UserNode) {
   const defaultValues = {
     firstName: user?.firstName ?? '',
     lastName: user?.lastName ?? '',
+    nickname: user?.nickname ?? 'drit',
     homeTown: user?.homeTown ?? '',
     studyAddress: user?.studyAddress ?? '',
     study: user?.study ?? '',

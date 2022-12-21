@@ -10,6 +10,7 @@ import * as yup from 'yup'
 export type UserProfileFormData = {
   firstName: string
   lastName: string
+  nickname: string
   studyAddress: string
   homeTown: string
   study: string
@@ -29,6 +30,7 @@ export type UserProfileCleanedData = Omit<
 const UserEditSchema = yup.object().shape({
   firstName: yup.string().required('Fornavn må fylles ut'),
   lastName: yup.string().required('Etternavn må fylles ut'),
+  nickname: yup.string().required('Kallenavn må fylles ut'),
   studyAddress: yup.string().required('Adresse må fylles ut'),
   homeTown: yup.string().required('Hjemby må fylles ut'),
   study: yup.string().required('Studie må fylles ut'),

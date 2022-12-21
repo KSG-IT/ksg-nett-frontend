@@ -33,6 +33,7 @@ export const USER_QUERY = gql`
       getCleanFullName
       firstName
       lastName
+      nickname
       aboutMe
       homeTown
       dateOfBirth

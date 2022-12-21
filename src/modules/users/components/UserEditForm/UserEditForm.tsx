@@ -49,6 +49,12 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
           {...register('lastName')}
         />
         <TextInput
+          label={'Kallenavn'}
+          icon={<IconSignature size={14} />}
+          error={errors?.nickname?.message}
+          {...register('nickname')}
+        />
+        <TextInput
           label="Hjemby"
           icon={<IconHome size={14} />}
           error={errors?.homeTown?.message}
