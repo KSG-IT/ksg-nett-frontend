@@ -1,6 +1,6 @@
 import { Button, FileInput, Stack, TextInput } from '@mantine/core'
 import { Link } from '@mantine/tiptap'
-import { IconFileCode } from '@tabler/icons'
+import { IconCheck, IconFileCode } from '@tabler/icons'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { InternalGroupNode } from 'modules/organization/types'
@@ -45,6 +45,7 @@ export const InternalGroupEditForm: React.FC<InternalGroupEditFormProps> = ({
       refetchQueries: [INTERNAL_GROUP_QUERY],
       onCompleted() {
         showNotification({
+          icon: <IconCheck />,
           title: 'Informasjon oppdatert',
           message: 'Informasjonen om gruppen er oppdatert',
         })
