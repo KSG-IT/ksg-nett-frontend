@@ -24,7 +24,7 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
   onCompletedCallback,
 }) => {
   const { form, onSubmit } = useEditProfileLogic({
-    ...useEditProfileAPI(user),
+    ...useEditProfileAPI({ user, onCompletedCallback }),
     onCompletedCallback,
   })
   const { formState, register, handleSubmit, getValues, setValue } = form

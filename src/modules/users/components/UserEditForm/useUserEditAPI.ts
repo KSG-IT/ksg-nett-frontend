@@ -2,8 +2,16 @@ import { useUserMutations } from 'modules/users/mutations.hooks'
 import { USER_QUERY } from 'modules/users/queries'
 import { UserNode } from 'modules/users/types'
 import { UserProfileCleanedData } from './useUserEditLogic'
+import { showNotification } from '@mantine/notifications'
+import { closeAllModals } from '@mantine/modals'
 
-export function useEditProfileAPI(user: UserNode) {
+interface EditProfileApiProps {
+  user: UserNode
+  onCompletedCallback: () => void
+}
+
+export function useEditProfileAPI(input: EditProfileApiProps) {
+  const { user, onCompletedCallback } = input
   const { patchUser } = useUserMutations()
 
   async function handleSubmit(data: UserProfileCleanedData) {
@@ -21,6 +29,14 @@ export function useEditProfileAPI(user: UserNode) {
         input: input,
       },
       refetchQueries: [USER_QUERY],
+      onCompleted: data => {
+        showNotification({
+          title: 'Vellykket',
+          message: 'Profilen har blitt oppdatert',
+          color: 'green',
+        })
+        onCompletedCallback()
+      },
     })
   }
 

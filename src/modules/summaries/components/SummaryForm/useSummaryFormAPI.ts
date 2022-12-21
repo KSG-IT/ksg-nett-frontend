@@ -27,8 +27,8 @@ export function useSummaryFormAPI(
         refetchQueries: [ALL_SUMMARIES, SUMMARY_QUERY],
         onCompleted({ patchSummary }) {
           showNotification({
-            title: 'Referat oppdatert',
-            message: '',
+            title: 'Vellykket',
+            message: 'Referatet har blitt oppdatert',
             color: 'green',
           })
           onCompletedCallback?.()
@@ -46,7 +46,7 @@ export function useSummaryFormAPI(
         refetchQueries: [ALL_SUMMARIES],
         onCompleted: data => {
           showNotification({
-            title: 'Suksess',
+            title: 'Vellykket',
             message: 'Referatet ble opprettet',
           })
           navigate(`/summaries/${data.createSummary.summary.id}`)
