@@ -77,6 +77,9 @@ const MainContent = React.lazy(() => import('routes/MainContent'))
 
 // ==== Handbook ====
 const Handbook = React.lazy(() => import('modules/handbook/views/Handbook'))
+const DocumentDetail = React.lazy(
+  () => import('modules/handbook/views/DocumentDetail')
+)
 
 export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
@@ -212,6 +215,9 @@ export const AppRoutes: React.FC = () => {
         {/* ==== HANDBOOK MODULE ==== */}
         <Route path="handbook">
           <Route index element={<Handbook />} />
+          <Route path="document">
+            <Route path=":documentId" element={<DocumentDetail />} />
+          </Route>
         </Route>
 
         {/* ==== USERS MODULE ==== */}
