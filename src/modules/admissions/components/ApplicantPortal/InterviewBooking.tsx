@@ -9,6 +9,7 @@ import { INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY } from 'modules/admissions/queri
 import { InterviewsAvailableForBookingReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 import { format } from 'util/date-fns'
+import { InterviewsAvailableForBooking } from './components/InterviewsAvailableForBooking'
 
 interface InterviewBookingProps {
   applicantToken: string
@@ -75,6 +76,36 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
         </Text>
         <Text>Helst book et intevju så tidlig som mulig.</Text>
       </MessageBox>
+      <InterviewsAvailableForBooking
+        interviews={data.interviewsAvailableForBooking}
+        handleCallback={handleBookInterview}
+      />
+      <Group>
+        <Button
+          disabled={dayOffset === 0}
+          color="samfundet-red"
+          variant={'outline'}
+          onClick={() => {
+            setDayOffset(dayOffset - 2)
+          }}
+        >
+          Gå tilbake 2 dager
+        </Button>
+        <Button
+          color="samfundet-red"
+          variant={'outline'}
+          onClick={() => {
+            setDayOffset(dayOffset + 2)
+          }}
+        >
+          Gå frem 2 dager
+        </Button>
+      </Group>
+    </Stack>
+  )
+}
+
+/*
       {data.interviewsAvailableForBooking.map(day => {
         return (
           <Stack key={`${day.date}`}>
@@ -107,26 +138,4 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
           disse dagene
         </Container>
       )}
-      <Title order={3}>Ingen av tidspunktene passer</Title>
-      <Group>
-        <Button
-          disabled={dayOffset === 0}
-          color="samfundet-red"
-          onClick={() => {
-            setDayOffset(dayOffset - 2)
-          }}
-        >
-          -2 dager
-        </Button>
-        <Button
-          color="samfundet-red"
-          onClick={() => {
-            setDayOffset(dayOffset + 2)
-          }}
-        >
-          +2 dager
-        </Button>
-      </Group>
-    </Stack>
-  )
-}
+ */
