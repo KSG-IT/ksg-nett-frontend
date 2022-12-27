@@ -6,6 +6,7 @@ import {
   Stack,
   TextInput,
   Title,
+  Image,
 } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import { IconFileCode } from '@tabler/icons'
@@ -70,8 +71,9 @@ export const RegisterInformationForm: React.FC<
             placeholder="Velg en dato"
             error={errors?.dateOfBirth?.message}
             // Not enjoying this hack here
-            value={getValues('dateOfBirth')}
-            onChange={date => date && setValue('dateOfBirth', date)}
+            defaultValue={getValues('dateOfBirth')}
+            onChange={date => date && setValue('dateOfBirth', new Date(date))}
+            allowFreeInput
           />
           <TextInput
             label="Telefon"
@@ -106,6 +108,14 @@ export const RegisterInformationForm: React.FC<
               clearable
             />
           </Group>
+          {file && (
+            <Image
+              src={URL.createObjectURL(file)}
+              radius={'md'}
+              alt="Opptaksbildet ditt"
+              width={300}
+            />
+          )}
 
           <Checkbox
             checked={doesNotWantImage}
