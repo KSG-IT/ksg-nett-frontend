@@ -551,6 +551,17 @@ export interface AddInternalGroupPositionPriorityReturns {
 export interface AddInternalGroupPositionPriorityVariables {
   internalGroupPositionId: string
   applicantId: string
+  token: string
+}
+
+export interface ApplicantDeleteInternalGroupPositionPriorityReturns {
+  success: boolean
+}
+
+export interface ApplicantDeleteInternalGroupPositionPriorityVariables {
+  internalGroupPositionId: string
+  applicantId: string
+  token: string
 }
 
 export interface InternalGroupPositionsAvailableForApplicantReturns {
@@ -573,6 +584,14 @@ export interface UpdateInternalGroupPositionPriorityOrderReturns {
 export interface UpdateInternalGroupPositionPriorityOrderVariables {
   applicantId: string
   priorityOrder: string[]
+}
+export interface ApplicantUpdateInternalGroupPositionPriorityOrderVariables {
+  applicantId: string
+  priorityOrder: string[]
+  token: string
+}
+export interface UpdateInternalGroupPositionPriorityOrderReturns {
+  success: boolean
 }
 
 export interface AssignApplicantNewInterviewReturns {

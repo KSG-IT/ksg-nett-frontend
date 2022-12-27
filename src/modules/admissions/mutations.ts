@@ -67,6 +67,23 @@ export const UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION = gql`
   }
 `
 
+export const APPLICANT_UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION = gql`
+  mutation ApplicantUpdateInternalGroupPositionPriorityOrder(
+    $applicantId: ID!
+    $priorityOrder: [ID!]!
+    $token: String!
+  ) {
+    applicantUpdateInternalGroupPositionPriorityOrder(
+      applicantId: $applicantId
+      priorityOrder: $priorityOrder
+      token: $token
+    ) {
+      internalGroupPositionPriorities {
+        id
+      }
+    }
+  }
+`
 export const RE_SEND_APPLICATION_TOKEN = gql`
   mutation ReSendApplicationToken($email: String!) {
     reSendApplicationToken(email: $email) {
@@ -163,12 +180,44 @@ export const ADD_INTERNAL_GROUP_POSITION_PRIORITY = gql`
   }
 `
 
+export const APPLICANT_ADD_INTERNAL_GROUP_POSITION_PRIORITY = gql`
+  mutation ApplicantAddInternalGroupPositionPriority(
+    $internalGroupPositionId: ID!
+    $applicantId: ID!
+    $token: String!
+  ) {
+    applicantAddInternalGroupPositionPriority(
+      internalGroupPositionId: $internalGroupPositionId
+      applicantId: $applicantId
+      token: $token
+    ) {
+      success
+    }
+  }
+`
+
 // export const CHANGE_INTERNAL_GROUP_PRIORITY_ORDER = gql``
 
 export const DELETE_INTERNAL_GROUP_POSITION_PRIORITY = gql`
   mutation DeleteInternalGroupPositionPriority($id: ID!) {
     deleteInternalGroupPositionPriority(id: $id) {
       found
+    }
+  }
+`
+
+export const APPLICANT_DELETE_INTERNAL_GROUP_POSITION_PRIORITY = gql`
+  mutation ApplicantDeleteInternalGroupPositionPriority(
+    $internalGroupPositionId: ID!
+    $applicantId: ID!
+    $token: String!
+  ) {
+    applicantDeleteInternalGroupPositionPriority(
+      internalGroupPositionId: $internalGroupPositionId
+      applicantId: $applicantId
+      token: $token
+    ) {
+      success
     }
   }
 `
