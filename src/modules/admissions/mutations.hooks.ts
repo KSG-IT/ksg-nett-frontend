@@ -18,6 +18,7 @@ import {
   SET_SELF_AS_INTERVIEWER,
   UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
   UPLOAD_APPLICANTS_FILE_MUTATION,
+  APPLICANT_UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
 } from './mutations'
 import {
   ApplicantInterestNode,
@@ -337,7 +338,7 @@ export const useApplicantMutations = () => {
   ] = useMutation<
     UpdateInternalGroupPositionPriorityOrderReturns,
     UpdateInternalGroupPositionPriorityOrderVariables
-  >(UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION)
+  >(APPLICANT_UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION)
 
   const [
     assignApplicantNewInterview,
