@@ -24,7 +24,7 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
   onCompletedCallback,
 }) => {
   const { form, onSubmit } = useEditProfileLogic({
-    ...useEditProfileAPI(user),
+    ...useEditProfileAPI({ user, onCompletedCallback }),
     onCompletedCallback,
   })
   const { formState, register, handleSubmit, getValues, setValue } = form
@@ -47,6 +47,12 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
           label="Etternavn"
           error={errors?.lastName?.message}
           {...register('lastName')}
+        />
+        <TextInput
+          label={'Kallenavn'}
+          icon={<IconSignature size={14} />}
+          error={errors?.nickname?.message}
+          {...register('nickname')}
         />
         <TextInput
           label="Hjemby"

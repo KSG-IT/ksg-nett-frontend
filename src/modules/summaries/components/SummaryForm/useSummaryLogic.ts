@@ -5,12 +5,12 @@ import {
   PatchSummaryMutationReturns,
 } from 'modules/summaries/types'
 import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
 import { OnFormSubmit } from 'types/forms'
 import * as yup from 'yup'
 import { RichTextEditor, Link } from '@mantine/tiptap'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import { showNotification } from '@mantine/notifications'
 
 export type SummaryFormData = {
   contents: string
@@ -59,7 +59,10 @@ export function useSummaryLogic(input: SummaryLogicInput) {
     if (!editor) return
 
     if (editor.getHTML() === '<p><br></p>') {
-      toast.error('Du må skrive noe i referatet')
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Du må skrive noe i referatet',
+      })
       return
     }
 
@@ -71,7 +74,10 @@ export function useSummaryLogic(input: SummaryLogicInput) {
 
     if (cleanedData.internalGroup === 'other') {
       if (cleanedData.title === '') {
-        toast.error('Tittel eller internt gruppenavn må være satt')
+        showNotification({
+          title: 'Noe gikk galt',
+          message: 'Du må skrive noe i tittel',
+        })
         return
       }
       cleanedData.internalGroup = null
