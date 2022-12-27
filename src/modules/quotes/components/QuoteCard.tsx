@@ -1,10 +1,8 @@
-import { useMutation } from '@apollo/client'
 import {
   Avatar,
   Badge,
   Card,
   createStyles,
-  Grid,
   Group,
   Menu,
   Stack,
@@ -12,6 +10,7 @@ import {
   UnstyledButton,
   useMantineTheme,
 } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import {
   IconArrowBackUp,
   IconHash,
@@ -19,28 +18,19 @@ import {
   IconTrash,
 } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
-import { DASHBOARD_DATA_QUERY } from 'modules/dashboard/queries'
 
 import { UserThumbnail } from 'modules/users/components'
 import { ME_QUERY, USER_QUERY } from 'modules/users/queries'
-import { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
+import { useState } from 'react'
 import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
-import { CREATE_QUOTE_VOTE, DELETE_USER_QUOTE_VOTE } from '../mutations'
 import { useQuoteMutations } from '../mutations.hooks'
 import {
   APPROVED_QUOTES_QUERY,
   PNEDING_QUOTES_QUERY,
   POPULAR_QUOTES_QUERY,
 } from '../queries'
-import {
-  CreateQuoteVoteReturns,
-  CreateQuoteVoteVariables,
-  DeleteUserQuoteVoteReturns,
-  DeleteUserQuoteVoteVariables,
-  QuoteNode,
-} from '../types.graphql'
+import { QuoteNode } from '../types.graphql'
 
 interface VoteIconProps {
   upvoted: boolean
@@ -82,48 +72,22 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
   const me = useStore(state => state.user)!
   const [upvoted, setUpvoted] = useState(me.upvotedQuoteIds.includes(quote.id))
   const [voteSum, setVoteSum] = useState(quote.sum)
-  const [upvote] = useMutation<
-    CreateQuoteVoteReturns,
-    CreateQuoteVoteVariables
-  >(CREATE_QUOTE_VOTE, {
-    refetchQueries,
-  })
-  const [deleteUpvote] = useMutation<
-    DeleteUserQuoteVoteReturns,
-    DeleteUserQuoteVoteVariables
-  >(DELETE_USER_QUOTE_VOTE, {
-    refetchQueries,
-  })
 
-  const { invalidateQuote, deleteQuote } = useQuoteMutations()
+  const { invalidateQuote, deleteQuote, upvote, deleteUpvote } =
+    useQuoteMutations()
 
-  useEffect(() => {
-    const isUpvoted = me.upvotedQuoteIds.includes(quote.id)
-    setUpvoted(isUpvoted)
-  }, [me.upvotedQuoteIds, quote.id, setUpvoted])
-
-  useEffect(() => {
-    setVoteSum(quote.sum)
-  }, [quote.sum])
-
-  const handleUpvote = () => {
+  function handleUpvote() {
     if (!upvoted) {
-      toast.promise(
-        upvote({
-          variables: { input: { quote: quote.id, value: 1 } },
-        }),
-        {
-          loading: 'Oppstemmer sitat...',
-          error: 'Kunne ikke oppstemme sitat!',
-          success: 'Sitat oppstemt!',
-        }
-      )
-    } else {
-      toast.promise(deleteUpvote({ variables: { quoteId: quote.id } }), {
-        loading: 'Sletter stemme...',
-        error: 'Kunne ikke slette stemme',
-        success: 'Stemme slettet!',
+      setVoteSum(sum => sum + 1)
+      setUpvoted(true)
+      upvote({
+        variables: { input: { quote: quote.id, value: 1 } },
+        refetchQueries,
       })
+    } else {
+      setVoteSum(sum => sum - 1)
+      setUpvoted(false)
+      deleteUpvote({ variables: { quoteId: quote.id }, refetchQueries })
     }
   }
 
@@ -131,11 +95,16 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
     invalidateQuote({
       variables: { quoteId: quote.id },
       refetchQueries: [APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Sitat underkjent')
+        showNotification({
+          message: 'Sitat underkjent',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
       },
     })
   }
@@ -144,11 +113,16 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
     deleteQuote({
       variables: { id: quote.id },
       refetchQueries: [APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Sitat slettet')
+        showNotification({
+          message: 'Sitat slettet',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
       },
     })
   }

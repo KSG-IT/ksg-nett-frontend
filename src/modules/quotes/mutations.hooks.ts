@@ -2,15 +2,20 @@ import { useMutation } from '@apollo/client'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import {
   APPROVE_QUOTE_MUTATION,
+  CREATE_QUOTE_VOTE,
   DELETE_QUOTE,
+  DELETE_USER_QUOTE_VOTE,
   INVALIDATE_QUOTE_MUTATION,
 } from './mutations'
 import {
   ApproveQuoteReturns,
   ApproveQuoteVariables,
+  CreateQuoteVoteReturns,
+  CreateQuoteVoteVariables,
+  DeleteUserQuoteVoteReturns,
+  DeleteUserQuoteVoteVariables,
   InvalidateQuoteReturns,
   InvalidateQuoteVariables,
-  QuoteNode,
 } from './types.graphql'
 
 export function useQuoteMutations() {
@@ -29,6 +34,16 @@ export function useQuoteMutations() {
     DeleteMutationVariables
   >(DELETE_QUOTE)
 
+  const [upvote, { loading: upvoteLoading }] = useMutation<
+    CreateQuoteVoteReturns,
+    CreateQuoteVoteVariables
+  >(CREATE_QUOTE_VOTE)
+
+  const [deleteUpvote, { loading: deleteUpvoteLoading }] = useMutation<
+    DeleteUserQuoteVoteReturns,
+    DeleteUserQuoteVoteVariables
+  >(DELETE_USER_QUOTE_VOTE)
+
   return {
     approveQuote,
     approveQuoteLoading,
@@ -36,5 +51,9 @@ export function useQuoteMutations() {
     invalidateQuoteLoading,
     deleteQuote,
     deleteQuoteLoading,
+    upvote,
+    upvoteLoading,
+    deleteUpvote,
+    deleteUpvoteLoading,
   }
 }
