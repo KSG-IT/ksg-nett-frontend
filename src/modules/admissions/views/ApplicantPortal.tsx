@@ -7,6 +7,7 @@ import {
   Stack,
   Stepper,
   Text,
+  ThemeIcon,
   Title,
 } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
@@ -25,6 +26,7 @@ import {
   GeApplicantFromTokenReturns,
   GetApplicantFromTokenVariables,
 } from '../types.graphql'
+import { IconUsers } from '@tabler/icons'
 
 const translateStatusToStep = (status: ApplicantStatusValues): number => {
   switch (status) {
@@ -128,11 +130,19 @@ export const ApplicantPortal: React.FC = () => {
             </Stepper.Step>
             <Stepper.Completed>
               <Stack>
-                <Text size="md">Takk for at har søkte KSG!</Text>
-                <Title order={3}>Intervjuinformasjon</Title>
+                <Text size="md">Takk for at du har søkt KSG!</Text>
+                <Title color={'dimmed'} order={3}>
+                  Intervjuinformasjon
+                </Title>
                 <Group>
                   <Title order={4}>Hvor:</Title>
-                  <Text>{applicant.interview?.location.name}</Text>
+                  <Text
+                    transform={'uppercase'}
+                    color={'samfundet-red'}
+                    weight={'bold'}
+                  >
+                    {applicant.interview?.location.name}
+                  </Text>
                 </Group>
                 <Stack>
                   <Title order={4}>Beskrivelse:</Title>
@@ -146,26 +156,38 @@ export const ApplicantPortal: React.FC = () => {
                     {applicant.interview &&
                       format(
                         new Date(applicant.interview.interviewStart),
-                        'EEEE d MMMM H:mm'
+                        "EEEE d. MMMM, 'kl' H:mm"
                       )}
                   </Text>
                 </Group>
                 <Title order={3}>Prioriteringer</Title>
-                <List>
-                  {applicant.priorities.map(priority => {
+                <List spacing={'xs'}>
+                  {applicant.priorities.map((priority, index) => {
                     if (priority === null) {
                       return null
                     }
                     return (
-                      <List.Item key={priority.id}>
+                      <List.Item
+                        key={priority.id}
+                        icon={
+                          <ThemeIcon variant={'light'} size={24} radius={'md'}>
+                            {index + 1}
+                          </ThemeIcon>
+                        }
+                      >
                         {priority.internalGroupPosition.name}
                       </List.Item>
                     )
                   })}
                 </List>
-                <Button color="red" onClick={() => setModalOpen(true)}>
+                <Button
+                  variant={'outline'}
+                  color="samfundet-red"
+                  onClick={() => setModalOpen(true)}
+                >
                   Trekk søknad
                 </Button>
+                <Text>Du kan nå trygt lukke dette vinduet</Text>
                 <RetractApplicationModal
                   opened={modalOpen}
                   setOpened={setModalOpen}
