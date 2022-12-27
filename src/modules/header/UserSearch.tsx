@@ -1,10 +1,8 @@
 import { useLazyQuery } from '@apollo/client'
+import { createStyles, Group } from '@mantine/core'
 import { IconSearch } from '@tabler/icons'
 import { UserThumbnail } from 'modules/users/components'
-import {
-  ALL_ACTIVE_USERS_LIST_QUERY,
-  ALL_ACTIVE_USERS_SHALLOW_QUERY,
-} from 'modules/users/queries'
+import { ALL_ACTIVE_USERS_LIST_QUERY } from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
@@ -13,30 +11,7 @@ import {
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Select, { components, DropdownIndicatorProps } from 'react-select'
-import styled from 'styled-components'
 import { useDebounce } from 'util/hooks'
-
-const Wrapper = styled.div`
-  height: 35px;
-  width: 300px;
-  display: flex;
-  flex-direction: row;
-  border-radius: 10px;
-  position: relative;
-  align-items: center;
-  padding: 5px;
-
-  ${props => props.theme.media.mobile} {
-    width: 100%;
-    padding: 0;
-  }
-`
-
-const SelectEntry = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
 
 const DropdownIndicator = (
   props: DropdownIndicatorProps<UserSearchOption, false>
@@ -55,13 +30,14 @@ interface UserSearchOption {
 }
 
 const Option = (props: UserSearchOption) => (
-  <SelectEntry>
+  <Group position="apart">
     {props.label}
     <UserThumbnail user={props.user} size="sm" />
-  </SelectEntry>
+  </Group>
 )
 
 export const UserSearch: React.VFC = () => {
+  const { classes } = useStyles()
   const [userQuery, setUserQuery] = useState('')
   const debounceQuery = useDebounce(userQuery)
   const [selected, setSelected] = useState<UserSearchOption | null>(null)
@@ -96,7 +72,7 @@ export const UserSearch: React.VFC = () => {
     })) || []
 
   return (
-    <Wrapper>
+    <div className={classes.wrapper}>
       <Select
         isLoading={loading}
         onInputChange={val => setUserQuery(val)}
@@ -110,6 +86,24 @@ export const UserSearch: React.VFC = () => {
         components={{ DropdownIndicator }}
         formatOptionLabel={data => <Option {...data} />}
       />
-    </Wrapper>
+    </div>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  wrapper: {
+    height: 35,
+    width: 300,
+    display: 'flex',
+    flexDirection: 'row',
+    borderRadius: 10,
+    position: 'relative',
+    alignItems: 'center',
+    padding: 5,
+
+    [theme.breakpoints.xs]: {
+      width: '100%',
+      padding: 0,
+    },
+  },
+}))

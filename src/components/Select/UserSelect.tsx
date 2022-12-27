@@ -5,7 +5,6 @@ import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
 } from 'modules/users/types'
-import styled from 'styled-components'
 import { usersToSelectOption } from 'util/user'
 
 interface UserSelectProps extends Omit<SelectProps, 'data' | 'value'> {
