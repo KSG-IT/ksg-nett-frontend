@@ -43,7 +43,7 @@ export function useEditProfileAPI(input: EditProfileApiProps) {
   const defaultValues = {
     firstName: user?.firstName ?? '',
     lastName: user?.lastName ?? '',
-    nickname: user?.nickname ?? 'drit',
+    nickname: user?.nickname ?? '',
     homeTown: user?.homeTown ?? '',
     studyAddress: user?.studyAddress ?? '',
     study: user?.study ?? '',

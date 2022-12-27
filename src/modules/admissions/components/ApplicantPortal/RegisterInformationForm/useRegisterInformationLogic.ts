@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { OnFormSubmit } from 'types/forms'
 import * as yup from 'yup'
+import { FILE_SIZE } from '../../../../../util/consts'
 
 export type RegisterInformationFormData = {
   firstName: string
@@ -16,6 +17,7 @@ export type RegisterInformationFormData = {
   dateOfBirth: Date
   phone: string
   wantsDigitalInterview: boolean
+  profileImage?: File | null
 }
 
 const RegisterInformationSchema = yup.object().shape({
@@ -30,6 +32,15 @@ const RegisterInformationSchema = yup.object().shape({
   dateOfBirth: yup.date().required('Fødselsdato må fylles ut'),
   phone: yup.string().required('Telefonnummer må fylles ut'),
   wantsDigitalInterview: yup.boolean().required(),
+  profileImage: yup
+    .mixed()
+    .nullable()
+    .notRequired()
+    .test(
+      'FILE_SIZE',
+      'Filstørrelse for stor, 1 MB maks.',
+      value => !value || (value && value.size <= FILE_SIZE)
+    ),
 })
 
 interface UseRegisterInformationLogicInput {
