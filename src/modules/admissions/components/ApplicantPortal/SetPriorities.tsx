@@ -1,11 +1,10 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import {
   ActionIcon,
   Alert,
   Button,
   Divider,
   Group,
-  List,
   SimpleGrid,
   Stack,
   Text,
@@ -16,21 +15,13 @@ import { showNotification } from '@mantine/notifications'
 import { IconChevronDown, IconChevronUp, IconTrash } from '@tabler/icons'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import {
-  APPLICANT_ADD_INTERNAL_GROUP_POSITION_PRIORITY,
-  APPLICANT_DELETE_INTERNAL_GROUP_POSITION_PRIORITY,
-  APPLICANT_UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
-} from 'modules/admissions/mutations'
-import { usePatchApplicant } from 'modules/admissions/mutations.hooks'
+  useApplicantFromTokenMutations,
+  usePatchApplicant,
+} from 'modules/admissions/mutations.hooks'
 import { INTERNAL_GROUP_POSITIONS_AVAILABLE_FOR_APPLICANTS_QUERY } from 'modules/admissions/queries'
 import {
-  AddInternalGroupPositionPriorityReturns,
-  AddInternalGroupPositionPriorityVariables,
-  ApplicantDeleteInternalGroupPositionPriorityReturns,
-  ApplicantDeleteInternalGroupPositionPriorityVariables,
   ApplicantNode,
-  ApplicantUpdateInternalGroupPositionPriorityOrderVariables,
   InternalGroupPositionsAvailableForApplicantReturns,
-  UpdateInternalGroupPositionPriorityOrderReturns,
 } from 'modules/admissions/types.graphql'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -64,6 +55,8 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
   >([])
   const [filteredInternalGroupPositions, setFilteredInternalGroupPositions] =
     useState<InternalGroupPosition[]>([])
+  const { addPriority, updatePriorities, deleteInternalGroupPriority } =
+    useApplicantFromTokenMutations()
 
   useEffect(() => {
     // We handle what internal group positions we want to display for the user
@@ -103,25 +96,6 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
   // Saves priorities and moves the applicant to the interview booking phase
   const { patchApplicant } = usePatchApplicant()
 
-  const [deleteInternalGroupPriority] = useMutation<
-    ApplicantDeleteInternalGroupPositionPriorityReturns,
-    ApplicantDeleteInternalGroupPositionPriorityVariables
-  >(APPLICANT_DELETE_INTERNAL_GROUP_POSITION_PRIORITY, {
-    refetchQueries: ['GetApplicantFromToken'],
-  })
-
-  const [addPriority] = useMutation<
-    AddInternalGroupPositionPriorityReturns,
-    AddInternalGroupPositionPriorityVariables
-  >(APPLICANT_ADD_INTERNAL_GROUP_POSITION_PRIORITY, {
-    refetchQueries: ['GetApplicantFromToken'],
-  })
-
-  const [updatePriorities] = useMutation<
-    UpdateInternalGroupPositionPriorityOrderReturns,
-    ApplicantUpdateInternalGroupPositionPriorityOrderVariables
-  >(APPLICANT_UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION)
-
   //  === Handlers ===
   const handleAddPriority = (internal_group_position_id: string) => {
     addPriority({
@@ -138,17 +112,16 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
     setIsDirty(true)
   }
   const handleUpdatePriorities = (priorityIds: string[]) => {
-    console.table(priorityIds)
     updatePriorities({
       variables: {
         priorityOrder: priorityIds,
         applicantId: applicant.id,
         token: applicantToken,
       },
-      onError(message) {
+      onError({ message }) {
         showNotification({
           title: 'Error',
-          message: `${message}`,
+          message,
           color: 'red',
         })
       },
@@ -162,17 +135,10 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
         applicantId: applicant.id,
         token: applicantToken,
       },
-      onCompleted() {
-        showNotification({
-          title: 'Priority deleted',
-          message: 'Your priority has been deleted',
-          color: 'teal',
-        })
-      },
-      onError(message) {
+      onError({ message }) {
         showNotification({
           title: 'Error',
-          message: `${message}`,
+          message,
           color: 'red',
         })
       },

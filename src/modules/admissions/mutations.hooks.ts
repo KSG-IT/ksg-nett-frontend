@@ -5,10 +5,13 @@ import toast from 'react-hot-toast'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import { ApplicantStatusValues, InterviewTotalEvaluationValues } from './consts'
 import {
+  APPLICANT_ADD_INTERNAL_GROUP_POSITION_PRIORITY,
+  APPLICANT_DELETE_INTERNAL_GROUP_POSITION_PRIORITY,
+  APPLICANT_UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
   ASSIGN_APPLICANT_NEW_INTERVIEW_MUTATION,
   CLOSE_ADMISSION_MUTATION,
-  CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION,
   CREATE_APPLICANT_COMMENT_MUTATION,
+  CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION,
   CREATE_APPLICATIONS,
   DELETE_APPLICANT,
   DELETE_INTERNAL_GROUP_POSITION_PRIORITY_MUTATION,
@@ -16,13 +19,16 @@ import {
   PATCH_INTERVIEW_SCHEDULE_TEMPLATE,
   REMOVE_SELF_AS_INTERVIEWER,
   SET_SELF_AS_INTERVIEWER,
-  UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
   UPLOAD_APPLICANTS_FILE_MUTATION,
-  APPLICANT_UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
 } from './mutations'
 import {
+  AddInternalGroupPositionPriorityReturns,
+  ApplicantAddInternalGroupPositionPriorityVariables,
+  ApplicantDeleteInternalGroupPositionPriorityReturns,
+  ApplicantDeleteInternalGroupPositionPriorityVariables,
   ApplicantInterestNode,
   ApplicantNode,
+  ApplicantUpdateInternalGroupPositionPriorityOrderVariables,
   AssignApplicantNewInterviewReturns,
   AssignApplicantNewInterviewVariables,
   CreateApplicantCommentReturns,
@@ -285,6 +291,7 @@ interface ResetApplicantInternalGroupPositionOfferReturns {
     applicant: Pick<ApplicantNode, 'id' | 'fullName'>
   }
 }
+
 interface ResetApplicantInternalGroupPositionOfferVariables {
   applicantInterestId: string
 }
@@ -373,6 +380,33 @@ export const useApplicantMutations = () => {
 
     deleteInternalGroupPositionPriority,
     deleteInternalGroupPositionPriorityLoading,
+  }
+}
+
+export const useApplicantFromTokenMutations = () => {
+  const [deleteInternalGroupPriority] = useMutation<
+    ApplicantDeleteInternalGroupPositionPriorityReturns,
+    ApplicantDeleteInternalGroupPositionPriorityVariables
+  >(APPLICANT_DELETE_INTERNAL_GROUP_POSITION_PRIORITY, {
+    refetchQueries: ['GetApplicantFromToken'],
+  })
+
+  const [addPriority] = useMutation<
+    AddInternalGroupPositionPriorityReturns,
+    ApplicantAddInternalGroupPositionPriorityVariables
+  >(APPLICANT_ADD_INTERNAL_GROUP_POSITION_PRIORITY, {
+    refetchQueries: ['GetApplicantFromToken'],
+  })
+
+  const [updatePriorities] = useMutation<
+    UpdateInternalGroupPositionPriorityOrderReturns,
+    ApplicantUpdateInternalGroupPositionPriorityOrderVariables
+  >(APPLICANT_UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION)
+
+  return {
+    deleteInternalGroupPriority,
+    addPriority,
+    updatePriorities,
   }
 }
 

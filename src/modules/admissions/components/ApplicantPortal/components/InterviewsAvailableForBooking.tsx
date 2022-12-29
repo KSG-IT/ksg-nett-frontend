@@ -8,11 +8,9 @@ import {
   SimpleGrid,
   Divider,
 } from '@mantine/core'
-import { format } from '../../../../../util/date-fns'
-import {
-  AvailableInterviewsDayGrouping,
-  InterviewsAvailableForBookingReturns,
-} from '../../../types.graphql'
+import { AvailableInterviewsDayGrouping } from 'modules/admissions/types.graphql'
+
+import { format } from 'util/date-fns'
 
 export interface InterviewsAvailableProps {
   interviews: AvailableInterviewsDayGrouping[]
