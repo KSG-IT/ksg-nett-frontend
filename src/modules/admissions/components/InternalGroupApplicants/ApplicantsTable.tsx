@@ -7,8 +7,8 @@ import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { ApplicantTableRowMenu } from './ApplicantTableRowMenu'
 import { CardTable } from 'components/CardTable'
 
-const parseApplicantName = (applicant: CoreApplicantNode) => {
-  if (applicant.fullName === ' ') return 'Mangler data'
+function safeParseApplicantName(applicant: CoreApplicantNode) {
+  if (applicant.fullName === ' ') return ''
 
   return applicant.fullName
 }
@@ -32,7 +32,7 @@ export const ApplicantsTable: React.FC<{
 }> = ({ applicants }) => {
   const rows = applicants.map(applicant => (
     <tr key={applicant.id}>
-      <td>{parseApplicantName(applicant)}</td>
+      <td>{safeParseApplicantName(applicant)}</td>
       <td>
         <ApplicantStatusBadge applicantStatus={applicant.status} />
       </td>
@@ -55,7 +55,7 @@ export const ApplicantsTable: React.FC<{
   ))
 
   return (
-    <CardTable highlightOnHover>
+    <CardTable highlightOnHover compact>
       <thead>
         <tr>
           <td>Navn</td>
