@@ -1,8 +1,8 @@
-import { Group, Stack, Title } from '@mantine/core'
+import { Group, Stack, TextInput, Title } from '@mantine/core'
+import { useDebouncedValue } from '@mantine/hooks'
+import { IconSearch } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
-import { Search } from 'components/Input'
 import { useState } from 'react'
-import { useDebounce } from 'util/hooks/useDebounce'
 import { QuoteGrid } from '../components/QuoteGrid'
 import { QuotesTabs } from '../components/QuotesTabs'
 
@@ -13,7 +13,10 @@ const breadCrumbItems = [
 
 export const QuotesList = () => {
   const [query, setQuery] = useState('')
-  const debouncedQuery = useDebounce(query)
+  const [debouncedQuery] = useDebouncedValue(query, 200)
+  /**
+   * This view lags like crazy on search. Fix at some point
+   */
 
   return (
     <Stack>
@@ -22,11 +25,14 @@ export const QuotesList = () => {
         <Title order={2} color="dimmed">
           Sitater
         </Title>
-        <Search
-          width={600}
+        <TextInput
+          icon={<IconSearch />}
           placeholder="Søk etter innhold..."
           value={query}
-          onChange={setQuery}
+          onChange={evt => setQuery(evt.target.value)}
+          style={{
+            width: 600,
+          }}
         />
         <QuotesTabs />
       </Group>

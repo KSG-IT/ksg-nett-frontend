@@ -1,4 +1,4 @@
-import { Button, Menu } from '@mantine/core'
+import { ActionIcon, Button, Menu } from '@mantine/core'
 import { IconDots, IconEye, IconUserMinus, IconUserPlus } from '@tabler/icons'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import { INTERNAL_GROUP_APPLICANTS_DATA } from 'modules/admissions/queries'
@@ -54,9 +54,9 @@ export const ApplicantTableRowMenu: React.FC<{
   return (
     <Menu position="left-start">
       <Menu.Target>
-        <Button variant="outline">
-          <IconDots />
-        </Button>
+        <ActionIcon>
+          <IconDots size={16} stroke={1.5} />
+        </ActionIcon>
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item onClick={handleMoreInfo} icon={<IconEye />}>

@@ -1,15 +1,18 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Stack, Title } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
 import { AdmissionsShortcutPanel } from '../components/AdmissionDashboard/AdmissionsShortcutPanel'
 import { InternalGroupPreviewList } from '../components/DiscussionDashboard/InternalGroupPreviewList'
 import { useAdmissionMutations } from '../mutations.hooks'
-import { ALL_INTERNAL_GROUP_APPLICANT_DATA } from '../queries'
+import {
+  ACTIVE_ADMISSION_QUERY,
+  ALL_INTERNAL_GROUP_APPLICANT_DATA,
+} from '../queries'
 import { AllInternalGroupsAcceptingApplicantsReturns } from '../types.graphql'
 
 export const DiscussionDashboard: React.FC = () => {
@@ -28,6 +31,8 @@ export const DiscussionDashboard: React.FC = () => {
       ALL_INTERNAL_GROUP_APPLICANT_DATA
     )
 
+  console.log(data)
+
   const { lockAdmission } = useAdmissionMutations()
 
   if (error) return <FullPageError />
@@ -35,19 +40,26 @@ export const DiscussionDashboard: React.FC = () => {
   if (loading || !data) return <FullContentLoader />
 
   const handleLockAdmission = () => {
-    lockAdmission({ refetchQueries: ['ActiveAdmission'] })
-      .then(() => {
-        toast.success('Fordelingsmøtet er låst')
+    lockAdmission({
+      refetchQueries: [ACTIVE_ADMISSION_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Fordelingsmøtet er låst',
+        })
         navigate('/admissions')
-      })
-      .catch(() => {
-        toast.error('Noe gikk galt')
-      })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
+    })
   }
   const { allInternalGroupApplicantData } = data
   return (
     <Stack>
-      <AdmissionsShortcutPanel />
       <Group position="apart" mb="md">
         <Title>Fordelingsmøtet</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
@@ -56,6 +68,7 @@ export const DiscussionDashboard: React.FC = () => {
           </Button>
         </PermissionGate>
       </Group>
+      <AdmissionsShortcutPanel />
       <InternalGroupPreviewList
         allInternalGroupApplicantData={allInternalGroupApplicantData}
       />
