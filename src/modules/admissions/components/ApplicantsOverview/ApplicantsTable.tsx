@@ -1,4 +1,4 @@
-import { Button, Menu, Modal } from '@mantine/core'
+import { ActionIcon, Button, Menu, Modal } from '@mantine/core'
 import { IconDots, IconEye, IconTrash } from '@tabler/icons'
 import { CardTable } from 'components/CardTable'
 import { PermissionGate } from 'components/PermissionGate'
@@ -58,9 +58,9 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
       <td>
         <Menu position="left-start">
           <Menu.Target>
-            <Button variant="outline" color="samfundet-red">
-              <IconDots />
-            </Button>
+            <ActionIcon>
+              <IconDots size={16} stroke={1.5} />
+            </ActionIcon>
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Label>Valg</Menu.Label>
@@ -92,7 +92,7 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
 
   return (
     <>
-      <CardTable>
+      <CardTable compact>
         <thead>
           <tr>
             <th>Navn</th>

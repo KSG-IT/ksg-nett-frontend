@@ -1,29 +1,37 @@
-import { Button, Group, Modal, Text, Textarea } from '@mantine/core'
+import { Button, Group, Modal, Stack, Text, Textarea } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 interface ApplicantNoticeCommentInputProps {
   applicant: Pick<ApplicantNode, 'id' | 'noticeComment'>
 }
 
-export const ApplicantNoticeCommentInput: React.VFC<
+export const ApplicantNoticeCommentInput: React.FC<
   ApplicantNoticeCommentInputProps
 > = ({ applicant }) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [comment, setComment] = useState(applicant.noticeComment)
   const [modalComment, setModalComment] = useState(applicant.noticeComment)
 
-  const isEmpty = comment === ''
+  const isEmpty = useMemo(() => comment === '', [comment])
 
   const { patchApplicant } = useApplicantMutations()
 
   async function handleCommitChange() {
     await patchApplicant({
       variables: { id: applicant.id, input: { noticeComment: modalComment } },
-    }).then(() => {
-      setModalOpen(false)
-      setComment(modalComment)
+      onCompleted() {
+        setModalOpen(false)
+        setComment(modalComment)
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
     })
   }
 
@@ -37,18 +45,24 @@ export const ApplicantNoticeCommentInput: React.VFC<
       <Text onClick={() => setModalOpen(true)} style={{ cursor: 'pointer' }}>
         {isEmpty ? 'Skriv kommentar' : comment}
       </Text>
-      <Modal opened={modalOpen} onClose={() => setModalOpen(false)}>
-        <Textarea
-          value={modalComment}
-          placeholder={'Srkiv kommentar'}
-          onChange={evt => setModalComment(evt.target.value)}
-        />
-        <Group align={'flex-end'}>
-          <Button onClick={handleCancel} color="red">
-            Avbryt
-          </Button>
-          <Button onClick={handleCommitChange}>Lagre kommentar</Button>
-        </Group>
+      <Modal
+        title="Skriv kommentar"
+        opened={modalOpen}
+        onClose={() => setModalOpen(false)}
+      >
+        <Stack>
+          <Textarea
+            value={modalComment}
+            placeholder={'Srkiv kommentar'}
+            onChange={evt => setModalComment(evt.target.value)}
+          />
+          <Group align={'flex-end'}>
+            <Button onClick={handleCancel} color="gray">
+              Avbryt
+            </Button>
+            <Button onClick={handleCommitChange}>Lagre kommentar</Button>
+          </Group>
+        </Stack>
       </Modal>
     </>
   )

@@ -551,6 +551,7 @@ export const APPLICANT_NOTICES_QUERY = gql`
         id
         initials
         profileImage
+        getFullWithNickName
       }
     }
   }

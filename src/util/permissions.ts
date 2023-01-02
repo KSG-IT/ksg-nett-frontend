@@ -33,6 +33,19 @@ export const PERMISSIONS = {
       sociOrderSession: 'economy.add_sociordersession',
     },
   },
+  // ===== HANDBOOK ======
+  handbook: {
+    add: {
+      document: 'handbook.add_document',
+    },
+    view: {},
+    change: {
+      document: 'handbook.change_document',
+    },
+    delete: {
+      document: 'handbook.delete_document',
+    },
+  },
   // ===== SUMMARIES ======
   summaries: {
     add: {

@@ -1,4 +1,5 @@
 import { Button, Paper, Table } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
 import {
@@ -55,7 +56,10 @@ const renderActionButton = (
       },
       refetchQueries: ['InternalGroupDiscussionDataQuery'],
       onCompleted() {
-        toast.success('Interesse for søker registrert!')
+        showNotification({
+          title: 'Suksess',
+          message: 'Nei men så hyggelig',
+        })
       },
     })
   }
@@ -72,7 +76,10 @@ const renderActionButton = (
       variables: { id: interest.id },
       refetchQueries: ['InternalGroupDiscussionDataQuery'],
       onCompleted() {
-        toast.success('Interesse for søker slettet!')
+        showNotification({
+          title: 'Suksess',
+          message: 'rip',
+        })
       },
     })
   }
@@ -103,7 +110,7 @@ export const FreeForAllApplicantsTable: React.FC<
   }
 
   // Handlers
-  const handleMoreInfo = (applicant: ApplicantNode) => {
+  function handleMoreInfo(applicant: ApplicantNode) {
     navigate(`/admissions/applicants/${applicant.id}`)
   }
 
