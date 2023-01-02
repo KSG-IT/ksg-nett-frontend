@@ -2,7 +2,7 @@ import {
   InternalGroupNode,
   InternalGroupPositionNode,
 } from 'modules/organization/types'
-import { UserNode, UserThumbnailProps } from 'modules/users/types'
+import { UserThumbnailProps } from 'modules/users/types'
 import {
   AdmissionStatusValues,
   ApplicantStatusValues,
@@ -355,6 +355,7 @@ export type CreateAdmissionInput = {
   status?: AdmissionStatusValues
   availableInternalGroupPositions?: any[]
 }
+
 export interface CreateAdmissionVariables {
   input: CreateAdmissionInput
 }
@@ -398,6 +399,7 @@ export interface PatchApplicantVariables {
   id: string
   input: PatchApplicantInput
 }
+
 export interface PatchApplicantReturns {
   applicant: {
     id: string
@@ -480,6 +482,7 @@ export interface CreateInterviewLocationReturns {
     interviewLocation: Pick<InterviewLocationNode, 'id' | 'name'>
   }
 }
+
 export interface CreateInterviewLocationVariables {
   input: {
     name: string
@@ -526,6 +529,7 @@ export interface SetSelfAsInterviewerMutatationReturns {
     success: boolean
   }
 }
+
 export interface SetSelfAsInterviewerMutatationVariables {
   interviewId: string
 }
@@ -553,6 +557,20 @@ export interface AddInternalGroupPositionPriorityVariables {
   applicantId: string
 }
 
+export interface ApplicantAddInternalGroupPositionPriorityVariables {
+  internalGroupPositionId: string
+  token: string
+}
+
+export interface ApplicantDeleteInternalGroupPositionPriorityReturns {
+  success: boolean
+}
+
+export interface ApplicantDeleteInternalGroupPositionPriorityVariables {
+  internalGroupPositionId: string
+  token: string
+}
+
 export interface InternalGroupPositionsAvailableForApplicantReturns {
   internalGroupPositionsAvailableForApplicants: Pick<
     InternalGroupNode,
@@ -563,6 +581,7 @@ export interface InternalGroupPositionsAvailableForApplicantReturns {
 export interface CreateApplicantsFromCSVDataReturns {
   ok: boolean
 }
+
 export interface CreateApplicantsFromCSVDataVariables {
   applicants: ApplicantCSVData[]
 }
@@ -570,14 +589,26 @@ export interface CreateApplicantsFromCSVDataVariables {
 export interface UpdateInternalGroupPositionPriorityOrderReturns {
   priorityOrder: Pick<InternalGroupPositionPriorityNode, 'id'>[]
 }
+
 export interface UpdateInternalGroupPositionPriorityOrderVariables {
   applicantId: string
   priorityOrder: string[]
 }
 
+export interface ApplicantUpdateInternalGroupPositionPriorityOrderVariables {
+  applicantId: string
+  priorityOrder: string[]
+  token: string
+}
+
+export interface UpdateInternalGroupPositionPriorityOrderReturns {
+  success: boolean
+}
+
 export interface AssignApplicantNewInterviewReturns {
   success: boolean
 }
+
 export interface AssignApplicantNewInterviewVariables {
   applicantId: string
   interviewId: string
