@@ -82,6 +82,7 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
     handleUpdatePriorities(priorityIds)
     setIsDirty(false)
   }, [isDirty])
+
   // === Queries and mutations ===
   useQuery<InternalGroupPositionsAvailableForApplicantReturns>(
     INTERNAL_GROUP_POSITIONS_AVAILABLE_FOR_APPLICANTS_QUERY,
@@ -101,7 +102,6 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
     addPriority({
       variables: {
         internalGroupPositionId: internal_group_position_id,
-        applicantId: applicant.id,
         token: applicantToken,
       },
     })
@@ -132,7 +132,6 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
     deleteInternalGroupPriority({
       variables: {
         internalGroupPositionId: internal_group_position_id,
-        applicantId: applicant.id,
         token: applicantToken,
       },
       onError({ message }) {

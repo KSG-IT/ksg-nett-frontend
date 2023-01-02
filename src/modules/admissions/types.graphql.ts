@@ -559,7 +559,6 @@ export interface AddInternalGroupPositionPriorityVariables {
 
 export interface ApplicantAddInternalGroupPositionPriorityVariables {
   internalGroupPositionId: string
-  applicantId: string
   token: string
 }
 
@@ -569,7 +568,6 @@ export interface ApplicantDeleteInternalGroupPositionPriorityReturns {
 
 export interface ApplicantDeleteInternalGroupPositionPriorityVariables {
   internalGroupPositionId: string
-  applicantId: string
   token: string
 }
 
