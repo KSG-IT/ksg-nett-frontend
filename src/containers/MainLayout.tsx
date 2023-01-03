@@ -16,8 +16,7 @@ import { UserSearch } from 'modules/header/UserSearch'
 import React, { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Link } from 'react-router-dom'
-import { lock, unlock } from 'tua-body-scroll-lock'
-import { useIsMobile, useSidebar } from 'util/hooks'
+import { useSidebar } from 'util/hooks'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
 interface ErrorFallbackProps {
@@ -46,34 +45,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const theme = useMantineTheme()
   const { sidebarOpen, toggleSidebar } = useSidebar()
   const { classes } = useStyles()
-  const isMobile = useIsMobile()
-
-  function handleToggle() {
-    // An attempt to handle ios scroll context issue
-    const main = document.querySelector('main')
-    const nav = document.querySelector('nav')
-    if (!sidebarOpen && isMobile) {
-      if (main) {
-        main.style.display = 'block'
-        main.style.overflow = 'hidden'
-        main.style.position = 'fixed'
-        nav && (nav.style.overscrollBehaviorY = 'contain')
-        // const scrollAnchoringPoint = document.getElementById('Generelt')
-        // scrollAnchoringPoint && scrollAnchoringPoint.click()
-      }
-    }
-
-    if (sidebarOpen && isMobile) {
-      if (main) {
-        main.style.display = 'block'
-        main.style.overflow = 'auto'
-        main.style.position = 'relative'
-        nav && (nav.style.overscrollBehaviorY = 'auto')
-      }
-    }
-
-    toggleSidebar()
-  }
 
   return (
     <AppShell
@@ -96,7 +67,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={sidebarOpen}
-                onClick={handleToggle}
+                onClick={toggleSidebar}
                 size="sm"
                 color={theme.colors.gray[6]}
                 mr="xl"

@@ -1,11 +1,11 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { Button, Group, Stack, Title } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconClock } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
-import { toast } from 'react-hot-toast'
 import { Navigate } from 'react-router-dom'
 import { PatchMutationVariables } from 'types/graphql'
 import { PERMISSIONS } from 'util/permissions'
@@ -49,20 +49,28 @@ export const AdmissionDashboard: React.FC = () => {
   if (loading || !data) return <FullContentLoader />
 
   const handleAdmissionNextPhase = (admissionId: string) => {
-    toast.promise(
-      admissionNextPhase({
-        variables: {
-          id: admissionId,
-          input: { status: AdmissionStatusValues.IN_SESSION },
-        },
-        refetchQueries: [ALL_INTERNAL_GROUP_APPLICANT_DATA],
-      }),
-      {
-        error: 'Noe gikk galt',
-        loading: 'Avslutter intervjuperioden',
-        success: 'Intervjuperiode stengt!',
-      }
-    )
+    admissionNextPhase({
+      variables: {
+        id: admissionId,
+        input: { status: AdmissionStatusValues.IN_SESSION },
+      },
+      refetchQueries: [
+        ALL_INTERNAL_GROUP_APPLICANT_DATA,
+        ACTIVE_ADMISSION_QUERY,
+      ],
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Fordelingsmøtet er nå i gang',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
+    })
   }
 
   const { activeAdmission } = data
