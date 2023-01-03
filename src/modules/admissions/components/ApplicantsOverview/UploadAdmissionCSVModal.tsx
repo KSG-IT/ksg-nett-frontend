@@ -30,9 +30,9 @@ export const UploadAdmissionCSVModal: React.FC<
   function handleUploadFile() {
     uploadApplicantCSVDataMutation({
       variables: { applicantsFile: file },
-      onCompleted({ uploadApplicantCSVData }) {
+      onCompleted({ uploadApplicantsCsv }) {
         // In order to not break the mutation we need to get rid of the __typename property for each entry
-        const parsedResult = uploadApplicantCSVData.validApplicants.map(
+        const parsedResult = uploadApplicantsCsv.validApplicants.map(
           ({ __typename, ...rest }: any) => rest
         )
         setResult(parsedResult)
