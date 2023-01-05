@@ -39,6 +39,7 @@ export type InterviewNode = {
     | 'canCommitThreeSemesters'
     | 'openForOtherPositions'
     | 'priorities'
+    | 'status'
   >
   totalEvaluation: InterviewTotalEvaluationValues | null
   priorities: InternalGroupPositionPriority[]
