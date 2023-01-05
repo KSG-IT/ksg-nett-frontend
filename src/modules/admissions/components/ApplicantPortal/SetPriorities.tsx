@@ -28,6 +28,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useListState } from '@mantine/hooks'
+import { MessageBox } from 'components/MessageBox'
 
 interface InternalGroupPosition {
   id: string
@@ -146,11 +147,7 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
   }
 
   const handleNextStep = () => {
-    if (
-      confirm(
-        'Vil du låse dine prioriteter? Det er mulig å omprioriterre under intervjuet.'
-      )
-    ) {
+    if (confirm('Bekreft at du vil gå videre til neste steg')) {
       patchApplicant({
         variables: {
           id: applicant.id,
@@ -205,19 +202,18 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
 
   return (
     <Stack style={{ maxWidth: 900 }}>
-      <Alert color="blue">
+      <MessageBox type="info">
         Du må minst ha 1 stilling før du kan booke intervju, og kan ikke ha mer
-        enn 3.
-      </Alert>
-      <Text>
-        Se for mer informasjon om gjengene
+        enn 3. Du kan lese mer om de forskjellige stillingene på{' '}
         <Anchor
           href={'https://samfundet.no/informasjon/kafe-og-serveringsgjengen'}
           target={'_blank'}
         >
-          <b> her</b>
+          <b>denne lenken</b>
         </Anchor>
-      </Text>
+        .
+      </MessageBox>
+
       <Stack ref={animationParent}>
         {values.map((priority, index) => (
           <Group grow key={priority!.id} position={'apart'}>
@@ -264,13 +260,20 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
           ))}
         </SimpleGrid>
       </Stack>
+      <MessageBox type="warning">
+        <b>Obs!</b> Selv om du har mulighet til å velge mer enn 3 prioriteringer
+        på Samfundet sine nettssider når du søker KSG ber vi deg begrense deg
+        til 3 prioriteringer her. Du vil ikke ha mulighet til å endre på
+        stillingene etter at du har lagret på denne siden. Det er mulig å endre
+        rekkefølgen på prioriteringene dine under intervjuet.
+      </MessageBox>
 
       <Button
         onClick={handleNextStep}
         disabled={!canMoveOn}
         color="samfundet-red"
       >
-        Book intervju
+        Lagre prioriteringer
       </Button>
     </Stack>
   )
