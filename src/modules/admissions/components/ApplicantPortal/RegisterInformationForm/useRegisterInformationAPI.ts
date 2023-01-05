@@ -1,8 +1,9 @@
-import { format } from 'util/date-fns'
+import { showNotification } from '@mantine/notifications'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { GET_APPLICATION_FROM_TOKEN } from 'modules/admissions/queries'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
+import { format } from 'util/date-fns'
 import { RegisterInformationFormData } from './useRegisterInformationLogic'
 
 interface UseRegisterInformationAPIInput {
@@ -30,6 +31,12 @@ export function useRegisterInformationAPI({
         input: input,
       },
       refetchQueries: [GET_APPLICATION_FROM_TOKEN],
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
     })
   }
 
