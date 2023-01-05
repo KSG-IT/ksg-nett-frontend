@@ -47,7 +47,7 @@ export const ApplicantSummary: React.FC<ApplicantSummaryProps> = ({
           {applicant.interview &&
             format(
               new Date(applicant.interview.interviewStart),
-              "EEEE d. MMMM, 'kl' H:mm"
+              "EEEE d. MMMM, 'kl' HH:mm"
             )}
         </Text>
       </Group>
