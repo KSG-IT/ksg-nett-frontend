@@ -16,6 +16,7 @@ import {
   InternalGroupApplicants,
   InternalGroupDiscussion,
   MyInterviews,
+  TodaysInterviews,
 } from 'modules/admissions/views'
 import {
   BarTabCustomers,
@@ -301,6 +302,16 @@ export const AppRoutes: React.FC = () => {
                 permissions={PERMISSIONS.admissions.view.admission}
               >
                 <ApplicantNotices />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="todays-interviews"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <TodaysInterviews />
               </RestrictedRoute>
             }
           />

@@ -1,5 +1,6 @@
 import {
   Icon3dCubeSphere,
+  IconSun,
   IconUsers,
   IconUserSearch,
   IconWheelchair,
@@ -30,6 +31,12 @@ const shortcuts = [
     icon: Icon3dCubeSphere,
     color: 'samfundet-red',
     link: '/admissions/assign-interview',
+  },
+  {
+    title: 'Dagens intervjuer',
+    icon: IconSun,
+    color: 'samfundet-red',
+    link: '/admissions/todays-interviews',
   },
 ]
 
