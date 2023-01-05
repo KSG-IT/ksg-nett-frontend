@@ -23,6 +23,7 @@ export function useRegisterInformationAPI({
       lastActivity: new Date(),
     }
 
+    // TODO replace with custom mutation using applicant token
     return patchApplicant({
       variables: {
         id: id,
