@@ -4,7 +4,7 @@ import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
 import { AdmissionsShortcutPanel } from '../components/AdmissionDashboard/AdmissionsShortcutPanel'
 import { InternalGroupPreviewList } from '../components/DiscussionDashboard/InternalGroupPreviewList'
@@ -31,8 +31,6 @@ export const DiscussionDashboard: React.FC = () => {
       ALL_INTERNAL_GROUP_APPLICANT_DATA
     )
 
-  console.log(data)
-
   const { lockAdmission } = useAdmissionMutations()
 
   if (error) return <FullPageError />
@@ -58,6 +56,10 @@ export const DiscussionDashboard: React.FC = () => {
     })
   }
   const { allInternalGroupApplicantData } = data
+
+  if (allInternalGroupApplicantData === null) {
+    return <Navigate to="/admissions" />
+  }
   return (
     <Stack>
       <Group position="apart" mb="md">
