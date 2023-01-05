@@ -315,7 +315,16 @@ export const AppRoutes: React.FC = () => {
               </RestrictedRoute>
             }
           />
-          <Route path="close" element={<CloseAdmission />} />
+          <Route
+            path="close"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.change.admission}
+              >
+                <CloseAdmission />
+              </RestrictedRoute>
+            }
+          />
 
           <Route path="internal-group">
             <Route

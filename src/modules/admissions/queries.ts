@@ -200,9 +200,11 @@ export const INTERVIEW_DETAIL_QUERY = gql`
       id
       notes
       discussion
+      totalEvaluation
       applicant {
         id
         fullName
+        status
         canCommitThreeSemesters
         openForOtherPositions
         priorities {
