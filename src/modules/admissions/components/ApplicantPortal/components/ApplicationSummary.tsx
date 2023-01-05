@@ -7,6 +7,7 @@ import {
   ThemeIcon,
   Title,
 } from '@mantine/core'
+import { MessageBox } from 'components/MessageBox'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 import { format } from 'util/date-fns'
@@ -28,14 +29,17 @@ export const ApplicantSummary: React.FC<ApplicantSummaryProps> = ({
         Intervjuinformasjon
       </Title>
       <Group>
-        <Title order={4}>Hvor:</Title>
+        <Title order={4}>Intervjulokale:</Title>
         <Text transform={'uppercase'} color={'samfundet-red'} weight={'bold'}>
           {applicant.interview?.location.name}
         </Text>
       </Group>
       <Stack>
         <Title order={4}>Beskrivelse:</Title>
-        <Text>{applicant.interview?.location.locationDescription}</Text>
+        <Text>
+          Møt opp i glassinngangen til Samfundet fem minutter før intervjuet
+          starter. Vi ser frem til å møte deg!{' '}
+        </Text>
       </Stack>
       <Group>
         <Title order={4}>Når:</Title>
@@ -74,6 +78,11 @@ export const ApplicantSummary: React.FC<ApplicantSummaryProps> = ({
       >
         Trekk søknad
       </Button>
+      <MessageBox type="info">
+        Om du skulle lure på noe, eller ha andre problemer er det mulig å ta
+        kontakt på
+        <b> ksg-opptak@samfundet.no</b>
+      </MessageBox>
       <Text>Du kan nå trygt lukke dette vinduet</Text>
       <RetractApplicationModal
         opened={modalOpen}
