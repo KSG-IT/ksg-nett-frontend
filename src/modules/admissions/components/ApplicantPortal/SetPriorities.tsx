@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import {
   ActionIcon,
   Alert,
+  Anchor,
   Button,
   Divider,
   Group,
@@ -208,6 +209,15 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
         Du må minst ha 1 stilling før du kan booke intervju, og kan ikke ha mer
         enn 3.
       </Alert>
+      <Text>
+        Se for mer informasjon om gjengene
+        <Anchor
+          href={'https://samfundet.no/informasjon/kafe-og-serveringsgjengen'}
+          target={'_blank'}
+        >
+          <b> her</b>
+        </Anchor>
+      </Text>
       <Stack ref={animationParent}>
         {values.map((priority, index) => (
           <Group grow key={priority!.id} position={'apart'}>

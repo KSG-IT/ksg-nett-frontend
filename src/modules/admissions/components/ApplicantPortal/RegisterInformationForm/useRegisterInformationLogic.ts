@@ -77,17 +77,8 @@ export function useRegisterInformationLogic(
       ...data,
       image: file,
     }
-
-    if (!file) {
-      if (doesNotWantImage) {
-        mutationdata.image = null
-      } else {
-        showNotification({
-          message: 'Du må laste opp bilde',
-          color: 'yellow',
-        })
-        return
-      }
+    if (doesNotWantImage) {
+      mutationdata.image = null
     }
 
     await onSubmit(mutationdata)
