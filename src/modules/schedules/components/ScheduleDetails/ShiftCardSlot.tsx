@@ -15,7 +15,7 @@ import {
   NORMALIZED_SHIFTS_FROM_RANGE_QUERY,
 } from 'modules/schedules/queries'
 import { ShiftSlotNode } from 'modules/schedules/types.graphql'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 
 interface ShiftCardSlotProps {
@@ -75,26 +75,32 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
     })
   }
 
-  const renderedText =
-    shiftSlot.user === null ? (
-      <Text className={classes.hoverableRed} onClick={() => setOpened(true)}>
-        {shiftSlot.role}
-      </Text>
-    ) : (
-      <Group position="apart">
-        <Text
-          className={classes.hoverableGreen}
-          onClick={() => setOpened(true)}
-        >
-          {shiftSlot.user.getFullWithNickName}
+  const renderedText = useMemo(
+    () =>
+      shiftSlot.user === null ? (
+        <Text className={classes.hoverableRed} onClick={() => setOpened(true)}>
+          {shiftSlot.role}
         </Text>
-        <UnstyledButton
-          onClick={() => handleRemoveUserFromShiftSlot(shiftSlot.id)}
-        >
-          <IconX size="16px" color="white" />
-        </UnstyledButton>
-      </Group>
-    )
+      ) : (
+        <Group position="apart">
+          <Text
+            className={classes.hoverableGreen}
+            onClick={() => setOpened(true)}
+          >
+            {shiftSlot.user.getFullWithNickName}
+          </Text>
+          <UnstyledButton
+            onClick={() => handleRemoveUserFromShiftSlot(shiftSlot.id)}
+          >
+            <IconX size="16px" color="white" />
+          </UnstyledButton>
+        </Group>
+      ),
+
+    [shiftSlot]
+  )
+  console.log('rerender')
+  console.log(shiftSlot)
 
   return (
     <Popover opened={opened} onChange={setOpened} withinPortal>

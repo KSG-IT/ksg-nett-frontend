@@ -8,6 +8,7 @@ export type InternalGroupNode = {
   groupImage: string
   groupIcon: string
   description: string
+  highlightedName: string
   membershipData: InternalGroupMembershipDataNode[]
 }
 
@@ -54,8 +55,11 @@ export type InternalGroupVariables = {
 
 // === Mutation typing ===
 
-export type PatchInternalGroupInput = Partial<Omit<InternalGroupNode, 'id'>>
-
+export type PatchInternalGroupInput = {
+  name?: string
+  description?: string
+  groupImage?: File | null
+}
 export interface PatchInternalGroupReturns {
   internalGroup: InternalGroupNode
 }

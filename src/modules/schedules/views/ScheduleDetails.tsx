@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
-import { IconSettings } from '@tabler/icons'
+import { IconPlus, IconSettings } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 
 import { FullPageError } from 'components/FullPageComponents'
@@ -13,6 +13,7 @@ import {
   ScheduleSettingsModal,
   WeekController,
 } from '../components/ScheduleDetails'
+import { CreateShiftDrawer } from '../components/ScheduleDetails/CreateShiftDrawer'
 
 import { ShiftRenderer } from '../components/ScheduleDetails/ShiftRenderer'
 import { SCHEDULE_QUERY } from '../queries'
@@ -31,6 +32,7 @@ export const ScheduleDetails: React.FC = () => {
     keyof ScheduleDetailsParams
   >() as ScheduleDetailsParams
   const [applyTemplateModalOpen, setApplyTemplateModalOpen] = useState(false)
+  const [createShiftDrawerOpen, setCreateShiftDrawerOpen] = useState(false)
   const [scheduleSettingsModalOpen, setScheduleSettingsModalOpen] =
     useState(false)
   const [shiftsFrom, setShiftsFrom] = useState<Date>(new Date())
@@ -84,12 +86,21 @@ export const ScheduleDetails: React.FC = () => {
             Innstillinger
           </Button>
         </Group>
-        <Button
-          color="samfundet-red"
-          onClick={() => setApplyTemplateModalOpen(true)}
-        >
-          Generer vakter fra mal
-        </Button>
+        <Group>
+          <Button
+            leftIcon={<IconPlus />}
+            onClick={() => setCreateShiftDrawerOpen(true)}
+          >
+            {' '}
+            Nytt skift
+          </Button>
+          <Button
+            color="samfundet-red"
+            onClick={() => setApplyTemplateModalOpen(true)}
+          >
+            Generer vakter fra mal
+          </Button>
+        </Group>
       </Group>
 
       <div className={classes.shifts}>
@@ -108,6 +119,14 @@ export const ScheduleDetails: React.FC = () => {
         isOpen={scheduleSettingsModalOpen}
         schedule={schedule}
         onCloseCallback={() => setScheduleSettingsModalOpen(false)}
+      />
+      <CreateShiftDrawer
+        scheduleId={schedule.id}
+        size="xl"
+        padding="md"
+        title="Opprett nytt skift"
+        opened={createShiftDrawerOpen}
+        onClose={() => setCreateShiftDrawerOpen(false)}
       />
     </Stack>
   )

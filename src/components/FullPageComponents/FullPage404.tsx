@@ -1,25 +1,14 @@
+import { Center, Stack, Title } from '@mantine/core'
 import { IconSkull } from '@tabler/icons'
-import styled from 'styled-components'
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: auto;
-  color: ${props => props.theme.colors.gray1};
-`
-
-const Message = styled.h2`
-  font-size: 28px;
-  font-weight: 600;
-`
-
-export const FullPage404: React.VFC = () => {
+export const FullPage404: React.FC = () => {
   return (
-    <Wrapper>
-      <IconSkull size={200} />
-      <Message>Denne siden finnes ikke</Message>
-    </Wrapper>
+    <Center style={{ width: '100%', height: '100%' }}>
+      <Stack align={'center'} spacing={0}>
+        <IconSkull size={200} />
+        <Title order={2}>Denne siden finnes ikke</Title>
+      </Stack>
+    </Center>
   )
 }
 

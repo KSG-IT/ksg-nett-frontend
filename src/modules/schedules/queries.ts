@@ -131,7 +131,7 @@ export const NORMALIZED_SHIFTS_FROM_RANGE_QUERY = gql`
               user {
                 id
                 initials
-                fullName
+                getFullWithNickName
                 profileImage
               }
             }
@@ -161,7 +161,7 @@ export const NORMALIZED_SHIFTS_FROM_RANGE_QUERY = gql`
                 user {
                   id
                   initials
-                  fullName
+                  getFullWithNickName
                   profileImage
                 }
               }

@@ -1,11 +1,10 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Paper, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { IconFileAnalytics } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { useState } from 'react'
-import { Navigate } from 'react-router-dom'
 import { API_URL } from 'util/env'
 import {
   CloseAdmissionTable,
@@ -32,8 +31,8 @@ export const CloseAdmission: React.FC = () => {
     },
   } = data
 
-  if (activeAdmission === null || activeAdmission.status !== 'CLOSED') {
-    return <Navigate to="/admission" />
+  if (activeAdmission === null || activeAdmission.status !== 'LOCKED') {
+    return <span>Opptaket er enten ikke startet eller låst</span>
   }
 
   return (

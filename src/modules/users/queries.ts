@@ -6,11 +6,13 @@ export const ME_QUERY = gql`
       id
       profileImage
       getFullWithNickName
+      getCleanFullName
       initials
       balance
       icalToken
       upvotedQuoteIds
       requiresMigrationWizard
+      firstTimeLogin
       lastTransactions {
         name
         amount
@@ -31,7 +33,8 @@ export const USER_QUERY = gql`
       getCleanFullName
       firstName
       lastName
-      biography
+      nickname
+      aboutMe
       homeTown
       dateOfBirth
       ksgStatus

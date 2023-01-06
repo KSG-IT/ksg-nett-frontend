@@ -2,17 +2,17 @@ import { createStyles, Navbar, Text } from '@mantine/core'
 import {
   IconAffiliate,
   IconBlockquote,
+  IconBook,
+  IconBook2,
   IconCalendarTime,
   IconChartAreaLine,
   IconClipboardList,
   IconCreditCard,
-  IconDisabled,
   IconEdit,
   IconHandMiddleFinger,
   IconHome,
   IconReportMoney,
   IconUserPlus,
-  IconUsers,
 } from '@tabler/icons'
 import { useLocation } from 'react-router-dom'
 import { useStore } from 'store'
@@ -59,6 +59,12 @@ const routes: RouteGroup[] = [
         label: 'Sitater',
         permissions: [],
       },
+      {
+        icon: IconBook2,
+        link: '/handbook',
+        label: 'Håndboka',
+        permissions: [],
+      },
     ],
   },
   {
@@ -102,9 +108,9 @@ const routes: RouteGroup[] = [
       },
       {
         icon: IconClipboardList,
-        link: '/economy/print',
-        label: 'Krysselister',
-        permissions: PERMISSIONS.economy.view.sociSession,
+        link: '/economy/soci-sessions/live',
+        label: 'Stilletime',
+        permissions: PERMISSIONS.economy.add.sociOrderSession,
       },
     ],
   },
@@ -127,7 +133,12 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
       hiddenBreakpoint="sm"
       hidden={!isOpen}
       width={{ sm: 200, lg: 250 }}
-      style={{ backgroundColor: 'white', overflowY: 'scroll' }}
+      style={{
+        backgroundColor: 'white',
+        overflowY: 'auto',
+        overscrollBehavior: 'contain',
+        fontSize: '12px',
+      }}
     >
       <NavBarMeSection />
       {routes.map((routeGroup, index) => {
@@ -137,7 +148,7 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
         if (!hasAny) return null
         return (
           <div className={classes.group} key={index}>
-            <Text weight={600} mb="xs">
+            <Text weight={600} mb="xs" id={routeGroup.title}>
               {routeGroup.title}
             </Text>
             {routeGroup.items.map((item, index) => {

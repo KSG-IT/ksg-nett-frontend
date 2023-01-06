@@ -141,7 +141,7 @@ export const APPLICANT_QUERY = gql`
         id
         user {
           id
-          fullName
+          getFullWithNickName
           initials
           profileImage
         }
@@ -178,7 +178,7 @@ export const APPLICANT_QUERY = gql`
           id
           initials
           profileImage
-          fullName
+          getFullWithNickName
         }
       }
     }
@@ -200,9 +200,11 @@ export const INTERVIEW_DETAIL_QUERY = gql`
       id
       notes
       discussion
+      totalEvaluation
       applicant {
         id
         fullName
+        status
         canCommitThreeSemesters
         openForOtherPositions
         priorities {
@@ -506,6 +508,7 @@ export const CORE_APPLICANT_FIELDS = gql`
         id
         profileImage
         initials
+        getFullWithNickName
       }
     }
   }
@@ -550,6 +553,7 @@ export const APPLICANT_NOTICES_QUERY = gql`
         id
         initials
         profileImage
+        getFullWithNickName
       }
     }
   }

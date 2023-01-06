@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Paper, Stack, Title } from '@mantine/core'
+import { Group, Paper, Stack, Title } from '@mantine/core'
 import { IconCircleCheck, IconCircleX } from '@tabler/icons'
-import { BackButton } from 'components/BackButton'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -78,15 +77,15 @@ export const InternalGroupApplicants: React.FC = ({}) => {
         {internalGroupName.toLocaleLowerCase()} på intervjuet.
       </MessageBox>
       <Title order={2}>Førstevalg</Title>
-      <Paper p="md">
+      <Paper>
         <ApplicantsTable applicants={firstPriorities} />
       </Paper>
       <Title order={2}>Andrevalg</Title>
-      <Paper p="md">
+      <Paper>
         <ApplicantsTable applicants={secondPriorities} />
-      </Paper>{' '}
+      </Paper>
       <Title order={2}>Tredjevalg</Title>
-      <Paper p="md">
+      <Paper>
         <ApplicantsTable applicants={thirdPriorities} />
       </Paper>
     </Stack>

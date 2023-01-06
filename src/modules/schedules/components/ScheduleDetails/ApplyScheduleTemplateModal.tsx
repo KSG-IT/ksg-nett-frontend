@@ -1,10 +1,10 @@
 import { Button, Group, Modal, NumberInput, Text } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
+import { showNotification } from '@mantine/notifications'
 import { add } from 'date-fns'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
 import { ScheduleTemplateSelect } from '../ScheduleTemplateSelect'
 
@@ -45,11 +45,18 @@ export const ApplyScheduleTemplateModal: React.FC<
       },
       refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
       onCompleted: () => {
-        toast.success('Generated shifts')
+        showNotification({
+          title: 'Vakter opprettet',
+          message: 'Vaktene ble opprettet',
+          color: 'green',
+        })
         onCloseCallback()
       },
-      onError: err => {
-        toast.error(err.message)
+      onError: ({ message }) => {
+        showNotification({
+          title: 'Noe gikk galt',
+          message: message,
+        })
       },
     })
   }

@@ -1,11 +1,4 @@
-import {
-  Button,
-  FileInput,
-  Group,
-  SimpleGrid,
-  Textarea,
-  TextInput,
-} from '@mantine/core'
+import { Button, FileInput, Group, SimpleGrid, TextInput } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import {
   IconAt,
@@ -31,7 +24,7 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
   onCompletedCallback,
 }) => {
   const { form, onSubmit } = useEditProfileLogic({
-    ...useEditProfileAPI(user),
+    ...useEditProfileAPI({ user, onCompletedCallback }),
     onCompletedCallback,
   })
   const { formState, register, handleSubmit, getValues, setValue } = form
@@ -54,6 +47,12 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
           label="Etternavn"
           error={errors?.lastName?.message}
           {...register('lastName')}
+        />
+        <TextInput
+          label={'Kallenavn'}
+          icon={<IconSignature size={14} />}
+          error={errors?.nickname?.message}
+          {...register('nickname')}
         />
         <TextInput
           label="Hjemby"
@@ -104,12 +103,6 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
           onChange={value => value && setValue('profileImage', value)}
         />
       </SimpleGrid>
-      <Textarea
-        autosize
-        label="Om meg"
-        error={errors?.biography?.message}
-        {...register('biography')}
-      />
 
       <Group position="apart" mt="md">
         <Button

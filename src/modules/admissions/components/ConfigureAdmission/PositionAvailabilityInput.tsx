@@ -1,12 +1,5 @@
 import { useMutation } from '@apollo/client'
-import {
-  Button,
-  Group,
-  NumberInput,
-  Select,
-  Text,
-  UnstyledButton,
-} from '@mantine/core'
+import { NumberInput, Select, UnstyledButton } from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
 import {
   DELETE_ADMISSION_AVAILABLE_INTERNAL_GROUP_POSITION_DATA,
@@ -18,14 +11,7 @@ import {
 } from 'modules/admissions/types.graphql'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-import styled from 'styled-components'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-`
 
 interface PositionAvailabilityInputProps {
   availablePosition: AdmissionAvailableInternalGroupPositionData

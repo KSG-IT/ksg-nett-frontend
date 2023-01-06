@@ -24,7 +24,7 @@ export const ApplicantStatusBadge: React.VFC<ApplicantStatusBadgeProps> = ({
   applicantStatus,
 }) => {
   return (
-    <Badge color={resolveStatusColor(applicantStatus)} size="lg">
+    <Badge color={resolveStatusColor(applicantStatus)} size="sm">
       {parseApplicantStatus(applicantStatus)}
     </Badge>
   )

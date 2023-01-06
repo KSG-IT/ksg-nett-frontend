@@ -1,22 +1,34 @@
-import { useMutation, useQuery } from '@apollo/client'
-import { Alert, Button, Group, Stack, Text, Title } from '@mantine/core'
+import { useQuery } from '@apollo/client'
+import {
+  ActionIcon,
+  Alert,
+  Anchor,
+  Button,
+  Divider,
+  Group,
+  SimpleGrid,
+  Stack,
+  Text,
+  ThemeIcon,
+  Title,
+} from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconTrash } from '@tabler/icons'
+import { IconChevronDown, IconChevronUp, IconTrash } from '@tabler/icons'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import {
-  ADD_INTERNAL_GROUP_POSITION_PRIORITY,
-  DELETE_INTERNAL_GROUP_POSITION_PRIORITY,
-} from 'modules/admissions/mutations'
-import { usePatchApplicant } from 'modules/admissions/mutations.hooks'
+  useApplicantFromTokenMutations,
+  usePatchApplicant,
+} from 'modules/admissions/mutations.hooks'
 import { INTERNAL_GROUP_POSITIONS_AVAILABLE_FOR_APPLICANTS_QUERY } from 'modules/admissions/queries'
 import {
-  AddInternalGroupPositionPriorityReturns,
-  AddInternalGroupPositionPriorityVariables,
   ApplicantNode,
-  InternalGroupPositionPriorityNode,
   InternalGroupPositionsAvailableForApplicantReturns,
 } from 'modules/admissions/types.graphql'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useListState } from '@mantine/hooks'
+import { MessageBox } from 'components/MessageBox'
 
 interface InternalGroupPosition {
   id: string
@@ -34,18 +46,19 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
 }) => {
   // === Local state variables ===
   // Initial priority state are applicant non-null priorities
-  const [priorities, setPriorities] = useState<
-    InternalGroupPositionPriorityNode[]
-  >(
-    applicant.priorities.filter(
-      priority => priority !== null
-    ) as InternalGroupPositionPriorityNode[]
+  const { applicantToken } = useParams() as { applicantToken: string }
+  const [animationParent] = useAutoAnimate<HTMLDivElement>()
+  const [values, handlers] = useListState(
+    applicant.priorities.filter(priority => priority !== null)
   )
+  const [isDirty, setIsDirty] = useState(false)
   const [internalGroupPositions, setInternalGroupPositions] = useState<
     InternalGroupPosition[]
   >([])
   const [filteredInternalGroupPositions, setFilteredInternalGroupPositions] =
     useState<InternalGroupPosition[]>([])
+  const { addPriority, updatePriorities, deleteInternalGroupPriority } =
+    useApplicantFromTokenMutations()
 
   useEffect(() => {
     // We handle what internal group positions we want to display for the user
@@ -58,11 +71,19 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
     const availableInternalGroupPositions = internalGroupPositions.filter(
       position => !priorityIds.includes(position.id)
     )
-
+    handlers.setState(filteredPriorities)
     // Filtered positions are those which are available for the user to add to their priority listing
     setFilteredInternalGroupPositions(availableInternalGroupPositions)
-    setPriorities(filteredPriorities as InternalGroupPositionPriorityNode[])
-  }, [applicant.priorities, internalGroupPositions])
+  }, [internalGroupPositions, applicant.priorities])
+
+  useEffect(() => {
+    const filteredPriorities = values.filter(priority => priority !== null)
+    const priorityIds = filteredPriorities.map(
+      priority => priority!.internalGroupPosition.id
+    )
+    handleUpdatePriorities(priorityIds)
+    setIsDirty(false)
+  }, [isDirty])
 
   // === Queries and mutations ===
   useQuery<InternalGroupPositionsAvailableForApplicantReturns>(
@@ -78,90 +99,157 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
   // Saves priorities and moves the applicant to the interview booking phase
   const { patchApplicant } = usePatchApplicant()
 
-  const [deleteInternalGroupPriority] = useMutation(
-    DELETE_INTERNAL_GROUP_POSITION_PRIORITY,
-    { refetchQueries: ['GetApplicantFromToken'] }
-  )
-
-  const [addPriority] = useMutation<
-    AddInternalGroupPositionPriorityReturns,
-    AddInternalGroupPositionPriorityVariables
-  >(ADD_INTERNAL_GROUP_POSITION_PRIORITY, {
-    refetchQueries: ['GetApplicantFromToken'],
-  })
-
   //  === Handlers ===
   const handleAddPriority = (internal_group_position_id: string) => {
     addPriority({
       variables: {
         internalGroupPositionId: internal_group_position_id,
-        applicantId: applicant.id,
+        token: applicantToken,
       },
     })
   }
 
-  const handleDeletePriority = (priorityId: string) => {
-    deleteInternalGroupPriority({ variables: { id: priorityId } })
+  const handlePriorityChange = (index: number, direction: -1 | 1) => {
+    handlers.reorder({ from: index, to: index + direction })
+    setIsDirty(true)
+  }
+  const handleUpdatePriorities = (priorityIds: string[]) => {
+    updatePriorities({
+      variables: {
+        priorityOrder: priorityIds,
+        applicantId: applicant.id,
+        token: applicantToken,
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Error',
+          message,
+          color: 'red',
+        })
+      },
+    })
+  }
+
+  const handleDeletePriority = (internal_group_position_id: string) => {
+    deleteInternalGroupPriority({
+      variables: {
+        internalGroupPositionId: internal_group_position_id,
+        token: applicantToken,
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Error',
+          message,
+          color: 'red',
+        })
+      },
+    })
   }
 
   const handleNextStep = () => {
-    patchApplicant({
-      variables: {
-        id: applicant.id,
-        input: {
-          status: ApplicantStatusValues.HAS_SET_PRIORITIES,
+    if (confirm('Bekreft at du vil gå videre til neste steg')) {
+      patchApplicant({
+        variables: {
+          id: applicant.id,
+          input: {
+            status: ApplicantStatusValues.HAS_SET_PRIORITIES,
+          },
         },
-      },
-      refetchQueries: ['GetApplicantFromToken'],
-      onCompleted() {
-        showNotification({
-          title: 'Lagret prioriteringer',
-          message: 'Du har nå lagret dine prioriteringer',
-        })
-        nextStepCallback()
-      },
-      onError() {
-        showNotification({
-          title: 'Kunne ikke lagre prioriteringer',
-          message: 'Noe gikk galt under lagring av prioriteringer',
-        })
-      },
-    })
+        refetchQueries: ['GetApplicantFromToken'],
+        onCompleted() {
+          showNotification({
+            title: 'Lagret prioriteringer',
+            message: 'Du har nå lagret dine prioriteringer',
+          })
+          nextStepCallback()
+        },
+        onError() {
+          showNotification({
+            title: 'Kunne ikke lagre prioriteringer',
+            message: 'Noe gikk galt under lagring av prioriteringer',
+          })
+        },
+      })
+    }
   }
 
   // ToDo move this to local state and update in useEffect
-  const canMoveOn = priorities.length > 0
-  const canAddPriority = priorities.length < 3
+  const canMoveOn = values.length > 0
+  const canAddPriority = values.length < 3
+
+  function renderChangePriorityButtons(index: number) {
+    const moveUp = index > 0
+    const moveDown = index < values.length - 1
+
+    return (
+      <Stack spacing={0}>
+        <ActionIcon
+          disabled={!moveUp}
+          onClick={() => handlePriorityChange(index, -1)}
+        >
+          <IconChevronUp />
+        </ActionIcon>
+
+        <ActionIcon
+          disabled={!moveDown}
+          onClick={() => handlePriorityChange(index, 1)}
+        >
+          <IconChevronDown />
+        </ActionIcon>
+      </Stack>
+    )
+  }
 
   return (
     <Stack style={{ maxWidth: 900 }}>
-      <Alert color="blue">
+      <MessageBox type="info">
         Du må minst ha 1 stilling før du kan booke intervju, og kan ikke ha mer
-        enn 3.
-      </Alert>
-      {priorities.map(priority => {
-        return (
-          <Group position="apart">
-            <Text>{priority.internalGroupPosition.name}</Text>
-            <Button
-              color="red"
-              leftIcon={<IconTrash />}
-              onClick={() => {
-                handleDeletePriority(priority.id)
-              }}
-            >
-              Slett prioritet
-            </Button>
+        enn 3. Du kan lese mer om de forskjellige stillingene på{' '}
+        <Anchor
+          href={'https://samfundet.no/informasjon/kafe-og-serveringsgjengen'}
+          target={'_blank'}
+        >
+          <b>denne lenken</b>
+        </Anchor>
+        .
+      </MessageBox>
+
+      <Stack ref={animationParent}>
+        {values.map((priority, index) => (
+          <Group grow key={priority!.id} position={'apart'}>
+            <Text>
+              <ThemeIcon mr={'sm'} radius={'md'}>
+                {index + 1}
+              </ThemeIcon>{' '}
+              {priority?.internalGroupPosition.name}
+            </Text>
+            <Group position={'right'}>
+              {renderChangePriorityButtons(index)}
+              <Button
+                color="samfundet-red"
+                variant={'outline'}
+                leftIcon={<IconTrash />}
+                onClick={() => {
+                  handleDeletePriority(priority!.internalGroupPosition.id)
+                }}
+              >
+                Fjern
+              </Button>
+            </Group>
           </Group>
-        )
-      })}
+        ))}
+      </Stack>
+      <Divider />
       <Stack>
-        <Title order={3}>Tilgjengelige stillinger</Title>
-        <Group>
+        <Title color={'dimmed'} order={3}>
+          Tilgjengelige stillinger
+        </Title>
+        <SimpleGrid breakpoints={[{ minWidth: 'sm', cols: 4 }]} cols={1}>
           {filteredInternalGroupPositions.map(position => (
             <Button
               key={position.name}
-              color="green"
+              variant={'light'}
+              color="samfundet-red"
               onClick={() => {
                 handleAddPriority(position.id)
               }}
@@ -170,15 +258,22 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
               {position.name}
             </Button>
           ))}
-        </Group>
+        </SimpleGrid>
       </Stack>
+      <MessageBox type="warning">
+        <b>Obs!</b> Selv om du har mulighet til å velge mer enn 3 prioriteringer
+        på Samfundet sine nettssider når du søker KSG ber vi deg begrense deg
+        til 3 prioriteringer her. Du vil ikke ha mulighet til å endre på
+        stillingene etter at du har lagret på denne siden. Det er mulig å endre
+        rekkefølgen på prioriteringene dine under intervjuet.
+      </MessageBox>
 
       <Button
         onClick={handleNextStep}
         disabled={!canMoveOn}
         color="samfundet-red"
       >
-        Book intervju
+        Lagre prioriteringer
       </Button>
     </Stack>
   )

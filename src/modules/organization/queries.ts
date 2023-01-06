@@ -17,6 +17,7 @@ export const INTERNAL_GROUP_QUERY = gql`
       type
       groupImage
       description
+      highlightedName
       membershipData {
         internalGroupPositionName
         users {

@@ -1,9 +1,16 @@
 import { useQuery } from '@apollo/client'
-import { Paper, Select } from '@mantine/core'
+import { createStyles, Group, Select, Text } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts'
-import styled from 'styled-components'
+import {
+  Bar,
+  BarChart,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 import { format } from 'util/date-fns'
 import { numberWithSpaces } from 'util/parsing'
 import { MY_EXPENDITURES } from '../queries'
@@ -13,19 +20,6 @@ import {
   MyExpendituresVariables,
 } from '../types.graphql'
 
-const TotalRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`
-
-const TotalLabel = styled.label``
-
-const TotalValue = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-`
-
 interface MyExpendituresProps {
   moneySpent: number
 }
@@ -33,6 +27,7 @@ interface MyExpendituresProps {
 export const MyExpenditures: React.FC<MyExpendituresProps> = ({
   moneySpent,
 }) => {
+  const { classes } = useStyles()
   const { loading, error, data } = useQuery<
     MyExpendituresReturns,
     MyExpendituresVariables
@@ -63,29 +58,46 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
   ]
 
   const parsedData = data.myExpenditures.data.map(day => ({
-    name: format(new Date(day.day), 'd MMM'),
-    value: day.sum,
+    date: format(new Date(day.day), 'd MMM'),
+    sum: day.sum,
   }))
 
   return (
-    <Paper shadow={'lg'} p="md" style={{ overflowX: 'scroll' }}>
+    <>
       <Select
         label={'Periode'}
         data={dateRangeOptions}
         defaultValue={dateRangeOptions[0].value}
       />
+      <ResponsiveContainer width={'95%'} height={400}>
+        <BarChart
+          data={parsedData}
+          width={300}
+          height={400}
+          className={classes.barChart}
+        >
+          <XAxis dataKey={'date'} />
+          <YAxis />
+          <Tooltip filterNull />
+          <Legend />
+          <Bar dataKey={'sum'} fill={'maroon'} />
+        </BarChart>
+      </ResponsiveContainer>
 
-      <BarChart width={700} height={300} data={parsedData}>
-        <Bar dataKey={'value'} fill={'hotpink'} unit=",- NOK" />
-        <XAxis dataKey={'name'} />
-        <YAxis dataKey={'value'} />
-        <Tooltip filterNull />
-      </BarChart>
-
-      <TotalRow>
-        <TotalLabel>Sum</TotalLabel>
-        <TotalValue>{numberWithSpaces(moneySpent)},- NOK </TotalValue>
-      </TotalRow>
-    </Paper>
+      <Group position="apart">
+        <Text weight={'bold'}>Sum</Text>
+        <Text weight="bold">{numberWithSpaces(moneySpent)} kr</Text>
+      </Group>
+    </>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  totalRow: {
+    maxWidth: '700px',
+  },
+  barChart: {
+    padding: '0px',
+    margin: '0px',
+  },
+}))

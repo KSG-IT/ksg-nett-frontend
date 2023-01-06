@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { Button, Menu, Text, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Button, Menu, Text, useMantineTheme } from '@mantine/core'
 import {
   IconBackpack,
   IconCheck,
@@ -120,9 +120,9 @@ export const DiscussApplicantTableRows: React.VFC<
       <td>
         <Menu position="left-start">
           <Menu.Target>
-            <Button variant="outline" loading={loading} color="samfundet-red">
-              <IconDots />
-            </Button>
+            <ActionIcon>
+              <IconDots size={16} stroke={1.5} />
+            </ActionIcon>
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item icon={<IconEye />}>

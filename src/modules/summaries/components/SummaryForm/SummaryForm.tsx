@@ -1,14 +1,17 @@
 import {
   Button,
   Card,
+  Group,
   SimpleGrid,
   Stack,
-  Textarea,
   TextInput,
   Title,
+  Text,
+  Divider,
 } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import { IconCalendar } from '@tabler/icons'
+import { RichTextEditor } from 'components/RichTextEditor'
 import {
   InternalGroupSelect,
   UserMultiSelect,
@@ -18,6 +21,7 @@ import { SummaryNode } from 'modules/summaries/types'
 import { useState } from 'react'
 import { useSummaryFormAPI } from './useSummaryFormAPI'
 import { useSummaryLogic } from './useSummaryLogic'
+import { CustomInputLabel } from './CustomInputLabel'
 
 interface SummaryFormProps {
   summary?: SummaryNode
@@ -28,21 +32,27 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
   summary,
   onCompletedCallback,
 }) => {
-  const { form, onSubmit } = useSummaryLogic({
-    ...useSummaryFormAPI(summary),
-    onCompletedCallback,
+  const { form, editor, onSubmit } = useSummaryLogic({
+    ...useSummaryFormAPI(summary, onCompletedCallback),
   })
 
   const { formState, register, handleSubmit, getValues, setValue, watch } = form
   const { errors, isSubmitting } = formState
   const [reporter, setReporter] = useState<string>(getValues('reporter'))
+  const [internalGroup, setInternalGroup] = useState<string>(
+    getValues('internalGroup') ?? ''
+  )
   const [participants, setParticipants] = useState<string[]>(
     getValues('participants')
   )
 
-  function handleCallback(values: string[]) {
+  function handleParticipantsCallback(values: string[]) {
     setParticipants(values)
     setValue('participants', values)
+  }
+  function handleInternalGroupCallback(value: string) {
+    setInternalGroup(value)
+    setValue('internalGroup', value)
   }
 
   return (
@@ -56,46 +66,37 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
               { maxWidth: 600, cols: 1, spacing: 'sm' },
             ]}
           >
-            <div>
-              <UserSelect
-                withinPortal
-                label={
-                  <Title order={5} color={'dimmed'}>
-                    Referent
-                  </Title>
-                }
-                userId={reporter}
-                setUserCallback={value => {
-                  setReporter(value)
-                  setValue('reporter', value)
-                }}
-              />
-              <div>
-                <InternalGroupSelect
-                  withOtherOption
-                  setInternalGroupCallback={value =>
-                    setValue('internalGroup', value)
-                  }
+            <Stack>
+              <CustomInputLabel label={'Referent'}>
+                <UserSelect
+                  withinPortal
+                  userId={reporter}
+                  setUserCallback={value => {
+                    setReporter(value)
+                    setValue('reporter', value)
+                  }}
                 />
-              </div>
-
-              <div>
+              </CustomInputLabel>
+              <CustomInputLabel label={'Interngjeng'}>
+                <InternalGroupSelect
+                  withinPortal
+                  withOtherOption
+                  internalGroupId={internalGroup}
+                  setInternalGroupCallback={handleInternalGroupCallback}
+                />
+              </CustomInputLabel>
+              <CustomInputLabel
+                label={'Tittel'}
+                description={"Trengs kun hvis du har valgt 'Annet'"}
+              >
                 <TextInput
-                  label="Tittel"
-                  description="Trengs bare om man velger 'Annet'"
                   {...register('title')}
                   disabled={!(watch('internalGroup') === 'other')}
                 />
-              </div>
-
-              <div>
+              </CustomInputLabel>
+              <CustomInputLabel label={'Dato'}>
                 <DatePicker
                   withinPortal
-                  label={
-                    <Title order={5} color={'dimmed'}>
-                      Dato
-                    </Title>
-                  }
                   placeholder="Velg en dato"
                   icon={<IconCalendar size={14} />}
                   error={errors?.date?.message}
@@ -103,20 +104,20 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
                   onChange={date => date && setValue('date', new Date(date))}
                   allowFreeInput
                 />
-              </div>
-            </div>
+              </CustomInputLabel>
+            </Stack>
             <UserMultiSelect
               label={
-                <Title order={5} color={'dimmed'}>
+                <Title mb={'xs'} order={5} color={'dimmed'}>
                   Deltakere
                 </Title>
               }
               users={participants}
-              setUsersCallback={handleCallback}
+              setUsersCallback={handleParticipantsCallback}
             />
           </SimpleGrid>
         </Card>
-        <Textarea autosize minRows={24} {...register('contents')} />
+        <RichTextEditor editor={editor} />
         <Button color={'samfundet-red'} disabled={isSubmitting} type={'submit'}>
           Lagre
         </Button>

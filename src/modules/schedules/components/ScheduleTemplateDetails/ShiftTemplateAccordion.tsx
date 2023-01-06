@@ -20,7 +20,7 @@ export const ShiftTemplateAccordion: React.FC<ShiftTemplateAccordionProps> = ({
   })
   return (
     <Paper>
-      <Accordion defaultValue="customization">
+      <Accordion multiple>
         <Accordion.Item value="header">
           <Accordion.Control chevron={false}>
             <Group className={classes.shiftTemplateRow} position="apart">

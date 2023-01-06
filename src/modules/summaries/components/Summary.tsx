@@ -1,9 +1,7 @@
 import { Avatar, Badge, Divider, Group, Title } from '@mantine/core'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import { useEditor } from '@tiptap/react'
 import { UserThumbnail } from '../../users/components'
 import { SummaryNode } from '../types'
-import { getSummaryTypeLabel } from '../util'
 
 interface SummaryProps {
   summary: SummaryNode
@@ -38,8 +36,7 @@ export const Summary: React.FC<SummaryProps> = ({ summary }: SummaryProps) => {
         </Group>
       </Group>
       <Divider size={1} />
-
-      <ReactMarkdown plugins={[remarkGfm]}>{summary.contents}</ReactMarkdown>
+      <div dangerouslySetInnerHTML={{ __html: summary.contents }} />
     </>
   )
 }

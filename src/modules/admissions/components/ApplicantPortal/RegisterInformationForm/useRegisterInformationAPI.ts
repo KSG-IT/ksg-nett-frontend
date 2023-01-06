@@ -1,8 +1,9 @@
-import { format } from 'util/date-fns'
+import { showNotification } from '@mantine/notifications'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { GET_APPLICATION_FROM_TOKEN } from 'modules/admissions/queries'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
+import { format } from 'util/date-fns'
 import { RegisterInformationFormData } from './useRegisterInformationLogic'
 
 interface UseRegisterInformationAPIInput {
@@ -18,18 +19,24 @@ export function useRegisterInformationAPI({
     const { id } = applicant
     const input = {
       ...data,
-      image: data.image,
       dateOfBirth: format(new Date(data.dateOfBirth), 'yyyy-MM-dd'),
       status: ApplicantStatusValues.HAS_REGISTERED_PROFILE,
       lastActivity: new Date(),
     }
 
+    // TODO replace with custom mutation using applicant token
     return patchApplicant({
       variables: {
         id: id,
         input: input,
       },
       refetchQueries: [GET_APPLICATION_FROM_TOKEN],
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
     })
   }
 

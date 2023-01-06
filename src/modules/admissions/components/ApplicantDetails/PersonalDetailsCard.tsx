@@ -1,6 +1,6 @@
 import { Grid, Group, Image, Paper, Stack, Text } from '@mantine/core'
-import { format } from 'util/date-fns'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
+import { format } from 'util/date-fns'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 
 interface LabelProps {
@@ -19,7 +19,7 @@ interface PersonalDetailsCardProps {
   applicant: ApplicantNode
 }
 
-export const PersonalDetailsCard: React.VFC<PersonalDetailsCardProps> = ({
+export const PersonalDetailsCard: React.FC<PersonalDetailsCardProps> = ({
   applicant,
 }) => {
   return (
@@ -40,7 +40,12 @@ export const PersonalDetailsCard: React.VFC<PersonalDetailsCardProps> = ({
               <Label>Studie</Label>
               <Text>{applicant.study}</Text>
             </Stack>
+            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
+              <Label>Telefon</Label>
+              <Text>{applicant.phone}</Text>
+            </Stack>
           </Group>
+
           <Group align="flex-start" spacing={'xs'} p="xl">
             <Stack justify={'flex-start'} align="flex-start" spacing="xs">
               <Label>Fødselsdate</Label>

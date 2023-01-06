@@ -17,7 +17,7 @@ export const PrintLists = () => {
       <Title>Lister</Title>
       <List>
         <List.Item>
-          <Link to="working-today">De som jobber i dag</Link>
+          <Link to="/economy/soci-sessions/live">Digital stilletime</Link>
         </List.Item>
       </List>
     </div>

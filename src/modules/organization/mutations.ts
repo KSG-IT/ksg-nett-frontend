@@ -50,3 +50,13 @@ export const ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP = gql`
     }
   }
 `
+
+export const PATCH_INTERNAL_GROUP_MUTATION = gql`
+  mutation PatchInternalGroup($id: ID!, $input: PatchInternalGroupInput!) {
+    patchInternalGroup(id: $id, input: $input) {
+      internalGroup {
+        id
+      }
+    }
+  }
+`

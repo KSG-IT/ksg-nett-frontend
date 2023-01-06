@@ -1,19 +1,18 @@
 import { useQuery } from '@apollo/client'
 import { Group, SimpleGrid, Stack, Title } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import styled from 'styled-components'
 import { QuoteCard } from '../components'
 import { QuotesTabs } from '../components/QuotesTabs'
 import { POPULAR_QUOTES_QUERY } from '../queries'
 import { PopularQuotesReturns } from '../types.graphql'
 
-const AllTimeContainer = styled.div`
-  grid-area: all-time;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`
+const breadCrumbItems = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Sitater', path: '/quotes' },
+  { label: 'Populære', path: '' },
+]
 
 export const PopularQuotes: React.VFC = () => {
   const { data, loading, error } =
@@ -31,6 +30,7 @@ export const PopularQuotes: React.VFC = () => {
 
   return (
     <Stack>
+      <Breadcrumbs items={breadCrumbItems} />
       <Group position="apart">
         <Title order={2} color="dimmed">
           Populære sitater
@@ -51,7 +51,7 @@ export const PopularQuotes: React.VFC = () => {
           ))}
         </SimpleGrid>
       </Stack>
-      <AllTimeContainer>
+      <Stack>
         <Title order={3}>Siden tidenes morgen</Title>
         <SimpleGrid
           cols={3}
@@ -64,7 +64,7 @@ export const PopularQuotes: React.VFC = () => {
             <QuoteCard quote={quote} key={quote.id} displaySemester />
           ))}
         </SimpleGrid>
-      </AllTimeContainer>
+      </Stack>
     </Stack>
   )
 }

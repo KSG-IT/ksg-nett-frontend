@@ -20,6 +20,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+main {
+  overflow: hidden;
+}
 
 input[type='text'],
 textarea {

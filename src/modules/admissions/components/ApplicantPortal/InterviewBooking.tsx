@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Container, Group, Stack, Text, Title } from '@mantine/core'
+import { Button, Group, Stack, Text } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -8,7 +8,7 @@ import { BOOK_INTERRVIEW_MUTATION } from 'modules/admissions/mutations'
 import { INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY } from 'modules/admissions/queries'
 import { InterviewsAvailableForBookingReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import { format } from 'util/date-fns'
+import { InterviewsAvailableForBooking } from './components/InterviewsAvailableForBooking'
 
 interface InterviewBookingProps {
   applicantToken: string
@@ -37,92 +37,65 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
   if (loading || !data) return <FullContentLoader />
 
   const handleBookInterview = (interviewIds: string[]) => {
-    bookInterview({
-      variables: {
-        interviewIds: interviewIds,
-        applicantToken: applicantToken,
-      },
-      refetchQueries: ['GetApplicantFromToken'],
-      onCompleted() {
-        showNotification({
-          title: 'Intervjuet er booket',
-          message: 'Intervjuet er booket',
-          color: 'green',
-        })
-      },
-      onError() {
-        showNotification({
-          title: 'Noe gikk galt',
-          message:
-            'Kan hende noen andre har booket samme intervju. Prøv et annet intervju annet',
-          color: 'red',
-        })
-      },
-    })
+    if (confirm('Er du sikker på dette tidspunktet?')) {
+      bookInterview({
+        variables: {
+          interviewIds: interviewIds,
+          applicantToken: applicantToken,
+        },
+        refetchQueries: ['GetApplicantFromToken'],
+        onCompleted() {
+          showNotification({
+            title: 'Intervjuet er booket',
+            message: 'Intervjuet er booket',
+            color: 'green',
+          })
+        },
+        onError() {
+          showNotification({
+            title: 'Noe gikk galt',
+            message:
+              'Kan hende noen andre har booket samme intervju. Prøv et annet intervju annet',
+            color: 'red',
+          })
+        },
+      })
+    }
   }
   return (
-    <Stack>
+    <Stack style={{ maxWidth: 900 }}>
       <MessageBox type="info">
         <Text>
-          Det kan hende prøver å booke intervjutid samtidig. Dette kan medføre
-          at tidspunkter forsvinner om du ikke velger et tidspunkt raskt nok.
+          Det kan hende at flere prøver å booke intervjutid samtidig. Dette kan
+          medføre at tidspunkter forsvinner om du ikke velger et tidspunkt raskt
+          nok. For at vi ikke skal glemme å sette opp intervjuere er det
+          tidligst mulig å booke et intervju neste dag. Helst book et intevju så
+          tidlig som mulig.
         </Text>
-        <Text>
-          For at vi ikke skal glemme å sette opp intervjuere er det tidligst
-          mulig å booke et intervju neste dag.
-        </Text>
-        <Text>Helst book et intevju så tidlig som mulig.</Text>
       </MessageBox>
-      {data.interviewsAvailableForBooking.map(day => {
-        return (
-          <Stack key={`${day.date}`}>
-            <Title order={2}>Tilgjengelige tidspunkter</Title>
-            <Group position="apart">
-              {format(new Date(day.date), 'EEEE dd MMM')}
-              <Group>
-                {day.interviewSlots.map((slot, i) => {
-                  const unavailable = slot.interviewIds.length === 0
-                  return (
-                    <Button
-                      key={i}
-                      disabled={unavailable}
-                      onClick={() => {
-                        handleBookInterview(slot.interviewIds)
-                      }}
-                    >
-                      {format(new Date(slot.interviewStart), 'HH:mm')}
-                    </Button>
-                  )
-                })}
-              </Group>
-            </Group>
-          </Stack>
-        )
-      })}
-      {data.interviewsAvailableForBooking.length === 0 && (
-        <Container color="gray">
-          Oi, her var det tomt. Det er ikke flere tilgjengelige tidspunkter
-          disse dagene
-        </Container>
-      )}
-      <Title order={3}>Ingen av tidspunktene passer</Title>
+      <InterviewsAvailableForBooking
+        interviews={data.interviewsAvailableForBooking}
+        handleCallback={handleBookInterview}
+      />
       <Group>
         <Button
           disabled={dayOffset === 0}
           color="samfundet-red"
+          variant={'outline'}
           onClick={() => {
             setDayOffset(dayOffset - 2)
           }}
         >
-          -2 dager
+          Gå tilbake 2 dager
         </Button>
         <Button
           color="samfundet-red"
+          variant={'outline'}
           onClick={() => {
             setDayOffset(dayOffset + 2)
           }}
         >
-          +2 dager
+          Gå frem 2 dager
         </Button>
       </Group>
     </Stack>

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Center } from '@mantine/core'
+import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 
 import {
@@ -15,6 +16,7 @@ import {
   InternalGroupApplicants,
   InternalGroupDiscussion,
   MyInterviews,
+  TodaysInterviews,
 } from 'modules/admissions/views'
 import {
   BarTabCustomers,
@@ -26,8 +28,7 @@ import {
   CreateDeposit,
   Deposits,
   MyEconomy,
-  PrintLists,
-  PrintWorkingToday,
+  SociOrderSession,
   SociSessionDetail,
   SosiSessions,
 } from 'modules/economy/views'
@@ -61,6 +62,7 @@ import {
   UserTypeDetail,
   UserTypes,
 } from 'modules/users/views'
+import { FirstTimeLogin } from 'modules/users/views/FirstTImeLogin'
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useStore } from 'store'
@@ -74,11 +76,17 @@ const FullPage404 = React.lazy(
 
 const MainContent = React.lazy(() => import('routes/MainContent'))
 
+// ==== Handbook ====
+const Handbook = React.lazy(() => import('modules/handbook/views/Handbook'))
+const DocumentDetail = React.lazy(
+  () => import('modules/handbook/views/DocumentDetail')
+)
+
 export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
   const setUser = useStore(state => state.setUser)
 
-  if (error) return <span>Error {error.message}</span>
+  if (error) return <FullPageError />
 
   if (loading || data === undefined)
     return (
@@ -91,6 +99,15 @@ export const AppRoutes: React.FC = () => {
 
   if (me == null || me === undefined) {
     return <PublicRoutes />
+  }
+
+  if (me.firstTimeLogin) {
+    return (
+      <Routes>
+        <Route path="registration" element={<FirstTimeLogin />} />
+        <Route path="*" element={<Navigate to="/registration" />} />
+      </Routes>
+    )
   }
 
   if (me.requiresMigrationWizard) {
@@ -110,9 +127,9 @@ export const AppRoutes: React.FC = () => {
         <Route index element={<Navigate to="/dashboard" replace />} />
 
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="events" element={<p>Hello Events</p>} />
         <Route path="*" element={<FullPage404 />} />
 
+        {/* ==== BAR TAB MODULE ==== */}
         <Route path="bar-tab">
           <Route
             index
@@ -142,6 +159,8 @@ export const AppRoutes: React.FC = () => {
             }
           />
         </Route>
+
+        {/* ==== SUMMARY MODULE ==== */}
         <Route path="summaries">
           <Route index element={<Summaries />} />
           <Route
@@ -157,7 +176,7 @@ export const AppRoutes: React.FC = () => {
           </Route>
           <Route path="*" element={<FullPage404 />} />
         </Route>
-
+        {/* ==== INTERNAL GROUPS MODULE ==== */}
         <Route path="internal-groups">
           <Route index element={<InternalGroups />} />
           <Route path=":internalGroupId">
@@ -178,6 +197,7 @@ export const AppRoutes: React.FC = () => {
           </Route>
         </Route>
 
+        {/* ==== QUOTES MODULE ==== */}
         <Route path="quotes">
           <Route path="popular" element={<PopularQuotes />} />
           <Route index element={<QuotesList />} />
@@ -193,7 +213,24 @@ export const AppRoutes: React.FC = () => {
           <Route path="create" element={<CreateQuote />} />
         </Route>
 
+        {/* ==== HANDBOOK MODULE ==== */}
+        <Route path="handbook">
+          <Route index element={<Handbook />} />
+          <Route path="document">
+            <Route path=":documentId" element={<DocumentDetail />} />
+          </Route>
+        </Route>
+
+        {/* ==== USERS MODULE ==== */}
         <Route path="users">
+          <Route
+            path="me"
+            element={
+              <span>
+                Coming soon<sup>TM</sup>
+              </span>
+            }
+          />
           <Route path=":userId" element={<UserProfile />} />
           <Route path="user-types">
             <Route
@@ -215,14 +252,7 @@ export const AppRoutes: React.FC = () => {
           </Route>
         </Route>
 
-        <Route path="gallery">
-          <Route index element={<p>Hello Gallery</p>} />
-        </Route>
-
-        <Route path="quiz">
-          <Route index element={<p>Hello Quiz</p>} />
-        </Route>
-
+        {/* ==== ADMISSIONS MODULE ==== */}
         <Route path="admissions">
           <Route
             index
@@ -275,6 +305,16 @@ export const AppRoutes: React.FC = () => {
               </RestrictedRoute>
             }
           />
+          <Route
+            path="todays-interviews"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <TodaysInterviews />
+              </RestrictedRoute>
+            }
+          />
 
           <Route
             path="assign-interview"
@@ -286,9 +326,18 @@ export const AppRoutes: React.FC = () => {
               </RestrictedRoute>
             }
           />
-          <Route path="close" element={<CloseAdmission />} />
+          <Route
+            path="close"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.change.admission}
+              >
+                <CloseAdmission />
+              </RestrictedRoute>
+            }
+          />
 
-          <Route path="internal-group-applicants">
+          <Route path="internal-group">
             <Route
               path=":internalGroupId"
               element={<InternalGroupApplicants />}
@@ -347,6 +396,7 @@ export const AppRoutes: React.FC = () => {
           </Route>
         </Route>
 
+        {/* ==== ECONOMY MODULE ==== */}
         <Route path="economy">
           <Route path="deposits/create" element={<CreateDeposit />} />
           <Route
@@ -359,28 +409,6 @@ export const AppRoutes: React.FC = () => {
           />
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
-          <Route path="print">
-            <Route
-              index
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.economy.view.sociSession}
-                >
-                  <PrintLists />
-                </RestrictedRoute>
-              }
-            />
-            <Route
-              path="working-today"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.economy.view.sociSession}
-                >
-                  <PrintWorkingToday />
-                </RestrictedRoute>
-              }
-            />
-          </Route>
 
           <Route path="soci-sessions">
             <Route
@@ -393,6 +421,8 @@ export const AppRoutes: React.FC = () => {
                 </RestrictedRoute>
               }
             />
+            <Route path="live" element={<SociOrderSession />} />
+
             <Route
               path=":id"
               element={
@@ -416,6 +446,16 @@ export const AppRoutes: React.FC = () => {
                 permissions={PERMISSIONS.schedules.change.schedule}
               >
                 <Schedules />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path=":id"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleDetails />
               </RestrictedRoute>
             }
           />
@@ -450,17 +490,6 @@ export const AppRoutes: React.FC = () => {
               />
             </Route>
           </Route>
-
-          <Route
-            path=":id"
-            element={
-              <RestrictedRoute
-                permissions={PERMISSIONS.schedules.change.schedule}
-              >
-                <ScheduleDetails />
-              </RestrictedRoute>
-            }
-          />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" />} />

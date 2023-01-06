@@ -103,3 +103,42 @@ export const INVALIDATE_DEPOSIT_MUTATION = gql`
     }
   }
 `
+
+export const CREATE_SOCI_ORDER_SESSION_MUTATION = gql`
+  mutation CreateSociOrderSession {
+    createSociOrderSession {
+      sociOrderSession {
+        id
+      }
+    }
+  }
+`
+
+export const PLACE_SOCI_ORDER_SESSION_ORDER_MUTATION = gql`
+  mutation PlaceSociOrderSessionOrder($productId: ID!, $amount: Int!) {
+    placeSociOrderSessionOrder(productId: $productId, amount: $amount) {
+      sociOrderSessionOrder {
+        id
+      }
+    }
+  }
+`
+
+export const SOCI_ORDER_SESSION_NEXT_STATUS_MUTATION = gql`
+  mutation SociOrderSessionNextStatus {
+    sociOrderSessionNextStatus {
+      sociOrderSession {
+        id
+      }
+    }
+  }
+`
+
+// DeleteSociOrderSessionFoodOrderMutation
+export const DELETE_SOCI_ORDER_SESSION_FOOD_ORDER_MUTATION = gql`
+  mutation DeleteSociOrderSessionFoodOrder($orderId: ID!) {
+    deleteSociOrderSessionFoodOrder(orderId: $orderId) {
+      found
+    }
+  }
+`

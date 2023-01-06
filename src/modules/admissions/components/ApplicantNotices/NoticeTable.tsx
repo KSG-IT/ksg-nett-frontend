@@ -1,4 +1,4 @@
-import { Button, Card, Menu, Table } from '@mantine/core'
+import { ActionIcon, Button, Card, Menu, Table } from '@mantine/core'
 import { IconDots, IconMail, IconPhone, IconTrash } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
 import { formatDistanceToNow } from 'util/date-fns'
@@ -78,9 +78,9 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
       <td>
         <Menu position="left-start" withinPortal>
           <Menu.Target>
-            <Button variant="outline" color="samfundet-red">
-              <IconDots />
-            </Button>
+            <ActionIcon>
+              <IconDots size={16} stroke={1.5} />
+            </ActionIcon>
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item
@@ -120,7 +120,7 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
   ))
 
   return (
-    <CardTable>
+    <CardTable fontSize={12}>
       <thead>
         <tr>
           <th>Navn</th>

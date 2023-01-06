@@ -1,26 +1,18 @@
-import {
-  Button,
-  createStyles,
-  Group,
-  Paper,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core'
-import { IconPlus } from '@tabler/icons'
-import { ShiftLocationWeek } from 'modules/schedules/types.graphql'
+import { createStyles, Group, Paper, Stack, Text, Title } from '@mantine/core'
+import { ShiftLocationWeek, ShiftNode } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import { format } from 'util/date-fns'
-import { CreateShiftPopover } from './CreateShiftPopover'
 import { ShiftCard } from './ShiftCard'
 
 interface ShiftLocationWeekCardProps {
   shiftLocationWeek: ShiftLocationWeek
+  setShiftModalCallback: (shift: string | null) => void
   scheduleId: string
 }
 
 export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
   shiftLocationWeek,
+  setShiftModalCallback,
   scheduleId,
 }) => {
   /**
@@ -35,6 +27,7 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
       <Title order={3}>
         Uke {format(new Date(shiftLocationWeek.date), 'w')}
       </Title>
+
       {shiftLocationWeek.shiftDays.map(shiftDay => (
         <Stack key={shiftDay.date} className={classes.week}>
           <Title order={4}>
@@ -47,7 +40,11 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
                 <div className={classes.locationColumn} key={location.location}>
                   <Text>{parseLocation(location.location).name}</Text>
                   {location.shifts.map(shift => (
-                    <ShiftCard key={shift.id} shift={shift} />
+                    <ShiftCard
+                      key={shift.id}
+                      shift={shift}
+                      setShiftModalCallback={setShiftModalCallback}
+                    />
                   ))}
                 </div>
               ))}

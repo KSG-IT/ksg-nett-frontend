@@ -14,7 +14,7 @@ interface MyInterviewsReturns {
   >[]
 }
 
-const MY_UPCOMING_INTERVIEWS_QUERY = gql`
+export const MY_UPCOMING_INTERVIEWS_QUERY = gql`
   query MyUpcomingInterviews {
     myUpcomingInterviews {
       id

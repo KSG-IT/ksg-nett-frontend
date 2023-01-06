@@ -1,3 +1,4 @@
+import { SociOrderSessionNode } from 'modules/economy/types.graphql'
 import { QuoteNode } from 'modules/quotes/types.graphql'
 import { SummaryNode } from 'modules/summaries'
 import { WantedUser } from './components/WantedList'
@@ -22,6 +23,7 @@ export interface DashboardDataQueryReturns {
       'text' | 'tagged' | 'id' | 'context' | 'sum' | 'semester'
     >[]
     wantedList: WantedUser[]
+    sociOrderSession: Pick<SociOrderSessionNode, 'id'> | null
     myUpcomingShifts: {
       roleDisplay: string
       shift: {

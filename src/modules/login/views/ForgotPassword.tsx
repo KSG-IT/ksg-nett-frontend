@@ -36,7 +36,6 @@ export const ForgotPassword: React.FC = () => {
 
   function handleResetPassword(data: ResetMyPasswordInput) {
     const { username } = data
-    console.log('sup')
     resetPassword({
       variables: {
         username,

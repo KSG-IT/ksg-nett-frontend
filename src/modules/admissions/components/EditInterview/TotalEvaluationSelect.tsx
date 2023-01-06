@@ -2,6 +2,7 @@ import { Select } from '@mantine/core'
 import { InterviewTotalEvaluationValues } from 'modules/admissions/consts'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import { InterviewNode } from 'modules/admissions/types.graphql'
+import { useState } from 'react'
 
 const totalEvaluationOptions = [
   {
@@ -33,9 +34,11 @@ interface TotalEvaluationSelectProps {
 export const TotalEvaluationSelect: React.VFC<TotalEvaluationSelectProps> = ({
   interview,
 }) => {
+  const [selectedValue, setSelectedValue] = useState(interview.totalEvaluation)
   const { patchInterview } = useInterviewMutations()
 
   const handleChange = (value: InterviewTotalEvaluationValues) => {
+    setSelectedValue(value)
     patchInterview({
       variables: {
         id: interview.id,
@@ -50,6 +53,7 @@ export const TotalEvaluationSelect: React.VFC<TotalEvaluationSelectProps> = ({
     <Select
       label="Totalvurdering"
       placeholder="Velg verdi"
+      value={selectedValue}
       data={totalEvaluationOptions}
       onChange={handleChange}
     />

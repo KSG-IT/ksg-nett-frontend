@@ -22,12 +22,12 @@ export const QuoteGrid: React.FC<QuoteGridProps> = ({ search }) => {
     variables: { q: search, first: DEFAULT_PAGINATION_SIZE },
   })
 
-  const quotes = data?.approvedQuotes.edges.map(edge => edge.node) ?? []
-  const hasNextPage = data?.approvedQuotes.pageInfo.hasNextPage ?? false
-
   if (error) return <FullPageError />
 
   if (loading || !data) return <FullContentLoader />
+
+  const quotes = data?.approvedQuotes.edges.map(edge => edge.node) ?? []
+  const hasNextPage = data?.approvedQuotes.pageInfo.hasNextPage ?? false
 
   const handleFetchMore = async () => {
     if (typeof data === 'undefined') return

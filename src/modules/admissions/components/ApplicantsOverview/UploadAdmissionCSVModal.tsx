@@ -1,11 +1,12 @@
-import { Button, FileInput, Modal, Stack, Table } from '@mantine/core'
+import { Button, FileInput, Modal, Stack } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconFileCode, IconUpload, IconUserPlus } from '@tabler/icons'
 import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
+import { CURRENT_APPLICANTS_QUERY } from 'modules/admissions/queries'
 import { ApplicantCSVData } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 
 interface UploadAdmissionCSVModalProps {
   opened: boolean
@@ -29,31 +30,39 @@ export const UploadAdmissionCSVModal: React.FC<
   function handleUploadFile() {
     uploadApplicantCSVDataMutation({
       variables: { applicantsFile: file },
-    }).then(res => {
-      // In order to not break the mutation we need to get rid of the __typename property for each entry
-      const parsedResult = res.data.uploadApplicantsCsv.validApplicants.map(
-        ({ __typename, ...rest }: any) => rest
-      )
-      setResult(parsedResult)
-      toast.success('Søkere behandlet fra fil')
+      onCompleted({ uploadApplicantsCsv }) {
+        // In order to not break the mutation we need to get rid of the __typename property for each entry
+        const parsedResult = uploadApplicantsCsv.validApplicants.map(
+          ({ __typename, ...rest }: any) => rest
+        )
+        setResult(parsedResult)
+        showNotification({
+          title: 'Opplasting fullført',
+          message: 'Opplasting av CSV-fil fullført',
+        })
+      },
     })
   }
 
   function handleCreateProfiles() {
     createApplicantsFromCSVDataMutation({
       variables: { applicants: result },
-      refetchQueries: ['CurrentApplicantsQuery'],
-    })
-      .then(res => {
-        toast.success('Søkere opprettet')
+      refetchQueries: [CURRENT_APPLICANTS_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Søkere opprettet',
+          message: 'Søkere ble opprettet fra CSV-fil',
+        })
         setResult([])
-        setFile(null)
         onClose()
-      })
-      .catch(err => {
-        toast.error('Noe gikk galt')
-        console.error(err)
-      })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
+    })
   }
 
   return (

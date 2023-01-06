@@ -1,6 +1,5 @@
 import { Button, Card, Group, Stack, Text, Title } from '@mantine/core'
 import { MessageBox } from 'components/MessageBox'
-import { format } from 'util/date-fns'
 import {
   parseAdditionalEvaluation,
   parseBooleanEvaluation,
@@ -8,9 +7,8 @@ import {
 } from 'modules/admissions/parsing'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { UserThumbnail } from 'modules/users/components'
-import ReactMarkdown from 'react-markdown'
-import { Link, useNavigate } from 'react-router-dom'
-import remarkGfm from 'remark-gfm'
+import { Link } from 'react-router-dom'
+import { format } from 'util/date-fns'
 
 interface InterviewDetailsProps {
   applicant: ApplicantNode
@@ -22,10 +20,10 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
   canEdit,
 }) => {
   const { interview } = applicant
-  const navigate = useNavigate()
+
   if (interview === null) {
     return (
-      <Stack style={{ maxWidth: 800 }} my="lg">
+      <Stack>
         <Title order={2}>Intrvjudetaljer</Title>
         <MessageBox type="warning">
           Søker har ikke satt seg opp til intervju enda
@@ -36,8 +34,6 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
 
   return (
     <Stack>
-      {/* Rewrite Wrapper to Stack? */}
-      {/* Top level part should have a details card with perosanl information and image */}
       <Title order={2}>Intervjudetaljer</Title>
       {applicant.wantsDigitalInterview && (
         <MessageBox type="warning">
@@ -108,15 +104,13 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
       <Stack>
         <Title>Intervjunotater</Title>
         <Card p="xs">
-          <ReactMarkdown plugins={[remarkGfm]}>{interview.notes}</ReactMarkdown>
+          <div dangerouslySetInnerHTML={{ __html: interview.notes }} />
         </Card>
       </Stack>
       <Stack>
         <Title>Diskusjonsnotater</Title>
         <Card p="xs">
-          <ReactMarkdown plugins={[remarkGfm]}>
-            {interview.discussion}
-          </ReactMarkdown>
+          <div dangerouslySetInnerHTML={{ __html: interview.discussion }} />
         </Card>
       </Stack>
     </Stack>

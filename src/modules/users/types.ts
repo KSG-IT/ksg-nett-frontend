@@ -17,7 +17,7 @@ export type UserNode = {
   getCleanFullName: string
   phone: string
   homeTown: string
-  biography: string
+  aboutMe: string
   initials: string
   username: string
   dateOfBirth: string
@@ -33,6 +33,7 @@ export type UserNode = {
   isActive: boolean
   inRelationship: boolean
   requiresMigrationWizard: boolean
+  firstTimeLogin: boolean
   icalToken: string
   isAdministrator: boolean
   bankAccountActivity: BankAccountActivity[]
@@ -84,7 +85,7 @@ export interface AllUsersShallowQueryVariables {
 export interface AllUsersShallowQueryReturns {
   allActiveUsersList: Pick<
     UserNode,
-    'id' | 'profileImage' | 'initials' | 'getCleanFullName'
+    'id' | 'profileImage' | 'initials' | 'getCleanFullName' | 'phone'
   >[]
 }
 
@@ -123,7 +124,11 @@ export interface PatchUserReturns {
 export interface UserThumbnailProps extends AvatarProps {
   user: Pick<
     UserNode,
-    'id' | 'profileImage' | 'initials' | 'getFullWithNickName'
+    | 'id'
+    | 'profileImage'
+    | 'initials'
+    | 'getFullWithNickName'
+    | 'getCleanFullName'
   >
 }
 
@@ -142,4 +147,11 @@ export interface RemoveUserFromUserTypeReturns {
 export interface RemoveUserFromUserTypeVariables {
   userId: string
   userTypeId: string
+}
+
+export interface UpdateAboutMeReturns {
+  user: Pick<UserNode, 'id'>
+}
+export interface UpdateAboutMeVariables {
+  aboutMe: string
 }

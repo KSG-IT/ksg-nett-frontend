@@ -1,5 +1,4 @@
 import {
-  Affix,
   AppShell,
   Burger,
   Button,
@@ -9,19 +8,17 @@ import {
   Header,
   Image,
   MediaQuery,
-  Popover,
   Text,
   useMantineTheme,
 } from '@mantine/core'
-import { useScrollLock } from '@mantine/hooks'
+import { FullContentLoader } from 'components/Loading'
 import { UserSearch } from 'modules/header/UserSearch'
-import React from 'react'
+import React, { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Link } from 'react-router-dom'
-import { useStore } from 'store'
+import { useSidebar } from 'util/hooks'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
-
 interface ErrorFallbackProps {
   error: Error
   resetErrorBoundary: () => void
@@ -46,8 +43,7 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const theme = useMantineTheme()
-  const toggleSidebar = useStore(state => state.toggleSidebarOpen)
-  const sidebarOpen = useStore(state => state.sidebarOpen)
+  const { sidebarOpen, toggleSidebar } = useSidebar()
   const { classes } = useStyles()
 
   return (
@@ -99,35 +95,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     >
       {/* Main content being rendered */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <Affix position={{ bottom: 20, right: 20 }}>
-          <Popover>
-            <Popover.Target>
-              <Button
-                color={'blue'}
-                variant={'light'}
-                radius={'xl'}
-                size={'sm'}
-              >
-                Noe som ikke funker?
-              </Button>
-            </Popover.Target>
-            <Popover.Dropdown>
-              <Text size={'sm'}>
-                Send inn feil eller mangler gjennom dette skjemaet!
-              </Text>
-              <Button
-                variant={'subtle'}
-                compact
-                component={'a'}
-                href={'https://forms.gle/6ofXcwWEKmB8JXWP6'}
-                target="_blank"
-              >
-                Tilbakemeldingsskjema
-              </Button>
-            </Popover.Dropdown>
-          </Popover>
-        </Affix>
-        {children}
+        <Suspense fallback={<FullContentLoader />}>{children}</Suspense>
       </ErrorBoundary>
     </AppShell>
   )
@@ -140,10 +108,6 @@ const useStyles = createStyles(t => ({
     [`@media (max-width: ${t.breakpoints.sm}px)`]: {
       flexDirection: 'row-reverse',
     },
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'center',
   },
 }))
 

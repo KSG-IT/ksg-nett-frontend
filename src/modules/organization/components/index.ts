@@ -1,1 +1,1 @@
-export * from './InternalGroupCard'
+export {}

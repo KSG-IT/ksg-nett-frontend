@@ -1,6 +1,12 @@
-import { Button, createStyles, SimpleGrid, TextInput } from '@mantine/core'
+import {
+  Button,
+  Checkbox,
+  createStyles,
+  SimpleGrid,
+  TextInput,
+} from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
-import { IconSignature } from '@tabler/icons'
+import { useState } from 'react'
 import { UserWizardData } from './types'
 import { useUserMigrationWizardFormAPI } from './useUserMigrationWizardFormAPI'
 import { useUserMigrationWizardFormLogic } from './useUserMigrationWizardFormLogic'
@@ -12,17 +18,20 @@ interface UserMigrationWizardFormProps {
 export const UserMigrationWizardForm: React.FC<
   UserMigrationWizardFormProps
 > = ({ user }) => {
+  const [readMessageBox, setReadMessageBox] = useState(false)
   const { form, onSubmit } = useUserMigrationWizardFormLogic(
     useUserMigrationWizardFormAPI({ user })
   )
-  const { classes } = useUserMigrationWizardFormStyles()
   const { formState, register, handleSubmit, getValues, setValue } = form
   const { errors, isSubmitting } = formState
 
-  console.log(formState.errors)
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Checkbox
+        label="Jeg har lest informasjonsboksen over"
+        checked={readMessageBox}
+        onChange={evt => setReadMessageBox(!readMessageBox)}
+      />
       <SimpleGrid
         cols={2}
         breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
@@ -78,7 +87,12 @@ export const UserMigrationWizardForm: React.FC<
           {...register('cardUuid')}
         />
         <div></div>
-        <Button type="submit" color="samfundet-red" loading={isSubmitting}>
+        <Button
+          type="submit"
+          color="samfundet-red"
+          loading={isSubmitting}
+          disabled={!readMessageBox}
+        >
           Lagre informasjon
         </Button>
       </SimpleGrid>

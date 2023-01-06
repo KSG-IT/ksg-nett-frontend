@@ -26,13 +26,13 @@ export interface ResetMyPasswordVariables {
   username: string
 }
 
-export interface ResetPassworsByTokenReturns {
+export interface ResetPasswordByTokenReturns {
   resetPasswordByToken: {
     loginToken: string
   }
 }
 
-export interface ResetPassworsByTokenVariables {
+export interface ResetPasswordByTokenVariables {
   token: string
   newPassword: string
 }

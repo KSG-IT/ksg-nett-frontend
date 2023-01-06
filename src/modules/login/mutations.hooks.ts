@@ -9,8 +9,8 @@ import {
   LoginMutationVariables,
   ResetMyPasswordReturns,
   ResetMyPasswordVariables,
-  ResetPassworsByTokenReturns,
-  ResetPassworsByTokenVariables,
+  ResetPasswordByTokenReturns,
+  ResetPasswordByTokenVariables,
 } from './types.graphql'
 
 export function useLoginMutations() {
@@ -25,7 +25,7 @@ export function useLoginMutations() {
   >(RESET_My_PASSWORD_MUTATION)
 
   const [resetPasswordByToken, { loading: resetPasswordByTokenLoading }] =
-    useMutation<ResetPassworsByTokenReturns, ResetPassworsByTokenVariables>(
+    useMutation<ResetPasswordByTokenReturns, ResetPasswordByTokenVariables>(
       RESET_PASSWORD_BY_TOKEN_MUTATION
     )
   return {

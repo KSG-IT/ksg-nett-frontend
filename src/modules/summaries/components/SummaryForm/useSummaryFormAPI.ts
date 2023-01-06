@@ -1,10 +1,14 @@
+import { showNotification } from '@mantine/notifications'
 import { useNavigate } from 'react-router-dom'
 import { usePatchSummaryMutations } from '../../mutations'
 import { ALL_SUMMARIES, SUMMARY_QUERY } from '../../queries'
 import { SummaryNode } from '../../types'
 import { SummaryCleanedData } from './useSummaryLogic'
 
-export function useSummaryFormAPI(summary?: SummaryNode) {
+export function useSummaryFormAPI(
+  summary?: SummaryNode,
+  onCompletedCallback?: () => void
+) {
   const { patchSummary, createSummary } = usePatchSummaryMutations()
   const navigate = useNavigate()
 
@@ -21,8 +25,13 @@ export function useSummaryFormAPI(summary?: SummaryNode) {
           input: input,
         },
         refetchQueries: [ALL_SUMMARIES, SUMMARY_QUERY],
-        onCompleted: data => {
-          navigate(`/summaries/${data.patchSummary.summary.id}`)
+        onCompleted({ patchSummary }) {
+          showNotification({
+            title: 'Vellykket',
+            message: 'Referatet har blitt oppdatert',
+            color: 'green',
+          })
+          onCompletedCallback?.()
         },
       })
     } else {
@@ -36,17 +45,21 @@ export function useSummaryFormAPI(summary?: SummaryNode) {
         },
         refetchQueries: [ALL_SUMMARIES],
         onCompleted: data => {
+          showNotification({
+            title: 'Vellykket',
+            message: 'Referatet ble opprettet',
+          })
           navigate(`/summaries/${data.createSummary.summary.id}`)
+        },
+        onError({ message }) {
+          showNotification({
+            title: 'Noe gikk galt',
+            message: message,
+          })
         },
       })
     }
   }
-
-  // let initialInternalGroupValue = summary?.internalGroup?.id ?? ''
-
-  // if (initialInternalGroupValue === '' && summary?.title !== '') {
-  //   initialInternalGroupValue = 'other'
-  // }
 
   const defaultValues = {
     contents: summary?.contents ?? '',

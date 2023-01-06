@@ -1,5 +1,7 @@
 import { Stack } from '@mantine/core'
-import { ShiftDayWeek } from 'modules/schedules/types.graphql'
+import { ShiftDayWeek, ShiftNode } from 'modules/schedules/types.graphql'
+import { useState } from 'react'
+import { ShiftCardModal } from './ShiftCardModal'
 import { ShiftDayWeekCard } from './ShiftDayWeekCard'
 
 interface ShiftDayWeekListProps {
@@ -11,8 +13,21 @@ export const ShiftDayWeekList: React.FC<ShiftDayWeekListProps> = ({
   shiftDayWeeks,
   scheduleId,
 }) => {
+  const [openedShiftId, setOpenedShiftId] = useState<string | null>(null)
+  const [shiftModalOpened, setShiftModalOpened] = useState(false)
+
   if (shiftDayWeeks.length === 0) {
     return <div>Ingen vakter den valgte uken</div>
+  }
+
+  function handleShiftModal(shiftId: string | null) {
+    setOpenedShiftId(shiftId)
+    setShiftModalOpened(shiftId !== null)
+  }
+
+  function handleCloseShiftModal() {
+    handleShiftModal(null)
+    setShiftModalOpened(false)
   }
 
   return (
@@ -23,9 +38,15 @@ export const ShiftDayWeekList: React.FC<ShiftDayWeekListProps> = ({
             key={index}
             shiftDayWeek={shiftDayWeek}
             scheduleId={scheduleId}
+            setShiftModalCallback={handleShiftModal}
           />
         )
       })}
+      <ShiftCardModal
+        opened={shiftModalOpened}
+        onClose={handleCloseShiftModal}
+        shiftId={openedShiftId}
+      />
     </Stack>
   )
 }

@@ -31,18 +31,23 @@ export const Dashboard = () => {
   if (loading || data === undefined) return <FullContentLoader />
 
   const {
-    dashboardData: { wantedList, lastQuotes, myUpcomingShifts },
+    dashboardData: {
+      wantedList,
+      lastQuotes,
+      myUpcomingShifts,
+      sociOrderSession,
+    },
   } = data
 
   return (
     <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
-      <ShortcutCards />
+      <ShortcutCards sociOrderSession={!!sociOrderSession} />
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
         <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>
           <FutureShifts shifts={myUpcomingShifts} />
-          <TransactionCard user={user} />
+          <TransactionCard activities={user.lastTransactions} />
         </Grid.Col>
         <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>
           <RecentQuotes quotes={lastQuotes} />
