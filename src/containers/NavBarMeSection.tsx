@@ -1,4 +1,4 @@
-import { Group, Navbar, Stack, Text } from '@mantine/core'
+import { createStyles, Group, Navbar, Stack, Text } from '@mantine/core'
 import {
   IconCashBanknote,
   IconJumpRope,
@@ -7,9 +7,10 @@ import {
   IconSettings,
 } from '@tabler/icons'
 import { UserThumbnail } from 'modules/users/components'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useStore } from 'store'
 import { removeLoginToken } from 'util/auth'
+import { useSidebar } from 'util/hooks'
 import { NavItem } from './NavItem'
 
 function liquidityColor(balance: number) {
@@ -25,7 +26,10 @@ function liquidityColor(balance: number) {
 }
 
 export const NavBarMeSection: React.FC = () => {
+  const { classes } = useStyles()
   const me = useStore(store => store.user)
+  const { toggleSidebar } = useSidebar()
+  const navigate = useNavigate()
 
   function handleLogoutAlert() {
     if (confirm('Er du sikker på at du vil logge ut?')) {
@@ -34,23 +38,27 @@ export const NavBarMeSection: React.FC = () => {
     }
   }
 
+  function handleClick() {
+    toggleSidebar()
+    navigate(`/users/${me.id}`)
+  }
+
   return (
     <Navbar.Section>
-      <Group>
+      <Group className={classes.meGroup} onClick={handleClick}>
         <UserThumbnail user={me} size="md" />
-        <Link to={`/users/${me.id}`}>
-          <Stack spacing={0}>
-            <Text style={{ textOverflow: 'ellipsis' }} size="xs">
-              {me.getFullWithNickName}
+
+        <Stack spacing={0}>
+          <Text style={{ textOverflow: 'ellipsis' }} size="xs">
+            {me.getFullWithNickName}
+          </Text>
+          <Group spacing={0} align="center">
+            <IconPigMoney size={16} />
+            <Text size={'xs'} weight={500} color={liquidityColor(me.balance)}>
+              {me.balance} kr
             </Text>
-            <Group spacing={0} align="center">
-              <IconPigMoney size={16} />
-              <Text size={'xs'} weight={500} color={liquidityColor(me.balance)}>
-                {me.balance} kr
-              </Text>
-            </Group>
-          </Stack>
-        </Link>
+          </Group>
+        </Stack>
       </Group>
       <NavItem
         label="Innstillinger"
@@ -84,3 +92,11 @@ export const NavBarMeSection: React.FC = () => {
     </Navbar.Section>
   )
 }
+
+const useStyles = createStyles(() => ({
+  meGroup: {
+    ':hover': {
+      cursor: 'pointer',
+    },
+  },
+}))

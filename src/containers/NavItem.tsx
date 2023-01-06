@@ -2,7 +2,6 @@ import { createStyles, Text } from '@mantine/core'
 import { TablerIcon } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
-import { unlock } from 'tua-body-scroll-lock'
 import { useIsMobile, useSidebar } from 'util/hooks'
 export interface RouteItem {
   label: string
@@ -15,28 +14,11 @@ export interface RouteItem {
 export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
   const { classes, cx } = useNavItemStyles({ active: props.active })
 
-  const { sidebarOpen, toggleSidebar } = useSidebar()
-  const isMobile = useIsMobile()
+  const { toggleSidebar } = useSidebar()
 
-  function handleClick() {
-    props.onClick && props.onClick()
-
-    if (sidebarOpen && isMobile) {
-      // I hate ios safari
-      const main = document.querySelector('main')
-      if (main) {
-        main.style.display = 'block'
-        main.style.overflow = 'auto'
-        main.style.position = 'relative'
-        // unlock(main)
-      }
-    }
-
-    toggleSidebar()
-  }
   return (
     <PermissionGate permissions={props.permissions}>
-      <Link to={props.link} className={classes.navItem} onClick={handleClick}>
+      <Link to={props.link} className={classes.navItem} onClick={toggleSidebar}>
         <props.icon
           className={cx(classes.icon)}
           data-active={props.active}
