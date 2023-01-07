@@ -379,13 +379,22 @@ export const INTERNAL_GROUP_DISCUSSION_DATA = gql`
 `
 
 export const INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY = gql`
-  query InterviewsAvailableForBookingQuery($dayOffset: Int!) {
-    interviewsAvailableForBooking(dayOffset: $dayOffset) {
+  query InterviewsAvailableForBookingQuery($dateSelected: Date!) {
+    interviewsAvailableForBooking(dateSelected: $dateSelected) {
       date
       interviewSlots {
         interviewStart
         interviewIds
       }
+    }
+  }
+`
+
+export const INTERVIEW_PERIOD_DATES_QUERY = gql`
+  query InterviewPeriodDatesQuery {
+    interviewPeriodDates {
+      startDate
+      endDate
     }
   }
 `
