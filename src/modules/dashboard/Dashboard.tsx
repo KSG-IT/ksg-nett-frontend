@@ -23,8 +23,12 @@ export const Dashboard = () => {
   )
   const user = useStore(state => state.user)!
 
-  const { data, loading, error } =
-    useQuery<DashboardDataQueryReturns>(DASHBOARD_DATA_QUERY)
+  const { data, loading, error } = useQuery<DashboardDataQueryReturns>(
+    DASHBOARD_DATA_QUERY,
+    {
+      pollInterval: 30_000,
+    }
+  )
 
   if (error) return <FullPageError />
 

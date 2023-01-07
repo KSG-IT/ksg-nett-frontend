@@ -34,10 +34,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
       </td>
       <td>
         <Text align="right" color={'samfundet-red.7'}>
-          {transaction.quantity
-            ? transaction.amount * transaction.quantity
-            : transaction.amount}{' '}
-          kr
+          {transaction.amount} kr
         </Text>
       </td>
 

@@ -60,6 +60,7 @@ export const USER_QUERY = gql`
         text
         sum
         context
+        semester
         tagged {
           id
           initials

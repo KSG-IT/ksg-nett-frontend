@@ -17,7 +17,7 @@ export const UserQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
       ]}
     >
       {quotes.map(quote => (
-        <QuoteCard quote={quote} key={quote.id} />
+        <QuoteCard displaySemester quote={quote} key={quote.id} />
       ))}
     </SimpleGrid>
   )
