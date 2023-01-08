@@ -79,6 +79,8 @@ export const ApplyScheduleTemplateModal: React.FC<
       <NumberInput
         label="Antall uker"
         value={numberOfWeeks}
+        min={1}
+        max={20}
         onChange={val => val && setNumberOfWeeks(val)}
       />
 
@@ -91,7 +93,9 @@ export const ApplyScheduleTemplateModal: React.FC<
         Siste vakt generert til{' '}
         {shiftsFrom &&
           format(
-            getSundayOfWeekFromDate(add(shiftsFrom, { weeks: numberOfWeeks })),
+            getSundayOfWeekFromDate(
+              add(shiftsFrom, { weeks: numberOfWeeks - 1 })
+            ),
             'EEE dd.MMM'
           )}
       </Text>
