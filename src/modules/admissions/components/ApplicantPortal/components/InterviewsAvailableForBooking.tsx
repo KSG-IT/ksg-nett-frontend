@@ -8,11 +8,11 @@ import {
 } from '@mantine/core'
 import { InterviewsAvailableForBookingReturns } from 'modules/admissions/types.graphql'
 
-import { format } from 'util/date-fns'
 import { useQuery } from '@apollo/client'
-import { INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY } from '../../../queries'
-import { FullPageError } from '../../../../../components/FullPageComponents'
-import { FullContentLoader } from '../../../../../components/Loading'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
+import { INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY } from 'modules/admissions/queries'
+import { format } from 'util/date-fns'
 
 export interface InterviewsAvailableProps {
   dateSelected: string

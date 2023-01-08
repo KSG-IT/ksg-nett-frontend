@@ -29,12 +29,12 @@ interface InterviewBookingProps {
 export const InterviewBooking: React.FC<InterviewBookingProps> = ({
   applicantToken,
 }) => {
-  const [selectedInterview, setSelectedInterview] = useState<string[]>([])
+  const [selectedInterviews, setSelectedInterviews] = useState<string[]>([])
   const [day, setDay] = useState(new Date())
   const { classes, cx } = useStyles()
   const handleDayChange = (newDay: Date) => {
     setDay(newDay)
-    setSelectedInterview([])
+    setSelectedInterviews([])
   }
   const { data, error, loading } = useQuery<InterviewPeriodDatesReturns>(
     INTERVIEW_PERIOD_DATES_QUERY
@@ -123,21 +123,19 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
                 [classes.selected]: modifiers.selected,
               })
             }
-
-            //set custom inputcontainer, which uses children: reactnode
           />
         </Container>
 
         <Stack>
           <InterviewsAvailableForBooking
             dateSelected={format(day, 'yyyy-MM-dd')}
-            handleCallback={setSelectedInterview}
-            currentlySelected={selectedInterview}
+            handleCallback={setSelectedInterviews}
+            currentlySelected={selectedInterviews}
           />
           <Button
-            disabled={selectedInterview.length === 0}
+            disabled={selectedInterviews.length === 0}
             onClick={() => {
-              handleBookInterview(selectedInterview)
+              handleBookInterview(selectedInterviews)
             }}
           >
             Bekreft intervjutid
