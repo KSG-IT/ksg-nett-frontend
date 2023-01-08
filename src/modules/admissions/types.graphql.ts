@@ -190,6 +190,11 @@ export type InterviewScheduleTemplateNode = {
   defaultPauseDuration: string
 }
 
+export interface interviewPeriodDatesNode {
+  startDate: Date
+  endDate: Date
+}
+
 /* === QUERY TYPING === */
 
 export interface ActiveAdmissioneturns {
@@ -263,6 +268,9 @@ export interface InterviewsAvailableForBookingVariables {
   requestMoreInterviewsOffset: Date
 }
 
+export interface InterviewPeriodDatesReturns {
+  interviewPeriodDates: interviewPeriodDatesNode
+}
 export interface GetApplicantFromTokenVariables {}
 
 export interface GetApplicantFromTokenReturns {
