@@ -16,9 +16,14 @@ export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
 
   const { toggleSidebar } = useSidebar()
 
+  function handleClick() {
+    props.onClick?.()
+    toggleSidebar()
+  }
+
   return (
     <PermissionGate permissions={props.permissions}>
-      <Link to={props.link} className={classes.navItem} onClick={toggleSidebar}>
+      <Link to={props.link} className={classes.navItem} onClick={handleClick}>
         <props.icon
           className={cx(classes.icon)}
           data-active={props.active}
