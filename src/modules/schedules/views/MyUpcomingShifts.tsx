@@ -20,8 +20,10 @@ export const MyUpcomingShifts: React.FC = () => {
   const me = useStore(state => state.user)
   const { classes } = useMyUpcomingShiftStyles()
 
-  const { data, loading, error } =
-    useQuery<MyUpcomingShiftsReturns>(MY_UPCOMING_SHIFTS)
+  const { data, loading, error } = useQuery<MyUpcomingShiftsReturns>(
+    MY_UPCOMING_SHIFTS,
+    { pollInterval: 30_000 }
+  )
 
   if (error) return <FullPageError />
 

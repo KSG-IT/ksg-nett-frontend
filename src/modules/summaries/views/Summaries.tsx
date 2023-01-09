@@ -44,6 +44,7 @@ export const Summaries: React.FC = () => {
     fetchPolicy: 'cache-and-network',
     nextFetchPolicy: 'cache-first',
     variables: { q: debouncedQuery, first: DEFAULT_PAGINATION_SIZE },
+    pollInterval: 30_000,
   })
 
   if (error) return <FullPageError />
