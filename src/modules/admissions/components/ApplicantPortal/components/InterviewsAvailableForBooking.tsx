@@ -23,11 +23,11 @@ export interface InterviewsAvailableProps {
 export const InterviewsAvailableForBooking: React.FC<
   InterviewsAvailableProps
 > = ({ dateSelected, handleCallback, currentlySelected }) => {
-  const { data, error, loading } =
+  const { data, error, loading, refetch } =
     useQuery<InterviewsAvailableForBookingReturns>(
       INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY,
       {
-        pollInterval: 5_000,
+        pollInterval: 1_000,
         fetchPolicy: 'network-only',
         variables: {
           dateSelected: dateSelected,
