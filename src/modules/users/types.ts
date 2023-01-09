@@ -36,6 +36,7 @@ export type UserNode = {
   firstTimeLogin: boolean
   icalToken: string
   isAdministrator: boolean
+  owesMoney: boolean
   bankAccountActivity: BankAccountActivity[]
   lastTransactions: BankAccountActivity[]
   upvotedQuoteIds: string[]
