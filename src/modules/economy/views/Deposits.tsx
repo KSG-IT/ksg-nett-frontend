@@ -37,6 +37,7 @@ export const Deposits: React.FC = () => {
       unverifiedOnly: unverifiedOnly,
       first: DEFAULT_PAGINATION_SIZE,
     },
+    pollInterval: 30_000,
   })
 
   if (error) return <FullPageError />
