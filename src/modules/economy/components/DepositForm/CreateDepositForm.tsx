@@ -22,8 +22,7 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
   onCompletedCallback,
 }) => {
   const { form, onSubmit } = useCreateDepositLogic({
-    ...useCreateDepositAPI(),
-    onCompletedCallback,
+    ...useCreateDepositAPI(onCompletedCallback),
   })
   const mobileSize = useMediaQuery('(max-width: 600px)')
   const { formState, register, handleSubmit, setValue } = form
