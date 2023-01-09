@@ -15,7 +15,7 @@ const DepositCreateSchema = yup.object().shape({
   amount: yup
     .number()
     .required('Må sette sum')
-    .max(30000, 'Kan ikke være høyere enn 30 000')
+    .max(30_000, 'Kan ikke være høyere enn 30 000')
     .min(1, 'Må minst være 1'),
   description: yup.string().required('Description is required'),
   receipt: yup.mixed().required('File is required'),

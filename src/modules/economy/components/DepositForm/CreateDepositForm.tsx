@@ -38,6 +38,9 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             variant="filled"
             error={errors?.amount?.message}
             label="Beløp"
+            required
+            min={1}
+            max={30_000}
             placeholder="Hvor mye socistøv du vil konvertere"
             icon={<IconCashBanknote size={14} />}
             onChange={value => value && setValue('amount', value)}
@@ -45,8 +48,9 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
           <TextInput
             size={mobileSize ? 'xs' : 'sm'}
             variant="filled"
-            label="Beskrivelse"
-            placeholder="Skriv en beskrivelse av innskuddet"
+            label="Kommentar"
+            required
+            placeholder="Skriv en hyggelig kommentar"
             icon={<IconNote size={14} />}
             {...register('description')}
           />
@@ -54,6 +58,8 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             mt={'sm'}
             size={mobileSize ? 'sm' : 'md'}
             placeholder="Skjermbilde av bankoverføring"
+            required
+            label="Kvittering"
             icon={<IconUpload size={14} />}
             accept="image/png,image/jpeg,image/jpg"
             onChange={value => value && setValue('receipt', value)}
@@ -74,7 +80,7 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             disabled={isSubmitting}
             type="submit"
           >
-            Lag innskudd
+            Send til godkjenning
           </Button>
         </Group>
       </Stack>
