@@ -4,7 +4,8 @@ export const PERMISSIONS = {
     add: {
       admission: 'admissions.add.admission',
       applicant: 'admissions.add_applicant',
-      internalGroupPriority: 'admissions.add.internalgrouppriority',
+      internalGroupPriority: 'admissions.add_internalgrouppriority',
+      interview: 'admissions.add_interview',
     },
     change: {
       interview: 'admissions.change_interview',
@@ -15,6 +16,7 @@ export const PERMISSIONS = {
     },
     view: {
       admission: 'admissions.view_admission',
+      interview: 'admissions.view_interview',
     },
   },
   // ===== ECONOMY ======

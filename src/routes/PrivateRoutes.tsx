@@ -15,6 +15,7 @@ import {
   EditInterview,
   InternalGroupApplicants,
   InternalGroupDiscussion,
+  InterviewsOverview,
   MyInterviews,
   TodaysInterviews,
 } from 'modules/admissions/views'
@@ -312,6 +313,16 @@ export const AppRoutes: React.FC = () => {
                 permissions={PERMISSIONS.admissions.view.admission}
               >
                 <TodaysInterviews />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="interviews-overview"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.interview}
+              >
+                <InterviewsOverview />
               </RestrictedRoute>
             }
           />
