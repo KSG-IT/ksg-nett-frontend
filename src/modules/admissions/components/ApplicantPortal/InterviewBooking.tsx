@@ -12,7 +12,7 @@ import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { addDays } from 'date-fns'
+import { addDays, isAfter } from 'date-fns'
 import { format } from 'util/date-fns'
 import { BOOK_INTERRVIEW_MUTATION } from 'modules/admissions/mutations'
 import { INTERVIEW_PERIOD_DATES_QUERY } from 'modules/admissions/queries'
@@ -20,7 +20,6 @@ import { InterviewPeriodDatesReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 import { InterviewsAvailableForBooking } from './components/InterviewsAvailableForBooking'
 import 'dayjs/locale/nb'
-import dayjs from 'dayjs'
 
 interface InterviewBookingProps {
   applicantToken: string
@@ -105,11 +104,11 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
             locale={'nb'}
             placeholder={'Klikk her for å velge dato'}
             minDate={
-              startDate > new Date()
-                ? dayjs(startDate).toDate()
+              isAfter(new Date(startDate), new Date())
+                ? new Date(startDate)
                 : addDays(new Date(), 1)
             }
-            maxDate={dayjs(endDate).toDate()}
+            maxDate={new Date(endDate)}
             value={day}
             onChange={date => {
               date && handleDayChange(date)
