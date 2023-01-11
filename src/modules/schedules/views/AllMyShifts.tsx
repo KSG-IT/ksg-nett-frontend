@@ -15,7 +15,9 @@ const breadcrumbsItems = [
 ]
 
 export const AllMyShifts: React.FC = () => {
-  const { data, loading, error } = useQuery<AllMyShiftsReturns>(ALL_MY_SHIFTS)
+  const { data, loading, error } = useQuery<AllMyShiftsReturns>(ALL_MY_SHIFTS, {
+    pollInterval: 30_000,
+  })
 
   if (error) return <FullPageError />
 

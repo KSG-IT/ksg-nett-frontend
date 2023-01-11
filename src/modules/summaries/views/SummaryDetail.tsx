@@ -35,6 +35,7 @@ export const SummaryDetail = () => {
     SummaryDetailQueryVariables
   >(SUMMARY_QUERY, {
     variables: { id: params.summaryId },
+    pollInterval: 30_000,
   })
 
   if (error) return <FullPageError />
