@@ -8,6 +8,7 @@ import {
   Stack,
   Title,
 } from '@mantine/core'
+import { DatePicker } from '@mantine/dates'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -54,10 +55,11 @@ export const INTERVIEW_OVERRVIEW_QUERY = gql`
 export const InterviewsOverview: React.FC = () => {
   const { classes } = useStyles()
   const [addInterviewModalOpen, setAddInterviewModalOpen] = useState(false)
+  const [date, setDate] = useState(new Date())
 
   const { data, loading, error } = useQuery(INTERVIEW_OVERRVIEW_QUERY, {
     variables: {
-      date: format(new Date(), 'yyyy-MM-dd'),
+      date: format(date, 'yyyy-MM-dd'),
     },
   })
 
@@ -112,6 +114,7 @@ export const InterviewsOverview: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
+      <DatePicker value={date} onChange={val => val && setDate(val)} />
       <Group position="apart">
         <Title>Intervjuoversikt</Title>
         <Button onClick={() => setAddInterviewModalOpen(true)}>
