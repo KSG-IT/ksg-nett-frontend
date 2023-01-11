@@ -622,3 +622,19 @@ export interface AssignApplicantNewInterviewVariables {
   applicantId: string
   interviewId: string
 }
+
+type CreateInterviewInput = {
+  location: string
+  interviewStart: string
+  interviewEnd: string
+}
+
+export interface CreateInterviewVariables {
+  input: CreateInterviewInput
+}
+
+export interface CreateInterviewReturns {
+  createInterview: {
+    interview: Pick<InterviewNode, 'id'>
+  }
+}

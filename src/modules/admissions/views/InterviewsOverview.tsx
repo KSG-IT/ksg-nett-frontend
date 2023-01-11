@@ -1,6 +1,19 @@
-import { createStyles, Grid, Paper, Stack, Title } from '@mantine/core'
+import { gql, useQuery } from '@apollo/client'
+import {
+  Button,
+  createStyles,
+  Group,
+  Modal,
+  Paper,
+  Stack,
+  Title,
+} from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
-import { useMemo } from 'react'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
+import { useState } from 'react'
+import { format } from 'util/date-fns'
+import { AddInterviewForm } from '../components/InterviewOverview.tsx'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -8,150 +21,123 @@ const breadcrumbsItems = [
   { label: 'Intervjuoverdsikt', path: '' },
 ]
 
-const locations = [
-  {
-    name: 'Bodegaen',
-  },
-  {
-    name: 'Knaus',
-  },
-  {
-    name: 'Lyche',
-  },
-  {
-    name: 'Edgar',
-  },
-  {
-    name: 'Klubben',
-  },
-]
-
-// array of half hour intervals whole for 24 hours
-const timeIntervals = [
-  '10:00',
-  '10:30',
-  '11:00',
-  '11:30',
-  '12:00',
-  '12:30',
-  '13:00',
-  '13:30',
-  '14:00',
-  '14:30',
-  '15:00',
-  '15:30',
-  '16:00',
-  '16:30',
-  '17:00',
-  '17:30',
-  '18:00',
-  '18:30',
-  '19:00',
-  '19:30',
-  '20:00',
-]
-
-function locationToRowIndex(location: 'bodegaen' | 'knaus') {
-  if (location === 'bodegaen') {
-    return 2
-  }
-
-  if (location === 'knaus') {
-    return 3
-  }
+type CellItem = {
+  time: string
+  content: string
+  applicantId: string | null
+  interviewId: string
+  color: string
 }
 
-function timeToColumnIndex(time: string) {
-  return timeIntervals.indexOf(time) + 1
+type RowItem = {
+  location: string
+  interviews: CellItem[]
 }
 
-const inteviewCellSlots = [
-  {
-    location: 'bodegaen',
-    interviews: [
-      {
-        time: '10:30',
-        name: 'Ola Nordmann',
-      },
-      {
-        time: '14:00',
-        name: 'Alex Orvik',
-      },
-    ],
-  },
-  {
-    location: 'knaus',
-    interviews: [
-      {
-        time: '14:00',
-        name: 'Ola Nordmann',
-      },
-      {
-        time: '14:30',
-        name: 'Alex Orvik',
-      },
-    ],
-  },
-]
+export const INTERVIEW_OVERRVIEW_QUERY = gql`
+  query InterviewOverview($date: Date!) {
+    interviewOverview(date: $date) {
+      locations
+      timestampHeader
+      interviewRows {
+        location
+        interviews {
+          time
+          content
+          color
+        }
+      }
+    }
+  }
+`
 
 export const InterviewsOverview: React.FC = () => {
   const { classes } = useStyles()
+  const [addInterviewModalOpen, setAddInterviewModalOpen] = useState(false)
 
-  const parsedCellItems = useMemo(() => {
-    const headerRow = timeIntervals.map(time => ({
-      rowIndex: 0,
-      columnIndex: timeToColumnIndex(time) + 1,
-      name: time,
-    }))
+  const { data, loading, error } = useQuery(INTERVIEW_OVERRVIEW_QUERY, {
+    variables: {
+      date: format(new Date(), 'yyyy-MM-dd'),
+    },
+  })
 
-    const locaationColumn = locations.map(location => ({
-      rowIndex: locationToRowIndex(location.name as 'bodegaen'),
-      columnIndex: 0,
-      name: location.name,
-    }))
+  if (error) return <FullPageError />
 
-    const cellItems = inteviewCellSlots.map(cellItem => {
-      const rowIndex = locationToRowIndex(cellItem.location as 'bodegaen')
-      return cellItem.interviews.map(interview => {
-        const columnIndex = timeToColumnIndex(interview.time)
-        return {
-          rowIndex,
-          columnIndex,
-          name: interview.name,
-        }
-      })
+  if (loading || !data) return <FullContentLoader />
+
+  const { interviewOverview } = data
+  const { interviewRows, locations, timestampHeader } = interviewOverview
+
+  const locationRowDict: any = {}
+  const timeColumnDict: any = {}
+
+  locations.forEach((location: string, index: number) => {
+    locationRowDict[location] = index + 1
+  })
+
+  timestampHeader.forEach((time: string, index: number) => {
+    timeColumnDict[time] = index + 1
+  })
+
+  const headerRow = timestampHeader.map((time: string) => ({
+    rowIndex: 1,
+    columnIndex: timeColumnDict[time] + 1,
+    name: time,
+    color: '',
+  }))
+
+  const locationColumn = locations.map((location: string) => ({
+    rowIndex: locationRowDict[location] + 1,
+    columnIndex: 1,
+    name: location,
+    color: '',
+  }))
+
+  const cellItems = interviewRows.map((cellItem: RowItem) => {
+    const rowIndex = locationRowDict[cellItem.location] + 1
+    return cellItem.interviews.map(interview => {
+      const columnIndex = timeColumnDict[interview.time] + 1
+      return {
+        rowIndex,
+        columnIndex,
+        name: interview.content,
+        color: interview.color,
+        time: interview.time,
+      }
     })
+  })
 
-    return [...headerRow, ...locaationColumn, ...cellItems.flat()]
-  }, [])
+  const parsedCellItems = [...headerRow, ...locationColumn, ...cellItems.flat()]
 
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Title>Intervjuoversikt</Title>
+      <Group position="apart">
+        <Title>Intervjuoversikt</Title>
+        <Button onClick={() => setAddInterviewModalOpen(true)}>
+          Opprett intervju
+        </Button>
+      </Group>
       <Paper>
         <div className={classes.grid}>
           {parsedCellItems.map(cellItem => (
-            // <div
-            //   style={{
-            //     fontSize: 12,
-            //     width: 100,
-            //     gridColumnStart: cellItem.columnIndex,
-            //     gridColumnEnd: cellItem.columnIndex + 1,
-            //     gridRowStart: cellItem.rowIndex,
-            //     gridRowEnd: cellItem.rowIndex,
-            //   }}
-            // >
-            //   {cellItem.name}
-            // </div>
             <GridItemCell
               colStart={cellItem.columnIndex}
               rowStart={cellItem.rowIndex as number}
               name={cellItem.name}
+              color={cellItem.color}
             />
           ))}
         </div>
       </Paper>
+      <Modal
+        opened={addInterviewModalOpen}
+        onClose={() => setAddInterviewModalOpen(false)}
+      >
+        <AddInterviewForm
+          onCloseCallback={() => setAddInterviewModalOpen(false)}
+        />
+      </Modal>
     </Stack>
   )
 }
@@ -162,10 +148,6 @@ const useStyles = createStyles(theme => ({
     display: 'grid',
     overflowX: 'scroll',
     backgroundColor: 'hotpink',
-    //     row-gap: 10px;
-    // column-gap: 20px;
-    // grid-template-columns: 200px 100px auto 100px 200px;
-    // grid-template-rows: 25% 50% 25%;
     rowGap: 5,
     columnGap: 5,
     gridTemplateColumns: 'repeat(21, 1fr)',
@@ -176,31 +158,39 @@ const useStyles = createStyles(theme => ({
 type GridItem = {
   colStart: number
   rowStart: number
+  color: string
 }
 
 type GridItemProp = {
   colStart: number
   rowStart: number
   name: string
+  color: string
 }
 
-const GridItemCell: React.FC<GridItemProp> = ({ colStart, rowStart, name }) => {
+const GridItemCell: React.FC<GridItemProp> = ({
+  colStart,
+  rowStart,
+  name,
+  color,
+}) => {
   const { classes } = useGridItemStyles({
     colStart,
     rowStart,
+    color,
   })
 
   return <div className={classes.gridItem}>{name}</div>
 }
 
 const useGridItemStyles = createStyles(
-  (theme, { colStart, rowStart }: GridItem) => ({
+  (theme, { colStart, rowStart, color }: GridItem) => ({
     gridItem: {
-      backgroundColor: 'red',
+      backgroundColor: color,
       gridColumnStart: colStart,
       gridColumnEnd: colStart + 1,
       gridRowStart: rowStart,
-      gridRowEnd: rowStart,
+      gridRowEnd: rowStart + 1,
       fontSize: 12,
       width: 100,
       color: 'yellow',

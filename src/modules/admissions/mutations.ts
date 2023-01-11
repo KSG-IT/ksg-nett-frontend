@@ -440,3 +440,13 @@ export const DELETE_INTERNAL_GROUP_POSITION_PRIORITY_MUTATION = gql`
     }
   }
 `
+
+export const CREATE_INTERVIEW_MUTATION = gql`
+  mutation CreateInterviewMutation($input: CreateInterviewInput!) {
+    createInterview(input: $input) {
+      interview {
+        id
+      }
+    }
+  }
+`

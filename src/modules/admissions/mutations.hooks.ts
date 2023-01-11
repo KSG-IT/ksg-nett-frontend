@@ -21,6 +21,7 @@ import {
   SET_SELF_AS_INTERVIEWER,
   UPLOAD_APPLICANTS_FILE_MUTATION,
   UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
+  CREATE_INTERVIEW_MUTATION,
 } from './mutations'
 import {
   AddInternalGroupPositionPriorityReturns,
@@ -38,6 +39,8 @@ import {
   CreateApplicantsFromCSVDataVariables,
   CreateApplicationsReturns,
   CreateApplicationsVariables,
+  CreateInterviewReturns,
+  CreateInterviewVariables,
   PatchApplicantReturns,
   PatchApplicantVariables,
   PatchInterviewScheduleTemplateReturns,
@@ -115,6 +118,11 @@ export const useInterviewMutations = () => {
     }
   )
 
+  const [createInterview, { loading: createInterviewLoading }] = useMutation<
+    CreateInterviewReturns,
+    CreateInterviewVariables
+  >(CREATE_INTERVIEW_MUTATION)
+
   return {
     patchInterview,
     patchInterviewLoading,
@@ -124,6 +132,9 @@ export const useInterviewMutations = () => {
 
     removeSelfAsInterviewer,
     removeSelfLoading,
+
+    createInterview,
+    createInterviewLoading,
   }
 }
 
