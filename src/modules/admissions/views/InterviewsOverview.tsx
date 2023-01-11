@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import {
   Button,
   createStyles,
@@ -9,12 +9,18 @@ import {
   Title,
 } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
+import { showNotification } from '@mantine/notifications'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { MessageBox } from 'components/MessageBox'
+import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
 import { format } from 'util/date-fns'
+import { PERMISSIONS } from 'util/permissions'
 import { AddInterviewForm } from '../components/InterviewOverview.tsx'
+import { useInterviewMutations } from '../mutations.hooks'
+import { INTERVIEW_OVERRVIEW_QUERY } from '../queries'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -35,32 +41,18 @@ type RowItem = {
   interviews: CellItem[]
 }
 
-export const INTERVIEW_OVERRVIEW_QUERY = gql`
-  query InterviewOverview($date: Date!) {
-    interviewOverview(date: $date) {
-      locations
-      timestampHeader
-      interviewRows {
-        location
-        interviews {
-          time
-          content
-          color
-        }
-      }
-    }
-  }
-`
-
 export const InterviewsOverview: React.FC = () => {
   const { classes } = useStyles()
   const [addInterviewModalOpen, setAddInterviewModalOpen] = useState(false)
   const [date, setDate] = useState(new Date())
 
+  const { deleteInterview } = useInterviewMutations()
+
   const { data, loading, error } = useQuery(INTERVIEW_OVERRVIEW_QUERY, {
     variables: {
       date: format(date, 'yyyy-MM-dd'),
     },
+    pollInterval: 10_000,
   })
 
   if (error) return <FullPageError />
@@ -105,26 +97,64 @@ export const InterviewsOverview: React.FC = () => {
         name: interview.content,
         color: interview.color,
         time: interview.time,
+        interviewId: interview.interviewId,
       }
     })
   })
 
   const parsedCellItems = [...headerRow, ...locationColumn, ...cellItems.flat()]
 
+  function handleDeleteInterview(interviewId: string) {
+    if (!interviewId) return
+
+    const confirm = window.confirm(
+      'Er du sikker på at du vil slette intervjuet?'
+    )
+    if (!confirm) return
+
+    deleteInterview({
+      variables: { id: interviewId },
+      refetchQueries: [INTERVIEW_OVERRVIEW_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Intrvju slettet',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message: message,
+          color: 'red',
+        })
+      },
+    })
+  }
+
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <DatePicker value={date} onChange={val => val && setDate(val)} />
+
       <Group position="apart">
         <Title>Intervjuoversikt</Title>
-        <Button onClick={() => setAddInterviewModalOpen(true)}>
-          Opprett intervju
-        </Button>
+        <PermissionGate permissions={PERMISSIONS.admissions.add.interview}>
+          <Button onClick={() => setAddInterviewModalOpen(true)}>
+            Opprett intervju
+          </Button>
+        </PermissionGate>
+      </Group>
+      <MessageBox type="info">
+        Du kan slette tomme intervjuer ved å trykke på de
+      </MessageBox>
+      <Group>
+        <DatePicker value={date} onChange={val => val && setDate(val)} />
       </Group>
       <Paper>
         <div className={classes.grid}>
           {parsedCellItems.map(cellItem => (
             <GridItemCell
+              onClick={() => handleDeleteInterview(cellItem.interviewId)}
               colStart={cellItem.columnIndex}
               rowStart={cellItem.rowIndex as number}
               name={cellItem.name}
@@ -155,6 +185,7 @@ const useStyles = createStyles(theme => ({
     columnGap: 5,
     gridTemplateColumns: 'repeat(21, 1fr)',
     gridTemplateRows: 'auto',
+    borderCollapse: 'collapse',
   },
 }))
 
@@ -162,6 +193,7 @@ type GridItem = {
   colStart: number
   rowStart: number
   color: string
+  firstRowOrColumn: boolean
 }
 
 type GridItemProp = {
@@ -169,6 +201,7 @@ type GridItemProp = {
   rowStart: number
   name: string
   color: string
+  onClick?: () => void
 }
 
 const GridItemCell: React.FC<GridItemProp> = ({
@@ -176,18 +209,25 @@ const GridItemCell: React.FC<GridItemProp> = ({
   rowStart,
   name,
   color,
+  onClick,
 }) => {
+  const firstRowOrColumn = rowStart === 1 || colStart === 1
   const { classes } = useGridItemStyles({
     colStart,
     rowStart,
     color,
+    firstRowOrColumn,
   })
 
-  return <div className={classes.gridItem}>{name}</div>
+  return (
+    <div className={classes.gridItem} onClick={onClick}>
+      {name}
+    </div>
+  )
 }
 
 const useGridItemStyles = createStyles(
-  (theme, { colStart, rowStart, color }: GridItem) => ({
+  (theme, { colStart, rowStart, color, firstRowOrColumn }: GridItem) => ({
     gridItem: {
       backgroundColor: color,
       gridColumnStart: colStart,
@@ -195,9 +235,15 @@ const useGridItemStyles = createStyles(
       gridRowStart: rowStart,
       gridRowEnd: rowStart + 1,
       fontSize: 12,
-      width: 100,
+      width: 150,
       color: 'yellow',
-      height: 40,
+      height: 60,
+      display: 'flex',
+      padding: theme.spacing.xs,
+      ':hover': {
+        backgroundColor: 'orange',
+        cursor: 'pointer',
+      },
     },
   })
 )

@@ -1,8 +1,9 @@
-import { Button, Select, Stack } from '@mantine/core'
+import { Button, Stack } from '@mantine/core'
 import { DatePicker, TimeRangeInput } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
+import { MessageBox } from 'components/MessageBox'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
-import { INTERVIEW_OVERRVIEW_QUERY } from 'modules/admissions/views'
+import { INTERVIEW_OVERRVIEW_QUERY } from 'modules/admissions/queries'
 import { useState } from 'react'
 import { InterviewLocationSelect } from '../InterviewLocationSelect'
 
@@ -35,7 +36,14 @@ export const AddInterviewForm: React.FC<AddInterviewFormProps> = ({
     datetimeEnd.setSeconds(0)
     datetimeEnd.setMilliseconds(0)
 
-    console.log([datetimeStart, datetimeEnd])
+    if (datetimeStart.getTime() >= datetimeEnd.getTime()) {
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Starttid må være før sluttid',
+        color: 'red',
+      })
+      return
+    }
 
     createInterview({
       variables: {
@@ -66,9 +74,21 @@ export const AddInterviewForm: React.FC<AddInterviewFormProps> = ({
   return (
     <form onSubmit={handleSubmit}>
       <Stack>
+        <MessageBox type="warning">
+          Ikke veldig godt laget. Intervjustart må være helv eller halv.
+          Intervjuslutt må være en halvtime senere.
+        </MessageBox>
         <InterviewLocationSelect onSelectCallback={setLocationId} />
-        <DatePicker value={date} onChange={val => val && setDate(val)} />
-        <TimeRangeInput value={time} onChange={val => val && setTime(val)} />
+        <DatePicker
+          value={date}
+          onChange={val => val && setDate(val)}
+          label="Dato"
+        />
+        <TimeRangeInput
+          value={time}
+          onChange={val => val && setTime(val)}
+          label="Intervjutid"
+        />
         <Button type="submit">Opprett</Button>
       </Stack>
     </form>

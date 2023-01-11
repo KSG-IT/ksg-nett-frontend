@@ -594,3 +594,22 @@ export const ALL_APPLICANTS_AVAILABLE_FOR_REBOOKING_QUERY = gql`
     }
   }
 `
+
+export const INTERVIEW_OVERRVIEW_QUERY = gql`
+  query InterviewOverview($date: Date!) {
+    interviewOverview(date: $date) {
+      locations
+      timestampHeader
+      interviewRows {
+        location
+        interviews {
+          time
+          content
+          color
+          interviewId
+          applicantId
+        }
+      }
+    }
+  }
+`

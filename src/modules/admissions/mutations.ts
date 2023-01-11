@@ -450,3 +450,11 @@ export const CREATE_INTERVIEW_MUTATION = gql`
     }
   }
 `
+
+export const DELETE_INTERVIEW_MUTATION = gql`
+  mutation DeleteInterviewMutation($id: ID!) {
+    deleteInterview(id: $id) {
+      found
+    }
+  }
+`
