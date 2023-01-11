@@ -42,6 +42,11 @@ type RowItem = {
 }
 
 export const InterviewsOverview: React.FC = () => {
+  /**
+   * Should get the data and pass it to a component which memoized the value.
+   * The order of things is handled on the backend and parses timestamps using
+   * local time with the timezone on server settings
+   */
   const { classes } = useStyles()
   const [addInterviewModalOpen, setAddInterviewModalOpen] = useState(false)
   const [date, setDate] = useState(new Date())
@@ -65,11 +70,16 @@ export const InterviewsOverview: React.FC = () => {
   const locationRowDict: any = {}
   const timeColumnDict: any = {}
 
+  // Locations are retrieved from the backend and sorted by name
   locations.forEach((location: string, index: number) => {
+    // css grid is 1-indexed
     locationRowDict[location] = index + 1
   })
 
+  // The timestamps are generated on the backend using the schedule template
+  // day start and default interview duration fields
   timestampHeader.forEach((time: string, index: number) => {
+    // css grid is 1-indexed
     timeColumnDict[time] = index + 1
   })
 
@@ -88,6 +98,8 @@ export const InterviewsOverview: React.FC = () => {
   }))
 
   const cellItems = interviewRows.map((cellItem: RowItem) => {
+    // cellitems need to be offset since grid is 1-indexed and the first row and column
+    // is for location and timestamps
     const rowIndex = locationRowDict[cellItem.location] + 1
     return cellItem.interviews.map(interview => {
       const columnIndex = timeColumnDict[interview.time] + 1
