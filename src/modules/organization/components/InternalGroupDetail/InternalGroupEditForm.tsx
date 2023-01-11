@@ -3,7 +3,10 @@ import { Link } from '@mantine/tiptap'
 import { IconCheck, IconFileCode } from '@tabler/icons'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { InternalGroupNode } from 'modules/organization/types'
+import {
+  InternalGroupNode,
+  PatchInternalGroupInput,
+} from 'modules/organization/types'
 import { useState } from 'react'
 
 import { showNotification } from '@mantine/notifications'
@@ -33,14 +36,20 @@ export const InternalGroupEditForm: React.FC<InternalGroupEditFormProps> = ({
 
     if (name === '') return
 
+    const input: PatchInternalGroupInput = {
+      name: name,
+      description: editor.getHTML(),
+      groupImage: image,
+    }
+
+    if (image === null) {
+      delete input.groupImage
+    }
+
     patchInternalGroup({
       variables: {
         id: internalGroup.id,
-        input: {
-          name,
-          description: editor.getHTML(),
-          groupImage: image,
-        },
+        input: input,
       },
       refetchQueries: [INTERNAL_GROUP_QUERY],
       onCompleted() {
