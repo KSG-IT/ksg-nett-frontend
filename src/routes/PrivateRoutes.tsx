@@ -26,6 +26,7 @@ import {
 import { Dashboard } from 'modules/dashboard/Dashboard'
 import {
   CreateDeposit,
+  DebtCollection,
   Deposits,
   MyEconomy,
   SociOrderSession,
@@ -115,6 +116,15 @@ export const AppRoutes: React.FC = () => {
       <Routes>
         <Route path="migration-wizard" element={<MigrationWizard />} />
         <Route path="*" element={<Navigate to="/migration-wizard" />} />
+      </Routes>
+    )
+  }
+
+  if (me.owesMoney) {
+    return (
+      <Routes>
+        <Route path="torpedo" element={<DebtCollection />} />
+        <Route path="*" element={<Navigate to="/torpedo" />} />
       </Routes>
     )
   }
