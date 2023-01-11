@@ -5,6 +5,15 @@ export type LegacyUserrWorkHistoryNode = {
   dateTo: string
 }
 
+export type PatchHighlightInput = {
+  user: string
+  internalGroup: string
+  occupation: string
+  description: string
+  image?: File | null
+  archived: boolean
+}
+
 export interface PatchInternalGroupPositionMembershipReturns {
   internalGroupPositionMembership: Pick<
     InternalGroupPositionMembershipNode,
@@ -14,6 +23,26 @@ export interface PatchInternalGroupPositionMembershipReturns {
 export interface PatchInternalGroupPositionMembershipVariables {
   id: string
   input: Partial<Omit<InternalGroupPositionMembershipNode, 'id'>>
+}
+
+export interface PatchInternalGroupUserHighlightReturns {
+  internalGroupUserHighlight: Pick<InternalGroupUserHighlightNode, 'id'>
+}
+
+export interface PatchInternalGroupUserHighlightVariables {
+  id: string
+  input: PatchHighlightInput
+}
+
+export interface BatchPatchInternalGroupUserHighlightReturns {
+  internalGroupUserHighlights: {
+    id: string
+  }[]
+}
+
+type BatchEntry = Partial<InternalGroupUserHighlightNode>
+export interface BatchPatchInternalGroupUserHighlightVariables {
+  input: BatchEntry[]
 }
 
 export interface QuitKSGReturns {
@@ -26,7 +55,10 @@ export interface QuitKSGVariables {
   membershipId: string
 }
 
-import { InternalGroupPositionNode } from 'modules/organization/types'
+import {
+  InternalGroupPositionNode,
+  InternalGroupUserHighlightNode,
+} from 'modules/organization/types'
 
 export enum InternalGroupPositionType {
   FUNCTIONARY = 'FUNCTIONARY',
