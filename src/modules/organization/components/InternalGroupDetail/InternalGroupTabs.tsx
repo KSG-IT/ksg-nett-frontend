@@ -29,7 +29,7 @@ export const InternalGroupTabs: React.FC<InternalGroupTabsProps> = ({
       </Tabs.Panel>
 
       <Tabs.Panel value="highlights" pt="xs">
-        <InternalGroupUserHighlights internalGroupId="" />
+        <InternalGroupUserHighlights internalGroupId={internalGroup.id} />
       </Tabs.Panel>
 
       <Tabs.Panel value="settings" pt="xs">
