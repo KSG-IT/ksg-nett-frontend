@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client'
 import { Center } from '@mantine/core'
+import * as Sentry from '@sentry/react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-
 import {
   AdmissionDashboard,
   ApplicantDetails,
@@ -101,6 +101,8 @@ export const AppRoutes: React.FC = () => {
   if (me == null || me === undefined) {
     return <PublicRoutes />
   }
+
+  Sentry.setUser({ email: me.email })
 
   if (me.firstTimeLogin) {
     return (

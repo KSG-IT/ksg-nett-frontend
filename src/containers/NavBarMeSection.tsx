@@ -1,4 +1,5 @@
 import { createStyles, Group, Navbar, Stack, Text } from '@mantine/core'
+import * as Sentry from '@sentry/react'
 import {
   IconCashBanknote,
   IconJumpRope,
@@ -7,7 +8,7 @@ import {
   IconSettings,
 } from '@tabler/icons'
 import { UserThumbnail } from 'modules/users/components'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useStore } from 'store'
 import { removeLoginToken } from 'util/auth'
 import { useSidebar } from 'util/hooks'
@@ -34,6 +35,7 @@ export const NavBarMeSection: React.FC = () => {
   function handleLogoutAlert() {
     if (confirm('Er du sikker på at du vil logge ut?')) {
       removeLoginToken()
+      Sentry.setUser(null)
       window.location.reload()
     }
   }
