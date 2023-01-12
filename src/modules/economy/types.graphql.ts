@@ -316,3 +316,11 @@ export interface DeleteSociOrderSessionFoodOrderReturns {
 export interface DeleteSociOrderSessionFoodOrderVariables {
   orderId: string
 }
+
+export interface InviteUsersToOrderSessionReturns {
+  sociOrderSession: Pick<SociOrderSessionNode, 'id'>
+}
+
+export interface InviteUsersToOrderSessionVariables {
+  users: string[]
+}
