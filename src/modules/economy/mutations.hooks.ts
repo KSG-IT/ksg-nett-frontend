@@ -7,6 +7,7 @@ import {
   CREATE_SOCI_SESSION_MUTATION,
   DELETE_SOCI_ORDER_SESSION_FOOD_ORDER_MUTATION,
   INVALIDATE_DEPOSIT_MUTATION,
+  INVITE_USERS_TO_ORDER_SESSION_MUTATION,
   PLACE_PROUCT_ORDER_MUTATION,
   PLACE_SOCI_ORDER_SESSION_ORDER_MUTATION,
   SOCI_ORDER_SESSION_NEXT_STATUS_MUTATION,
@@ -25,6 +26,8 @@ import {
   DeleteSociOrderSessionFoodOrderVariables,
   InvalidateDepositReturns,
   InvalidateDepositVariables,
+  InviteUsersToOrderSessionReturns,
+  InviteUsersToOrderSessionVariables,
   PlaceProductOrderReturns,
   PlaceProductOrderVariables,
   PlaceSociOrderSessionOrderReturns,
@@ -125,6 +128,14 @@ export function useSociOrderSessionMutations() {
     DeleteSociOrderSessionFoodOrderVariables
   >(DELETE_SOCI_ORDER_SESSION_FOOD_ORDER_MUTATION)
 
+  const [
+    inviteUsersToOrderSession,
+    { loading: inviteUsersToOrderSessionLoading },
+  ] = useMutation<
+    InviteUsersToOrderSessionReturns,
+    InviteUsersToOrderSessionVariables
+  >(INVITE_USERS_TO_ORDER_SESSION_MUTATION)
+
   return {
     createSociOrderSession,
     createSociOrderSessionLoading,
@@ -134,5 +145,7 @@ export function useSociOrderSessionMutations() {
     sociOrderSessionNextStatusLoading,
     deleteSociOrderSessionFoodOrder,
     deleteSociOrderSessionFoodOrderLoading,
+    inviteUsersToOrderSession,
+    inviteUsersToOrderSessionLoading,
   }
 }
