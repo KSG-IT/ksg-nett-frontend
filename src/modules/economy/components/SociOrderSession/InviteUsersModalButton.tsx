@@ -1,4 +1,11 @@
-import { Button, Group, Modal, Stack, Title } from '@mantine/core'
+import {
+  Button,
+  Group,
+  LoadingOverlay,
+  Modal,
+  Stack,
+  Title,
+} from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { UserMultiSelect } from 'components/Select'
 import { useSociOrderSessionMutations } from 'modules/economy/mutations.hooks'
@@ -8,7 +15,8 @@ export const InviteUsersModalButton: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const [users, setUsers] = useState<string[]>([])
 
-  const { inviteUsersToOrderSession } = useSociOrderSessionMutations()
+  const { inviteUsersToOrderSession, inviteUsersToOrderSessionLoading } =
+    useSociOrderSessionMutations()
 
   function handleInviteUsers() {
     const confirmed = confirm(
@@ -55,6 +63,7 @@ export const InviteUsersModalButton: React.FC = () => {
             <Button onClick={handleInviteUsers}>Inviter</Button>
           </Group>
         </Stack>
+        <LoadingOverlay visible={inviteUsersToOrderSessionLoading} />
       </Modal>
     </>
   )
