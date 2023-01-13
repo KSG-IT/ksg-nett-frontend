@@ -17,7 +17,6 @@ export const GridItemCell: React.FC<GridItemProp> = ({
   color,
   onClick,
 }) => {
-  // const firstRowOrColumn = rowStart === 1 || colStart === 1
   const firstRowOrColumn = useMemo(
     () => rowStart === 1 || colStart === 1,
     [rowStart, colStart]
@@ -32,12 +31,12 @@ export const GridItemCell: React.FC<GridItemProp> = ({
 
   return (
     <Stack
+      className={classes.gridItem}
       align={'center'}
       justify={'center'}
-      className={classes.gridItem}
       onClick={onClick}
     >
-      <Text size={'md'} className={classes.gridItemText}>
+      <Text className={classes.gridItemText} size={'md'}>
         {name}
       </Text>
     </Stack>
@@ -56,7 +55,7 @@ const useGridItemStyles = createStyles(
       gridColumnEnd: colStart + 1,
       gridRowStart: rowStart,
       gridRowEnd: rowStart + 1,
-      fontSize: 12,
+
       boxShadow: '4px 4px 0px #000',
       width: 150,
       borderRadius: theme.radius.md,
@@ -86,6 +85,7 @@ const useGridItemStyles = createStyles(
       paddingLeft: theme.spacing.sm,
       fontFamily: 'Comic Sans MS, cursive',
       fontWeight: 700,
+      fontSize: 14,
       width: '100%',
       height: '100%',
       color: 'black',

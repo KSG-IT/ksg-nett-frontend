@@ -18,29 +18,21 @@ import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
 import { format } from 'util/date-fns'
 import { PERMISSIONS } from 'util/permissions'
+import { AssignInterviewModal } from '../components/AssignInterview'
 import { AddInterviewForm } from '../components/InterviewOverview.tsx'
+import { GridItemCell } from '../components/InterviewOverview.tsx/GridItemCell'
 import { useInterviewMutations } from '../mutations.hooks'
 import { INTERVIEW_TABLE_OVERVIEW_QUERY } from '../queries'
-import { AssignInterviewModal } from '../components/AssignInterview'
 import {
   InterviewLocationOverviewRow,
-  InterviewOverviewCell,
   InterviewTableOverviewReturns,
 } from '../types.graphql'
-import { GridItemCell } from '../components/InterviewOverview.tsx/GridItemCell'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
   { label: 'Orvik', path: '/admissions' },
-  { label: 'Intervjuoverdsikt', path: '' },
+  { label: 'Intervjuoversikt', path: '' },
 ]
-
-// this is to fill in the selected interview state with the correct data
-type InterviewSelectedProps = {
-  interviewId: string
-  interviewStart: string
-  location: string
-}
 
 // this is used for all cell items, to make sure that we can get interviewId and applicantId
 // still needs some real typing overhaul to easily convert from the table data to the actual intverview data required
@@ -51,6 +43,11 @@ type CellItem = {
   color: string
   interviewId?: string
   applicantId?: string
+}
+
+// Allows us to set the key programatically. We use this as a way to map a name or a timestamp to a given grid index
+type DynamicIndexDict = {
+  [key: string]: number
 }
 
 export const InterviewsOverview: React.FC = () => {
@@ -64,10 +61,6 @@ export const InterviewsOverview: React.FC = () => {
   const [assignInterviewModalOpen, setAssignInterviewModalOpen] =
     useState(false)
   const [date, setDate] = useState(new Date())
-  const [interview, setInterview] = useState<InterviewSelectedProps | null>(
-    null
-  )
-
   const [selectedInterviewId, setSelectedInterviewId] = useState<string | null>(
     null
   )
@@ -91,8 +84,8 @@ export const InterviewsOverview: React.FC = () => {
   const { interviewTableOverview } = data
   const { interviewRows, locations, timestampHeader } = interviewTableOverview
 
-  const locationRowDict: any = {}
-  const timeColumnDict: any = {}
+  const locationRowDict: DynamicIndexDict = {}
+  const timeColumnDict: DynamicIndexDict = {}
 
   // Locations are retrieved from the backend and sorted by name
   locations.forEach((location: string, index: number) => {
@@ -171,8 +164,6 @@ export const InterviewsOverview: React.FC = () => {
   }
 
   function handleAssignInterview(interviewId: string) {
-    console.log(interviewId)
-
     setSelectedInterviewId(interviewId)
     setAssignInterviewModalOpen(true)
   }
@@ -222,8 +213,9 @@ export const InterviewsOverview: React.FC = () => {
       </Modal>
       {selectedInterviewId && (
         <AssignInterviewModal
-          interviewId={selectedInterviewId}
           opened={assignInterviewModalOpen}
+          interviewId={selectedInterviewId}
+          setInterviewIdCallback={setSelectedInterviewId}
           onClose={() => setAssignInterviewModalOpen(false)}
         />
       )}
@@ -234,13 +226,16 @@ export const InterviewsOverview: React.FC = () => {
 const useStyles = createStyles(theme => ({
   grid: {
     display: 'grid',
-    overflowX: 'scroll',
+    overflowX: 'hidden',
     backgroundColor: '#f7f3eb', //ugly beach color
     rowGap: 5,
     columnGap: 5,
     gridTemplateColumns: 'repeat(21, 1fr)',
     gridTemplateRows: 'auto',
     borderCollapse: 'collapse',
+    ':hover': {
+      overflowX: 'scroll',
+    },
   },
   card: {
     border: '2px solid black',

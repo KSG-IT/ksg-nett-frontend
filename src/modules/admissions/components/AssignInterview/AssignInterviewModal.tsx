@@ -23,10 +23,12 @@ import { ApplicantSelect } from '../ApplicantSelect'
 
 export interface AssignInterviewModalProps extends ModalProps {
   interviewId: string | null
+  setInterviewIdCallback: (interviewId: string | null) => void
 }
 
 export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
   interviewId,
+  setInterviewIdCallback,
   ...props
 }) => {
   const [applicantId, setApplicantId] = useState<string | null>(null)
@@ -91,6 +93,7 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
 
   function handleClose() {
     setApplicantId(null)
+    setInterviewIdCallback(null)
     props.onClose()
   }
 
