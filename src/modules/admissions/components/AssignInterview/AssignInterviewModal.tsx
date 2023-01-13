@@ -7,17 +7,28 @@ import {
   ModalProps,
   Stack,
   Text,
+  UnstyledButton,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import {
+  IconAlertTriangle,
+  IconExclamationMark,
+  IconHomeExclamation,
+  IconMoodAngry,
+  IconTrash,
+} from '@tabler/icons'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { MessageBox } from 'components/MessageBox'
-import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
+import {
+  useApplicantMutations,
+  useInterviewMutations,
+} from 'modules/admissions/mutations.hooks'
 import {
   INTERVIEW_SHALLOW_DETAILS_QUERY,
   INTERVIEW_TABLE_OVERVIEW_QUERY,
 } from 'modules/admissions/queries'
 import { InterviewDetailQueryReturns } from 'modules/admissions/types.graphql'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { format } from 'util/date-fns'
 import { ApplicantSelect } from '../ApplicantSelect'
 
@@ -46,6 +57,12 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
   const { assignApplicantNewInterview, assignApplicantNewInterviewLoading } =
     useApplicantMutations()
 
+  const {
+    deleteInterview,
+    removeApplicantFromInterview,
+    removeApplicantFromInterviewLoading,
+  } = useInterviewMutations()
+
   function handleAssignNewInterview() {
     if (!applicantId || !interview) return
 
@@ -54,7 +71,10 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
         applicantId,
         interviewId: interview.id,
       },
-      refetchQueries: [INTERVIEW_TABLE_OVERVIEW_QUERY],
+      refetchQueries: [
+        INTERVIEW_TABLE_OVERVIEW_QUERY,
+        INTERVIEW_SHALLOW_DETAILS_QUERY,
+      ],
       onCompleted() {
         showNotification({
           title: 'Intervju tilbudt',
@@ -63,7 +83,6 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
           color: 'green',
         })
         setApplicantId(null)
-        props.onClose()
       },
       onError() {
         showNotification({
@@ -71,6 +90,67 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
           message:
             'Kan hende noen andre har booket samme intervju. Prøv et annet intervju annet',
           color: 'red',
+        })
+      },
+    })
+  }
+
+  function handleDeleteInterview() {
+    if (!interview) return
+
+    const confirmed = confirm('Er du sikker på at du vil slette intervjuet?')
+    if (!confirmed) return
+
+    deleteInterview({
+      variables: {
+        id: interview.id,
+      },
+      refetchQueries: [INTERVIEW_TABLE_OVERVIEW_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Intervju slettet',
+          message: 'Intervjuet er slettet',
+          color: 'green',
+        })
+        props.onClose()
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          color: 'red',
+          message,
+        })
+      },
+    })
+  }
+
+  function handleRemoveApplicantFromInterview() {
+    if (!interview) return
+    const confirmed = confirm(
+      'Er du sikker på at du vil fjerne søkeren fra intervjuet?'
+    )
+    if (!confirmed) return
+
+    removeApplicantFromInterview({
+      variables: {
+        interviewId: interview.id,
+      },
+      refetchQueries: [
+        INTERVIEW_SHALLOW_DETAILS_QUERY,
+        INTERVIEW_TABLE_OVERVIEW_QUERY,
+      ],
+      onCompleted() {
+        showNotification({
+          title: 'Søker fjernet',
+          message: 'Søkeren er fjernet fra intervjuet',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          color: 'red',
+          message,
         })
       },
     })
@@ -89,7 +169,7 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
 
   if (!interview) return <FullPage404 />
 
-  if (!interview) return <FullPage404 />
+  const free = interview.applicant === null
 
   function handleClose() {
     setApplicantId(null)
@@ -106,9 +186,15 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
         </MessageBox>
 
         <Stack spacing="xs">
-          <Text size="lg" weight={500}>
-            Intervjudetaljer
-          </Text>
+          <Group position="apart">
+            <Text size="lg" weight={500}>
+              Intervjudetaljer
+            </Text>
+
+            <UnstyledButton onClick={handleDeleteInterview}>
+              <IconTrash />
+            </UnstyledButton>
+          </Group>
           <Text>Lokale: {interview.location.name}</Text>
           <Text>
             Starttidspunkt:{' '}
@@ -116,8 +202,22 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
           </Text>
         </Stack>
 
-        <ApplicantSelect onApplicantSelect={setApplicantId} />
-
+        {free && <ApplicantSelect onApplicantSelect={setApplicantId} />}
+        {!free && (
+          <>
+            <MessageBox type="warning">
+              Intervjuet er booket av {interview.applicant?.fullName}
+            </MessageBox>
+            <Button
+              leftIcon={<IconAlertTriangle />}
+              color="red"
+              loading={removeApplicantFromInterviewLoading}
+              onClick={handleRemoveApplicantFromInterview}
+            >
+              Fjern fra intervju
+            </Button>
+          </>
+        )}
         <Group position="right">
           <Button color="gray" onClick={handleClose}>
             Avbryt

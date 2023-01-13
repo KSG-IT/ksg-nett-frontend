@@ -7,9 +7,11 @@ import {
   Modal,
   Stack,
   Title,
+  UnstyledButton,
 } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
+import { IconChevronLeft, IconChevronRight, IconPlus } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -135,37 +137,17 @@ export const InterviewsOverview: React.FC = () => {
   )
   const parsedCellItems = [...headerRow, ...locationColumn, ...cellItems.flat()]
 
-  function handleDeleteInterview(interviewId: string) {
-    if (!interviewId) return
-
-    const confirm = window.confirm(
-      'Er du sikker på at du vil slette intervjuet?'
-    )
-    if (!confirm) return
-
-    deleteInterview({
-      variables: { id: interviewId },
-      refetchQueries: [INTERVIEW_TABLE_OVERVIEW_QUERY],
-      onCompleted() {
-        showNotification({
-          title: 'Suksess',
-          message: 'Intervju slettet',
-          color: 'green',
-        })
-      },
-      onError({ message }) {
-        showNotification({
-          title: 'Noe gikk galt',
-          message: message,
-          color: 'red',
-        })
-      },
-    })
-  }
-
   function handleAssignInterview(interviewId: string) {
     setSelectedInterviewId(interviewId)
     setAssignInterviewModalOpen(true)
+  }
+
+  function handleIncrementDate() {
+    setDate(new Date(date.setDate(date.getDate() + 1)))
+  }
+
+  function handleDecrementDate() {
+    setDate(new Date(date.setDate(date.getDate() - 1)))
   }
 
   return (
@@ -180,19 +162,38 @@ export const InterviewsOverview: React.FC = () => {
           </Button>
         </PermissionGate>
       </Group>
-      <MessageBox type="info">
-        Du kan slette tomme intervjuer ved å trykke på de
-      </MessageBox>
-      <Group>
-        <DatePicker value={date} onChange={val => val && setDate(val)} />
+
+      <Group position="center" align={'center'}>
+        <UnstyledButton onClick={handleDecrementDate}>
+          <IconChevronLeft />
+        </UnstyledButton>
+        <DatePicker
+          value={date}
+          onChange={val => val && setDate(val)}
+          locale={'nb'}
+          inputFormat="dddd DD. MMMM"
+        />
+        <UnstyledButton>
+          <IconChevronRight onClick={handleIncrementDate} />
+        </UnstyledButton>
       </Group>
       <Card className={classes.card} radius={'md'} p={'xs'}>
         <div className={classes.grid}>
+          <div
+            style={{
+              gridColumnStart: 1,
+              gridColumnEnd: 1,
+              gridRowStart: 1,
+              gridRowEnd: 1,
+            }}
+          >
+            {/* In case we want something in the corner here */}
+          </div>
           {parsedCellItems.map((cellItem: CellItem) => (
             <GridItemCell
               onClick={
                 cellItem?.applicantId
-                  ? () => handleDeleteInterview(cellItem?.interviewId!)
+                  ? () => handleAssignInterview(cellItem?.interviewId!)
                   : () => handleAssignInterview(cellItem?.interviewId!)
               }
               colStart={cellItem.columnIndex}

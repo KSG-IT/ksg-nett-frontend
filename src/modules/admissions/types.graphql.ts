@@ -663,3 +663,11 @@ export interface CreateInterviewReturns {
     interview: Pick<InterviewNode, 'id'>
   }
 }
+
+export interface RemoveApplicantFromInterviewReturns {
+  interview: Pick<InterviewNode, 'id'>
+}
+
+export interface RemoveApplicantFromInterviewVariables {
+  interviewId: string
+}

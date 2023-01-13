@@ -242,6 +242,10 @@ export const INTERVIEW_SHALLOW_DETAILS_QUERY = gql`
         name
       }
       interviewStart
+      applicant {
+        id
+        fullName
+      }
     }
   }
 `

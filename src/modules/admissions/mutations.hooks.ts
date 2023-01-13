@@ -23,6 +23,7 @@ import {
   UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
   CREATE_INTERVIEW_MUTATION,
   DELETE_INTERVIEW_MUTATION,
+  REMOVE_APPLICANT_FROM_INTERVIEW_MUTATION,
 } from './mutations'
 import {
   AddInternalGroupPositionPriorityReturns,
@@ -46,6 +47,8 @@ import {
   PatchApplicantVariables,
   PatchInterviewScheduleTemplateReturns,
   PatchInterviewScheduleTemplateVariables,
+  RemoveApplicantFromInterviewReturns,
+  RemoveApplicantFromInterviewVariables,
   SetSelfAsInterviewerMutatationReturns,
   SetSelfAsInterviewerMutatationVariables,
   UpdateInternalGroupPositionPriorityOrderReturns,
@@ -129,6 +132,14 @@ export const useInterviewMutations = () => {
     DeleteMutationVariables
   >(DELETE_INTERVIEW_MUTATION)
 
+  const [
+    removeApplicantFromInterview,
+    { loading: removeApplicantFromInterviewLoading },
+  ] = useMutation<
+    RemoveApplicantFromInterviewReturns,
+    RemoveApplicantFromInterviewVariables
+  >(REMOVE_APPLICANT_FROM_INTERVIEW_MUTATION)
+
   return {
     patchInterview,
     patchInterviewLoading,
@@ -140,6 +151,8 @@ export const useInterviewMutations = () => {
     createInterviewLoading,
     deleteInterview,
     deleteInterviewLoading,
+    removeApplicantFromInterview,
+    removeApplicantFromInterviewLoading,
   }
 }
 
