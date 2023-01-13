@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Kbd, Stack, Title } from '@mantine/core'
+import { useOs } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
 import Link from '@tiptap/extension-link'
 import { useEditor } from '@tiptap/react'
@@ -38,7 +39,7 @@ export const EditInterview: React.FC = () => {
   >() as EditInterviewParams
   const [lockModalOpen, setLockModalOpen] = useState(false)
   const [didNotShowModalOpen, setDidNotShowModalOpen] = useState(false)
-  const firstRender = useRef(true)
+  const os = useOs()
 
   const { patchInterview } = useInterviewMutations()
 
@@ -233,6 +234,10 @@ export const EditInterview: React.FC = () => {
 
       {/* Interview and discussion Notes */}
       <Title order={2}>Intervjunotater</Title>
+      <MessageBox type="info">
+        Det er mulig å lagre notatene ved bruk av{' '}
+        <Kbd>{os === 'macos' ? 'cmd' : 'ctrl'}</Kbd> + <Kbd>s</Kbd>
+      </MessageBox>
 
       <RichTextEditor editor={notesEditor} />
       <Title order={2}>Diskusjonsnotater</Title>

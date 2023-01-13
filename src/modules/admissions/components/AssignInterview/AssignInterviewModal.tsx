@@ -10,13 +10,7 @@ import {
   UnstyledButton,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import {
-  IconAlertTriangle,
-  IconExclamationMark,
-  IconHomeExclamation,
-  IconMoodAngry,
-  IconTrash,
-} from '@tabler/icons'
+import { IconAlertTriangle, IconTrash } from '@tabler/icons'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { MessageBox } from 'components/MessageBox'
 import { PermissionGate } from 'components/PermissionGate'
@@ -29,7 +23,7 @@ import {
   INTERVIEW_TABLE_OVERVIEW_QUERY,
 } from 'modules/admissions/queries'
 import { InterviewDetailQueryReturns } from 'modules/admissions/types.graphql'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { format } from 'util/date-fns'
 import { PERMISSIONS } from 'util/permissions'
