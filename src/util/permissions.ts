@@ -13,6 +13,7 @@ export const PERMISSIONS = {
     },
     delete: {
       applicant: 'admissions.delete_applicant',
+      interview: 'admissions.delete_interview',
     },
     view: {
       admission: 'admissions.view_admission',

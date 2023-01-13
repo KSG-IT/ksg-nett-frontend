@@ -19,6 +19,7 @@ import {
 } from '@tabler/icons'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { MessageBox } from 'components/MessageBox'
+import { PermissionGate } from 'components/PermissionGate'
 import {
   useApplicantMutations,
   useInterviewMutations,
@@ -30,6 +31,7 @@ import {
 import { InterviewDetailQueryReturns } from 'modules/admissions/types.graphql'
 import { useMemo, useState } from 'react'
 import { format } from 'util/date-fns'
+import { PERMISSIONS } from 'util/permissions'
 import { ApplicantSelect } from '../ApplicantSelect'
 
 export interface AssignInterviewModalProps extends ModalProps {
@@ -190,10 +192,13 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
             <Text size="lg" weight={500}>
               Intervjudetaljer
             </Text>
-
-            <UnstyledButton onClick={handleDeleteInterview}>
-              <IconTrash />
-            </UnstyledButton>
+            <PermissionGate
+              permissions={PERMISSIONS.admissions.delete.interview}
+            >
+              <UnstyledButton onClick={handleDeleteInterview}>
+                <IconTrash />
+              </UnstyledButton>
+            </PermissionGate>
           </Group>
           <Text>Lokale: {interview.location.name}</Text>
           <Text>
@@ -222,14 +227,16 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
           <Button color="gray" onClick={handleClose}>
             Avbryt
           </Button>
-          <Button
-            color="samfundet-red"
-            disabled={applicantId === null}
-            loading={assignApplicantNewInterviewLoading}
-            onClick={handleAssignNewInterview}
-          >
-            Bekreft intervjutid
-          </Button>
+          <PermissionGate permissions={PERMISSIONS.admissions.change.interview}>
+            <Button
+              color="samfundet-red"
+              disabled={applicantId === null}
+              loading={assignApplicantNewInterviewLoading}
+              onClick={handleAssignNewInterview}
+            >
+              Bekreft intervjutid
+            </Button>
+          </PermissionGate>
         </Group>
       </Stack>
       <LoadingOverlay
