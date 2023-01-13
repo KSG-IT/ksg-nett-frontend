@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { ScrollArea, Stack, Title } from '@mantine/core'
+import { Stack, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
