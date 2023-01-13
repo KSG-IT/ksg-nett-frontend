@@ -22,7 +22,10 @@ export const AllShifts = () => {
   const { data, error, loading } = useQuery<
     AllShiftsReturns,
     AllShiftsVariables
-  >(ALL_SHIFTS, { variables: { date: format(date, 'yyyy-MM-dd') } })
+  >(ALL_SHIFTS, {
+    variables: { date: format(date, 'yyyy-MM-dd') },
+    pollInterval: 30_000,
+  })
 
   if (error) return <FullPageError />
 

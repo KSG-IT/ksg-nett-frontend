@@ -14,6 +14,7 @@ export enum LocationValues {
 export enum RoleValues {
   UGLE = 'UGLE',
   BRANNVAKT = 'BRANNVAKT',
+  BAEREVAKT = 'BAEREVAKT',
   BARISTA = 'BARISTA',
   KAFEANSVARLIG = 'KAFEANSVARLIG',
   BARSERVITOR = 'BARSERVITOR',

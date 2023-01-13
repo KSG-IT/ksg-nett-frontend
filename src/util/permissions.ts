@@ -106,12 +106,6 @@ export const PERMISSIONS = {
     },
   },
   // ===== ORGANIZATION =====
-  /**
-   *           "organization.add_internalgrouppositionmembership",
-            "organization.change_internalgrouppositionmembership",
-            "organization.delete_internalgrouppositionmembership",
-            "organization.view_internalgrouppositionmembership",
-   */
   organization: {
     change: {
       internalGroup: 'organization.change_internalgroup',

@@ -14,9 +14,13 @@ const breadCrumbItems = [
   { label: 'Populære', path: '' },
 ]
 
-export const PopularQuotes: React.VFC = () => {
-  const { data, loading, error } =
-    useQuery<PopularQuotesReturns>(POPULAR_QUOTES_QUERY)
+export const PopularQuotes: React.FC = () => {
+  const { data, loading, error } = useQuery<PopularQuotesReturns>(
+    POPULAR_QUOTES_QUERY,
+    {
+      pollInterval: 30_000,
+    }
+  )
 
   if (error) return <FullPageError />
 

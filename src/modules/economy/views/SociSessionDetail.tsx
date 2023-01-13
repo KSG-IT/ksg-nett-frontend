@@ -39,6 +39,7 @@ export const SociSessionDetail: React.FC = () => {
     variables: {
       id,
     },
+    pollInterval: 10_000,
   })
 
   const { closeSociSession } = useSociSessionMutations()

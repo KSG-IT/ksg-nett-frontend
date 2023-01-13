@@ -1,14 +1,25 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Group, Stack, Text } from '@mantine/core'
+import {
+  Button,
+  Container,
+  createStyles,
+  SimpleGrid,
+  Stack,
+  Text,
+} from '@mantine/core'
+import { Calendar } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
+import { addDays, isAfter } from 'date-fns'
+import { format } from 'util/date-fns'
 import { BOOK_INTERRVIEW_MUTATION } from 'modules/admissions/mutations'
-import { INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY } from 'modules/admissions/queries'
-import { InterviewsAvailableForBookingReturns } from 'modules/admissions/types.graphql'
+import { INTERVIEW_PERIOD_DATES_QUERY } from 'modules/admissions/queries'
+import { InterviewPeriodDatesReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 import { InterviewsAvailableForBooking } from './components/InterviewsAvailableForBooking'
+import 'dayjs/locale/nb'
 
 interface InterviewBookingProps {
   applicantToken: string
@@ -17,25 +28,17 @@ interface InterviewBookingProps {
 export const InterviewBooking: React.FC<InterviewBookingProps> = ({
   applicantToken,
 }) => {
-  const [dayOffset, setDayOffset] = useState(0)
-
-  const { data, error, loading } =
-    useQuery<InterviewsAvailableForBookingReturns>(
-      INTERVIEWS_AVAILABLE_FOR_BOOKING_QUERY,
-      {
-        pollInterval: 20_000,
-        fetchPolicy: 'network-only',
-        variables: {
-          dayOffset: dayOffset,
-        },
-      }
-    )
+  const [selectedInterviews, setSelectedInterviews] = useState<string[]>([])
+  const [day, setDay] = useState(new Date())
+  const { classes, cx } = useStyles()
+  const handleDayChange = (newDay: Date) => {
+    setDay(newDay)
+    setSelectedInterviews([])
+  }
+  const { data, error, loading } = useQuery<InterviewPeriodDatesReturns>(
+    INTERVIEW_PERIOD_DATES_QUERY
+  )
   const [bookInterview] = useMutation(BOOK_INTERRVIEW_MUTATION)
-
-  if (error) return <FullPageError />
-
-  if (loading || !data) return <FullContentLoader />
-
   const handleBookInterview = (interviewIds: string[]) => {
     if (confirm('Er du sikker på dette tidspunktet?')) {
       bookInterview({
@@ -44,12 +47,21 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
           applicantToken: applicantToken,
         },
         refetchQueries: ['GetApplicantFromToken'],
-        onCompleted() {
-          showNotification({
-            title: 'Intervjuet er booket',
-            message: 'Intervjuet er booket',
-            color: 'green',
-          })
+        onCompleted({ bookInterview }) {
+          const { ok } = bookInterview
+          if (ok) {
+            showNotification({
+              title: 'Intervjuet er booket',
+              message: 'Intervjuet er booket',
+              color: 'green',
+            })
+          } else {
+            showNotification({
+              title: 'Intervjuet er ikke booket',
+              message: 'Det var ikke mulig å booke intervjuet',
+              color: 'red',
+            })
+          }
         },
         onError() {
           showNotification({
@@ -62,6 +74,15 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
       })
     }
   }
+
+  if (error) return <FullPageError />
+
+  if (loading || !data) return <FullContentLoader />
+
+  const {
+    interviewPeriodDates: { endDate, startDate },
+  } = data
+
   return (
     <Stack style={{ maxWidth: 900 }}>
       <MessageBox type="info">
@@ -73,31 +94,73 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
           tidlig som mulig.
         </Text>
       </MessageBox>
-      <InterviewsAvailableForBooking
-        interviews={data.interviewsAvailableForBooking}
-        handleCallback={handleBookInterview}
-      />
-      <Group>
-        <Button
-          disabled={dayOffset === 0}
-          color="samfundet-red"
-          variant={'outline'}
-          onClick={() => {
-            setDayOffset(dayOffset - 2)
-          }}
-        >
-          Gå tilbake 2 dager
-        </Button>
-        <Button
-          color="samfundet-red"
-          variant={'outline'}
-          onClick={() => {
-            setDayOffset(dayOffset + 2)
-          }}
-        >
-          Gå frem 2 dager
-        </Button>
-      </Group>
+      <SimpleGrid
+        cols={2}
+        breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
+      >
+        <Container>
+          <Calendar
+            size={'md'}
+            locale={'nb'}
+            placeholder={'Klikk her for å velge dato'}
+            minDate={
+              isAfter(new Date(startDate), new Date())
+                ? new Date(startDate)
+                : addDays(new Date(), 1)
+            }
+            maxDate={new Date(endDate)}
+            value={day}
+            onChange={date => {
+              date && handleDayChange(date)
+            }}
+            disableOutsideEvents
+            dayClassName={(date, modifiers) =>
+              cx({
+                [classes.disabled]: modifiers.disabled,
+                [classes.available]: !modifiers.disabled,
+                [classes.weekend]: modifiers.weekend && !modifiers.disabled,
+                [classes.selected]: modifiers.selected,
+              })
+            }
+          />
+        </Container>
+
+        <Stack>
+          <InterviewsAvailableForBooking
+            dateSelected={format(day, 'yyyy-MM-dd')}
+            handleCallback={setSelectedInterviews}
+            currentlySelected={selectedInterviews}
+          />
+          <Button
+            disabled={selectedInterviews.length === 0}
+            onClick={() => {
+              handleBookInterview(selectedInterviews)
+            }}
+          >
+            Bekreft intervjutid
+          </Button>
+        </Stack>
+      </SimpleGrid>
     </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  disabled: {
+    color: `${theme.colors.gray[3]} !important`,
+    backgroundColor: `${theme.colors.white} !important`,
+  },
+  available: {
+    color: `${theme.colors['samfundet-red'][3]}`,
+    border: `1px solid ${theme.colors.white}`,
+    backgroundColor: `${theme.colors.red[1]}`,
+    borderRadius: '50%',
+    backgroundClip: 'content-box',
+  },
+  weekend: {
+    color: `${theme.colors['samfundet-red'][3]} !important`,
+  },
+  selected: {
+    color: `${theme.colors.white} !important`,
+  },
+}))

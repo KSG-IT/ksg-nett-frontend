@@ -40,6 +40,7 @@ export const UserTypeDetail: React.FC = ({}) => {
     variables: {
       id: userTypeId,
     },
+    pollInterval: 30_000,
   })
 
   if (error) return <FullPageError />

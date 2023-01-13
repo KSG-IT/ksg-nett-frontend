@@ -18,6 +18,7 @@ import {
   FoodOrderingForm,
   MyFoodOrders,
 } from '../components/SociOrderSession'
+import { InviteUsersModalButton } from '../components/SociOrderSession/InviteUsersModalButton'
 import { SociOrderSessionStatusValues } from '../enums'
 import { useSociOrderSessionMutations } from '../mutations.hooks'
 import {
@@ -116,16 +117,19 @@ export const SociOrderSession: React.FC = ({}) => {
         />
         <Group position="apart">
           <Title order={2}>Burgerliste</Title>
-          <PermissionGate
-            permissions={PERMISSIONS.economy.change.sociOrderSession}
-          >
-            <Button
-              loading={sociOrderSessionNextStatusLoading}
-              onClick={handleNextStatus}
+          <Group>
+            <PermissionGate
+              permissions={PERMISSIONS.economy.change.sociOrderSession}
             >
-              Steng bestillinger
-            </Button>
-          </PermissionGate>
+              <InviteUsersModalButton />
+              <Button
+                loading={sociOrderSessionNextStatusLoading}
+                onClick={handleNextStatus}
+              >
+                Steng bestillinger
+              </Button>
+            </PermissionGate>
+          </Group>
         </Group>
 
         <MessageBox type="info">
@@ -168,16 +172,20 @@ export const SociOrderSession: React.FC = ({}) => {
               </Button>
             </a>
           )}
-          <PermissionGate
-            permissions={PERMISSIONS.economy.change.sociOrderSession}
-          >
-            <Button
-              loading={sociOrderSessionNextStatusLoading}
-              onClick={handleNextStatus}
+
+          <Group>
+            <PermissionGate
+              permissions={PERMISSIONS.economy.change.sociOrderSession}
             >
-              Avslutt stilletime
-            </Button>
-          </PermissionGate>
+              <InviteUsersModalButton />
+              <Button
+                loading={sociOrderSessionNextStatusLoading}
+                onClick={handleNextStatus}
+              >
+                Avslutt stilletime
+              </Button>
+            </PermissionGate>
+          </Group>
         </Group>
 
         <MessageBox type="info">

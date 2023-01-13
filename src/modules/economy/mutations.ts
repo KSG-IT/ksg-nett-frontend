@@ -134,11 +134,20 @@ export const SOCI_ORDER_SESSION_NEXT_STATUS_MUTATION = gql`
   }
 `
 
-// DeleteSociOrderSessionFoodOrderMutation
 export const DELETE_SOCI_ORDER_SESSION_FOOD_ORDER_MUTATION = gql`
   mutation DeleteSociOrderSessionFoodOrder($orderId: ID!) {
     deleteSociOrderSessionFoodOrder(orderId: $orderId) {
       found
+    }
+  }
+`
+
+export const INVITE_USERS_TO_ORDER_SESSION_MUTATION = gql`
+  mutation InviteUsersToOrderSession($users: [ID!]!) {
+    inviteUsersToOrderSession(users: $users) {
+      sociOrderSession {
+        id
+      }
     }
   }
 `
