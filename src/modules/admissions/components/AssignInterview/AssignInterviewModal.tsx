@@ -30,6 +30,7 @@ import {
 } from 'modules/admissions/queries'
 import { InterviewDetailQueryReturns } from 'modules/admissions/types.graphql'
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { format } from 'util/date-fns'
 import { PERMISSIONS } from 'util/permissions'
 import { ApplicantSelect } from '../ApplicantSelect'
@@ -211,7 +212,13 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
         {!free && (
           <>
             <MessageBox type="warning">
-              Intervjuet er booket av {interview.applicant?.fullName}
+              Intervjuet er booket av {interview.applicant?.fullName}.{' '}
+              <Link
+                style={{ fontWeight: 600, cursor: 'pointer' }}
+                to={`/admissions/applicants/${interview.applicant.id}`}
+              >
+                Mer detaljer
+              </Link>
             </MessageBox>
             <Button
               leftIcon={<IconAlertTriangle />}
