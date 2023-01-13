@@ -63,6 +63,27 @@ export type InterviewBooleanEvaluationNode = {
   statement: string
 }
 
+export type InterviewOverviewTableData = {
+  id: string
+  interviewRows: InterviewLocationOverviewRow[]
+  locations: string[]
+  timestampHeader: string[]
+}
+
+export type InterviewLocationOverviewRow = {
+  id: string
+  location: string
+  interviews: InterviewOverviewCell[]
+}
+
+export type InterviewOverviewCell = {
+  time: string
+  content: string
+  applicantId: string
+  interviewId: string
+  color: string
+}
+
 export type InterviewBooleanEvaluationAnswerNode = {
   id: string
   statement: Pick<InterviewBooleanEvaluationNode, 'statement' | 'id'>
@@ -202,6 +223,10 @@ export interface ActiveAdmissioneturns {
     AdmissionNode,
     'id' | 'availableInternalGroupPositionsData' | 'status'
   > | null
+}
+
+export interface InterviewTableOverviewReturns {
+  interviewTableOverview: InterviewOverviewTableData
 }
 
 export interface CurrentApplicantsReturns {

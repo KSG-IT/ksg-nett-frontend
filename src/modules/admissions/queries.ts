@@ -595,9 +595,9 @@ export const ALL_APPLICANTS_AVAILABLE_FOR_REBOOKING_QUERY = gql`
   }
 `
 
-export const INTERVIEW_OVERRVIEW_QUERY = gql`
-  query InterviewOverview($date: Date!) {
-    interviewOverview(date: $date) {
+export const INTERVIEW_TABLE_OVERVIEW_QUERY = gql`
+  query InterviewTableOverview($date: Date!) {
+    interviewTableOverview(date: $date) {
       locations
       timestampHeader
       interviewRows {

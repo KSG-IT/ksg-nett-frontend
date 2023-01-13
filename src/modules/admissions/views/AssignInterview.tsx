@@ -94,7 +94,11 @@ export const AssignInterview: React.FC = () => {
         <tbody>{rows}</tbody>
       </CardTable>
       <AssignInterviewModal
-        interview={interview}
+        interview={{
+          interviewId: interview?.id ?? '',
+          location: interview?.location.name ?? '',
+          interviewStart: interview?.interviewStart ?? '',
+        }}
         opened={modalOpen}
         onClose={() => setModalOpen(false)}
       />

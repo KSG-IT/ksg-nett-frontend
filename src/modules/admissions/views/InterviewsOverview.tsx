@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client'
 import {
   Button,
+  Card,
   createStyles,
   Group,
   Modal,
-  Paper,
   Stack,
   Title,
 } from '@mantine/core'
@@ -20,7 +20,14 @@ import { format } from 'util/date-fns'
 import { PERMISSIONS } from 'util/permissions'
 import { AddInterviewForm } from '../components/InterviewOverview.tsx'
 import { useInterviewMutations } from '../mutations.hooks'
-import { INTERVIEW_OVERRVIEW_QUERY } from '../queries'
+import { INTERVIEW_TABLE_OVERVIEW_QUERY } from '../queries'
+import { AssignInterviewModal } from '../components/AssignInterview'
+import {
+  InterviewLocationOverviewRow,
+  InterviewOverviewCell,
+  InterviewTableOverviewReturns,
+} from '../types.graphql'
+import { GridItemCell } from '../components/InterviewOverview.tsx/GridItemCell'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -28,17 +35,22 @@ const breadcrumbsItems = [
   { label: 'Intervjuoverdsikt', path: '' },
 ]
 
-type CellItem = {
-  time: string
-  content: string
-  applicantId: string | null
+// this is to fill in the selected interview state with the correct data
+type InterviewSelectedProps = {
   interviewId: string
-  color: string
+  interviewStart: string
+  location: string
 }
 
-type RowItem = {
-  location: string
-  interviews: CellItem[]
+// this is used for all cell items, to make sure that we can get interviewId and applicantId
+// still needs some real typing overhaul to easily convert from the table data to the actual intverview data required
+type CellItem = {
+  rowIndex: number | any
+  columnIndex: number | any
+  name: string
+  color: string
+  interviewId?: string
+  applicantId?: string
 }
 
 export const InterviewsOverview: React.FC = () => {
@@ -49,23 +61,31 @@ export const InterviewsOverview: React.FC = () => {
    */
   const { classes } = useStyles()
   const [addInterviewModalOpen, setAddInterviewModalOpen] = useState(false)
+  const [assignInterviewModalOpen, setAssignInterviewModalOpen] =
+    useState(false)
   const [date, setDate] = useState(new Date())
+  const [interview, setInterview] = useState<InterviewSelectedProps | null>(
+    null
+  )
 
   const { deleteInterview } = useInterviewMutations()
 
-  const { data, loading, error } = useQuery(INTERVIEW_OVERRVIEW_QUERY, {
-    variables: {
-      date: format(date, 'yyyy-MM-dd'),
-    },
-    pollInterval: 10_000,
-  })
+  const { data, loading, error } = useQuery<InterviewTableOverviewReturns>(
+    INTERVIEW_TABLE_OVERVIEW_QUERY,
+    {
+      variables: {
+        date: format(date, 'yyyy-MM-dd'),
+      },
+      pollInterval: 10_000,
+    }
+  )
 
   if (error) return <FullPageError />
 
   if (loading || !data) return <FullContentLoader />
 
-  const { interviewOverview } = data
-  const { interviewRows, locations, timestampHeader } = interviewOverview
+  const { interviewTableOverview } = data
+  const { interviewRows, locations, timestampHeader } = interviewTableOverview
 
   const locationRowDict: any = {}
   const timeColumnDict: any = {}
@@ -97,23 +117,25 @@ export const InterviewsOverview: React.FC = () => {
     color: '',
   }))
 
-  const cellItems = interviewRows.map((cellItem: RowItem) => {
-    // cellitems need to be offset since grid is 1-indexed and the first row and column
-    // is for location and timestamps
-    const rowIndex = locationRowDict[cellItem.location] + 1
-    return cellItem.interviews.map(interview => {
-      const columnIndex = timeColumnDict[interview.time] + 1
-      return {
-        rowIndex,
-        columnIndex,
-        name: interview.content,
-        color: interview.color,
-        time: interview.time,
-        interviewId: interview.interviewId,
-      }
-    })
-  })
-
+  const cellItems = interviewRows.map(
+    (cellItem: InterviewLocationOverviewRow) => {
+      // cellitems need to be offset since grid is 1-indexed and the first row and column
+      // is for location and timestamps
+      const rowIndex = locationRowDict[cellItem.location] + 1
+      return cellItem.interviews.map(interview => {
+        const columnIndex = timeColumnDict[interview.time] + 1
+        return {
+          rowIndex,
+          columnIndex,
+          name: interview.content,
+          color: interview.color,
+          time: interview.time,
+          interviewId: interview.interviewId,
+          applicantId: interview.applicantId,
+        }
+      })
+    }
+  )
   const parsedCellItems = [...headerRow, ...locationColumn, ...cellItems.flat()]
 
   function handleDeleteInterview(interviewId: string) {
@@ -126,11 +148,11 @@ export const InterviewsOverview: React.FC = () => {
 
     deleteInterview({
       variables: { id: interviewId },
-      refetchQueries: [INTERVIEW_OVERRVIEW_QUERY],
+      refetchQueries: [INTERVIEW_TABLE_OVERVIEW_QUERY],
       onCompleted() {
         showNotification({
           title: 'Suksess',
-          message: 'Intrvju slettet',
+          message: 'Intervju slettet',
           color: 'green',
         })
       },
@@ -142,6 +164,32 @@ export const InterviewsOverview: React.FC = () => {
         })
       },
     })
+  }
+
+  function handleAssignInterview(interviewId: string) {
+    // getting interviewRow from interviewRows by interviewId
+    const interview = interviewRows.find(
+      (interview: InterviewLocationOverviewRow) =>
+        interview.interviews.find(
+          (interview: InterviewOverviewCell) =>
+            interview.interviewId === interviewId
+        )
+    )
+    // if it doesn't find it, it means that the interview is not assigned
+    if (!interview) return
+    // finding time of interview from interviewId:
+    const interviewTime = interview.interviews.find(
+      (interview: InterviewOverviewCell) =>
+        interview.interviewId === interviewId
+    )
+    // then again for safety reasons or whatever we check this as well
+    if (!interviewTime) return
+    setInterview({
+      interviewId: interviewId,
+      location: interview.location,
+      interviewStart: interviewTime?.time ?? '',
+    })
+    setAssignInterviewModalOpen(true)
   }
 
   return (
@@ -162,11 +210,15 @@ export const InterviewsOverview: React.FC = () => {
       <Group>
         <DatePicker value={date} onChange={val => val && setDate(val)} />
       </Group>
-      <Paper>
+      <Card className={classes.card} radius={'md'}>
         <div className={classes.grid}>
-          {parsedCellItems.map(cellItem => (
+          {parsedCellItems.map((cellItem: CellItem) => (
             <GridItemCell
-              onClick={() => handleDeleteInterview(cellItem.interviewId)}
+              onClick={
+                cellItem?.applicantId
+                  ? () => handleDeleteInterview(cellItem?.interviewId!)
+                  : () => handleAssignInterview(cellItem?.interviewId!)
+              }
               colStart={cellItem.columnIndex}
               rowStart={cellItem.rowIndex as number}
               name={cellItem.name}
@@ -174,7 +226,7 @@ export const InterviewsOverview: React.FC = () => {
             />
           ))}
         </div>
-      </Paper>
+      </Card>
       <Modal
         opened={addInterviewModalOpen}
         onClose={() => setAddInterviewModalOpen(false)}
@@ -183,79 +235,30 @@ export const InterviewsOverview: React.FC = () => {
           onCloseCallback={() => setAddInterviewModalOpen(false)}
         />
       </Modal>
+      {interview && (
+        <AssignInterviewModal
+          interview={interview}
+          opened={assignInterviewModalOpen}
+          onClose={() => setAssignInterviewModalOpen(false)}
+        />
+      )}
     </Stack>
   )
 }
 
 const useStyles = createStyles(theme => ({
   grid: {
-    padding: theme.spacing.sm,
     display: 'grid',
     overflowX: 'scroll',
-    backgroundColor: 'hotpink',
+    backgroundColor: '#f7f3eb', //ugly beach color
     rowGap: 5,
     columnGap: 5,
     gridTemplateColumns: 'repeat(21, 1fr)',
     gridTemplateRows: 'auto',
     borderCollapse: 'collapse',
   },
+  card: {
+    border: '2px solid black',
+    backgroundColor: '#f7f3eb', //same ugly beach color
+  },
 }))
-
-type GridItem = {
-  colStart: number
-  rowStart: number
-  color: string
-  firstRowOrColumn: boolean
-}
-
-type GridItemProp = {
-  colStart: number
-  rowStart: number
-  name: string
-  color: string
-  onClick?: () => void
-}
-
-const GridItemCell: React.FC<GridItemProp> = ({
-  colStart,
-  rowStart,
-  name,
-  color,
-  onClick,
-}) => {
-  const firstRowOrColumn = rowStart === 1 || colStart === 1
-  const { classes } = useGridItemStyles({
-    colStart,
-    rowStart,
-    color,
-    firstRowOrColumn,
-  })
-
-  return (
-    <div className={classes.gridItem} onClick={onClick}>
-      {name}
-    </div>
-  )
-}
-
-const useGridItemStyles = createStyles(
-  (theme, { colStart, rowStart, color, firstRowOrColumn }: GridItem) => ({
-    gridItem: {
-      backgroundColor: color,
-      gridColumnStart: colStart,
-      gridColumnEnd: colStart + 1,
-      gridRowStart: rowStart,
-      gridRowEnd: rowStart + 1,
-      fontSize: 12,
-      width: 150,
-      color: 'yellow',
-      height: 60,
-      display: 'flex',
-      padding: theme.spacing.xs,
-      ':hover': {
-        backgroundColor: 'orange',
-        cursor: 'pointer',
-      },
-    },
-  })
-)

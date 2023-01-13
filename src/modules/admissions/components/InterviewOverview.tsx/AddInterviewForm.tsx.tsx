@@ -3,7 +3,7 @@ import { DatePicker, TimeRangeInput } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
 import { MessageBox } from 'components/MessageBox'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
-import { INTERVIEW_OVERRVIEW_QUERY } from 'modules/admissions/queries'
+import { INTERVIEW_TABLE_OVERVIEW_QUERY } from 'modules/admissions/queries'
 import { useState } from 'react'
 import { InterviewLocationSelect } from '../InterviewLocationSelect'
 
@@ -53,7 +53,7 @@ export const AddInterviewForm: React.FC<AddInterviewFormProps> = ({
           interviewEnd: datetimeEnd.toISOString(),
         },
       },
-      refetchQueries: [INTERVIEW_OVERRVIEW_QUERY],
+      refetchQueries: [INTERVIEW_TABLE_OVERVIEW_QUERY],
       onCompleted() {
         showNotification({
           title: 'Suksess',
