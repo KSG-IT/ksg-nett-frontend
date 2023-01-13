@@ -46,7 +46,11 @@ export const InternalGroupInfo: React.FC<InternalGroupInfoProps> = ({
                 <Card radius={'md'}>
                   <Group>
                     {position.users.map(user => (
-                      <UserThumbnail key={user.id} user={user} size={'lg'} />
+                      <UserThumbnail
+                        key={user.id}
+                        user={user}
+                        size={position.users.length > 25 ? 'md' : 'lg'}
+                      />
                     ))}
                   </Group>
                 </Card>

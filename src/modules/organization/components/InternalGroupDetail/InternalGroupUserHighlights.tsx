@@ -53,7 +53,6 @@ export const InternalGroupUserHighlights: React.FC<
   return (
     <SimpleGrid
       cols={3}
-      // if below breakpoint md, padding is 0:
       p={isMobile ? 0 : 'md'}
       spacing={isMobile ? 0 : 'lg'}
       verticalSpacing={isMobile ? 'lg' : 'xl'}
@@ -71,7 +70,7 @@ export const InternalGroupUserHighlights: React.FC<
           </Card.Section>
           <Group grow position={'apart'} mt="md" mb="xs">
             <Text weight={700}>{highlight.user.getFullWithNickName}</Text>
-            <Group>
+            <Group position={'right'} spacing={0}>
               <Badge>{highlight.occupation}</Badge>
               <ActionIcon
                 onClick={() => {
@@ -109,7 +108,6 @@ export const InternalGroupUserHighlights: React.FC<
           </Modal>
         </Card>
       ))}
-      {/* I want to create a big gray button with a plus inside, that calls and add function: */}
       <UnstyledButton
         p={'xl'}
         className={classes.addButton}
