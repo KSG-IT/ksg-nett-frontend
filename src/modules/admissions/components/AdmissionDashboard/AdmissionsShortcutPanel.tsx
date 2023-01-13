@@ -34,12 +34,6 @@ const shortcuts = [
     link: '/admissions/assign-interview',
   },
   {
-    title: 'Dagens intervjuer',
-    icon: IconSun,
-    color: 'samfundet-red',
-    link: '/admissions/todays-interviews',
-  },
-  {
     title: 'Intervjuoversikt',
     icon: IconAbacus,
     color: 'samfundet-red',

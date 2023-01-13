@@ -1,24 +1,45 @@
-import { Button, Group, Modal, ModalProps, Stack, Text } from '@mantine/core'
+import { useQuery } from '@apollo/client'
+import {
+  Button,
+  Group,
+  LoadingOverlay,
+  Modal,
+  ModalProps,
+  Stack,
+  Text,
+} from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
-import { ALL_AVAILABLE_INTERVIEWS_QUERY } from 'modules/admissions/queries'
+import {
+  INTERVIEW_SHALLOW_DETAILS_QUERY,
+  INTERVIEW_TABLE_OVERVIEW_QUERY,
+} from 'modules/admissions/queries'
+import { InterviewDetailQueryReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
+import { format } from 'util/date-fns'
 import { ApplicantSelect } from '../ApplicantSelect'
 
 export interface AssignInterviewModalProps extends ModalProps {
-  interview: {
-    interviewId: string
-    location: string
-    interviewStart: string
-  }
+  interviewId: string | null
 }
 
 export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
-  interview,
+  interviewId,
   ...props
 }) => {
   const [applicantId, setApplicantId] = useState<string | null>(null)
+
+  // Change to shallow typing for returns
+  const { data, loading, error } = useQuery<InterviewDetailQueryReturns>(
+    INTERVIEW_SHALLOW_DETAILS_QUERY,
+    {
+      variables: {
+        id: interviewId,
+      },
+    }
+  )
 
   const { assignApplicantNewInterview, assignApplicantNewInterviewLoading } =
     useApplicantMutations()
@@ -29,9 +50,9 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
     assignApplicantNewInterview({
       variables: {
         applicantId,
-        interviewId: interview.interviewId,
+        interviewId: interview.id,
       },
-      refetchQueries: [ALL_AVAILABLE_INTERVIEWS_QUERY],
+      refetchQueries: [INTERVIEW_TABLE_OVERVIEW_QUERY],
       onCompleted() {
         showNotification({
           title: 'Intervju tilbudt',
@@ -53,6 +74,21 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
     })
   }
 
+  if (error) return <FullPageError />
+
+  if (loading || !data)
+    return (
+      <Modal title="Tilby ny intervjutid" {...props}>
+        <LoadingOverlay visible={true} />
+      </Modal>
+    )
+
+  const { interview } = data
+
+  if (!interview) return <FullPage404 />
+
+  if (!interview) return <FullPage404 />
+
   function handleClose() {
     setApplicantId(null)
     props.onClose()
@@ -65,15 +101,18 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
           Søkere som ikke har svart på epost eller satt prioriteringer dukker
           ikke opp her.
         </MessageBox>
-        {interview && (
-          <Stack spacing="xs">
-            <Text size="lg" weight={500}>
-              Intervjudetaljer
-            </Text>
-            <Text>Lokale: {interview.location}</Text>
-            <Text>Starttidspunkt: {interview.interviewStart}</Text>
-          </Stack>
-        )}
+
+        <Stack spacing="xs">
+          <Text size="lg" weight={500}>
+            Intervjudetaljer
+          </Text>
+          <Text>Lokale: {interview.location.name}</Text>
+          <Text>
+            Starttidspunkt:{' '}
+            {format(new Date(interview.interviewStart), 'eee dd MMM HH:mm')}
+          </Text>
+        </Stack>
+
         <ApplicantSelect onApplicantSelect={setApplicantId} />
 
         <Group position="right">
@@ -90,6 +129,9 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
           </Button>
         </Group>
       </Stack>
+      <LoadingOverlay
+        visible={assignApplicantNewInterviewLoading || loading || !data}
+      />
     </Modal>
   )
 }

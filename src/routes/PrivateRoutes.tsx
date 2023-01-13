@@ -8,7 +8,6 @@ import {
   ApplicantDetails,
   ApplicantNotices,
   ApplicantsOverview,
-  AssignInterview,
   CloseAdmission,
   ConfigurationWizard,
   DiscussionDashboard,
@@ -327,16 +326,6 @@ export const AppRoutes: React.FC = () => {
             }
           />
 
-          <Route
-            path="assign-interview"
-            element={
-              <RestrictedRoute
-                permissions={PERMISSIONS.admissions.view.admission}
-              >
-                <AssignInterview />
-              </RestrictedRoute>
-            }
-          />
           <Route
             path="close"
             element={

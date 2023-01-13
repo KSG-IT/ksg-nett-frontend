@@ -26,6 +26,7 @@ export const ApplicantSelect: React.FC<ApplicantSelectProps> = ({
   return (
     <Select
       label="Søker"
+      searchable
       placeholder="Søk etter søker"
       data={applicantData}
       onChange={onApplicantSelect}

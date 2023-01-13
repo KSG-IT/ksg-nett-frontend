@@ -233,6 +233,19 @@ export const INTERVIEW_DETAIL_QUERY = gql`
   }
 `
 
+export const INTERVIEW_SHALLOW_DETAILS_QUERY = gql`
+  query Interview($id: ID!) {
+    interview(id: $id) {
+      id
+      location {
+        id
+        name
+      }
+      interviewStart
+    }
+  }
+`
+
 // RENAME TO MATCH QUERY NAME
 export const VALID_APPLICANTS_QUERY = gql`
   query CloseAdmissionQueryData {

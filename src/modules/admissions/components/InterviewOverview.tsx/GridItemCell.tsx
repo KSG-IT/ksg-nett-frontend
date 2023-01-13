@@ -1,4 +1,5 @@
 import { createStyles, Stack, Text } from '@mantine/core'
+import { useMemo } from 'react'
 
 type GridItemProp = {
   colStart: number
@@ -16,7 +17,11 @@ export const GridItemCell: React.FC<GridItemProp> = ({
   color,
   onClick,
 }) => {
-  const firstRowOrColumn = rowStart === 1 || colStart === 1
+  // const firstRowOrColumn = rowStart === 1 || colStart === 1
+  const firstRowOrColumn = useMemo(
+    () => rowStart === 1 || colStart === 1,
+    [rowStart, colStart]
+  )
   const { classes } = useGridItemStyles({
     colStart,
     rowStart,
@@ -58,7 +63,7 @@ const useGridItemStyles = createStyles(
       color: name === 'Ledig' ? theme.black : theme.colors.gray[0],
       border: `4px solid #000`,
       fontWeight: 700,
-      height: 60,
+      height: rowStart === 1 ? 40 : 60,
       display: 'flex',
       ':hover': {
         backgroundColor:

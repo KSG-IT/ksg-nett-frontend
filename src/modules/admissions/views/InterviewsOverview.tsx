@@ -68,6 +68,10 @@ export const InterviewsOverview: React.FC = () => {
     null
   )
 
+  const [selectedInterviewId, setSelectedInterviewId] = useState<string | null>(
+    null
+  )
+
   const { deleteInterview } = useInterviewMutations()
 
   const { data, loading, error } = useQuery<InterviewTableOverviewReturns>(
@@ -167,28 +171,9 @@ export const InterviewsOverview: React.FC = () => {
   }
 
   function handleAssignInterview(interviewId: string) {
-    // getting interviewRow from interviewRows by interviewId
-    const interview = interviewRows.find(
-      (interview: InterviewLocationOverviewRow) =>
-        interview.interviews.find(
-          (interview: InterviewOverviewCell) =>
-            interview.interviewId === interviewId
-        )
-    )
-    // if it doesn't find it, it means that the interview is not assigned
-    if (!interview) return
-    // finding time of interview from interviewId:
-    const interviewTime = interview.interviews.find(
-      (interview: InterviewOverviewCell) =>
-        interview.interviewId === interviewId
-    )
-    // then again for safety reasons or whatever we check this as well
-    if (!interviewTime) return
-    setInterview({
-      interviewId: interviewId,
-      location: interview.location,
-      interviewStart: interviewTime?.time ?? '',
-    })
+    console.log(interviewId)
+
+    setSelectedInterviewId(interviewId)
     setAssignInterviewModalOpen(true)
   }
 
@@ -210,7 +195,7 @@ export const InterviewsOverview: React.FC = () => {
       <Group>
         <DatePicker value={date} onChange={val => val && setDate(val)} />
       </Group>
-      <Card className={classes.card} radius={'md'}>
+      <Card className={classes.card} radius={'md'} p={'xs'}>
         <div className={classes.grid}>
           {parsedCellItems.map((cellItem: CellItem) => (
             <GridItemCell
@@ -235,9 +220,9 @@ export const InterviewsOverview: React.FC = () => {
           onCloseCallback={() => setAddInterviewModalOpen(false)}
         />
       </Modal>
-      {interview && (
+      {selectedInterviewId && (
         <AssignInterviewModal
-          interview={interview}
+          interviewId={selectedInterviewId}
           opened={assignInterviewModalOpen}
           onClose={() => setAssignInterviewModalOpen(false)}
         />
