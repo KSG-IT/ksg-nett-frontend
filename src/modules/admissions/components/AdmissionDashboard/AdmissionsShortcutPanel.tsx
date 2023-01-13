@@ -28,12 +28,6 @@ const shortcuts = [
     link: '/admissions/applicant-notices',
   },
   {
-    title: 'Intervjuallokering',
-    icon: Icon3dCubeSphere,
-    color: 'samfundet-red',
-    link: '/admissions/assign-interview',
-  },
-  {
     title: 'Intervjuoversikt',
     icon: IconAbacus,
     color: 'samfundet-red',
