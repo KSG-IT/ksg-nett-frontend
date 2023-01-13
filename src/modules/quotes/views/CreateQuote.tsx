@@ -8,18 +8,19 @@ import {
   SimpleGrid,
   Stack,
   Textarea,
-  TextInput,
   Title,
 } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconHash, IconQuote } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { UserMultiSelect } from 'components/Select'
 import { formatISO } from 'date-fns'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
+
 import { Link, useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
 import { CREATE_QUOTE } from '../mutations'
+import { PNEDING_QUOTES_QUERY } from '../queries'
 import { CreateQuoteReturns, CreateQuoteVariables } from '../types.graphql'
 
 const quoteTextPlaceholder =
@@ -47,36 +48,48 @@ export const CreateQuote: React.FC = () => {
     }
   )
 
-  const handleCreateQuote = () => {
+  function handleCreateQuote() {
     if (text === '') {
-      toast.error('Sitatet må ha noe innhold')
+      showNotification({
+        title: 'Mangler data',
+        message: 'Mangler sitat',
+      })
       return
     }
     if (tagged.length === 0) {
-      toast.error('Noen må bli tagget i sitatet')
+      showNotification({
+        title: 'Mangler data',
+        message: 'Noen må tagges',
+      })
       return
     }
 
-    toast
-      .promise(
-        createQuote({
-          variables: {
-            input: {
-              text: text,
-              context: context,
-              tagged: tagged,
-              createdAt: formatISO(new Date()),
-            },
-          },
-        }),
-        {
-          loading: 'Sender inn sitat...',
-          success: 'Sitat sendt inn',
-          error: 'Noe gikk galt',
-        }
-      )
-      .then(() => navigate('/quotes'))
+    createQuote({
+      variables: {
+        input: {
+          text: text,
+          context: context,
+          tagged: tagged,
+          createdAt: formatISO(new Date()),
+        },
+      },
+      refetchQueries: [PNEDING_QUOTES_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Sitat sendt inn til godkjenning',
+        })
+        navigate('/quotes')
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
+    })
   }
+
   return (
     <Container size={'sm'} p={mobileSize ? 0 : 'sm'}>
       <Breadcrumbs items={breadcrumbsItems} />
@@ -101,9 +114,10 @@ export const CreateQuote: React.FC = () => {
               onChange={evt => setText(evt.target.value)}
               placeholder={quoteTextPlaceholder}
             />
-            <TextInput
+            <Textarea
               value={context}
               label={'Kontekst'}
+              minRows={mobileSize ? 4 : 2}
               variant={'filled'}
               size={mobileSize ? 'xs' : 'sm'}
               icon={<IconHash />}

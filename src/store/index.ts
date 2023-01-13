@@ -27,6 +27,7 @@ export const UserPlaceholder: UserNode = {
   bankAccountActivity: [],
   lastTransactions: [],
   upvotedQuoteIds: [],
+  owesMoney: false,
   isSuperUser: false,
   allPermissions: [],
   dateOfBirth: '',

@@ -33,6 +33,7 @@ export const SosiSessions: React.FC = () => {
     AllSociSessionsVariables
   >(ALL_SOCI_SESSIONS, {
     variables: { first: DEFAULT_PAGINATION_SIZE },
+    pollInterval: 30_000,
   })
 
   if (error) return <FullPageError />

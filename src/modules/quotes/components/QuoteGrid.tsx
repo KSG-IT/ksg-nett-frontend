@@ -20,6 +20,7 @@ export const QuoteGrid: React.FC<QuoteGridProps> = ({ search }) => {
     ApprovedQuotesVariables
   >(APPROVED_QUOTES_QUERY, {
     variables: { q: search, first: DEFAULT_PAGINATION_SIZE },
+    pollInterval: 30_000,
   })
 
   if (error) return <FullPageError />
