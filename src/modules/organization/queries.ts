@@ -45,7 +45,7 @@ export const INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY = gql`
       }
       user {
         id
-        firstName
+        getFullWithNickName
       }
       description
       archived

@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import {
-  BATCH_PATCH_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION,
+  CREATE_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION,
   PATCH_INTERNAL_GROUP_MUTATION,
   PATCH_INTERNAL_GROUP_POSITION_MEMBERSHIP_MUTATION,
   PATCH_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION,
@@ -8,8 +8,7 @@ import {
 } from './mutations'
 import { PatchInternalGroupReturns, PatchInternalGroupVariables } from './types'
 import {
-  BatchPatchInternalGroupUserHighlightReturns,
-  BatchPatchInternalGroupUserHighlightVariables,
+  CreateInternalGroupUserHighlightReturns,
   PatchInternalGroupPositionMembershipReturns,
   PatchInternalGroupPositionMembershipVariables,
   PatchInternalGroupUserHighlightReturns,
@@ -62,17 +61,16 @@ export function useInternalGroupUserHighlightMutations() {
   >(PATCH_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION)
 
   const [
-    batchPatchInternalGroupUserHighlight,
-    { loading: batchPatchInternalGroupUserHighlightLoading },
-  ] = useMutation<
-    BatchPatchInternalGroupUserHighlightReturns,
-    BatchPatchInternalGroupUserHighlightVariables
-  >(BATCH_PATCH_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION)
+    createInternalGroupUserHighlight,
+    { loading: createInternalGroupUserHighlightLoading },
+  ] = useMutation<CreateInternalGroupUserHighlightReturns>(
+    CREATE_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION
+  )
 
   return {
+    createInternalGroupUserHighlight,
+    createInternalGroupUserHighlightLoading,
     patchInternalGroupUserHighlight,
     patchInternalGroupUserHighlightLoading,
-    batchPatchInternalGroupUserHighlight,
-    batchPatchInternalGroupUserHighlightLoading,
   }
 }

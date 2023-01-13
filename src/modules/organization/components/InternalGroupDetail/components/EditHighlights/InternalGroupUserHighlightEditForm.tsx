@@ -18,23 +18,23 @@ import { InternalGroupSelect, UserSelect } from 'components/Select'
 import { IconPhoto } from '@tabler/icons'
 
 interface InternalGroupUserHighlightEditProps {
-  highlight: InternalGroupUserHighlightNode
+  highlight?: InternalGroupUserHighlightNode
   onCompletedCallback?: () => void
 }
 
 export const InternalGroupUserHighlightEditForm: React.FC<
   InternalGroupUserHighlightEditProps
 > = ({ highlight, onCompletedCallback }) => {
-  const { form, onSubmit } = useEditHighlightLogic({
-    ...useEditHighlightAPI({ highlight, onCompletedCallback }),
-  })
+  const { form, onSubmit } = useEditHighlightLogic(
+    useEditHighlightAPI({ highlight, onCompletedCallback })
+  )
   const { formState, register, handleSubmit, getValues, setValue } = form
   const { errors, isSubmitting } = formState
   const [user, setUser] = useState<string>(getValues('user'))
   const [internalGroup, setInternalGroup] = useState<string>(
     getValues('internalGroup')
   )
-  const [image, setImage] = useState<File | null>(highlight.image ?? null)
+  const [image, setImage] = useState<File | null>(highlight?.image ?? null)
   const [isDirty, setIsDirty] = useState(false)
 
   function handleUserCallback(value: string) {
@@ -76,12 +76,6 @@ export const InternalGroupUserHighlightEditForm: React.FC<
             {...register('occupation', { required: true })}
             error={errors.occupation?.message}
           />
-          <Textarea
-            label={'Beskrivelse'}
-            placeholder={'Skriv noe fint om din funk'}
-            {...register('description', { required: true })}
-            error={errors.description?.message}
-          />
           <Switch my={'sm'} {...register('archived')} label={'Arkivert'} />
         </Stack>
         <Stack>
@@ -97,7 +91,7 @@ export const InternalGroupUserHighlightEditForm: React.FC<
             <Image
               src={
                 !isDirty
-                  ? highlight.image?.toString()
+                  ? highlight?.image?.toString()
                   : URL.createObjectURL(image!)
               }
               radius={'md'}
@@ -107,6 +101,14 @@ export const InternalGroupUserHighlightEditForm: React.FC<
           </Container>
         </Stack>
       </SimpleGrid>
+      <Textarea
+        autosize
+        minRows={3}
+        label={'Beskrivelse'}
+        placeholder={'Skriv noe fint om din funk'}
+        {...register('description', { required: true })}
+        error={errors.description?.message}
+      />
       <Group my={'sm'} grow>
         <Button disabled={isSubmitting} type={'submit'}>
           Lagre

@@ -2,6 +2,8 @@ import {
   ActionIcon,
   Badge,
   Card,
+  createStyles,
+  Divider,
   Group,
   Image,
   Modal,
@@ -9,7 +11,7 @@ import {
   Spoiler,
   Text,
   Title,
-  useMantineTheme,
+  UnstyledButton,
 } from '@mantine/core'
 import { useQuery } from '@apollo/client'
 import { INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY } from '../../queries'
@@ -22,7 +24,8 @@ import {
 } from '../../types'
 import { InternalGroupUserHighlightEditForm } from 'modules/organization/components/InternalGroupDetail/components/EditHighlights/InternalGroupUserHighlightEditForm'
 import { useState } from 'react'
-import { IconNotes } from '@tabler/icons'
+import { IconNotes, IconPlus } from '@tabler/icons'
+import { useIsMobile } from '../../../../util/hooks'
 
 interface InternalGroupUserHighlightsProps {
   internalGroupId: string
@@ -38,17 +41,22 @@ export const InternalGroupUserHighlights: React.FC<
     variables: { internalGroupId: internalGroupId },
   })
   const [modalOpened, setModalOpened] = useState(false)
-  const [selectedHighlight, setSelectedHighlight] =
-    useState<InternalGroupUserHighlightNode | null>(null)
-  const theme = useMantineTheme()
-  if (error || !data) return <FullPageError />
-  if (loading) return <FullContentLoader />
+  const [selectedHighlight, setSelectedHighlight] = useState<
+    InternalGroupUserHighlightNode | undefined
+  >(undefined)
+  const isMobile = useIsMobile()
+  const { classes } = useStyles()
+  if (error) return <FullPageError />
+  if (loading || !data) return <FullContentLoader />
 
   const { internalGroupUserHighlightsByInternalGroup: highlightData } = data
   return (
     <SimpleGrid
       cols={3}
-      p={'xl'}
+      // if below breakpoint md, padding is 0:
+      p={isMobile ? 0 : 'md'}
+      spacing={isMobile ? 0 : 'lg'}
+      verticalSpacing={isMobile ? 'lg' : 'xl'}
       breakpoints={[
         { maxWidth: 900, cols: 1, spacing: 'sm' },
         { maxWidth: 1200, cols: 2, spacing: 'sm' },
@@ -61,8 +69,8 @@ export const InternalGroupUserHighlights: React.FC<
               <Image src={highlight.image.toString()} height={300} />
             )}
           </Card.Section>
-          <Group position={'apart'} mt="md" mb="xs">
-            <Text weight={700}>{highlight.user.firstName}</Text>
+          <Group grow position={'apart'} mt="md" mb="xs">
+            <Text weight={700}>{highlight.user.getFullWithNickName}</Text>
             <Group>
               <Badge>{highlight.occupation}</Badge>
               <ActionIcon
@@ -84,22 +92,48 @@ export const InternalGroupUserHighlights: React.FC<
             size={'lg'}
             opened={modalOpened}
             onClose={() => setModalOpened(false)}
-            overlayColor={theme.colors.gray[2]}
-            overlayOpacity={0.55}
-            overlayBlur={3}
           >
-            <Title mb={'sm'} order={4} color={'dimmed'}>
-              Rediger din funk
+            <Title
+              align={'center'}
+              order={4}
+              color={'dimmed'}
+              transform={'uppercase'}
+            >
+              Rediger/legg til høydepunkt
             </Title>
-            {selectedHighlight && (
-              <InternalGroupUserHighlightEditForm
-                highlight={selectedHighlight}
-                onCompletedCallback={() => setModalOpened(false)}
-              />
-            )}
+            <Divider my={'md'} />
+            <InternalGroupUserHighlightEditForm
+              highlight={selectedHighlight}
+              onCompletedCallback={() => setModalOpened(false)}
+            />
           </Modal>
         </Card>
       ))}
+      {/* I want to create a big gray button with a plus inside, that calls and add function: */}
+      <UnstyledButton
+        p={'xl'}
+        className={classes.addButton}
+        onClick={() => {
+          setSelectedHighlight(undefined)
+          setModalOpened(true)
+        }}
+        style={{}}
+      >
+        <IconPlus size={30} />
+      </UnstyledButton>
     </SimpleGrid>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  addButton: {
+    width: '100%',
+    backgroundColor: theme.colors.gray[2],
+    borderRadius: theme.radius.lg,
+    border: '1px solid ' + theme.colors.gray[3],
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: theme.colors.gray[5],
+  },
+}))

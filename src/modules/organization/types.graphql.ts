@@ -20,9 +20,14 @@ export interface PatchInternalGroupPositionMembershipReturns {
     'id'
   >
 }
+
 export interface PatchInternalGroupPositionMembershipVariables {
   id: string
   input: Partial<Omit<InternalGroupPositionMembershipNode, 'id'>>
+}
+
+export interface CreateInternalGroupUserHighlightReturns {
+  internalGroupUserHighlight: Pick<InternalGroupUserHighlightNode, 'id'>
 }
 
 export interface PatchInternalGroupUserHighlightReturns {
@@ -34,23 +39,13 @@ export interface PatchInternalGroupUserHighlightVariables {
   input: PatchHighlightInput
 }
 
-export interface BatchPatchInternalGroupUserHighlightReturns {
-  internalGroupUserHighlights: {
-    id: string
-  }[]
-}
-
-type BatchEntry = Partial<InternalGroupUserHighlightNode>
-export interface BatchPatchInternalGroupUserHighlightVariables {
-  input: BatchEntry[]
-}
-
 export interface QuitKSGReturns {
   internalGroupPositionMembership: Pick<
     InternalGroupPositionMembershipNode,
     'id'
   >
 }
+
 export interface QuitKSGVariables {
   membershipId: string
 }

@@ -5,7 +5,7 @@ import { INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY } from 'modules/
 import { showNotification } from '@mantine/notifications'
 
 interface UseEditHighlightAPIInput {
-  highlight: InternalGroupUserHighlightNode
+  highlight?: InternalGroupUserHighlightNode
   onCompletedCallback?: () => void
 }
 
@@ -13,31 +13,62 @@ export function useEditHighlightAPI({
   highlight,
   onCompletedCallback,
 }: UseEditHighlightAPIInput) {
-  const { patchInternalGroupUserHighlight } =
+  const { patchInternalGroupUserHighlight, createInternalGroupUserHighlight } =
     useInternalGroupUserHighlightMutations()
 
   async function handleSubmit(data: HighlightFormData) {
-    const { id } = highlight
-    const input = {
-      ...data,
-    }
+    if (highlight) {
+      const input = {
+        ...data,
+      }
 
-    return patchInternalGroupUserHighlight({
-      variables: {
-        id: id,
-        input: input,
-      },
-      refetchQueries: [INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY],
-      onCompleted: data => {
-        showNotification({
-          title: 'Vellykket',
-          message: 'Beskrivelsen har blitt oppdatert',
-          color: 'green',
-        })
-        onCompletedCallback?.()
-      },
-    })
+      const { id } = highlight
+      return patchInternalGroupUserHighlight({
+        variables: {
+          id: id,
+          input: input,
+        },
+        refetchQueries: [
+          INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY,
+        ],
+        onCompleted: data => {
+          showNotification({
+            title: 'Vellykket',
+            message: 'Beskrivelsen har blitt oppdatert',
+            color: 'green',
+          })
+          onCompletedCallback?.()
+        },
+      })
+    } else {
+      const input = {
+        ...data,
+      }
+
+      return createInternalGroupUserHighlight({
+        variables: {
+          input: input,
+        },
+        refetchQueries: [
+          INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY,
+        ],
+        onCompleted: data => {
+          showNotification({
+            title: 'Vellykket',
+            message: 'Innslaget ble opprettet',
+          })
+          onCompletedCallback?.()
+        },
+        onError({ message }) {
+          showNotification({
+            title: 'Noe gikk galt',
+            message: message,
+          })
+        },
+      })
+    }
   }
+
   const defaultValues = {
     user: highlight?.user.id ?? '',
     internalGroup: highlight?.internalGroup.id ?? '',

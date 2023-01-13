@@ -23,12 +23,11 @@ export const PATCH_INTERNAL_GROUP_POSITION_MEMBERSHIP_MUTATION = gql`
   }
 `
 
-export const PATCH_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION = gql`
-  mutation PatchInternalGroupUserHighlight(
-    $id: ID!
-    $input: PatchInternalGroupUserHighlightInput!
+export const CREATE_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION = gql`
+  mutation CreateInternalGroupUserHighlight(
+    $input: CreateInternalGroupUserHighlightInput!
   ) {
-    patchInternalGroupUserHighlight(id: $id, input: $input) {
+    createInternalGroupUserHighlight(input: $input) {
       internalGroupUserHighlight {
         id
       }
@@ -36,12 +35,13 @@ export const PATCH_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION = gql`
   }
 `
 
-export const BATCH_PATCH_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION = gql`
-  mutation BatchPatchInternalGroupUserHighlight(
-    $input: [BatchPatchInternalGroupUserHighlightInput]!
+export const PATCH_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION = gql`
+  mutation PatchInternalGroupUserHighlight(
+    $id: ID!
+    $input: PatchInternalGroupUserHighlightInput!
   ) {
-    batchPatchInternalGroupUserHighlight(input: $input) {
-      internalGroupUserHighlights {
+    patchInternalGroupUserHighlight(id: $id, input: $input) {
+      internalGroupUserHighlight {
         id
       }
     }
