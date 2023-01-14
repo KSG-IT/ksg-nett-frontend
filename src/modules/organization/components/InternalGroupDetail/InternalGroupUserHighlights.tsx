@@ -87,35 +87,38 @@ export const InternalGroupUserHighlights: React.FC<
               {highlight.description}
             </Text>
           </Spoiler>
-          <Modal
-            size={'lg'}
-            opened={modalOpened}
-            onClose={() => setModalOpened(false)}
-          >
-            <Title
-              align={'center'}
-              order={4}
-              color={'dimmed'}
-              transform={'uppercase'}
-            >
-              Rediger/legg til høydepunkt
-            </Title>
-            <Divider my={'md'} />
-            <InternalGroupUserHighlightEditForm
-              highlight={selectedHighlight}
-              onCompletedCallback={() => setModalOpened(false)}
-            />
-          </Modal>
         </Card>
       ))}
+      <Modal
+        size={'lg'}
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+      >
+        <Title
+          align={'center'}
+          order={4}
+          color={'dimmed'}
+          transform={'uppercase'}
+        >
+          Rediger/legg til høydepunkt
+        </Title>
+        <Divider my={'md'} />
+        <InternalGroupUserHighlightEditForm
+          highlight={selectedHighlight}
+          onCompletedCallback={() => {
+            console.log('completed')
+            setModalOpened(false)
+          }}
+        />
+      </Modal>
       <UnstyledButton
         p={'xl'}
         className={classes.addButton}
         onClick={() => {
+          console.log('add')
           setSelectedHighlight(undefined)
           setModalOpened(true)
         }}
-        style={{}}
       >
         <IconPlus size={30} />
       </UnstyledButton>
