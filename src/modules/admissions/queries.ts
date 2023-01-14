@@ -233,6 +233,23 @@ export const INTERVIEW_DETAIL_QUERY = gql`
   }
 `
 
+export const INTERVIEW_SHALLOW_DETAILS_QUERY = gql`
+  query Interview($id: ID!) {
+    interview(id: $id) {
+      id
+      location {
+        id
+        name
+      }
+      interviewStart
+      applicant {
+        id
+        fullName
+      }
+    }
+  }
+`
+
 // RENAME TO MATCH QUERY NAME
 export const VALID_APPLICANTS_QUERY = gql`
   query CloseAdmissionQueryData {
@@ -591,6 +608,25 @@ export const ALL_APPLICANTS_AVAILABLE_FOR_REBOOKING_QUERY = gql`
       status
       hometown
       email
+    }
+  }
+`
+
+export const INTERVIEW_TABLE_OVERVIEW_QUERY = gql`
+  query InterviewTableOverview($date: Date!) {
+    interviewTableOverview(date: $date) {
+      locations
+      timestampHeader
+      interviewRows {
+        location
+        interviews {
+          time
+          content
+          color
+          interviewId
+          applicantId
+        }
+      }
     }
   }
 `

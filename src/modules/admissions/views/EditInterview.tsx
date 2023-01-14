@@ -1,14 +1,16 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Kbd, Stack, Title } from '@mantine/core'
+import { useOs } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
 import Link from '@tiptap/extension-link'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { RichTextEditor } from 'components/RichTextEditor'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
   AdditionalEvaluationAnswerList,
@@ -21,7 +23,7 @@ import {
 } from '../components/EditInterview/'
 import { ApplicantStatusValues } from '../consts'
 import { useInterviewMutations, usePatchApplicant } from '../mutations.hooks'
-import { INTERVIEW_DETAIL_QUERY } from '../queries'
+import { APPLICANT_QUERY, INTERVIEW_DETAIL_QUERY } from '../queries'
 import {
   InterviewDetailQueryReturns,
   InterviewDetailQueryVariables,
@@ -37,6 +39,7 @@ export const EditInterview: React.FC = () => {
   >() as EditInterviewParams
   const [lockModalOpen, setLockModalOpen] = useState(false)
   const [didNotShowModalOpen, setDidNotShowModalOpen] = useState(false)
+  const os = useOs()
 
   const { patchInterview } = useInterviewMutations()
 
@@ -67,6 +70,24 @@ export const EditInterview: React.FC = () => {
       }
     },
   })
+
+  const saveKeyHandler = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault()
+        handleSaveNotes()
+      }
+    },
+    [notesEditor, discussionEditor, data]
+  )
+
+  useEffect(() => {
+    document.addEventListener('keydown', saveKeyHandler)
+
+    return () => {
+      document.removeEventListener('keydown', saveKeyHandler)
+    }
+  }, [saveKeyHandler])
 
   const { patchApplicant } = usePatchApplicant()
 
@@ -149,23 +170,19 @@ export const EditInterview: React.FC = () => {
   }
 
   function handleSaveNotes() {
-    if (!notesEditor || !discussionEditor) {
-      showNotification({
-        title: 'Noe gikk galt',
-        message: 'Kunne ikke lagre intervjunotater',
-        color: 'red',
-      })
-      return
-    }
+    if (!data) return
+    if (!interview) return
+    if (!notesEditor || !discussionEditor) return
 
     patchInterview({
       variables: {
-        id: interview!.id,
+        id: interview.id,
         input: {
           notes: notesEditor.getHTML(),
           discussion: discussionEditor.getHTML(),
         },
       },
+      refetchQueries: [INTERVIEW_DETAIL_QUERY, APPLICANT_QUERY],
       onCompleted() {
         showNotification({
           title: 'Sukkess',
@@ -186,6 +203,22 @@ export const EditInterview: React.FC = () => {
   return (
     <Stack>
       <Title>Intervjunotater: {interview.applicant.fullName}</Title>
+      <Breadcrumbs
+        items={[
+          {
+            path: '/admissions',
+            label: 'Orvik',
+          },
+          {
+            path: `/admissions/applicants/${interview.applicant.id}`,
+            label: `${interview.applicant.fullName}`,
+          },
+          {
+            path: '',
+            label: 'Intervjunotater',
+          },
+        ]}
+      />
       <MessageBox type="danger">
         <b>Obs!</b> Det skal aldri være mer enn én person som fører notater. Det
         vil si at bare én skal være inne på denne siden mens intervjuet pågår.
@@ -200,6 +233,10 @@ export const EditInterview: React.FC = () => {
 
       {/* Interview and discussion Notes */}
       <Title order={2}>Intervjunotater</Title>
+      <MessageBox type="info">
+        Det er mulig å lagre notatene ved bruk av{' '}
+        <Kbd>{os === 'macos' ? 'cmd' : 'ctrl'}</Kbd> + <Kbd>s</Kbd>
+      </MessageBox>
 
       <RichTextEditor editor={notesEditor} />
       <Title order={2}>Diskusjonsnotater</Title>

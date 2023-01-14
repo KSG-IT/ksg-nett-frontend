@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { ScrollArea, Stack, Title } from '@mantine/core'
+import { Stack, Title } from '@mantine/core'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useParams } from 'react-router-dom'
@@ -52,6 +53,18 @@ export const ApplicantDetails: React.VFC = () => {
   return (
     <Stack>
       <Title order={2}>Kandidatdetaljer</Title>
+      <Breadcrumbs
+        items={[
+          {
+            path: '/admissions',
+            label: 'Orvik',
+          },
+          {
+            path: `/admissions/applicants/${applicant.id}`,
+            label: `${applicant.fullName}`,
+          },
+        ]}
+      />
       <PersonalDetailsCard applicant={applicant} />
       <InterviewDetails applicant={applicant} canEdit={!cannotEdit} />
       <ApplicantComments applicant={applicant} />
