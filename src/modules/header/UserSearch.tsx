@@ -49,6 +49,8 @@ export const UserSearch: React.VFC = () => {
   >(ALL_ACTIVE_USERS_LIST_QUERY, { variables: { q: debounceQuery } })
 
   useEffect(() => {
+    if (debounceQuery === '') return
+
     if (debounceQuery) {
       execute()
     }
