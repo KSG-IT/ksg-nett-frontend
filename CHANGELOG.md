@@ -1,26 +1,30 @@
 # CHANGELOG
 
-## [v2023.1.2] - 2023-01-13
+## [v2023.1.3]
 
 ### Added
 
-- Improved interview booking widget for applicants
-- Add polling to default views
-- Add debt collection view
-- Add sentry tracking
-- Invite users to order session modal
+- Interview overview
+  - Can add interview
+  - Can re-assign applicants to interview
+  - Can remove applicant from interview
+- Edit interview cmd/ctl + s to save
+- Internal group highlights tab
+  - Add new highlight
+  - Edit highlight
+- Edit interview save keyboard command
 
-### Changed
+### Removed
 
-- Add quote context input -> textarea
+- Interview allocation and todays interview views
 
-### Fixed
+## [v2023.1.2]
 
-- Broken logout button
-- Apply schedule template date indicator
-- Missing role option for `bærevakt`
+### Added
 
-## [v2023.1.1] - 2023-01-07
+- Soci order session invite other users
+
+## [2023.1.1] - 2023-01-07
 
 First release.
 
