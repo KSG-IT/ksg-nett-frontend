@@ -85,7 +85,6 @@ export const EditInterview: React.FC = () => {
     document.addEventListener('keydown', saveKeyHandler)
 
     return () => {
-      console.log('removing event listener')
       document.removeEventListener('keydown', saveKeyHandler)
     }
   }, [saveKeyHandler])

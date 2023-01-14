@@ -75,7 +75,7 @@ export const AddInterviewForm: React.FC<AddInterviewFormProps> = ({
     <form onSubmit={handleSubmit}>
       <Stack>
         <MessageBox type="warning">
-          Ikke veldig godt laget. Intervjustart må være helv eller halv.
+          Ikke veldig godt laget. Intervjustart må være hel eller halv.
           Intervjuslutt må være en halvtime senere.
         </MessageBox>
         <InterviewLocationSelect onSelectCallback={setLocationId} />

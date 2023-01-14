@@ -10,12 +10,10 @@ import {
   UnstyledButton,
 } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
-import { showNotification } from '@mantine/notifications'
-import { IconChevronLeft, IconChevronRight, IconPlus } from '@tabler/icons'
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { MessageBox } from 'components/MessageBox'
 import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
 import { format } from 'util/date-fns'
@@ -36,8 +34,6 @@ const breadcrumbsItems = [
   { label: 'Intervjuoversikt', path: '' },
 ]
 
-// this is used for all cell items, to make sure that we can get interviewId and applicantId
-// still needs some real typing overhaul to easily convert from the table data to the actual intverview data required
 type CellItem = {
   rowIndex: number | any
   columnIndex: number | any
@@ -224,7 +220,7 @@ export const InterviewsOverview: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles(() => ({
   grid: {
     display: 'grid',
     overflowX: 'hidden',

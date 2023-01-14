@@ -44,10 +44,7 @@ export const GridItemCell: React.FC<GridItemProp> = ({
 }
 
 const useGridItemStyles = createStyles(
-  (
-    theme,
-    { colStart, rowStart, color, name, firstRowOrColumn }: GridItemProp
-  ) => ({
+  (theme, { colStart, rowStart, name, firstRowOrColumn }: GridItemProp) => ({
     gridItem: {
       backgroundColor:
         name === 'Ledig' ? theme.colors.green[3] : theme.colors.orange[3],
