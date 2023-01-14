@@ -106,7 +106,6 @@ export const InternalGroupUserHighlights: React.FC<
         <InternalGroupUserHighlightEditForm
           highlight={selectedHighlight}
           onCompletedCallback={() => {
-            console.log('completed')
             setModalOpened(false)
           }}
         />
@@ -115,7 +114,6 @@ export const InternalGroupUserHighlights: React.FC<
         p={'xl'}
         className={classes.addButton}
         onClick={() => {
-          console.log('add')
           setSelectedHighlight(undefined)
           setModalOpened(true)
         }}
