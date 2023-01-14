@@ -8,13 +8,13 @@ import {
   ApplicantDetails,
   ApplicantNotices,
   ApplicantsOverview,
-  AssignInterview,
   CloseAdmission,
   ConfigurationWizard,
   DiscussionDashboard,
   EditInterview,
   InternalGroupApplicants,
   InternalGroupDiscussion,
+  InterviewsOverview,
   MyInterviews,
   TodaysInterviews,
 } from 'modules/admissions/views'
@@ -327,17 +327,17 @@ export const AppRoutes: React.FC = () => {
               </RestrictedRoute>
             }
           />
-
           <Route
-            path="assign-interview"
+            path="interviews-overview"
             element={
               <RestrictedRoute
-                permissions={PERMISSIONS.admissions.view.admission}
+                permissions={PERMISSIONS.admissions.view.interview}
               >
-                <AssignInterview />
+                <InterviewsOverview />
               </RestrictedRoute>
             }
           />
+
           <Route
             path="close"
             element={

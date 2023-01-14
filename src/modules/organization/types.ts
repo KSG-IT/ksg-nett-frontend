@@ -23,6 +23,16 @@ export type InternalGroupPositionNode = {
   name: string
 }
 
+export type InternalGroupUserHighlightNode = {
+  id: string
+  user: UserNode
+  internalGroup: InternalGroupNode
+  occupation: string
+  description: string
+  image?: File | null
+  archived: boolean
+}
+
 // === Query typing ===
 export interface AllInternalGroupsReturns {
   allInternalGroups: InternalGroupNode[]
@@ -38,6 +48,14 @@ export interface AllInternalGroupPositionsReturns {
 }
 export type InternalGroupReturns = {
   internalGroup: InternalGroupNode
+}
+
+export type InternalGroupUserHighlightsByInternalGroupReturns = {
+  internalGroupUserHighlightsByInternalGroup: InternalGroupUserHighlightNode[]
+}
+
+export type InternalGroupUserHighlightsByInternalGroupVariables = {
+  internalGroupId: string
 }
 
 export enum InternalGroupType {
