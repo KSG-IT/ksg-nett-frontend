@@ -10,6 +10,7 @@ export const ME_QUERY = gql`
       initials
       balance
       icalToken
+      owesMoney
       upvotedQuoteIds
       requiresMigrationWizard
       firstTimeLogin
