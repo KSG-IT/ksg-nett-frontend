@@ -1,21 +1,24 @@
 # CHANGELOG
 
-## [Unreleased]
+## [v2023.1.4] - 2023-01-15
 
 ### Added
 
 - Payment details and upcoming shift in debt collection view
 - Currency formatter hook
 
-### Changed
+### Fixed
 
 - ShiftSlot card fixes
   - Reduce font size
   - Fix overflow bug
   - Change from nickname to cleanname
+
+### Changed
+
 - Icon changes
 
-## [v2023.1.3]
+## [v2023.1.3] - 2023-01-14
 
 ### Added
 
@@ -33,7 +36,7 @@
 
 - Interview allocation and todays interview views
 
-## [v2023.1.2]
+## [v2023.1.2] - 2023-01-13
 
 ### Added
 
