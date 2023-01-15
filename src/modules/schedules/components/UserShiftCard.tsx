@@ -3,19 +3,17 @@ import {
   Card,
   createStyles,
   Group,
-  SimpleGrid,
   Stack,
   Text,
-  Title,
   useMantineTheme,
 } from '@mantine/core'
 import { format } from 'util/date-fns'
 import { UserThumbnail } from 'modules/users/components'
 import { ShiftNode } from '../types.graphql'
 import { parseLocation, parseShiftRole } from '../util'
-import { useMobile } from 'util/isMobile'
 import { useIsMobile } from '../../../util/hooks'
 import { capitalizeFirstLetter } from 'util/parsing'
+
 interface UserShiftCardProps {
   shift: Pick<
     ShiftNode,
@@ -23,6 +21,7 @@ interface UserShiftCardProps {
   >
   year?: boolean
 }
+
 export const UserShiftCard: React.FC<UserShiftCardProps> = ({
   shift,
   year,
