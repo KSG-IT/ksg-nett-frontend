@@ -12,7 +12,7 @@ import { UserThumbnail } from 'modules/users/components'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from 'store'
 import { removeLoginToken } from 'util/auth'
-import { useSidebar } from 'util/hooks'
+import { useCurrencyFormatter, useSidebar } from 'util/hooks'
 import { NavItem } from './NavItem'
 
 function liquidityColor(balance: number) {
@@ -30,6 +30,7 @@ function liquidityColor(balance: number) {
 export const NavBarMeSection: React.FC = () => {
   const { classes } = useStyles()
   const me = useStore(store => store.user)
+  const { formatCurrency } = useCurrencyFormatter()
   const { toggleSidebar } = useSidebar()
   const navigate = useNavigate()
 
@@ -58,7 +59,7 @@ export const NavBarMeSection: React.FC = () => {
           <Group spacing={0} align="center">
             <IconPigMoney size={16} />
             <Text size={'xs'} weight={500} color={liquidityColor(me.balance)}>
-              {me.balance} kr
+              {formatCurrency(me.balance)}
             </Text>
           </Group>
         </Stack>

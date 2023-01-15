@@ -3,7 +3,7 @@ import { Breadcrumbs } from 'components/Breadcrumbs'
 import { MessageBox } from 'components/MessageBox'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
-import { CreateDepositForm } from '../components'
+import { CreateDepositForm, CreateDepositInfoBox } from '../components'
 
 const breadCrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -28,12 +28,7 @@ export const CreateDeposit: React.FC<DepositProps> = () => {
       >
         Legg til innskudd
       </Title>
-      <MessageBox type="info">
-        Her kan du opprette et nytt innskudd på kontoen din. Bankoverføringer
-        kan gjøres til <b>1503.88.72882</b> eller du kan betale med vipps. Velg
-        "kjøp noe/betal til" og søk <b>95034</b>, da får du opp Societeten. Ved
-        bruk av vipps er det gebyr på 5%, altså 5kr per 100kr du vil sende.
-      </MessageBox>
+      <CreateDepositInfoBox />
       <Card radius={'md'} withBorder className={classes.card}>
         <CreateDepositForm
           onCompletedCallback={() => navigate('/economy/me')}

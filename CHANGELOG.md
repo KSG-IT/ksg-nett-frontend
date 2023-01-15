@@ -2,12 +2,18 @@
 
 ## [Unreleased]
 
+### Added
+
+- Payment details and upcoming shift in debt collection view
+- Currency formatter hook
+
 ### Changed
 
 - ShiftSlot card fixes
   - Reduce font size
   - Fix overflow bug
   - Change from nickname to cleanname
+- Icon changes
 
 ## [v2023.1.3]
 
