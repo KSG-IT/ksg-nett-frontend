@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [Unreleased]
+
+### Added
+
+- Payment details and upcoming shift in debt collection view
+
 ## [v2023.1.3]
 
 ### Added
