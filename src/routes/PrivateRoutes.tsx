@@ -123,7 +123,7 @@ export const AppRoutes: React.FC = () => {
     )
   }
 
-  if (!me.owesMoney) {
+  if (me.owesMoney) {
     return (
       <Routes>
         <Route path="torpedo" element={<DebtCollection />} />

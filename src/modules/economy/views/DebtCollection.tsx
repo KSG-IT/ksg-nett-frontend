@@ -35,6 +35,7 @@ export const DebtCollection: React.FC = () => {
         og få det godkjent.
       </Text>
       <CreateDepositInfoBox />
+      <Title order={2}>Opprett innskudd</Title>
       <CreateDepositForm onCompletedCallback={() => {}} />
       <Title order={2}>Kommende vakter</Title>
       <UserShiftCardList shifts={myUpcomingShifts} />
