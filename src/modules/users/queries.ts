@@ -5,9 +5,11 @@ export const ME_QUERY = gql`
     me {
       id
       profileImage
+      firstName
       getFullWithNickName
       getCleanFullName
       initials
+      email
       balance
       icalToken
       owesMoney
