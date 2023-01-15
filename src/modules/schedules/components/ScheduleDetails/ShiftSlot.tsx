@@ -100,7 +100,9 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
                 <Text className={classes.shiftSlotRoleText}>
                   {shiftSlot.role}
                 </Text>
-                <Text>{shiftSlot.user.getCleanFullName}</Text>
+                <Text className={classes.nameOverflow}>
+                  {shiftSlot.user.getCleanFullName}
+                </Text>
               </Stack>
             </Group>
             <ActionIcon
@@ -372,6 +374,9 @@ const useStyles = createStyles(t => ({
         color: 'white',
       },
     },
+  },
+  nameOverflow: {
+    textOverflow: 'ellipsis',
   },
   shiftSlotRoleText: {
     fontSize: 10,
