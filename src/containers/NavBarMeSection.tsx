@@ -2,6 +2,7 @@ import { createStyles, Group, Navbar, Stack, Text } from '@mantine/core'
 import * as Sentry from '@sentry/react'
 import {
   IconCashBanknote,
+  IconHandRock,
   IconJumpRope,
   IconLogout,
   IconPigMoney,
@@ -80,7 +81,7 @@ export const NavBarMeSection: React.FC = () => {
       <NavItem
         label="Min vaktplan"
         link="/schedules/me"
-        icon={IconJumpRope}
+        icon={IconHandRock}
         active={false}
         permissions={[]}
       />
