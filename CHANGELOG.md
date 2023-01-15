@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [Unreleased]
+
+### Changed
+
+- ShiftSlot card fixes
+  - Reduce font size
+  - Fix overflow bug
+  - Change from nickname to cleanname
+
 ## [v2023.1.3]
 
 ### Added
