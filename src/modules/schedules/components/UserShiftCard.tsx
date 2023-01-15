@@ -62,7 +62,6 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({
               user={slot.user}
               size={isMobile ? 'md' : 'lg'}
               radius={100}
-              className={classes.userThumbnail}
             />
             <Badge size={isMobile ? 'sm' : 'sm'} variant={'outline'} my={0}>
               {parseShiftRole(slot.role)}
@@ -88,31 +87,4 @@ const useStyles = createStyles(theme => ({
     maxWidth: 700,
     overflowX: 'scroll',
   },
-  userThumbnail: {
-    radius: '100%',
-  },
-  filledSlotsGroup: {
-    overflowX: 'scroll',
-  },
 }))
-
-/*
-        <Group noWrap className={classes.filledSlotsGroup}>
-          {shift.filledSlots.map(slot => (
-            <Stack spacing="xs" align={'center'}>
-              <UserThumbnail
-                user={slot.user}
-                size={isMobile ? 'md' : 'lg'}
-                radius={100}
-                className={classes.userThumbnail}
-              />
-              <Badge variant={'outline'} my={0}>
-                {parseShiftRole(slot.role)}
-              </Badge>
-              <Text my={0} size={isMobile ? 'xs' : 'sm'}>
-                {slot.user.getCleanFullName}
-              </Text>
-            </Stack>
-          ))}
-        </Group>
- */
