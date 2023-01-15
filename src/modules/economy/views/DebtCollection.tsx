@@ -5,18 +5,14 @@ import { FullContentLoader } from 'components/Loading'
 import { UserShiftCardList } from 'modules/schedules/components'
 import { MY_UPCOMING_SHIFTS } from 'modules/schedules/queries'
 import { MyUpcomingShiftsReturns } from 'modules/schedules/types.graphql'
-import { useMe } from 'util/hooks'
+import { useCurrencyFormatter, useMe } from 'util/hooks'
 import { CreateDepositForm, CreateDepositInfoBox } from '../components'
 
 export const DebtCollection: React.FC = () => {
   const me = useMe()
   const { data, loading, error } =
     useQuery<MyUpcomingShiftsReturns>(MY_UPCOMING_SHIFTS)
-
-  const numberFrmt = new Intl.NumberFormat('nb-NO', {
-    style: 'currency',
-    currency: 'NOK',
-  })
+  const { formatCurrency } = useCurrencyFormatter()
 
   if (error) return <FullPageError />
 
@@ -27,7 +23,7 @@ export const DebtCollection: React.FC = () => {
   return (
     <Stack p="lg">
       <Title>Hei, {me.firstName}!</Title>
-      <Title order={3}>Din saldo: {numberFrmt.format(me.balance)}</Title>
+      <Title order={3}>Din saldo: {formatCurrency(me.balance)}</Title>
 
       <Text>
         Du skylder penger.Her har du mulighet til å se vakter, men ikke noe
