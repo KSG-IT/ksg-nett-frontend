@@ -1,5 +1,6 @@
 import {
   Icon3dCubeSphere,
+  IconAbacus,
   IconSun,
   IconUsers,
   IconUserSearch,
@@ -27,16 +28,11 @@ const shortcuts = [
     link: '/admissions/applicant-notices',
   },
   {
-    title: 'Intervjuallokering',
-    icon: Icon3dCubeSphere,
+    title: 'Intervjuoversikt',
+    icon: IconAbacus,
     color: 'samfundet-red',
-    link: '/admissions/assign-interview',
-  },
-  {
-    title: 'Dagens intervjuer',
-    icon: IconSun,
-    color: 'samfundet-red',
-    link: '/admissions/todays-interviews',
+    link: '/admissions/interviews-overview',
+    permissions: 'admissions.view_interview',
   },
 ]
 

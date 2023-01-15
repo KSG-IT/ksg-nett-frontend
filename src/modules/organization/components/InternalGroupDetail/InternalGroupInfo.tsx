@@ -1,4 +1,4 @@
-import { Card, Group, Stack, Text, Title } from '@mantine/core'
+import { Card, Divider, Group, SimpleGrid, Stack, Title } from '@mantine/core'
 import { InternalGroupNode } from 'modules/organization/types'
 import { UserThumbnail } from 'modules/users/components'
 
@@ -10,31 +10,58 @@ export const InternalGroupInfo: React.FC<InternalGroupInfoProps> = ({
   internalGroup,
 }) => {
   return (
-    <Stack>
+    <SimpleGrid
+      cols={2}
+      breakpoints={[{ maxWidth: 900, cols: 1, spacing: 'sm' }]}
+    >
       {internalGroup.description && (
-        <Card p="sm">
+        <Card p="sm" withBorder>
           <div
             dangerouslySetInnerHTML={{ __html: internalGroup.description }}
           />
         </Card>
       )}
 
-      {internalGroup.membershipData.map(position => {
-        if (position.users.length === 0) return null
-        return (
-          <>
-            <Title order={3}>{position.internalGroupPositionName}</Title>
-            <Group>
-              {position.users.map(user => (
-                <Stack>
-                  <UserThumbnail user={user} />
-                  <Text>{user.fullName}</Text>
-                </Stack>
-              ))}
-            </Group>
-          </>
-        )
-      })}
-    </Stack>
+      <Card p="sm" withBorder>
+        <Title
+          align={'center'}
+          transform={'uppercase'}
+          color={'gray.7'}
+          order={3}
+        >
+          Gjengens medlemmer
+        </Title>
+        {internalGroup.membershipData.map(position => {
+          if (position.users.length === 0) return null
+          return (
+            <Stack
+              key={position.internalGroupPositionName}
+              my={'sm'}
+              spacing={'xs'}
+            >
+              <Title color={'dimmed'} order={4}>
+                {position.internalGroupPositionName}
+              </Title>
+              <Group>
+                <Card radius={'md'}>
+                  <Group>
+                    {position.users.map(user => (
+                      <UserThumbnail
+                        key={user.id}
+                        user={user}
+                        size={position.users.length > 25 ? 'md' : 'lg'}
+                      />
+                    ))}
+                  </Group>
+                </Card>
+              </Group>
+              {internalGroup.membershipData.indexOf(position) !== 1 && (
+                <Divider my={'sm'} />
+              )}
+            </Stack>
+          )
+        })}
+      </Card>
+    </SimpleGrid>
   )
 }

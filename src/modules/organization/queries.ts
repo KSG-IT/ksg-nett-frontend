@@ -22,9 +22,33 @@ export const INTERNAL_GROUP_QUERY = gql`
         internalGroupPositionName
         users {
           id
-          fullName
+          initials
+          getFullWithNickName
+          profileImage
         }
       }
+    }
+  }
+`
+
+export const INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY = gql`
+  query InternalGroupUserHighlightsByInternalGroup($internalGroupId: ID!) {
+    internalGroupUserHighlightsByInternalGroup(
+      internalGroupId: $internalGroupId
+    ) {
+      id
+      image
+      occupation
+      internalGroup {
+        id
+        name
+      }
+      user {
+        id
+        getFullWithNickName
+      }
+      description
+      archived
     }
   }
 `

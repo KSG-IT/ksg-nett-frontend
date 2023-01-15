@@ -23,6 +23,31 @@ export const PATCH_INTERNAL_GROUP_POSITION_MEMBERSHIP_MUTATION = gql`
   }
 `
 
+export const CREATE_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION = gql`
+  mutation CreateInternalGroupUserHighlight(
+    $input: CreateInternalGroupUserHighlightInput!
+  ) {
+    createInternalGroupUserHighlight(input: $input) {
+      internalGroupUserHighlight {
+        id
+      }
+    }
+  }
+`
+
+export const PATCH_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION = gql`
+  mutation PatchInternalGroupUserHighlight(
+    $id: ID!
+    $input: PatchInternalGroupUserHighlightInput!
+  ) {
+    patchInternalGroupUserHighlight(id: $id, input: $input) {
+      internalGroupUserHighlight {
+        id
+      }
+    }
+  }
+`
+
 export const QUIT_KSG_MUTATION = gql`
   mutation QuitKSG($membershipId: ID!) {
     quitKsg(membershipId: $membershipId) {
