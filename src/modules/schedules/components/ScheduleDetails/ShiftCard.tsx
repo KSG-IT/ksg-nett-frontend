@@ -7,19 +7,11 @@ import {
   Group,
   Text,
   Tooltip,
-  useMantineTheme,
 } from '@mantine/core'
 import { IconAlertTriangle, IconClock } from '@tabler/icons'
-import { useShiftMutations } from 'modules/schedules/mutations.hooks'
-import {
-  MY_UPCOMING_SHIFTS,
-  NORMALIZED_SHIFTS_FROM_RANGE_QUERY,
-} from 'modules/schedules/queries'
 import { ShiftNode } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import { UserThumbnail } from 'modules/users/components'
-import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
 
 interface ShiftCardProps {
@@ -32,22 +24,6 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({
   setShiftModalCallback,
 }) => {
   const { classes } = useShiftCardStyles()
-
-  const { deleteShift } = useShiftMutations()
-
-  function handleDeleteShift() {
-    // Should trigger a confirm delete dialog
-    deleteShift({
-      variables: { id: shift.id },
-      refetchQueries: [MY_UPCOMING_SHIFTS, NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
-      onCompleted() {
-        toast.success('Vakt slettet')
-      },
-    })
-  }
 
   const { name: location, color } = parseLocation(shift.location)
   return (

@@ -85,14 +85,14 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
   return (
     <Popover
       width="target"
-      position="right-start"
+      position="bottom-start"
       opened={popoverOpened}
       onClose={() => setPopoverOpened(false)}
     >
       <Popover.Target>
         <UnstyledButton className={classes.shiftSlot} onClick={togglePopover}>
-          <Group position="apart">
-            <Group spacing="md">
+          <Group position="apart" noWrap>
+            <Group spacing="xs">
               <div className={classes.iconContainer}>
                 <UserThumbnail user={shiftSlot.user} />
               </div>
@@ -100,7 +100,9 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
                 <Text className={classes.shiftSlotRoleText}>
                   {shiftSlot.role}
                 </Text>
-                <Text>{shiftSlot.user.getFullWithNickName}</Text>
+                <Text className={classes.nameOverflow}>
+                  {shiftSlot.user.getCleanFullName}
+                </Text>
               </Stack>
             </Group>
             <ActionIcon
@@ -130,7 +132,7 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
                   className={classes.selectUserButton}
                   onClick={() => handleSelectUser(user)}
                 >
-                  <Group spacing="md">
+                  <Group spacing="xs">
                     <Avatar src={user.profileImage} />
                     <Text>{user.getCleanFullName}</Text>
                   </Group>
@@ -173,13 +175,13 @@ const EmptyShiftSlot: React.FC<ShiftSlotProps> = ({
   return (
     <Popover
       width="target"
-      position="right-start"
+      position="bottom-start"
       opened={popoverOpened}
       onClose={handleClosePopover}
     >
       <Popover.Target>
         <UnstyledButton className={classes.shiftSlot} onClick={togglePopover}>
-          <Group spacing="md">
+          <Group spacing="xs">
             <div className={classes.iconContainer}>
               <IconUserPlus size={24} />
             </div>
@@ -361,8 +363,9 @@ export const ShiftSlot: React.FC<ShallowShiftProps> = ({ shiftSlot }) => {
 const useStyles = createStyles(t => ({
   shiftSlot: {
     height: 50,
-    width: 350,
+    width: 275,
     border: '1px solid black',
+    fontSize: 12,
     borderRadius: t.radius.md,
     padding: '0 10px',
     '&:hover': {
@@ -372,8 +375,11 @@ const useStyles = createStyles(t => ({
       },
     },
   },
+  nameOverflow: {
+    textOverflow: 'ellipsis',
+  },
   shiftSlotRoleText: {
-    fontSize: 12,
+    fontSize: 10,
     color: 'gray',
     fontWeight: 500,
     '&:hover': {
@@ -388,7 +394,7 @@ const useStyles = createStyles(t => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 45,
+    width: 35,
     height: '100%',
   },
   selectUserButton: {

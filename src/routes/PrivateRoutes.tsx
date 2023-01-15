@@ -103,6 +103,7 @@ export const AppRoutes: React.FC = () => {
   }
 
   Sentry.setUser({ email: me.email })
+  setUser(me)
 
   if (me.firstTimeLogin) {
     return (
@@ -130,8 +131,6 @@ export const AppRoutes: React.FC = () => {
       </Routes>
     )
   }
-
-  setUser(me)
 
   return (
     <Routes>

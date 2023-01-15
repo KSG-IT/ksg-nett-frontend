@@ -1,7 +1,6 @@
 import {
-  Icon3dCubeSphere,
   IconAbacus,
-  IconSun,
+  IconPokeball,
   IconUsers,
   IconUserSearch,
   IconWheelchair,
@@ -11,7 +10,7 @@ import { ShortcutCardGrid } from 'components/ShortcutCard'
 const shortcuts = [
   {
     title: 'Mine intervjuer',
-    icon: IconWheelchair,
+    icon: IconPokeball,
     color: 'samfundet-red',
     link: '/admissions/my-interviews',
   },
