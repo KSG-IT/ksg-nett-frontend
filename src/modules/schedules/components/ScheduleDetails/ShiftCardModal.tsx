@@ -42,7 +42,6 @@ export const SHIFT_DETAIL_QUERY = gql`
         user {
           id
           getCleanFullName
-          getFullWithNickName
           profileImage
           initials
         }
