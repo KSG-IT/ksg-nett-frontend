@@ -640,6 +640,19 @@ export const FINISHED_INTERVIEWS_QUERY = gql`
         fullName
         email
         phone
+        priorities {
+          id
+          applicantPriority
+          internalGroupPriority
+          internalGroupPosition {
+            name
+            id
+            internalGroup {
+              id
+              name
+            }
+          }
+        }
       }
       location {
         id

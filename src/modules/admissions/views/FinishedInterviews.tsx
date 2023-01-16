@@ -7,6 +7,7 @@ import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { format } from 'util/date-fns'
 import { useInterviewMutations } from '../mutations.hooks'
+import { parseApplicantPriorityInternalGroupPosition } from '../parsing'
 import { FINISHED_INTERVIEWS_QUERY } from '../queries'
 import { FinishedInterviewsReturns, InterviewNode } from '../types.graphql'
 
@@ -52,11 +53,6 @@ export const FinishedInterviews: React.FC = () => {
 
   const rows = finishedInterviews.map(interview => (
     <tr key={interview.id}>
-      <td>{interview.applicant.fullName}</td>
-      <td>{interview.applicant.phone}</td>
-      <td>{interview.applicant.email}</td>
-      <td>{interview.location.name}</td>
-      <td>{format(new Date(interview.interviewStart), 'HH:mm')}</td>
       <td>
         {interview.registeredAtSamfundet ? (
           <Badge
@@ -76,12 +72,32 @@ export const FinishedInterviews: React.FC = () => {
           </Badge>
         )}
       </td>
+      <td>{interview.location.name}</td>
+      <td>{format(new Date(interview.interviewStart), 'HH:mm')}</td>
+      <td>{interview.applicant.fullName}</td>
+      <td>{interview.applicant.phone}</td>
+      <td>{interview.applicant.email}</td>
+      <td>
+        {parseApplicantPriorityInternalGroupPosition(
+          interview.applicant.priorities[0]
+        )}
+      </td>
+      <td>
+        {parseApplicantPriorityInternalGroupPosition(
+          interview.applicant.priorities[1]
+        )}
+      </td>
+      <td>
+        {parseApplicantPriorityInternalGroupPosition(
+          interview.applicant.priorities[2]
+        )}
+      </td>
     </tr>
   ))
 
-  const missingInterviews =
-    finishedInterviews.filter(interview => !interview.registeredAtSamfundet)
-      .length > 0
+  const missingInterviews = finishedInterviews.filter(
+    interview => !interview.registeredAtSamfundet
+  ).length
 
   return (
     <Stack>
@@ -91,7 +107,7 @@ export const FinishedInterviews: React.FC = () => {
         sine opptakssider. Du kan endre registreringsstatus ved å klikke på
         statusen.
       </MessageBox>
-      {missingInterviews ? (
+      {missingInterviews > 0 ? (
         <MessageBox type="warning">
           Det er {missingInterviews} intervjuer som ikke er registrert på
           Samfundet sine opptakssider.
@@ -105,12 +121,15 @@ export const FinishedInterviews: React.FC = () => {
       <CardTable>
         <thead>
           <tr>
+            <th>Status</th>
+            <th>Intervjusted</th>
+            <th>Intervjutidspunkt</th>
             <th>Søker</th>
             <th>Telefon</th>
             <th>E-post</th>
-            <th>Intervjusted</th>
-            <th>Intervjutidspunkt</th>
-            <th>Status</th>
+            <th>Førstevalg</th>
+            <th>Andrevalg</th>
+            <th>Tredjevalg</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
