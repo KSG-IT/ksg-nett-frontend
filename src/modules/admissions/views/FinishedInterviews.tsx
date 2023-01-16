@@ -1,13 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
-import {
-  Badge,
-  Checkbox,
-  Chip,
-  createStyles,
-  Group,
-  Stack,
-  Title,
-} from '@mantine/core'
+import { Badge, createStyles, Stack, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
