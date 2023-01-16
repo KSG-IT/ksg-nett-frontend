@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { Badge, createStyles, Stack, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { CardTable } from 'components/CardTable'
@@ -7,34 +7,8 @@ import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { format } from 'util/date-fns'
 import { useInterviewMutations } from '../mutations.hooks'
-import { InterviewNode } from '../types.graphql'
-
-const FINISHED_INTERVIEWS_QUERY = gql`
-  query FinishedInterviewsQuery {
-    finishedInterviews {
-      id
-      applicant {
-        id
-        fullName
-        email
-        phone
-      }
-      location {
-        id
-        name
-      }
-      interviewStart
-      registeredAtSamfundet
-    }
-  }
-`
-
-interface FinishedInterviewsReturns {
-  finishedInterviews: Pick<
-    InterviewNode,
-    'id' | 'registeredAtSamfundet' | 'applicant' | 'location' | 'interviewStart'
-  >[]
-}
+import { FINISHED_INTERVIEWS_QUERY } from '../queries'
+import { FinishedInterviewsReturns, InterviewNode } from '../types.graphql'
 
 export const FinishedInterviews: React.FC = () => {
   const { classes } = useStyles()

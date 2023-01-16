@@ -382,6 +382,13 @@ export type AvailableInterviewsDayGrouping = {
   interviewSlots: InterviewSlot[]
 }
 
+export interface FinishedInterviewsReturns {
+  finishedInterviews: Pick<
+    InterviewNode,
+    'id' | 'registeredAtSamfundet' | 'applicant' | 'location' | 'interviewStart'
+  >[]
+}
+
 /* === MUTATION TYPING === */
 
 export interface CreateAdmissionReturns {

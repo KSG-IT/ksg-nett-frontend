@@ -630,3 +630,23 @@ export const INTERVIEW_TABLE_OVERVIEW_QUERY = gql`
     }
   }
 `
+
+export const FINISHED_INTERVIEWS_QUERY = gql`
+  query FinishedInterviewsQuery {
+    finishedInterviews {
+      id
+      applicant {
+        id
+        fullName
+        email
+        phone
+      }
+      location {
+        id
+        name
+      }
+      interviewStart
+      registeredAtSamfundet
+    }
+  }
+`
