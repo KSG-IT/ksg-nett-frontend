@@ -12,11 +12,11 @@ import {
   ConfigurationWizard,
   DiscussionDashboard,
   EditInterview,
+  FinishedInterviews,
   InternalGroupApplicants,
   InternalGroupDiscussion,
   InterviewsOverview,
   MyInterviews,
-  TodaysInterviews,
 } from 'modules/admissions/views'
 import {
   BarTabCustomers,
@@ -317,16 +317,6 @@ export const AppRoutes: React.FC = () => {
             }
           />
           <Route
-            path="todays-interviews"
-            element={
-              <RestrictedRoute
-                permissions={PERMISSIONS.admissions.view.admission}
-              >
-                <TodaysInterviews />
-              </RestrictedRoute>
-            }
-          />
-          <Route
             path="interviews-overview"
             element={
               <RestrictedRoute
@@ -336,6 +326,16 @@ export const AppRoutes: React.FC = () => {
               </RestrictedRoute>
             }
           />
+          <Route
+            path="finished-interviews"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.interview}
+              >
+                <FinishedInterviews />
+              </RestrictedRoute>
+            }
+          ></Route>
 
           <Route
             path="close"

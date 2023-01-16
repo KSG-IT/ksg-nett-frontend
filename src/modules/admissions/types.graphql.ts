@@ -40,9 +40,12 @@ export type InterviewNode = {
     | 'openForOtherPositions'
     | 'priorities'
     | 'status'
+    | 'phone'
+    | 'email'
   >
   totalEvaluation: InterviewTotalEvaluationValues | null
   priorities: InternalGroupPositionPriority[]
+  registeredAtSamfundet: boolean
 }
 
 export type InterviewLocationNode = {

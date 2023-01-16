@@ -82,6 +82,7 @@ type PatchInterviewInput = {
   notes?: string
   discussion?: string
   totalEvaluation?: InterviewTotalEvaluationValues
+  registeredAtSamfundet?: boolean
 }
 
 interface PatchInterviewVariables {
@@ -92,6 +93,7 @@ interface PatchInterviewVariables {
 interface PatchInterviewReturns {
   patchInterview: {
     id: string
+    registeredAtSamfundet: boolean
   }
 }
 

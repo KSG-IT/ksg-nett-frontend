@@ -1,5 +1,6 @@
 import {
   IconAbacus,
+  IconCheck,
   IconPokeball,
   IconUsers,
   IconUserSearch,
@@ -32,6 +33,12 @@ const shortcuts = [
     color: 'samfundet-red',
     link: '/admissions/interviews-overview',
     permissions: 'admissions.view_interview',
+  },
+  {
+    title: 'Fullførte intervjuer',
+    icon: IconCheck,
+    color: 'samfundet-red',
+    link: '/admissions/finished-interviews',
   },
 ]
 
