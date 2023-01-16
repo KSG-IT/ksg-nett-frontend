@@ -83,6 +83,17 @@ const DocumentDetail = React.lazy(
   () => import('modules/handbook/views/DocumentDetail')
 )
 
+// ==== Games ====
+const GamesDashboard = React.lazy(
+  () => import('modules/games/views/GamesDashboard')
+)
+const TruthOrDrink = React.lazy(
+  () => import('modules/games/views/TruthOrDrink')
+)
+const HundredQuestions = React.lazy(
+  () => import('modules/games/views/HundredQuestions')
+)
+
 export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
   const setUser = useStore(state => state.setUser)
@@ -446,6 +457,13 @@ export const AppRoutes: React.FC = () => {
             />
           </Route>
           <Route path="*" element={<FullPage404 />} />
+        </Route>
+
+        {/* ==== GAMES MODULE ==== */}
+        <Route path="games">
+          <Route index element={<GamesDashboard />} />
+          <Route path="truth-or-drink" element={<TruthOrDrink />} />
+          <Route path="hundred-questions" element={<HundredQuestions />} />
         </Route>
 
         {/* ==== SCHEDULES MODULE ==== */}

@@ -8,6 +8,7 @@ import {
   IconChartAreaLine,
   IconClipboardList,
   IconCreditCard,
+  IconDeviceGamepad,
   IconEdit,
   IconHandMiddleFinger,
   IconHome,
@@ -37,6 +38,12 @@ const routes: RouteGroup[] = [
         permissions: [],
       },
       {
+        icon: IconBook2,
+        link: '/handbook',
+        label: 'Håndboka',
+        permissions: [],
+      },
+      {
         icon: IconEdit,
         link: '/summaries',
         label: 'Møtereferater',
@@ -59,10 +66,11 @@ const routes: RouteGroup[] = [
         label: 'Sitater',
         permissions: [],
       },
+
       {
-        icon: IconBook2,
-        link: '/handbook',
-        label: 'Håndboka',
+        icon: IconDeviceGamepad,
+        link: '/games',
+        label: 'Sprell',
         permissions: [],
       },
     ],
