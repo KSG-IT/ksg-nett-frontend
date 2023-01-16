@@ -96,13 +96,11 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
               <div className={classes.iconContainer}>
                 <UserThumbnail user={shiftSlot.user} />
               </div>
-              <Stack spacing={0}>
+              <Stack spacing={0} className={classes.nameOverflow}>
                 <Text className={classes.shiftSlotRoleText}>
                   {shiftSlot.role}
                 </Text>
-                <Text className={classes.nameOverflow}>
-                  {shiftSlot.user.getCleanFullName}
-                </Text>
+                <Text>{shiftSlot.user.getCleanFullName}</Text>
               </Stack>
             </Group>
             <ActionIcon
