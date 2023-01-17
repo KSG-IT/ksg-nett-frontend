@@ -40,12 +40,21 @@ export const EditShiftForm: React.FC<EditShiftFormProps> = ({ shift }) => {
   const onSubmit = (values: ShiftFormValues) => {
     const [start, end] = values.time
 
-    start.setFullYear(values.day.getFullYear())
-    start.setMonth(values.day.getMonth())
-    start.setDate(values.day.getDate())
-    end.setFullYear(values.day.getFullYear())
-    end.setMonth(values.day.getMonth())
-    end.setDate(values.day.getDate())
+    const datetimeStart = new Date(start)
+    datetimeStart.setHours(start.getHours())
+    datetimeStart.setMinutes(start.getMinutes())
+    datetimeStart.setSeconds(0)
+    datetimeStart.setMilliseconds(0)
+
+    const datetimeEnd = new Date(start)
+    datetimeEnd.setHours(end.getHours())
+    datetimeEnd.setMinutes(end.getMinutes())
+    datetimeEnd.setSeconds(0)
+    datetimeEnd.setMilliseconds(0)
+
+    if (datetimeEnd < datetimeStart) {
+      datetimeEnd.setDate(datetimeEnd.getDate() + 1)
+    }
 
     patchShift({
       variables: {
@@ -53,8 +62,8 @@ export const EditShiftForm: React.FC<EditShiftFormProps> = ({ shift }) => {
         input: {
           name: values.name,
           location: values.location,
-          datetimeStart: start,
-          datetimeEnd: end,
+          datetimeStart: datetimeStart,
+          datetimeEnd: datetimeEnd,
         },
       },
       refetchQueries: [SHIFT_DETAIL_QUERY, NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
