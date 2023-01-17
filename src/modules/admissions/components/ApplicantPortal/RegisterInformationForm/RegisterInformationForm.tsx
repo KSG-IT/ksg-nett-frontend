@@ -101,7 +101,7 @@ export const RegisterInformationForm: React.FC<
             <FileInput
               value={file}
               onChange={setFile}
-              label="Velg en opptaksfil"
+              label="Last opp søkerbilde"
               accept="image/png,image/jpeg,image/jpg"
               placeholder="Trykk her"
               icon={<IconFileCode />}
