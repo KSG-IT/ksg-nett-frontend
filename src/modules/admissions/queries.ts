@@ -429,8 +429,10 @@ export const GET_APPLICATION_FROM_TOKEN = gql`
       phone
       study
       hometown
+      status
       address
       gdprConsent
+      wantsDigitalInterview
       priorities {
         id
         internalGroupPosition {
