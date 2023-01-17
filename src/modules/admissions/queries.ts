@@ -517,6 +517,7 @@ export const CORE_APPLICANT_FIELDS = gql`
     study
     hometown
     address
+    wantsDigitalInterview
     priorities {
       id
       internalGroupPosition {

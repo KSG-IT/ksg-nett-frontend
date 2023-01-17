@@ -65,6 +65,7 @@ export const ApplicantDetails: React.VFC = () => {
           },
         ]}
       />
+      <Title order={2}>{applicant.fullName}</Title>
       <PersonalDetailsCard applicant={applicant} />
       <InterviewDetails applicant={applicant} canEdit={!cannotEdit} />
       <ApplicantComments applicant={applicant} />

@@ -184,6 +184,7 @@ export type CoreApplicantNode = {
   interviewIsCovered: boolean
   iAmAttendingInterview: boolean
   phone: string
+  wantsDigitalInterview: boolean
   priorities: InternalGroupPositionPriority[]
 }
 
