@@ -115,18 +115,23 @@ export const PERMISSIONS = {
       internalGroupPosition: 'organization.change_internalgroupposition',
       internalGroupPositionMembership:
         'organization.change_internalgrouppositionmembership',
+      internalGroupUserHighlight:
+        'organization.change_internalgroupuserhighlight',
     },
     add: {
       internalGroup: 'organization.add_internalgroup',
       internalGroupPosition: 'organization.add_internalgroupposition',
       internalGroupPositionMembership:
         'organization.add_internalgrouppositionmembership',
+      internalGroupUserHighlight: 'organization.add_internalgroupuserhighlight',
     },
     delete: {
       internalGroup: 'organization.delete_internalgroup',
       internalGroupPosition: 'organization.delete_internalgroupposition',
       internalGroupPositionMembership:
         'organization.delete_internalgrouppositionmembership',
+      internalGroupUserHighlight:
+        'organization.delete_internalgroupuserhighlight',
     },
     view: {
       internalGroup: 'organization.view_internalgroup',

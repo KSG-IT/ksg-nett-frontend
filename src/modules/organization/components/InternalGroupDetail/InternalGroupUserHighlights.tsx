@@ -26,6 +26,8 @@ import { InternalGroupUserHighlightEditForm } from 'modules/organization/compone
 import { useState } from 'react'
 import { IconNotes, IconPlus } from '@tabler/icons'
 import { useIsMobile } from '../../../../util/hooks'
+import { PermissionGate } from '../../../../components/PermissionGate'
+import { PERMISSIONS } from '../../../../util/permissions'
 
 interface InternalGroupUserHighlightsProps {
   internalGroupId: string
@@ -72,14 +74,20 @@ export const InternalGroupUserHighlights: React.FC<
             <Text weight={700}>{highlight.user.getFullWithNickName}</Text>
             <Group position={'right'} spacing={0}>
               <Badge>{highlight.occupation}</Badge>
-              <ActionIcon
-                onClick={() => {
-                  setModalOpened(true)
-                  setSelectedHighlight(highlight)
-                }}
+              <PermissionGate
+                permissions={
+                  PERMISSIONS.organization.change.internalGroupUserHighlight
+                }
               >
-                <IconNotes />
-              </ActionIcon>
+                <ActionIcon
+                  onClick={() => {
+                    setModalOpened(true)
+                    setSelectedHighlight(highlight)
+                  }}
+                >
+                  <IconNotes />
+                </ActionIcon>
+              </PermissionGate>
             </Group>
           </Group>
           <Spoiler maxHeight={120} showLabel={'Vis mer'} hideLabel="Hide">
@@ -89,6 +97,7 @@ export const InternalGroupUserHighlights: React.FC<
           </Spoiler>
         </Card>
       ))}
+
       <Modal
         size={'lg'}
         opened={modalOpened}
@@ -103,6 +112,7 @@ export const InternalGroupUserHighlights: React.FC<
           Rediger/legg til høydepunkt
         </Title>
         <Divider my={'md'} />
+
         <InternalGroupUserHighlightEditForm
           highlight={selectedHighlight}
           onCompletedCallback={() => {
@@ -110,6 +120,7 @@ export const InternalGroupUserHighlights: React.FC<
           }}
         />
       </Modal>
+
       <UnstyledButton
         p={'xl'}
         className={classes.addButton}
