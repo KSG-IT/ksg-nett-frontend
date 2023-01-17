@@ -40,9 +40,12 @@ export type InterviewNode = {
     | 'openForOtherPositions'
     | 'priorities'
     | 'status'
+    | 'phone'
+    | 'email'
   >
   totalEvaluation: InterviewTotalEvaluationValues | null
   priorities: InternalGroupPositionPriority[]
+  registeredAtSamfundet: boolean
 }
 
 export type InterviewLocationNode = {
@@ -377,6 +380,13 @@ export type InterviewSlot = {
 export type AvailableInterviewsDayGrouping = {
   date: Date
   interviewSlots: InterviewSlot[]
+}
+
+export interface FinishedInterviewsReturns {
+  finishedInterviews: Pick<
+    InterviewNode,
+    'id' | 'registeredAtSamfundet' | 'applicant' | 'location' | 'interviewStart'
+  >[]
 }
 
 /* === MUTATION TYPING === */
