@@ -1,14 +1,14 @@
 import { Alert, Text } from '@mantine/core'
-import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons'
+import { IconAlertTriangle, IconCheck, IconInfoCircle } from '@tabler/icons'
 
 interface MessageBoxProps {
-  type: 'info' | 'warning' | 'danger'
+  type: 'info' | 'warning' | 'danger' | 'success'
   children: React.ReactNode
 }
 
 export const MessageBox: React.FC<MessageBoxProps> = ({ type, children }) => {
   let icon
-  let color: 'blue' | 'yellow' | 'red'
+  let color: 'blue' | 'yellow' | 'red' | 'green'
 
   switch (type) {
     case 'info':
@@ -23,6 +23,10 @@ export const MessageBox: React.FC<MessageBoxProps> = ({ type, children }) => {
     case 'danger':
       icon = <IconAlertTriangle />
       color = 'red'
+      break
+    case 'success':
+      icon = <IconCheck />
+      color = 'green'
       break
   }
 
