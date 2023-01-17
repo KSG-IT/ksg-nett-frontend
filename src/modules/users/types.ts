@@ -130,6 +130,7 @@ export interface UserThumbnailProps extends AvatarProps {
     | 'initials'
     | 'getFullWithNickName'
     | 'getCleanFullName'
+    | 'firstName'
   >
 }
 

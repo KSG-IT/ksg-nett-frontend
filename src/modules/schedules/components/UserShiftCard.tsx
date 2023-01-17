@@ -11,7 +11,7 @@ import { format } from 'util/date-fns'
 import { UserThumbnail } from 'modules/users/components'
 import { ShiftNode } from '../types.graphql'
 import { parseLocation, parseShiftRole } from '../util'
-import { useIsMobile } from '../../../util/hooks'
+import { useIsMobile } from 'util/hooks'
 import { capitalizeFirstLetter } from 'util/parsing'
 
 interface UserShiftCardProps {
@@ -63,11 +63,11 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({
               size={isMobile ? 'md' : 'lg'}
               radius={100}
             />
-            <Badge size={isMobile ? 'sm' : 'sm'} variant={'outline'} my={0}>
+            <Badge variant={'outline'} size={isMobile ? 'sm' : 'sm'} my={0}>
               {parseShiftRole(slot.role)}
             </Badge>
             <Text my={0} size={isMobile ? 'sm' : 'sm'}>
-              {slot.user.getCleanFullName}
+              {slot.user.firstName}
             </Text>
           </Stack>
         ))}

@@ -12,7 +12,8 @@ export const MY_UPCOMING_SHIFTS = gql`
         user {
           id
           initials
-          getCleanFullName
+          firstName
+          getFullWithNickName
           profileImage
         }
       }
@@ -35,8 +36,8 @@ export const ALL_MY_SHIFTS = gql`
         user {
           id
           initials
+          firstName
           getFullWithNickName
-          getCleanFullName
           profileImage
         }
       }
