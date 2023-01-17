@@ -34,8 +34,6 @@ export const AllShifts = () => {
     if (!firstRender.current) return
     firstRender.current = false
 
-    console.log(location.search)
-
     const search = queryString.parse(location.search)
     const dateString = search.date as string
 
