@@ -213,6 +213,10 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
         </Anchor>
         .
       </MessageBox>
+      <MessageBox type="danger">
+        Du må minst være fylt 20 år for å søke på spritbartender eller
+        barservitør. Selv om de er tilgjengelige her.
+      </MessageBox>
 
       <Stack ref={animationParent}>
         {values.map((priority, index) => (
