@@ -73,7 +73,7 @@ export const FinishedInterviews: React.FC = () => {
         )}
       </td>
       <td>{interview.location.name}</td>
-      <td>{format(new Date(interview.interviewStart), 'HH:mm')}</td>
+      <td>{format(new Date(interview.interviewStart), 'dd.MMM  HH:mm')}</td>
       <td>{interview.applicant.fullName}</td>
       <td>{interview.applicant.phone}</td>
       <td>{interview.applicant.email}</td>

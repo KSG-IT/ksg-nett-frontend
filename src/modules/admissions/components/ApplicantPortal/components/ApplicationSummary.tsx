@@ -30,16 +30,28 @@ export const ApplicantSummary: React.FC<ApplicantSummaryProps> = ({
       </Title>
       <Group>
         <Title order={4}>Intervjulokale:</Title>
-        <Text transform={'uppercase'} color={'samfundet-red'} weight={'bold'}>
-          {applicant.interview?.location.name}
-        </Text>
+        {applicant.wantsDigitalInterview ? (
+          <Text transform={'uppercase'} color={'samfundet-red'} weight={'bold'}>
+            DIGITALT
+          </Text>
+        ) : (
+          <Text transform={'uppercase'} color={'samfundet-red'} weight={'bold'}>
+            {applicant.interview?.location.name}
+          </Text>
+        )}
       </Group>
       <Stack>
         <Title order={4}>Beskrivelse:</Title>
-        <Text>
-          Møt opp i glassinngangen til Samfundet fem minutter før intervjuet
-          starter. Vi ser frem til å møte deg!{' '}
-        </Text>
+        {applicant.wantsDigitalInterview ? (
+          <Text>
+            Du vil bli tilsendt en lenke til en videsamtale ved intervjustart
+          </Text>
+        ) : (
+          <Text>
+            Møt opp i glassinngangen til Samfundet fem minutter før intervjuet
+            starter. Vi ser frem til å møte deg!
+          </Text>
+        )}
       </Stack>
       <Group>
         <Title order={4}>Når:</Title>

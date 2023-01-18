@@ -1,4 +1,4 @@
-import { Grid, Group, Image, Paper, Stack, Text } from '@mantine/core'
+import { Grid, Group, Image, Paper, Stack, Text, Title } from '@mantine/core'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { format } from 'util/date-fns'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
@@ -25,12 +25,14 @@ export const PersonalDetailsCard: React.FC<PersonalDetailsCardProps> = ({
   return (
     <Paper p="md" style={{ maxWidth: 800 }}>
       <Grid grow gutter="lg">
-        <Image height={250} width={250} src={applicant.image} />
+        {applicant.image && (
+          <Image height={250} width={250} src={applicant.image} />
+        )}
         <Stack>
           <Group align="flex-start" spacing={'xs'} p="xl">
             <Stack justify={'flex-start'} align="flex-start" spacing="xs">
-              <Label>Navn</Label>
-              <Text m="0"> {applicant.fullName}</Text>
+              <Label>Epost</Label>
+              <Text m="0"> {applicant.email}</Text>
             </Stack>
             <Stack justify={'flex-start'} align="flex-start" spacing="xs">
               <Label>Hjemby</Label>
@@ -48,7 +50,7 @@ export const PersonalDetailsCard: React.FC<PersonalDetailsCardProps> = ({
 
           <Group align="flex-start" spacing={'xs'} p="xl">
             <Stack justify={'flex-start'} align="flex-start" spacing="xs">
-              <Label>Fødselsdate</Label>
+              <Label>Fødselsdato</Label>
               <Text>
                 {format(new Date(applicant.dateOfBirth), 'dd.MM.yyyy')}
               </Text>

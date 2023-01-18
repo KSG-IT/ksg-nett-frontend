@@ -37,7 +37,7 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
       <Title order={2}>Intervjudetaljer</Title>
       {applicant.wantsDigitalInterview && (
         <MessageBox type="warning">
-          <b>Obs!</b> Søker ønsker digitalt intervju
+          <b>Obs!</b> Søker ønsker digitalt intervju.
         </MessageBox>
       )}
       <Card>

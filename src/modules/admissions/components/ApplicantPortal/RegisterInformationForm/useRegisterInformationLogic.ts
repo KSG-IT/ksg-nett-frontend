@@ -4,8 +4,8 @@ import { PatchApplicantReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { OnFormSubmit } from 'types/forms'
+import { FILE_SIZE } from 'util/consts'
 import * as yup from 'yup'
-import { FILE_SIZE } from '../../../../../util/consts'
 
 export type RegisterInformationFormData = {
   firstName: string
@@ -14,7 +14,7 @@ export type RegisterInformationFormData = {
   hometown: string
   study: string
   gdprConsent: boolean
-  dateOfBirth: Date
+  dateOfBirth: Date | null
   phone: string
   wantsDigitalInterview: boolean
   profileImage?: File | null

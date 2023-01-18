@@ -19,7 +19,7 @@ export function useRegisterInformationAPI({
     const { id } = applicant
     const input = {
       ...data,
-      dateOfBirth: format(new Date(data.dateOfBirth), 'yyyy-MM-dd'),
+      dateOfBirth: format(new Date(data.dateOfBirth ?? ''), 'yyyy-MM-dd'),
       status: ApplicantStatusValues.HAS_REGISTERED_PROFILE,
       lastActivity: new Date(),
     }
@@ -47,7 +47,7 @@ export function useRegisterInformationAPI({
     hometown: applicant?.hometown ?? '',
     study: applicant?.study ?? '',
     gdprConsent: applicant?.gdprConsent ?? false,
-    dateOfBirth: new Date(1996, 10, 11),
+    dateOfBirth: null,
     phone: applicant?.phone ?? '',
     wantsDigitalInterview: applicant?.wantsDigitalInterview ?? false,
   }
