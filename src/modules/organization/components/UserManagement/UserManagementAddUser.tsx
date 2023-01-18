@@ -1,22 +1,23 @@
 import { useMutation } from '@apollo/client'
 import { Button, Group, Stack, Title } from '@mantine/core'
+import { MessageBox } from 'components/MessageBox'
 import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
-  InternalGroupPositionTypeOption,
+  InternalGroupPositionType,
 } from 'modules/organization/types.graphql'
+import { MANAGE_USERS_DATA_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import { MANAGE_USERS_DATA_QUERY } from '../../../users/queries'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 
 interface UserManagementAddUserProps {
   setModalOpen: (open: boolean) => void
 }
-export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
+export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
   setModalOpen,
 }) => {
   const [selectedUser, setSelectedUser] = useState('')
@@ -24,7 +25,7 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
   const [
     selectedInternalGroupPositionType,
     setSelectedInternalGroupPositionType,
-  ] = useState<InternalGroupPositionTypeOption | null>(null)
+  ] = useState<InternalGroupPositionType | null>(null)
   const history = useNavigate()
 
   const [assignNewPosition, { loading }] = useMutation<
@@ -45,7 +46,7 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
       variables: {
         userId: selectedUser,
         internalGroupPositionId: internalGroupPositionId,
-        internalGroupPositionType: selectedInternalGroupPositionType.value,
+        internalGroupPositionType: selectedInternalGroupPositionType,
       },
       refetchQueries: [MANAGE_USERS_DATA_QUERY],
       onError() {
@@ -59,16 +60,17 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
 
   return (
     <Stack>
-      <Title>Gi bruker nytt verv</Title>
-      <label>Bruker</label>
-      <UserSelect setUserCallback={setSelectedUser} />
-      <label>Verv</label>
+      <MessageBox type="info">
+        <b>Merk! </b> En person kan bare ha ett verv fra en interngjeng
+        samtidig. Om du gir en person et nytt verv i en interngjeng samtidig som
+        de har et gammelt et vil det gamle vervet automatisk termineres og få en
+        sluttdato. Dette gjelder ikke interessegrupper.
+      </MessageBox>
+      <UserSelect label="Bruker" setUserCallback={setSelectedUser} />
       <InternalGroupPositionSelect
         setInternalGroupPositionCallback={setInternalGroupPositionId}
       />
-      <label>Type</label>
       <InternalGroupPositionTypeSelect
-        selected={selectedInternalGroupPositionType}
         onChange={setSelectedInternalGroupPositionType}
       />
       <Group mt="md" position="right">

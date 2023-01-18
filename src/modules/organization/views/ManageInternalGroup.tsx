@@ -75,7 +75,7 @@ export const ManageInternalGroup: React.FC = () => {
         Tidligere medlemskap
       </Title>
       <UserManagementTable usersData={all} />
-      <Modal opened={modalOpen} onClose={() => setModalOpen(false)}>
+      <Modal title="Legg til verv" opened={modalOpen} onClose={() => setModalOpen(false)}>
         <UserManagementAddUser setModalOpen={setModalOpen} />
       </Modal>
     </Stack>

@@ -1,20 +1,23 @@
+import { Select } from '@mantine/core'
 import { internalGroupPositionTypeOptions } from 'modules/organization/consts'
-import { InternalGroupPositionTypeOption } from 'modules/organization/types.graphql'
-import Select from 'react-select'
+import { InternalGroupPositionType } from 'modules/organization/types.graphql'
 
 interface InternalGroupPositionTypeSelectProps {
-  defaultValue?: InternalGroupPositionTypeOption | null
-  selected: InternalGroupPositionTypeOption | null
   onChange: (
-    internalGroupPositionType: InternalGroupPositionTypeOption | null
+    internalGroupPositionType: InternalGroupPositionType | null
   ) => void
 }
 
 export const InternalGroupPositionTypeSelect: React.FC<
   InternalGroupPositionTypeSelectProps
-> = ({ selected, defaultValue = null, onChange }) => {
+> = ({ onChange }) => {
   const options = internalGroupPositionTypeOptions
   return (
-    <Select defaultValue={defaultValue} onChange={onChange} options={options} />
+    <Select
+      data={options}
+      label="Vervtype"
+      placeholder="Velg en vervtype"
+      onChange={onChange}
+    />
   )
 }
