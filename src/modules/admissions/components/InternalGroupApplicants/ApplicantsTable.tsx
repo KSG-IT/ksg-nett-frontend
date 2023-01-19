@@ -36,6 +36,13 @@ export const ApplicantsTable: React.FC<{
       <td>
         <ApplicantStatusBadge applicantStatus={applicant.status} />
       </td>
+      <td>
+        {applicant.wantsDigitalInterview ? (
+          <Badge color="orange">Digitalt</Badge>
+        ) : (
+          <Badge color="grape">Fysisk</Badge>
+        )}
+      </td>
       <td>{applicant.phone}</td>
       <td>{getInterviewTime(applicant)}</td>
       <td>
@@ -60,6 +67,7 @@ export const ApplicantsTable: React.FC<{
         <tr>
           <td>Navn</td>
           <td>Status</td>
+          <td>Intervjutype</td>
           <td>Telefon</td>
           <td>Intervjutid</td>
           <td>Intevjuere</td>

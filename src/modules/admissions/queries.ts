@@ -429,8 +429,10 @@ export const GET_APPLICATION_FROM_TOKEN = gql`
       phone
       study
       hometown
+      status
       address
       gdprConsent
+      wantsDigitalInterview
       priorities {
         id
         internalGroupPosition {
@@ -517,6 +519,7 @@ export const CORE_APPLICANT_FIELDS = gql`
     study
     hometown
     address
+    wantsDigitalInterview
     priorities {
       id
       internalGroupPosition {
@@ -627,6 +630,39 @@ export const INTERVIEW_TABLE_OVERVIEW_QUERY = gql`
           applicantId
         }
       }
+    }
+  }
+`
+
+export const FINISHED_INTERVIEWS_QUERY = gql`
+  query FinishedInterviewsQuery {
+    finishedInterviews {
+      id
+      applicant {
+        id
+        fullName
+        email
+        phone
+        priorities {
+          id
+          applicantPriority
+          internalGroupPriority
+          internalGroupPosition {
+            name
+            id
+            internalGroup {
+              id
+              name
+            }
+          }
+        }
+      }
+      location {
+        id
+        name
+      }
+      interviewStart
+      registeredAtSamfundet
     }
   }
 `

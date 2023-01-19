@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Stack, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
+import { CardTable } from 'components/CardTable'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useParams } from 'react-router-dom'
@@ -65,7 +66,25 @@ export const ApplicantDetails: React.VFC = () => {
           },
         ]}
       />
+      <Title order={2}>{applicant.fullName}</Title>
       <PersonalDetailsCard applicant={applicant} />
+      <CardTable>
+        <thead>
+          <tr>
+            <th>Førstevalg</th>
+            <th>Andrevalg</th>
+            <th>Tredjevalg</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{applicant.priorities[0]?.internalGroupPosition?.name}</td>
+
+            <td>{applicant.priorities[1]?.internalGroupPosition?.name}</td>
+            <td>{applicant.priorities[2]?.internalGroupPosition?.name}</td>
+          </tr>
+        </tbody>
+      </CardTable>
       <InterviewDetails applicant={applicant} canEdit={!cannotEdit} />
       <ApplicantComments applicant={applicant} />
     </Stack>
