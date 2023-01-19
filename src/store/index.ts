@@ -37,6 +37,11 @@ export const UserPlaceholder: UserNode = {
   icalToken: '',
   taggedAndVerifiedQuotes: [],
   internalGroupPositionMembershipHistory: [],
+  allergies: [],
+  notifyOnQuote: false,
+  notifyOnShift: false,
+  notifyOnDeposit: false,
+  canRewriteAboutMe: false,
   legacyWorkHistory: [],
   homeTown: '',
   bankAccount: {

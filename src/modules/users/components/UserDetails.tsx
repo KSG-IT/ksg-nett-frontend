@@ -14,6 +14,7 @@ import {
 import {
   IconAt,
   IconBook,
+  IconBook2,
   IconCake,
   IconHome,
   IconMapPin,
@@ -89,7 +90,11 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
             <Group spacing={'xs'} className={classes.bio} noWrap mt={'xl'}>
               <Text className={classes.aboutMe}>Om meg</Text>
               <ThemeIcon variant="light" color={'samfundet-red'}>
-                <IconBook stroke={1.2} />
+                {user.canRewriteAboutMe ? (
+                  <IconBook stroke={1.2} />
+                ) : (
+                  <IconBook2 stroke={1.2} />
+                )}
               </ThemeIcon>
             </Group>
             <Text mt={'xs'}>{user.aboutMe}</Text>

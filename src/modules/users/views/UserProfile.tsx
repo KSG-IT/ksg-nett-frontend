@@ -19,7 +19,7 @@ export const UserProfile: React.FC = () => {
   const [editUserModalOpen, setEditUserModalOpen] = useState(false)
 
   const { userId } = useParams<keyof UserProfileParams>() as UserProfileParams
-  const { data, loading, error } = useQuery<
+  const { data, loading, error, refetch } = useQuery<
     UserQueryReturns,
     UserQueryVariables
   >(USER_QUERY, {
@@ -35,7 +35,7 @@ export const UserProfile: React.FC = () => {
     user: { internalGroupPositionMembershipHistory: memberships, ...user },
   } = data
 
-  if (user === null || user === undefined) return <FullPage404 />
+  if (user === null) return <FullPage404 />
 
   return (
     <>
