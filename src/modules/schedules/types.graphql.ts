@@ -107,7 +107,7 @@ export interface AllMyShiftsReturns {
 export interface AllShiftsReturns {
   allShifts: Pick<
     ShiftNode,
-    'id' | 'datetimeStart' | 'name' | 'filledSlots' | 'location'
+    'id' | 'datetimeStart' | 'name' | 'filledSlots' | 'location' | 'datetimeEnd'
   >[]
 }
 
