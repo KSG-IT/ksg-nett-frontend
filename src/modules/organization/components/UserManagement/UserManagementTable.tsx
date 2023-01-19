@@ -1,5 +1,6 @@
-import { Badge, createStyles, Text, TextProps } from '@mantine/core'
+import { Badge, createStyles, Menu, Text, TextProps } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
+import { internalGroupPositionTypeOptions } from 'modules/organization/consts'
 import { ManageInternalGroupUser } from 'modules/organization/types.graphql'
 import { UserManagementTableRow } from './UserManagementTableRow'
 
@@ -42,7 +43,18 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
         <Badge color={'samfundet-red'}>{membership.positionName}</Badge>
       </td>
       <TableData>
-        {membership.internalGroupPositionMembership.getTypeDisplay}
+        <Menu>
+          <Menu.Target>
+            <Badge style={{ cursor: 'pointer' }}>
+              {membership.internalGroupPositionMembership.getTypeDisplay}
+            </Badge>
+          </Menu.Target>
+          <Menu.Dropdown>
+            {internalGroupPositionTypeOptions.map(positionType => (
+              <Menu.Item>{positionType.label}</Menu.Item>
+            ))}
+          </Menu.Dropdown>
+        </Menu>
       </TableData>
       <TableData>{membership.dateJoinedSemesterShorthand}</TableData>
       {activeMemberships ? (
@@ -66,7 +78,7 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   )
 
   return (
-    <CardTable>
+    <CardTable compact>
       {/* Should parse data in here and show loading state here */}
       <thead>
         <tr>
@@ -76,7 +88,7 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
           <Header>Startet</Header>
           {activeMemberships ? (
             <>
-              <Header>Sett verv</Header>
+              <Header></Header>
               <th></th>
               <th></th>
             </>

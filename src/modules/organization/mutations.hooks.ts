@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/client'
+import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import {
   CREATE_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION,
   PATCH_INTERNAL_GROUP_MUTATION,
@@ -38,6 +39,13 @@ export function useInternalGroupPositionMembershipMutations() {
     PatchInternalGroupPositionMembershipVariables
   >(PATCH_INTERNAL_GROUP_POSITION_MEMBERSHIP_MUTATION)
 
+  const [
+    deleteInternalGroupPositionMembership,
+    { loading: deleteInternalGroupPositionMembershipLoading },
+  ] = useMutation<DeleteMutationReturns, DeleteMutationVariables>(
+    DELETE_INTERNALGROUP_POSITION_MEMBERSHIP_MUTATION
+  )
+
   const [quitKSG, { loading: quitKSGLoading }] = useMutation<
     QuitKSGReturns,
     QuitKSGVariables
@@ -48,6 +56,8 @@ export function useInternalGroupPositionMembershipMutations() {
     patchInternalGroupPositionMembershipLoading,
     quitKSG,
     quitKSGLoading,
+    deleteInternalGroupPositionMembership,
+    deleteInternalGroupPositionMembershipLoading,
   }
 }
 
