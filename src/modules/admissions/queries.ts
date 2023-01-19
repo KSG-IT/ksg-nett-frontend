@@ -666,3 +666,21 @@ export const FINISHED_INTERVIEWS_QUERY = gql`
     }
   }
 `
+
+export const INTERVIEW_STATISTICS_QUERY = gql`
+  query InterviewStatisticsQuery {
+    interviewStatistics {
+      totalApplicants
+      totalFinishedInterviews
+      totalBookedInterviews
+      totalAvailableInterviews
+      userInterviewCounts {
+        interviewCount
+        user {
+          id
+          fullName
+        }
+      }
+    }
+  }
+`

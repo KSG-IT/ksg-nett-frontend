@@ -2,7 +2,7 @@ import {
   InternalGroupNode,
   InternalGroupPositionNode,
 } from 'modules/organization/types'
-import { UserThumbnailProps } from 'modules/users/types'
+import { UserNode, UserThumbnailProps } from 'modules/users/types'
 import {
   AdmissionStatusValues,
   ApplicantStatusValues,
@@ -287,8 +287,6 @@ export interface InterviewDetailQueryVariables {
   id: string
 }
 
-/* === Query typing === */
-
 export interface InterviewsAvailableForBookingReturns {
   interviewsAvailableForBooking: AvailableInterviewsDayGrouping[]
 }
@@ -388,6 +386,19 @@ export interface FinishedInterviewsReturns {
     InterviewNode,
     'id' | 'registeredAtSamfundet' | 'applicant' | 'location' | 'interviewStart'
   >[]
+}
+
+export interface InterviewStatisticsReturns {
+  interviewStatistics: {
+    totalApplicants: number
+    totalFinishedInterviews: number
+    totalBookedInterviews: number
+    totalAvailableInterviews: number
+    userInterviewCounts: {
+      interviewCount: number
+      user: Pick<UserNode, 'id' | 'fullName'>
+    }[]
+  }
 }
 
 /* === MUTATION TYPING === */
