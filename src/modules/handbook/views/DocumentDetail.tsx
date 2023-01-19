@@ -18,7 +18,6 @@ const DocumentDetail = () => {
   const { documentId } = useParams<
     keyof DocumentDetailParams
   >() as DocumentDetailParams
-
   const { data, loading, error } = useQuery<
     DocumentDetailReturn,
     DocumentDetailVariables
@@ -38,7 +37,7 @@ const DocumentDetail = () => {
 
   const breadcrumbs = [
     { label: 'Home', path: '/' },
-    { label: 'Handbook', path: '/handbook' },
+    { label: 'Håndboka', path: '/handbook' },
     { label: document.name, path: '' },
   ]
 
@@ -46,14 +45,16 @@ const DocumentDetail = () => {
     <Stack>
       <Breadcrumbs items={breadcrumbs} />
       <Group position="apart">
-        <Title>{document.name}</Title>
+        <Title order={2} color={'dimmed'}>
+          {document.name}
+        </Title>
         <PermissionGate permissions={PERMISSIONS.handbook.change.document}>
           <ActionIcon>
             <IconEdit />
           </ActionIcon>
         </PermissionGate>
       </Group>
-      <Card>
+      <Card withBorder>
         <div
           dangerouslySetInnerHTML={{
             __html: document.content,
@@ -63,5 +64,4 @@ const DocumentDetail = () => {
     </Stack>
   )
 }
-
 export default DocumentDetail

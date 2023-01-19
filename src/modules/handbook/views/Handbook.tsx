@@ -12,7 +12,7 @@ import { AllDocumentsReturn } from '../types.graphql'
 
 const breadcrumbs = [
   { label: 'Home', path: '/' },
-  { label: 'Handbook', path: '/handbook' },
+  { label: 'Håndboka', path: '/handbook' },
 ]
 
 const Handbook = () => {

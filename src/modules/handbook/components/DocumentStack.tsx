@@ -1,16 +1,15 @@
 import {
   ActionIcon,
-  createStyles,
+  Badge,
   Group,
   Menu,
   Paper,
   Stack,
-  Title,
   useMantineTheme,
 } from '@mantine/core'
 import { IconDots, IconFile, IconTrash } from '@tabler/icons'
 import { PermissionGate } from 'components/PermissionGate'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
 import { DocumentNode } from '../types.graphql'
 
@@ -19,29 +18,27 @@ interface DocumentStackProps {
 }
 
 export const DocumentStack: React.FC<DocumentStackProps> = ({ documents }) => {
-  const { classes } = useStyles()
   const theme = useMantineTheme()
-  const navigate = useNavigate()
-
-  function handleNavigate(documentId: string) {
-    navigate(`/handbook/document/${documentId}`)
-  }
 
   return (
     <Stack spacing={0}>
       {documents.map(document => (
-        <Paper withBorder key={document.id} p="xs">
+        <Paper
+          component={Link}
+          to={`document/${document.id}`}
+          withBorder
+          key={document.id}
+          p="xs"
+        >
           <Group position="apart">
-            <Group
-              className={classes.documentGroup}
-              role="link"
-              onClick={() => handleNavigate(document.id)}
-            >
+            <Group>
               <IconFile
                 color={theme.colors.gray[5]}
                 fill={theme.colors.gray[5]}
               />
-              <Title order={4}>{document.name}</Title>
+              <Badge size={'xl'} variant={'filled'} radius={'sm'}>
+                {document.name}
+              </Badge>
             </Group>
             <PermissionGate permissions={PERMISSIONS.handbook.delete.document}>
               <td>
@@ -73,13 +70,3 @@ export const DocumentStack: React.FC<DocumentStackProps> = ({ documents }) => {
     </Stack>
   )
 }
-
-const useStyles = createStyles(theme => ({
-  documentGroup: {
-    paddingRight: theme.spacing.xl,
-    ':hover': {
-      cursor: 'pointer',
-      textDecoration: 'underline',
-    },
-  },
-}))
