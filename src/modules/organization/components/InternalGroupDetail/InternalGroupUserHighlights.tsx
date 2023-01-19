@@ -25,9 +25,9 @@ import {
 import { InternalGroupUserHighlightEditForm } from 'modules/organization/components/InternalGroupDetail/components/EditHighlights/InternalGroupUserHighlightEditForm'
 import { useState } from 'react'
 import { IconNotes, IconPlus } from '@tabler/icons'
-import { useIsMobile } from '../../../../util/hooks'
-import { PermissionGate } from '../../../../components/PermissionGate'
-import { PERMISSIONS } from '../../../../util/permissions'
+import { useIsMobile } from 'util/hooks'
+import { PermissionGate } from 'components/PermissionGate'
+import { PERMISSIONS } from 'util/permissions'
 
 interface InternalGroupUserHighlightsProps {
   internalGroupId: string
