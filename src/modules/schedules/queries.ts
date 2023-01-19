@@ -5,13 +5,15 @@ export const MY_UPCOMING_SHIFTS = gql`
     myUpcomingShifts {
       id
       location
+      name
       filledSlots {
         id
         role
         user {
           id
           initials
-          fullName
+          firstName
+          getFullWithNickName
           profileImage
         }
       }
@@ -27,13 +29,15 @@ export const ALL_MY_SHIFTS = gql`
     allMyShifts {
       id
       location
+      name
       filledSlots {
         id
         role
         user {
           id
           initials
-          fullName
+          firstName
+          getFullWithNickName
           profileImage
         }
       }

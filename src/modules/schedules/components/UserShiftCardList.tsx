@@ -3,7 +3,10 @@ import { ShiftNode } from '../types.graphql'
 import { UserShiftCard } from './UserShiftCard'
 
 interface UserShiftCardListProps {
-  shifts: Pick<ShiftNode, 'id' | 'location' | 'datetimeStart' | 'filledSlots'>[]
+  shifts: Pick<
+    ShiftNode,
+    'id' | 'location' | 'datetimeStart' | 'filledSlots' | 'datetimeEnd' | 'name'
+  >[]
 }
 
 export const UserShiftCardList: React.FC<UserShiftCardListProps> = ({
