@@ -11,9 +11,6 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   TAG: ${{ github.sha }}
-  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-  SENTRY_ORG_SLUG: ${{ secrets.SENTRY_ORG_SLUG }}
-  SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
 
 jobs:
   test:
@@ -39,13 +36,3 @@ jobs:
         run: yarn install
       - name: Deploy production
         run: yarn deploy:production
-      - name: Sentry Release
-        uses: getsentry/action-release@v1.2.1
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG_SLUG }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-          # SENTRY_URL: https://sentry.io/
-        with:
-          environment: production
-
