@@ -87,6 +87,8 @@ const DocumentDetail = React.lazy(
 const AdmissionStatistics = React.lazy(
   () => import('modules/admissions/views/AdmissionStatistics')
 )
+// ==== Users ====
+const MySettings = React.lazy(() => import('modules/users/views/MySettings'))
 
 export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
@@ -239,14 +241,7 @@ export const AppRoutes: React.FC = () => {
 
         {/* ==== USERS MODULE ==== */}
         <Route path="users">
-          <Route
-            path="me"
-            element={
-              <span>
-                Coming soon<sup>TM</sup>
-              </span>
-            }
-          />
+          <Route path="me" element={<MySettings />} />
           <Route path=":userId" element={<UserProfile />} />
           <Route path="user-types">
             <Route

@@ -69,3 +69,31 @@ export const UPDATE_ABOUT_ME_MUTATION = gql`
     }
   }
 `
+
+export const UPDATE_MY_ALLERGIES_MUTATION = gql`
+  mutation UpdateMyAllergies($allergyIds: [ID!]) {
+    updateMyAllergies(allergyIds: $allergyIds) {
+      user {
+        id
+      }
+    }
+  }
+`
+
+export const UPDATE_MY_EMAIL_NOTIFICATIONS_MUTATION = gql`
+  mutation UpdateMyEmailNotifications(
+    $notifyOnDeposit: Boolean!
+    $notifyOnQuote: Boolean!
+    $notifyOnShift: Boolean!
+  ) {
+    updateMyEmailNotifications(
+      notifyOnDeposit: $notifyOnDeposit
+      notifyOnQuote: $notifyOnQuote
+      notifyOnShift: $notifyOnShift
+    ) {
+      user {
+        id
+      }
+    }
+  }
+`
