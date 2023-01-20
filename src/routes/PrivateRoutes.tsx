@@ -83,6 +83,10 @@ const DocumentDetail = React.lazy(
   () => import('modules/handbook/views/DocumentDetail')
 )
 
+// ==== Admissions ====
+const AdmissionStatistics = React.lazy(
+  () => import('modules/admissions/views/AdmissionStatistics')
+)
 // ==== Users ====
 const MySettings = React.lazy(() => import('modules/users/views/MySettings'))
 
@@ -331,7 +335,17 @@ export const AppRoutes: React.FC = () => {
                 <FinishedInterviews />
               </RestrictedRoute>
             }
-          ></Route>
+          />
+          <Route
+            path="statistics"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.interview}
+              >
+                <AdmissionStatistics />
+              </RestrictedRoute>
+            }
+          />
 
           <Route
             path="close"
