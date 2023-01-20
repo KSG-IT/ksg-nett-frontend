@@ -396,7 +396,7 @@ export interface InterviewStatisticsReturns {
     totalAvailableInterviews: number
     userInterviewCounts: {
       interviewCount: number
-      user: Pick<UserNode, 'id' | 'fullName'>
+      user: Pick<UserNode, 'id' | 'getFullWithNickName'>
     }[]
   }
 }

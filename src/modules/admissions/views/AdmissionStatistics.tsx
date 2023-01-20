@@ -85,7 +85,7 @@ const AdmissionStatistics: React.FC = () => {
           {userInterviewCounts.map(({ user, interviewCount }, index) => (
             <tr key={user.id}>
               <td>{index + 1}</td>
-              <td>{user.fullName}</td>
+              <td>{user.getFullWithNickName}</td>
               <td style={{ textAlign: 'right' }}>{interviewCount}</td>
             </tr>
           ))}

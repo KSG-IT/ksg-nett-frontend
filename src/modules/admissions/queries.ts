@@ -678,7 +678,7 @@ export const INTERVIEW_STATISTICS_QUERY = gql`
         interviewCount
         user {
           id
-          fullName
+          getFullWithNickName
         }
       }
     }
