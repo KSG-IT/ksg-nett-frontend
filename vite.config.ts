@@ -22,8 +22,7 @@ export default defineConfig({
 
       // Auth tokens can be obtained from https://sentry.io/settings/account/api/auth-tokens/
       // and needs the `project:releases` and `org:read` scopes
-      authToken:
-        '23e586cab9934603851ce6b8f98ff65f19199197a35b47bbbb9046044602535b',
+      authToken: process.env.VITE_SENTRY_AUTH_TOKEN,
 
       // Optionally uncomment the line below to override automatic release name detection
       // release: process.env.RELEASE,
