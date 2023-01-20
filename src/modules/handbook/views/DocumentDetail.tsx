@@ -9,6 +9,8 @@ import { useParams } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
 import { DOCUMENT_DETAIL_QUERY } from '../queries'
 import { DocumentDetailReturn, DocumentDetailVariables } from '../types.graphql'
+import { useState } from 'react'
+import { DocumentForm } from '../components/DocumentForm/DocumentForm'
 
 type DocumentDetailParams = {
   documentId: string
@@ -18,6 +20,7 @@ const DocumentDetail = () => {
   const { documentId } = useParams<
     keyof DocumentDetailParams
   >() as DocumentDetailParams
+  const [editMode, setEditMode] = useState(false)
   const { data, loading, error } = useQuery<
     DocumentDetailReturn,
     DocumentDetailVariables
@@ -44,23 +47,36 @@ const DocumentDetail = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbs} />
-      <Group position="apart">
-        <Title order={2} color={'dimmed'}>
-          {document.name}
-        </Title>
-        <PermissionGate permissions={PERMISSIONS.handbook.change.document}>
-          <ActionIcon>
-            <IconEdit />
-          </ActionIcon>
-        </PermissionGate>
-      </Group>
-      <Card withBorder>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: document.content,
-          }}
+
+      {editMode ? (
+        <DocumentForm
+          document={document}
+          onCompletedCallback={() => setEditMode(false)}
+          editCallback={() => setEditMode(!editMode)}
         />
-      </Card>
+      ) : (
+        <>
+          <Group position={editMode ? 'right' : 'apart'}>
+            {editMode ? null : (
+              <Title order={2} color={'dimmed'}>
+                {document.name}
+              </Title>
+            )}
+            <PermissionGate permissions={PERMISSIONS.handbook.change.document}>
+              <ActionIcon onClick={() => setEditMode(!editMode)}>
+                <IconEdit />
+              </ActionIcon>
+            </PermissionGate>
+          </Group>
+          <Card withBorder>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: document.content,
+              }}
+            />
+          </Card>
+        </>
+      )}
     </Stack>
   )
 }

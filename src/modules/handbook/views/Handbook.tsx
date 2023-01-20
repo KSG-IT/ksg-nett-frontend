@@ -9,6 +9,7 @@ import { PERMISSIONS } from 'util/permissions'
 import { DocumentStack } from '../components'
 import { ALL_DOCUMENTS_QUERY } from '../queries'
 import { AllDocumentsReturn } from '../types.graphql'
+import { Link } from 'react-router-dom'
 
 const breadcrumbs = [
   { label: 'Home', path: '/' },
@@ -33,7 +34,12 @@ const Handbook = () => {
         <Title>Håndboka</Title>
 
         <PermissionGate permissions={PERMISSIONS.handbook.add.document}>
-          <Button disabled leftIcon={<IconFilePlus />} variant="subtle">
+          <Button
+            component={Link}
+            to={'create'}
+            leftIcon={<IconFilePlus />}
+            variant="subtle"
+          >
             Nytt dokument
           </Button>
         </PermissionGate>

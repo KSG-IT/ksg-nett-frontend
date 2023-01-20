@@ -33,6 +33,7 @@ import {
   SociSessionDetail,
   SosiSessions,
 } from 'modules/economy/views'
+import { CreateDocument } from 'modules/handbook/views/CreateDocument'
 import {
   InternalGroupDetail,
   InternalGroups,
@@ -227,6 +228,7 @@ export const AppRoutes: React.FC = () => {
         {/* ==== HANDBOOK MODULE ==== */}
         <Route path="handbook">
           <Route index element={<Handbook />} />
+          <Route path={'create'} element={<CreateDocument />} />
           <Route path="document">
             <Route path=":documentId" element={<DocumentDetail />} />
           </Route>
