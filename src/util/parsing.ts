@@ -47,3 +47,7 @@ export const radioToBoolean = (input: '' | 'yes' | 'no') => {
       return false
   }
 }
+
+export const capitalizeFirstLetter = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
