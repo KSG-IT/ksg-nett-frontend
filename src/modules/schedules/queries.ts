@@ -197,6 +197,7 @@ export const ALL_SHIFTS = gql`
         }
       }
       datetimeStart
+      datetimeEnd
     }
   }
 `

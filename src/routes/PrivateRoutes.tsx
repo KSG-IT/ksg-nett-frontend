@@ -84,6 +84,13 @@ const DocumentDetail = React.lazy(
   () => import('modules/handbook/views/DocumentDetail')
 )
 
+// ==== Admissions ====
+const AdmissionStatistics = React.lazy(
+  () => import('modules/admissions/views/AdmissionStatistics')
+)
+// ==== Users ====
+const MySettings = React.lazy(() => import('modules/users/views/MySettings'))
+
 export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
   const setUser = useStore(state => state.setUser)
@@ -236,14 +243,7 @@ export const AppRoutes: React.FC = () => {
 
         {/* ==== USERS MODULE ==== */}
         <Route path="users">
-          <Route
-            path="me"
-            element={
-              <span>
-                Coming soon<sup>TM</sup>
-              </span>
-            }
-          />
+          <Route path="me" element={<MySettings />} />
           <Route path=":userId" element={<UserProfile />} />
           <Route path="user-types">
             <Route
@@ -337,7 +337,17 @@ export const AppRoutes: React.FC = () => {
                 <FinishedInterviews />
               </RestrictedRoute>
             }
-          ></Route>
+          />
+          <Route
+            path="statistics"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.interview}
+              >
+                <AdmissionStatistics />
+              </RestrictedRoute>
+            }
+          />
 
           <Route
             path="close"

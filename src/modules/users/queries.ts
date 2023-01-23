@@ -47,6 +47,7 @@ export const USER_QUERY = gql`
       phone
       initials
       profileImage
+      canRewriteAboutMe
       internalGroupPositionMembershipHistory {
         id
         membershipStart
@@ -173,6 +174,37 @@ export const USER_TYPE_DETAIL_QUERY = gql`
           getCleanFullName
         }
       }
+    }
+  }
+`
+
+export const MY_SETTINGS_QUERY = gql`
+  query MySettings {
+    me {
+      id
+      firstName
+      lastName
+      nickname
+      email
+      phone
+      dateOfBirth
+      study
+      studyAddress
+      ksgStatus
+      homeTown
+      aboutMe
+      allergies {
+        id
+        name
+      }
+      notifyOnQuote
+      notifyOnDeposit
+      notifyOnShift
+      canRewriteAboutMe
+    }
+    allAllergies {
+      id
+      name
     }
   }
 `

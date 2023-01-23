@@ -5,12 +5,11 @@ import globals from 'rollup-plugin-node-globals'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
-
 dotenv.config()
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [react(), tsconfigPaths(), ,],
   esbuild: {
     // https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
     logOverride: { 'this-is-undefined-in-esm': 'silent' },

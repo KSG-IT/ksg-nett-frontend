@@ -27,3 +27,5 @@ dist
 
 # IDEs and editors
 .idea
+
+.sentryclirc

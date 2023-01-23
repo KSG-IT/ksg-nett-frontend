@@ -44,10 +44,20 @@ export type UserNode = {
   legacyWorkHistory: LegacyUserrWorkHistoryNode[]
   allPermissions: string[]
   isSuperUser: boolean
+  allergies: AllergyNode[]
+  notifyOnQuote: boolean
+  notifyOnShift: boolean
+  notifyOnDeposit: boolean
+  canRewriteAboutMe: boolean
   bankAccount: {
     id: string
     cardUuid: string
   }
+}
+
+export type AllergyNode = {
+  id: string
+  name: string
 }
 
 export type UserTypeLogEntryNode = {
@@ -116,6 +126,30 @@ export interface MyWizardQueryReturns {
   >
 }
 
+export interface MySettingsQueryReturns {
+  me: Pick<
+    UserNode,
+    | 'id'
+    | 'firstName'
+    | 'lastName'
+    | 'nickname'
+    | 'email'
+    | 'phone'
+    | 'dateOfBirth'
+    | 'study'
+    | 'studyAddress'
+    | 'ksgStatus'
+    | 'homeTown'
+    | 'aboutMe'
+    | 'allergies'
+    | 'notifyOnQuote'
+    | 'notifyOnDeposit'
+    | 'notifyOnShift'
+    | 'canRewriteAboutMe'
+  >
+  allAllergies: AllergyNode[]
+}
+
 export interface PatchUserReturns {
   user: {
     id: string
@@ -156,4 +190,22 @@ export interface UpdateAboutMeReturns {
 }
 export interface UpdateAboutMeVariables {
   aboutMe: string
+}
+
+export interface UpdateMyAllergiesReturns {
+  user: Pick<UserNode, 'id'>
+}
+
+export interface UpdateMyAllergiesVariables {
+  allergyIds: string[]
+}
+
+export interface UpdateMyEmailNotificationsReturns {
+  user: Pick<UserNode, 'id'>
+}
+
+export interface UpdateMyEmailNotificationsVariables {
+  notifyOnQuote: boolean
+  notifyOnDeposit: boolean
+  notifyOnShift: boolean
 }

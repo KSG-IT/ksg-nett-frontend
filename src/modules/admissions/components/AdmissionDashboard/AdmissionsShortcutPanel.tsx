@@ -2,6 +2,7 @@ import {
   IconAbacus,
   IconCheck,
   IconPokeball,
+  IconSailboat,
   IconUsers,
   IconUserSearch,
   IconWheelchair,
@@ -39,6 +40,12 @@ const shortcuts = [
     icon: IconCheck,
     color: 'samfundet-red',
     link: '/admissions/finished-interviews',
+  },
+  {
+    title: 'Statistiskk',
+    icon: IconSailboat,
+    color: 'samfundet-red',
+    link: '/admissions/statistics',
   },
 ]
 
