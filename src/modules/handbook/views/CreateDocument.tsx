@@ -4,7 +4,7 @@ import { DocumentForm } from '../components/DocumentForm/DocumentForm'
 
 const breadcrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
-  { label: 'Referater', path: '/handbook' },
+  { label: 'Håndboka', path: '/handbook' },
   { label: 'Opprett', path: '/handbook/create' },
 ]
 

@@ -1,11 +1,10 @@
-import { ActionIcon, Button, Group, Stack, TextInput } from '@mantine/core'
+import { Button, Group, Stack, TextInput } from '@mantine/core'
 import { DocumentNode } from '../../types.graphql'
 import { RichTextEditor } from 'components/RichTextEditor'
 import { useDocumentFormAPI } from './useDocumentFormAPI'
 import { useDocumentLogic } from './useDocumentLogic'
 import { PermissionGate } from 'components/PermissionGate'
 import { PERMISSIONS } from 'util/permissions'
-import { IconEditOff } from '@tabler/icons'
 
 interface DocumentForm {
   document?: DocumentNode
@@ -30,16 +29,19 @@ export const DocumentForm: React.FC<DocumentForm> = ({
       <Stack>
         <Group position={'apart'}>
           <TextInput
+            size={'md'}
             placeholder="Navn"
             required
             error={errors.name?.message}
             {...register('name')}
           />
-          <PermissionGate permissions={PERMISSIONS.handbook.change.document}>
-            <ActionIcon disabled={!document} onClick={editCallback}>
-              <IconEditOff />
-            </ActionIcon>
-          </PermissionGate>
+          {document && (
+            <PermissionGate permissions={PERMISSIONS.handbook.change.document}>
+              <Button variant={'light'} onClick={editCallback}>
+                Avbryt
+              </Button>
+            </PermissionGate>
+          )}
         </Group>
 
         <RichTextEditor editor={editor} />
