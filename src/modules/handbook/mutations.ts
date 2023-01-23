@@ -1,6 +1,7 @@
 import { DocumentNode, PatchDocumentInput } from './types.graphql'
 import { useMutation } from '@apollo/client'
 import { gql } from 'graphql-tag'
+import { DELETE_DOCUMENT } from './queries'
 
 export const PATCH_DOCUMENT = gql`
   mutation UpdateDocument($id: ID!, $input: UpdateDocumentInput!) {
@@ -33,6 +34,22 @@ interface PatchDocumentVariables {
 
 export interface CreateDocumentReturns {
   createDocument: { document: Pick<DocumentNode, 'id'> }
+}
+
+export interface DeleteDocumentVariables {
+  id: string
+}
+
+export interface DeleteDocumentReturns {
+  deleteDocument: { found: boolean }
+}
+
+export function useDeleteDocumentMutation() {
+  const [deleteDocument, { loading: deleteDocumentLoading }] = useMutation<
+    DeleteDocumentReturns,
+    DeleteDocumentVariables
+  >(DELETE_DOCUMENT)
+  return { deleteDocument, deleteDocumentLoading }
 }
 
 export function usePatchDocumentMutations() {

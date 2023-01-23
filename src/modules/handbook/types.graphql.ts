@@ -13,7 +13,10 @@ export type DocumentNode = {
 // ==== QUERIES ====
 
 export interface AllDocumentsReturn {
-  allDocuments: Pick<DocumentNode, 'id' | 'name' | 'createdAt' | 'updatedAt'>[]
+  allDocuments: Pick<
+    DocumentNode,
+    'id' | 'name' | 'createdAt' | 'updatedAt' | 'updatedBy'
+  >[]
 }
 
 export interface DocumentDetailReturn {
