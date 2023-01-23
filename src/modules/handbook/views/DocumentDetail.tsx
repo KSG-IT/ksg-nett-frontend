@@ -1,26 +1,31 @@
 import { useQuery } from '@apollo/client'
-import { ActionIcon, Card, Group, Stack, Title } from '@mantine/core'
-import { IconEdit } from '@tabler/icons'
+import { Button, Card, Group, Stack, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
 import { DOCUMENT_DETAIL_QUERY } from '../queries'
 import { DocumentDetailReturn, DocumentDetailVariables } from '../types.graphql'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { DocumentForm } from '../components/DocumentForm/DocumentForm'
+import queryString from 'query-string'
 
 type DocumentDetailParams = {
   documentId: string
 }
 
-const DocumentDetail = () => {
+interface DocumentDetailProps {
+  editModeInitial?: boolean
+}
+
+const DocumentDetail: React.FC<DocumentDetailProps> = ({ editModeInitial }) => {
   const { documentId } = useParams<
     keyof DocumentDetailParams
   >() as DocumentDetailParams
-  const [editMode, setEditMode] = useState(false)
+  const [editMode, setEditMode] = useState(editModeInitial || false)
+  const firstRender = useRef(true)
   const { data, loading, error } = useQuery<
     DocumentDetailReturn,
     DocumentDetailVariables
@@ -29,6 +34,18 @@ const DocumentDetail = () => {
       id: documentId,
     },
   })
+
+  useEffect(() => {
+    if (!firstRender.current) return
+    firstRender.current = false
+
+    const search = queryString.parse(location.search)
+    const modeString = search.mode as string
+
+    if (modeString === 'edit') {
+      setEditMode(true)
+    }
+  }, [setEditMode])
 
   if (error) return <FullPageError />
 
@@ -62,11 +79,21 @@ const DocumentDetail = () => {
                 {document.name}
               </Title>
             )}
-            <PermissionGate permissions={PERMISSIONS.handbook.change.document}>
-              <ActionIcon onClick={() => setEditMode(!editMode)}>
-                <IconEdit />
-              </ActionIcon>
-            </PermissionGate>
+            <Group>
+              <Button variant={'outline'} component={Link} to={'/handbook'}>
+                Tilbake
+              </Button>
+              <PermissionGate
+                permissions={PERMISSIONS.handbook.change.document}
+              >
+                <Button
+                  variant={'light'}
+                  onClick={() => setEditMode(!editMode)}
+                >
+                  {editMode ? 'Avbryt' : 'Rediger'}
+                </Button>
+              </PermissionGate>
+            </Group>
           </Group>
           <Card withBorder>
             <div

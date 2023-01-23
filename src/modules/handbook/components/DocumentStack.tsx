@@ -1,31 +1,67 @@
 import {
-  ActionIcon,
-  Badge,
+  createStyles,
   Group,
-  Menu,
   Paper,
   Stack,
+  Text,
   useMantineTheme,
 } from '@mantine/core'
-import { IconDots, IconFile, IconTrash } from '@tabler/icons'
-import { PermissionGate } from 'components/PermissionGate'
-import { Link } from 'react-router-dom'
-import { PERMISSIONS } from 'util/permissions'
+import { IconFile } from '@tabler/icons'
+import { Link, useNavigate } from 'react-router-dom'
 import { DocumentNode } from '../types.graphql'
+import { formatDistanceToNow } from '../../../util/date-fns'
 
 interface DocumentStackProps {
-  documents: Pick<DocumentNode, 'id' | 'createdAt' | 'name' | 'updatedAt'>[]
+  documents: Pick<
+    DocumentNode,
+    'id' | 'createdAt' | 'name' | 'updatedAt' | 'updatedBy'
+  >[]
+  selectedCallback: (
+    document: Pick<
+      DocumentNode,
+      'id' | 'createdAt' | 'name' | 'updatedAt' | 'updatedBy'
+    > | null
+  ) => void
+  selectedDocument: Pick<
+    DocumentNode,
+    'id' | 'createdAt' | 'name' | 'updatedAt' | 'updatedBy'
+  > | null
 }
 
-export const DocumentStack: React.FC<DocumentStackProps> = ({ documents }) => {
+export const DocumentStack: React.FC<DocumentStackProps> = ({
+  documents,
+  selectedCallback,
+  selectedDocument,
+}) => {
   const theme = useMantineTheme()
+  const { classes } = useStyles()
+  const navigate = useNavigate()
+
+  function handleSingleClick(
+    document: Pick<
+      DocumentNode,
+      'id' | 'createdAt' | 'name' | 'updatedAt' | 'updatedBy'
+    >
+  ) {
+    // If the document is already selected, deselect it
+    if (selectedDocument?.id === document.id) {
+      selectedCallback(null)
+      return
+    }
+    selectedCallback(document)
+  }
 
   return (
     <Stack spacing={0}>
       {documents.map(document => (
         <Paper
-          component={Link}
-          to={`document/${document.id}`}
+          className={
+            selectedDocument?.id === document.id
+              ? classes.cardActive
+              : classes.card
+          }
+          onClick={() => handleSingleClick(document)}
+          onDoubleClick={() => navigate(`document/${document.id}`)}
           withBorder
           key={document.id}
           p="xs"
@@ -33,40 +69,56 @@ export const DocumentStack: React.FC<DocumentStackProps> = ({ documents }) => {
           <Group position="apart">
             <Group>
               <IconFile
-                color={theme.colors.gray[5]}
-                fill={theme.colors.gray[5]}
+                color={theme.colors[theme.primaryColor][6]}
+                fill={theme.colors[theme.primaryColor][0]}
+                stroke={1.4}
               />
-              <Badge size={'xl'} variant={'filled'} radius={'sm'}>
+              <Text
+                component={Link}
+                to={`document/${document.id}`}
+                size={'sm'}
+                color={selectedDocument?.id === document.id ? 'black' : 'dark'}
+                weight={
+                  selectedDocument?.id === document.id ? 'bold' : 'lighter'
+                }
+              >
                 {document.name}
-              </Badge>
+              </Text>
             </Group>
-            <PermissionGate permissions={PERMISSIONS.handbook.delete.document}>
-              <td>
-                <Menu
-                  transition="pop"
-                  withArrow
-                  position="bottom-end"
-                  zIndex={300}
-                >
-                  <Menu.Target>
-                    <ActionIcon>
-                      <IconDots size={16} stroke={1.5} />
-                    </ActionIcon>
-                  </Menu.Target>
-                  <Menu.Dropdown>
-                    <Menu.Item
-                      icon={<IconTrash size={16} stroke={1.5} />}
-                      color="red"
-                    >
-                      Slett dokument
-                    </Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
-              </td>
-            </PermissionGate>
+            <Group>
+              <Text
+                color={
+                  selectedDocument?.id === document.id ? 'black' : 'dimmed'
+                }
+                truncate
+                size={'xs'}
+              >
+                Oppdatert sist av: {document.updatedBy?.firstName}
+              </Text>
+              <Text
+                color={
+                  selectedDocument?.id === document.id ? 'black' : 'dimmed'
+                }
+                size={'xs'}
+              >
+                for {formatDistanceToNow(new Date(document.updatedAt))} siden
+              </Text>
+            </Group>
           </Group>
         </Paper>
       ))}
     </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  card: {
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.colors.gray[0],
+    },
+  },
+  cardActive: {
+    backgroundColor: theme.colors[theme.primaryColor][0],
+  },
+}))
