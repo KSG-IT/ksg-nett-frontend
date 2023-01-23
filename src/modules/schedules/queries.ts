@@ -192,7 +192,8 @@ export const ALL_SHIFTS = gql`
         user {
           id
           initials
-          fullName
+          firstName
+          getFullWithNickName
           profileImage
         }
       }
