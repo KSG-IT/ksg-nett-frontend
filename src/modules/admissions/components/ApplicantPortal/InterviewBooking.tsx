@@ -89,9 +89,7 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
         <Text>
           Det kan hende at flere prøver å booke intervjutid samtidig. Dette kan
           medføre at tidspunkter forsvinner om du ikke velger et tidspunkt raskt
-          nok. For at vi ikke skal glemme å sette opp intervjuere er det
-          tidligst mulig å booke et intervju neste dag. Helst book et intevju så
-          tidlig som mulig.
+          nok. Helst book et intevju så tidlig som mulig.
         </Text>
       </MessageBox>
       <SimpleGrid
