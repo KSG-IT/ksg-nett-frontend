@@ -1,4 +1,3 @@
-import { Table } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { ToggleApplicantTableRow } from './ToggleApplicantTableRow'
@@ -7,7 +6,7 @@ interface CloseAdmissionTableProps {
   applicants: ApplicantNode[]
 }
 
-export const CloseAdmissionTable: React.VFC<CloseAdmissionTableProps> = ({
+export const CloseAdmissionTable: React.FC<CloseAdmissionTableProps> = ({
   applicants,
 }) => {
   const applicantRows = applicants.map(applicant => (

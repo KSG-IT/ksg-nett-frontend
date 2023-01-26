@@ -351,7 +351,7 @@ export const AppRoutes: React.FC = () => {
             path="close"
             element={
               <RestrictedRoute
-                permissions={PERMISSIONS.admissions.change.admission}
+                permissions={PERMISSIONS.admissions.view.admission}
               >
                 <CloseAdmission />
               </RestrictedRoute>
