@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## [v2023.1.6] - 2023-01-27
+
+### Added
+
+- Handbook: create new documents
+- Handbook: edit documents
+- Handbook: delete documents
+
+### Changed
+
+- Handbook: styling improvements
+
+### Fixed
+
+- Header: User search laggy performance
+- Schdules: Missing 'kontoret' option
+- schedules: Missing 'ryddevakt' option
+
+## [v2023.1.5] - 2023-01-??
+
+Things happend. Not sure what.
+
 ## [v2023.1.4] - 2023-01-15
 
 ### Added
