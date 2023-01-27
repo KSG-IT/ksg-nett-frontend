@@ -7,6 +7,17 @@ export const ALL_DOCUMENTS_QUERY = gql`
       name
       createdAt
       updatedAt
+      updatedBy {
+        firstName
+        getCleanFullName
+      }
+    }
+  }
+`
+export const DELETE_DOCUMENT = gql`
+  mutation DeleteDocument($id: ID!) {
+    deleteDocument(id: $id) {
+      found
     }
   }
 `

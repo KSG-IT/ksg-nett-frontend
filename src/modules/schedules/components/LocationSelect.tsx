@@ -12,6 +12,7 @@ const locationOptions = [
   { value: LocationValues.STORSALEN, label: 'Storsalen' },
   { value: LocationValues.KLUBBEN, label: 'Klubben' },
   { value: LocationValues.RUNDHALLEN, label: 'Rundhallen' },
+  { value: LocationValues.KONTORET, label: 'Kontoret' },
 ]
 interface LocationSelectProps extends Omit<SelectProps, 'data'> {
   value: LocationValues | null

@@ -93,6 +93,17 @@ export interface AllUsersShallowQueryVariables {
   q?: string
 }
 
+export interface SearchbarUsersQueryVariables {
+  searchString: string
+}
+
+export interface SearchbarUsersQueryReturns {
+  searchbarUsers: Pick<
+    UserNode,
+    'id' | 'profileImage' | 'initials' | 'getCleanFullName'
+  >[]
+}
+
 export interface AllUsersShallowQueryReturns {
   allActiveUsersList: Pick<
     UserNode,

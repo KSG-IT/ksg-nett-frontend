@@ -208,3 +208,14 @@ export const MY_SETTINGS_QUERY = gql`
     }
   }
 `
+
+export const SEARCHBAR_USERS_QUERY = gql`
+  query SearchbarUsers($searchString: String) {
+    searchbarUsers(searchString: $searchString) {
+      id
+      getCleanFullName
+      profileImage
+      initials
+    }
+  }
+`
