@@ -70,7 +70,7 @@ const Handbook = () => {
             </ActionIcon>
             <ActionIcon
               disabled={!selectedDocument}
-              onClick={evt =>
+              onClick={(evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
                 selectedDocument && handleDelete(evt, selectedDocument.id)
               }
               color="gray"
