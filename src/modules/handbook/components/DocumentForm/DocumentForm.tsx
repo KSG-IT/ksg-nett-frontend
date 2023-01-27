@@ -1,10 +1,10 @@
 import { Button, Group, Stack, TextInput } from '@mantine/core'
-import { DocumentNode } from '../../types.graphql'
+import { PermissionGate } from 'components/PermissionGate'
 import { RichTextEditor } from 'components/RichTextEditor'
+import { PERMISSIONS } from 'util/permissions'
+import { DocumentNode } from '../../types.graphql'
 import { useDocumentFormAPI } from './useDocumentFormAPI'
 import { useDocumentLogic } from './useDocumentLogic'
-import { PermissionGate } from 'components/PermissionGate'
-import { PERMISSIONS } from 'util/permissions'
 
 interface DocumentForm {
   document?: DocumentNode
@@ -17,9 +17,9 @@ export const DocumentForm: React.FC<DocumentForm> = ({
   onCompletedCallback,
   editCallback,
 }) => {
-  const { form, editor, onSubmit } = useDocumentLogic({
-    ...useDocumentFormAPI(document, onCompletedCallback),
-  })
+  const { form, editor, onSubmit } = useDocumentLogic(
+    useDocumentFormAPI(document, onCompletedCallback)
+  )
 
   const { formState, register, handleSubmit } = form
   const { errors, isSubmitting } = formState

@@ -1,15 +1,15 @@
 import { showNotification } from '@mantine/notifications'
-import { usePatchDocumentMutations } from 'modules/handbook/mutations'
-import { DocumentNode } from '../../types.graphql'
+import { useDocumentMutations } from 'modules/handbook/mutations.hooks'
 import { useNavigate } from 'react-router-dom'
-import { DocumentCleanedData } from './useDocumentLogic'
 import { ALL_DOCUMENTS_QUERY, DOCUMENT_DETAIL_QUERY } from '../../queries'
+import { DocumentNode } from '../../types.graphql'
+import { DocumentCleanedData } from './useDocumentLogic'
 
 export function useDocumentFormAPI(
   document?: DocumentNode,
   onCompletedCallback?: () => void
 ) {
-  const { patchDocument, createDocument } = usePatchDocumentMutations()
+  const { patchDocument, createDocument } = useDocumentMutations()
   const navigate = useNavigate()
 
   async function handleSubmit(data: DocumentCleanedData) {
@@ -25,13 +25,19 @@ export function useDocumentFormAPI(
           input: input,
         },
         refetchQueries: [ALL_DOCUMENTS_QUERY, DOCUMENT_DETAIL_QUERY],
-        onCompleted({ patchDocument }) {
+        onCompleted() {
           showNotification({
             title: 'Vellykket',
             message: 'Dokumentet har blitt oppdatert',
             color: 'green',
           })
           onCompletedCallback?.()
+        },
+        onError({ message }) {
+          showNotification({
+            title: 'Noe gikk galt',
+            message: message,
+          })
         },
       })
     } else {

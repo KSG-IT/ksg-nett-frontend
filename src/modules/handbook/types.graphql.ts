@@ -32,11 +32,6 @@ export interface DocumentDetailVariables {
 export type PatchDocumentInput = {
   name: string
   content: string
-  createdBy?: string
-  updatedBy?: string
-
-  createdAt?: string
-  updatedAt?: string
 }
 
 export type PatchDocumentMutationReturns = {

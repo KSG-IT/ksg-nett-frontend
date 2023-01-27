@@ -1,19 +1,19 @@
 import { useQuery } from '@apollo/client'
 import { ActionIcon, Button, Group, Stack, Title } from '@mantine/core'
+import { useClickOutside } from '@mantine/hooks'
+import { showNotification } from '@mantine/notifications'
 import { IconEdit, IconEye, IconFilePlus, IconTrash } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
 import { DocumentStack } from '../components'
+import { useDocumentMutations } from '../mutations.hooks'
 import { ALL_DOCUMENTS_QUERY } from '../queries'
 import { AllDocumentsReturn, DocumentNode } from '../types.graphql'
-import { Link, useNavigate } from 'react-router-dom'
-import { showNotification } from '@mantine/notifications'
-import { useDeleteDocumentMutation } from '../mutations'
-import { useState } from 'react'
-import { useClickOutside } from '@mantine/hooks'
 
 const breadcrumbs = [
   { label: 'Home', path: '/' },
@@ -27,7 +27,7 @@ const Handbook = () => {
     DocumentNode,
     'id' | 'createdAt' | 'name' | 'updatedAt' | 'updatedBy'
   > | null>(null)
-  const { deleteDocument, deleteDocumentLoading } = useDeleteDocumentMutation()
+  const { deleteDocument, deleteDocumentLoading } = useDocumentMutations()
   const ref = useClickOutside(() => handleClickOutside())
   const navigate = useNavigate()
   if (error) return <FullPageError />
@@ -61,7 +61,6 @@ const Handbook = () => {
   return (
     <Stack ref={ref}>
       <Breadcrumbs items={breadcrumbs} />
-      {/* Meta data card here eventually */}
       <Group position="apart">
         <Title>Håndboka</Title>
         <Group>
@@ -71,7 +70,9 @@ const Handbook = () => {
             </ActionIcon>
             <ActionIcon
               disabled={!selectedDocument}
-              onClick={(e: any) => handleDelete(e, selectedDocument!?.id)}
+              onClick={evt =>
+                selectedDocument && handleDelete(evt, selectedDocument.id)
+              }
               color="gray"
             >
               <IconTrash size={24} stroke={2} />
