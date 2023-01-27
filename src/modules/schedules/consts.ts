@@ -9,6 +9,8 @@ export enum LocationValues {
   SELSKAPSSIDEN = 'SELSKAPSSIDEN',
   STORSALEN = 'STORSALEN',
   STROSSA = 'STROSSA',
+
+  KONTORET = 'KONTORET',
 }
 
 export enum RoleValues {
