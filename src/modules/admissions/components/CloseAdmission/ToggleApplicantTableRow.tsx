@@ -1,9 +1,12 @@
 import { Checkbox } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { useToggleApplicantWillBeAdmitted } from 'modules/admissions/mutations.hooks'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { renderPrioritycell } from 'modules/admissions/utils'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
+import { Link } from 'react-router-dom'
+import { usePermissions } from 'util/hooks/usePermissions'
+import { PERMISSIONS } from 'util/permissions'
 
 interface ToggleApplicantWillBeAdmittedReturns {
   toggleApplicantWillBeAdmitted: {
@@ -19,6 +22,7 @@ export const ToggleApplicantTableRow: React.VFC<ToggleApplicantInlineProps> = ({
   applicant,
 }) => {
   const [willBeAdmitted, setWillBeAdmitted] = useState(applicant.willBeAdmitted)
+  const { hasPermissions } = usePermissions()
 
   const { toggleApplicantWillBeAdmitted } = useToggleApplicantWillBeAdmitted()
 
@@ -39,7 +43,10 @@ export const ToggleApplicantTableRow: React.VFC<ToggleApplicantInlineProps> = ({
           setWillBeAdmitted(!willBeAdmitted)
           return
         }
-        toast.error('No gikk galt')
+        showNotification({
+          title: 'Noe gikk galt',
+          message: '',
+        })
       },
     }).then(({ data }) => {
       // I have a feeling this is not the best way to do this.
@@ -62,10 +69,18 @@ export const ToggleApplicantTableRow: React.VFC<ToggleApplicantInlineProps> = ({
 
   return (
     <tr key={applicant.id}>
-      <td key={applicant.fullName}>{applicant.fullName}</td>
+      <td key={applicant.fullName}>
+        <Link to={`/admissions/applicants/${applicant.id}`}>
+          {applicant.fullName}
+        </Link>
+      </td>
       {applicant.priorities.map(priority => renderPrioritycell(priority))}
       <td key="togglecheckbox">
-        <Checkbox checked={willBeAdmitted} onChange={handleToggleApplicant} />
+        <Checkbox
+          disabled={!hasPermissions(PERMISSIONS.admissions.change.admission)}
+          checked={willBeAdmitted}
+          onChange={handleToggleApplicant}
+        />
       </td>
     </tr>
   )

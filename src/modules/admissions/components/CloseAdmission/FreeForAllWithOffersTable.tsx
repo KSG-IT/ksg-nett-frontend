@@ -1,10 +1,14 @@
-import { Button, Table } from '@mantine/core'
+import { Button } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { CardTable } from 'components/CardTable'
 import {
   useGiveApplicantToInternalGroupMutation,
   useResetApplicantInternalGroupPositionOffer,
 } from 'modules/admissions/mutations.hooks'
 import { ApplicantInterestNode } from 'modules/admissions/types.graphql'
+import { Link } from 'react-router-dom'
+import { usePermissions } from 'util/hooks/usePermissions'
+import { PERMISSIONS } from 'util/permissions'
 
 const parsePositionOffer = (
   interest: ApplicantInterestNode['positionToBeOffered']
@@ -17,6 +21,8 @@ const parsePositionOffer = (
 export const FreeForAllWithOffersTable: React.VFC<{
   applicantInterests: ApplicantInterestNode[]
 }> = ({ applicantInterests }) => {
+  const { hasPermissions } = usePermissions()
+
   const { giveApplicantToInternalGroupMutation } =
     useGiveApplicantToInternalGroupMutation()
   const { resetApplicantInternalGroupPositionOfferMutation } =
@@ -31,6 +37,12 @@ export const FreeForAllWithOffersTable: React.VFC<{
         'CloseAdmissionQueryData',
         'AdmissionApplicantPreviewQuery',
       ],
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message: message,
+        })
+      },
     })
   }
 
@@ -43,21 +55,35 @@ export const FreeForAllWithOffersTable: React.VFC<{
         'CloseAdmissionQueryData',
         'AdmissionApplicantPreviewQuery',
       ],
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message: message,
+        })
+      },
     })
   }
 
   const interestRows = applicantInterests.map(interest => (
     <tr key={interest.id}>
-      <td key={1}>{interest.applicant.fullName}</td>
+      <td key={1}>
+        <Link to={`/admissions/applicants/${interest.applicant.id}`}>
+          {interest.applicant.fullName}
+        </Link>
+      </td>
       <td key={2}>{interest.internalGroup.name}</td>
       <td key={3}>
-        <Button onClick={() => handleGiveApplicant(interest.id)}>
+        <Button
+          disabled={!hasPermissions(PERMISSIONS.admissions.change.admission)}
+          onClick={() => handleGiveApplicant(interest.id)}
+        >
           Gi til {interest.internalGroup.name}
         </Button>
       </td>
       <td key={4}>{parsePositionOffer(interest.positionToBeOffered)}</td>
       <td key={5}>
         <Button
+          disabled={!hasPermissions(PERMISSIONS.admissions.change.admission)}
           onClick={() => handleResetApplicantInterest(interest.id)}
           color="red"
         >
