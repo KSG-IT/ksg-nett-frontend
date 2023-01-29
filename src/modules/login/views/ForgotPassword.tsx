@@ -84,7 +84,6 @@ export const ForgotPassword: React.FC = () => {
             {...register('username')}
           />
           <Button
-            color="samfundet-red"
             type="submit"
             fullWidth
             mt="md"

@@ -151,9 +151,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
     <Stack className={classes.wrapper}>
       <Group position="apart">
         <Group>
-          <Button color="samfundet-red" onClick={handleLockBarTab}>
-            Lås BSF
-          </Button>
+          <Button onClick={handleLockBarTab}>Lås BSF</Button>
         </Group>
       </Group>
 
@@ -228,9 +226,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
         </Group>
       </Card>
       <Group>
-        <Button color="samfundet-red" onClick={handleAddProductOrder}>
-          Lagre kryss
-        </Button>
+        <Button onClick={handleAddProductOrder}>Lagre kryss</Button>
       </Group>
     </Stack>
   )

@@ -100,22 +100,16 @@ export const ConfigureInterviewLocationAvailability: React.VFC<
           onChange={evt => setInterviewLocationName(evt.target.value)}
         />
         <Group>
-          <Button color="samfundet-red" onClick={handleCreateInterviewLocation}>
+          <Button onClick={handleCreateInterviewLocation}>
             Opprett nytt lokale
           </Button>
         </Group>
       </Stack>
       <Group my="lg">
-        <Button
-          color="samfundet-red"
-          onClick={() => setStageCallback('SCHEDULE')}
-        >
+        <Button onClick={() => setStageCallback('SCHEDULE')}>
           Forrige steg
         </Button>
-        <Button
-          color="samfundet-red"
-          onClick={() => setStageCallback('INTERVIEW_TEMPLATE')}
-        >
+        <Button onClick={() => setStageCallback('INTERVIEW_TEMPLATE')}>
           Neste steg
         </Button>
       </Group>

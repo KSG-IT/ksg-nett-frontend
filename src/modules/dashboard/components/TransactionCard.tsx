@@ -78,7 +78,9 @@ const useStyles = createStyles(theme => ({
   card: {
     backgroundColor: theme.colors.white,
     border: `1px solid ${theme.colors.gray[3]}`,
-    borderTop: `5px solid ${theme.colors.brand}`,
+    borderTop: `5px solid ${
+      theme.colors[theme.primaryColor][theme.primaryShade as number]
+    }`,
   },
   tableHeader: {
     color: theme.colors.gray[7],

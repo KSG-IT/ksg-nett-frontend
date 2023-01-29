@@ -95,7 +95,6 @@ export const AdmissionDashboard: React.FC = () => {
           <Button
             leftIcon={<IconClock />}
             disabled={nextPhaseLoading}
-            color="samfundet-red"
             onClick={() => {
               handleAdmissionNextPhase(activeAdmission.id)
             }}

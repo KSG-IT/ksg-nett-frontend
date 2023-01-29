@@ -65,7 +65,7 @@ export const DiscussionDashboard: React.FC = () => {
       <Group position="apart" mb="md">
         <Title>Fordelingsmøtet</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
-          <Button color="samfundet-red" onClick={handleLockAdmission}>
+          <Button onClick={handleLockAdmission}>
             Fordelingsmøtet er ferdig
           </Button>
         </PermissionGate>

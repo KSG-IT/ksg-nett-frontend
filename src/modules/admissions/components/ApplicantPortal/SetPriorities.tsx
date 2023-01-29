@@ -230,7 +230,6 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
             <Group position={'right'}>
               {renderChangePriorityButtons(index)}
               <Button
-                color="samfundet-red"
                 variant={'outline'}
                 leftIcon={<IconTrash />}
                 onClick={() => {
@@ -253,7 +252,6 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
             <Button
               key={position.name}
               variant={'light'}
-              color="samfundet-red"
               onClick={() => {
                 handleAddPriority(position.id)
               }}
@@ -272,11 +270,7 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
         rekkefølgen på prioriteringene dine under intervjuet.
       </MessageBox>
 
-      <Button
-        onClick={handleNextStep}
-        disabled={!canMoveOn}
-        color="samfundet-red"
-      >
+      <Button onClick={handleNextStep} disabled={!canMoveOn}>
         Lagre prioriteringer
       </Button>
     </Stack>

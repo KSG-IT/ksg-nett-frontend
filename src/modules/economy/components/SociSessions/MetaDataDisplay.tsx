@@ -25,14 +25,12 @@ export const MetaDataDisplay: React.FC<MetaDataDisplayProps> = ({
       <Group>
         <Group>
           <Text className={classes.label}>Status:</Text>
-          <Badge color="samfundet-red">
-            {sociSession.closed ? 'Stengt' : 'Åpen'}
-          </Badge>
+          <Badge>{sociSession.closed ? 'Stengt' : 'Åpen'}</Badge>
         </Group>
         {sociSession.closed && (
           <Group>
             <Text className={classes.label}>Tid stengt:</Text>
-            <Badge color="samfundet-red">
+            <Badge>
               {format(new Date(sociSession.closedAt), 'yyyy.MM.dd HH:mm')}
             </Badge>
           </Group>
@@ -40,15 +38,13 @@ export const MetaDataDisplay: React.FC<MetaDataDisplayProps> = ({
 
         <Group>
           <Text className={classes.label}>Listetype:</Text>
-          <Badge color="samfundet-red">{sociSession.type}</Badge>
+          <Badge>{sociSession.type}</Badge>
         </Group>
         <Group>
           {sociSession.createdBy && (
             <>
               <Text className={classes.label}>Opprettet av:</Text>
-              <Badge color="samfundet-red">
-                {sociSession.createdBy.getCleanFullName}
-              </Badge>
+              <Badge>{sociSession.createdBy.getCleanFullName}</Badge>
             </>
           )}
         </Group>

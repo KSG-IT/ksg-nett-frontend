@@ -66,16 +66,10 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
           />
         </SimpleGrid>
         <Group position="apart" mt={'md'}>
-          <Button
-            variant="outline"
-            color={'samfundet-red'}
-            component={Link}
-            to="/dashboard"
-          >
+          <Button variant="outline" component={Link} to="/dashboard">
             Avbryt
           </Button>
           <Button
-            color={'samfundet-red'}
             size={mobileSize ? 'sm' : 'md'}
             disabled={isSubmitting}
             type="submit"

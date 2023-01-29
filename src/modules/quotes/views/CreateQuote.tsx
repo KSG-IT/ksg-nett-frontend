@@ -127,19 +127,10 @@ export const CreateQuote: React.FC = () => {
             <UserMultiSelect users={tagged} setUsersCallback={setTagged} />
           </SimpleGrid>
           <Group position="apart">
-            <Button
-              variant="outline"
-              color={'samfundet-red'}
-              component={Link}
-              to="/quotes"
-            >
+            <Button variant="outline" component={Link} to="/quotes">
               Avbryt
             </Button>
-            <Button
-              mt={'md'}
-              color={'samfundet-red'}
-              onClick={handleCreateQuote}
-            >
+            <Button mt={'md'} onClick={handleCreateQuote}>
               Send inn
             </Button>
           </Group>
@@ -155,7 +146,7 @@ const useStyles = createStyles(theme => ({
     fontWeight: 'bold',
   },
   card: {
-    borderTop: `5px solid ${theme.colors.brand}`,
+    borderTop: `5px solid ${theme.colors[theme.primaryColor][6]}`,
   },
   select: {
     color: 'green',

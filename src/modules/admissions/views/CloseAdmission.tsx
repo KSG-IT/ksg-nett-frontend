@@ -66,13 +66,11 @@ export const CloseAdmission: React.FC = () => {
       </MessageBox>
       <FreeForAllWithOffersTable applicantInterests={applicantInterests} />
       <Group>
-        <Button color="samfundet-red" onClick={() => setPreviewModalOpen(true)}>
+        <Button onClick={() => setPreviewModalOpen(true)}>
           Fullfør opptak
         </Button>
         <a href={`${API_URL}/admissions/callsheet`} target="_blank">
-          <Button leftIcon={<IconFileAnalytics />} color="samfundet-red">
-            Last ned ringeliste
-          </Button>
+          <Button leftIcon={<IconFileAnalytics />}>Last ned ringeliste</Button>
         </a>
       </Group>
       <FinalOverlookModal

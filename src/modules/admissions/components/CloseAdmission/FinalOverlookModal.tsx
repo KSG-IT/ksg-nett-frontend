@@ -32,11 +32,9 @@ export const FinalOverlookModal: React.VFC<{
     >
       <Stack>
         <ResultPreview />
-        <Button color="samfundet-red" onClick={handleCloseAdmission}>
-          Avslutt opptaket
-        </Button>
+        <Button onClick={handleCloseAdmission}>Avslutt opptaket</Button>
       </Stack>
-      <LoadingOverlay color="samfundet-red" visible={closeAdmissionLoading} />
+      <LoadingOverlay visible={closeAdmissionLoading} />
     </Modal>
   )
 }

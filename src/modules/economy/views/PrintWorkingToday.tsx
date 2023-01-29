@@ -85,11 +85,7 @@ export const PrintWorkingToday: React.FC = ({}) => {
       <Breadcrumbs items={breadcrumbsItems} />
       <Group position="apart">
         <Title>Krysseliste for jobbende</Title>
-        <Button
-          leftIcon={<IconFileDownload />}
-          color="samfundet-red"
-          onClick={handleFetchList}
-        >
+        <Button leftIcon={<IconFileDownload />} onClick={handleFetchList}>
           Last ned krysseliste
         </Button>
       </Group>

@@ -98,9 +98,7 @@ export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
         />
       </SimpleGrid>
       <Group my="sm">
-        <Button color="samfundet-red" type="submit">
-          Lagre innstillinger
-        </Button>
+        <Button type="submit">Lagre innstillinger</Button>
       </Group>
     </form>
   )

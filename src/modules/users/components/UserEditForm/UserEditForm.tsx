@@ -1,4 +1,11 @@
-import { Button, FileInput, Group, SimpleGrid, TextInput } from '@mantine/core'
+import {
+  Button,
+  FileInput,
+  Group,
+  SimpleGrid,
+  TextInput,
+  useMantineTheme,
+} from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import {
   IconAt,
@@ -29,6 +36,7 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
   })
   const { formState, register, handleSubmit, getValues, setValue } = form
   const { errors, isSubmitting } = formState
+  const theme = useMantineTheme()
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -105,16 +113,16 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
       </SimpleGrid>
 
       <Group position="apart" mt="md">
-        <Button
-          variant="outline"
-          color="samfundet-red"
-          onClick={onCompletedCallback}
-        >
+        <Button variant="outline" onClick={onCompletedCallback}>
           Lukk
         </Button>
         <Button
           variant="gradient"
-          gradient={{ from: 'samfundet-red.6', to: 'samfundet-red.4', deg: 15 }}
+          gradient={{
+            from: theme.colors[theme.primaryColor][6],
+            to: theme.colors[theme.primaryColor][4],
+            deg: 15,
+          }}
           disabled={isSubmitting}
           type="submit"
         >

@@ -79,7 +79,6 @@ export const ScheduleDetails: React.FC = () => {
           />
 
           <Button
-            color="samfundet-red"
             leftIcon={<IconSettings />}
             onClick={() => setScheduleSettingsModalOpen(true)}
           >
@@ -94,10 +93,7 @@ export const ScheduleDetails: React.FC = () => {
             {' '}
             Nytt skift
           </Button>
-          <Button
-            color="samfundet-red"
-            onClick={() => setApplyTemplateModalOpen(true)}
-          >
+          <Button onClick={() => setApplyTemplateModalOpen(true)}>
             Generer vakter fra mal
           </Button>
         </Group>

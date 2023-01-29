@@ -54,12 +54,10 @@ export const StartAdmissionProcessCard: React.VFC<
           <b>Legg til ny bruker</b>
         </Text>
         <Group>
-          <Button color="samfundet-red" onClick={handleOpenAdmission}>
-            Start nytt opptak
-          </Button>
+          <Button onClick={handleOpenAdmission}>Start nytt opptak</Button>
         </Group>
         <div>Noen du har glemt å legge til?</div>
-        <Button color="samfundet-red">Legg til ny bruker</Button>
+        <Button>Legg til ny bruker</Button>
       </PermissionGate>
     </Stack>
   )

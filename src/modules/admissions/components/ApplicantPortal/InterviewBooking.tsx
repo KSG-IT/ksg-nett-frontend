@@ -151,14 +151,14 @@ const useStyles = createStyles(theme => ({
     backgroundColor: `${theme.colors.white} !important`,
   },
   available: {
-    color: `${theme.colors['samfundet-red'][3]}`,
+    color: `${theme.colors[theme.primaryColor][3]}`,
     border: `1px solid ${theme.colors.white}`,
     backgroundColor: `${theme.colors.red[1]}`,
     borderRadius: '50%',
     backgroundClip: 'content-box',
   },
   weekend: {
-    color: `${theme.colors['samfundet-red'][3]} !important`,
+    color: `${theme.colors[theme.primaryColor][3]} !important`,
   },
   selected: {
     color: `${theme.colors.white} !important`,

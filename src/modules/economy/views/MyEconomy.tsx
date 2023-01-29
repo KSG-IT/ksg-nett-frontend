@@ -6,6 +6,7 @@ import {
   Stack,
   Text,
   Title,
+  useMantineTheme,
 } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
@@ -74,7 +75,9 @@ export const MyEconomy: React.FC = () => {
 
 const useStyles = createStyles(theme => ({
   cardWithBorder: {
-    borderTop: `5px solid ${theme.colors.brand}`,
+    borderTop: `5px solid ${
+      theme.colors[theme.primaryColor][theme.primaryShade as number]
+    }`,
     '@media (max-width: 800px)': {
       padding: theme.spacing.xs,
     },

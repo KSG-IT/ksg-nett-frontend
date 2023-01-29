@@ -44,21 +44,12 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
       <td>
         {invoice.pdf ? (
           <a href={invoice.pdf} target="_blank">
-            <Button
-              color="samfundet-red"
-              leftIcon={<IconDownload />}
-              variant="subtle"
-            >
+            <Button leftIcon={<IconDownload />} variant="subtle">
               Last ned
             </Button>
           </a>
         ) : (
-          <Button
-            disabled
-            leftIcon={<IconFilePlus />}
-            color="samfundet-red"
-            variant="subtle"
-          >
+          <Button disabled leftIcon={<IconFilePlus />} variant="subtle">
             Opprett
           </Button>
         )}
@@ -69,7 +60,6 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
         ) : (
           <Button
             leftIcon={<IconMailbox />}
-            color="samfundet-red"
             variant="subtle"
             disabled={!invoice.pdf}
             onClick={() => handleSendInvoiceEmail(invoice.id)}

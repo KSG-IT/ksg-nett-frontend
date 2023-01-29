@@ -4,6 +4,7 @@ import { FullContentLoader } from 'components/Loading'
 import { ShortcutCardGrid } from 'components/ShortcutCard'
 import { INTERNAL_GROUPS_ACCEPTING_APPLICANTS } from 'modules/admissions/queries'
 import { InternalGroupsAcceptingApplicantsReturns } from 'modules/admissions/types.graphql'
+import { IconUsers } from '@tabler/icons'
 
 export const InternalGroupsNav: React.FC = () => {
   const { error, loading, data } =
@@ -21,7 +22,6 @@ export const InternalGroupsNav: React.FC = () => {
     internalGroup => ({
       title: internalGroup.name,
       link: `/admissions/internal-group/${internalGroup.id}`,
-      color: 'samfundet-red',
     })
   )
 

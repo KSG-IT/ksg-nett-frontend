@@ -11,7 +11,7 @@ interface UserManagementTableProps {
 const useStyles = createStyles(theme => ({
   card: {
     backgroundColor: theme.colors.white,
-    borderTop: `5px solid ${theme.colors.brand}`,
+    borderTop: `5px solid ${theme.colors[theme.primaryColor][6]}`,
   },
   tableHeader: {
     color: theme.colors.gray[7],
@@ -39,7 +39,7 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
     <tr key={membership.userId}>
       <TableData>{membership.fullName}</TableData>
       <td align="center">
-        <Badge color={'samfundet-red'}>{membership.positionName}</Badge>
+        <Badge>{membership.positionName}</Badge>
       </td>
       <TableData>
         {membership.internalGroupPositionMembership.getTypeDisplay}

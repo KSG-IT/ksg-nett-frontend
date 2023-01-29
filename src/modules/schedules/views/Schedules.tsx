@@ -29,7 +29,7 @@ export const Schedules: React.FC = () => {
       <Group position="apart" align="center">
         <Title>Vaktplaner</Title>
         <Link to="/schedules/templates">
-          <Button color="samfundet-red">Se vaktplanmaler</Button>
+          <Button>Se vaktplanmaler</Button>
         </Link>
       </Group>
       <SchedulesTable schedules={allSchedules} />

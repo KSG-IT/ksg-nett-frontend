@@ -78,10 +78,7 @@ export const UserTypeDetail: React.FC = ({}) => {
       <td>{user.getCleanFullName}</td>
       <td>
         <Group position="right">
-          <Button
-            color="samfundet-red"
-            onClick={() => handleRemoveUserFromUserType(user.id)}
-          >
+          <Button onClick={() => handleRemoveUserFromUserType(user.id)}>
             Fjern fra gruppe
           </Button>
         </Group>
@@ -107,7 +104,7 @@ export const UserTypeDetail: React.FC = ({}) => {
       <Breadcrumbs items={overloadedBreadcrumbItems} />
       <Group position="apart">
         <Title>{userType.name}</Title>
-        <Button color="samfundet-red" onClick={() => setAddUserModalOpen(true)}>
+        <Button onClick={() => setAddUserModalOpen(true)}>
           Legg til bruker
         </Button>
       </Group>

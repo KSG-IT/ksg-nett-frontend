@@ -121,10 +121,7 @@ export const ConfigurePosistionAvailability: React.VFC<
                 <Text>{position.name}</Text>
               </td>
               <td>
-                <Button
-                  color="samfundet-red"
-                  onClick={() => handleAddPosition(position.id)}
-                >
+                <Button onClick={() => handleAddPosition(position.id)}>
                   Gjør tilgjengelig
                 </Button>
               </td>
@@ -133,18 +130,10 @@ export const ConfigurePosistionAvailability: React.VFC<
         </tbody>
       </CardTable>
       <Group>
-        <Button
-          color="samfundet-red"
-          onClick={() => setStageCallback('INTERVIEW_TEMPLATE')}
-        >
+        <Button onClick={() => setStageCallback('INTERVIEW_TEMPLATE')}>
           Forrige steg
         </Button>
-        <Button
-          color="samfundet-red"
-          onClick={() => setStageCallback('SUMMARY')}
-        >
-          Neste steg
-        </Button>
+        <Button onClick={() => setStageCallback('SUMMARY')}>Neste steg</Button>
       </Group>
     </Stack>
   )

@@ -88,7 +88,6 @@ export const UploadAdmissionCSVModal: React.FC<
           clearable
         />
         <Button
-          color="samfundet-red"
           leftIcon={<IconUpload />}
           disabled={!file}
           type="submit"
@@ -98,7 +97,6 @@ export const UploadAdmissionCSVModal: React.FC<
         </Button>
       </Stack>
       <Button
-        color="samfundet-red"
         disabled={result.length === 0 || !file}
         loading={createApplicantsFromCSVLoading}
         leftIcon={<IconUserPlus />}

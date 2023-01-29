@@ -75,11 +75,7 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
         <Button color="gray" onClick={() => setModalOpen(false)}>
           Avbryt
         </Button>
-        <Button
-          color="samfundet-red"
-          onClick={handleAssignNewPosition}
-          disabled={loading}
-        >
+        <Button onClick={handleAssignNewPosition} disabled={loading}>
           Lagre
         </Button>
       </Group>

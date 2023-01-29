@@ -118,7 +118,7 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
           </SimpleGrid>
         </Card>
         <RichTextEditor editor={editor} />
-        <Button color={'samfundet-red'} disabled={isSubmitting} type={'submit'}>
+        <Button disabled={isSubmitting} type={'submit'}>
           Lagre
         </Button>
       </Stack>

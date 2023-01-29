@@ -84,7 +84,6 @@ export const SosiSessions: React.FC = () => {
         <Group>
           <PermissionGate permissions={PERMISSIONS.economy.add.sociSession}>
             <Button
-              color="samfundet-red"
               leftIcon={<IconPlus />}
               onClick={() => setCreateModalOpen(true)}
             >
@@ -92,23 +91,19 @@ export const SosiSessions: React.FC = () => {
             </Button>
           </PermissionGate>
           <PermissionGate permissions={PERMISSIONS.economy.view.sociSession}>
-            <Button disabled color="samfundet-red" leftIcon={<IconChartArea />}>
+            <Button disabled leftIcon={<IconChartArea />}>
               Statistikk
             </Button>
           </PermissionGate>
           <PermissionGate permissions={PERMISSIONS.economy.change.sociProduct}>
-            <Button disabled color="samfundet-red" leftIcon={<IconGlass />}>
+            <Button disabled leftIcon={<IconGlass />}>
               Vareutvalg
             </Button>
           </PermissionGate>
         </Group>
       </Group>
       <SociSessionsTable sociSessions={sociSessions} />
-      {hasNextPage && (
-        <Button color="samfundet-red" onClick={handleFetchMore}>
-          Last inn flere
-        </Button>
-      )}
+      {hasNextPage && <Button onClick={handleFetchMore}>Last inn flere</Button>}
       <CreateSociSessionModal
         open={createModalOpen}
         onCloseCallback={() => setCreateModalOpen(false)}

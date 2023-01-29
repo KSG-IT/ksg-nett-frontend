@@ -48,18 +48,13 @@ export const AddApplicantsArea: React.FC = () => {
       />
       <Group>
         <Button
-          color="samfundet-red"
           leftIcon={<IconPlane />}
           onClick={handleCreateApplicants}
           disabled={createApplicantsLoading}
         >
           Legg til søkere
         </Button>
-        <Button
-          color="samfundet-red"
-          leftIcon={<IconFileUpload />}
-          onClick={() => setOpen(true)}
-        >
+        <Button leftIcon={<IconFileUpload />} onClick={() => setOpen(true)}>
           Last opp fil
         </Button>
         <UploadAdmissionCSVModal opened={open} onClose={() => setOpen(false)} />

@@ -49,9 +49,9 @@ const useNavItemStyles = createStyles((t, { active }: { active: boolean }) => ({
     width: '100%',
     borderRadius: t.radius.sm,
     padding: `8px 4px`,
-    backgroundColor: active ? t.colors.brand : t.colors.white,
+    backgroundColor: active ? t.colors[t.primaryColor][6] : t.colors.white,
     '&:hover': {
-      backgroundColor: !active ? t.colors.red[0] : 'none',
+      backgroundColor: !active ? t.colors[t.primaryColor][0] : 'none',
     },
   },
 }))

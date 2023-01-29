@@ -55,9 +55,7 @@ export const InternalGroupPreviewCard: React.FC<{
         </Group>
         <Group position="right">
           <Link to={`${internalGroupDiscussionData.internalGroup.id}`}>
-            <Button color="samfundet-red" leftIcon={<IconEye />}>
-              Mer detaljer
-            </Button>
+            <Button leftIcon={<IconEye />}>Mer detaljer</Button>
           </Link>
         </Group>
       </Stack>

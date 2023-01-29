@@ -48,11 +48,7 @@ export const ApplicantComments: React.FC<ApplicantCommentsProps> = ({
         minRows={4}
         onChange={evt => setComment(evt.target.value)}
       />
-      <Button
-        color="samfundet-red"
-        onClick={handleCreateComment}
-        disabled={comment === ''}
-      >
+      <Button onClick={handleCreateComment} disabled={comment === ''}>
         Lagre kommentar
       </Button>
     </>

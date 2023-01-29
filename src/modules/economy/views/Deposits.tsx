@@ -49,11 +49,7 @@ export const Deposits: React.FC = () => {
       <Breadcrumbs items={breadCrumbItems} />
       <Group position="apart">
         <Title>Innskudd</Title>
-        <Button
-          color="samfundet-red"
-          leftIcon={<IconRefresh />}
-          onClick={() => refetch()}
-        >
+        <Button leftIcon={<IconRefresh />} onClick={() => refetch()}>
           Oppdater
         </Button>
       </Group>

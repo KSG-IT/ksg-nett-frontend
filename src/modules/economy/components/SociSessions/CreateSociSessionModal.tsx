@@ -97,7 +97,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
           <Button color="gray" onClick={handleCancel}>
             Avbryt
           </Button>
-          <Button color="samfundet-red" type="submit" onClick={handleSubmit}>
+          <Button type="submit" onClick={handleSubmit}>
             Opprett
           </Button>
         </Group>

@@ -67,13 +67,9 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
       </td>
       <td>
         {deposit.approved ? (
-          <Button onClick={() => handleDeposit(deposit)} color="samfundet-red">
-            Underkjenn
-          </Button>
+          <Button onClick={() => handleDeposit(deposit)}>Underkjenn</Button>
         ) : (
-          <Button onClick={() => handleDeposit(deposit)} color="samfundet-red">
-            Godkjenn
-          </Button>
+          <Button onClick={() => handleDeposit(deposit)}>Godkjenn</Button>
         )}
       </td>
     </tr>

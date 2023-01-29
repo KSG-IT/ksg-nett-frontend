@@ -13,12 +13,7 @@ export const UserHistory: React.FC<UserHistoryProps> = ({ memberships }) => {
       <Timeline.Item
         bulletSize={28}
         bullet={
-          <ThemeIcon
-            size={30}
-            variant="filled"
-            color={'samfundet-red.4'}
-            radius="xl"
-          >
+          <ThemeIcon size={30} variant="filled" radius="xl">
             <IconUsers size={20} />
           </ThemeIcon>
         }
@@ -28,7 +23,7 @@ export const UserHistory: React.FC<UserHistoryProps> = ({ memberships }) => {
         <Text color={'dimmed'} size={'sm'}>
           {position.internalGroup.name}
         </Text>
-        <Text size={'sm'} weight={800} color={`${theme.colors.brand}`}>
+        <Text size={'sm'} weight={800} color={theme.primaryColor}>
           {membershipStart} {membershipEnd && ` - ${membershipEnd}`}
         </Text>
       </Timeline.Item>

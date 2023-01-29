@@ -87,17 +87,10 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
       <Stack>
         <Title>Genererte intervjuer</Title>
         <Group>
-          <Button
-            color="samfundet-red"
-            onClick={() => setStageCallback('AVAILABLE_POSITIONS')}
-          >
+          <Button onClick={() => setStageCallback('AVAILABLE_POSITIONS')}>
             Forrige steg
           </Button>
-          <Button
-            color="samfundet-red"
-            onClick={handleGenerateInterviews}
-            loading={generateLoading}
-          >
+          <Button onClick={handleGenerateInterviews} loading={generateLoading}>
             Generer interjuer basert på innstillinger
           </Button>
         </Group>
@@ -151,15 +144,10 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
         ))}
       </Stack>
       <Group>
-        <Button
-          color="samfundet-red"
-          onClick={() => setStageCallback('AVAILABLE_POSITIONS')}
-        >
+        <Button onClick={() => setStageCallback('AVAILABLE_POSITIONS')}>
           Forrige steg
         </Button>
-        <Button color="samfundet-red" onClick={handleOpenAdmission}>
-          Åpne opptaket
-        </Button>
+        <Button onClick={handleOpenAdmission}>Åpne opptaket</Button>
       </Group>
     </Stack>
   )

@@ -1,4 +1,8 @@
-import { Anchor, Breadcrumbs as BreadcrumbsBase } from '@mantine/core'
+import {
+  Anchor,
+  Breadcrumbs as BreadcrumbsBase,
+  useMantineTheme,
+} from '@mantine/core'
 import { IconChevronRight } from '@tabler/icons'
 import { Link } from 'react-router-dom'
 
@@ -12,6 +16,7 @@ interface BreadcrumbsProps {
 }
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
+  const theme = useMantineTheme()
   return (
     <BreadcrumbsBase
       separator={
@@ -24,7 +29,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
           key={index}
           component={Link}
           to={item.path}
-          color="samfundet-red"
+          color={theme.primaryColor}
           weight={500}
           style={{ marginBottom: '0.5rem' }}
         >
