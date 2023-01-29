@@ -163,6 +163,13 @@ export interface MySettingsQueryReturns {
   allAllergies: AllergyNode[]
 }
 
+export interface NewbiesQueryReturns {
+  newbies: Pick<
+    UserNode,
+    'id' | 'fullName' | 'activeInternalGroupPosition' | 'profileImage'
+  >[]
+}
+
 export interface PatchUserReturns {
   user: {
     id: string
