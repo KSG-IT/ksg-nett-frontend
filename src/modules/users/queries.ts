@@ -24,6 +24,18 @@ export const ME_QUERY = gql`
       }
       isSuperuser
       allPermissions
+      themes {
+        id
+        name
+        primaryShade
+        colorScheme
+      }
+      selectedTheme {
+        id
+        name
+        primaryShade
+        colorScheme
+      }
     }
   }
 `

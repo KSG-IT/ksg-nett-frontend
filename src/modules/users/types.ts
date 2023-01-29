@@ -45,6 +45,8 @@ export type UserNode = {
   allPermissions: string[]
   isSuperUser: boolean
   allergies: AllergyNode[]
+  themes: ThemeNode[]
+  selectedTheme: ThemeNode
   notifyOnQuote: boolean
   notifyOnShift: boolean
   notifyOnDeposit: boolean
@@ -58,6 +60,15 @@ export type UserNode = {
 export type AllergyNode = {
   id: string
   name: string
+}
+
+type Shade = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+export type ThemeNode = {
+  id: string
+  name: string
+  primaryShade: Shade
+  colorScheme: string
 }
 
 export type UserTypeLogEntryNode = {
