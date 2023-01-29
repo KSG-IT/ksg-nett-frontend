@@ -1,5 +1,6 @@
 import {
   AppShell,
+  Badge,
   Burger,
   Button,
   Container,
@@ -46,6 +47,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { sidebarOpen, toggleSidebar } = useSidebar()
   const { classes } = useStyles()
 
+  console.log(APP_VERSION)
+
   return (
     <AppShell
       styles={{
@@ -85,6 +88,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                       Kafe- og serveringsnett
                     </Text>
                   </Link>
+                  <a
+                    target="_blank"
+                    href="https://github.com/KSG-IT/ksg-nett-frontend/blob/develop/CHANGELOG.md"
+                  >
+                    <Badge style={{ color: 'black' }} color="gray">
+                      v{APP_VERSION}
+                    </Badge>
+                  </a>
                 </Group>
               </MediaQuery>
               <UserSearch />

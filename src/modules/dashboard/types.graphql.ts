@@ -24,6 +24,7 @@ export interface DashboardDataQueryReturns {
     >[]
     wantedList: WantedUser[]
     sociOrderSession: Pick<SociOrderSessionNode, 'id'> | null
+    showNewbies: boolean
     myUpcomingShifts: {
       roleDisplay: string
       shift: {

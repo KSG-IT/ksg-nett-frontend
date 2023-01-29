@@ -90,6 +90,7 @@ const AdmissionStatistics = React.lazy(
 )
 // ==== Users ====
 const MySettings = React.lazy(() => import('modules/users/views/MySettings'))
+const Newbies = React.lazy(() => import('modules/users/views/Newbies'))
 
 export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
@@ -110,7 +111,7 @@ export const AppRoutes: React.FC = () => {
     return <PublicRoutes />
   }
 
-  Sentry.setUser({ email: me.email })
+  Sentry.setUser({ email: me.email, id: me.id, username: me.fullName })
   setUser(me)
 
   if (me.firstTimeLogin) {
@@ -245,6 +246,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="users">
           <Route path="me" element={<MySettings />} />
           <Route path=":userId" element={<UserProfile />} />
+          <Route path="newbies" element={<Newbies />} />
           <Route path="user-types">
             <Route
               index

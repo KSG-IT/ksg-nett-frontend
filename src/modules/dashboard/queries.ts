@@ -11,6 +11,7 @@ export const DASHBOARD_DATA_QUERY = gql`
         initials
         profileImage
       }
+      showNewbies
       sociOrderSession {
         id
       }

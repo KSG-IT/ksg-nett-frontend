@@ -219,3 +219,17 @@ export const SEARCHBAR_USERS_QUERY = gql`
     }
   }
 `
+
+export const NEWWBIES_QUERY = gql`
+  query NewbiesQuery {
+    newbies {
+      id
+      fullName
+      profileImage
+      activeInternalGroupPosition {
+        id
+        name
+      }
+    }
+  }
+`
