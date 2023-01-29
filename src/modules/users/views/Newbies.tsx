@@ -9,7 +9,7 @@ import { NewbiesQueryReturns } from '../types'
 
 const breadcrumbItems = [
   { label: 'Home', path: '/dashboard' },
-  { label: 'Users', path: '/users' },
+  { label: 'Brukere', path: '' },
   { label: 'Newbies', path: '' },
 ]
 
