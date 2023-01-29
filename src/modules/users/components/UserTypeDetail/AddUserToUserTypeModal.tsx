@@ -48,8 +48,8 @@ export const AddUserToUserTypeModal: React.FC<AddUserToUserTypeModalProps> = ({
           color: 'red',
         })
       },
-    }),
-      onClose()
+    })
+    onClose()
   }
 
   return (
