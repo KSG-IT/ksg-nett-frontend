@@ -1,5 +1,6 @@
 import {
   AppShell,
+  Badge,
   Burger,
   Button,
   Container,
@@ -11,6 +12,7 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core'
+import { IconLink } from '@tabler/icons'
 import { FullContentLoader } from 'components/Loading'
 import { UserSearch } from 'modules/header/UserSearch'
 import React, { Suspense } from 'react'
@@ -45,6 +47,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const theme = useMantineTheme()
   const { sidebarOpen, toggleSidebar } = useSidebar()
   const { classes } = useStyles()
+
+  console.log(APP_VERSION)
 
   return (
     <AppShell
@@ -85,6 +89,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                       Kafe- og serveringsnett
                     </Text>
                   </Link>
+                  <Badge color="gray">v{APP_VERSION}</Badge>
                 </Group>
               </MediaQuery>
               <UserSearch />

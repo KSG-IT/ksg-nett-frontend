@@ -4,9 +4,11 @@ import {
   IconCreditCard,
   IconEdit,
   IconMeat,
+  IconMoodKid,
   IconQuote,
 } from '@tabler/icons'
 import { ShortcutCard, ShortcutCardGrid } from 'components/ShortcutCard'
+import { useMemo } from 'react'
 import { PERMISSIONS } from 'util/permissions'
 
 const shortcuts = [
@@ -39,29 +41,47 @@ const shortcuts = [
 
 interface ShortcutCardsProps {
   sociOrderSession: boolean
+  showNewbies: boolean
 }
 
 export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
   sociOrderSession,
+  showNewbies,
 }) => {
   const { classes } = useStyles()
+
+  const memoizedShortcuts = useMemo(() => {
+    if (showNewbies) {
+      return [
+        ...shortcuts,
+        {
+          title: 'De nye',
+          icon: IconMoodKid,
+          color: 'samfundet-red',
+          link: '/users/newbies',
+        },
+      ]
+    } else {
+      return shortcuts
+    }
+  }, [showNewbies])
 
   return (
     <Stack>
       <Text color="dimmed" className={classes.title}>
         Snarveier
       </Text>
-      <Card p={0}>
-        {sociOrderSession && (
-          <ShortcutCard
-            title="Stilletime"
-            icon={IconMeat}
-            color="samfundet-red"
-            link="/economy/soci-sessions/live"
-          />
-        )}
-      </Card>
-      <ShortcutCardGrid shortcuts={shortcuts} />
+
+      {sociOrderSession && (
+        <ShortcutCard
+          title="Stilletime"
+          icon={IconMeat}
+          color="samfundet-red"
+          link="/economy/soci-sessions/live"
+        />
+      )}
+
+      <ShortcutCardGrid shortcuts={memoizedShortcuts} />
     </Stack>
   )
 }

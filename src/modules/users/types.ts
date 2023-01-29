@@ -1,5 +1,6 @@
 import { AvatarProps } from '@mantine/core'
 import { BankAccountActivity } from 'modules/economy/types.graphql'
+import { InternalGroupPositionNode } from 'modules/organization/types'
 import {
   InternalGroupPositionMembershipNode,
   LegacyUserrWorkHistoryNode,
@@ -41,6 +42,7 @@ export type UserNode = {
   lastTransactions: BankAccountActivity[]
   upvotedQuoteIds: string[]
   internalGroupPositionMembershipHistory: InternalGroupPositionMembershipNode[]
+  activeInternalGroupPosition: Pick<InternalGroupPositionNode, 'id' | 'name'>
   legacyWorkHistory: LegacyUserrWorkHistoryNode[]
   allPermissions: string[]
   isSuperUser: boolean

@@ -40,13 +40,17 @@ export const Dashboard = () => {
       lastQuotes,
       myUpcomingShifts,
       sociOrderSession,
+      showNewbies,
     },
   } = data
 
   return (
     <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
-      <ShortcutCards sociOrderSession={!!sociOrderSession} />
+      <ShortcutCards
+        sociOrderSession={!!sociOrderSession}
+        showNewbies={showNewbies}
+      />
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
         <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>
