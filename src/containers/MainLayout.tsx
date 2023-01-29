@@ -12,7 +12,6 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core'
-import { IconLink } from '@tabler/icons'
 import { FullContentLoader } from 'components/Loading'
 import { UserSearch } from 'modules/header/UserSearch'
 import React, { Suspense } from 'react'
@@ -89,7 +88,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                       Kafe- og serveringsnett
                     </Text>
                   </Link>
-                  <Badge color="gray">v{APP_VERSION}</Badge>
+                  <a
+                    target="_blank"
+                    href="https://github.com/KSG-IT/ksg-nett-frontend/blob/develop/CHANGELOG.md"
+                  >
+                    <Badge style={{ color: 'black' }} color="gray">
+                      v{APP_VERSION}
+                    </Badge>
+                  </a>
                 </Group>
               </MediaQuery>
               <UserSearch />
