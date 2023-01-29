@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [v2023.1.7] - 2023-01-289
+
+### Added
+
+- Users: View to show new additions to KSG
+- Header: Display webapp version number
+
 ## [v2023.1.6] - 2023-01-27
 
 ### Added
