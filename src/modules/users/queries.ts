@@ -98,9 +98,6 @@ export const ALL_ACTIVE_USERS_LIST_QUERY = gql`
     allActiveUsersList(q: $q) {
       id
       getCleanFullName
-      profileImage
-      initials
-      phone
     }
   }
 `
