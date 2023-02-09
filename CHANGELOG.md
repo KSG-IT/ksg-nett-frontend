@@ -1,6 +1,12 @@
 # CHANGELOG
 
-## [v2023.1.7] - 2023-01-289
+## [v2023.2.1] - 2023-02-09
+
+### Fixed
+
+- Schedules: Edit shift date bug
+
+## [v2023.1.7] - 2023-01-28
 
 ### Added
 
