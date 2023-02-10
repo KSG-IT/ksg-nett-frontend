@@ -1,10 +1,12 @@
 import { useMutation } from '@apollo/client'
+import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import {
   APPROVE_DEPOSIT_MUTATION,
   CLOSE_SOCI_SESSION_MUTATION,
   CREATE_DEPOSIT_MUTATION,
   CREATE_SOCI_ORDER_SESSION_MUTATION,
   CREATE_SOCI_SESSION_MUTATION,
+  DELETE_DEPOSIT_MUTATION,
   DELETE_SOCI_ORDER_SESSION_FOOD_ORDER_MUTATION,
   INVALIDATE_DEPOSIT_MUTATION,
   INVITE_USERS_TO_ORDER_SESSION_MUTATION,
@@ -51,6 +53,11 @@ export function useDepositMutations() {
       INVALIDATE_DEPOSIT_MUTATION
     )
 
+  const [deleteDeposit, { loading: deleteDepositLoading }] = useMutation<
+    DeleteMutationReturns,
+    DeleteMutationVariables
+  >(DELETE_DEPOSIT_MUTATION)
+
   return {
     createDeposit,
     createDepositLoading,
@@ -58,6 +65,8 @@ export function useDepositMutations() {
     approveDepositLoading,
     invalidateDeposit,
     invalidateDepositLoading,
+    deleteDeposit,
+    deleteDepositLoading,
   }
 }
 
