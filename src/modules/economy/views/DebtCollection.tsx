@@ -6,7 +6,7 @@ import { UserShiftCardList } from 'modules/schedules/components'
 import { MY_UPCOMING_SHIFTS } from 'modules/schedules/queries'
 import { MyUpcomingShiftsReturns } from 'modules/schedules/types.graphql'
 import { useCurrencyFormatter, useMe } from 'util/hooks'
-import { CreateDepositForm, CreateDepositInfoBox } from '../components'
+import { CreateDepositInfoBox, DebtCollectionDepositForm } from '../components'
 
 export const DebtCollection: React.FC = () => {
   const me = useMe()
@@ -32,7 +32,7 @@ export const DebtCollection: React.FC = () => {
       </Text>
       <CreateDepositInfoBox />
       <Title order={2}>Opprett innskudd</Title>
-      <CreateDepositForm onCompletedCallback={() => {}} />
+      <DebtCollectionDepositForm />
       <Title order={2}>Kommende vakter</Title>
       <UserShiftCardList shifts={myUpcomingShifts} />
     </Stack>
