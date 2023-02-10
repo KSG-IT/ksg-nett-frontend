@@ -98,7 +98,7 @@ const routes: RouteGroup[] = [
         icon: IconCreditCard,
         link: '/economy/deposits',
         label: 'Innskudd',
-        permissions: PERMISSIONS.economy.change.deposit,
+        permissions: PERMISSIONS.economy.approve.deposit,
       },
       {
         icon: IconReportMoney,

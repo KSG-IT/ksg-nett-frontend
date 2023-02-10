@@ -35,6 +35,12 @@ export const PERMISSIONS = {
       deposit: 'economy.change_deposit',
       sociOrderSession: 'economy.add_sociordersession',
     },
+    approve: {
+      deposit: 'economy.approve_deposit',
+    },
+    invalidate: {
+      deposit: 'economy.invalidate_deposit',
+    },
   },
   // ===== HANDBOOK ======
   handbook: {

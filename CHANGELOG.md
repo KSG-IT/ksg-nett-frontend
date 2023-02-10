@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [v2023.2.1] - 2023-02-10
+
+### Fixed
+
+- Economy: Incorrect deposits view permission check
+
 ## [v2023.2.1] - 2023-02-09
 
 ### Fixed

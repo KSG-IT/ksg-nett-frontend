@@ -427,7 +427,7 @@ export const AppRoutes: React.FC = () => {
           <Route
             path="deposits"
             element={
-              <RestrictedRoute permissions={PERMISSIONS.economy.change.deposit}>
+              <RestrictedRoute permissions={PERMISSIONS.economy.approve.deposit}>
                 <Deposits />
               </RestrictedRoute>
             }
