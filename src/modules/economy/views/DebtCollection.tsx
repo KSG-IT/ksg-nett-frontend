@@ -32,7 +32,7 @@ export const DebtCollection: React.FC = () => {
       </Text>
       <CreateDepositInfoBox />
       <Title order={2}>Opprett innskudd</Title>
-      <DebtCollectionDepositForm />
+      {/* <DebtCollectionDepositForm /> */}
       <Title order={2}>Kommende vakter</Title>
       <UserShiftCardList shifts={myUpcomingShifts} />
     </Stack>
