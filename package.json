@@ -17,6 +17,8 @@
     "@mantine/tiptap": "5.10.0",
     "@sentry/react": "7.34.0",
     "@sentry/tracing": "7.34.0",
+    "@stripe/react-stripe-js": "^1.16.4",
+    "@stripe/stripe-js": "^1.46.0",
     "@tabler/icons": "^1.95.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
