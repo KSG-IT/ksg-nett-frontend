@@ -26,6 +26,14 @@ export const PATCH_DEPOSIT = gql`
   }
 `
 
+export const DELETE_DEPOSIT_MUTATION = gql`
+  mutation DeleteDeposit($id: ID!) {
+    deleteDeposit(id: $id) {
+      found
+    }
+  }
+`
+
 export const PATCH_SOCI_BANK_ACCOUNT = gql`
   mutation PatchSociBankAccount($id: ID!, $input: PatchSociBankAccountInput!) {
     patchSociBankAccount(id: $id, input: $input) {

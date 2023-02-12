@@ -1,6 +1,7 @@
 import { showNotification } from '@mantine/notifications'
 import { formatISO } from 'date-fns'
 import { useDepositMutations } from 'modules/economy/mutations.hooks'
+import { ONGOING_DEPOSIT_INTENT_QUERY } from 'modules/economy/views'
 import { CreateDepositFormData } from './useCreateDepositLogic'
 
 export function useCreateDepositAPI(onCompletedCallback: () => void) {
@@ -15,6 +16,7 @@ export function useCreateDepositAPI(onCompletedCallback: () => void) {
       variables: {
         input: input,
       },
+      refetchQueries: [ONGOING_DEPOSIT_INTENT_QUERY],
       onCompleted() {
         showNotification({
           title: 'Suksess',
