@@ -12,12 +12,12 @@ import { useMemo } from 'react'
 import { PERMISSIONS } from 'util/permissions'
 
 const shortcuts = [
-  {
-    title: 'Nytt innskudd',
-    icon: IconCreditCard,
-    color: 'samfundet-red',
-    link: '/economy/deposits/create',
-  },
+  // {
+  //   title: 'Nytt innskudd',
+  //   icon: IconCreditCard,
+  //   color: 'samfundet-red',
+  //   link: '/economy/deposits/create',
+  // },
   {
     title: 'Legg til sitat',
     icon: IconQuote,
