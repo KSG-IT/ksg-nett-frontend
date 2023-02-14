@@ -1,6 +1,16 @@
 # CHANGELOG
 
-## [v2023.2.1] - 2023-02-10
+## [v2023.2.3] - 2023-02-14
+
+### Added
+
+- Economy: Stripe deposit integration
+
+### Removed
+
+- Economy: Lists deposit view
+
+## [v2023.2.2] - 2023-02-10
 
 ### Fixed
 
