@@ -11,6 +11,7 @@ import {
 } from '../components'
 import { MY_SETTINGS_QUERY } from '../queries'
 import { MySettingsQueryReturns } from '../types'
+import { MyColorTheme } from '../components/MyColorTheme'
 
 const MySettings: React.FC = () => {
   const { data, loading, error } =
@@ -32,6 +33,7 @@ const MySettings: React.FC = () => {
       />
       <Title>Min profil</Title>
       <MyEmailSettings user={me} />
+      <MyColorTheme user={me} />
       <AllergyTransferList
         userAllergies={me.allergies}
         allAllergies={allAllergies}

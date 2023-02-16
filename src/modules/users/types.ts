@@ -69,6 +69,7 @@ export type ThemeNode = {
   name: string
   primaryShade: Shade
   colorScheme: string
+  label: string
 }
 
 export type UserTypeLogEntryNode = {
@@ -157,6 +158,8 @@ export interface MySettingsQueryReturns {
     | 'notifyOnDeposit'
     | 'notifyOnShift'
     | 'canRewriteAboutMe'
+    | 'selectedTheme'
+    | 'themes'
   >
   allAllergies: AllergyNode[]
 }
@@ -213,6 +216,14 @@ export interface UpdateMyAllergiesVariables {
 
 export interface UpdateMyEmailNotificationsReturns {
   user: Pick<UserNode, 'id'>
+}
+
+export interface UpdateMyThemeReturns {
+  user: Pick<UserNode, 'id'>
+}
+
+export interface UpdateMyThemeVariables {
+  themeId: string
 }
 
 export interface UpdateMyEmailNotificationsVariables {

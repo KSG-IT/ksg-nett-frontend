@@ -29,12 +29,14 @@ export const ME_QUERY = gql`
         name
         primaryShade
         colorScheme
+        label
       }
       selectedTheme {
         id
         name
         primaryShade
         colorScheme
+        label
       }
     }
   }
@@ -201,6 +203,20 @@ export const MY_SETTINGS_QUERY = gql`
       phone
       dateOfBirth
       study
+      selectedTheme {
+        id
+        name
+        primaryShade
+        colorScheme
+        label
+      }
+      themes {
+        id
+        name
+        primaryShade
+        colorScheme
+        label
+      }
       studyAddress
       ksgStatus
       homeTown
