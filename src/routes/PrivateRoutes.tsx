@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Center, MantineProvider, MantineThemeOverride } from '@mantine/core'
+import { Center } from '@mantine/core'
 import * as Sentry from '@sentry/react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -33,6 +33,7 @@ import {
   SociSessionDetail,
   SosiSessions,
 } from 'modules/economy/views'
+import { CreateDocument } from 'modules/handbook/views/CreateDocument'
 import {
   InternalGroupDetail,
   InternalGroups,
@@ -89,6 +90,7 @@ const AdmissionStatistics = React.lazy(
 )
 // ==== Users ====
 const MySettings = React.lazy(() => import('modules/users/views/MySettings'))
+const Newbies = React.lazy(() => import('modules/users/views/Newbies'))
 
 export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
@@ -109,7 +111,7 @@ export const AppRoutes: React.FC = () => {
     return <PublicRoutes />
   }
 
-  Sentry.setUser({ email: me.email })
+  Sentry.setUser({ email: me.email, id: me.id, username: me.fullName })
   setUser(me)
 
   if (me.firstTimeLogin) {
@@ -139,415 +141,377 @@ export const AppRoutes: React.FC = () => {
     )
   }
 
-  const fakingShit: MantineThemeOverride = {
-    colors: {
-      white: ['#fff'],
-      brand: ['#A03033'],
-      'samfundet-red': [
-        '#ffe7ea',
-        '#f2c2c3',
-        '#e49c9e',
-        '#d77578',
-        '#ca4e52',
-        '#b13538',
-        '#A03033',
-        '#641b1e',
-        '#3e0f11',
-        '#1d0202',
-      ],
-    },
-    primaryColor: `${
-      me.selectedTheme !== null ? me.selectedTheme.name : 'samfundet-red'
-    }`,
-    primaryShade: me.selectedTheme !== null ? me.selectedTheme.primaryShade : 6,
-    fontFamily: '"Inter"',
-  }
-
   return (
-    <MantineProvider theme={fakingShit}>
-      <Routes>
-        <Route path="/" element={<MainContent />}>
-          <Route index element={<Navigate to="/dashboard" replace />} />
+    <Routes>
+      <Route path="/" element={<MainContent />}>
+        <Route index element={<Navigate to="/dashboard" replace />} />
 
-          <Route path="dashboard" element={<Dashboard />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="*" element={<FullPage404 />} />
+
+        {/* ==== BAR TAB MODULE ==== */}
+        <Route path="bar-tab">
+          <Route
+            index
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.barTab.view.barTab}>
+                <BarTabDashboard />
+              </RestrictedRoute>
+            }
+          />
+
+          <Route
+            path="previous"
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.barTab.view.barTab}>
+                <PreviousBarTabs />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="customers"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.barTab.view.barTabCustomer}
+              >
+                <BarTabCustomers />
+              </RestrictedRoute>
+            }
+          />
+        </Route>
+
+        {/* ==== SUMMARY MODULE ==== */}
+        <Route path="summaries">
+          <Route index element={<Summaries />} />
+          <Route
+            path="create"
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.summaries.add.summary}>
+                <CreateSummary />
+              </RestrictedRoute>
+            }
+          />
+          <Route path=":summaryId">
+            <Route index element={<SummaryDetail />} />
+          </Route>
           <Route path="*" element={<FullPage404 />} />
-
-          {/* ==== BAR TAB MODULE ==== */}
-          <Route path="bar-tab">
+        </Route>
+        {/* ==== INTERNAL GROUPS MODULE ==== */}
+        <Route path="internal-groups">
+          <Route index element={<InternalGroups />} />
+          <Route path=":internalGroupId">
+            <Route index element={<InternalGroupDetail />} />
             <Route
-              index
-              element={
-                <RestrictedRoute permissions={PERMISSIONS.barTab.view.barTab}>
-                  <BarTabDashboard />
-                </RestrictedRoute>
-              }
-            />
-
-            <Route
-              path="previous"
-              element={
-                <RestrictedRoute permissions={PERMISSIONS.barTab.view.barTab}>
-                  <PreviousBarTabs />
-                </RestrictedRoute>
-              }
-            />
-            <Route
-              path="customers"
+              path="manage"
               element={
                 <RestrictedRoute
-                  permissions={PERMISSIONS.barTab.view.barTabCustomer}
-                >
-                  <BarTabCustomers />
-                </RestrictedRoute>
-              }
-            />
-          </Route>
-
-          {/* ==== SUMMARY MODULE ==== */}
-          <Route path="summaries">
-            <Route index element={<Summaries />} />
-            <Route
-              path="create"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.summaries.add.summary}
-                >
-                  <CreateSummary />
-                </RestrictedRoute>
-              }
-            />
-            <Route path=":summaryId">
-              <Route index element={<SummaryDetail />} />
-            </Route>
-            <Route path="*" element={<FullPage404 />} />
-          </Route>
-          {/* ==== INTERNAL GROUPS MODULE ==== */}
-          <Route path="internal-groups">
-            <Route index element={<InternalGroups />} />
-            <Route path=":internalGroupId">
-              <Route index element={<InternalGroupDetail />} />
-              <Route
-                path="manage"
-                element={
-                  <RestrictedRoute
-                    permissions={
-                      PERMISSIONS.organization.change
-                        .internalGroupPositionMembership
-                    }
-                  >
-                    <ManageInternalGroup />
-                  </RestrictedRoute>
-                }
-              />
-            </Route>
-          </Route>
-
-          {/* ==== QUOTES MODULE ==== */}
-          <Route path="quotes">
-            <Route path="popular" element={<PopularQuotes />} />
-            <Route index element={<QuotesList />} />
-            <Route
-              path="review"
-              element={
-                <RestrictedRoute permissions={PERMISSIONS.quotes.approve.quote}>
-                  <ReviewQuotes />
-                </RestrictedRoute>
-              }
-            />
-            <Route path="popular" element={<PopularQuotes />} />
-            <Route path="create" element={<CreateQuote />} />
-          </Route>
-
-          {/* ==== HANDBOOK MODULE ==== */}
-          <Route path="handbook">
-            <Route index element={<Handbook />} />
-            <Route path="document">
-              <Route path=":documentId" element={<DocumentDetail />} />
-            </Route>
-          </Route>
-
-          {/* ==== USERS MODULE ==== */}
-          <Route path="users">
-            <Route path="me" element={<MySettings />} />
-            <Route path=":userId" element={<UserProfile />} />
-            <Route path="user-types">
-              <Route
-                index
-                element={
-                  <RestrictedRoute
-                    permissions={PERMISSIONS.users.view.userType}
-                  >
-                    <UserTypes />
-                  </RestrictedRoute>
-                }
-              />
-              <Route
-                path=":userTypeId"
-                element={
-                  <RestrictedRoute
-                    permissions={PERMISSIONS.users.view.userType}
-                  >
-                    <UserTypeDetail />
-                  </RestrictedRoute>
-                }
-              />
-            </Route>
-          </Route>
-
-          {/* ==== ADMISSIONS MODULE ==== */}
-          <Route path="admissions">
-            <Route
-              index
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.admissions.view.admission}
-                >
-                  <AdmissionDashboard />
-                </RestrictedRoute>
-              }
-            />
-            <Route
-              path="configure"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.admissions.change.admission}
-                >
-                  <ConfigurationWizard />
-                </RestrictedRoute>
-              }
-            />
-            <Route
-              path="my-interviews"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.admissions.view.admission}
-                >
-                  <MyInterviews />
-                </RestrictedRoute>
-              }
-            />
-
-            <Route
-              path="applicants-overview"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.admissions.view.admission}
-                >
-                  <ApplicantsOverview />
-                </RestrictedRoute>
-              }
-            />
-            <Route
-              path="applicant-notices"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.admissions.view.admission}
-                >
-                  <ApplicantNotices />
-                </RestrictedRoute>
-              }
-            />
-            <Route
-              path="interviews-overview"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.admissions.view.interview}
-                >
-                  <InterviewsOverview />
-                </RestrictedRoute>
-              }
-            />
-            <Route
-              path="finished-interviews"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.admissions.view.interview}
-                >
-                  <FinishedInterviews />
-                </RestrictedRoute>
-              }
-            />
-            <Route
-              path="statistics"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.admissions.view.interview}
-                >
-                  <AdmissionStatistics />
-                </RestrictedRoute>
-              }
-            />
-
-            <Route
-              path="close"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.admissions.change.admission}
-                >
-                  <CloseAdmission />
-                </RestrictedRoute>
-              }
-            />
-
-            <Route path="internal-group">
-              <Route
-                path=":internalGroupId"
-                element={<InternalGroupApplicants />}
-              />
-            </Route>
-
-            <Route path="discussion-dashboard">
-              <Route
-                index
-                element={
-                  <RestrictedRoute
-                    permissions={PERMISSIONS.admissions.view.admission}
-                  >
-                    <DiscussionDashboard />
-                  </RestrictedRoute>
-                }
-              />
-              <Route
-                path=":internalGroupId"
-                element={
-                  <RestrictedRoute
-                    permissions={PERMISSIONS.admissions.view.admission}
-                  >
-                    <InternalGroupDiscussion />
-                  </RestrictedRoute>
-                }
-              />
-            </Route>
-
-            <Route path="applicants">
-              <Route
-                path=":applicantId"
-                element={
-                  <RestrictedRoute
-                    permissions={PERMISSIONS.admissions.view.admission}
-                  >
-                    <ApplicantDetails />
-                  </RestrictedRoute>
-                }
-              />
-            </Route>
-
-            <Route path="interviews">
-              <Route path=":interviewId">
-                <Route
-                  path="edit"
-                  element={
-                    <RestrictedRoute
-                      permissions={PERMISSIONS.admissions.view.admission}
-                    >
-                      <EditInterview />
-                    </RestrictedRoute>
+                  permissions={
+                    PERMISSIONS.organization.change
+                      .internalGroupPositionMembership
                   }
-                />
-              </Route>
-            </Route>
-          </Route>
-
-          {/* ==== ECONOMY MODULE ==== */}
-          <Route path="economy">
-            <Route path="deposits/create" element={<CreateDeposit />} />
-            <Route
-              path="deposits"
-              element={
-                <RestrictedRoute
-                  permissions={PERMISSIONS.economy.change.deposit}
                 >
-                  <Deposits />
+                  <ManageInternalGroup />
                 </RestrictedRoute>
               }
             />
-            <Route path="me" element={<MyEconomy />} />
-            <Route path="soci-products" element={<h2>Suh duh</h2>} />
+          </Route>
+        </Route>
 
-            <Route path="soci-sessions">
-              <Route
-                index
-                element={
-                  <RestrictedRoute
-                    permissions={PERMISSIONS.economy.view.sociSession}
-                  >
-                    <SosiSessions />
-                  </RestrictedRoute>
-                }
-              />
-              <Route path="live" element={<SociOrderSession />} />
+        {/* ==== QUOTES MODULE ==== */}
+        <Route path="quotes">
+          <Route path="popular" element={<PopularQuotes />} />
+          <Route index element={<QuotesList />} />
+          <Route
+            path="review"
+            element={
+              <RestrictedRoute permissions={PERMISSIONS.quotes.approve.quote}>
+                <ReviewQuotes />
+              </RestrictedRoute>
+            }
+          />
+          <Route path="popular" element={<PopularQuotes />} />
+          <Route path="create" element={<CreateQuote />} />
+        </Route>
 
-              <Route
-                path=":id"
-                element={
-                  <RestrictedRoute
-                    permissions={PERMISSIONS.economy.view.sociSession}
-                  >
-                    <SociSessionDetail />
-                  </RestrictedRoute>
-                }
-              />
-            </Route>
-            <Route path="*" element={<FullPage404 />} />
+        {/* ==== HANDBOOK MODULE ==== */}
+        <Route path="handbook">
+          <Route index element={<Handbook />} />
+          <Route path={'create'} element={<CreateDocument />} />
+          <Route path="document">
+            <Route path=":documentId" element={<DocumentDetail />} />
+          </Route>
+        </Route>
+
+        {/* ==== USERS MODULE ==== */}
+        <Route path="users">
+          <Route path="me" element={<MySettings />} />
+          <Route path=":userId" element={<UserProfile />} />
+          <Route path="newbies" element={<Newbies />} />
+          <Route path="user-types">
+            <Route
+              index
+              element={
+                <RestrictedRoute permissions={PERMISSIONS.users.view.userType}>
+                  <UserTypes />
+                </RestrictedRoute>
+              }
+            />
+            <Route
+              path=":userTypeId"
+              element={
+                <RestrictedRoute permissions={PERMISSIONS.users.view.userType}>
+                  <UserTypeDetail />
+                </RestrictedRoute>
+              }
+            />
+          </Route>
+        </Route>
+
+        {/* ==== ADMISSIONS MODULE ==== */}
+        <Route path="admissions">
+          <Route
+            index
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <AdmissionDashboard />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="configure"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.change.admission}
+              >
+                <ConfigurationWizard />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="my-interviews"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <MyInterviews />
+              </RestrictedRoute>
+            }
+          />
+
+          <Route
+            path="applicants-overview"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <ApplicantsOverview />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="applicant-notices"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <ApplicantNotices />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="interviews-overview"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.interview}
+              >
+                <InterviewsOverview />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="finished-interviews"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.interview}
+              >
+                <FinishedInterviews />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="statistics"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.interview}
+              >
+                <AdmissionStatistics />
+              </RestrictedRoute>
+            }
+          />
+
+          <Route
+            path="close"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.admissions.view.admission}
+              >
+                <CloseAdmission />
+              </RestrictedRoute>
+            }
+          />
+
+          <Route path="internal-group">
+            <Route
+              path=":internalGroupId"
+              element={<InternalGroupApplicants />}
+            />
           </Route>
 
-          {/* ==== SCHEDULES MODULE ==== */}
-          <Route path="schedules">
+          <Route path="discussion-dashboard">
             <Route
               index
               element={
                 <RestrictedRoute
-                  permissions={PERMISSIONS.schedules.change.schedule}
+                  permissions={PERMISSIONS.admissions.view.admission}
                 >
-                  <Schedules />
+                  <DiscussionDashboard />
                 </RestrictedRoute>
               }
             />
+            <Route
+              path=":internalGroupId"
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.admissions.view.admission}
+                >
+                  <InternalGroupDiscussion />
+                </RestrictedRoute>
+              }
+            />
+          </Route>
+
+          <Route path="applicants">
+            <Route
+              path=":applicantId"
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.admissions.view.admission}
+                >
+                  <ApplicantDetails />
+                </RestrictedRoute>
+              }
+            />
+          </Route>
+
+          <Route path="interviews">
+            <Route path=":interviewId">
+              <Route
+                path="edit"
+                element={
+                  <RestrictedRoute
+                    permissions={PERMISSIONS.admissions.view.admission}
+                  >
+                    <EditInterview />
+                  </RestrictedRoute>
+                }
+              />
+            </Route>
+          </Route>
+        </Route>
+
+        {/* ==== ECONOMY MODULE ==== */}
+        <Route path="economy">
+          <Route path="deposits">
+            <Route path="create" element={<CreateDeposit />} />
+          </Route>
+          <Route path="me" element={<MyEconomy />} />
+          <Route path="soci-products" element={<h2>Suh duh</h2>} />
+
+          <Route path="soci-sessions">
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.economy.view.sociSession}
+                >
+                  <SosiSessions />
+                </RestrictedRoute>
+              }
+            />
+            <Route path="live" element={<SociOrderSession />} />
+
             <Route
               path=":id"
               element={
                 <RestrictedRoute
-                  permissions={PERMISSIONS.schedules.change.schedule}
+                  permissions={PERMISSIONS.economy.view.sociSession}
                 >
-                  <ScheduleDetails />
+                  <SociSessionDetail />
                 </RestrictedRoute>
               }
             />
-            <Route path="me">
-              <Route index element={<MyUpcomingShifts />} />
-              <Route path="history" element={<AllMyShifts />} />
-              <Route path="availability" element={<MyAvailability />} />
-            </Route>
-            <Route path="all-shifts" element={<AllShifts />} />
+          </Route>
+          <Route path="*" element={<FullPage404 />} />
+        </Route>
 
-            <Route path="templates">
+        {/* ==== SCHEDULES MODULE ==== */}
+        <Route path="schedules">
+          <Route
+            index
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <Schedules />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path=":id"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleDetails />
+              </RestrictedRoute>
+            }
+          />
+          <Route path="me">
+            <Route index element={<MyUpcomingShifts />} />
+            <Route path="history" element={<AllMyShifts />} />
+            <Route path="availability" element={<MyAvailability />} />
+          </Route>
+          <Route path="all-shifts" element={<AllShifts />} />
+
+          <Route path="templates">
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.schedules.view.scheduleTemplate}
+                >
+                  <ScheduleTemplates />
+                </RestrictedRoute>
+              }
+            />
+            <Route path=":templateId">
               <Route
                 index
                 element={
                   <RestrictedRoute
                     permissions={PERMISSIONS.schedules.view.scheduleTemplate}
                   >
-                    <ScheduleTemplates />
+                    <ScheduleTemplateDetails />
                   </RestrictedRoute>
                 }
               />
-              <Route path=":templateId">
-                <Route
-                  index
-                  element={
-                    <RestrictedRoute
-                      permissions={PERMISSIONS.schedules.view.scheduleTemplate}
-                    >
-                      <ScheduleTemplateDetails />
-                    </RestrictedRoute>
-                  }
-                />
-              </Route>
             </Route>
           </Route>
         </Route>
-        <Route path="*" element={<Navigate to="/dashboard" />} />
-      </Routes>
-    </MantineProvider>
+      </Route>
+      <Route path="*" element={<Navigate to="/dashboard" />} />
+    </Routes>
   )
 }

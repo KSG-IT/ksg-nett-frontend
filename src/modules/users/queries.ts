@@ -112,9 +112,6 @@ export const ALL_ACTIVE_USERS_LIST_QUERY = gql`
     allActiveUsersList(q: $q) {
       id
       getCleanFullName
-      profileImage
-      initials
-      phone
     }
   }
 `
@@ -233,6 +230,31 @@ export const MY_SETTINGS_QUERY = gql`
     allAllergies {
       id
       name
+    }
+  }
+`
+
+export const SEARCHBAR_USERS_QUERY = gql`
+  query SearchbarUsers($searchString: String) {
+    searchbarUsers(searchString: $searchString) {
+      id
+      getCleanFullName
+      profileImage
+      initials
+    }
+  }
+`
+
+export const NEWWBIES_QUERY = gql`
+  query NewbiesQuery {
+    newbies {
+      id
+      fullName
+      profileImage
+      activeInternalGroupPosition {
+        id
+        name
+      }
     }
   }
 `

@@ -1,6 +1,6 @@
 {
   "name": "ksg-nett-frontend",
-  "version": "0.1.0",
+  "version": "2023.2.3",
   "private": true,
   "dependencies": {
     "@apollo/client": "3.7.3",
@@ -15,8 +15,10 @@
     "@mantine/modals": "5.10.0",
     "@mantine/notifications": "5.10.0",
     "@mantine/tiptap": "5.10.0",
-    "@sentry/react": "7.30.0",
-    "@sentry/tracing": "7.30.0",
+    "@sentry/react": "7.34.0",
+    "@sentry/tracing": "7.34.0",
+    "@stripe/react-stripe-js": "^1.16.4",
+    "@stripe/stripe-js": "^1.46.0",
     "@tabler/icons": "^1.95.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

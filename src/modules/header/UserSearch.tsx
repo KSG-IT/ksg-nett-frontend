@@ -2,10 +2,10 @@ import { useLazyQuery } from '@apollo/client'
 import { createStyles, Group } from '@mantine/core'
 import { IconSearch } from '@tabler/icons'
 import { UserThumbnail } from 'modules/users/components'
-import { ALL_ACTIVE_USERS_LIST_QUERY } from 'modules/users/queries'
+import { SEARCHBAR_USERS_QUERY } from 'modules/users/queries'
 import {
-  AllUsersShallowQueryReturns,
-  AllUsersShallowQueryVariables,
+  SearchbarUsersQueryReturns,
+  SearchbarUsersQueryVariables,
   UserNode,
 } from 'modules/users/types'
 import { useCallback, useEffect, useState } from 'react'
@@ -44,16 +44,14 @@ export const UserSearch: React.VFC = () => {
   const navigate = useNavigate()
 
   const [execute, { loading, data }] = useLazyQuery<
-    AllUsersShallowQueryReturns,
-    AllUsersShallowQueryVariables
-  >(ALL_ACTIVE_USERS_LIST_QUERY, { variables: { q: debounceQuery } })
+    SearchbarUsersQueryReturns,
+    SearchbarUsersQueryVariables
+  >(SEARCHBAR_USERS_QUERY)
 
   useEffect(() => {
-    if (debounceQuery === '') return
-
-    if (debounceQuery) {
-      execute()
-    }
+    execute({
+      variables: { searchString: debounceQuery },
+    })
   }, [debounceQuery])
 
   const handleSelectUser = useCallback(
@@ -67,7 +65,7 @@ export const UserSearch: React.VFC = () => {
     [setUserQuery, history]
   )
   const options: UserSearchOption[] =
-    data?.allActiveUsersList.map(user => ({
+    data?.searchbarUsers.map(user => ({
       value: user.id,
       label: user.getCleanFullName,
       user: user as UserNode,

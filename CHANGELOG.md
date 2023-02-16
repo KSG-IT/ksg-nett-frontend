@@ -1,5 +1,56 @@
 # CHANGELOG
 
+## [v2023.2.3] - 2023-02-14
+
+### Added
+
+- Economy: Stripe deposit integration
+
+### Removed
+
+- Economy: Lists deposit view
+
+## [v2023.2.2] - 2023-02-10
+
+### Fixed
+
+- Economy: Incorrect deposits view permission check
+
+## [v2023.2.1] - 2023-02-09
+
+### Fixed
+
+- Schedules: Edit shift date bug
+
+## [v2023.1.7] - 2023-01-28
+
+### Added
+
+- Users: View to show new additions to KSG
+- Header: Display webapp version number
+
+## [v2023.1.6] - 2023-01-27
+
+### Added
+
+- Handbook: create new documents
+- Handbook: edit documents
+- Handbook: delete documents
+
+### Changed
+
+- Handbook: styling improvements
+
+### Fixed
+
+- Header: User search laggy performance
+- Schdules: Missing 'kontoret' option
+- schedules: Missing 'ryddevakt' option
+
+## [v2023.1.5] - 2023-01-??
+
+Things happend. Not sure what.
+
 ## [v2023.1.4] - 2023-01-15
 
 ### Added

@@ -1,7 +1,8 @@
+import { gql, useQuery } from '@apollo/client'
 import { Card, Container, createStyles, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
-import { MessageBox } from 'components/MessageBox'
-import { useNavigate } from 'react-router-dom'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
 import { useMediaQuery } from 'util/hooks'
 import { CreateDepositForm, CreateDepositInfoBox } from '../components'
 
@@ -13,10 +14,29 @@ const breadCrumbItems = [
 
 interface DepositProps {}
 
+export const ONGOING_DEPOSIT_INTENT_QUERY = gql`
+  query OngoingDepositIntent {
+    ongoingDepositIntent {
+      id
+      amount
+      resolvedAmount
+      stripePaymentId
+    }
+  }
+`
+
 export const CreateDeposit: React.FC<DepositProps> = () => {
   const { classes } = useStyles()
   const mobileSize = useMediaQuery('(max-width: 600px)')
-  const navigate = useNavigate()
+
+  const { data, loading, error } = useQuery(ONGOING_DEPOSIT_INTENT_QUERY)
+
+  if (error) return <FullPageError />
+
+  if (loading || !data) return <FullContentLoader />
+
+  const onGoingIntent = data?.ongoingDepositIntent ?? null
+
   return (
     <Container size={'sm'} p={mobileSize ? 0 : 'xl'}>
       <Breadcrumbs items={breadCrumbItems} />
@@ -31,7 +51,8 @@ export const CreateDeposit: React.FC<DepositProps> = () => {
       <CreateDepositInfoBox />
       <Card radius={'md'} withBorder className={classes.card}>
         <CreateDepositForm
-          onCompletedCallback={() => navigate('/economy/me')}
+          onCompletedCallback={() => {}}
+          onGoingIntent={onGoingIntent}
         />
       </Card>
     </Container>

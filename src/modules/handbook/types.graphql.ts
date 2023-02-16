@@ -1,4 +1,4 @@
-import { UserThumbnailProps } from 'modules/users/types'
+import { UserNode } from 'modules/users/types'
 
 export type DocumentNode = {
   id: string
@@ -6,14 +6,17 @@ export type DocumentNode = {
   content: string
   createdAt: string
   updatedAt: string
-  createdBy: UserThumbnailProps['user']
-  updatedBy: UserThumbnailProps['user']
+  createdBy: UserNode
+  updatedBy: UserNode
 }
 
 // ==== QUERIES ====
 
 export interface AllDocumentsReturn {
-  allDocuments: Pick<DocumentNode, 'id' | 'name' | 'createdAt' | 'updatedAt'>[]
+  allDocuments: Pick<
+    DocumentNode,
+    'id' | 'name' | 'createdAt' | 'updatedAt' | 'updatedBy'
+  >[]
 }
 
 export interface DocumentDetailReturn {
@@ -22,4 +25,15 @@ export interface DocumentDetailReturn {
 
 export interface DocumentDetailVariables {
   id: string
+}
+
+// ==== MUTATIONS ====
+
+export type PatchDocumentInput = {
+  name: string
+  content: string
+}
+
+export type PatchDocumentMutationReturns = {
+  patchDocument: { document: Pick<DocumentNode, 'id'> }
 }

@@ -38,17 +38,18 @@ export const EditShiftForm: React.FC<EditShiftFormProps> = ({ shift }) => {
   })
 
   const onSubmit = (values: ShiftFormValues) => {
-    const [start, end] = values.time
+    const { day: startDate } = values
+    const [startTime, endTime] = values.time
 
-    const datetimeStart = new Date(start)
-    datetimeStart.setHours(start.getHours())
-    datetimeStart.setMinutes(start.getMinutes())
+    const datetimeStart = new Date(startDate)
+    datetimeStart.setHours(startTime.getHours())
+    datetimeStart.setMinutes(startTime.getMinutes())
     datetimeStart.setSeconds(0)
     datetimeStart.setMilliseconds(0)
 
-    const datetimeEnd = new Date(start)
-    datetimeEnd.setHours(end.getHours())
-    datetimeEnd.setMinutes(end.getMinutes())
+    const datetimeEnd = new Date(startDate)
+    datetimeEnd.setHours(endTime.getHours())
+    datetimeEnd.setMinutes(endTime.getMinutes())
     datetimeEnd.setSeconds(0)
     datetimeEnd.setMilliseconds(0)
 

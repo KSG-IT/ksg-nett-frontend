@@ -9,6 +9,7 @@ export enum LocationValues {
   SELSKAPSSIDEN = 'SELSKAPSSIDEN',
   STORSALEN = 'STORSALEN',
   STROSSA = 'STROSSA',
+  KONTORET = 'KONTORET',
 }
 
 export enum RoleValues {
@@ -59,4 +60,5 @@ export const locationOptions = [
   { value: LocationValues.STORSALEN, label: 'Storsalen' },
   { value: LocationValues.KLUBBEN, label: 'Klubben' },
   { value: LocationValues.RUNDHALLEN, label: 'Rundhallen' },
+  { value: LocationValues.KONTORET, label: 'Kontoret' },
 ]

@@ -4,8 +4,10 @@ import { IconFileAnalytics } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
+import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
 import { API_URL } from 'util/env'
+import { PERMISSIONS } from 'util/permissions'
 import {
   CloseAdmissionTable,
   FinalOverlookModal,
@@ -66,12 +68,16 @@ export const CloseAdmission: React.FC = () => {
       </MessageBox>
       <FreeForAllWithOffersTable applicantInterests={applicantInterests} />
       <Group>
-        <Button onClick={() => setPreviewModalOpen(true)}>
-          Fullfør opptak
+        <Button color="samfundet-red" onClick={() => setPreviewModalOpen(true)}>
+          Se over opptak
         </Button>
-        <a href={`${API_URL}/admissions/callsheet`} target="_blank">
-          <Button leftIcon={<IconFileAnalytics />}>Last ned ringeliste</Button>
-        </a>
+        <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
+          <a href={`${API_URL}/admissions/callsheet`} target="_blank">
+            <Button leftIcon={<IconFileAnalytics />} color="samfundet-red">
+              Last ned ringeliste
+            </Button>
+          </a>
+        </PermissionGate>
       </Group>
       <FinalOverlookModal
         opened={previewModalOpen}

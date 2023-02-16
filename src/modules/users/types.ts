@@ -1,5 +1,6 @@
 import { AvatarProps } from '@mantine/core'
 import { BankAccountActivity } from 'modules/economy/types.graphql'
+import { InternalGroupPositionNode } from 'modules/organization/types'
 import {
   InternalGroupPositionMembershipNode,
   LegacyUserrWorkHistoryNode,
@@ -41,6 +42,7 @@ export type UserNode = {
   lastTransactions: BankAccountActivity[]
   upvotedQuoteIds: string[]
   internalGroupPositionMembershipHistory: InternalGroupPositionMembershipNode[]
+  activeInternalGroupPosition: Pick<InternalGroupPositionNode, 'id' | 'name'>
   legacyWorkHistory: LegacyUserrWorkHistoryNode[]
   allPermissions: string[]
   isSuperUser: boolean
@@ -105,6 +107,17 @@ export interface AllUsersShallowQueryVariables {
   q?: string
 }
 
+export interface SearchbarUsersQueryVariables {
+  searchString: string
+}
+
+export interface SearchbarUsersQueryReturns {
+  searchbarUsers: Pick<
+    UserNode,
+    'id' | 'profileImage' | 'initials' | 'getCleanFullName'
+  >[]
+}
+
 export interface AllUsersShallowQueryReturns {
   allActiveUsersList: Pick<
     UserNode,
@@ -162,6 +175,13 @@ export interface MySettingsQueryReturns {
     | 'themes'
   >
   allAllergies: AllergyNode[]
+}
+
+export interface NewbiesQueryReturns {
+  newbies: Pick<
+    UserNode,
+    'id' | 'fullName' | 'activeInternalGroupPosition' | 'profileImage'
+  >[]
 }
 
 export interface PatchUserReturns {

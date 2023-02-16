@@ -67,6 +67,10 @@ const shiftRoleData = [
     value: RoleValues.SOCIVAKT,
     label: parseShiftRole(RoleValues.SOCIVAKT),
   },
+  {
+    value: RoleValues.RYDDEVAKT,
+    label: parseShiftRole(RoleValues.RYDDEVAKT),
+  },
 ]
 
 interface ShiftRoleSelectProps

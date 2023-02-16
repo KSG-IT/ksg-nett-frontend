@@ -17,8 +17,6 @@ const DepositCreateSchema = yup.object().shape({
     .required('Må sette sum')
     .max(30_000, 'Kan ikke være høyere enn 30 000')
     .min(1, 'Må minst være 1'),
-  description: yup.string().required('Description is required'),
-  receipt: yup.mixed().required('File is required'),
 })
 
 interface UseCreateDepositLogicInput {
@@ -29,7 +27,7 @@ interface UseCreateDepositLogicInput {
 export function useCreateDepositLogic(input: UseCreateDepositLogicInput) {
   const { defaultValues, onSubmit } = input
   const form = useForm<CreateDepositFormData>({
-    mode: 'onSubmit',
+    mode: 'onChange',
     defaultValues,
     resolver: yupResolver(DepositCreateSchema),
   })

@@ -95,12 +95,6 @@ const routes: RouteGroup[] = [
         permissions: PERMISSIONS.users.change.userType,
       },
       {
-        icon: IconCreditCard,
-        link: '/economy/deposits',
-        label: 'Innskudd',
-        permissions: PERMISSIONS.economy.change.deposit,
-      },
-      {
         icon: IconReportMoney,
         link: '/economy/soci-sessions',
         label: 'Innkryssinger',
