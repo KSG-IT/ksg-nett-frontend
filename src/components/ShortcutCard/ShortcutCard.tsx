@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 export interface ShortcutProps {
   title: string
   icon?: TablerIcon
-  color: string
+  color?: string
   link: string
   permissions?: string | string[]
 }
@@ -28,7 +28,16 @@ export const ShortcutCard: React.FC<ShortcutProps> = ({
         key={title}
         className={classes.item}
       >
-        {Icon && <Icon color={theme.colors[color][6]} size={32} />}
+        {Icon && (
+          <Icon
+            color={
+              color
+                ? theme.colors[color][6]
+                : theme.colors[theme.primaryColor][theme.primaryShade as number]
+            }
+            size={32}
+          />
+        )}
         <Text
           size={'md'}
           color={'dimmed'}

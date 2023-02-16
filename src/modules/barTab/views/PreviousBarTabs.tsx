@@ -89,11 +89,7 @@ export const PreviousBarTabs: React.FC = () => {
         <tbody>{rows}</tbody>
       </CardTable>
 
-      {hasNextPage && (
-        <Button color="samfundet-red" onClick={handleFetchMore}>
-          Hent flere
-        </Button>
-      )}
+      {hasNextPage && <Button onClick={handleFetchMore}>Hent flere</Button>}
     </Stack>
   )
 }

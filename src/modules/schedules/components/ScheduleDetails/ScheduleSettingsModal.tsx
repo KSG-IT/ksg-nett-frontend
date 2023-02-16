@@ -79,9 +79,7 @@ export const ScheduleSettingsModal: React.FC<ScheduleSettingsModalProps> = ({
           <Button color="gray" onClick={onCloseCallback}>
             Avbryt
           </Button>
-          <Button color="samfundet-red" onClick={handleSave}>
-            Lagre
-          </Button>
+          <Button onClick={handleSave}>Lagre</Button>
         </Group>
       </Stack>
     </Modal>

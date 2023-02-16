@@ -77,7 +77,6 @@ export const MyInterviews: React.FC = () => {
       <td>{interview.location.name}</td>
       <td>
         <Button
-          color="samfundet-red"
           leftIcon={<IconEye />}
           onClick={() => {
             handleRedirectToInterview(interview.applicant.id)

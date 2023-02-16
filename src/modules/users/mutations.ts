@@ -97,3 +97,12 @@ export const UPDATE_MY_EMAIL_NOTIFICATIONS_MUTATION = gql`
     }
   }
 `
+export const UPDATE_MY_THEME_MUTATION = gql`
+  mutation UpdateMyTheme($themeId: ID!) {
+    updateMyTheme(themeId: $themeId) {
+      user {
+        id
+      }
+    }
+  }
+`

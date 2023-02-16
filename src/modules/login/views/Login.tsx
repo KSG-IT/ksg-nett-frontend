@@ -101,7 +101,6 @@ export const Login: React.FC = () => {
           />
           <Button
             type="submit"
-            color="samfundet-red"
             fullWidth
             mt="xl"
             size="md"
@@ -112,10 +111,7 @@ export const Login: React.FC = () => {
         </form>
 
         <Text align="center" mt="md">
-          Glemt passordet ditt?{' '}
-          <Link to="/forgot-password" color="samfundet-red">
-            Trykk her
-          </Link>
+          Glemt passordet ditt? <Link to="/forgot-password">Trykk her</Link>
         </Text>
       </Paper>
     </div>

@@ -82,7 +82,7 @@ const useStyles = createStyles(theme => ({
     fontWeight: 'bold',
   },
   card: {
-    borderTop: `4px solid ${theme.colors.brand}`,
+    borderTop: `4px solid ${theme.colors[theme.primaryColor][6]}`,
     margin: `${theme.spacing.sm}px 0`,
     maxWidth: 700,
     overflowX: 'scroll',

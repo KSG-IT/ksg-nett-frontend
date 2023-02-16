@@ -104,7 +104,6 @@ export const ApplyScheduleTemplateModal: React.FC<
           Avbryt
         </Button>
         <Button
-          color="samfundet-red"
           disabled={generateShiftsFromTemplateLoading}
           loading={generateShiftsFromTemplateLoading}
           onClick={handleGenerate}

@@ -49,7 +49,6 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({
               } else {
                 return (
                   <Avatar
-                    color={'samfundet-red'}
                     size={'sm'}
                     radius={'xl'}
                     placeholder="https://m.media-amazon.com/images/M/MV5BMjA5NTE4NTE5NV5BMl5BanBnXkFtZTcwMTcyOTY5Mw@@._V1_.jpg"

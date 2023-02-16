@@ -230,7 +230,6 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
           </Button>
           <PermissionGate permissions={PERMISSIONS.admissions.change.interview}>
             <Button
-              color="samfundet-red"
               disabled={applicantId === null}
               loading={assignApplicantNewInterviewLoading}
               onClick={handleAssignNewInterview}

@@ -137,10 +137,7 @@ export const ReviewQuotes: React.FC = () => {
 
               <Stack>
                 <PermissionGate permissions={PERMISSIONS.quotes.approve.quote}>
-                  <Button
-                    color={'samfundet-red'}
-                    onClick={() => handleApproveQuote(quote.id)}
-                  >
+                  <Button onClick={() => handleApproveQuote(quote.id)}>
                     Godkjenn
                   </Button>
                 </PermissionGate>

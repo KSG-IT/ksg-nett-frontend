@@ -57,9 +57,7 @@ export const ManageInternalGroup: React.FC = () => {
             Aktive medlemskap
           </Title>
         </Group>
-        <Button color={'samfundet-red'} onClick={() => setModalOpen(true)}>
-          Tilegn nytt verv
-        </Button>
+        <Button onClick={() => setModalOpen(true)}>Tilegn nytt verv</Button>
       </Group>
       <MessageBox type="info">
         Her har du mulighet til å administrere aktive medlemskap i gjengen din.

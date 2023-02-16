@@ -367,7 +367,7 @@ const useStyles = createStyles(t => ({
     borderRadius: t.radius.md,
     padding: '0 10px',
     '&:hover': {
-      backgroundColor: t.colors['samfundet-red'][4],
+      backgroundColor: t.colors[t.primaryColor][4],
       div: {
         color: 'white',
       },
@@ -399,7 +399,7 @@ const useStyles = createStyles(t => ({
     padding: t.spacing.xs,
     borderBottom: `1px solid ${t.colors.gray[3]}`,
     '&:hover': {
-      backgroundColor: t.colors['samfundet-red'][4],
+      backgroundColor: t.colors[t.primaryColor][4],
       color: 'white',
       div: {
         color: 'white',

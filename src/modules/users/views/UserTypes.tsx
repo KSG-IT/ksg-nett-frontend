@@ -22,7 +22,7 @@ export const UserTypes: React.FC = () => {
       <td>
         <Group position="right">
           <Link to={`${userType.id}`}>
-            <Button color="samfundet-red">Administrer</Button>
+            <Button>Administrer</Button>
           </Link>
         </Group>
       </td>

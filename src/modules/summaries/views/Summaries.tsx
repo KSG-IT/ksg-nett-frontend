@@ -66,9 +66,7 @@ export const Summaries: React.FC = () => {
         </Text>
       </td>
       <td>
-        <Badge variant={'filled'} color={'samfundet-red'}>
-          {summary.displayName}
-        </Badge>
+        <Badge variant={'filled'}>{summary.displayName}</Badge>
       </td>
       <td>
         <Avatar.Group spacing={'sm'}>

@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom'
 import { useSidebar } from 'util/hooks'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
+import { parseHex } from '@mantine/core/lib/ColorPicker/converters/parsers'
 interface ErrorFallbackProps {
   error: Error
   resetErrorBoundary: () => void
@@ -56,7 +57,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           fontFamily: 'Inter',
         },
         main: {
-          background: theme.colors.gray[0],
+          background: `${theme.colors[theme.primaryColor][1]}18`,
         },
       }}
       navbarOffsetBreakpoint="sm"

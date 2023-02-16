@@ -50,9 +50,7 @@ export const UpdateCustomerModal: React.FC<UpdateCustomerModalProps> = ({
           <Button color="gray" onClick={onCloseCallback}>
             Avbryt
           </Button>
-          <Button color="samfundet-red" onClick={handleUpdateCustomer}>
-            Lagre
-          </Button>
+          <Button onClick={handleUpdateCustomer}>Lagre</Button>
         </Group>
       </Stack>
     </Modal>

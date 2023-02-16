@@ -78,11 +78,7 @@ export const SociSessionDetail: React.FC = () => {
       <Group position="apart">
         <Title>{sociSession.getNameDisplay}</Title>
         <PermissionGate permissions={PERMISSIONS.economy.change.sociSession}>
-          <Button
-            color="samfundet-red"
-            disabled={!closable}
-            onClick={handleCloseSession}
-          >
+          <Button disabled={!closable} onClick={handleCloseSession}>
             Steng liste
           </Button>
         </PermissionGate>

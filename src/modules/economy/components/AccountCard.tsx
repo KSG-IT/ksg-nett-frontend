@@ -11,6 +11,7 @@ import {
   Text,
   TextInput,
   Title,
+  useMantineTheme,
 } from '@mantine/core'
 import { IconCash, IconCheck, IconEdit, IconPlus } from '@tabler/icons'
 import React, { useState } from 'react'
@@ -37,6 +38,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
   const [cardUuid, setCardUuid] = useState(account.cardUuid)
   const [editable, setEditable] = useState(false)
   const user = useMe()
+  const theme = useMantineTheme()
 
   const [changeCardUuid] = useMutation<
     PatchSociBankAccountReturns,
@@ -71,13 +73,17 @@ export const AccountCard: React.FC<AccountCardProps> = ({
   return (
     <Card withBorder className={classes.balanceCard}>
       <Group position={'apart'}>
-        <Title order={4} color={'samfundet-red.0'}>
+        <Title order={4} color={theme.white}>
           {user.getCleanFullName}
         </Title>
         <Title
           order={4}
           variant={'gradient'}
-          gradient={{ from: 'samfundet-red.0', to: 'samfundet-red.2', deg: 30 }}
+          gradient={{
+            from: theme.colors[theme.primaryColor][1],
+            to: theme.colors[theme.primaryColor][2],
+            deg: 30,
+          }}
         >
           Socibanken
         </Title>
@@ -87,20 +93,23 @@ export const AccountCard: React.FC<AccountCardProps> = ({
           <Card.Section>
             <div>
               <Badge>Saldo</Badge>
-              <Text size={30} weight={'bold'} color={'samfundet-red.0'}>
+              <Text size={30} weight={'bold'} color={'white'}>
                 {numberWithSpaces(account.balance)} kr
               </Text>
             </div>
           </Card.Section>
           <Card.Section>
-            <Text pb="xs" size={'sm'} color={'samfundet-red.1'}>
+            <Text
+              pb="xs"
+              size={'sm'}
+              color={theme.colors[theme.primaryColor][0]}
+            >
               Fyll på
             </Text>
             <Button
               component={Link}
               to={'/economy/deposits/create'}
               variant={'light'}
-              color={'samfundet-red'}
             >
               <IconCash />
               <IconPlus />
@@ -109,7 +118,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
         </Group>
         <Group px="md">
           <Card.Section>
-            <Text align="left" color={'samfundet-red.0'}>
+            <Text align="left" color={theme.colors[theme.primaryColor][1]}>
               Kortnummer
             </Text>
             <Group position="center">
@@ -119,7 +128,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
                 onChange={evt => setCardUuid(evt.target.value)}
                 onBlur={toggleEditable}
               />
-              <ActionIcon color={'samfundet-red.0'} onClick={toggleEditable}>
+              <ActionIcon color={'gray.0'} onClick={toggleEditable}>
                 <IconEdit stroke={1.4} />
               </ActionIcon>
             </Group>
@@ -131,13 +140,10 @@ export const AccountCard: React.FC<AccountCardProps> = ({
 }
 
 const useStyles = createStyles(theme => ({
-  cardWithBorder: {
-    borderTop: `5px solid ${theme.colors.brand}`,
-  },
   balanceCard: {
     backgroundImage: theme.fn.gradient({
-      from: 'samfundet-red.7',
-      to: 'samfundet-red.4',
+      from: theme.colors[theme.primaryColor][7],
+      to: theme.colors[theme.primaryColor][4],
       deg: 360,
     }),
     color: theme.white,

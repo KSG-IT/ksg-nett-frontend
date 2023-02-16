@@ -11,7 +11,7 @@ export const Summary: React.FC<SummaryProps> = ({ summary }: SummaryProps) => {
   return (
     <>
       <Group position={'left'}>
-        <Badge variant={'filled'} size={'lg'} color={'samfundet-red'}>
+        <Badge variant={'filled'} size={'lg'}>
           {summary.displayName}
         </Badge>
         <Divider orientation={'vertical'} />

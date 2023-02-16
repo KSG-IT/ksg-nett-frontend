@@ -43,7 +43,7 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
   const isMobile = useIsMobile()
   const editButton = (
     <PermissionGate permissions={PERMISSIONS.users.change.user}>
-      <Button variant="light" color={'samfundet-red'} onClick={onClick}>
+      <Button variant="light" onClick={onClick}>
         Endre
       </Button>
     </PermissionGate>
@@ -89,7 +89,7 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
             <IconWithData icon={IconCake} userData={user.dateOfBirth} />
             <Group spacing={'xs'} className={classes.bio} noWrap mt={'xl'}>
               <Text className={classes.aboutMe}>Om meg</Text>
-              <ThemeIcon variant="light" color={'samfundet-red'}>
+              <ThemeIcon variant="light">
                 {user.canRewriteAboutMe ? (
                   <IconBook stroke={1.2} />
                 ) : (

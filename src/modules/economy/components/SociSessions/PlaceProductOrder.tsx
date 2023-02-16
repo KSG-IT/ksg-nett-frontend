@@ -50,9 +50,7 @@ export const PlaceProductOrder: React.FC<PlaceProductOrderProps> = ({
           value={orderSize}
           onChange={val => val && setOrderSize(val)}
         />
-        <Button color="samfundet-red" onClick={handlePlaceProductOrder}>
-          Legg til
-        </Button>
+        <Button onClick={handlePlaceProductOrder}>Legg til</Button>
       </Group>
     </Paper>
   )

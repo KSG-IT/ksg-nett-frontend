@@ -48,8 +48,8 @@ export const AddUserToUserTypeModal: React.FC<AddUserToUserTypeModalProps> = ({
           color: 'red',
         })
       },
-    }),
-      onClose()
+    })
+    onClose()
   }
 
   return (
@@ -66,9 +66,7 @@ export const AddUserToUserTypeModal: React.FC<AddUserToUserTypeModalProps> = ({
         <UserSelect setUserCallback={setSelectedUser} />
         <Group position="right">
           <Button color="gray">Avbryt</Button>
-          <Button color="samfundet-red" onClick={handleAddUser}>
-            Legg til
-          </Button>
+          <Button onClick={handleAddUser}>Legg til</Button>
         </Group>
       </Stack>
       <LoadingOverlay visible={addUserToUserTypeLoading} />

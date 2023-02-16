@@ -70,7 +70,6 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
     <Popover opened={isOpen} onClose={() => setIsOpen(false)}>
       <Popover.Target>
         <Button
-          color="samfundet-red"
           variant="subtle"
           leftIcon={<IconPlus />}
           loading={createShiftLoading}
@@ -99,9 +98,7 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
             onChange={setLocation}
           />
 
-          <Button color="samfundet-red" onClick={handleCreateShift}>
-            Lagre
-          </Button>
+          <Button onClick={handleCreateShift}>Lagre</Button>
         </Stack>
       </Popover.Dropdown>
     </Popover>

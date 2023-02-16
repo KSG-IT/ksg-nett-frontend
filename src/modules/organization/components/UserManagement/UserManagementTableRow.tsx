@@ -86,7 +86,6 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
       <td>
         <Group>
           <Button
-            color={'samfundet-red'}
             onClick={() => {
               handleAssignNewPosition()
             }}
@@ -94,11 +93,7 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
           >
             Oppdater status
           </Button>
-          <Button
-            variant="outline"
-            color="samfundet-red"
-            onClick={handleQuitKSG}
-          >
+          <Button variant="outline" onClick={handleQuitKSG}>
             Ferdig med KSG
           </Button>
         </Group>

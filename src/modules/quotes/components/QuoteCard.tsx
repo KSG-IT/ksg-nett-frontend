@@ -41,7 +41,7 @@ const UpvoteIcon: React.FC<VoteIconProps> = ({ upvoted, onClick }) => {
   const theme = useMantineTheme()
   return (
     <IconThumbUp
-      color={upvoted ? `${theme.colors.brand}` : 'gray'}
+      color={upvoted ? `${theme.colors[theme.primaryColor[6]]}` : 'gray'}
       size={24}
       strokeWidth={upvoted ? 2 : 1}
       style={{ cursor: 'pointer' }}
@@ -174,9 +174,7 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
               </Menu>
             </PermissionGate>
             {displaySemester && (
-              <Badge variant="outline" color="samfundet-red">
-                {quote.semester}
-              </Badge>
+              <Badge variant="outline">{quote.semester}</Badge>
             )}
             <Text size={'sm'}>{voteSum}</Text>
             <UpvoteIcon upvoted={upvoted} onClick={handleUpvote} />

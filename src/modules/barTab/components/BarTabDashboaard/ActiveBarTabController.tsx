@@ -41,15 +41,13 @@ export const ActiveBarTablController: React.FC<
           over gammel data og også sende ut fakturaer.
         </MessageBox>
         <Group>
-          <Button color="samfundet-red" onClick={handleOpenBarTab}>
-            Start ny BSF
-          </Button>
+          <Button onClick={handleOpenBarTab}>Start ny BSF</Button>
           <Link to="customers">
-            <Button color="samfundet-red">De andre gjengene</Button>
+            <Button>De andre gjengene</Button>
           </Link>
 
           <Link to="previous">
-            <Button color="samfundet-red">Tidligere BSF'er</Button>
+            <Button>Tidligere BSF'er</Button>
           </Link>
         </Group>
       </Stack>

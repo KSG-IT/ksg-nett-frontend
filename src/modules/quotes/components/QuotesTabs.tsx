@@ -10,12 +10,7 @@ interface LinkButtonProps extends ButtonProps {
 }
 
 const LinkButton: React.FC<LinkButtonProps> = ({ to, children, variant }) => (
-  <Button
-    color={'samfundet-red'}
-    component={Link}
-    to={`/quotes/${to}`}
-    variant={variant}
-  >
+  <Button component={Link} to={`/quotes/${to}`} variant={variant}>
     {children}
   </Button>
 )

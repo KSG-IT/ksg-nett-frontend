@@ -65,7 +65,7 @@ const useStyles = createStyles(theme => ({
     fontWeight: 'bold',
   },
   card: {
-    borderTop: `5px solid ${theme.colors.brand}`,
+    borderTop: `5px solid ${theme.colors[theme.primaryColor][6]}`,
     margin: `${theme.spacing.sm}px 0`,
   },
 }))

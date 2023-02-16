@@ -141,7 +141,6 @@ export const ConfigureInterviewTemplate: React.VFC<
           onChange={evt => setInterviewBooleanEvaluation(evt.target.value)}
         />
         <Button
-          color="samfundet-red"
           variant="subtle"
           leftIcon={<IconPlus />}
           onClick={handleCreateInterviewBooleanEvaluation}
@@ -175,7 +174,6 @@ export const ConfigureInterviewTemplate: React.VFC<
           }
         />
         <Button
-          color="samfundet-red"
           variant="subtle"
           leftIcon={<IconPlus />}
           onClick={handleCreateInterviewAdditionalEvaluationStatement}
@@ -185,15 +183,11 @@ export const ConfigureInterviewTemplate: React.VFC<
       </Group>
       <Group>
         <Button
-          color="samfundet-red"
           onClick={() => setStageCallback('INTERVIEW_LOCATION_AVAILABILITY')}
         >
           Forrige steg
         </Button>
-        <Button
-          color="samfundet-red"
-          onClick={() => setStageCallback('AVAILABLE_POSITIONS')}
-        >
+        <Button onClick={() => setStageCallback('AVAILABLE_POSITIONS')}>
           Neste steg
         </Button>
       </Group>

@@ -38,7 +38,7 @@ export const IconWithData: React.FC<IconWithDataProps> = ({
     <Grid align={'center'} columns={12}>
       <Grid.Col span={1}>
         <Stack align={'center'}>
-          <ThemeIcon variant="light" color={'samfundet-red'}>
+          <ThemeIcon variant="light">
             <Icon size={14} stroke={1.5} />
           </ThemeIcon>
         </Stack>

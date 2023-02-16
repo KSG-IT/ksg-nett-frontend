@@ -66,7 +66,7 @@ export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
 const useStyles = createStyles(theme => ({
   card: {
     backgroundColor: theme.colors.white,
-    borderTop: `5px solid ${theme.colors.brand}`,
+    borderTop: `5px solid ${theme.colors[theme.primaryColor]}`,
   },
   shiftButton: {
     '&:hover': {

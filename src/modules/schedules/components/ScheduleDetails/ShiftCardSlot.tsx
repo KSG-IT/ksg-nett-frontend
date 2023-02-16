@@ -113,9 +113,7 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
             <Text transform="uppercase" color={'dimmed'}>
               Velg bruker for skift
             </Text>
-            <Button color="samfundet-red" onClick={handleDeleteShiftSlot}>
-              Slett
-            </Button>
+            <Button onClick={handleDeleteShiftSlot}>Slett</Button>
           </Group>
           <UserSelect width="90%" setUserCallback={handleAddUserToShift} />
         </Stack>

@@ -80,17 +80,12 @@ export const CreateAndSendInvoices: React.FC = ({}) => {
       <Group position="right">
         <Button
           leftIcon={<IconFilePlus />}
-          color="samfundet-red"
           onClick={handleGeneratePdf}
           loading={generatePdfLoading}
         >
           Opprett PDF'er
         </Button>
-        <Button
-          color="samfundet-red"
-          leftIcon={<IconFileX />}
-          onClick={handleDeletePdf}
-        >
+        <Button leftIcon={<IconFileX />} onClick={handleDeletePdf}>
           Slett PDFer
         </Button>
       </Group>
@@ -106,7 +101,6 @@ export const CreateAndSendInvoices: React.FC = ({}) => {
       <Button
         disabled={bsfFinishedDisabled}
         loading={finalizeBarTabLoading}
-        color="samfundet-red"
         onClick={handleFinalizeBarTab}
       >
         BSF er ferdig

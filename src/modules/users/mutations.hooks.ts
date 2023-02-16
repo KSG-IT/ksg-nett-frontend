@@ -7,6 +7,7 @@ import {
   UPDATE_MY_ALLERGIES_MUTATION,
   UPDATE_MY_EMAIL_NOTIFICATIONS_MUTATION,
   UPDATE_MY_INFO_MUTATION,
+  UPDATE_MY_THEME_MUTATION,
 } from './mutations'
 import {
   AddUserToUserTypeReturns,
@@ -19,6 +20,8 @@ import {
   UpdateMyAllergiesVariables,
   UpdateMyEmailNotificationsReturns,
   UpdateMyEmailNotificationsVariables,
+  UpdateMyThemeReturns,
+  UpdateMyThemeVariables,
   UserNode,
 } from './types'
 
@@ -79,6 +82,11 @@ export function useUserMutations() {
     UpdateMyEmailNotificationsVariables
   >(UPDATE_MY_EMAIL_NOTIFICATIONS_MUTATION)
 
+  const [updateMyTheme, { loading: updateMyThemeLoading }] = useMutation<
+    UpdateMyThemeReturns,
+    UpdateMyThemeVariables
+  >(UPDATE_MY_THEME_MUTATION)
+
   return {
     patchUser,
     patchUserLoading,
@@ -92,6 +100,8 @@ export function useUserMutations() {
     updateMyAllergiesLoading,
     updateMyEmailNotifications,
     updateMyEmailNotificationsLoading,
+    updateMyTheme,
+    updateMyThemeLoading,
   }
 }
 

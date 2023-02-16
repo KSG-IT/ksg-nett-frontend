@@ -47,9 +47,7 @@ export const BarTabSummary: React.FC<BarTabSummaryProps> = ({ barTab }) => {
   return (
     <Stack className={classes.wrapper}>
       <Group position="right">
-        <Button color="samfundet-red" onClick={handleCreateInvoices}>
-          Lagre fakturaer
-        </Button>
+        <Button onClick={handleCreateInvoices}>Lagre fakturaer</Button>
       </Group>
       {barTabCustomerData.map(customer => (
         <BarTabSummaryTable barTabCustomerData={customer} />

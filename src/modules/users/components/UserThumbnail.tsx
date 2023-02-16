@@ -1,4 +1,4 @@
-import { Avatar, Tooltip } from '@mantine/core'
+import { Avatar, Tooltip, useMantineTheme } from '@mantine/core'
 import { UserThumbnailProps } from 'modules/users/types'
 import { Link } from 'react-router-dom'
 
@@ -8,6 +8,7 @@ export const UserThumbnail: React.FC<UserThumbnailProps> = ({
   radius,
   className,
 }) => {
+  const theme = useMantineTheme()
   const { profileImage, initials, getFullWithNickName } = user
   const hasprofileImage = profileImage !== null
   return (
@@ -15,7 +16,7 @@ export const UserThumbnail: React.FC<UserThumbnailProps> = ({
       <Avatar
         size={size}
         component={Link}
-        color="samfundet-red"
+        color={theme.primaryColor}
         to={`/users/${user.id}`}
         src={hasprofileImage ? profileImage : ''}
         radius={radius ? radius : 'xl'}

@@ -78,11 +78,7 @@ export const QuoteGrid: React.FC<QuoteGridProps> = ({ search }) => {
       </SimpleGrid>
       <Container>
         {hasNextPage && (
-          <Button
-            color="samfundet-red"
-            loading={loading}
-            onClick={handleFetchMore}
-          >
+          <Button loading={loading} onClick={handleFetchMore}>
             Hent flere sitater
           </Button>
         )}

@@ -75,7 +75,6 @@ export const ChangePasswordWithToken: React.FC = () => {
           onChange={evt => setRepeatNewPassword(evt.target.value)}
         />
         <Button
-          color="samfundet-red"
           type="submit"
           fullWidth
           mt="md"

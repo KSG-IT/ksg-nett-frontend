@@ -87,12 +87,7 @@ export const UserMigrationWizardForm: React.FC<
           {...register('cardUuid')}
         />
         <div></div>
-        <Button
-          type="submit"
-          color="samfundet-red"
-          loading={isSubmitting}
-          disabled={!readMessageBox}
-        >
+        <Button type="submit" loading={isSubmitting} disabled={!readMessageBox}>
           Lagre informasjon
         </Button>
       </SimpleGrid>

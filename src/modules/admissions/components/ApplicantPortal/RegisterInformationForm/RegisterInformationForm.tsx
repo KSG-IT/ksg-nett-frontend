@@ -93,7 +93,6 @@ export const RegisterInformationForm: React.FC<
           </MessageBox>
 
           <Checkbox
-            color="samfundet-red"
             label="Samtykke om personopplysninger"
             {...register('gdprConsent')}
           />
@@ -119,7 +118,6 @@ export const RegisterInformationForm: React.FC<
 
           <Checkbox
             checked={doesNotWantImage}
-            color="samfundet-red"
             label="Jeg ønsker ikke å laste opp et bilde"
             onChange={() => setDoesNotWantImage(!doesNotWantImage)}
           />
@@ -136,7 +134,6 @@ export const RegisterInformationForm: React.FC<
               loading={isSubmitting}
               disabled={!doesNotWantImage && !file}
               type="submit"
-              color="samfundet-red"
             >
               Lagre informasjon
             </Button>

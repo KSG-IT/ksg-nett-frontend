@@ -122,10 +122,7 @@ export const InterviewLocationAvailabilityCard: React.VFC<
           <TimeRangeInput value={from} onChange={setFrom} />
         </Group>
 
-        <Button
-          color="samfundet-red"
-          onClick={handleCreateInterviewLocationAvailability}
-        >
+        <Button onClick={handleCreateInterviewLocationAvailability}>
           Legg til intervall
         </Button>
       </Stack>

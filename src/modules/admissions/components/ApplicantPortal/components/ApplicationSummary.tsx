@@ -6,6 +6,7 @@ import {
   Text,
   ThemeIcon,
   Title,
+  useMantineTheme,
 } from '@mantine/core'
 import { MessageBox } from 'components/MessageBox'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
@@ -21,6 +22,7 @@ export const ApplicantSummary: React.FC<ApplicantSummaryProps> = ({
   applicant,
 }) => {
   const [modalOpen, setModalOpen] = useState(false)
+  const theme = useMantineTheme()
 
   return (
     <Stack>
@@ -31,11 +33,19 @@ export const ApplicantSummary: React.FC<ApplicantSummaryProps> = ({
       <Group>
         <Title order={4}>Intervjulokale:</Title>
         {applicant.wantsDigitalInterview ? (
-          <Text transform={'uppercase'} color={'samfundet-red'} weight={'bold'}>
+          <Text
+            transform={'uppercase'}
+            color={theme.primaryColor}
+            weight={'bold'}
+          >
             DIGITALT
           </Text>
         ) : (
-          <Text transform={'uppercase'} color={'samfundet-red'} weight={'bold'}>
+          <Text
+            transform={'uppercase'}
+            color={theme.primaryColor}
+            weight={'bold'}
+          >
             {applicant.interview?.location.name}
           </Text>
         )}
@@ -83,11 +93,7 @@ export const ApplicantSummary: React.FC<ApplicantSummaryProps> = ({
           )
         })}
       </List>
-      <Button
-        variant={'outline'}
-        color="samfundet-red"
-        onClick={() => setModalOpen(true)}
-      >
+      <Button variant={'outline'} onClick={() => setModalOpen(true)}>
         Trekk søknad
       </Button>
       <MessageBox type="info">

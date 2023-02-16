@@ -58,7 +58,6 @@ export const MyUpcomingInterviews: React.VFC = () => {
       <td>{interview.location.name}</td>
       <td>
         <Button
-          color="samfundet-red"
           onClick={() => {
             handleRedirectToInterview(interview.applicant.id)
           }}

@@ -18,14 +18,12 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
       <td>{format(new Date(sociSession.createdAt), 'yyyy.MM.dd')}</td>
       <td>{sociSession.type}</td>
       <td>
-        <Badge color="samfundet-red">
-          {sociSession.closed ? 'Stengt' : 'Åpen'}
-        </Badge>
+        <Badge>{sociSession.closed ? 'Stengt' : 'Åpen'}</Badge>
       </td>
       <td>{numberWithSpaces(sociSession.moneySpent)},- NOK</td>
       <td>
         <Link to={`${sociSession.id}`}>
-          <Button color="samfundet-red">Se liste</Button>
+          <Button>Se liste</Button>
         </Link>
       </td>
     </tr>
