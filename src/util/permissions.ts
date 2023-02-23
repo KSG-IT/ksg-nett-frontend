@@ -42,6 +42,19 @@ export const PERMISSIONS = {
       deposit: 'economy.invalidate_deposit',
     },
   },
+  // ===== FEATURE FLAGS ======
+  featureFlags: {
+    add: {
+      featureFlag: 'feature_flags.add_featureflag',
+    },
+    change: {
+      featureFlag: 'feature_flags.change_featureflag',
+    },
+    view: {
+      featureFlag: 'feature_flags.view_featureflag',
+    },
+  },
+
   // ===== HANDBOOK ======
   handbook: {
     add: {

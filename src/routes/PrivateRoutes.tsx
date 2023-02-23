@@ -92,6 +92,11 @@ const AdmissionStatistics = React.lazy(
 const MySettings = React.lazy(() => import('modules/users/views/MySettings'))
 const Newbies = React.lazy(() => import('modules/users/views/Newbies'))
 
+// ==== Feature flags ====
+const FeatureFlags = React.lazy(
+  () => import('modules/featureFlags/views/FeatureFlags')
+)
+
 export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
   const setUser = useStore(state => state.setUser)
@@ -455,6 +460,18 @@ export const AppRoutes: React.FC = () => {
           </Route>
           <Route path="*" element={<FullPage404 />} />
         </Route>
+
+        {/* ==== FEATURE FLAGS MODULE ==== */}
+        <Route
+          path="feature-flags"
+          element={
+            <RestrictedRoute
+              permissions={PERMISSIONS.featureFlags.view.featureFlag}
+            >
+              <FeatureFlags />
+            </RestrictedRoute>
+          }
+        />
 
         {/* ==== SCHEDULES MODULE ==== */}
         <Route path="schedules">
