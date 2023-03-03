@@ -67,9 +67,9 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
             {depositMethod === DepositMethodValues.BANK_TRANSFER && (
               <MessageBox type="warning">
                 <b>Obs!</b> Ved bankoverføring husk å skrive inn navn og dato på
-                overøring. Bankoverføringer blir heller ikke godkjent før de har
-                blitt bekreftet at de har kommet inn på konto. Dette tar som
-                regel noen dager
+                overøringen i kommentaren <b>nede</b>. Bankoverføringer blir
+                heller ikke godkjent før de har blitt bekreftet at de har kommet
+                inn på konto. Dette tar som regel noen dager
               </MessageBox>
             )}
             <form onSubmit={handleSubmit(onSubmit)}>
