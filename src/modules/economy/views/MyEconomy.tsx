@@ -11,11 +11,12 @@ import {
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import React from 'react'
+import { useMe } from 'util/hooks'
+import { TransactionCard } from '../../dashboard/components/TransactionCard'
 import { AccountCard, MyDeposits, MyExpenditures } from '../components'
 import { MY_BANK_ACCOUNT_QUERY } from '../queries'
 import { MyBankAccountReturns } from '../types.graphql'
-import { TransactionCard } from '../../dashboard/components/TransactionCard'
-import React from 'react'
 
 const breadCrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -23,11 +24,16 @@ const breadCrumbItems = [
 ]
 
 const DigiBong: React.FC = () => {
-  const { data, loading, error } = useQuery(gql`
-    query {
-      myExternalChargeQrCodeUrl
+  const { data, loading, error } = useQuery(
+    gql`
+      query {
+        myExternalChargeQrCodeUrl
+      }
+    `,
+    {
+      fetchPolicy: 'network-only',
     }
-  `)
+  )
 
   if (error) return <FullPageError />
 
@@ -48,6 +54,8 @@ export const MyEconomy: React.FC = () => {
     MY_BANK_ACCOUNT_QUERY
   )
 
+  const me = useMe()
+
   if (error) return <FullPageError />
 
   if (loading || !data) return <FullContentLoader />
@@ -56,7 +64,8 @@ export const MyEconomy: React.FC = () => {
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
       <Title>Min økonomi</Title>
-      <DigiBong />
+
+      {me.isSuperUser && <DigiBong />}
 
       <AccountCard
         className={classes.balanceCard}
