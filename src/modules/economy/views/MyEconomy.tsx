@@ -1,13 +1,16 @@
 import { gql, useQuery } from '@apollo/client'
 import {
+  ActionIcon,
   Anchor,
   Card,
   createStyles,
+  Group,
   SimpleGrid,
   Stack,
   Text,
   Title,
 } from '@mantine/core'
+import { IconRefresh } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -24,7 +27,7 @@ const breadCrumbItems = [
 ]
 
 const DigiBong: React.FC = () => {
-  const { data, loading, error } = useQuery(
+  const { data, loading, error, refetch } = useQuery(
     gql`
       query {
         myExternalChargeQrCodeUrl
@@ -42,9 +45,14 @@ const DigiBong: React.FC = () => {
   const { myExternalChargeQrCodeUrl } = data
 
   return (
-    <Anchor href={myExternalChargeQrCodeUrl} target="_blank">
-      Min digibong
-    </Anchor>
+    <Group>
+      <Anchor href={myExternalChargeQrCodeUrl} target="_blank">
+        Min digibong
+      </Anchor>
+      <ActionIcon>
+        <IconRefresh stroke={1.5} size={20} onClick={() => refetch()} />
+      </ActionIcon>
+    </Group>
   )
 }
 
@@ -65,7 +73,7 @@ export const MyEconomy: React.FC = () => {
       <Breadcrumbs items={breadCrumbItems} />
       <Title>Min økonomi</Title>
 
-      {me.isSuperUser && <DigiBong />}
+      {me.isSuperuser && <DigiBong />}
 
       <AccountCard
         className={classes.balanceCard}

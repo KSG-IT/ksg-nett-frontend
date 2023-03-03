@@ -28,7 +28,6 @@ export const UserPlaceholder: UserNode = {
   lastTransactions: [],
   upvotedQuoteIds: [],
   owesMoney: false,
-  isSuperUser: false,
   allPermissions: [],
   dateOfBirth: '',
   studyAddress: '',
