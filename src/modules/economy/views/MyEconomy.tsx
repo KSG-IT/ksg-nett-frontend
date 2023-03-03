@@ -1,5 +1,6 @@
-import { useQuery } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import {
+  Anchor,
   Card,
   createStyles,
   SimpleGrid,
@@ -21,6 +22,26 @@ const breadCrumbItems = [
   { label: 'Min økonomi', path: '/economy/me' },
 ]
 
+const DigiBong: React.FC = () => {
+  const { data, loading, error } = useQuery(gql`
+    query {
+      myExternalChargeQrCodeUrl
+    }
+  `)
+
+  if (error) return <FullPageError />
+
+  if (loading || !data) return <span> Loading</span>
+
+  const { myExternalChargeQrCodeUrl } = data
+
+  return (
+    <Anchor href={myExternalChargeQrCodeUrl} target="_blank">
+      Min digibong
+    </Anchor>
+  )
+}
+
 export const MyEconomy: React.FC = () => {
   const { classes } = useStyles()
   const { data, loading, error } = useQuery<MyBankAccountReturns>(
@@ -35,6 +56,7 @@ export const MyEconomy: React.FC = () => {
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
       <Title>Min økonomi</Title>
+      <DigiBong />
 
       <AccountCard
         className={classes.balanceCard}
