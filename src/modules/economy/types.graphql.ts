@@ -1,6 +1,10 @@
 import { UserNode, UserThumbnailProps } from 'modules/users/types'
 import { RelayEdges, RelayEdgesWithPageInfo } from 'types/graphql'
-import { SociOrderSessionStatusValues, SociProductTypeValues } from './enums'
+import {
+  DepositMethodValues,
+  SociOrderSessionStatusValues,
+  SociProductTypeValues,
+} from './enums'
 
 // General typing
 export enum SociSessionType {
@@ -211,14 +215,10 @@ export interface MySessionProductOrdersReturns {
 
 // ===== MUTATIONS =====
 
-export interface CreateDepositInput {
+export interface CreateDepositMutationVariables {
   amount: number
   description: string
-  receipt: File | null
-  onCompletedCallback: () => void
-}
-export interface CreateDepositMutationVariables {
-  input: CreateDepositInput
+  depositMethod: DepositMethodValues
 }
 
 export interface CreateDepositMutationReturns {

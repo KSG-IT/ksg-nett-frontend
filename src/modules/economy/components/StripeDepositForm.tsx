@@ -42,6 +42,8 @@ export const StripeDepositForm: React.FC<StripeDepositFormProps> = ({
 
       confirmParams: {
         return_url: import.meta.env.VITE_APP_URL + '/economy/me',
+        // setup_future_usage: 'off_session',  // Use this to save card for future use. Need to refactor it
+        // form flow before implementing this.
         payment_method_data: {
           billing_details: {
             email: me.email,

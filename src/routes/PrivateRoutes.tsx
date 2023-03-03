@@ -97,6 +97,9 @@ const FeatureFlags = React.lazy(
   () => import('modules/featureFlags/views/FeatureFlags')
 )
 
+const EconomyDashboard = React.lazy(
+  () => import('modules/economy/views/EconomyDashboard')
+)
 export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
   const setUser = useStore(state => state.setUser)
@@ -428,7 +431,18 @@ export const AppRoutes: React.FC = () => {
 
         {/* ==== ECONOMY MODULE ==== */}
         <Route path="economy">
+          <Route index element={<EconomyDashboard />} />
           <Route path="deposits">
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.economy.approve.deposit}
+                >
+                  <Deposits />
+                </RestrictedRoute>
+              }
+            />
             <Route path="create" element={<CreateDeposit />} />
           </Route>
           <Route path="me" element={<MyEconomy />} />

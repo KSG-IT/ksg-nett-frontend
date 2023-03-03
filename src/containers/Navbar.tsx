@@ -84,22 +84,16 @@ const routes: RouteGroup[] = [
         permissions: PERMISSIONS.admissions.view.admission,
       },
       {
-        icon: IconChartAreaLine,
-        link: '/bar-tab',
-        label: 'BSF',
-        permissions: PERMISSIONS.barTab.view.barTab,
-      },
-      {
         icon: IconHandMiddleFinger,
         link: '/users/user-types',
         label: 'Tilganger',
         permissions: PERMISSIONS.users.change.userType,
       },
       {
-        icon: IconReportMoney,
-        link: '/economy/soci-sessions',
-        label: 'Innkryssinger',
-        permissions: PERMISSIONS.economy.view.sociSession,
+        icon: IconCreditCard,
+        link: '/economy',
+        label: 'Økonomi',
+        permissions: PERMISSIONS.economy.view.deposit,
       },
       {
         icon: IconClipboardList,

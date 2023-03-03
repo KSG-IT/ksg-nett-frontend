@@ -20,7 +20,8 @@ import { AllDepositsQuery, AllDepositsVariables } from '../types.graphql'
 
 const breadCrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
-  { label: 'Innskudd', path: '/deposits' },
+  { label: 'Økonomi', path: '/economy' },
+  { label: 'Innskudd', path: '' },
 ]
 
 export const Deposits: React.FC = () => {

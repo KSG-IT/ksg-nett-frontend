@@ -21,6 +21,7 @@ import {
   CloseSociSessionReturns,
   CloseSociSessionVariables,
   CreateDepositMutationReturns,
+  CreateDepositMutationVariables,
   CreateSociOrderSessionReturns,
   CreateSociSessionReturns,
   CreateSociSessionVariables,
@@ -40,8 +41,10 @@ import {
 } from './types.graphql'
 
 export function useDepositMutations() {
-  const [createDeposit, { loading: createDepositLoading }] =
-    useMutation<CreateDepositMutationReturns>(CREATE_DEPOSIT_MUTATION)
+  const [createDeposit, { loading: createDepositLoading }] = useMutation<
+    CreateDepositMutationReturns,
+    CreateDepositMutationVariables
+  >(CREATE_DEPOSIT_MUTATION)
 
   const [approveDeposit, { loading: approveDepositLoading }] = useMutation<
     ApproveDepositReturns,
