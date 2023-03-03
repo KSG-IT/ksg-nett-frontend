@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [v2023.3.3] - 2023-03-03
+
+### Changed
+
+- Economy: Deposit form bank transfer and two-step stripe deposit
+- Economy: Move navitems from sidebar to own dashboard
+
 ## [v2023.2.3] - 2023-02-14
 
 ### Added
