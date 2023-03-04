@@ -9,9 +9,11 @@ export const CreateDepositInfoBox: React.FC = () => {
           Stripe
         </a>
       </b>{' '}
-      for å behandle og verifisere betalinger. KSG-nett lagrer under ingen
+      for å behandle og verifisere kortbetalinger. KSG-nett lagrer under ingen
       omstendigheter kredittkortinformasjon. Betalingen innebærer et
-      behandlingsgebyr.
+      behandlingsgebyr. Det er fortsatt mulig å benytte seg av bankoverføringer,
+      dette har ikke et gebyr men kan ta noe lengre tid. Kontonummeret til
+      Societen er <b>1503.88.72882</b>.
     </MessageBox>
   )
 }

@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { DepositMethodValues } from 'modules/economy/enums'
 import { CreateDepositMutationReturns } from 'modules/economy/types.graphql'
 import { useForm } from 'react-hook-form'
 import { OnFormSubmit } from 'types/forms'
@@ -7,8 +8,7 @@ import * as yup from 'yup'
 export type CreateDepositFormData = {
   amount: number
   description: string
-  receipt: File | null
-  createdAt?: string
+  depositMethod: DepositMethodValues
 }
 
 const DepositCreateSchema = yup.object().shape({
@@ -16,7 +16,8 @@ const DepositCreateSchema = yup.object().shape({
     .number()
     .required('Må sette sum')
     .max(30_000, 'Kan ikke være høyere enn 30 000')
-    .min(1, 'Må minst være 1'),
+    .min(50, 'Må minst være 50'),
+  description: yup.string().required('Må skrive en kommentar'),
 })
 
 interface UseCreateDepositLogicInput {

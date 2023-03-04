@@ -1,5 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
-import { Card, Container, createStyles, Title } from '@mantine/core'
+import { Card, Container, createStyles, Tabs, Title } from '@mantine/core'
+import { IconBuildingBank, IconCreditCard } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -49,6 +50,7 @@ export const CreateDeposit: React.FC<DepositProps> = () => {
         Legg til innskudd
       </Title>
       <CreateDepositInfoBox />
+
       <Card radius={'md'} withBorder className={classes.card}>
         <CreateDepositForm
           onCompletedCallback={() => {}}

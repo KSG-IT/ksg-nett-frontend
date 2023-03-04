@@ -1,5 +1,6 @@
-import { Button } from '@mantine/core'
+import { ActionIcon, Button } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import { IconCheck, IconX } from '@tabler/icons'
 import { CardTable } from 'components/CardTable'
 import { FullContentLoader } from 'components/Loading'
 import { useDepositMutations } from 'modules/economy/mutations.hooks'
@@ -55,11 +56,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
       <td>{format(new Date(deposit.createdAt), 'yyyy.MM.dd HH:mm')}</td>
       <td>{deposit.account.user.fullName}</td>
       <td>{deposit.amount}</td>
-      <td>
-        <a href={deposit.receipt || ''} target="_blank">
-          Se kvittering
-        </a>
-      </td>
+      <td>{deposit.description}</td>
       <td>
         {deposit.approvedBy ? (
           <UserThumbnail user={deposit.approvedBy} />
@@ -67,26 +64,32 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
       </td>
       <td>
         {deposit.approved ? (
-          <Button onClick={() => handleDeposit(deposit)} color="samfundet-red">
-            Underkjenn
-          </Button>
+          <ActionIcon
+            onClick={() => handleDeposit(deposit)}
+            color="samfundet-red"
+          >
+            <IconX />
+          </ActionIcon>
         ) : (
-          <Button onClick={() => handleDeposit(deposit)} color="samfundet-red">
-            Godkjenn
-          </Button>
+          <ActionIcon
+            onClick={() => handleDeposit(deposit)}
+            color="samfundet-red"
+          >
+            <IconCheck />
+          </ActionIcon>
         )}
       </td>
     </tr>
   ))
 
   return (
-    <CardTable>
+    <CardTable compact>
       <thead>
         <tr>
           <th>Tidsstempel</th>
           <th>Navn</th>
           <th>Sum</th>
-          <th>Kvittering</th>
+          <th>Kommentar</th>
           <th>Godkjent av</th>
           <th>Handling</th>
         </tr>

@@ -3,7 +3,6 @@ import { createStyles, Grid, Stack, useMantineTheme } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { MessageBox } from 'components/MessageBox'
 import { useStore } from 'store'
 import { useMediaQuery } from 'util/hooks'
 import { FutureShifts } from './components/FutureShifts'
@@ -27,7 +26,7 @@ export const Dashboard = () => {
   const { data, loading, error } = useQuery<DashboardDataQueryReturns>(
     DASHBOARD_DATA_QUERY,
     {
-      pollInterval: 30_000,
+      pollInterval: 10_000,
     }
   )
 
@@ -48,11 +47,6 @@ export const Dashboard = () => {
   return (
     <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
-      <MessageBox type="warning">
-        Innskudd vil ikke være tilgjengelig fra Mandag 13. Februar grunnet
-        vedlikehold på ubestemt tid. Det vil forhåpentligvis være på plass igjen
-        i løpet av uken. Beklager ulemper dette måtte medføre.
-      </MessageBox>
       <ShortcutCards
         sociOrderSession={!!sociOrderSession}
         showNewbies={showNewbies}

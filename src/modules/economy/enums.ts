@@ -9,3 +9,8 @@ export enum SociProductTypeValues {
   FOOD = 'FOOD',
   DRINK = 'DRINK',
 }
+
+export enum DepositMethodValues {
+  STRIPE = 'STRIPE',
+  BANK_TRANSFER = 'BANK_TRANSFER',
+}
