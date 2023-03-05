@@ -10,7 +10,7 @@ import {
   Text,
   Title,
 } from '@mantine/core'
-import { IconRefresh } from '@tabler/icons'
+import { IconExternalLink, IconRefresh } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -47,7 +47,10 @@ const DigiBong: React.FC = () => {
   return (
     <Group>
       <Anchor href={myExternalChargeQrCodeUrl} target="_blank">
-        Min digibong
+        <Group spacing={0}>
+          <Text>Digibong QR kode</Text>
+          <IconExternalLink stroke={1.5} size={18} />
+        </Group>
       </Anchor>
       <ActionIcon>
         <IconRefresh stroke={1.5} size={20} onClick={() => refetch()} />
