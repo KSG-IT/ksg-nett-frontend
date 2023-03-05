@@ -1,6 +1,6 @@
 {
   "name": "ksg-nett-frontend",
-  "version": "2023.3.3",
+  "version": "2023.3.1",
   "private": true,
   "dependencies": {
     "@apollo/client": "3.7.3",
