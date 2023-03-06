@@ -1,31 +1,71 @@
-import { useQuery } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import {
+  ActionIcon,
+  Anchor,
   Card,
   createStyles,
+  Group,
   SimpleGrid,
   Stack,
   Text,
   Title,
 } from '@mantine/core'
+import { IconExternalLink, IconRefresh } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import React from 'react'
+import { useMe } from 'util/hooks'
+import { TransactionCard } from '../../dashboard/components/TransactionCard'
 import { AccountCard, MyDeposits, MyExpenditures } from '../components'
 import { MY_BANK_ACCOUNT_QUERY } from '../queries'
 import { MyBankAccountReturns } from '../types.graphql'
-import { TransactionCard } from '../../dashboard/components/TransactionCard'
-import React from 'react'
 
 const breadCrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
   { label: 'Min økonomi', path: '/economy/me' },
 ]
 
+const DigiBong: React.FC = () => {
+  const { data, loading, error, refetch } = useQuery(
+    gql`
+      query {
+        myExternalChargeQrCodeUrl
+      }
+    `,
+    {
+      fetchPolicy: 'network-only',
+    }
+  )
+
+  if (error) return <FullPageError />
+
+  if (loading || !data) return <span> Loading</span>
+
+  const { myExternalChargeQrCodeUrl } = data
+
+  return (
+    <Group>
+      <Anchor href={myExternalChargeQrCodeUrl} target="_blank">
+        <Group spacing={0}>
+          <Text>Digibong QR kode</Text>
+          <IconExternalLink stroke={1.5} size={18} />
+        </Group>
+      </Anchor>
+      <ActionIcon>
+        <IconRefresh stroke={1.5} size={20} onClick={() => refetch()} />
+      </ActionIcon>
+    </Group>
+  )
+}
+
 export const MyEconomy: React.FC = () => {
   const { classes } = useStyles()
   const { data, loading, error } = useQuery<MyBankAccountReturns>(
     MY_BANK_ACCOUNT_QUERY
   )
+
+  const me = useMe()
 
   if (error) return <FullPageError />
 
@@ -35,6 +75,8 @@ export const MyEconomy: React.FC = () => {
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
       <Title>Min økonomi</Title>
+
+      {me.isSuperuser && <DigiBong />}
 
       <AccountCard
         className={classes.balanceCard}
