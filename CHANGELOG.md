@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [v2023.3.2] - 2023-03-07
+
+### Fixed
+
+- Economy: Debt collection. Re-add missing deposit form
+
 ## [v2023.3.1] - 2023-03-03
 
 ### Changed
