@@ -262,6 +262,7 @@ export interface PlaceProductOrderVariables {
   userId: string
   productId: string
   orderSize: number
+  overcharge: boolean
 }
 
 export interface CreateSociSessionReturns {

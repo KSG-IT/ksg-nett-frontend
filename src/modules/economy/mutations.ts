@@ -72,12 +72,14 @@ export const PLACE_PROUCT_ORDER_MUTATION = gql`
     $userId: ID!
     $productId: ID!
     $orderSize: Int!
+    $overcharge: Boolean
   ) {
     placeProductOrder(
       sociSessionId: $sociSessionId
       userId: $userId
       productId: $productId
       orderSize: $orderSize
+      overcharge: $overcharge
     ) {
       productOrder {
         id

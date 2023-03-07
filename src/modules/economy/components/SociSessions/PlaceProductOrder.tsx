@@ -1,10 +1,12 @@
-import { Button, Group, NumberInput, Paper } from '@mantine/core'
+import { Button, Checkbox, Group, NumberInput, Paper } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
+import { PermissionGate } from 'components/PermissionGate'
 import { UserSelect } from 'components/Select'
 import { useProductOrderMutations } from 'modules/economy/mutations.hooks'
 import { SOCI_SESSION_QUERY } from 'modules/economy/queries'
 import { ME_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
+import { PERMISSIONS } from 'util/permissions'
 import { ProductSelect } from '../ProductSelect'
 
 interface PlaceProductOrderProps {
@@ -15,6 +17,7 @@ export const PlaceProductOrder: React.FC<PlaceProductOrderProps> = ({
   sociSessionId,
 }) => {
   const [userId, setUserId] = useState('')
+  const [overcharge, setOvercharge] = useState(false)
   const [productId, setProductId] = useState('')
   const [orderSize, setOrderSize] = useState(1)
 
@@ -29,21 +32,35 @@ export const PlaceProductOrder: React.FC<PlaceProductOrderProps> = ({
         productId,
         orderSize,
         sociSessionId,
+        overcharge,
       },
       refetchQueries: [SOCI_SESSION_QUERY, ME_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
       },
       onCompleted() {
-        toast.success('Bestilling lagt inn')
+        showNotification({
+          title: 'Sukess',
+          message: 'Ordren ble lagt til',
+        })
         setOrderSize(1)
       },
     })
   }
   return (
     <Paper p="md">
-      <Group position="apart">
+      <Group spacing="lg">
         <UserSelect setUserCallback={setUserId} />
+        <PermissionGate permissions={PERMISSIONS.economy.canOvercharge}>
+          <Checkbox
+            label="Sett i minus"
+            checked={overcharge}
+            onChange={evt => evt && setOvercharge(evt.target.checked)}
+          />
+        </PermissionGate>
         <ProductSelect value={productId} onChangeCallback={setProductId} />
         <NumberInput
           placeholder="Antall"
