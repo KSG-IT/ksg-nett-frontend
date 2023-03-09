@@ -1,6 +1,12 @@
 import { ActionIcon, Menu } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconCheck, IconDots, IconTrash } from '@tabler/icons'
+import {
+  IconCheck,
+  IconChecks,
+  IconDots,
+  IconEditCircle,
+  IconTrash,
+} from '@tabler/icons'
 import { CardTable } from 'components/CardTable'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
@@ -26,28 +32,36 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
 
   if (queryLoading) return <FullContentLoader />
 
-  function handleApproveDeposit(deposit: DepositNode) {
-    const correctedAmouynt = prompt(
-      'Vil du korrigere beløpet?',
-      `${deposit.amount}`
-    )
+  function handleApproveDeposit(deposit: DepositNode, correct = false) {
+    let mutationVariables = {
+      depositId: deposit.id,
+      correctedAmount: deposit.amount,
+    }
 
-    if (correctedAmouynt === null) return
+    if (correct) {
+      const correctedAmouynt = prompt('Korrekt beløp?', `${deposit.amount}`)
 
-    const amount = parseInt(correctedAmouynt)
+      if (correctedAmouynt === null) return
 
-    if (isNaN(amount)) {
-      showNotification({
-        title: 'Noe gikk galt',
-        message: 'Beløpet må være et tall',
-      })
-      return
+      const amount = parseInt(correctedAmouynt)
+
+      if (isNaN(amount)) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message: 'Beløpet må være et tall',
+        })
+        return
+      }
+
+      mutationVariables = {
+        ...mutationVariables,
+        correctedAmount: amount,
+      }
     }
 
     approveDeposit({
       variables: {
-        depositId: deposit.id,
-        correctedAmount: amount,
+        ...mutationVariables,
       },
 
       refetchQueries: [ALL_DEPOSITS, ME_QUERY],
@@ -114,14 +128,21 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
                 color="green"
                 onClick={() => handleApproveDeposit(deposit)}
               >
-                Godkjenn innskudd
+                Godkjenn
+              </Menu.Item>
+              <Menu.Item
+                icon={<IconEditCircle />}
+                color="orange"
+                onClick={() => handleApproveDeposit(deposit, true)}
+              >
+                Korrriger og godkjenn
               </Menu.Item>
               <Menu.Item
                 color="red"
                 icon={<IconTrash />}
                 onClick={() => handleDeleteDeposit(deposit)}
               >
-                Slett innskudd
+                Slett
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
