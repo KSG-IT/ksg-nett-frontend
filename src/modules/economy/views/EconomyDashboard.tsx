@@ -1,11 +1,5 @@
 import { Stack, Title } from '@mantine/core'
-import {
-  IconBabyCarriage,
-  IconBaguette,
-  IconCreditCard,
-  IconEdit,
-  IconQuote,
-} from '@tabler/icons'
+import { IconBabyCarriage, IconBaguette, IconCreditCard } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { ShortcutCardGrid } from 'components/ShortcutCard'
 import { PERMISSIONS } from 'util/permissions'

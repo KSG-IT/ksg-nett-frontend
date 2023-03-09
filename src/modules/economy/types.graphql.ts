@@ -262,6 +262,7 @@ export interface PlaceProductOrderVariables {
   userId: string
   productId: string
   orderSize: number
+  overcharge: boolean
 }
 
 export interface CreateSociSessionReturns {
@@ -283,6 +284,7 @@ export interface ApproveDepositReturns {
 
 export interface ApproveDepositVariables {
   depositId: string
+  correctedAmount?: number
 }
 
 export interface InvalidateDepositReturns {

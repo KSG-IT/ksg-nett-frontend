@@ -1,12 +1,11 @@
 import { useQuery } from '@apollo/client'
 import { Button, createStyles, Group, Title } from '@mantine/core'
-import { IconChartArea, IconGlass, IconPlus, IconPrinter } from '@tabler/icons'
+import { IconChartArea, IconGlass, IconPlus } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { PERMISSIONS } from 'util/permissions'
 import {
@@ -21,6 +20,7 @@ import {
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
+  { label: 'Økonomi', path: '/economy' },
   { label: 'Innkryssinger', path: '/economy/soci-sessions' },
 ]
 
