@@ -6,6 +6,7 @@ import {
   IconDots,
   IconEditCircle,
   IconTrash,
+  IconX,
 } from '@tabler/icons'
 import { CardTable } from 'components/CardTable'
 import { FullContentLoader } from 'components/Loading'
@@ -103,6 +104,36 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
     })
   }
 
+  function handleInvalidateDeposit(deposit: DepositNode) {
+    if (!deposit.approved) {
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Kan ikke underkjenne et innskudd som ikke er godkjent',
+      })
+      return
+    }
+
+    invalidateDeposit({
+      variables: {
+        depositId: deposit.id,
+      },
+      refetchQueries: [ALL_DEPOSITS, ME_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          color: 'teal',
+          message: 'Innskudd er underkjent',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
+    })
+  }
+
   const rows = deposits.map((deposit, index) => (
     <tr key={deposit.id}>
       <td>{format(new Date(deposit.createdAt), 'yyyy.MM.dd HH:mm')}</td>
@@ -138,8 +169,17 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
                 Korrriger og godkjenn
               </Menu.Item>
               <Menu.Item
+                icon={<IconX />}
+                color="purple"
+                disabled={!deposit.approved}
+                onClick={() => handleInvalidateDeposit(deposit)}
+              >
+                Underkjenn
+              </Menu.Item>
+              <Menu.Item
                 color="red"
                 icon={<IconTrash />}
+                disabled={deposit.approved}
                 onClick={() => handleDeleteDeposit(deposit)}
               >
                 Slett
