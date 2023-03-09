@@ -1,6 +1,7 @@
 import { showNotification } from '@mantine/notifications'
 import { DepositMethodValues } from 'modules/economy/enums'
 import { useDepositMutations } from 'modules/economy/mutations.hooks'
+import { CreateDepositMutationVariables } from 'modules/economy/types.graphql'
 import { ONGOING_DEPOSIT_INTENT_QUERY } from 'modules/economy/views'
 import { useNavigate } from 'react-router-dom'
 import { CreateDepositFormData } from './useCreateDepositLogic'
@@ -9,7 +10,7 @@ export function useCreateDepositAPI(onCompletedCallback: () => void) {
   const { createDeposit } = useDepositMutations()
   const navigate = useNavigate()
 
-  async function handleSubmit(data: CreateDepositFormData) {
+  async function handleSubmit(data: CreateDepositMutationVariables) {
     return createDeposit({
       variables: {
         ...data,
@@ -35,8 +36,8 @@ export function useCreateDepositAPI(onCompletedCallback: () => void) {
   }
 
   const defaultValues = {
-    amount: 0,
-    description: '',
+    amount: 50,
+    dateOfTransfer: new Date(),
     depositMethod: DepositMethodValues.STRIPE,
   }
   return {
