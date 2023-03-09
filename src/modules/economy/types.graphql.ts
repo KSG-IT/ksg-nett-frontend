@@ -284,6 +284,7 @@ export interface ApproveDepositReturns {
 
 export interface ApproveDepositVariables {
   depositId: string
+  correctedAmount?: number
 }
 
 export interface InvalidateDepositReturns {

@@ -20,6 +20,7 @@ import { SociSessionReturns, SociSessionType } from '../types.graphql'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
+  { label: 'Økonomi', path: '/economy' },
   { label: 'Innkryssinger', path: '/economy/soci-sessions' },
 ]
 

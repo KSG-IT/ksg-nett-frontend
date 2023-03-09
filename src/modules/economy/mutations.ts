@@ -97,8 +97,8 @@ export const UNDO_PRODUCT_ORDER_MUTATION = gql`
 `
 
 export const APPROVE_DEPOSIT_MUTATION = gql`
-  mutation ApproveDeposit($depositId: ID!) {
-    approveDeposit(depositId: $depositId) {
+  mutation ApproveDeposit($depositId: ID!, $correctedAmount: Int) {
+    approveDeposit(depositId: $depositId, correctedAmount: $correctedAmount) {
       deposit {
         id
       }
