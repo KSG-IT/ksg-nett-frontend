@@ -157,6 +157,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
               <Menu.Item
                 icon={<IconCheck />}
                 color="green"
+                disabled={deposit.approved}
                 onClick={() => handleApproveDeposit(deposit)}
               >
                 Godkjenn
@@ -164,6 +165,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
               <Menu.Item
                 icon={<IconEditCircle />}
                 color="orange"
+                disabled={deposit.approved}
                 onClick={() => handleApproveDeposit(deposit, true)}
               >
                 Korrriger og godkjenn
