@@ -8,6 +8,7 @@
   - Deposits table
     - Delete deposit
     - Correct amount and approve deposit
+    - Deposit method as a table column
   - Soci sessions
     - Add option to overcharge an account when adding product orders
   - My economy
