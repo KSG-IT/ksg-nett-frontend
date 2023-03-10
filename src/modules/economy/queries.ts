@@ -33,9 +33,9 @@ export const ALL_DEPOSITS = gql`
           id
           description
           amount
-          receipt
           approved
           createdAt
+          depositMethod
           account {
             id
             user {

@@ -2,7 +2,6 @@ import { ActionIcon, Menu } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import {
   IconCheck,
-  IconChecks,
   IconDots,
   IconEditCircle,
   IconTrash,
@@ -11,11 +10,13 @@ import {
 import { CardTable } from 'components/CardTable'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
+import { DepositMethodValues } from 'modules/economy/enums'
 import { useDepositMutations } from 'modules/economy/mutations.hooks'
 import { ALL_DEPOSITS } from 'modules/economy/queries'
 import { DepositNode } from 'modules/economy/types.graphql'
 import { UserThumbnail } from 'modules/users/components'
 import { ME_QUERY } from 'modules/users/queries'
+import { Link } from 'react-router-dom'
 import { format } from 'util/date-fns'
 import { PERMISSIONS } from 'util/permissions'
 
@@ -137,8 +138,17 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
   const rows = deposits.map((deposit, index) => (
     <tr key={deposit.id}>
       <td>{format(new Date(deposit.createdAt), 'yyyy.MM.dd HH:mm')}</td>
-      <td>{deposit.account.user.fullName}</td>
+      <td>
+        <Link to={`/users/${deposit.account.user.id}`}>
+          {deposit.account.user.fullName}
+        </Link>
+      </td>
       <td>{deposit.amount}</td>
+      <td>
+        {deposit.depositMethod === DepositMethodValues.BANK_TRANSFER
+          ? 'Bankoverføring'
+          : 'Stripe'}
+      </td>
       <td>{deposit.description}</td>
       <td>
         {deposit.approvedBy ? (
@@ -200,6 +210,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
           <th>Tidsstempel</th>
           <th>Navn</th>
           <th>Sum</th>
+          <th>Betalingsmetode</th>
           <th>Kommentar</th>
           <th>Godkjent av</th>
           <th></th>
