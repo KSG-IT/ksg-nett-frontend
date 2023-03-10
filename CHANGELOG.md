@@ -1,5 +1,34 @@
 # CHANGELOG
 
+## [v2023.3.3] - 2023-03-10
+
+### Added
+
+- Economy
+  - Deposits table
+    - Delete deposit
+    - Correct amount and approve deposit
+    - Deposit method as a table column
+  - Soci sessions
+    - Add option to overcharge an account when adding product orders
+  - My economy
+    - Add external charge QR code url behind superuser permission
+
+### Changed
+
+- Economy
+  - Deposit form
+    - Remove description field from stripe deposit
+    - Replace bank transfer deposit description with date picker
+    - Append date to bank transfer deposit description
+
+### Fixed
+
+- Navbar
+  - Replace economy dashboard navitem permission with 'economy.view_socisession'
+- Routes
+  - Missing permission wrapper on EconomyDashboard
+
 ## [v2023.3.2] - 2023-03-07
 
 ### Fixed

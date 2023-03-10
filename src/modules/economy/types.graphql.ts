@@ -100,11 +100,10 @@ export interface DepositNode {
   description: string
   amount: number
   resolvedAmount: number | null
-  receipt: string | null // string with image url
+  depositMethod: DepositMethodValues
   approvedBy: UserNode | null
   approvedAt: Date | null
   approved: boolean
-  comments: DepositCommentNode[]
   createdAt: Date
 }
 
