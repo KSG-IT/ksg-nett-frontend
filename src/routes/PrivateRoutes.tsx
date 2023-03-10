@@ -431,7 +431,16 @@ export const AppRoutes: React.FC = () => {
 
         {/* ==== ECONOMY MODULE ==== */}
         <Route path="economy">
-          <Route index element={<EconomyDashboard />} />
+          <Route
+            index
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.economy.view.sociSession}
+              >
+                <EconomyDashboard />
+              </RestrictedRoute>
+            }
+          />
           <Route path="deposits">
             <Route
               index
