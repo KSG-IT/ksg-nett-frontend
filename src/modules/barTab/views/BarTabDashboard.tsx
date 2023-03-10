@@ -9,6 +9,7 @@ import { ActiveBarTabReturns } from '../types.graphql'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
+  { label: 'Økonomi', path: '/economy' },
   { label: 'BSF', path: '/bar-tab' },
 ]
 

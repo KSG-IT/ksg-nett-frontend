@@ -100,11 +100,10 @@ export interface DepositNode {
   description: string
   amount: number
   resolvedAmount: number | null
-  receipt: string | null // string with image url
+  depositMethod: DepositMethodValues
   approvedBy: UserNode | null
   approvedAt: Date | null
   approved: boolean
-  comments: DepositCommentNode[]
   createdAt: Date
 }
 
@@ -262,6 +261,7 @@ export interface PlaceProductOrderVariables {
   userId: string
   productId: string
   orderSize: number
+  overcharge: boolean
 }
 
 export interface CreateSociSessionReturns {
@@ -283,6 +283,7 @@ export interface ApproveDepositReturns {
 
 export interface ApproveDepositVariables {
   depositId: string
+  correctedAmount?: number
 }
 
 export interface InvalidateDepositReturns {

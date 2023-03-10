@@ -9,6 +9,7 @@ import {
   Radio,
   Textarea,
 } from '@mantine/core'
+import { DatePicker } from '@mantine/dates'
 
 import { IconCashBanknote } from '@tabler/icons'
 import { MessageBox } from 'components/MessageBox'
@@ -32,13 +33,13 @@ interface CreateDepositViewProps {
 export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
   onGoingIntent,
 }) => {
-  const { form, onSubmit } = useCreateDepositLogic({
-    ...useCreateDepositAPI(() => {}),
-  })
+  const { form, onSubmit } = useCreateDepositLogic(
+    useCreateDepositAPI(() => {})
+  )
   const { deleteDeposit, deleteDepositLoading } = useDepositMutations()
 
   const mobileSize = useMediaQuery('(max-width: 600px)')
-  const { formState, handleSubmit, setValue, watch, register } = form
+  const { formState, handleSubmit, setValue, watch, getValues } = form
   const { errors, isSubmitting } = formState
   const { formatCurrency } = useCurrencyFormatter()
 
@@ -66,10 +67,9 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
           <Stepper.Step label="Opprett innskudd">
             {depositMethod === DepositMethodValues.BANK_TRANSFER && (
               <MessageBox type="warning">
-                <b>Obs!</b> Ved bankoverføring husk å skrive inn navn og dato på
-                overøringen i kommentaren <b>nede</b>. Bankoverføringer blir
-                heller ikke godkjent før de har blitt bekreftet at de har kommet
-                inn på konto. Dette tar som regel noen dager
+                <b>Obs!</b> Bankoverføringer blir ikke godkjent før de har blitt
+                bekreftet at de har kommet inn på konto. Dette tar som regel
+                noen dager
               </MessageBox>
             )}
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -109,17 +109,24 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                 icon={<IconCashBanknote size={14} />}
                 onChange={value => value && setValue('amount', value)}
               />
-
-              <Textarea
-                required
-                label="Kommentar"
-                placeholder={
-                  depositMethod === DepositMethodValues.STRIPE
-                    ? 'Legg igjen en hyggelig kommentar'
-                    : 'Vennligst skriv fult navn og dato på overføringen'
-                }
-                {...register('description')}
-              />
+              {depositMethod === DepositMethodValues.BANK_TRANSFER && (
+                <Controller
+                  name="dateOfTransfer"
+                  control={form.control}
+                  render={({ field }) => (
+                    <DatePicker
+                      label="Dato for overføring"
+                      placeholder="Velg dato"
+                      clearable={false}
+                      maxDate={new Date()}
+                      value={field.value}
+                      onChange={value =>
+                        value && setValue('dateOfTransfer', value)
+                      }
+                    />
+                  )}
+                />
+              )}
 
               <Group position="apart" mt={'md'}>
                 <Button

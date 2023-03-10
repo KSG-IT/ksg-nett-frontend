@@ -72,12 +72,14 @@ export const PLACE_PROUCT_ORDER_MUTATION = gql`
     $userId: ID!
     $productId: ID!
     $orderSize: Int!
+    $overcharge: Boolean
   ) {
     placeProductOrder(
       sociSessionId: $sociSessionId
       userId: $userId
       productId: $productId
       orderSize: $orderSize
+      overcharge: $overcharge
     ) {
       productOrder {
         id
@@ -95,8 +97,8 @@ export const UNDO_PRODUCT_ORDER_MUTATION = gql`
 `
 
 export const APPROVE_DEPOSIT_MUTATION = gql`
-  mutation ApproveDeposit($depositId: ID!) {
-    approveDeposit(depositId: $depositId) {
+  mutation ApproveDeposit($depositId: ID!, $correctedAmount: Int) {
+    approveDeposit(depositId: $depositId, correctedAmount: $correctedAmount) {
       deposit {
         id
       }

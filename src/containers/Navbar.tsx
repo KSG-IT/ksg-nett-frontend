@@ -93,7 +93,7 @@ const routes: RouteGroup[] = [
         icon: IconCreditCard,
         link: '/economy',
         label: 'Økonomi',
-        permissions: PERMISSIONS.economy.view.deposit,
+        permissions: PERMISSIONS.economy.view.sociSession,
       },
       {
         icon: IconClipboardList,

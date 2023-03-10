@@ -9,6 +9,7 @@ export const MY_BANK_ACCOUNT_QUERY = gql`
       lastDeposits {
         id
         amount
+        resolvedAmount
         approved
         createdAt
       }
@@ -33,9 +34,9 @@ export const ALL_DEPOSITS = gql`
           id
           description
           amount
-          receipt
           approved
           createdAt
+          depositMethod
           account {
             id
             user {

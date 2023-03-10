@@ -11,6 +11,7 @@ import {
 import { IconRefresh, IconSearch } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
+import { MessageBox } from 'components/MessageBox'
 import { useState } from 'react'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { useDebounce } from 'util/hooks'
@@ -58,6 +59,10 @@ export const Deposits: React.FC = () => {
           Oppdater
         </Button>
       </Group>
+      <MessageBox type="warning">
+        Innskudd av typen ´Stripe` er ikke mulig å underkjenne eller godkjenne
+        manuelt.
+      </MessageBox>
       <Paper p="md" mb="sm" mt="sm">
         <Group align="center">
           <TextInput
