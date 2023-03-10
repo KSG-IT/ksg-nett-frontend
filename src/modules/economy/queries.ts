@@ -9,6 +9,7 @@ export const MY_BANK_ACCOUNT_QUERY = gql`
       lastDeposits {
         id
         amount
+        resolvedAmount
         approved
         createdAt
       }

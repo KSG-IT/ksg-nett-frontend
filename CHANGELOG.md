@@ -13,6 +13,7 @@
     - Add option to overcharge an account when adding product orders
   - My economy
     - Add external charge QR code url behind superuser permission
+    - Add delete mutation to last deposits table
 
 ### Changed
 
