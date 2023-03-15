@@ -12,14 +12,14 @@ import {
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 import { format } from 'util/date-fns'
-import { FullPageError } from '../../../../components/FullPageComponents'
-import { FullContentLoader } from '../../../../components/Loading'
-import { PRODUCT_ORDERS_BY_ITEM_AND_DATE_QUERY } from '../../queries'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
+import { PRODUCT_ORDERS_BY_ITEM_AND_DATE_QUERY } from 'modules/economy/queries'
 import {
   ExpenditureDay,
   ProductOrdersByItemAndDateReturns,
   ProductOrdersByItemAndDateVariables,
-} from '../../types.graphql'
+} from 'modules/economy/types.graphql'
 
 interface ItemChartProps {
   productId: string
