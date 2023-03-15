@@ -1,13 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { DepositMethodValues } from 'modules/economy/enums'
-import { CreateDepositMutationReturns } from 'modules/economy/types.graphql'
+import {
+  CreateDepositMutationReturns,
+  CreateDepositMutationVariables,
+} from 'modules/economy/types.graphql'
 import { useForm } from 'react-hook-form'
 import { OnFormSubmit } from 'types/forms'
+import { format } from 'util/date-fns'
 import * as yup from 'yup'
 
 export type CreateDepositFormData = {
   amount: number
-  description: string
+  dateOfTransfer: Date
   depositMethod: DepositMethodValues
 }
 
@@ -17,12 +21,14 @@ const DepositCreateSchema = yup.object().shape({
     .required('Må sette sum')
     .max(30_000, 'Kan ikke være høyere enn 30 000')
     .min(50, 'Må minst være 50'),
-  description: yup.string().required('Må skrive en kommentar'),
 })
 
 interface UseCreateDepositLogicInput {
   defaultValues: CreateDepositFormData
-  onSubmit: OnFormSubmit<CreateDepositFormData, CreateDepositMutationReturns>
+  onSubmit: OnFormSubmit<
+    CreateDepositMutationVariables,
+    CreateDepositMutationReturns
+  >
 }
 
 export function useCreateDepositLogic(input: UseCreateDepositLogicInput) {
@@ -34,7 +40,19 @@ export function useCreateDepositLogic(input: UseCreateDepositLogicInput) {
   })
 
   async function handleSubmit(data: CreateDepositFormData) {
-    await onSubmit(data).then(() => {
+    let description = ''
+    if (data.depositMethod === DepositMethodValues.BANK_TRANSFER) {
+      // Write out date in YYYY-MM-DD format
+      description = format(data.dateOfTransfer, 'd. MMMM')
+    }
+
+    const parsedData = {
+      amount: data.amount,
+      depositMethod: data.depositMethod,
+      description,
+    }
+
+    await onSubmit(parsedData).then(() => {
       form.reset()
     })
   }

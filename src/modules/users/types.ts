@@ -45,7 +45,6 @@ export type UserNode = {
   activeInternalGroupPosition: Pick<InternalGroupPositionNode, 'id' | 'name'>
   legacyWorkHistory: LegacyUserrWorkHistoryNode[]
   allPermissions: string[]
-  isSuperUser: boolean
   allergies: AllergyNode[]
   notifyOnQuote: boolean
   notifyOnShift: boolean

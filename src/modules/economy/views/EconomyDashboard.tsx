@@ -3,9 +3,7 @@ import {
   IconBabyCarriage,
   IconBaguette,
   IconCreditCard,
-  IconEdit,
   IconGraph,
-  IconQuote,
 } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { ShortcutCardGrid } from 'components/ShortcutCard'

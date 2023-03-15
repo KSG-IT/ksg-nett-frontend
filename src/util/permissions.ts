@@ -22,6 +22,7 @@ export const PERMISSIONS = {
   },
   // ===== ECONOMY ======
   economy: {
+    canOvercharge: 'economy.can_overcharge',
     add: {
       sociSession: 'economy.add_socisession',
       sociOrderSession: 'economy.add_sociordersession',
