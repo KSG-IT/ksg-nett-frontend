@@ -68,7 +68,7 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
   ]
 
   const parsedData = data.myExpenditures.data.map(day => ({
-    date: format(new Date(day.day), 'd MMM'),
+    date: format(new Date(day.day), 'd.MM'),
     sum: day.sum,
   }))
 
@@ -91,7 +91,7 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
       },
       title: {
         display: true,
-        text: 'Utgifter',
+        text: 'Totalt Forbruk',
       },
     },
     scales: {
@@ -114,7 +114,7 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
     labels: labels,
     datasets: [
       {
-        label: 'Utgifter',
+        label: 'kr per kveld',
         data: parsedData.map(day => day.sum),
         backgroundColor: theme.colors[theme.primaryColor][3],
       },
