@@ -41,6 +41,7 @@ export type TotalExpenditure = {
   data: ExpenditureDay[]
   total: number
 }
+
 export interface BankAccountActivity {
   name: string
   amount: number
@@ -176,6 +177,16 @@ export interface MyExpendituresReturns {
 
 export interface MyExpendituresVariables {
   dateRange: ExpenditureDateRangeEnum
+}
+
+export interface ProductOrdersByItemAndDateReturns {
+  productOrdersByItemAndDate: TotalExpenditure
+}
+
+export interface ProductOrdersByItemAndDateVariables {
+  productId: string
+  dateFrom: string
+  dateTo: string
 }
 
 export interface AllSociSessionsReturns {

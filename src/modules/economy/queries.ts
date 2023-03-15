@@ -232,3 +232,23 @@ export const ALL_SOCI_ORDERR_SESSION_DRINK_ORDERS_QUERY = gql`
     }
   }
 `
+
+export const PRODUCT_ORDERS_BY_ITEM_AND_DATE_QUERY = gql`
+  query ProductOrdersByItemAndDate(
+    $productId: ID!
+    $dateFrom: Date!
+    $dateTo: Date!
+  ) {
+    productOrdersByItemAndDate(
+      productId: $productId
+      dateFrom: $dateFrom
+      dateTo: $dateTo
+    ) {
+      total
+      data {
+        day
+        sum
+      }
+    }
+  }
+`

@@ -4,6 +4,7 @@ import {
   IconBaguette,
   IconCreditCard,
   IconEdit,
+  IconGraph,
   IconQuote,
 } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
@@ -29,6 +30,12 @@ const shortcuts = [
     icon: IconBabyCarriage,
     color: 'samfundet-red',
     link: 'soci-sessions',
+  },
+  {
+    title: 'Statistikk',
+    icon: IconGraph,
+    color: 'samfundet-red',
+    link: '/economy/statistics',
   },
 ]
 
