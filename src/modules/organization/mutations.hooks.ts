@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/client'
+import { DELETE_INTERNAL_GROUP_POSITION_PRIORITY_MUTATION } from 'modules/admissions/mutations'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import {
   CREATE_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION,
@@ -43,7 +44,7 @@ export function useInternalGroupPositionMembershipMutations() {
     deleteInternalGroupPositionMembership,
     { loading: deleteInternalGroupPositionMembershipLoading },
   ] = useMutation<DeleteMutationReturns, DeleteMutationVariables>(
-    DELETE_INTERNALGROUP_POSITION_MEMBERSHIP_MUTATION
+    DELETE_INTERNAL_GROUP_POSITION_PRIORITY_MUTATION
   )
 
   const [quitKSG, { loading: quitKSGLoading }] = useMutation<

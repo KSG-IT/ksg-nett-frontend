@@ -85,3 +85,11 @@ export const PATCH_INTERNAL_GROUP_MUTATION = gql`
     }
   }
 `
+
+export const DELETE_INTERNAL_GROUP_POSITION_MUTATION = gql`
+  mutation DeleteInternalGroupPosition($id: ID!) {
+    deleteInternalGroupPosition(id: $id) {
+      deletedId
+    }
+  }
+`

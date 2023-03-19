@@ -1,23 +1,16 @@
 import { Select } from '@mantine/core'
 import { internalGroupPositionTypeOptions } from 'modules/organization/consts'
 import { InternalGroupPositionType } from 'modules/organization/types.graphql'
+import React from 'react'
 
 interface InternalGroupPositionTypeSelectProps {
-  onChange: (
-    internalGroupPositionType: InternalGroupPositionType | null
-  ) => void
+  onChange: (value: InternalGroupPositionType) => void
 }
 
-export const InternalGroupPositionTypeSelect: React.FC<
-  InternalGroupPositionTypeSelectProps
-> = ({ onChange }) => {
+export const InternalGroupPositionTypeSelect = React.forwardRef<
+  React.ElementRef<typeof Select> & InternalGroupPositionTypeSelectProps,
+  Omit<React.ComponentPropsWithoutRef<typeof Select>, 'data'>
+>((props, ref) => {
   const options = internalGroupPositionTypeOptions
-  return (
-    <Select
-      data={options}
-      label="Vervtype"
-      placeholder="Velg en vervtype"
-      onChange={onChange}
-    />
-  )
-}
+  return <Select {...props} ref={ref} data={options} />
+})

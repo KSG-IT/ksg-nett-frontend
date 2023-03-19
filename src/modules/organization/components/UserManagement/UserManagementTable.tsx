@@ -1,7 +1,20 @@
+import { useMutation, useQuery } from '@apollo/client'
 import { Badge, createStyles, Menu, Text, TextProps } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
+import { InternalGroupPositionSelect } from 'components/Select/InternalGroupPositionSelect'
 import { internalGroupPositionTypeOptions } from 'modules/organization/consts'
-import { ManageInternalGroupUser } from 'modules/organization/types.graphql'
+import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
+import { ALL_INTERNAL_GROUP_POSITIONS } from 'modules/organization/queries'
+import { AllInternalGroupPositionsReturns } from 'modules/organization/types'
+import {
+  AssignNewInternalGroupPositionMembershipReturns,
+  AssignNewInternalGroupPositionMembershipVariables,
+  InternalGroupPositionType,
+  ManageInternalGroupUser,
+} from 'modules/organization/types.graphql'
+import { MANAGE_USERS_DATA_QUERY } from 'modules/users/queries'
+import toast from 'react-hot-toast'
+import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { UserManagementTableRow } from './UserManagementTableRow'
 
 interface UserManagementTableProps {
@@ -22,40 +35,85 @@ const useStyles = createStyles(theme => ({
     borderRadius: theme.radius.xs,
   },
 }))
+const TableData: React.FC<TextProps> = ({ children, color, weight }) => (
+  <td>
+    <Text color={color} weight={weight} size={'sm'}>
+      {children}
+    </Text>
+  </td>
+)
 
 export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   usersData,
   activeMemberships = false,
 }) => {
   const { classes } = useStyles()
-  const TableData: React.FC<TextProps> = ({ children, color, weight }) => (
-    <td>
-      <Text color={color} weight={weight} size={'sm'}>
-        {children}
-      </Text>
-    </td>
-  )
+  const [assignNewPosition, { loading }] = useMutation<
+    AssignNewInternalGroupPositionMembershipReturns,
+    AssignNewInternalGroupPositionMembershipVariables
+  >(ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP, {
+    refetchQueries: ['ManageUsersDataQuery'],
+  })
+
+  const handleAssignNewPosition = (
+    userId: string,
+    positionType: InternalGroupPositionType,
+    positionId: string
+  ) => {
+    assignNewPosition({
+      variables: {
+        userId: userId,
+        internalGroupPositionId: positionId,
+        internalGroupPositionType: positionType,
+      },
+      refetchQueries: [MANAGE_USERS_DATA_QUERY],
+      onError() {
+        toast.error('Noe gikk galt')
+      },
+      onCompleted() {
+        toast.success('Bruker oppdatert!')
+      },
+    })
+  }
 
   const tableRows = usersData.map(membership => (
     <tr key={membership.userId}>
       <TableData>{membership.fullName}</TableData>
       <td align="center">
-        <Badge color={'samfundet-red'}>{membership.positionName}</Badge>
+        {/* <Badge color={'samfundet-red'}>{membership.positionName}</Badge> */}
+        <InternalGroupPositionSelect
+          onChange={data => {
+            if (!data) return
+            handleAssignNewPosition(
+              membership.userId,
+              membership.internalGroupPositionType,
+              data
+            )
+          }}
+          variant="unstyled"
+          value={membership.internalGroupPositionMembership.position.id}
+        />
       </td>
-      <TableData>
-        <Menu>
-          <Menu.Target>
-            <Badge style={{ cursor: 'pointer' }}>
-              {membership.internalGroupPositionMembership.getTypeDisplay}
-            </Badge>
-          </Menu.Target>
-          <Menu.Dropdown>
-            {internalGroupPositionTypeOptions.map(positionType => (
-              <Menu.Item>{positionType.label}</Menu.Item>
-            ))}
-          </Menu.Dropdown>
-        </Menu>
-      </TableData>
+      <td>
+        <InternalGroupPositionTypeSelect
+          onChange={data => {
+            if (
+              data &&
+              Object.values(InternalGroupPositionType).includes(
+                data as InternalGroupPositionType
+              )
+            ) {
+              handleAssignNewPosition(
+                membership.userId,
+                data as InternalGroupPositionType,
+                membership.internalGroupPositionMembership.position.id
+              )
+            }
+          }}
+          variant="unstyled"
+          value={membership.internalGroupPositionType}
+        />
+      </td>
       <TableData>{membership.dateJoinedSemesterShorthand}</TableData>
       {activeMemberships ? (
         <UserManagementTableRow userData={membership} />
@@ -89,8 +147,6 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
           {activeMemberships ? (
             <>
               <Header></Header>
-              <th></th>
-              <th></th>
             </>
           ) : (
             <Header>Sluttet</Header>

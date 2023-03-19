@@ -95,8 +95,6 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
 
   return (
     <>
-      <td>tmp</td>
-      <td>tmp</td>
       <td>
         <Menu transition="pop" withArrow position="bottom-end">
           <Menu.Target>
