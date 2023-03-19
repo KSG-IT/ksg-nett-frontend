@@ -85,7 +85,7 @@ export const Login: React.FC = () => {
         </Title>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <TextInput
-            label="Brukernavn"
+            label="E-post"
             placeholder="hello@gmail.com"
             size="md"
             error={errors.username?.message}
