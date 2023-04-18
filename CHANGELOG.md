@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## [v2023.4.1] - 2023-04-18
+
+### Added
+
+- Economy
+  - CreateSociSessionModal add `minimumRequiredBalance` field to form
+  - Refactor SociSessionsTable to use menu items for actions
+  - Replace react-hot-toast usage
+  - Fix incorrect typing
+- vite config: add sourcemap option
+
+### Changed
+
+- Economy
+  - Refactor SociSessionsTable to use menu items for actions
+  - Replace react-hot-toast usage
+
+### Fixed
+
+- Economy
+  - broken typing causing incorrect error toasts/notifications
+
 ## [v2023.3.3] - 2023-03-10
 
 ### Added
