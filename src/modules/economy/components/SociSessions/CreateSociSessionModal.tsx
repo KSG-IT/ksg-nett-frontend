@@ -97,6 +97,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
         <Select
           label="Listetype"
           clearable={false}
+          value={type}
           data={[
             {
               label: SociSessionType.KRYSSELISTE,

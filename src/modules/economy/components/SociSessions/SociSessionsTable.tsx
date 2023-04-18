@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Button, Menu } from '@mantine/core'
+import { ActionIcon, Badge, Menu } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconBan, IconDots, IconEye } from '@tabler/icons'
 import { CardTable } from 'components/CardTable'
@@ -9,7 +9,6 @@ import { getSoiSeccionTypeColor } from 'modules/economy/utils'
 import { Link } from 'react-router-dom'
 import { format } from 'util/date-fns'
 import { useCurrencyFormatter } from 'util/hooks'
-import { numberWithSpaces } from 'util/parsing'
 
 interface SociSessionsTableProps {
   sociSessions: SociSessionNode[]
@@ -43,8 +42,6 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
         })
       },
     })
-
-    console.log('close')
   }
 
   const rows = sociSessions.map(sociSession => (
@@ -59,10 +56,10 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
         </Badge>
       </td>
       <td>{formatCurrency(sociSession.minimumRemainingBalance)}</td>
+      <td>{formatCurrency(sociSession.moneySpent)}</td>
       <td>
         <Badge>{sociSession.closed ? 'Stengt' : 'Åpen'}</Badge>
       </td>
-      <td>{formatCurrency(sociSession.moneySpent)}</td>
       <td>
         <Menu transition={'pop'} withArrow position="bottom-end" withinPortal>
           <Menu.Target>
@@ -77,6 +74,10 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
             <Menu.Item
               icon={<IconBan size="1rem" stroke={1.5} />}
               color="red"
+              disabled={
+                sociSession.type === SociSessionType.SOCIETETEN ||
+                sociSession.closed
+              }
               onClick={() => {
                 handleCloseSociSession(sociSession.id)
               }}
@@ -97,8 +98,8 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
           <th>Opprettet</th>
           <th>Type</th>
           <th>Beløpsgrense</th>
-          <th>Status</th>
           <th>Forbruk</th>
+          <th>Status</th>
           <th></th>
         </tr>
       </thead>
