@@ -9,7 +9,7 @@ dotenv.config()
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths(), ,],
+  plugins: [react(), tsconfigPaths()],
   esbuild: {
     // https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
     logOverride: { 'this-is-undefined-in-esm': 'silent' },
@@ -25,5 +25,6 @@ export default defineConfig({
     rollupOptions: {
       plugins: [nodePolyfills(), builtins(), globals()],
     },
+    sourcemap: true,
   },
 })
