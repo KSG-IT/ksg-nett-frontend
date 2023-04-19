@@ -101,7 +101,7 @@ export const SociSessionDetail: React.FC = () => {
           </Button>
         </PermissionGate>
       </Group>
-      {!closable && (
+      {sociSession.type === SociSessionType.SOCIETETEN && (
         <MessageBox type="warning">
           Krysselister fra Soci er automatisk ikke mulig å redigere gjennom
           KSG-nett. En stengt liste er heller ikke redigerbar.
