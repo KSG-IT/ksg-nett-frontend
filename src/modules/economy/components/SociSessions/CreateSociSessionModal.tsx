@@ -109,7 +109,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
         <NumberInput
           label="Minstebeløp gjenværende saldo"
           value={minimumRemainingBalance}
-          // min={0}
+          min={0}
           onChange={val => val && setMinimumRemainingBalance(val)}
         />
         <Group position="right">
