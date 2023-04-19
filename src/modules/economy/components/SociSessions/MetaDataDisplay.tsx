@@ -1,7 +1,7 @@
-import { Badge, createStyles, Group, Paper, Stack, Text } from '@mantine/core'
+import { Badge, createStyles, Group, Paper, Text } from '@mantine/core'
 import { SociSessionNode } from 'modules/economy/types.graphql'
 import { format } from 'util/date-fns'
-import { numberWithSpaces } from 'util/parsing'
+import { useCurrencyFormatter } from 'util/hooks'
 
 interface MetaDataDisplayProps {
   sociSession: Pick<
@@ -13,6 +13,7 @@ interface MetaDataDisplayProps {
     | 'closed'
     | 'createdBy'
     | 'closedAt'
+    | 'minimumRemainingBalance'
   >
 }
 
@@ -20,6 +21,7 @@ export const MetaDataDisplay: React.FC<MetaDataDisplayProps> = ({
   sociSession,
 }) => {
   const { classes } = useMetaDisplayStyles()
+  const { formatCurrency } = useCurrencyFormatter()
   return (
     <Paper p="md">
       <Group>
@@ -42,6 +44,15 @@ export const MetaDataDisplay: React.FC<MetaDataDisplayProps> = ({
           <Text className={classes.label}>Listetype:</Text>
           <Badge color="samfundet-red">{sociSession.type}</Badge>
         </Group>
+
+        {sociSession.minimumRemainingBalance !== 0 && (
+          <Group>
+            <Text className={classes.label}>Beløpsgrense:</Text>
+            <Badge color="samfundet-red">
+              {formatCurrency(sociSession.minimumRemainingBalance)}
+            </Badge>
+          </Group>
+        )}
         <Group>
           {sociSession.createdBy && (
             <>

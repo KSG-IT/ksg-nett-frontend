@@ -1,14 +1,11 @@
-import { createStyles, Paper, Table, UnstyledButton } from '@mantine/core'
+import { createStyles, UnstyledButton } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconTrash } from '@tabler/icons'
 import { CardTable } from 'components/CardTable'
 import { useProductOrderMutations } from 'modules/economy/mutations.hooks'
 import { SOCI_SESSION_QUERY } from 'modules/economy/queries'
-import {
-  ProductOrderNode,
-  SociSessionNode,
-} from 'modules/economy/types.graphql'
+import { SociSessionNode } from 'modules/economy/types.graphql'
 import { ME_QUERY } from 'modules/users/queries'
-import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
 import { numberWithSpaces } from 'util/parsing'
 
@@ -32,11 +29,17 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
         id: productOrderId,
       },
       refetchQueries: [SOCI_SESSION_QUERY, ME_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
       },
       onCompleted() {
-        toast.success('Bestillingen ble slettet')
+        showNotification({
+          title: 'Suksess',
+          message: 'Bestillingen ble reversert',
+        })
       },
     })
   }

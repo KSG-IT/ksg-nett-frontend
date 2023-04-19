@@ -1,6 +1,6 @@
 {
   "name": "ksg-nett-frontend",
-  "version": "2023.3.3",
+  "version": "2023.4.1",
   "private": true,
   "dependencies": {
     "@apollo/client": "3.7.3",
@@ -53,6 +53,7 @@
   "scripts": {
     "local": "vite",
     "start": "vite",
+    "dev": "vite",
     "build": "tsc && vite build",
     "prepare": "husky install",
     "build:development": "vite build --mode development",

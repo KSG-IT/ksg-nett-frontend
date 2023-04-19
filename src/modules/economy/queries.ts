@@ -84,6 +84,7 @@ export const ALL_SOCI_SESSIONS = gql`
         node {
           id
           getNameDisplay
+          minimumRemainingBalance
           closed
           type
           moneySpent
@@ -104,6 +105,7 @@ export const SOCI_SESSION_QUERY = gql`
       id
       getNameDisplay
       closed
+      minimumRemainingBalance
       type
       moneySpent
       closedAt

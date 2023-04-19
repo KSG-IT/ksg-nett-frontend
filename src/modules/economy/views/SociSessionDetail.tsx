@@ -6,7 +6,7 @@ import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { PermissionGate } from 'components/PermissionGate'
 import toast from 'react-hot-toast'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { DetailQueryVariables } from 'types/graphql'
 import { PERMISSIONS } from 'util/permissions'
 import {
@@ -15,8 +15,9 @@ import {
 } from '../components/SociSessions'
 import { MetaDataDisplay } from '../components/SociSessions/MetaDataDisplay'
 import { useSociSessionMutations } from '../mutations.hooks'
-import { SOCI_SESSION_QUERY } from '../queries'
+import { ALL_SOCI_SESSIONS, SOCI_SESSION_QUERY } from '../queries'
 import { SociSessionReturns, SociSessionType } from '../types.graphql'
+import { showNotification } from '@mantine/notifications'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -32,6 +33,8 @@ export const SociSessionDetail: React.FC = () => {
   const { id } = useParams<
     keyof SociSessionDetasilParams
   >() as SociSessionDetasilParams
+
+  const navigate = useNavigate()
 
   const { data, loading, error } = useQuery<
     SociSessionReturns,
@@ -54,12 +57,22 @@ export const SociSessionDetail: React.FC = () => {
       variables: {
         id: id,
       },
-      refetchQueries: [SOCI_SESSION_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
+      refetchQueries: [SOCI_SESSION_QUERY, ALL_SOCI_SESSIONS],
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
       },
-      onCompleted() {
-        toast.success('Liste lukket')
+      onCompleted({ closeSociSession: { sociSession } }) {
+        showNotification({
+          title: 'Suksess',
+          message: 'Krysseliste stengt',
+        })
+
+        if (sociSession === null) {
+          navigate('/economy/soci-sessions')
+        }
       },
     })
   }
@@ -88,7 +101,7 @@ export const SociSessionDetail: React.FC = () => {
           </Button>
         </PermissionGate>
       </Group>
-      {!closable && (
+      {sociSession.type === SociSessionType.SOCIETETEN && (
         <MessageBox type="warning">
           Krysselister fra Soci er automatisk ikke mulig å redigere gjennom
           KSG-nett. En stengt liste er heller ikke redigerbar.
