@@ -1,4 +1,4 @@
-import { Liquidity } from './types.graphql'
+import { Liquidity, SociSessionType } from './types.graphql'
 
 export const getLiquidity = (balance: number): Liquidity => {
   if (balance < 0) {
@@ -9,5 +9,20 @@ export const getLiquidity = (balance: number): Liquidity => {
     return 'positive'
   } else {
     return 'loaded'
+  }
+}
+
+export function getSoiSeccionTypeColor(type: SociSessionType) {
+  switch (type) {
+    case SociSessionType.SOCIETETEN:
+      return 'blue'
+    case SociSessionType.STILLETIME:
+      return 'yellow'
+    case SociSessionType.KRYSSELISTE:
+      return 'grape'
+    case SociSessionType.BURGERLISTE:
+      return 'orange'
+    default:
+      return 'samfundet-red'
   }
 }

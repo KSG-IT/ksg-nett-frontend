@@ -35,4 +35,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Deploy production
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: yarn deploy:production

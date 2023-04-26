@@ -5,6 +5,7 @@ import {
   Modal,
   Select,
   TextInput,
+  NumberInput,
 } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import { format } from 'util/date-fns'
@@ -12,8 +13,8 @@ import { useSociSessionMutations } from 'modules/economy/mutations.hooks'
 import { ALL_SOCI_SESSIONS } from 'modules/economy/queries'
 import { SociSessionType } from 'modules/economy/types.graphql'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { showNotification } from '@mantine/notifications'
 
 interface CreateSociSessionModalProps {
   open: boolean
@@ -26,7 +27,8 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
 }) => {
   const { classes } = useStyles()
   const [name, setName] = useState('')
-  const [type, setType] = useState<SociSessionType>(SociSessionType.STILLETIME)
+  const [minimumRemainingBalance, setMinimumRemainingBalance] = useState(0)
+  const [type, setType] = useState<SociSessionType>(SociSessionType.KRYSSELISTE)
   const [date, setDate] = useState(new Date())
   const navigate = useNavigate()
 
@@ -35,11 +37,13 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
   function handleSubmit() {
     type Input = {
       name: string | null
+      minimumRemainingBalance: number
       type: SociSessionType
       creationDate: string
     }
     const input: Input = {
       name: name.trim(),
+      minimumRemainingBalance: minimumRemainingBalance,
       type,
       creationDate: format(date, 'yyyy-MM-dd'),
     }
@@ -55,13 +59,20 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
         input,
       },
       refetchQueries: [ALL_SOCI_SESSIONS],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
-      onCompleted({ sociSession }) {
+      onCompleted({ createSociSession: { sociSession } }) {
         onCloseCallback()
-        toast.success('Liste opprettet')
-        navigate(`/soci-session/${sociSession.id}`)
+
+        showNotification({
+          title: 'Suksess',
+          message: 'krysseliste opprettet',
+        })
+        navigate(`${sociSession.id}`)
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
       },
     })
   }
@@ -69,6 +80,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
   function handleCancel() {
     onCloseCallback()
   }
+
   return (
     <Modal opened={open} onClose={onCloseCallback} title="Ny innkryssing">
       <div className={classes.form}>
@@ -83,8 +95,9 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
           onChange={val => val && setDate(val)}
         />
         <Select
-          label="Listeytype"
+          label="Listetype"
           clearable={false}
+          value={type}
           data={[
             {
               label: SociSessionType.KRYSSELISTE,
@@ -92,6 +105,12 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
             },
           ]}
           onChange={val => val && setType(val as SociSessionType)}
+        />
+        <NumberInput
+          label="Minstebeløp gjenværende saldo"
+          value={minimumRemainingBalance}
+          min={0}
+          onChange={val => val && setMinimumRemainingBalance(val)}
         />
         <Group position="right">
           <Button color="gray" onClick={handleCancel}>
