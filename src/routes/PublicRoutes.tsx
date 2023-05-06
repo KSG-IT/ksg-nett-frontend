@@ -1,7 +1,11 @@
 import { ReSendApplicantTokenForm } from 'modules/admissions/components/ApplicantPortal'
 import { ApplicantPortal } from 'modules/admissions/views'
-import { ForgotPassword, Login } from 'modules/login/views'
-import { ChangePasswordWithToken } from 'modules/login/views/ChangePasswordWithToken'
+import {
+  ChangePasswordWithToken,
+  ForgotPassword,
+  Login,
+  Authenticate,
+} from 'modules/login/views'
 import { Route, Routes } from 'react-router-dom'
 
 const PublicRoutes: React.FC = () => {
@@ -13,6 +17,9 @@ const PublicRoutes: React.FC = () => {
       </Route>
       <Route path="forgot-password" element={<ForgotPassword />} />
       <Route path="reset-password" element={<ChangePasswordWithToken />} />
+
+      {/* authenticate endpoint is used to load a jwt token sent from backend emails to log in */}
+      <Route path="authenticate" element={<Authenticate />} />
       <Route path="login" element={<Login />} />
       <Route path="*" element={<Login />} />
     </Routes>
