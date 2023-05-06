@@ -6,6 +6,7 @@ import {
   Login,
   Authenticate,
 } from 'modules/login/views'
+import { ErrorBoundary } from 'react-error-boundary'
 import { Route, Routes } from 'react-router-dom'
 
 const PublicRoutes: React.FC = () => {
@@ -19,7 +20,18 @@ const PublicRoutes: React.FC = () => {
       <Route path="reset-password" element={<ChangePasswordWithToken />} />
 
       {/* authenticate endpoint is used to load a jwt token sent from backend emails to log in */}
-      <Route path="authenticate" element={<Authenticate />} />
+
+      <Route
+        path="authenticate"
+        element={
+          <ErrorBoundary
+            FallbackComponent={() => <div>Oida, her gikk noe galt</div>}
+          >
+            <Authenticate />
+          </ErrorBoundary>
+        }
+      />
+
       <Route path="login" element={<Login />} />
       <Route path="*" element={<Login />} />
     </Routes>
