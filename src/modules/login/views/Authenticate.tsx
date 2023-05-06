@@ -1,7 +1,7 @@
 import { Center, Loader } from '@mantine/core'
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getLoginToken, setLoginToken } from 'util/auth'
+import { setLoginToken } from 'util/auth'
 import { useJwtTokenFromQueryString } from '../hooks'
 
 export const Authenticate: React.FC = () => {
@@ -25,9 +25,7 @@ export const Authenticate: React.FC = () => {
   }
 
   function handleLogin() {
-    console.log(token)
     setLoginToken(token)
-    console.log(getLoginToken())
     navigate('/dashboard')
     window.location.reload()
   }
