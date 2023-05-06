@@ -122,11 +122,12 @@ export const AppRoutes: React.FC = () => {
   Sentry.setUser({ email: me.email, id: me.id, username: me.fullName })
   setUser(me)
 
-  if (me.firstTimeLogin) {
+  if (me.owesMoney) {
+    // Prioritize this first, if we send a debt collection email we want to make it as easy as possible to pay
     return (
       <Routes>
-        <Route path="registration" element={<FirstTimeLogin />} />
-        <Route path="*" element={<Navigate to="/registration" />} />
+        <Route path="torpedo" element={<DebtCollection />} />
+        <Route path="*" element={<Navigate to="/torpedo" />} />
       </Routes>
     )
   }
@@ -140,11 +141,11 @@ export const AppRoutes: React.FC = () => {
     )
   }
 
-  if (me.owesMoney) {
+  if (me.firstTimeLogin) {
     return (
       <Routes>
-        <Route path="torpedo" element={<DebtCollection />} />
-        <Route path="*" element={<Navigate to="/torpedo" />} />
+        <Route path="registration" element={<FirstTimeLogin />} />
+        <Route path="*" element={<Navigate to="/registration" />} />
       </Routes>
     )
   }
