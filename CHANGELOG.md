@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [v2023.5.1] - 2023-05-06
+
+### Added
+
+- Whats new popup
+
 ## [v2023.4.1] - 2023-04-18
 
 ### Added
