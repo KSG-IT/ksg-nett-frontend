@@ -55,6 +55,9 @@ export const WhatsNewNotification: React.FC = () => {
             <ul>
               <li>Legge til 'Hva er nytt'</li>
               <li>
+                Innskudd kortbetaling: legge til gebyr i stedet for å trekke fra
+              </li>
+              <li>
                 Mulig å slette egne ikke-godkjente innskudd på 'Min økonomi'
               </li>
               <li>
