@@ -82,5 +82,6 @@ const useStyles = createStyles(() => ({
     fontSize: 14,
     borderRadius: 10,
     boxShadow: '1px  black',
+    backgroundColor: 'lightgray',
   },
 }))
