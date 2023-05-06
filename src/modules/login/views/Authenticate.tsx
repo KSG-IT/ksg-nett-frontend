@@ -5,12 +5,6 @@ import { getLoginToken, setLoginToken } from 'util/auth'
 import { useJwtTokenFromQueryString } from '../hooks'
 
 export const Authenticate: React.FC = () => {
-  /**
-   * This component is used to load a jwt token sent from backend emails to log in.
-   *
-   * Load the jwt from query params and store it in local storage. THen redirect
-   */
-
   const { token } = useJwtTokenFromQueryString()
   const navigate = useNavigate()
   const firstRender = useRef(true)
