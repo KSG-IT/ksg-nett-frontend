@@ -43,7 +43,12 @@ export const WhatsNewNotification: React.FC = () => {
     <Affix className={classes.wrapper}>
       <Paper p="m">
         <Stack spacing="xs">
-          <Spoiler maxHeight={100} showLabel={'Les mer'} hideLabel="Gjem tekst">
+          <Spoiler
+            pb={10}
+            maxHeight={100}
+            showLabel={'Les mer'}
+            hideLabel="Gjem tekst"
+          >
             <Group>
               <ActionIcon onClick={handleClose}>
                 <IconX />
@@ -82,6 +87,5 @@ const useStyles = createStyles(() => ({
     fontSize: 14,
     borderRadius: 10,
     boxShadow: '1px  black',
-    backgroundColor: 'lightgray',
   },
 }))
