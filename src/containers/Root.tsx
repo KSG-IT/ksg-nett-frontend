@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components'
 import { theme } from 'theme'
 import { ModalsProvider } from '@mantine/modals'
 import { NotificationsProvider } from '@mantine/notifications'
+import { WhatsNewNotification } from 'components/WhatsNewNotification'
 
 // TODO: Move this
 const mtheme: MantineThemeOverride = {
@@ -42,6 +43,7 @@ function Root() {
                 <AppRoutes />
               </BrowserRouter>
               <Toaster />
+              <WhatsNewNotification />
             </NotificationsProvider>
           </ModalsProvider>
         </MantineProvider>
