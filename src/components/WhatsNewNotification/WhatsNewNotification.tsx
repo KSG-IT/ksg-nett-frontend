@@ -13,8 +13,9 @@ import {
 import { IconX } from '@tabler/icons'
 import { useEffect, useRef, useState } from 'react'
 
-// Using a hard-coded key value so its easy to force it to unhide
-const NOTIFICATION_KEY = '3'
+// Using a hard-coded key value so its easy to force it to unhide.
+// Increment this to force new message
+const NOTIFICATION_KEY = '1'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
