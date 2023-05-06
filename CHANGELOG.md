@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [Unreleased]
+
+### Added
+
+- Login
+  - Add authetication route to allow authentication from backend
+    generated URL
+
 ## [v2023.5.1] - 2023-05-06
 
 ### Added
