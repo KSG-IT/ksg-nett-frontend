@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [Unreleased]
+
+### Added
+
+- Login
+  - Authenticate if token is in url
+- Economy
+  - Debt collection default amount set to owed amount
+
 ## [v2023.5.1] - 2023-05-06
 
 ### Added

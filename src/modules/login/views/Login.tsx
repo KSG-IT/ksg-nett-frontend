@@ -10,11 +10,14 @@ import {
   Title,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import { useEffect, useRef } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useStore } from 'store'
 import { setLoginToken } from 'util/auth'
 import * as yup from 'yup'
+import { useJwtTokenFromQueryString } from '../hooks'
 import { useLoginMutations } from '../mutations.hooks'
 
 let schema = yup.object().shape({
@@ -30,6 +33,23 @@ type LoginInput = {
 export const Login: React.FC = () => {
   const { classes } = useStyles()
   const client = useApolloClient()
+
+  const { token } = useJwtTokenFromQueryString()
+  const navigate = useNavigate()
+  const firstRender = useRef(true)
+
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false
+      return
+    }
+
+    if (token) {
+      setLoginToken(token)
+      navigate('/dashboard')
+      window.location.reload()
+    }
+  }, [token])
 
   const {
     register,
@@ -72,53 +92,55 @@ export const Login: React.FC = () => {
   const onSubmit: SubmitHandler<LoginInput> = data => handleLogin(data)
 
   return (
-    <div className={classes.wrapper}>
-      <Paper className={classes.form} radius={0} p={30}>
-        <Title
-          order={2}
-          className={classes.title}
-          align="center"
-          mt="md"
-          mb={50}
-        >
-          Velkommen til KSG-nett!
-        </Title>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <TextInput
-            label="Brukernavn"
-            placeholder="hello@gmail.com"
-            size="md"
-            error={errors.username?.message}
-            {...register('username')}
-          />
-          <PasswordInput
-            label="Passord"
-            placeholder="Passordet ditt"
+    <ErrorBoundary FallbackComponent={() => <div>Oida, her gikk noe galt</div>}>
+      <div className={classes.wrapper}>
+        <Paper className={classes.form} radius={0} p={30}>
+          <Title
+            order={2}
+            className={classes.title}
+            align="center"
             mt="md"
-            size="md"
-            error={errors.password?.message}
-            {...register('password')}
-          />
-          <Button
-            type="submit"
-            color="samfundet-red"
-            fullWidth
-            mt="xl"
-            size="md"
-            loading={loginLoading}
+            mb={50}
           >
-            Login
-          </Button>
-        </form>
+            Velkommen til KSG-nett!
+          </Title>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <TextInput
+              label="Brukernavn"
+              placeholder="hello@gmail.com"
+              size="md"
+              error={errors.username?.message}
+              {...register('username')}
+            />
+            <PasswordInput
+              label="Passord"
+              placeholder="Passordet ditt"
+              mt="md"
+              size="md"
+              error={errors.password?.message}
+              {...register('password')}
+            />
+            <Button
+              type="submit"
+              color="samfundet-red"
+              fullWidth
+              mt="xl"
+              size="md"
+              loading={loginLoading}
+            >
+              Login
+            </Button>
+          </form>
 
-        <Text align="center" mt="md">
-          Glemt passordet ditt?{' '}
-          <Link to="/forgot-password" color="samfundet-red">
-            Trykk her
-          </Link>
-        </Text>
-      </Paper>
-    </div>
+          <Text align="center" mt="md">
+            Glemt passordet ditt?{' '}
+            <Link to="/forgot-password" color="samfundet-red">
+              Trykk her
+            </Link>
+          </Text>
+        </Paper>
+      </div>
+    </ErrorBoundary>
   )
 }
 
