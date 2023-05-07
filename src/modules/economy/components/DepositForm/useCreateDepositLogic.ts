@@ -20,7 +20,7 @@ const DepositCreateSchema = yup.object().shape({
     .number()
     .required('Må sette sum')
     .max(30_000, 'Kan ikke være høyere enn 30 000')
-    .min(50, 'Må minst være 50'),
+    .min(1, 'Må minst være 1'),
 })
 
 interface UseCreateDepositLogicInput {
