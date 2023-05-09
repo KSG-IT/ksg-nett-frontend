@@ -62,6 +62,7 @@ export const ItemChart: React.FC<ItemChartProps> = ({
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
@@ -93,7 +94,7 @@ export const ItemChart: React.FC<ItemChartProps> = ({
   }
 
   return (
-    <Card p="md">
+    <Card p="md" style={{ width: '99%', height: '400px' }}>
       <Line options={chartOptions} data={graphData} />
     </Card>
   )
