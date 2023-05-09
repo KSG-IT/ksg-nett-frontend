@@ -17,6 +17,7 @@ import {
   AllSociSessionsReturns,
   AllSociSessionsVariables,
 } from '../types.graphql'
+import { MessageBox } from 'components/MessageBox'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -33,7 +34,7 @@ export const SosiSessions: React.FC = () => {
     AllSociSessionsVariables
   >(ALL_SOCI_SESSIONS, {
     variables: { first: DEFAULT_PAGINATION_SIZE },
-    pollInterval: 30_000,
+    pollInterval: 10_000,
   })
 
   if (error) return <FullPageError />
@@ -103,6 +104,9 @@ export const SosiSessions: React.FC = () => {
           </PermissionGate>
         </Group>
       </Group>
+      <MessageBox type="info">
+        Tomme lister slettes automatisk når de stenges.
+      </MessageBox>
       <SociSessionsTable sociSessions={sociSessions} />
       {hasNextPage && (
         <Button color="samfundet-red" onClick={handleFetchMore}>

@@ -4,9 +4,8 @@ import { useDepositMutations } from 'modules/economy/mutations.hooks'
 import { CreateDepositMutationVariables } from 'modules/economy/types.graphql'
 import { ONGOING_DEPOSIT_INTENT_QUERY } from 'modules/economy/views'
 import { useNavigate } from 'react-router-dom'
-import { CreateDepositFormData } from './useCreateDepositLogic'
 
-export function useCreateDepositAPI(onCompletedCallback: () => void) {
+export function useCreateDepositAPI(initialAmount: number) {
   const { createDeposit } = useDepositMutations()
   const navigate = useNavigate()
 
@@ -36,7 +35,7 @@ export function useCreateDepositAPI(onCompletedCallback: () => void) {
   }
 
   const defaultValues = {
-    amount: 50,
+    amount: initialAmount,
     dateOfTransfer: new Date(),
     depositMethod: DepositMethodValues.STRIPE,
   }

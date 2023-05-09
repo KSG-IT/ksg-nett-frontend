@@ -47,8 +47,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { sidebarOpen, toggleSidebar } = useSidebar()
   const { classes } = useStyles()
 
-  console.log(APP_VERSION)
-
   return (
     <AppShell
       styles={{

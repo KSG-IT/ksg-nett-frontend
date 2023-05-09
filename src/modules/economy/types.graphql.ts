@@ -11,6 +11,7 @@ export enum SociSessionType {
   SOCIETETEN = 'SOCIETETEN',
   STILLETIME = 'STILLETIME',
   KRYSSELISTE = 'KRYSSELISTE',
+  BURGERLISTE = 'BURGERLISTE',
 }
 
 // balance typing
@@ -74,6 +75,7 @@ export interface SociSessionNode {
   closed: boolean
   closedAt: Date
   moneySpent: number
+  minimumRemainingBalance: number
   productOrders: ProductOrderNode[]
 }
 
@@ -238,7 +240,7 @@ export interface PatchSociBankAccountVariables {
 }
 
 export interface CloseSociSessionReturns {
-  sociSession: Pick<SociSessionNode, 'id'>
+  closeSociSession: { sociSession: Pick<SociSessionNode, 'id'> }
 }
 
 export interface CloseSociSessionVariables {
@@ -265,7 +267,9 @@ export interface PlaceProductOrderVariables {
 }
 
 export interface CreateSociSessionReturns {
-  sociSession: Pick<SociSessionNode, 'id'>
+  createSociSession: {
+    sociSession: Pick<SociSessionNode, 'id'>
+  }
 }
 
 type CreateSociSessionInput = {

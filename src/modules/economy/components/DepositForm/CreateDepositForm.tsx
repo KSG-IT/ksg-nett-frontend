@@ -2,12 +2,11 @@ import {
   Button,
   Group,
   NumberInput,
+  Radio,
   SimpleGrid,
   Stack,
   Stepper,
   Text,
-  Radio,
-  Textarea,
 } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 
@@ -26,15 +25,17 @@ import { useCreateDepositAPI } from './useCreateDepositAPI'
 import { useCreateDepositLogic } from './useCreateDepositLogic'
 
 interface CreateDepositViewProps {
+  initialAmount?: number
   onCompletedCallback: () => void
   onGoingIntent: DepositNode | null
 }
 
 export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
   onGoingIntent,
+  initialAmount = 50,
 }) => {
   const { form, onSubmit } = useCreateDepositLogic(
-    useCreateDepositAPI(() => {})
+    useCreateDepositAPI(initialAmount)
   )
   const { deleteDeposit, deleteDepositLoading } = useDepositMutations()
 
@@ -95,19 +96,25 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                   </Radio.Group>
                 )}
               />
-
-              <NumberInput
-                hideControls
-                size={mobileSize ? 'xs' : 'sm'}
-                variant="filled"
-                error={errors?.amount?.message}
-                label="Beløp å betale"
-                required
-                min={50}
-                max={30_000}
-                placeholder="Hvor mye socistøv du vil konvertere"
-                icon={<IconCashBanknote size={14} />}
-                onChange={value => value && setValue('amount', value)}
+              <Controller
+                name="amount"
+                control={form.control}
+                render={({ field }) => (
+                  <NumberInput
+                    hideControls
+                    value={field.value}
+                    size={mobileSize ? 'xs' : 'sm'}
+                    variant="filled"
+                    error={errors?.amount?.message}
+                    label="Beløp å betale"
+                    required
+                    min={1}
+                    max={30_000}
+                    placeholder="Hvor mye socistøv du vil konvertere"
+                    icon={<IconCashBanknote size={14} />}
+                    onChange={value => value && setValue('amount', value)}
+                  />
+                )}
               />
               {depositMethod === DepositMethodValues.BANK_TRANSFER && (
                 <Controller
