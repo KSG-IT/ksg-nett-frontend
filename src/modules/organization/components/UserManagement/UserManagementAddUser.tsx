@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack } from '@mantine/core'
 import { MessageBox } from 'components/MessageBox'
 import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
@@ -68,13 +68,15 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
       </MessageBox>
       <UserSelect label="Bruker" setUserCallback={setSelectedUser} />
       <InternalGroupPositionSelect
-        setInternalGroupPositionCallback={setInternalGroupPositionId}
+        placeholder="Verv"
+        onChange={setInternalGroupPositionId}
       />
       <InternalGroupPositionTypeSelect
+        placeholder="Status"
         onChange={setSelectedInternalGroupPositionType}
       />
-      <Group mt="md" position="right">
-        <Button color="gray" onClick={() => setModalOpen(false)}>
+      <Group mt="md" position="apart">
+        <Button variant="outline" onClick={() => setModalOpen(false)}>
           Avbryt
         </Button>
         <Button
@@ -82,7 +84,7 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
           onClick={handleAssignNewPosition}
           disabled={loading}
         >
-          Lagre
+          Legg til
         </Button>
       </Group>
     </Stack>

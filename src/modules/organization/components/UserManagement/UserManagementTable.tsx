@@ -1,11 +1,7 @@
-import { useMutation, useQuery } from '@apollo/client'
-import { Badge, createStyles, Menu, Text, TextProps } from '@mantine/core'
+import { useMutation } from '@apollo/client'
+import { Badge, Text, TextProps, createStyles } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
-import { InternalGroupPositionSelect } from 'components/Select/InternalGroupPositionSelect'
-import { internalGroupPositionTypeOptions } from 'modules/organization/consts'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
-import { ALL_INTERNAL_GROUP_POSITIONS } from 'modules/organization/queries'
-import { AllInternalGroupPositionsReturns } from 'modules/organization/types'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
@@ -80,22 +76,14 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
     <tr key={membership.userId}>
       <TableData>{membership.fullName}</TableData>
       <td align="center">
-        {/* <Badge color={'samfundet-red'}>{membership.positionName}</Badge> */}
-        <InternalGroupPositionSelect
-          onChange={data => {
-            if (!data) return
-            handleAssignNewPosition(
-              membership.userId,
-              membership.internalGroupPositionType,
-              data
-            )
-          }}
-          variant="unstyled"
-          value={membership.internalGroupPositionMembership.position.id}
-        />
+        <Badge onClick={() => alert('hei')} color={'samfundet-red'}>
+          {membership.positionName}
+        </Badge>
       </td>
       <td>
         <InternalGroupPositionTypeSelect
+          withinPortal
+          style={{ width: 'fit-content' }}
           onChange={data => {
             if (
               data &&

@@ -1,14 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { ActionIcon, Menu } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import {
-  IconAlertTriangle,
-  IconDots,
-  IconMessages,
-  IconNote,
-  IconTrash,
-} from '@tabler/icons'
-import { internalGroupPositionTypeOptions } from 'modules/organization/consts'
+import { IconDots, IconGrave, IconTrash } from '@tabler/icons'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
 import { useInternalGroupPositionMembershipMutations } from 'modules/organization/mutations.hooks'
 import {
@@ -42,34 +35,8 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
   const { patchInternalGroupPositionMembership, quitKSG } =
     useInternalGroupPositionMembershipMutations()
 
-  const handleAssignNewPosition = () => {
-    if (selectedInternalGroupPositionType === null) return
-
-    if (
-      selectedInternalGroupPositionType.value ===
-      userData.internalGroupPositionType
-    )
-      return
-
-    assignNewPosition({
-      variables: {
-        userId: userData.userId,
-        internalGroupPositionId:
-          userData.internalGroupPositionMembership.position.id,
-        internalGroupPositionType: selectedInternalGroupPositionType.value,
-      },
-      refetchQueries: [MANAGE_USERS_DATA_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
-      onCompleted() {
-        toast.success('Bruker oppdatert!')
-      },
-    })
-  }
-
   function handleQuitKSG() {
-    const confirmed = confirm('Er du sikker på at du vil gjør dette?')
+    const confirmed = confirm('Er du sikker på at du vil avslutte vervet?')
 
     if (!confirmed) return
 
@@ -103,15 +70,19 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
             </ActionIcon>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Item color="red" icon={<IconTrash size={16} stroke={1.5} />}>
-              Slett verv
-            </Menu.Item>
             <Menu.Item
-              color="orange"
-              icon={<IconAlertTriangle size={16} stroke={1.5} />}
+              style={{ fontWeight: 800 }}
+              color="samfundet-red"
+              icon={<IconGrave size={20} stroke={2.4} />}
               onClick={handleQuitKSG}
             >
               Ferdig i KSG
+            </Menu.Item>
+            <Menu.Item
+              color="samfundet-red.2"
+              icon={<IconTrash size={20} stroke={2} />}
+            >
+              Fjern verv
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>

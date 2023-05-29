@@ -1,5 +1,11 @@
 import { useLazyQuery } from '@apollo/client'
-import { createStyles, Group } from '@mantine/core'
+import {
+  Group,
+  Select,
+  Text,
+  createStyles,
+  useMantineTheme,
+} from '@mantine/core'
 import { IconSearch } from '@tabler/icons'
 import { UserThumbnail } from 'modules/users/components'
 import { SEARCHBAR_USERS_QUERY } from 'modules/users/queries'
@@ -8,20 +14,9 @@ import {
   SearchbarUsersQueryVariables,
   UserNode,
 } from 'modules/users/types'
-import { useCallback, useEffect, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Select, { components, DropdownIndicatorProps } from 'react-select'
 import { useDebounce } from 'util/hooks'
-
-const DropdownIndicator = (
-  props: DropdownIndicatorProps<UserSearchOption, false>
-) => {
-  return (
-    <components.DropdownIndicator {...props}>
-      <IconSearch />
-    </components.DropdownIndicator>
-  )
-}
 
 interface UserSearchOption {
   label: string
@@ -29,16 +24,21 @@ interface UserSearchOption {
   user: UserNode
 }
 
-const Option = (props: UserSearchOption) => (
-  <Group position="apart">
-    {props.label}
-    <UserThumbnail user={props.user} size="sm" />
-  </Group>
+const SelectItem = forwardRef<HTMLDivElement, UserSearchOption>(
+  ({ user, label, ...others }: UserSearchOption, ref) => (
+    <div ref={ref} {...others}>
+      <Group noWrap>
+        <UserThumbnail user={user} />
+        <Text size="sm">{label}</Text>
+      </Group>
+    </div>
+  )
 )
 
-export const UserSearch: React.VFC = () => {
+export const UserSearch: React.FC = () => {
   const { classes } = useStyles()
   const [userQuery, setUserQuery] = useState('')
+  const theme = useMantineTheme()
   const debounceQuery = useDebounce(userQuery)
   const [selected, setSelected] = useState<UserSearchOption | null>(null)
   const navigate = useNavigate()
@@ -74,17 +74,16 @@ export const UserSearch: React.VFC = () => {
   return (
     <div className={classes.wrapper}>
       <Select
-        isLoading={loading}
-        onInputChange={val => setUserQuery(val)}
-        onChange={val => val && handleSelectUser(val.value)}
-        options={options}
-        value={selected}
-        styles={{
-          container: () => ({ width: '100%' }),
-        }}
-        placeholder="Search..."
-        components={{ DropdownIndicator }}
-        formatOptionLabel={data => <Option {...data} />}
+        itemComponent={SelectItem}
+        onChange={val => val && handleSelectUser(val)}
+        onSearchChange={setUserQuery}
+        searchValue={userQuery}
+        value={selected?.value ?? null}
+        data={options}
+        limit={10}
+        placeholder="Søk etter bruker"
+        rightSection={<IconSearch color={theme.colors['gray'][4]} />}
+        searchable
       />
     </div>
   )

@@ -5,6 +5,9 @@ export const ALL_INTERNAL_GROUP_POSITIONS = gql`
     allInternalGroupPositions {
       id
       name
+      internalGroup {
+        type
+      }
     }
   }
 `
