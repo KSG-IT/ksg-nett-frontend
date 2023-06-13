@@ -143,6 +143,7 @@ export const ALL_SOCI_PRODUCTS = gql`
       id
       name
       price
+      icon
     }
   }
 `
@@ -232,6 +233,49 @@ export const ALL_SOCI_ORDERR_SESSION_DRINK_ORDERS_QUERY = gql`
         name
         price
       }
+    }
+  }
+`
+
+export const PRODUCT_ORDERS_BY_ITEM_AND_DATE_QUERY = gql`
+  query ProductOrdersByItemAndDate(
+    $productId: ID!
+    $dateFrom: Date!
+    $dateTo: Date!
+  ) {
+    productOrdersByItemAndDate(
+      productId: $productId
+      dateFrom: $dateFrom
+      dateTo: $dateTo
+    ) {
+      total
+      data {
+        day
+        sum
+      }
+    }
+  }
+`
+
+export const PRODUCT_ORDERS_BY_ITEM_AND_DATE_LIST_QUERY = gql`
+  query ProductOrdersByItemAndDateList(
+    $productIds: [ID!]!
+    $dateFrom: Date!
+    $dateTo: Date!
+  ) {
+    productOrdersByItemAndDateList(
+      productIds: $productIds
+      dateFrom: $dateFrom
+      dateTo: $dateTo
+    ) {
+      total
+      data {
+        day
+        sum
+      }
+      quantity
+      average
+      name
     }
   }
 `

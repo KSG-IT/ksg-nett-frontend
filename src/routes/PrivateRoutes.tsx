@@ -71,6 +71,7 @@ import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
 import PublicRoutes from './PublicRoutes'
 import { RestrictedRoute } from './RestrictedRoute'
+import { SociStatistics } from '../modules/economy/views/SociStatistics'
 
 const FullPage404 = React.lazy(
   () => import('components/FullPageComponents/FullPage404')
@@ -457,6 +458,7 @@ export const AppRoutes: React.FC = () => {
           </Route>
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
+          <Route path={'statistics'} element={<SociStatistics />} />
 
           <Route path="soci-sessions">
             <Route

@@ -42,6 +42,15 @@ export type TotalExpenditure = {
   data: ExpenditureDay[]
   total: number
 }
+
+export type TotalExpenditureItem = {
+  data: ExpenditureDay[]
+  total: number
+  average: number
+  quantity: number
+  name: string
+}
+
 export interface BankAccountActivity {
   name: string
   amount: number
@@ -177,6 +186,26 @@ export interface MyExpendituresReturns {
 
 export interface MyExpendituresVariables {
   dateRange: ExpenditureDateRangeEnum
+}
+
+export interface ProductOrdersByItemAndDateReturns {
+  productOrdersByItemAndDate: TotalExpenditure
+}
+
+export interface ProductOrdersByItemAndDateListReturns {
+  productOrdersByItemAndDateList: TotalExpenditureItem[]
+}
+
+export interface ProductOrdersByItemAndDateListVariables {
+  productIds: string[]
+  dateFrom: string
+  dateTo: string
+}
+
+export interface ProductOrdersByItemAndDateVariables {
+  productId: string
+  dateFrom: string
+  dateTo: string
 }
 
 export interface AllSociSessionsReturns {

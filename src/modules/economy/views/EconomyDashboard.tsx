@@ -1,5 +1,10 @@
 import { Stack, Title } from '@mantine/core'
-import { IconBabyCarriage, IconBaguette, IconCreditCard } from '@tabler/icons'
+import {
+  IconBabyCarriage,
+  IconBaguette,
+  IconCreditCard,
+  IconGraph,
+} from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { ShortcutCardGrid } from 'components/ShortcutCard'
 import { PERMISSIONS } from 'util/permissions'
@@ -23,6 +28,12 @@ const shortcuts = [
     icon: IconBabyCarriage,
     color: 'samfundet-red',
     link: 'soci-sessions',
+  },
+  {
+    title: 'Statistikk',
+    icon: IconGraph,
+    color: 'samfundet-red',
+    link: '/economy/statistics',
   },
 ]
 
