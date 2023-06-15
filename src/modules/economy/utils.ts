@@ -29,6 +29,8 @@ export function getSoiSeccionTypeColor(type: SociSessionType) {
 }
 
 export function randomizeColors() {
+  // I'll admit this is kinda scuffed, but I gave up on making something more complex
+  // TODO: Make it not scuffed
   const theme = useMantineTheme()
   let colors = []
   const mantineColors = theme.colors
@@ -51,6 +53,5 @@ export function randomizeColors() {
     const j = Math.floor(Math.random() * (i + 1))
     ;[colors[i], colors[j]] = [colors[j], colors[i]]
   }
-  console.log(colors)
   return colors
 }

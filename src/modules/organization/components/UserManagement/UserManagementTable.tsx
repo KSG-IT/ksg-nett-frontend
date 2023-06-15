@@ -76,9 +76,7 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
     <tr key={membership.userId}>
       <TableData>{membership.fullName}</TableData>
       <td align="center">
-        <Badge onClick={() => alert('hei')} color={'samfundet-red'}>
-          {membership.positionName}
-        </Badge>
+        <Badge color={'samfundet-red'}>{membership.positionName}</Badge>
       </td>
       <td>
         <InternalGroupPositionTypeSelect
