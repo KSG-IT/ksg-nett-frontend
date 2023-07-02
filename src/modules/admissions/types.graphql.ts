@@ -202,6 +202,8 @@ export type AdmissionNode = {
   status: AdmissionStatusValues
   availableInternalGroupPositionsData: AdmissionAvailableInternalGroupPositionData[]
   applicants: ApplicantNode[]
+  interviewBookingLateBatchEnabled: boolean
+  interviewBookingOverrideEnabled: boolean
 }
 
 export type InterviewScheduleTemplateNode = {
@@ -225,7 +227,11 @@ export interface interviewPeriodDatesNode {
 export interface ActiveAdmissioneturns {
   activeAdmission: Pick<
     AdmissionNode,
-    'id' | 'availableInternalGroupPositionsData' | 'status'
+    | 'id'
+    | 'availableInternalGroupPositionsData'
+    | 'status'
+    | 'interviewBookingLateBatchEnabled'
+    | 'interviewBookingOverrideEnabled'
   > | null
 }
 

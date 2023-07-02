@@ -5,6 +5,8 @@ export const ACTIVE_ADMISSION_QUERY = gql`
     activeAdmission {
       id
       status
+      interviewBookingLateBatchEnabled
+      interviewBookingOverrideEnabled
       availableInternalGroupPositionsData {
         availablePositions
         internalGroupPosition {

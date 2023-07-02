@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Switch, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconClock } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
@@ -25,6 +25,9 @@ import {
   PatchAdmissionInput,
   PatchAdmissionReturns,
 } from '../types.graphql'
+import { useState } from 'react'
+import { ReactNativeFile } from 'apollo-upload-client'
+import { useAdmissionMutations } from '../mutations.hooks'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -92,21 +95,106 @@ export const AdmissionDashboard: React.FC = () => {
       <Group position="apart">
         <Title>Kontrollpanel opptak</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
-          <Button
-            leftIcon={<IconClock />}
-            disabled={nextPhaseLoading}
-            color="samfundet-red"
-            onClick={() => {
-              handleAdmissionNextPhase(activeAdmission.id)
-            }}
-          >
-            Intervjuperioden er over
-          </Button>
+          <Group>
+            <InterviewBookingSettingSwitches
+              admissionId={activeAdmission.id}
+              lateBatchEnabledInitial={
+                activeAdmission.interviewBookingLateBatchEnabled
+              }
+              overrideEnabledInitial={
+                activeAdmission.interviewBookingOverrideEnabled
+              }
+            />
+            <Button
+              leftIcon={<IconClock />}
+              disabled={nextPhaseLoading}
+              color="samfundet-red"
+              onClick={() => {
+                handleAdmissionNextPhase(activeAdmission.id)
+              }}
+            >
+              Intervjuperioden er over
+            </Button>
+          </Group>
         </PermissionGate>
       </Group>
       <AdmissionsShortcutPanel />
+
       <InternalGroupsNav />
       <MyUpcomingInterviews />
     </Stack>
+  )
+}
+
+const InterviewBookingSettingSwitches: React.FC<{
+  admissionId: string
+  lateBatchEnabledInitial: boolean
+  overrideEnabledInitial: boolean
+}> = ({ lateBatchEnabledInitial, overrideEnabledInitial, admissionId }) => {
+  const [lateBatchEnabled, setLateBatchEnabled] = useState(
+    lateBatchEnabledInitial
+  )
+  const [overrideEnabled, setOverrideEnabled] = useState(overrideEnabledInitial)
+
+  // Needs to be a fucking hook now
+  const [patchAdmission] = useMutation<
+    PatchAdmissionReturns,
+    PatchMutationVariables<PatchAdmissionInput>
+  >(PATCH_ADMISSION, {
+    onCompleted() {
+      showNotification({
+        title: 'Suksess',
+        color: 'teal',
+        message: 'Innstillinger for intervjubooking oppdatert',
+      })
+    },
+    onError(err) {
+      showNotification({
+        title: 'Noe gikk galt',
+        message: err.message,
+      })
+    },
+  })
+
+  function handleLateBatchEnabledChange(
+    evt: React.ChangeEvent<HTMLInputElement>
+  ) {
+    setLateBatchEnabled(evt.target.checked)
+    patchAdmission({
+      variables: {
+        id: admissionId,
+        input: {
+          interviewBookingLateBatchEnabled: evt.target.checked,
+        },
+      },
+    })
+  }
+
+  function handleOverrideEnabledChange(
+    evt: React.ChangeEvent<HTMLInputElement>
+  ) {
+    setOverrideEnabled(evt.target.checked)
+    patchAdmission({
+      variables: {
+        id: admissionId,
+        input: {
+          interviewBookingOverrideEnabled: evt.target.checked,
+        },
+      },
+    })
+  }
+  return (
+    <Group>
+      <Switch
+        label="Sene intervjuer først"
+        checked={lateBatchEnabled}
+        onChange={handleLateBatchEnabledChange}
+      />
+      <Switch
+        label="Booke på samme dag"
+        checked={overrideEnabled}
+        onChange={handleOverrideEnabledChange}
+      />
+    </Group>
   )
 }
