@@ -465,6 +465,7 @@ export const INTERNAL_GROUP_POSITIONS_AVAILABLE_FOR_APPLICANTS_QUERY = gql`
 export const INTERVIEW_TEMPLATE_QUERY = gql`
   query InterviewTemplateQuery {
     interviewTemplate {
+      defaultInterviewNotes
       interviewBooleanEvaluationStatements {
         id
         statement

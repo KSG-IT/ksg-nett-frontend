@@ -1,13 +1,7 @@
-import {
-  Button,
-  Group,
-  Loader,
-  NumberInput,
-  SimpleGrid,
-  Stack,
-} from '@mantine/core'
+import { Button, Group, Loader, NumberInput, SimpleGrid } from '@mantine/core'
 import { DatePicker, TimeInput } from '@mantine/dates'
-import { useMediaQuery } from 'util/hooks'
+import { Controller } from 'react-hook-form'
+import { useIsMobile, useMediaQuery } from 'util/hooks'
 import { useInterviewScheduleAPI } from './useInterviewScheduleAPI'
 import { useInterviewScheduleLogic } from './useInterviewScheduleLogic'
 
@@ -18,7 +12,7 @@ interface InterviewScheduleFormProps {
 export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
   nextStageCallback,
 }) => {
-  const isMobile = useMediaQuery('(max-width: 600px)')
+  const isMobile = useIsMobile()
   const { form, dataLoading, onSubmit } = useInterviewScheduleLogic({
     ...useInterviewScheduleAPI(),
     nextStageCallback,
@@ -82,19 +76,32 @@ export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
             setValue('defaultInterviewDayEnd', date)
           }}
         />
-        <DatePicker
-          placeholder="Velg dato"
-          label="Intervjuperiode stardato"
-          error={errors?.interviewPeriodStartDate?.message}
-          value={getValues('interviewPeriodStartDate')}
-          onChange={date => date && setValue('interviewPeriodStartDate', date)}
+        <Controller
+          control={form.control}
+          name="interviewPeriodStartDate"
+          render={({ field }) => (
+            <DatePicker
+              placeholder="Velg dato"
+              label="Intervjuperiode stardato"
+              error={errors?.interviewPeriodStartDate?.message}
+              value={field.value}
+              onChange={date => date && field.onChange(date)}
+            />
+          )}
         />
-        <DatePicker
-          placeholder="Velg dato"
-          label="Intervjuperiode sluttdato"
-          error={errors?.interviewPeriodEndDate?.message}
-          value={getValues('interviewPeriodEndDate')}
-          onChange={date => date && setValue('interviewPeriodEndDate', date)}
+
+        <Controller
+          control={form.control}
+          name="interviewPeriodEndDate"
+          render={({ field }) => (
+            <DatePicker
+              placeholder="Velg dato"
+              label="Intervjuperiode sluttdato"
+              error={errors?.interviewPeriodEndDate?.message}
+              value={field.value}
+              onChange={date => date && field.onChange(date)}
+            />
+          )}
         />
       </SimpleGrid>
       <Group my="sm">

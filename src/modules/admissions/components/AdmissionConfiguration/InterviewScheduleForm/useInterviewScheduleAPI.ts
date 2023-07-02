@@ -5,8 +5,6 @@ import { useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { InterviewScheduleFormData } from './useInterviewScheduleLogic'
 
-function transform() {}
-
 export function useInterviewScheduleAPI() {
   const { patchInterviewSchedule } = useInterviewScheduleMutations()
   const [scheduleId, setScheduleId] = useState<string>('')
@@ -21,13 +19,13 @@ export function useInterviewScheduleAPI() {
   })
 
   type MutationInput = {
-    defaultBlockSize: number
-    defaultInterviewDuration: string
-    defaultPauseDuration: string
-    defaultInterviewDayStart: string
-    defaultInterviewDayEnd: string
-    interviewPeriodStartDate: string
-    interviewPeriodEndDate: string
+    defaultBlockSize?: number
+    defaultInterviewDuration?: string
+    defaultPauseDuration?: string
+    defaultInterviewDayStart?: string
+    defaultInterviewDayEnd?: string
+    interviewPeriodStartDate?: string
+    interviewPeriodEndDate?: string
   }
 
   async function handleSubmit(mutationInput: MutationInput) {
@@ -88,7 +86,6 @@ export function useInterviewScheduleAPI() {
       defaultBlockSize: interviewScheduleTemplate.defaultBlockSize,
     }
   }, [data])
-  // console.table(parsedDefaultValues)
 
   return {
     defaultValues: parsedDefaultValues,

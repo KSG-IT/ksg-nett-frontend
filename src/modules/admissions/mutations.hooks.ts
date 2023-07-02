@@ -159,13 +159,15 @@ export const useInterviewMutations = () => {
 }
 
 export const useInterviewScheduleMutations = () => {
-  const [patchInterviewSchedule] = useMutation<
-    PatchInterviewScheduleTemplateReturns,
-    PatchInterviewScheduleTemplateVariables
-  >(PATCH_INTERVIEW_SCHEDULE_TEMPLATE)
+  const [patchInterviewSchedule, { loading: patchInterviewScheduleLoading }] =
+    useMutation<
+      PatchInterviewScheduleTemplateReturns,
+      PatchInterviewScheduleTemplateVariables
+    >(PATCH_INTERVIEW_SCHEDULE_TEMPLATE)
 
   return {
     patchInterviewSchedule,
+    patchInterviewScheduleLoading,
   }
 }
 

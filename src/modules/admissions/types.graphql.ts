@@ -332,6 +332,7 @@ export interface InterviewOverviewReturns {
 
 export interface InterviewTemplateReturns {
   interviewTemplate: {
+    defaultInterviewNotes: string
     interviewBooleanEvaluationStatements: Pick<
       InterviewBooleanEvaluationNode,
       'id' | 'statement'
@@ -556,13 +557,14 @@ export interface PatchInterviewScheduleTemplateReturns {
 export interface PatchInterviewScheduleTemplateVariables {
   id: string
   input: {
-    defaultBlockSize: number
-    defaultInterviewDuration: string
-    defaultPauseDuration: string
-    defaultInterviewDayStart: string
-    defaultInterviewDayEnd: string
-    interviewPeriodStartDate: string
-    interviewPeriodEndDate: string
+    defaultBlockSize?: number
+    defaultInterviewDuration?: string
+    defaultPauseDuration?: string
+    defaultInterviewDayStart?: string
+    defaultInterviewDayEnd?: string
+    defaultInterviewNotes?: string
+    interviewPeriodStartDate?: string
+    interviewPeriodEndDate?: string
   }
 }
 

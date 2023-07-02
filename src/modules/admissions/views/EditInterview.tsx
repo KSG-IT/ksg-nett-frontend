@@ -251,6 +251,7 @@ export const EditInterview: React.FC = () => {
       <Group>
         <Button onClick={handleSaveNotes}>Lagre</Button>
         <Button
+          disabled={interview.totalEvaluation === null}
           onClick={() => {
             setLockModalOpen(true)
           }}

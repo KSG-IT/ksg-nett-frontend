@@ -23,6 +23,10 @@ import { InterviewTemplateReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
+import { useInterviewScheduleAPI } from '../AdmissionConfiguration/InterviewScheduleForm/useInterviewScheduleAPI'
+import { useInterviewScheduleMutations } from 'modules/admissions/mutations.hooks'
+import { RichTextEditor } from 'components/RichTextEditor'
+import { DefaultInterviewNotesEditor } from './DefaultInterviewNotesEditor'
 
 type WizardStage =
   | 'START'
@@ -36,7 +40,7 @@ interface ConfigureInterviewTemplateProps {
   setStageCallback: (stage: WizardStage) => void
 }
 
-export const ConfigureInterviewTemplate: React.VFC<
+export const ConfigureInterviewTemplate: React.FC<
   ConfigureInterviewTemplateProps
 > = ({ setStageCallback }) => {
   const [interviewBooleanEvaluation, setInterviewBooleanEvaluation] =
@@ -45,6 +49,8 @@ export const ConfigureInterviewTemplate: React.VFC<
     interviewAdditionalEvaluationStatement,
     setInterviewAdditionalEvaluationStatement,
   ] = useState('')
+
+  const { patchInterviewSchedule } = useInterviewScheduleMutations()
 
   const [createInterviewBooleanEvaluation] = useMutation(
     CREATE_INTERVIEW_BOOLEAN_EVALUATION,
@@ -109,10 +115,13 @@ export const ConfigureInterviewTemplate: React.VFC<
     setInterviewAdditionalEvaluationStatement('')
   }
 
+  function handlePatchInterviewDefaultNotes() {}
+
   const {
     interviewTemplate: {
       interviewBooleanEvaluationStatements,
       interviewAdditionalEvaluationStatements,
+      defaultInterviewNotes,
     },
   } = data
 
@@ -183,6 +192,9 @@ export const ConfigureInterviewTemplate: React.VFC<
           Legg til
         </Button>
       </Group>
+      <Title order={2}>Intervjumal</Title>
+      {/* <RichTextEditor /> */}
+      <DefaultInterviewNotesEditor initialNotes={defaultInterviewNotes} />
       <Group>
         <Button
           color="samfundet-red"
