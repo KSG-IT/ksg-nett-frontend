@@ -229,7 +229,6 @@ export const EditInterview: React.FC = () => {
       <BooleanEvaluationAnswerList interview={interview} />
       <AdditionalEvaluationAnswerList interview={interview} />
       <AdditionalInformationFields applicant={interview.applicant} />
-      <ApplicantPrioritiesField applicant={interview.applicant} />
 
       {/* Interview and discussion Notes */}
       <Title order={2}>Intervjunotater</Title>
