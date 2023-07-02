@@ -354,8 +354,14 @@ export const ALL_INTERNAL_GROUP_APPLICANT_DATA = gql`
 
 export const INTERNAL_GROUP_DISCUSSION_DATA = gql`
   ${INTERNAL_GROUP_PRIORITY_FIELDS}
-  query InternalGroupDiscussionDataQuery($internalGroupId: ID!) {
-    internalGroupDiscussionData(internalGroupId: $internalGroupId) {
+  query InternalGroupDiscussionDataQuery(
+    $internalGroupId: ID!
+    $orderingKey: String
+  ) {
+    internalGroupDiscussionData(
+      internalGroupId: $internalGroupId
+      orderingKey: $orderingKey
+    ) {
       internalGroup {
         id
         name

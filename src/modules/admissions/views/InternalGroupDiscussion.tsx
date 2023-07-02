@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/client'
-import { Group, Stack, Text, Title } from '@mantine/core'
+import { Group, Radio, Stack, Text, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { SynCButton } from 'components/SyncButton'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {
   DiscussApplicantsTable,
@@ -18,6 +19,9 @@ interface InternalGroupDiscussionParams {
 }
 
 export const InternalGroupDiscussion: React.FC = () => {
+  const [orderingKey, setOrderingKey] = useState<
+    'priorities' | 'interview_time'
+  >('priorities')
   const { internalGroupId } = useParams<
     keyof InternalGroupDiscussionParams
   >() as InternalGroupDiscussionParams
@@ -26,7 +30,7 @@ export const InternalGroupDiscussion: React.FC = () => {
     useQuery<InternalGroupDiscussionDataReturns>(
       INTERNAL_GROUP_DISCUSSION_DATA,
       {
-        variables: { internalGroupId: internalGroupId },
+        variables: { internalGroupId: internalGroupId, orderingKey },
         pollInterval: 20_000,
         fetchPolicy: 'network-only',
       }
@@ -74,6 +78,14 @@ export const InternalGroupDiscussion: React.FC = () => {
           Obs! Du markerer ønsker på vegne av {internalGroup.name}
         </Text>
       </MessageBox>
+      <Radio.Group
+        label="Sorteringsmodus"
+        value={orderingKey}
+        onChange={val => setOrderingKey(val as 'priorities' | 'interview_time')}
+      >
+        <Radio label="Prioriteringer" value="priorities" />
+        <Radio label="Intervjutidspunkt" value="interview_time" />
+      </Radio.Group>
       <DiscussApplicantsTable
         internalGroup={internalGroup}
         applicants={applicants}
