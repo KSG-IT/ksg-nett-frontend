@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom'
 import { useSidebar } from 'util/hooks'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
+import { WhatsNewNotification } from 'components/WhatsNewNotification'
 interface ErrorFallbackProps {
   error: Error
   resetErrorBoundary: () => void
@@ -106,6 +107,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <Suspense fallback={<FullContentLoader />}>{children}</Suspense>
       </ErrorBoundary>
+      <WhatsNewNotification />
     </AppShell>
   )
 }

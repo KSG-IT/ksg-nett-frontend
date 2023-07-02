@@ -1,14 +1,13 @@
 import { ApolloProvider } from '@apollo/client/react'
 import { MantineProvider, MantineThemeOverride } from '@mantine/core'
+import { ModalsProvider } from '@mantine/modals'
+import { NotificationsProvider } from '@mantine/notifications'
 import client from 'apollo-setup'
 import { Toaster } from 'react-hot-toast'
 import { BrowserRouter } from 'react-router-dom'
 import { AppRoutes } from 'routes'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'theme'
-import { ModalsProvider } from '@mantine/modals'
-import { NotificationsProvider } from '@mantine/notifications'
-import { WhatsNewNotification } from 'components/WhatsNewNotification'
 
 // TODO: Move this
 const mtheme: MantineThemeOverride = {
@@ -43,7 +42,6 @@ function Root() {
                 <AppRoutes />
               </BrowserRouter>
               <Toaster />
-              <WhatsNewNotification />
             </NotificationsProvider>
           </ModalsProvider>
         </MantineProvider>
