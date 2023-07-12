@@ -1,12 +1,14 @@
 import { useQuery } from '@apollo/client'
-import { Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {
   ApplicantComments,
+  ApplicantRecommendationModal,
   InterviewDetails,
   PersonalDetailsCard,
 } from '../components/ApplicantDetails'
@@ -21,7 +23,8 @@ interface ApplicantDetailsParams {
   applicantId: string
 }
 
-export const ApplicantDetails: React.VFC = () => {
+export const ApplicantDetails: React.FC = () => {
+  const [recommendationModalOpen, setRecommendationModalOpen] = useState(false)
   const { applicantId } = useParams<
     keyof ApplicantDetailsParams
   >() as ApplicantDetailsParams
@@ -66,7 +69,12 @@ export const ApplicantDetails: React.VFC = () => {
           },
         ]}
       />
-      <Title order={2}>{applicant.fullName}</Title>
+      <Group spacing="xl">
+        <Title order={2}>{applicant.fullName}</Title>
+        <Button onClick={() => setRecommendationModalOpen(true)}>
+          Anbefal
+        </Button>
+      </Group>
       <PersonalDetailsCard applicant={applicant} />
       <CardTable>
         <thead>
@@ -79,7 +87,6 @@ export const ApplicantDetails: React.VFC = () => {
         <tbody>
           <tr>
             <td>{applicant.priorities[0]?.internalGroupPosition?.name}</td>
-
             <td>{applicant.priorities[1]?.internalGroupPosition?.name}</td>
             <td>{applicant.priorities[2]?.internalGroupPosition?.name}</td>
           </tr>
@@ -87,6 +94,11 @@ export const ApplicantDetails: React.VFC = () => {
       </CardTable>
       <InterviewDetails applicant={applicant} canEdit={!cannotEdit} />
       <ApplicantComments applicant={applicant} />
+      <ApplicantRecommendationModal
+        applicantId={applicant.id}
+        isOpen={recommendationModalOpen}
+        onClose={() => setRecommendationModalOpen(false)}
+      />
     </Stack>
   )
 }
