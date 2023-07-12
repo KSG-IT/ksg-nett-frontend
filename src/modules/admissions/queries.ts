@@ -382,6 +382,28 @@ export const INTERNAL_GROUP_DISCUSSION_DATA = gql`
           }
         }
       }
+      applicantRecommendations {
+        id
+        reasoning
+        recommendedBy {
+          id
+          fullName
+        }
+        applicant {
+          id
+          fullName
+          priorities {
+            ...InternalGroupPriorityFields
+          }
+          internalGroupInterests {
+            id
+            internalGroup {
+              id
+              name
+            }
+          }
+        }
+      }
 
       applicants {
         id

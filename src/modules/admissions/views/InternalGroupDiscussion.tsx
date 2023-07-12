@@ -1,24 +1,27 @@
 import { useQuery } from '@apollo/client'
-import { Group, Radio, Stack, Text, Title } from '@mantine/core'
+import { Group, Radio, Stack, Text, Title, createStyles } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { SynCButton } from 'components/SyncButton'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   DiscussApplicantsTable,
   FreeForAllApplicantsTable,
 } from '../components/DiscussionDashboard'
 import { INTERNAL_GROUP_DISCUSSION_DATA } from '../queries'
 import { InternalGroupDiscussionDataReturns } from '../types.graphql'
+import { CardTable } from 'components/CardTable'
 
 interface InternalGroupDiscussionParams {
   internalGroupId: string
 }
 
 export const InternalGroupDiscussion: React.FC = () => {
+  const navigate = useNavigate()
+  const { classes } = useStyles()
   const [orderingKey, setOrderingKey] = useState<
     'priorities' | 'interview_time'
   >('priorities')
@@ -36,6 +39,14 @@ export const InternalGroupDiscussion: React.FC = () => {
       }
     )
 
+  function handleRedirect(module: 'applicant' | 'user', id: string) {
+    if (module === 'applicant') {
+      navigate(`/admissions/applicants/${id}`)
+    } else if (module === 'user') {
+      navigate(`/users/${id}`)
+    }
+  }
+
   if (error) return <FullPageError />
 
   if (loading || !data) return <FullContentLoader />
@@ -45,6 +56,7 @@ export const InternalGroupDiscussion: React.FC = () => {
       applicants,
       internalGroup,
       applicantsOpenForOtherPositions,
+      applicantRecommendations,
     },
   } = data
 
@@ -96,6 +108,45 @@ export const InternalGroupDiscussion: React.FC = () => {
         applicants={applicantsOpenForOtherPositions}
         internalGroupId={internalGroupId}
       />
+      <Title order={2}>Anbefalte kandidater</Title>
+      <CardTable>
+        <thead>
+          <tr>
+            <th>Kandidat</th>
+            <th>Begrunnelse</th>
+            <th>Anbefalt av</th>
+          </tr>
+        </thead>
+        <tbody>
+          {applicantRecommendations.map((rec, i) => (
+            <tr key={i}>
+              <td
+                className={classes.clickableTd}
+                onClick={() => handleRedirect('applicant', rec.applicant.id)}
+              >
+                {rec.applicant.fullName}
+              </td>
+              <td>{rec.reasoning}</td>
+              <td
+                className={classes.clickableTd}
+                onClick={() => handleRedirect('user', rec.recommendedBy.id)}
+              >
+                {rec.recommendedBy.fullName}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </CardTable>
     </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  clickableTd: {
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.colors.gray[0],
+      textDecoration: 'underline',
+    },
+  },
+}))
