@@ -266,9 +266,8 @@ export const SetPriorities: React.FC<SetPrioritiesProps> = ({
       <MessageBox type="warning">
         <b>Obs!</b> Selv om du har mulighet til å velge mer enn 3 prioriteringer
         på Samfundet sine nettssider når du søker KSG ber vi deg begrense deg
-        til 3 prioriteringer her. Du vil ikke ha mulighet til å endre på
-        stillingene etter at du har lagret på denne siden. Det er mulig å endre
-        rekkefølgen på prioriteringene dine under intervjuet.
+        til 3 prioriteringer her. Du vil kunne endre prioriteringene dine helt
+        frem til intervjuperioden er over.
       </MessageBox>
 
       <Button

@@ -6,6 +6,7 @@ import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
+import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { PatchMutationVariables } from 'types/graphql'
 import { PERMISSIONS } from 'util/permissions'
@@ -25,9 +26,6 @@ import {
   PatchAdmissionInput,
   PatchAdmissionReturns,
 } from '../types.graphql'
-import { useState } from 'react'
-import { ReactNativeFile } from 'apollo-upload-client'
-import { useAdmissionMutations } from '../mutations.hooks'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },

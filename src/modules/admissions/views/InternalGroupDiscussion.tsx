@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Group, Radio, Stack, Text, Title, createStyles } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
+import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -11,9 +12,9 @@ import {
   DiscussApplicantsTable,
   FreeForAllApplicantsTable,
 } from '../components/DiscussionDashboard'
+import { InternalGroupDiscussionDataOrderingKeyValue } from '../consts'
 import { INTERNAL_GROUP_DISCUSSION_DATA } from '../queries'
 import { InternalGroupDiscussionDataReturns } from '../types.graphql'
-import { CardTable } from 'components/CardTable'
 
 interface InternalGroupDiscussionParams {
   internalGroupId: string
@@ -22,9 +23,11 @@ interface InternalGroupDiscussionParams {
 export const InternalGroupDiscussion: React.FC = () => {
   const navigate = useNavigate()
   const { classes } = useStyles()
-  const [orderingKey, setOrderingKey] = useState<
-    'priorities' | 'interview_time'
-  >('priorities')
+
+  const [orderingKey, setOrderingKey] =
+    useState<InternalGroupDiscussionDataOrderingKeyValue>(
+      InternalGroupDiscussionDataOrderingKeyValue.PRIORITY
+    )
   const { internalGroupId } = useParams<
     keyof InternalGroupDiscussionParams
   >() as InternalGroupDiscussionParams
@@ -93,10 +96,18 @@ export const InternalGroupDiscussion: React.FC = () => {
       <Radio.Group
         label="Sorteringsmodus"
         value={orderingKey}
-        onChange={val => setOrderingKey(val as 'priorities' | 'interview_time')}
+        onChange={val =>
+          setOrderingKey(val as InternalGroupDiscussionDataOrderingKeyValue)
+        }
       >
-        <Radio label="Prioriteringer" value="priorities" />
-        <Radio label="Intervjutidspunkt" value="interview_time" />
+        <Radio
+          label="Prioriteringer"
+          value={InternalGroupDiscussionDataOrderingKeyValue.PRIORITY}
+        />
+        <Radio
+          label="Intervjutidspunkt"
+          value={InternalGroupDiscussionDataOrderingKeyValue.INTERVIEW}
+        />
       </Radio.Group>
       <DiscussApplicantsTable
         internalGroup={internalGroup}
