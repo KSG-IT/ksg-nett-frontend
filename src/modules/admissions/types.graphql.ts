@@ -195,6 +195,14 @@ export type ApplicantInterestNode = {
   positionToBeOffered: Pick<InternalGroupPositionNode, 'id' | 'name'> | null
 }
 
+export type ApplicantRecommendationNode = {
+  id: string
+  applicant: Pick<ApplicantNode, 'id' | 'fullName'>
+  internalGroup: Pick<InternalGroupNode, 'id' | 'name'>
+  reasoning: string
+  recommendedBy: Pick<UserNode, 'id' | 'fullName'>
+}
+
 export type AdmissionNode = {
   id: string
   date: Date
@@ -601,6 +609,7 @@ export interface SetSelfAsInterviewerMutatationVariables {
 export type InternalGroupDiscussionData = {
   internalGroup: InternalGroupNode
   applicantsOpenForOtherPositions: ApplicantNode[]
+  applicantRecommendations: ApplicantRecommendationNode[]
   applicants: ApplicantNode[]
 }
 
