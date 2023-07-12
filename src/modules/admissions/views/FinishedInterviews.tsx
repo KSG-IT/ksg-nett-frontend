@@ -10,11 +10,21 @@ import { useInterviewMutations } from '../mutations.hooks'
 import { parseApplicantPriorityInternalGroupPosition } from '../parsing'
 import { FINISHED_INTERVIEWS_QUERY } from '../queries'
 import { FinishedInterviewsReturns, InterviewNode } from '../types.graphql'
+import { Breadcrumbs } from 'components/Breadcrumbs'
+
+const breadcrumbsItems = [
+  { label: 'Home', path: '/dashboard' },
+  { label: 'Orvik', path: '/admissions' },
+  { label: 'Fullførte intervjuer', path: '' },
+]
 
 export const FinishedInterviews: React.FC = () => {
   const { classes } = useStyles()
   const { data, loading, error } = useQuery<FinishedInterviewsReturns>(
-    FINISHED_INTERVIEWS_QUERY
+    FINISHED_INTERVIEWS_QUERY,
+    {
+      pollInterval: 15_000,
+    }
   )
 
   const { patchInterview } = useInterviewMutations()
@@ -101,6 +111,7 @@ export const FinishedInterviews: React.FC = () => {
 
   return (
     <Stack>
+      <Breadcrumbs items={breadcrumbsItems} />
       <Title>Fullførte intervjuer</Title>
       <MessageBox type="info">
         Oversikt over fullførte intervjuer og registreringsstatus på Samfundet
