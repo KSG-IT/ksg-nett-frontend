@@ -13,15 +13,17 @@ import {
 } from '../components/DiscussionDashboard'
 import { INTERNAL_GROUP_DISCUSSION_DATA } from '../queries'
 import { InternalGroupDiscussionDataReturns } from '../types.graphql'
+import { InternalGroupDiscussionDataOrderingKeyValue } from '../consts'
 
 interface InternalGroupDiscussionParams {
   internalGroupId: string
 }
 
 export const InternalGroupDiscussion: React.FC = () => {
-  const [orderingKey, setOrderingKey] = useState<
-    'priorities' | 'interview_time'
-  >('priorities')
+  const [orderingKey, setOrderingKey] =
+    useState<InternalGroupDiscussionDataOrderingKeyValue>(
+      InternalGroupDiscussionDataOrderingKeyValue.PRIORITY
+    )
   const { internalGroupId } = useParams<
     keyof InternalGroupDiscussionParams
   >() as InternalGroupDiscussionParams
@@ -81,10 +83,18 @@ export const InternalGroupDiscussion: React.FC = () => {
       <Radio.Group
         label="Sorteringsmodus"
         value={orderingKey}
-        onChange={val => setOrderingKey(val as 'priorities' | 'interview_time')}
+        onChange={val =>
+          setOrderingKey(val as InternalGroupDiscussionDataOrderingKeyValue)
+        }
       >
-        <Radio label="Prioriteringer" value="priorities" />
-        <Radio label="Intervjutidspunkt" value="interview_time" />
+        <Radio
+          label="Prioriteringer"
+          value={InternalGroupDiscussionDataOrderingKeyValue.PRIORITY}
+        />
+        <Radio
+          label="Intervjutidspunkt"
+          value={InternalGroupDiscussionDataOrderingKeyValue.INTERVIEW}
+        />
       </Radio.Group>
       <DiscussApplicantsTable
         internalGroup={internalGroup}
