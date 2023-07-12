@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
-import { IconFileAnalytics } from '@tabler/icons'
+import { Button, Group, Input, Stack, Title } from '@mantine/core'
+import { IconFileAnalytics, IconSearch } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -16,6 +16,7 @@ import {
 import { VALID_APPLICANTS_QUERY } from '../queries'
 
 export const CloseAdmission: React.FC = () => {
+  const [nameFilter, setNameFilter] = useState('')
   const [previewModalOpen, setPreviewModalOpen] = useState(false)
   const { error, loading, data } = useQuery(VALID_APPLICANTS_QUERY, {
     fetchPolicy: 'network-only',
@@ -56,7 +57,16 @@ export const CloseAdmission: React.FC = () => {
         Søkere vil bli tilegnet et verv automatisk avhengig av den gjengen med
         øverste prioritet som har sagt at de har lyst på kandidaten.
       </MessageBox>
-      <CloseAdmissionTable applicants={validApplicants} />
+      <Input
+        value={nameFilter}
+        placeholder="Søk på navn"
+        icon={<IconSearch />}
+        onChange={e => setNameFilter(e.currentTarget.value)}
+      />
+      <CloseAdmissionTable
+        applicants={validApplicants}
+        nameFilter={nameFilter}
+      />
 
       <Title order={2}> Kandidater med tilbud fra andre gjenger</Title>
       <MessageBox type="info">
