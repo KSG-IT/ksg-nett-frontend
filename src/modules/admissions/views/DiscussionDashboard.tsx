@@ -71,6 +71,7 @@ export const DiscussionDashboard: React.FC = () => {
         </PermissionGate>
       </Group>
       <AdmissionsShortcutPanel />
+      <Title order={2}>Gjengene</Title>
       <InternalGroupPreviewList
         allInternalGroupApplicantData={allInternalGroupApplicantData}
       />

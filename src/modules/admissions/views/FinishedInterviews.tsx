@@ -129,7 +129,7 @@ export const FinishedInterviews: React.FC = () => {
         </MessageBox>
       )}
 
-      <CardTable>
+      <CardTable compact>
         <thead>
           <tr>
             <th>Status</th>

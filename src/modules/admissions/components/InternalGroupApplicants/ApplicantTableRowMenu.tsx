@@ -7,6 +7,7 @@ import { MY_INTERVIEWS_QUERY } from 'modules/admissions/views'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { MY_UPCOMING_INTERVIEWS_QUERY } from '../AdmissionDashboard'
+import { showNotification } from '@mantine/notifications'
 
 export const ApplicantTableRowMenu: React.FC<{
   applicant: CoreApplicantNode
@@ -35,7 +36,11 @@ export const ApplicantTableRowMenu: React.FC<{
   const handleAttendInterview = () => {
     const { interview } = applicant
     if (interview === null) {
-      toast.error('Søkeren har ikke booket intervju')
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Søkeren har ikke booket intervju',
+        color: 'red',
+      })
       return
     }
     const handler = applicant.iAmAttendingInterview
