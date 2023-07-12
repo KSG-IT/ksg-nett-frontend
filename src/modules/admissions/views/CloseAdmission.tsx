@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Input, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, TextInput, Title } from '@mantine/core'
 import { IconFileAnalytics, IconSearch } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -57,7 +57,7 @@ export const CloseAdmission: React.FC = () => {
         Søkere vil bli tilegnet et verv automatisk avhengig av den gjengen med
         øverste prioritet som har sagt at de har lyst på kandidaten.
       </MessageBox>
-      <Input
+      <TextInput
         value={nameFilter}
         placeholder="Søk på navn"
         icon={<IconSearch />}
