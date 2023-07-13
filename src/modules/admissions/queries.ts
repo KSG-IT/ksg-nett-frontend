@@ -305,6 +305,7 @@ export const CURRENT_APPLICANTS_QUERY = gql`
       fullName
       email
       status
+      phone
       priorities {
         id
         internalGroupPosition {

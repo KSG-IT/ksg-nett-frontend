@@ -57,6 +57,6 @@ export enum NoticeMethodValues {
 }
 
 export enum InternalGroupDiscussionDataOrderingKeyValue {
-  PRIORITY = 'priority',
-  INTERVIEW = 'interview',
+  PRIORITY = 'priorities',
+  INTERVIEW = 'interview_time',
 }
