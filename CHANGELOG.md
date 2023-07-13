@@ -8,6 +8,18 @@
   - Authenticate if token is in url
 - Economy
   - Debt collection default amount set to owed amount
+- Admission:
+  - Applicant recommendation feature
+  - Applicant overview search
+  - Phone verification on applicant registration
+  - Interview booking override toggles
+  - Interview default text in interview configuration
+  - Order by modes in discussion table
+
+### Changed
+
+- Admission
+  - Applicant priorities moved from interview edit to applicant summary screen
 
 ## [v2023.5.1] - 2023-05-06
 

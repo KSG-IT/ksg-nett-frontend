@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '1'
+const NOTIFICATION_KEY = '2023-07-13:1'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -58,21 +58,26 @@ export const WhatsNewNotification: React.FC = () => {
               👋 Hva er nytt?
             </Title>
             <ul>
-              <li>Legge til 'Hva er nytt'</li>
-              <li>
-                Innskudd kortbetaling: legge til gebyr i stedet for å trekke fra
-              </li>
-              <li>
-                Mulig å slette egne ikke-godkjente innskudd på 'Min økonomi'
-              </li>
-              <li>
-                Mulighet for å sette minimum gjenværernde saldo for kjøp på
-                krysseliste
-              </li>
-              <li>
-                Forbedre tabell designet, mer kompakt og fargemarkering på
-                listetyper
-              </li>
+              <li>Opptaksforbedringer</li>
+              <ul>
+                <li>
+                  Prioriteringer endres nå hos søkeren i stedet for
+                  intervjunotater
+                </li>
+                <li>
+                  Intervjumal konfigureres på forhånd og kopieres til all
+                  intervjunotater
+                </li>
+                <li>
+                  Lettere å endre tidspunkter det er mulig å booke intervju
+                  under opptaksperioden
+                </li>
+                <li>Det er nå mulig å anbefale kandidater til andre gjenger</li>
+                <li>
+                  Sortere på prioritering eller intervjutid i tabellen for
+                  fordelingsmøtet
+                </li>
+              </ul>
             </ul>
           </Spoiler>
         </Stack>
