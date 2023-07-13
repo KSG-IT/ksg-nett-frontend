@@ -25,7 +25,7 @@ interface ApplicantPrioritiesFieldProps {
   applicant: Pick<ApplicantNode, 'id' | 'priorities'>
 }
 
-export const ApplicantPrioritiesField: React.VFC<
+export const ApplicantPrioritiesField: React.FC<
   ApplicantPrioritiesFieldProps
 > = ({ applicant }) => {
   const [priorities, setPriorities] = useState(

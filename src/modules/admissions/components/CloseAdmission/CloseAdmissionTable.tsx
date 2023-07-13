@@ -4,14 +4,18 @@ import { ToggleApplicantTableRow } from './ToggleApplicantTableRow'
 
 interface CloseAdmissionTableProps {
   applicants: ApplicantNode[]
+  nameFilter: string
 }
 
 export const CloseAdmissionTable: React.FC<CloseAdmissionTableProps> = ({
   applicants,
+  nameFilter,
 }) => {
-  const applicantRows = applicants.map(applicant => (
-    <ToggleApplicantTableRow applicant={applicant} />
-  ))
+  const applicantRows = applicants
+    .filter(applicant =>
+      applicant.fullName.toLowerCase().includes(nameFilter.toLowerCase())
+    )
+    .map(applicant => <ToggleApplicantTableRow applicant={applicant} />)
 
   return (
     <CardTable>

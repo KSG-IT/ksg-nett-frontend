@@ -1,6 +1,7 @@
 import { Select } from '@mantine/core'
 import { InterviewTotalEvaluationValues } from 'modules/admissions/consts'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
+import { INTERVIEW_DETAIL_QUERY } from 'modules/admissions/queries'
 import { InterviewNode } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 
@@ -46,12 +47,14 @@ export const TotalEvaluationSelect: React.VFC<TotalEvaluationSelectProps> = ({
           totalEvaluation: value,
         },
       },
+      refetchQueries: [INTERVIEW_DETAIL_QUERY],
     })
   }
 
   return (
     <Select
       label="Totalvurdering"
+      description="Totalvurdering må være satt før intervjuet kan låses"
       placeholder="Velg verdi"
       value={selectedValue}
       data={totalEvaluationOptions}

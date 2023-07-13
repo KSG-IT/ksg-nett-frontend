@@ -80,6 +80,11 @@ export const RegisterInformationForm: React.FC<
             error={errors?.phone?.message}
             {...register('phone')}
           />
+          <TextInput
+            label="Gjenta telefon"
+            error={errors?.phoneRepeated?.message}
+            {...register('phoneRepeated')}
+          />
           <Checkbox
             color="samfundet-red"
             label="Ønsker digitalt intervju"

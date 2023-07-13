@@ -195,6 +195,14 @@ export type ApplicantInterestNode = {
   positionToBeOffered: Pick<InternalGroupPositionNode, 'id' | 'name'> | null
 }
 
+export type ApplicantRecommendationNode = {
+  id: string
+  applicant: Pick<ApplicantNode, 'id' | 'fullName'>
+  internalGroup: Pick<InternalGroupNode, 'id' | 'name'>
+  reasoning: string
+  recommendedBy: Pick<UserNode, 'id' | 'fullName'>
+}
+
 export type AdmissionNode = {
   id: string
   date: Date
@@ -202,6 +210,8 @@ export type AdmissionNode = {
   status: AdmissionStatusValues
   availableInternalGroupPositionsData: AdmissionAvailableInternalGroupPositionData[]
   applicants: ApplicantNode[]
+  interviewBookingLateBatchEnabled: boolean
+  interviewBookingOverrideEnabled: boolean
 }
 
 export type InterviewScheduleTemplateNode = {
@@ -225,7 +235,11 @@ export interface interviewPeriodDatesNode {
 export interface ActiveAdmissioneturns {
   activeAdmission: Pick<
     AdmissionNode,
-    'id' | 'availableInternalGroupPositionsData' | 'status'
+    | 'id'
+    | 'availableInternalGroupPositionsData'
+    | 'status'
+    | 'interviewBookingLateBatchEnabled'
+    | 'interviewBookingOverrideEnabled'
   > | null
 }
 
@@ -332,6 +346,7 @@ export interface InterviewOverviewReturns {
 
 export interface InterviewTemplateReturns {
   interviewTemplate: {
+    defaultInterviewNotes: string
     interviewBooleanEvaluationStatements: Pick<
       InterviewBooleanEvaluationNode,
       'id' | 'statement'
@@ -556,13 +571,14 @@ export interface PatchInterviewScheduleTemplateReturns {
 export interface PatchInterviewScheduleTemplateVariables {
   id: string
   input: {
-    defaultBlockSize: number
-    defaultInterviewDuration: string
-    defaultPauseDuration: string
-    defaultInterviewDayStart: string
-    defaultInterviewDayEnd: string
-    interviewPeriodStartDate: string
-    interviewPeriodEndDate: string
+    defaultBlockSize?: number
+    defaultInterviewDuration?: string
+    defaultPauseDuration?: string
+    defaultInterviewDayStart?: string
+    defaultInterviewDayEnd?: string
+    defaultInterviewNotes?: string
+    interviewPeriodStartDate?: string
+    interviewPeriodEndDate?: string
   }
 }
 
@@ -593,6 +609,7 @@ export interface SetSelfAsInterviewerMutatationVariables {
 export type InternalGroupDiscussionData = {
   internalGroup: InternalGroupNode
   applicantsOpenForOtherPositions: ApplicantNode[]
+  applicantRecommendations: ApplicantRecommendationNode[]
   applicants: ApplicantNode[]
 }
 

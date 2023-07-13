@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import {
   ActionIcon,
-  Alert,
   Anchor,
   Button,
   Divider,
@@ -12,8 +12,10 @@ import {
   ThemeIcon,
   Title,
 } from '@mantine/core'
+import { useListState } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
 import { IconChevronDown, IconChevronUp, IconTrash } from '@tabler/icons'
+import { MessageBox } from 'components/MessageBox'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import {
   useApplicantFromTokenMutations,
@@ -26,9 +28,6 @@ import {
 } from 'modules/admissions/types.graphql'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { useListState } from '@mantine/hooks'
-import { MessageBox } from 'components/MessageBox'
 
 interface InternalGroupPosition {
   id: string
@@ -40,7 +39,7 @@ interface SetPrioritiesProps {
   nextStepCallback: () => void
 }
 
-export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
+export const SetPriorities: React.FC<SetPrioritiesProps> = ({
   applicant,
   nextStepCallback,
 }) => {
@@ -267,9 +266,8 @@ export const SetPriorities: React.VFC<SetPrioritiesProps> = ({
       <MessageBox type="warning">
         <b>Obs!</b> Selv om du har mulighet til å velge mer enn 3 prioriteringer
         på Samfundet sine nettssider når du søker KSG ber vi deg begrense deg
-        til 3 prioriteringer her. Du vil ikke ha mulighet til å endre på
-        stillingene etter at du har lagret på denne siden. Det er mulig å endre
-        rekkefølgen på prioriteringene dine under intervjuet.
+        til 3 prioriteringer her. Du vil kunne endre prioriteringene dine helt
+        frem til intervjuperioden er over.
       </MessageBox>
 
       <Button

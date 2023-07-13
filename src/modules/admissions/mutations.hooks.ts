@@ -54,6 +54,7 @@ import {
   UpdateInternalGroupPositionPriorityOrderReturns,
   UpdateInternalGroupPositionPriorityOrderVariables,
 } from './types.graphql'
+import { showNotification } from '@mantine/notifications'
 
 const PATCH_APPLICANT = gql`
   mutation PatchApplicant($id: ID!, $input: PatchApplicantInput!) {
@@ -113,7 +114,11 @@ export const useInterviewMutations = () => {
     SetSelfAsInterviewerMutatationVariables
   >(SET_SELF_AS_INTERVIEWER, {
     onError: error => {
-      toast.error(error.message)
+      showNotification({
+        title: 'Noe gikk galt',
+        message: error.message,
+        color: 'red',
+      })
     },
   })
 
@@ -159,13 +164,15 @@ export const useInterviewMutations = () => {
 }
 
 export const useInterviewScheduleMutations = () => {
-  const [patchInterviewSchedule] = useMutation<
-    PatchInterviewScheduleTemplateReturns,
-    PatchInterviewScheduleTemplateVariables
-  >(PATCH_INTERVIEW_SCHEDULE_TEMPLATE)
+  const [patchInterviewSchedule, { loading: patchInterviewScheduleLoading }] =
+    useMutation<
+      PatchInterviewScheduleTemplateReturns,
+      PatchInterviewScheduleTemplateVariables
+    >(PATCH_INTERVIEW_SCHEDULE_TEMPLATE)
 
   return {
     patchInterviewSchedule,
+    patchInterviewScheduleLoading,
   }
 }
 

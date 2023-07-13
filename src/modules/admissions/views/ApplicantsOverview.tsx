@@ -1,10 +1,12 @@
 import { useQuery } from '@apollo/client'
-import { Group, Stack, Title } from '@mantine/core'
+import { Group, Stack, TextInput, Title } from '@mantine/core'
+import { IconSearch } from '@tabler/icons'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
 import { SynCButton } from 'components/SyncButton'
+import { useDeferredValue, useState } from 'react'
 import { PERMISSIONS } from 'util/permissions'
 import { ApplicantsTable } from '../components/ApplicantsOverview'
 import { AddApplicantsArea } from '../components/ApplicantsOverview/AddApplicantsArea'
@@ -17,7 +19,9 @@ const breadcrumbsItems = [
   { label: 'Søkere', path: '' },
 ]
 
-export const ApplicantsOverview: React.FC<{}> = ({}) => {
+export const ApplicantsOverview: React.FC = () => {
+  const [filterQuery, setFilterQuery] = useState('')
+
   const { data, loading, error, refetch } = useQuery<CurrentApplicantsReturns>(
     CURRENT_APPLICANTS_QUERY,
     {
@@ -32,6 +36,8 @@ export const ApplicantsOverview: React.FC<{}> = ({}) => {
 
   const { currentApplicants } = data
 
+  console.log(filterQuery)
+
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
@@ -45,7 +51,16 @@ export const ApplicantsOverview: React.FC<{}> = ({}) => {
       <PermissionGate permissions={PERMISSIONS.admissions.add.applicant}>
         <AddApplicantsArea />
       </PermissionGate>
-      <ApplicantsTable applicants={currentApplicants} />
+      <TextInput
+        label="Søk"
+        placeholder="Søk etter navn, epost eller telefonnummer"
+        icon={<IconSearch />}
+        onChange={e => setFilterQuery(e.currentTarget.value)}
+      />
+      <ApplicantsTable
+        applicants={currentApplicants}
+        filterQuery={filterQuery}
+      />
     </Stack>
   )
 }
