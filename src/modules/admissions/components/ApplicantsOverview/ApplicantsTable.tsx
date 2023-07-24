@@ -9,6 +9,7 @@ import { useDeferredValue, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { DeleteApplicantModal } from './DeleteApplicantModal'
+import { CURRENT_APPLICANTS_QUERY } from 'modules/admissions/queries'
 
 interface ApplicantsTableProps {
   applicants: CoreApplicantNode[]
@@ -38,7 +39,7 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
       variables: {
         id: applicantToDelete.id,
       },
-      refetchQueries: ['CurrentApplicantsQuery'],
+      refetchQueries: [CURRENT_APPLICANTS_QUERY],
     })
   }
 
