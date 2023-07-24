@@ -3,13 +3,14 @@ import {
   Avatar,
   Button,
   Card,
-  createStyles,
   Group,
   SimpleGrid,
   Stack,
   Text,
   Title,
+  createStyles,
 } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import {
   FullPage404,
@@ -19,7 +20,6 @@ import {
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
 import { UserThumbnail } from 'modules/users/components'
-import toast from 'react-hot-toast'
 import { format } from 'util/date-fns'
 import { PERMISSIONS } from 'util/permissions'
 import { QuotesTabs } from '../components/QuotesTabs'
@@ -47,28 +47,47 @@ export const ReviewQuotes: React.FC = () => {
     refetchQueries: [PNEDING_QUOTES_QUERY, APPROVED_QUOTES_QUERY],
   })
 
-  const handleDeleteQuote = (quoteId: string) => {
-    toast.promise(deleteQuote({ variables: { id: quoteId } }), {
-      success: 'Sitat slettet',
-      loading: 'Sletter sitat',
-      error: 'Kunne ikke slette sitat',
+  function handleDeleteQuote(quoteId: string) {
+    deleteQuote({
+      variables: { id: quoteId },
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Sitatet ble slettet',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
+      },
     })
   }
 
-  const handleApproveQuote = (quoteId: string) => {
-    toast.promise(
-      approveQuote({
-        variables: {
-          quoteId: quoteId,
-        },
-        refetchQueries: [PNEDING_QUOTES_QUERY, APPROVED_QUOTES_QUERY],
-      }),
-      {
-        success: 'Sitat godkjent',
-        loading: 'Godkjenner sitat...',
-        error: 'Noe gikk galt',
-      }
-    )
+  function handleApproveQuote(quoteId: string) {
+    approveQuote({
+      variables: {
+        quoteId: quoteId,
+      },
+      refetchQueries: [PNEDING_QUOTES_QUERY, APPROVED_QUOTES_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Sitatet ble godkjent',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
+      },
+    })
   }
   if (error) return <FullPageError />
 
