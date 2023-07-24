@@ -45,6 +45,26 @@ export const AddInterviewForm: React.FC<AddInterviewFormProps> = ({
       return
     }
 
+    // duration has to be 30 minutes
+    if (datetimeEnd.getTime() - datetimeStart.getTime() !== 30 * 60 * 1000) {
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Intervju må være 30 minutter',
+        color: 'red',
+      })
+      return
+    }
+
+    // minutes have to be either 00 or 30, if not raise error
+    if (datetimeStart.getMinutes() !== 0 && datetimeStart.getMinutes() !== 30) {
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Starttid må være hel eller halv',
+        color: 'red',
+      })
+      return
+    }
+
     createInterview({
       variables: {
         input: {

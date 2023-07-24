@@ -1,12 +1,12 @@
 import { Button, Popover, Stack, TextInput } from '@mantine/core'
 import { DatePicker, TimeInput } from '@mantine/dates'
+import { showNotification } from '@mantine/notifications'
 import { IconPlus } from '@tabler/icons'
 import { format } from 'date-fns'
 import { LocationValues } from 'modules/schedules/consts'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { LocationSelect } from '../LocationSelect'
 
 interface CreateShiftPopoverProps {
@@ -56,12 +56,19 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
         },
       },
       refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Skiftet ble opprettet')
+        showNotification({
+          title: 'Vakt opprettet',
+          message: `${shiftName} opprettet`,
+        })
         setIsOpen(false)
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

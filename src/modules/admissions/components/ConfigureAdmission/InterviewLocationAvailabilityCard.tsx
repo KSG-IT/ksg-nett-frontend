@@ -9,6 +9,7 @@ import {
   UnstyledButton,
 } from '@mantine/core'
 import { DatePicker, TimeRangeInput } from '@mantine/dates'
+import { showNotification } from '@mantine/notifications'
 import { IconX } from '@tabler/icons'
 import {
   CREATE_INTERVIEW_LOCATION_AVAILABILITY,
@@ -20,7 +21,6 @@ import {
   InterviewLocationNode,
 } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import { toast } from 'react-hot-toast'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import { InterviewLocationAvailabilityInline } from './InterviewLocationAvailabilityInline'
 
@@ -46,8 +46,19 @@ export const InterviewLocationAvailabilityCard: React.VFC<
     DeleteMutationVariables
   >(DELETE_INTERVIEW_LOCATION, {
     refetchQueries: ['AllInterviewLocations'],
-    onCompleted: () => {
-      toast.success('Slettet Intervjulokale')
+    onCompleted() {
+      showNotification({
+        title: 'Suksess',
+        message: `${interviewLocation.name} slettet`,
+        color: 'green',
+      })
+    },
+    onError({ message }) {
+      showNotification({
+        title: 'Noe gikk galt',
+        message,
+        color: 'red',
+      })
     },
   })
 

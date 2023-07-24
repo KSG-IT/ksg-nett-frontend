@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { Alert, Button, Center, Stack, TextInput, Title } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconPlane } from '@tabler/icons'
 import { MessageBox } from 'components/MessageBox'
 import { RE_SEND_APPLICATION_TOKEN } from 'modules/admissions/mutations'
@@ -8,7 +9,6 @@ import {
   ReSendApplicationTokenVariables,
 } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 
 export const ReSendApplicantTokenForm: React.VFC = () => {
   const [email, setEmail] = useState('')
@@ -22,16 +22,30 @@ export const ReSendApplicantTokenForm: React.VFC = () => {
     const parsedEmail = email.trim()
 
     if (parsedEmail === '') {
-      toast.error('Du må skrive inn en epost')
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Du må skrive inn en epost',
+        color: 'red',
+      })
       return
     }
     sendResetMail({ variables: { email: parsedEmail } })
       .then(() => {
-        toast.success('Epost sendt!')
+        showNotification({
+          title: 'Suksess',
+          message: 'Epost sendt!',
+          color: 'green',
+        })
         setEmailSent(true)
         setEmail('')
       })
-      .catch(() => toast.error('Noe gikk galt'))
+      .catch(() => {
+        showNotification({
+          title: 'Noe gikk galt',
+          message: 'Kunne ikke sende epost',
+          color: 'red',
+        })
+      })
   }
 
   if (emailSent)

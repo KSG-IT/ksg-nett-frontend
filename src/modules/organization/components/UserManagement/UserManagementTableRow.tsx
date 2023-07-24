@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { Button, Group } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
 import { useInternalGroupPositionMembershipMutations } from 'modules/organization/mutations.hooks'
 import {
@@ -9,7 +10,6 @@ import {
   ManageInternalGroupUser,
 } from 'modules/organization/types.graphql'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { MANAGE_USERS_DATA_QUERY } from '../../../users/queries'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 
@@ -31,8 +31,7 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
     refetchQueries: ['ManageUsersDataQuery'],
   })
 
-  const { patchInternalGroupPositionMembership, quitKSG } =
-    useInternalGroupPositionMembershipMutations()
+  const { quitKSG } = useInternalGroupPositionMembershipMutations()
 
   const handleAssignNewPosition = () => {
     if (selectedInternalGroupPositionType === null) return
@@ -51,11 +50,19 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
         internalGroupPositionType: selectedInternalGroupPositionType.value,
       },
       refetchQueries: [MANAGE_USERS_DATA_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Bruker oppdatert!')
+        showNotification({
+          title: 'Suksess',
+          message: 'Brukeren har fått nytt verv',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
@@ -66,11 +73,19 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
         membershipId: userData.internalGroupPositionMembership.id,
       },
       refetchQueries: [MANAGE_USERS_DATA_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Bruker oppdatert!')
+        showNotification({
+          title: 'Suksess',
+          message: 'Snakkes aldri',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

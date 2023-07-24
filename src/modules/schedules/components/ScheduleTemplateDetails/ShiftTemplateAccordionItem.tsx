@@ -6,6 +6,7 @@ import {
   Table,
   Text,
 } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconPlus, IconTrash } from '@tabler/icons'
 import { RoleValues } from 'modules/schedules/consts'
 import {
@@ -16,7 +17,6 @@ import { SCHEDULE_TEMPLATE_QUERY } from 'modules/schedules/queries'
 import { ShiftTemplateNode } from 'modules/schedules/types.graphql'
 import { parseDay, parseLocation } from 'modules/schedules/util'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { ShiftRoleSelect } from '../ScheduleRoleSelect'
 import { ShiftSlotTemplateRow } from './ShiftSlotTemplateRow'
 
@@ -40,11 +40,19 @@ export const ShiftTemplateAccordionItem: React.FC<
         id: shiftTemplate.id,
       },
       refetchQueries: [SCHEDULE_TEMPLATE_QUERY],
-      onError: error => {
-        toast.error(error.message)
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Skiftet ble slettet',
+          color: 'green',
+        })
       },
-      onCompleted: () => {
-        toast.success('Vakt slettet')
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
@@ -59,11 +67,19 @@ export const ShiftTemplateAccordionItem: React.FC<
         },
       },
       refetchQueries: [SCHEDULE_TEMPLATE_QUERY],
-      onError: error => {
-        toast.error(error.message)
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Rollen ble lagt til',
+          color: 'green',
+        })
       },
-      onCompleted: () => {
-        toast.success('Vakt opprettet')
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

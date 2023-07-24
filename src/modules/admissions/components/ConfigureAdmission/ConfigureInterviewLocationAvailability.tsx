@@ -7,6 +7,7 @@ import {
   TextInput,
   Title,
 } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { CREATE_INTERVIEW_LOCATION } from 'modules/admissions/mutations'
@@ -16,7 +17,6 @@ import {
   CreateInterviewLocationVariables,
 } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useMediaQuery } from 'util/hooks'
 import { ALL_INTERVIEW_LOCATIONS_QUERY } from '../../queries'
 import { InterviewLocationAvailabilityCard } from './InterviewLocationAvailabilityCard'
@@ -55,7 +55,11 @@ export const ConfigureInterviewLocationAvailability: React.VFC<
     onCompleted: data => {
       const { createInterviewLocation } = data
       const { interviewLocation } = createInterviewLocation
-      toast.success(`${interviewLocation.name} opprettet`)
+      showNotification({
+        title: 'Suksess',
+        message: `${interviewLocation.name} opprettet`,
+        color: 'green',
+      })
       setInterviewLocationName('')
     },
   })
@@ -73,7 +77,11 @@ export const ConfigureInterviewLocationAvailability: React.VFC<
     )
 
     if (nameFilter.length > 0) {
-      toast.error('Lokalet finnes allerede')
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Lokalet finnes allerede',
+        color: 'red',
+      })
       return
     }
 

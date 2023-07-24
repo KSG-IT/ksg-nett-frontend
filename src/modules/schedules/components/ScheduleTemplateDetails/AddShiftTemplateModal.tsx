@@ -1,13 +1,13 @@
-import { Button, Group, Input, Modal, Select, TextInput } from '@mantine/core'
+import { Button, Group, Modal, TextInput } from '@mantine/core'
 import { TimeInput } from '@mantine/dates'
+import { showNotification } from '@mantine/notifications'
 import { DaySelect } from 'components/Select'
-import { format } from 'util/date-fns'
 import { DayValues, LocationValues } from 'modules/schedules/consts'
 import { useShiftTemplateMutations } from 'modules/schedules/mutations.hooks'
-import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { SCHEDULE_TEMPLATE_QUERY } from 'modules/schedules/queries'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { format } from 'util/date-fns'
 import { LocationSelect } from '../LocationSelect'
 
 interface AddShiftTemplateModalParams {
@@ -55,12 +55,20 @@ export const AddShiftTemplateModal: React.FC<AddShiftTemplateModalProps> = ({
         input,
       },
       refetchQueries: [SCHEDULE_TEMPLATE_QUERY],
-      onError: error => {
-        toast.error(error.message)
-      },
-      onCompleted: () => {
-        toast.success('Vakt lagt til')
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Vaktplanen ble oppdatert',
+          color: 'green',
+        })
         onCloseCallback()
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

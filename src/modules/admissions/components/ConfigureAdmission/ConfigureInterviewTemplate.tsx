@@ -9,6 +9,7 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconPlus, IconTrash } from '@tabler/icons'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -21,11 +22,7 @@ import {
 import { INTERVIEW_TEMPLATE_QUERY } from 'modules/admissions/queries'
 import { InterviewTemplateReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
-import { useInterviewScheduleAPI } from '../AdmissionConfiguration/InterviewScheduleForm/useInterviewScheduleAPI'
-import { useInterviewScheduleMutations } from 'modules/admissions/mutations.hooks'
-import { RichTextEditor } from 'components/RichTextEditor'
 import { DefaultInterviewNotesEditor } from './DefaultInterviewNotesEditor'
 
 type WizardStage =
@@ -49,8 +46,6 @@ export const ConfigureInterviewTemplate: React.FC<
     interviewAdditionalEvaluationStatement,
     setInterviewAdditionalEvaluationStatement,
   ] = useState('')
-
-  const { patchInterviewSchedule } = useInterviewScheduleMutations()
 
   const [createInterviewBooleanEvaluation] = useMutation(
     CREATE_INTERVIEW_BOOLEAN_EVALUATION,
@@ -100,7 +95,11 @@ export const ConfigureInterviewTemplate: React.FC<
 
   const handleCreateInterviewBooleanEvaluation = () => {
     if (interviewBooleanEvaluation === '') {
-      toast.error('Spørsmålet kan ikke være tomt')
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Spørsmålet kan ikke være tomt',
+        color: 'red',
+      })
       return
     }
     createInterviewBooleanEvaluation()
@@ -108,14 +107,16 @@ export const ConfigureInterviewTemplate: React.FC<
   }
   const handleCreateInterviewAdditionalEvaluationStatement = () => {
     if (interviewAdditionalEvaluationStatement === '') {
-      toast.error('Spørsmålet kan ikke være tomt')
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Spørsmålet kan ikke være tomt',
+        color: 'red',
+      })
       return
     }
     createInterviewAdditionalEvaluationStatement()
     setInterviewAdditionalEvaluationStatement('')
   }
-
-  function handlePatchInterviewDefaultNotes() {}
 
   const {
     interviewTemplate: {

@@ -6,9 +6,9 @@ import {
 } from 'modules/admissions/types.graphql'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
 import { OnFormSubmit } from 'types/forms'
 import * as yup from 'yup'
+import { showNotification } from '@mantine/notifications'
 
 export type InterviewScheduleFormData = {
   interviewPeriodStartDate: Date
@@ -82,7 +82,10 @@ export function useInterviewScheduleLogic({
     await onSubmit(mutationData)
       .then(() => nextStageCallback())
       .catch(err => {
-        toast.error(err.message)
+        showNotification({
+          title: 'Noe gikk galt',
+          message: err.message,
+        })
       })
   }
 

@@ -1,10 +1,10 @@
 import { Button, Group, Stack, Textarea, Title } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconFileUpload, IconPlane } from '@tabler/icons'
 import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { CURRENT_APPLICANTS_QUERY } from 'modules/admissions/queries'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { UploadAdmissionCSVModal } from './UploadAdmissionCSVModal'
 
 export const AddApplicantsArea: React.FC = () => {
@@ -19,18 +19,24 @@ export const AddApplicantsArea: React.FC = () => {
       .filter(emailString => emailString !== '')
       .map(emailString => emailString.trim())
 
-    toast.promise(
-      createApplicants({
-        variables: { emails: parsedEmails },
-        refetchQueries: [CURRENT_APPLICANTS_QUERY],
-      }),
-      {
-        loading: 'Oppretter søknader',
-        error: 'Noe gikk galt',
-        success: 'søknader opprettet',
-      }
-    )
-    setEmails('')
+    createApplicants({
+      variables: { emails: parsedEmails },
+      refetchQueries: [CURRENT_APPLICANTS_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Søkere lagt til',
+        })
+        setEmails('')
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
+      },
+    })
   }
   return (
     <Stack>

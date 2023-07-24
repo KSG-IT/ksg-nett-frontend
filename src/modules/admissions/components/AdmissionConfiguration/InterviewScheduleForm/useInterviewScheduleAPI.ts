@@ -2,8 +2,8 @@ import { useQuery } from '@apollo/client'
 import { useInterviewScheduleMutations } from 'modules/admissions/mutations.hooks'
 import { INTERVIEW_SCHEDULE_TEMPLATE } from 'modules/admissions/queries'
 import { useMemo, useState } from 'react'
-import toast from 'react-hot-toast'
 import { InterviewScheduleFormData } from './useInterviewScheduleLogic'
+import { showNotification } from '@mantine/notifications'
 
 export function useInterviewScheduleAPI() {
   const { patchInterviewSchedule } = useInterviewScheduleMutations()
@@ -13,8 +13,11 @@ export function useInterviewScheduleAPI() {
     onCompleted(data) {
       setScheduleId(data.interviewScheduleTemplate.id)
     },
-    onError(err) {
-      toast.error('Kunne ikke hente intervjuplan')
+    onError({ message }) {
+      showNotification({
+        title: 'Noe gikk galt',
+        message,
+      })
     },
   })
 

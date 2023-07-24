@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
+import { showNotification } from '@mantine/notifications'
 import { gql } from 'graphql-tag'
 import { InternalGroupNode } from 'modules/organization/types'
-import toast from 'react-hot-toast'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import { ApplicantStatusValues, InterviewTotalEvaluationValues } from './consts'
 import {
@@ -10,20 +10,20 @@ import {
   APPLICANT_UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
   ASSIGN_APPLICANT_NEW_INTERVIEW_MUTATION,
   CLOSE_ADMISSION_MUTATION,
-  CREATE_APPLICANT_COMMENT_MUTATION,
   CREATE_APPLICANTS_FROM_CSV_DATA_MUTATION,
+  CREATE_APPLICANT_COMMENT_MUTATION,
   CREATE_APPLICATIONS,
+  CREATE_INTERVIEW_MUTATION,
   DELETE_APPLICANT,
   DELETE_INTERNAL_GROUP_POSITION_PRIORITY_MUTATION,
+  DELETE_INTERVIEW_MUTATION,
   LOCK_ADMISSION_MUTATION,
   PATCH_INTERVIEW_SCHEDULE_TEMPLATE,
+  REMOVE_APPLICANT_FROM_INTERVIEW_MUTATION,
   REMOVE_SELF_AS_INTERVIEWER,
   SET_SELF_AS_INTERVIEWER,
-  UPLOAD_APPLICANTS_FILE_MUTATION,
   UPDATE_INTERNAL_GROUP_POSITION_PRIORITY_ORDER_MUTATION,
-  CREATE_INTERVIEW_MUTATION,
-  DELETE_INTERVIEW_MUTATION,
-  REMOVE_APPLICANT_FROM_INTERVIEW_MUTATION,
+  UPLOAD_APPLICANTS_FILE_MUTATION,
 } from './mutations'
 import {
   AddInternalGroupPositionPriorityReturns,
@@ -54,7 +54,6 @@ import {
   UpdateInternalGroupPositionPriorityOrderReturns,
   UpdateInternalGroupPositionPriorityOrderVariables,
 } from './types.graphql'
-import { showNotification } from '@mantine/notifications'
 
 const PATCH_APPLICANT = gql`
   mutation PatchApplicant($id: ID!, $input: PatchApplicantInput!) {

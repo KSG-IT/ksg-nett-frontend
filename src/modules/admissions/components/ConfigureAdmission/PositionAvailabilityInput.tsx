@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { NumberInput, Select, UnstyledButton } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconTrash } from '@tabler/icons'
 import {
   DELETE_ADMISSION_AVAILABLE_INTERNAL_GROUP_POSITION_DATA,
@@ -10,7 +11,6 @@ import {
   PatchAdmissionAvailableInternalGroupPositionDataReturns,
 } from 'modules/admissions/types.graphql'
 import React, { useState } from 'react'
-import toast from 'react-hot-toast'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 
 interface PositionAvailabilityInputProps {
@@ -45,7 +45,13 @@ export const PositionAvailabilityInput: React.VFC<
           membershipType: val,
         },
       },
-    }).then(() => toast.success('Oppdatert vervtype'))
+    }).then(() =>
+      showNotification({
+        title: 'Suksess',
+        message: 'Vervtype oppdatert',
+        color: 'green',
+      })
+    )
   }
 
   function handleAvailableNumberChange(val: number) {
@@ -57,7 +63,13 @@ export const PositionAvailabilityInput: React.VFC<
           availablePositions: val,
         },
       },
-    }).then(() => toast.success('Oppdatert antall verv'))
+    }).then(() =>
+      showNotification({
+        title: 'Suksess',
+        message: 'Antall oppdatert',
+        color: 'green',
+      })
+    )
   }
 
   const handleRemovePosition = () => {

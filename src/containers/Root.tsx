@@ -3,7 +3,6 @@ import { MantineProvider, MantineThemeOverride } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { NotificationsProvider } from '@mantine/notifications'
 import client from 'apollo-setup'
-import { Toaster } from 'react-hot-toast'
 import { BrowserRouter } from 'react-router-dom'
 import { AppRoutes } from 'routes'
 import { ThemeProvider } from 'styled-components'
@@ -41,7 +40,6 @@ function Root() {
               <BrowserRouter>
                 <AppRoutes />
               </BrowserRouter>
-              <Toaster />
             </NotificationsProvider>
           </ModalsProvider>
         </MantineProvider>

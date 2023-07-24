@@ -1,13 +1,12 @@
-import { ActionIcon, Button, Menu } from '@mantine/core'
+import { ActionIcon, Menu } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { IconDots, IconEye, IconUserMinus, IconUserPlus } from '@tabler/icons'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import { INTERNAL_GROUP_APPLICANTS_DATA } from 'modules/admissions/queries'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { MY_INTERVIEWS_QUERY } from 'modules/admissions/views'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { MY_UPCOMING_INTERVIEWS_QUERY } from '../AdmissionDashboard'
-import { showNotification } from '@mantine/notifications'
 
 export const ApplicantTableRowMenu: React.FC<{
   applicant: CoreApplicantNode
