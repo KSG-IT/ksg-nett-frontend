@@ -65,7 +65,7 @@ export const AllergyTransferList: React.FC<AllergyTransferListProps> = ({
 
   return (
     <Stack>
-      <Title order={3}>Mine allergene</Title>
+      <Title order={3}>Mine allergener</Title>
       <TransferList
         value={data}
         onChange={handleChange}
