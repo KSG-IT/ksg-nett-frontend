@@ -14,7 +14,7 @@ import {
 } from '@mantine/core'
 import { useListState } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
-import { IconChevronDown, IconChevronUp, IconTrash } from '@tabler/icons'
+import { IconChevronDown, IconChevronUp, IconTrash } from '@tabler/icons-react'
 import { MessageBox } from 'components/MessageBox'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import {

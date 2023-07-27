@@ -8,7 +8,7 @@ import {
   Text,
   Tooltip,
 } from '@mantine/core'
-import { IconAlertTriangle, IconClock } from '@tabler/icons'
+import { IconAlertTriangle, IconClock } from '@tabler/icons-react'
 import { ShiftNode } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import { UserThumbnail } from 'modules/users/components'

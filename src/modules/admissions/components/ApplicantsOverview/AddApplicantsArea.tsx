@@ -1,6 +1,6 @@
 import { Button, Group, Stack, Textarea, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconFileUpload, IconPlane } from '@tabler/icons'
+import { IconFileUpload, IconPlane } from '@tabler/icons-react'
 import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { CURRENT_APPLICANTS_QUERY } from 'modules/admissions/queries'

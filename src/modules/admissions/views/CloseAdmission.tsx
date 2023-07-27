@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Stack, TextInput, Title } from '@mantine/core'
-import { IconFileAnalytics, IconSearch } from '@tabler/icons'
+import { IconFileAnalytics, IconSearch } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'

@@ -1,11 +1,12 @@
-import { Button, Select, TextInput } from '@mantine/core'
-import { DatePicker, TimeRangeInput } from '@mantine/dates'
+import { Button, Group, Select, TextInput } from '@mantine/core'
+import { DatePickerInput, TimeInput } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
-import { locationOptions, LocationValues } from 'modules/schedules/consts'
+import { LocationValues, locationOptions } from 'modules/schedules/consts'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
 import { ShiftNode } from 'modules/schedules/types.graphql'
 import { Controller, useForm } from 'react-hook-form'
+import { format } from 'util/date-fns'
 import { SHIFT_DETAIL_QUERY } from '../ShiftCardModal'
 
 interface EditShiftFormProps {
@@ -16,11 +17,13 @@ export interface ShiftFormValues {
   name: string
   location: LocationValues | null
   day: Date
-  time: [Date, Date]
+  startTime: string
+  endTime: string
 }
 
 export const EditShiftForm: React.FC<EditShiftFormProps> = ({ shift }) => {
   const start = new Date(shift.datetimeStart)
+  const end = new Date(shift.datetimeEnd)
   const { patchShift } = useShiftMutations()
 
   const {
@@ -29,27 +32,31 @@ export const EditShiftForm: React.FC<EditShiftFormProps> = ({ shift }) => {
     handleSubmit,
     formState: { isDirty },
   } = useForm<ShiftFormValues>({
+    mode: 'onChange',
     defaultValues: {
       name: shift.name,
       location: shift.location,
       day: start,
-      time: [start, new Date(shift.datetimeEnd)] as [Date, Date],
+      startTime: format(start, 'HH:mm'),
+      endTime: format(end, 'HH:mm'),
     },
   })
 
   const onSubmit = (values: ShiftFormValues) => {
     const { day: startDate } = values
-    const [startTime, endTime] = values.time
 
     const datetimeStart = new Date(startDate)
-    datetimeStart.setHours(startTime.getHours())
-    datetimeStart.setMinutes(startTime.getMinutes())
+    const [startHours, startMinutes] = values.startTime.split(':')
+    const [endHours, endMinutes] = values.endTime.split(':')
+
+    datetimeStart.setHours(Number(startHours))
+    datetimeStart.setMinutes(Number(startMinutes))
     datetimeStart.setSeconds(0)
     datetimeStart.setMilliseconds(0)
 
     const datetimeEnd = new Date(startDate)
-    datetimeEnd.setHours(endTime.getHours())
-    datetimeEnd.setMinutes(endTime.getMinutes())
+    datetimeEnd.setHours(Number(endHours))
+    datetimeEnd.setMinutes(Number(endMinutes))
     datetimeEnd.setSeconds(0)
     datetimeEnd.setMilliseconds(0)
 
@@ -96,15 +103,12 @@ export const EditShiftForm: React.FC<EditShiftFormProps> = ({ shift }) => {
       <Controller
         name="day"
         control={control}
-        render={({ field }) => <DatePicker {...field} label="Vakt start" />}
+        render={({ field }) => <DatePickerInput {...field} />}
       />
-      <Controller
-        name="time"
-        control={control}
-        render={({ field }) => (
-          <TimeRangeInput {...field} label="Vakt varighet" />
-        )}
-      />
+      <Group>
+        <TimeInput label="Starttid" {...register('startTime')} />
+        <TimeInput label="Sluttid" {...register('endTime')} />
+      </Group>
       <Button type="submit" mt="md" disabled={!isDirty}>
         Lagre
       </Button>

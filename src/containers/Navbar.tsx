@@ -11,7 +11,7 @@ import {
   IconHandMiddleFinger,
   IconHome,
   IconUserPlus,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { useLocation } from 'react-router-dom'
 import { useStore } from 'store'
 import { usePermissions } from 'util/hooks/usePermissions'

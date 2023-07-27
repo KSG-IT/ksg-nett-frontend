@@ -1,6 +1,6 @@
 import { useLazyQuery } from '@apollo/client'
 import { createStyles, Group } from '@mantine/core'
-import { IconSearch } from '@tabler/icons'
+import { IconSearch } from '@tabler/icons-react'
 import { UserThumbnail } from 'modules/users/components'
 import { SEARCHBAR_USERS_QUERY } from 'modules/users/queries'
 import {

@@ -3,15 +3,16 @@ import {
   Checkbox,
   FileInput,
   Group,
+  Image,
   Stack,
   TextInput,
   Title,
-  Image,
 } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
-import { IconFileCode } from '@tabler/icons'
+import { DateInput } from '@mantine/dates'
+import { IconFileCode } from '@tabler/icons-react'
 import { MessageBox } from 'components/MessageBox'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
+import { Controller } from 'react-hook-form'
 import { useRegisterInformationAPI } from './useRegisterInformationAPI'
 import { useRegisterInformationLogic } from './useRegisterInformationLogic'
 
@@ -30,7 +31,8 @@ export const RegisterInformationForm: React.FC<
     setDoesNotWantImage,
     onSubmit,
   } = useRegisterInformationLogic(useRegisterInformationAPI({ applicant }))
-  const { formState, register, handleSubmit, getValues, setValue } = form
+  const { formState, control, register, handleSubmit, getValues, setValue } =
+    form
   const { errors, isSubmitting } = formState
 
   return (
@@ -66,14 +68,17 @@ export const RegisterInformationForm: React.FC<
             error={errors?.study?.message}
             {...register('study')}
           />
-          <DatePicker
-            label="Fødselsdato"
-            placeholder="Velg en dato"
-            error={errors?.dateOfBirth?.message}
-            // Not enjoying this hack here
-            defaultValue={getValues('dateOfBirth')}
-            onChange={date => date && setValue('dateOfBirth', new Date(date))}
-            allowFreeInput
+          <Controller
+            control={control}
+            name="dateOfBirth"
+            render={({ field }) => (
+              <DateInput
+                label="Fødselsdato"
+                placeholder="Velg en dato"
+                error={errors?.dateOfBirth?.message}
+                {...field}
+              />
+            )}
           />
           <TextInput
             label="Telefon"

@@ -1,4 +1,3 @@
-import { onError } from '@apollo/client/link/error'
 import {
   Button,
   Group,
@@ -57,7 +56,9 @@ export const AddUserToUserTypeModal: React.FC<AddUserToUserTypeModalProps> = ({
       title="Legg til bruker"
       opened={opened}
       onClose={onClose}
-      overlayBlur={5}
+      overlayProps={{
+        blur: 5,
+      }}
     >
       <Stack>
         <MessageBox type="warning">

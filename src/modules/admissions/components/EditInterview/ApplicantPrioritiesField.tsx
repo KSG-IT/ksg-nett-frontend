@@ -8,7 +8,7 @@ import {
 } from '@mantine/core'
 import { useListState } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
-import { IconCaretDown, IconCaretUp } from '@tabler/icons'
+import { IconCaretDown, IconCaretUp } from '@tabler/icons-react'
 import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import {

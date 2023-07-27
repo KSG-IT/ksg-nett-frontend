@@ -6,7 +6,7 @@ import {
   IconEditCircle,
   IconTrash,
   IconX,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'

@@ -1,53 +1,62 @@
 import { Button, Group, Loader, NumberInput, SimpleGrid } from '@mantine/core'
-import { DatePicker, TimeInput } from '@mantine/dates'
+import { DateInput, TimeInput } from '@mantine/dates'
 import { Controller } from 'react-hook-form'
-import { useIsMobile, useMediaQuery } from 'util/hooks'
+import { useIsMobile } from 'util/hooks'
 import { useInterviewScheduleAPI } from './useInterviewScheduleAPI'
 import { useInterviewScheduleLogic } from './useInterviewScheduleLogic'
 
 interface InterviewScheduleFormProps {
   nextStageCallback: () => void
+  interviewScheduleId: string
+  defaultValues: {
+    defaultInterviewDuration: string
+    defaultPauseDuration: string
+    defaultBlockSize: number
+    defaultInterviewDayStart: string
+    defaultInterviewDayEnd: string
+    interviewPeriodStartDate: Date
+    interviewPeriodEndDate: Date
+  }
 }
 
 export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
   nextStageCallback,
+  interviewScheduleId,
+  defaultValues,
 }) => {
   const isMobile = useIsMobile()
-  const { form, dataLoading, onSubmit } = useInterviewScheduleLogic({
-    ...useInterviewScheduleAPI(),
+  const { form, onSubmit } = useInterviewScheduleLogic({
+    ...useInterviewScheduleAPI({
+      interviewScheduleId,
+      defaultValues,
+    }),
     nextStageCallback,
   })
 
   const {
     handleSubmit,
+    register,
+    control,
     formState: { errors },
     getValues,
     setValue,
   } = form
 
-  if (dataLoading) {
-    return <Loader />
-  }
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <SimpleGrid cols={isMobile ? 1 : 2}>
         <TimeInput
-          // For some reason the ...register() method does not play nice with the
-          // time input, so we do this manually
-          value={getValues('defaultInterviewDuration')}
           label="Standard intervjulengde"
           description="Hvor lang tid er satt av per intervju. Dette er inkludert intervju, diskusjon og
           å flytte seg til nytt lokale"
           error={errors?.defaultInterviewDuration?.message}
-          onChange={value => setValue('defaultInterviewDuration', value)}
+          {...register('defaultInterviewDuration')}
         />
         <TimeInput
-          value={getValues('defaultPauseDuration')}
           label="Standard pauselengde"
           description="Hvor lang er pausen mellom tidsbolker med intervjuer"
           error={errors?.defaultPauseDuration?.message}
-          onChange={value => setValue('defaultPauseDuration', value)}
+          {...register('defaultPauseDuration')}
         />
         <NumberInput
           value={getValues('defaultBlockSize')}
@@ -59,47 +68,39 @@ export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
         />
         <div></div>
         <TimeInput
-          value={getValues('defaultInterviewDayStart')}
           label="Standard intervjustart"
           description="Tidspunkt på dagen intervjuene starter"
           error={errors?.defaultInterviewDayStart?.message}
-          onChange={date => {
-            setValue('defaultInterviewDayStart', date)
-          }}
+          {...register('defaultInterviewDayStart')}
         />
         <TimeInput
-          value={getValues('defaultInterviewDayEnd')}
           label="Standard intervjuslutt"
           description="Seneste tidspunkt intervjuene kan holde på en dag"
           error={errors?.defaultInterviewDayEnd?.message}
-          onChange={date => {
-            setValue('defaultInterviewDayEnd', date)
-          }}
-        />
-        <Controller
-          control={form.control}
-          name="interviewPeriodStartDate"
-          render={({ field }) => (
-            <DatePicker
-              placeholder="Velg dato"
-              label="Intervjuperiode stardato"
-              error={errors?.interviewPeriodStartDate?.message}
-              value={field.value}
-              onChange={date => date && field.onChange(date)}
-            />
-          )}
+          {...register('defaultInterviewDayEnd')}
         />
 
         <Controller
-          control={form.control}
+          control={control}
+          name="interviewPeriodStartDate"
+          render={({ field }) => (
+            <DateInput
+              label="Startdato for intervjuperioden"
+              description="Dagen de første intervjuene starter"
+              error={errors?.interviewPeriodStartDate?.message}
+              {...field}
+            />
+          )}
+        />
+        <Controller
+          control={control}
           name="interviewPeriodEndDate"
           render={({ field }) => (
-            <DatePicker
-              placeholder="Velg dato"
-              label="Intervjuperiode sluttdato"
+            <DateInput
+              label="Sluttdato for intervjuperioden"
+              description="Dagen de siste intervjuene holdes"
               error={errors?.interviewPeriodEndDate?.message}
-              value={field.value}
-              onChange={date => date && field.onChange(date)}
+              {...field}
             />
           )}
         />

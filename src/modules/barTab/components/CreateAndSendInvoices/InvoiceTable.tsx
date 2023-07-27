@@ -1,6 +1,6 @@
 import { Button, createStyles, Text } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconDownload, IconFilePlus, IconMailbox } from '@tabler/icons'
+import { IconDownload, IconFilePlus, IconMailbox } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { useInvoiceMutations } from 'modules/barTab/mutations.hooks'
 import { ACTIVE_BAR_TAB_INVOICES_QUERY } from 'modules/barTab/queries'

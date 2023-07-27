@@ -1,5 +1,5 @@
 import { Avatar, Badge, Table, createStyles } from '@mantine/core'
-import { IconCheck, IconX } from '@tabler/icons'
+import { IconCheck, IconX } from '@tabler/icons-react'
 import { format } from 'util/date-fns'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { UserThumbnail } from 'modules/users/components'

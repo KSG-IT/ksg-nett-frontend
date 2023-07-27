@@ -1,7 +1,7 @@
 import { ApolloProvider } from '@apollo/client/react'
 import { MantineProvider, MantineThemeOverride } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
-import { NotificationsProvider } from '@mantine/notifications'
+import { Notifications } from '@mantine/notifications'
 import client from 'apollo-setup'
 import { BrowserRouter } from 'react-router-dom'
 import { AppRoutes } from 'routes'
@@ -36,12 +36,11 @@ function Root() {
       <ThemeProvider theme={theme}>
         <MantineProvider theme={mtheme}>
           <ModalsProvider>
-            <NotificationsProvider>
-              <BrowserRouter>
-                <AppRoutes />
-              </BrowserRouter>
-            </NotificationsProvider>
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
           </ModalsProvider>
+          <Notifications />
         </MantineProvider>
       </ThemeProvider>
     </ApolloProvider>

@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core'
-import { IconRefresh } from '@tabler/icons'
+import { IconRefresh } from '@tabler/icons-react'
 
 interface SyncButtonProps {
   refetchLoading: boolean

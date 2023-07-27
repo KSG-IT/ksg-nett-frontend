@@ -25,6 +25,9 @@ export const ShiftTemplateAccordion: React.FC<ShiftTemplateAccordionProps> = ({
           <Accordion.Control chevron={false}>
             <Group className={classes.shiftTemplateRow} position="apart">
               <Text className={classes.shiftTemplateColumnCell} weight={600}>
+                Navn
+              </Text>
+              <Text className={classes.shiftTemplateColumnCell} weight={600}>
                 Dag
               </Text>
               <Text className={classes.shiftTemplateColumnCell} weight={600}>

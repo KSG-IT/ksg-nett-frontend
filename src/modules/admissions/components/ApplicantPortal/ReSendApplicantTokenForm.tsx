@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { Alert, Button, Center, Stack, TextInput, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconPlane } from '@tabler/icons'
+import { IconPlane } from '@tabler/icons-react'
 import { MessageBox } from 'components/MessageBox'
 import { RE_SEND_APPLICATION_TOKEN } from 'modules/admissions/mutations'
 import {

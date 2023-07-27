@@ -12,7 +12,7 @@ import {
   TextInput,
   Title,
 } from '@mantine/core'
-import { IconCash, IconCheck, IconEdit, IconPlus } from '@tabler/icons'
+import { IconCash, IconCheck, IconEdit, IconPlus } from '@tabler/icons-react'
 import React, { useState } from 'react'
 import { numberWithSpaces } from 'util/parsing'
 import { PATCH_SOCI_BANK_ACCOUNT } from '../mutations'

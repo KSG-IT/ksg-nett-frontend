@@ -1,20 +1,20 @@
 import {
   Button,
-  createStyles,
   Group,
   Modal,
+  NumberInput,
   Select,
   TextInput,
-  NumberInput,
+  createStyles,
 } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
-import { format } from 'util/date-fns'
+import { DatePickerInput } from '@mantine/dates'
+import { showNotification } from '@mantine/notifications'
 import { useSociSessionMutations } from 'modules/economy/mutations.hooks'
 import { ALL_SOCI_SESSIONS } from 'modules/economy/queries'
 import { SociSessionType } from 'modules/economy/types.graphql'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { showNotification } from '@mantine/notifications'
+import { format } from 'util/date-fns'
 
 interface CreateSociSessionModalProps {
   open: boolean
@@ -89,7 +89,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
           value={name}
           onChange={evt => setName(evt.currentTarget.value)}
         />
-        <DatePicker
+        <DatePickerInput
           label="Dato for innkryssing"
           value={date}
           onChange={val => val && setDate(val)}

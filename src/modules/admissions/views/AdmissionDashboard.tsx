@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { Button, Group, Stack, Switch, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconClock } from '@tabler/icons'
+import { IconClock } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'

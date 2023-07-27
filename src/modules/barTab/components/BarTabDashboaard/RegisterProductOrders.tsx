@@ -13,7 +13,7 @@ import {
   UnstyledButton,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconTrash } from '@tabler/icons'
+import { IconTrash } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
 import { BarTabOrderTypeValues } from 'modules/barTab/enums'

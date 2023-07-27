@@ -8,7 +8,7 @@ import {
   TextInput,
   Title,
 } from '@mantine/core'
-import { IconRefresh, IconSearch } from '@tabler/icons'
+import { IconRefresh, IconSearch } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { MessageBox } from 'components/MessageBox'

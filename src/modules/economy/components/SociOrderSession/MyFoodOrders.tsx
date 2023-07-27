@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Card, Group, List, Stack, Title, UnstyledButton } from '@mantine/core'
-import { IconTrash } from '@tabler/icons'
+import { IconTrash } from '@tabler/icons-react'
 import { useSociOrderSessionMutations } from 'modules/economy/mutations.hooks'
 import { MY_SESSION_PRODUCT_ORDERS_QUERY } from 'modules/economy/queries'
 import { MySessionProductOrdersReturns } from 'modules/economy/types.graphql'

@@ -10,7 +10,7 @@ import {
   UnstyledButton,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconAlertTriangle, IconTrash } from '@tabler/icons'
+import { IconAlertTriangle, IconTrash } from '@tabler/icons-react'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { MessageBox } from 'components/MessageBox'
 import { PermissionGate } from 'components/PermissionGate'

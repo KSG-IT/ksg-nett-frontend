@@ -6,7 +6,7 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core'
-import { IconFile } from '@tabler/icons'
+import { IconFile } from '@tabler/icons-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { DocumentNode } from '../types.graphql'
 import { formatDistanceToNow } from '../../../util/date-fns'

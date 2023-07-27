@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { Group, UnstyledButton } from '@mantine/core'
-import { IconTrash } from '@tabler/icons'
+import { IconTrash } from '@tabler/icons-react'
 import { DELETE_INTERVIEW_LOCATION_AVAILABILITY } from 'modules/admissions/mutations'
 import { ALL_INTERVIEW_LOCATIONS_QUERY } from 'modules/admissions/queries'
 import { InterviewLocationAvailabilityNode } from 'modules/admissions/types.graphql'

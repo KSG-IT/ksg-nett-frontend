@@ -1,5 +1,5 @@
 import { ActionIcon, Button, Card, Menu, Table } from '@mantine/core'
-import { IconDots, IconMail, IconPhone, IconTrash } from '@tabler/icons'
+import { IconDots, IconMail, IconPhone, IconTrash } from '@tabler/icons-react'
 import { PermissionGate } from 'components/PermissionGate'
 import { formatDistanceToNow } from 'util/date-fns'
 import { NoticeMethodValues } from 'modules/admissions/consts'

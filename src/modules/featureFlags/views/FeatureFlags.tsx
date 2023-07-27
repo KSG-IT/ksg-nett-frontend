@@ -9,7 +9,7 @@ import {
   Title,
   Tooltip,
 } from '@mantine/core'
-import { IconInfoCircle } from '@tabler/icons'
+import { IconInfoCircle } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'

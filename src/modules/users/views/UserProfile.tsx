@@ -99,7 +99,7 @@ const useStyles = createStyles(theme => ({
   name: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontWeight: 500,
-    fontSize: theme.fontSizes.lg * 1.25,
+    fontSize: (theme.fontSizes.lg as unknown as number) * 1.25, // Shady ??
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       textAlign: 'center',
     },

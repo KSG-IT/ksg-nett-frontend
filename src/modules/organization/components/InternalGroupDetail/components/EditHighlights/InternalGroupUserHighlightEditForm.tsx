@@ -15,7 +15,7 @@ import {
   TextInput,
 } from '@mantine/core'
 import { InternalGroupSelect, UserSelect } from 'components/Select'
-import { IconPhoto } from '@tabler/icons'
+import { IconPhoto } from '@tabler/icons-react'
 
 interface InternalGroupUserHighlightEditProps {
   highlight?: InternalGroupUserHighlightNode

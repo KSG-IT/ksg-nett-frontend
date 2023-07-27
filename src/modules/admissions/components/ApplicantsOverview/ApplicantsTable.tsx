@@ -1,5 +1,5 @@
 import { ActionIcon, Menu, Modal } from '@mantine/core'
-import { IconDots, IconEye, IconTrash } from '@tabler/icons'
+import { IconDots, IconEye, IconTrash } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { PermissionGate } from 'components/PermissionGate'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'

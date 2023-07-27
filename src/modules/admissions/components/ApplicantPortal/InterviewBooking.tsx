@@ -7,7 +7,7 @@ import {
   Stack,
   Text,
 } from '@mantine/core'
-import { Calendar } from '@mantine/dates'
+import { Calendar, DatePicker } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -97,29 +97,29 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
         breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
       >
         <Container>
-          <Calendar
+          <DatePicker
             size={'md'}
             locale={'nb'}
             placeholder={'Klikk her for å velge dato'}
             minDate={
               isAfter(new Date(startDate), new Date())
                 ? new Date(startDate)
-                : addDays(new Date(), 1)
+                : new Date()
             }
             maxDate={new Date(endDate)}
             value={day}
             onChange={date => {
               date && handleDayChange(date)
             }}
-            disableOutsideEvents
-            dayClassName={(date, modifiers) =>
-              cx({
-                [classes.disabled]: modifiers.disabled,
-                [classes.available]: !modifiers.disabled,
-                [classes.weekend]: modifiers.weekend && !modifiers.disabled,
-                [classes.selected]: modifiers.selected,
-              })
-            }
+            // disableOutsideEvents
+            // dayClassName={(date, modifiers) =>
+            //   cx({
+            //     [classes.disabled]: modifiers.disabled,
+            //     [classes.available]: !modifiers.disabled,
+            //     [classes.weekend]: modifiers.weekend && !modifiers.disabled,
+            //     [classes.selected]: modifiers.selected,
+            //   })
+            // }
           />
         </Container>
 

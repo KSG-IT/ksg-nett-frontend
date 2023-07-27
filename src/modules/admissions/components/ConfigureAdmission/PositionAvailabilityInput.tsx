@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { NumberInput, Select, UnstyledButton } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconTrash } from '@tabler/icons'
+import { IconTrash } from '@tabler/icons-react'
 import {
   DELETE_ADMISSION_AVAILABLE_INTERNAL_GROUP_POSITION_DATA,
   PATCH_ADMISSION_AVAILABLE_INTERNAL_GROUP_POSITION_DATA,
