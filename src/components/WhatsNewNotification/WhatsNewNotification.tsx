@@ -10,7 +10,7 @@ import {
   Title,
   createStyles,
 } from '@mantine/core'
-import { IconX } from '@tabler/icons'
+import { IconX } from '@tabler/icons-react'
 import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.

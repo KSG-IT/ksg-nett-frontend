@@ -6,6 +6,7 @@ import { useInternalGroupPositionMembershipMutations } from 'modules/organizatio
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
+  InternalGroupPositionType,
   InternalGroupPositionTypeOption,
   ManageInternalGroupUser,
 } from 'modules/organization/types.graphql'
@@ -23,7 +24,7 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
   const [
     selectedInternalGroupPositionType,
     setSelectedInternalGroupPositionType,
-  ] = useState<InternalGroupPositionTypeOption | null>(null)
+  ] = useState<InternalGroupPositionType | null>(null)
   const [assignNewPosition, { loading }] = useMutation<
     AssignNewInternalGroupPositionMembershipReturns,
     AssignNewInternalGroupPositionMembershipVariables
@@ -37,8 +38,7 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
     if (selectedInternalGroupPositionType === null) return
 
     if (
-      selectedInternalGroupPositionType.value ===
-      userData.internalGroupPositionType
+      selectedInternalGroupPositionType === userData.internalGroupPositionType
     )
       return
 
@@ -47,7 +47,7 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
         userId: userData.userId,
         internalGroupPositionId:
           userData.internalGroupPositionMembership.position.id,
-        internalGroupPositionType: selectedInternalGroupPositionType.value,
+        internalGroupPositionType: selectedInternalGroupPositionType,
       },
       refetchQueries: [MANAGE_USERS_DATA_QUERY],
       onCompleted() {
@@ -94,8 +94,9 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
     <>
       <td>
         <InternalGroupPositionTypeSelect
+          searchable
+          placeholder="Velg verv"
           onChange={setSelectedInternalGroupPositionType}
-          selected={selectedInternalGroupPositionType}
         />
       </td>
       <td>

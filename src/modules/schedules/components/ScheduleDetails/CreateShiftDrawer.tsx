@@ -9,10 +9,10 @@ import {
   TextInput,
   UnstyledButton,
 } from '@mantine/core'
-import { DatePicker, TimeInput } from '@mantine/dates'
+import { DatePickerInput, TimeInput } from '@mantine/dates'
 import { useListState } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
-import { IconPlus, IconX } from '@tabler/icons'
+import { IconPlus, IconX } from '@tabler/icons-react'
 import { LocationValues, RoleValues } from 'modules/schedules/consts'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
@@ -37,8 +37,8 @@ export const CreateShiftDrawer: React.FC<CreateShiftDrawerProps> = ({
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState('')
   const [location, setLocation] = useState<LocationValues | null>(null)
-  const [startTime, setStartTime] = useState(new Date())
-  const [endTime, setEndTime] = useState(new Date())
+  const [startTime, setStartTime] = useState('')
+  const [endTime, setEndTime] = useState('')
   const [roles, handler] = useListState<RoleObject>([
     {
       role: RoleValues.ARRANGEMENTANSVARLIG,
@@ -52,8 +52,8 @@ export const CreateShiftDrawer: React.FC<CreateShiftDrawerProps> = ({
   function resetForm() {
     setName('')
     setLocation(null)
-    setStartTime(new Date())
-    setEndTime(new Date())
+    setStartTime('')
+    setEndTime('')
 
     handler.setState([])
   }
@@ -65,22 +65,27 @@ export const CreateShiftDrawer: React.FC<CreateShiftDrawerProps> = ({
     }
 
     const datetimeStart = new Date(date)
-    datetimeStart.setHours(startTime.getHours())
-    datetimeStart.setMinutes(startTime.getMinutes())
-    datetimeStart.setSeconds(0)
-
     const datetimeEnd = new Date(date)
-    datetimeEnd.setHours(endTime.getHours())
-    datetimeEnd.setMinutes(endTime.getMinutes())
+
+    const [startHours, startMinutes] = startTime.split(':')
+    const [endHours, endMinutes] = endTime.split(':')
+
+    datetimeStart.setHours(Number(startHours))
+    datetimeStart.setMinutes(Number(startMinutes))
+    datetimeStart.setSeconds(0)
+    datetimeEnd.setHours(Number(endHours))
+    datetimeEnd.setMinutes(Number(endMinutes))
     datetimeEnd.setSeconds(0)
 
     if (datetimeEnd < datetimeStart) {
-      // datetime end is next daay
+      // datetime end is next day
       datetimeEnd.setDate(datetimeEnd.getDate() + 1)
     }
 
     // Daisychains together shift and slot mutation because I'm too lazy to do it in a single mutation
     // Alexander Orvik 2022-12-15 17:38
+    // Back here to migrate to Mantine v6. Still too lazy to fix this mess
+    // Alexander Orvik 2023-27-07 16:42
     createShift({
       variables: {
         input: {
@@ -171,7 +176,7 @@ export const CreateShiftDrawer: React.FC<CreateShiftDrawerProps> = ({
           />
         </Grid.Col>
         <Grid.Col span={1}>
-          <DatePicker
+          <DatePickerInput
             label="Dato"
             value={date}
             onChange={date => date && setDate(date)}
@@ -190,14 +195,14 @@ export const CreateShiftDrawer: React.FC<CreateShiftDrawerProps> = ({
           <TimeInput
             label="Tid start"
             value={startTime}
-            onChange={time => time && setStartTime(time)}
+            onChange={evt => setStartTime(evt.target.value)}
           />
         </Grid.Col>
         <Grid.Col span={1}>
           <TimeInput
             label="Tid slutt"
             value={endTime}
-            onChange={time => time && setEndTime(time)}
+            onChange={evt => setEndTime(evt.target.value)}
           />
         </Grid.Col>
         <Grid.Col span={2}>
@@ -217,7 +222,9 @@ export const CreateShiftDrawer: React.FC<CreateShiftDrawerProps> = ({
               <Group>
                 <NumberInput
                   value={role.count}
-                  onChange={val => handleUpdateRoleList(index, val, role.role)}
+                  onChange={val =>
+                    val && handleUpdateRoleList(index, val, role.role)
+                  }
                 />
                 <UnstyledButton onClick={() => handleRemoveRole(index)}>
                   <IconX />

@@ -92,6 +92,7 @@ export const SCHEDULE_TEMPLATE_QUERY = gql`
       shiftTemplates {
         id
         location
+        name
         timeStart
         timeEnd
         day

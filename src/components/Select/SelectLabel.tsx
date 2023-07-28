@@ -5,7 +5,7 @@ import {
   MultiSelectValueProps,
   SelectItemProps,
 } from '@mantine/core'
-import { IconUser, IconUserPlus } from '@tabler/icons'
+import { IconUser, IconUserPlus } from '@tabler/icons-react'
 
 export function Value({
   value,

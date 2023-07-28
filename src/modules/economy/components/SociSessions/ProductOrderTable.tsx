@@ -1,6 +1,6 @@
 import { createStyles, UnstyledButton } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconTrash } from '@tabler/icons'
+import { IconTrash } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { useProductOrderMutations } from 'modules/economy/mutations.hooks'
 import { SOCI_SESSION_QUERY } from 'modules/economy/queries'

@@ -1,5 +1,5 @@
 import { Popover, Text } from '@mantine/core'
-import { IconInfoCircle } from '@tabler/icons'
+import { IconInfoCircle } from '@tabler/icons-react'
 import { useState } from 'react'
 
 interface InfoPopoverProps {
@@ -16,7 +16,7 @@ export const InfoPopover: React.FC<InfoPopoverProps> = ({ content }) => {
       withArrow
       trapFocus={false}
       closeOnEscape={false}
-      transition="pop-top-left"
+      transitionProps={{ duration: 0, transition: 'pop-top-left' }}
       width={260}
     >
       <Popover.Target>

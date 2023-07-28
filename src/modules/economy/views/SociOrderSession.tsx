@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Modal, Stack, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconDownload, IconMeat } from '@tabler/icons'
+import { IconDownload, IconMeat } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'

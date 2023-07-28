@@ -6,7 +6,7 @@ import {
   IconMeat,
   IconMoodKid,
   IconQuote,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { ShortcutCard, ShortcutCardGrid } from 'components/ShortcutCard'
 import { useMemo } from 'react'
 import { PERMISSIONS } from 'util/permissions'

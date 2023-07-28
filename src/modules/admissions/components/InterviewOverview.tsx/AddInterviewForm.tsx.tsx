@@ -1,5 +1,5 @@
-import { Button, Stack } from '@mantine/core'
-import { DatePicker, TimeRangeInput } from '@mantine/dates'
+import { Button, Group, Stack } from '@mantine/core'
+import { DatePickerInput, TimeInput } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
 import { MessageBox } from 'components/MessageBox'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
@@ -16,23 +16,35 @@ export const AddInterviewForm: React.FC<AddInterviewFormProps> = ({
 }) => {
   const [locationId, setLocationId] = useState('')
   const [date, setDate] = useState(new Date())
-  const [time, setTime] = useState<[Date, Date]>([new Date(), new Date()])
+  const [timeSTart, setTimeStart] = useState('12:00')
+  const [timeEnd, setTimeEnd] = useState('12:30')
 
   const { createInterview } = useInterviewMutations()
 
   function handleSubmit(evt: React.FormEvent) {
     evt.preventDefault()
 
-    const [startTime, endTime] = time
+    if (locationId === '') {
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Du må velge intervjulokale!',
+        color: 'red',
+      })
+      return
+    }
+
+    const [startHours, startMinutes] = timeSTart.split(':')
+    const [endHours, endMinutes] = timeEnd.split(':')
+
     const datetimeStart = new Date(date)
-    datetimeStart.setHours(startTime.getHours())
-    datetimeStart.setMinutes(startTime.getMinutes())
+    datetimeStart.setHours(Number(startHours))
+    datetimeStart.setMinutes(Number(startMinutes))
     datetimeStart.setSeconds(0)
     datetimeStart.setMilliseconds(0)
 
     const datetimeEnd = new Date(date)
-    datetimeEnd.setHours(endTime.getHours())
-    datetimeEnd.setMinutes(endTime.getMinutes())
+    datetimeEnd.setHours(Number(endHours))
+    datetimeEnd.setMinutes(Number(endMinutes))
     datetimeEnd.setSeconds(0)
     datetimeEnd.setMilliseconds(0)
 
@@ -99,16 +111,24 @@ export const AddInterviewForm: React.FC<AddInterviewFormProps> = ({
           Intervjuslutt må være en halvtime senere.
         </MessageBox>
         <InterviewLocationSelect onSelectCallback={setLocationId} />
-        <DatePicker
+        <DatePickerInput
           value={date}
-          onChange={val => val && setDate(val)}
           label="Dato"
+          onChange={val => val && setDate(val)}
         />
-        <TimeRangeInput
-          value={time}
-          onChange={val => val && setTime(val)}
-          label="Intervjutid"
-        />
+
+        <Group>
+          <TimeInput
+            value={timeSTart}
+            label="Intervjustart"
+            onChange={evt => setTimeStart(evt.target.value)}
+          />
+          <TimeInput
+            value={timeEnd}
+            label="Intervjuslutt"
+            onChange={evt => setTimeEnd(evt.target.value)}
+          />
+        </Group>
         <Button type="submit">Opprett</Button>
       </Stack>
     </form>

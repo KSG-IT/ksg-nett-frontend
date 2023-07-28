@@ -1,6 +1,11 @@
 import { ActionIcon, Menu } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconDots, IconEye, IconUserMinus, IconUserPlus } from '@tabler/icons'
+import {
+  IconDots,
+  IconEye,
+  IconUserMinus,
+  IconUserPlus,
+} from '@tabler/icons-react'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import { INTERNAL_GROUP_APPLICANTS_DATA } from 'modules/admissions/queries'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'

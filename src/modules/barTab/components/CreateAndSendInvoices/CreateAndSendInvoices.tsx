@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Stack } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconFilePlus, IconFileX } from '@tabler/icons'
+import { IconFilePlus, IconFileX } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'

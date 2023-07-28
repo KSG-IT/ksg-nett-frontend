@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { ActionIcon, Group, Stack } from '@mantine/core'
-import { IconEdit, IconX } from '@tabler/icons'
+import { IconEdit, IconX } from '@tabler/icons-react'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'

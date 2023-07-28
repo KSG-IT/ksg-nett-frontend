@@ -1,7 +1,7 @@
 import { FetchResult } from '@apollo/client'
 import { Button, Group, LoadingOverlay } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconTrash } from '@tabler/icons'
+import { IconTrash } from '@tabler/icons-react'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 import { DeleteMutationReturns } from 'types/graphql'

@@ -8,7 +8,7 @@ import {
   UnstyledButton,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconX } from '@tabler/icons'
+import { IconX } from '@tabler/icons-react'
 import { UserSelect } from 'components/Select'
 import { useShiftSlotMutations } from 'modules/schedules/mutations.hooks'
 import {

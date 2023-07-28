@@ -7,7 +7,7 @@ import {
   Text,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconPlus, IconTrash } from '@tabler/icons'
+import { IconPlus, IconTrash } from '@tabler/icons-react'
 import { RoleValues } from 'modules/schedules/consts'
 import {
   useShiftSlotTemplateMutations,
@@ -88,6 +88,9 @@ export const ShiftTemplateAccordionItem: React.FC<
     <Accordion.Item value={shiftTemplate.id}>
       <Accordion.Control>
         <Group className={classes.shiftTemplateRow} position="apart">
+          <Text className={classes.shiftTemplateColumnCell}>
+            {shiftTemplate.name}
+          </Text>
           <Text className={classes.shiftTemplateColumnCell}>
             {parseDay(shiftTemplate.day)}
           </Text>

@@ -1,6 +1,6 @@
 import { Group, Stack, TextInput, Title } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
-import { IconSearch } from '@tabler/icons'
+import { IconSearch } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { useState } from 'react'
 import { QuoteGrid } from '../components/QuoteGrid'

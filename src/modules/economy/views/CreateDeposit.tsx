@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
 import { Card, Container, createStyles, Tabs, Title } from '@mantine/core'
-import { IconBuildingBank, IconCreditCard } from '@tabler/icons'
+import { IconBuildingBank, IconCreditCard } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'

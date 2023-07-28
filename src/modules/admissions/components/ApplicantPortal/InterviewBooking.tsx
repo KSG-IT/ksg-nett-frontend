@@ -1,25 +1,18 @@
 import { useMutation, useQuery } from '@apollo/client'
-import {
-  Button,
-  Container,
-  createStyles,
-  SimpleGrid,
-  Stack,
-  Text,
-} from '@mantine/core'
-import { Calendar } from '@mantine/dates'
+import { Button, Container, SimpleGrid, Stack, Text } from '@mantine/core'
+import { DatePicker } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { addDays, isAfter } from 'date-fns'
-import { format } from 'util/date-fns'
+import { isAfter } from 'date-fns'
+import 'dayjs/locale/nb'
 import { BOOK_INTERRVIEW_MUTATION } from 'modules/admissions/mutations'
 import { INTERVIEW_PERIOD_DATES_QUERY } from 'modules/admissions/queries'
 import { InterviewPeriodDatesReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
+import { format } from 'util/date-fns'
 import { InterviewsAvailableForBooking } from './components/InterviewsAvailableForBooking'
-import 'dayjs/locale/nb'
 
 interface InterviewBookingProps {
   applicantToken: string
@@ -30,7 +23,6 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
 }) => {
   const [selectedInterviews, setSelectedInterviews] = useState<string[]>([])
   const [day, setDay] = useState(new Date())
-  const { classes, cx } = useStyles()
   const handleDayChange = (newDay: Date) => {
     setDay(newDay)
     setSelectedInterviews([])
@@ -97,29 +89,20 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
         breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
       >
         <Container>
-          <Calendar
+          <DatePicker
             size={'md'}
             locale={'nb'}
             placeholder={'Klikk her for å velge dato'}
             minDate={
               isAfter(new Date(startDate), new Date())
                 ? new Date(startDate)
-                : addDays(new Date(), 1)
+                : new Date()
             }
             maxDate={new Date(endDate)}
             value={day}
             onChange={date => {
               date && handleDayChange(date)
             }}
-            disableOutsideEvents
-            dayClassName={(date, modifiers) =>
-              cx({
-                [classes.disabled]: modifiers.disabled,
-                [classes.available]: !modifiers.disabled,
-                [classes.weekend]: modifiers.weekend && !modifiers.disabled,
-                [classes.selected]: modifiers.selected,
-              })
-            }
           />
         </Container>
 
@@ -142,23 +125,3 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
     </Stack>
   )
 }
-
-const useStyles = createStyles(theme => ({
-  disabled: {
-    color: `${theme.colors.gray[3]} !important`,
-    backgroundColor: `${theme.colors.white} !important`,
-  },
-  available: {
-    color: `${theme.colors['samfundet-red'][3]}`,
-    border: `1px solid ${theme.colors.white}`,
-    backgroundColor: `${theme.colors.red[1]}`,
-    borderRadius: '50%',
-    backgroundClip: 'content-box',
-  },
-  weekend: {
-    color: `${theme.colors['samfundet-red'][3]} !important`,
-  },
-  selected: {
-    color: `${theme.colors.white} !important`,
-  },
-}))

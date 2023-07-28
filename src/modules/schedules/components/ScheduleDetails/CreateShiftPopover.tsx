@@ -1,7 +1,7 @@
 import { Button, Popover, Stack, TextInput } from '@mantine/core'
-import { DatePicker, TimeInput } from '@mantine/dates'
+import { DatePickerInput, TimeInput } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
-import { IconPlus } from '@tabler/icons'
+import { IconPlus } from '@tabler/icons-react'
 import { format } from 'date-fns'
 import { LocationValues } from 'modules/schedules/consts'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
@@ -23,8 +23,8 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
   const [shiftDate, setShiftDate] = useState<Date | null>(
     new Date(format(new Date(date), 'yyyy-MM-dd'))
   )
-  const [startTime, setStartTime] = useState<Date | null>(new Date())
-  const [endTime, setEndTime] = useState<Date | null>(new Date())
+  const [startTime, setStartTime] = useState('')
+  const [endTime, setEndTime] = useState('')
   const [shiftName, setShiftName] = useState<string>('')
   const { createShift, createShiftLoading } = useShiftMutations()
   function handleCreateShift() {
@@ -32,13 +32,18 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
       return
     }
 
-    // Merge date and time
     const start = new Date(shiftDate)
-    start.setHours(startTime.getHours())
-    start.setMinutes(startTime.getMinutes())
-    const end = new Date(date)
-    end.setHours(endTime.getHours())
-    end.setMinutes(endTime.getMinutes())
+    const end = new Date(shiftDate)
+
+    const [startHours, startMinutes] = startTime.split(':')
+    const [endHours, endMinutes] = endTime.split(':')
+
+    start.setHours(Number(startHours))
+    start.setMinutes(Number(startMinutes))
+    start.setSeconds(0)
+    end.setHours(Number(endHours))
+    end.setMinutes(Number(endMinutes))
+    end.setSeconds(0)
 
     // if end is less than start it means it's the next day
     if (end < start) {
@@ -93,13 +98,21 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
             value={shiftName}
             onChange={evt => setShiftName(evt.target.value)}
           />
-          <DatePicker label="Dato" value={shiftDate} onChange={setShiftDate} />
+          <DatePickerInput
+            label="Dato"
+            value={shiftDate}
+            onChange={setShiftDate}
+          />
           <TimeInput
             value={startTime}
-            onChange={setStartTime}
+            onChange={evt => setStartTime(evt.target.value)}
             label="Starttid"
           />
-          <TimeInput value={endTime} onChange={setEndTime} label="Sluttid" />
+          <TimeInput
+            value={endTime}
+            onChange={evt => setEndTime(evt.target.value)}
+            label="Sluttid"
+          />
           <LocationSelect
             label="Lokale"
             value={location}

@@ -13,7 +13,7 @@ interface BooleanEvaluationInlineProps {
   booleanEvaluationAnswer: InterviewBooleanEvaluationAnswerNode
 }
 
-export const BooleanEvaluationInline: React.VFC<
+export const BooleanEvaluationInline: React.FC<
   BooleanEvaluationInlineProps
 > = ({ booleanEvaluationAnswer }) => {
   const [value, setValue] = useState(
@@ -44,8 +44,10 @@ export const BooleanEvaluationInline: React.VFC<
         onChange={handleChange}
         label={booleanEvaluationAnswer.statement.statement}
       >
-        <Radio value="yes" label="Ja" />
-        <Radio value="no" label="Nei" />
+        <Group>
+          <Radio value="yes" label="Ja" />
+          <Radio value="no" label="Nei" />
+        </Group>
       </Radio.Group>
     </Group>
   )

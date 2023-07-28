@@ -1,8 +1,8 @@
 import { Anchor, Grid, Stack, Text, ThemeIcon } from '@mantine/core'
-import { TablerIcon } from '@tabler/icons'
+import { Icon } from '@tabler/icons-react'
 
 interface IconWithDataProps {
-  icon: TablerIcon
+  icon: Icon
   userData: string
   type?: 'text' | 'email' | 'tel'
 }

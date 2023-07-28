@@ -1,6 +1,6 @@
 import { ActionIcon, Badge, createStyles, Text } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconTrash } from '@tabler/icons'
+import { IconTrash } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { format } from 'util/date-fns'
 import { useCurrencyFormatter } from 'util/hooks'

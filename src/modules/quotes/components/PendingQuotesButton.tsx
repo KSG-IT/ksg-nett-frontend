@@ -11,9 +11,17 @@ export const PendingQuotesButton: React.FC<LinkProps> = ({ ...rest }) => {
 
   const pendingCount = data?.pendingQuotes?.length ?? 0
 
+  if (pendingCount === 0) {
+    return (
+      <Link {...rest} style={{ overflow: 'visible' }}>
+        <Button variant="outline">Innsendt</Button>
+      </Link>
+    )
+  }
+
   return (
     <Link {...rest} style={{ overflow: 'visible' }}>
-      <Indicator label={pendingCount} showZero={false} size={20} zIndex={1}>
+      <Indicator label={pendingCount} size={20} zIndex={1}>
         <Button variant="outline">Innsendt</Button>
       </Indicator>
     </Link>

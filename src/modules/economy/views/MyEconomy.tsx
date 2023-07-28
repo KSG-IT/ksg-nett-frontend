@@ -10,7 +10,7 @@ import {
   Text,
   Title,
 } from '@mantine/core'
-import { IconExternalLink, IconRefresh } from '@tabler/icons'
+import { IconExternalLink, IconRefresh } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'

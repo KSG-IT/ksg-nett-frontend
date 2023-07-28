@@ -16,7 +16,7 @@ import {
   IconHash,
   IconThumbUp,
   IconTrash,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { PermissionGate } from 'components/PermissionGate'
 
 import { UserThumbnail } from 'modules/users/components'

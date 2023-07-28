@@ -1,5 +1,5 @@
 import { Group, Paper, Text, Title, createStyles } from '@mantine/core'
-import { IconArrowRight } from '@tabler/icons'
+import { IconArrowRight } from '@tabler/icons-react'
 import { InternalGroupApplicantData } from 'modules/admissions/types.graphql'
 import { useNavigate } from 'react-router-dom'
 

@@ -29,16 +29,16 @@ export const AddShiftTemplateModal: React.FC<AddShiftTemplateModalProps> = ({
   const [name, setName] = useState('')
 
   const [day, setDay] = useState(DayValues.MONDAY)
-  const [startTime, setStartTime] = useState(new Date())
-  const [endTime, setEndTime] = useState(new Date())
+  const [startTime, setStartTime] = useState('')
+  const [endTime, setEndTime] = useState('')
   const [location, setLocation] = useState<LocationValues | null>(null)
 
   const { createShiftTemplate, createShiftTemplateLoading } =
     useShiftTemplateMutations()
 
   function handleCreateShiftTemplate() {
-    const timeStart = `${format(startTime, 'HH:mm')}:00`
-    const timeEnd = `${format(endTime, 'HH:mm')}:00`
+    const timeStart = `${startTime}:00`
+    const timeEnd = `${endTime}:00`
     const locationInput = location ?? null
 
     const input = {
@@ -88,12 +88,12 @@ export const AddShiftTemplateModal: React.FC<AddShiftTemplateModalProps> = ({
       <TimeInput
         value={startTime}
         label="Tidspunkt start"
-        onChange={time => setStartTime(time)}
+        onChange={evt => setStartTime(evt.target.value)}
       ></TimeInput>
       <TimeInput
         value={endTime}
         label="Tidspunkt slutt"
-        onChange={time => setEndTime(time)}
+        onChange={evt => setEndTime(evt.target.value)}
       ></TimeInput>
       <LocationSelect
         clearable

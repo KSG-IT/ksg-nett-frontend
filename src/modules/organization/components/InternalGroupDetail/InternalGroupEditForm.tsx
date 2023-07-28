@@ -1,6 +1,6 @@
 import { Button, FileInput, Stack, TextInput } from '@mantine/core'
 import { Link } from '@mantine/tiptap'
-import { IconCheck, IconFileCode } from '@tabler/icons'
+import { IconCheck, IconFileCode } from '@tabler/icons-react'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import {

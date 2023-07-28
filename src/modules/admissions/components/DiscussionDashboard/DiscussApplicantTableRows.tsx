@@ -10,7 +10,7 @@ import {
   IconPlayerPlay,
   IconQuestionMark,
   IconWheelchair,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { InternalGroupPositionPriorityBadge } from 'modules/admissions/components'
 import { InternalGroupPositionPriorityInternalGroupPriorityValues } from 'modules/admissions/consts'
 import { PATCH_INTERNAL_GROUP_POSITION_PRIORITY } from 'modules/admissions/mutations'

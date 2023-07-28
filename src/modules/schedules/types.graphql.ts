@@ -86,6 +86,7 @@ export type ShiftSlotTemplateNode = {
 
 export type ShiftTemplateNode = {
   id: string
+  name: string
   location: LocationValues | null
   timeStart: string
   timeEnd: string

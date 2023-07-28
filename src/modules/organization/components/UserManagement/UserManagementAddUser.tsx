@@ -1,22 +1,22 @@
 import { useMutation } from '@apollo/client'
 import { Button, Group, Stack, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import { MessageBox } from 'components/MessageBox'
 import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
-  InternalGroupPositionTypeOption,
+  InternalGroupPositionType,
 } from 'modules/organization/types.graphql'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { MANAGE_USERS_DATA_QUERY } from '../../../users/queries'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 
 interface UserManagementAddUserProps {
   setModalOpen: (open: boolean) => void
 }
-export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
+export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
   setModalOpen,
 }) => {
   const [selectedUser, setSelectedUser] = useState('')
@@ -24,8 +24,7 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
   const [
     selectedInternalGroupPositionType,
     setSelectedInternalGroupPositionType,
-  ] = useState<InternalGroupPositionTypeOption | null>(null)
-  const history = useNavigate()
+  ] = useState<InternalGroupPositionType | null>(null)
 
   const [assignNewPosition, { loading }] = useMutation<
     AssignNewInternalGroupPositionMembershipReturns,
@@ -39,13 +38,11 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
   const handleAssignNewPosition = () => {
     if (selectedInternalGroupPositionType === null) return
 
-    console.log(selectedInternalGroupPositionType)
-
     assignNewPosition({
       variables: {
         userId: selectedUser,
         internalGroupPositionId: internalGroupPositionId,
-        internalGroupPositionType: selectedInternalGroupPositionType.value,
+        internalGroupPositionType: selectedInternalGroupPositionType,
       },
       refetchQueries: [MANAGE_USERS_DATA_QUERY],
       onCompleted() {
@@ -68,19 +65,27 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
   return (
     <Stack>
       <Title>Gi bruker nytt verv</Title>
+      <MessageBox type="info">
+        <b>Merk! </b> En person kan bare ha ett verv fra en interngjeng
+        samtidig. Om du gir en person et nytt verv i en interngjeng samtidig som
+        de har et gammelt et vil det gamle vervet automatisk termineres og få en
+        sluttdato. Dette gjelder ikke interessegrupper.
+      </MessageBox>
       <label>Bruker</label>
       <UserSelect setUserCallback={setSelectedUser} />
       <label>Verv</label>
+
       <InternalGroupPositionSelect
         setInternalGroupPositionCallback={setInternalGroupPositionId}
       />
       <label>Type</label>
       <InternalGroupPositionTypeSelect
-        selected={selectedInternalGroupPositionType}
+        placeholder="Status"
+        searchable
         onChange={setSelectedInternalGroupPositionType}
       />
-      <Group mt="md" position="right">
-        <Button color="gray" onClick={() => setModalOpen(false)}>
+      <Group mt="md" position="apart">
+        <Button variant="outline" onClick={() => setModalOpen(false)}>
           Avbryt
         </Button>
         <Button
@@ -88,7 +93,7 @@ export const UserManagementAddUser: React.VFC<UserManagementAddUserProps> = ({
           onClick={handleAssignNewPosition}
           disabled={loading}
         >
-          Lagre
+          Legg til
         </Button>
       </Group>
     </Stack>
