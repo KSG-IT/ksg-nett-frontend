@@ -100,14 +100,16 @@ export const InternalGroupDiscussion: React.FC = () => {
           setOrderingKey(val as InternalGroupDiscussionDataOrderingKeyValue)
         }
       >
-        <Radio
-          label="Prioriteringer"
-          value={InternalGroupDiscussionDataOrderingKeyValue.PRIORITY}
-        />
-        <Radio
-          label="Intervjutidspunkt"
-          value={InternalGroupDiscussionDataOrderingKeyValue.INTERVIEW}
-        />
+        <Group>
+          <Radio
+            label="Prioriteringer"
+            value={InternalGroupDiscussionDataOrderingKeyValue.PRIORITY}
+          />
+          <Radio
+            label="Intervjutidspunkt"
+            value={InternalGroupDiscussionDataOrderingKeyValue.INTERVIEW}
+          />
+        </Group>
       </Radio.Group>
       <DiscussApplicantsTable
         internalGroup={internalGroup}

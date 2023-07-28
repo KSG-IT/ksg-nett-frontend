@@ -6,7 +6,7 @@ import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { parseApplicantPriorityInternalGroupPosition } from 'modules/admissions/parsing'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { useDeferredValue, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { DeleteApplicantModal } from './DeleteApplicantModal'
 import { CURRENT_APPLICANTS_QUERY } from 'modules/admissions/queries'
@@ -57,7 +57,11 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
       )
       .map(applicant => (
         <tr key={applicant.id}>
-          <td>{applicant.fullName}</td>
+          <td>
+            <Link to={`/admissions/applicants/${applicant.id}`}>
+              {applicant.fullName}
+            </Link>
+          </td>
           <td>{applicant.email}</td>
           <td>
             <ApplicantStatusBadge applicantStatus={applicant.status} />
