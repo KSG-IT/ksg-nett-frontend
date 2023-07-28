@@ -15,8 +15,10 @@ import {
 } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
+import { PermissionGate } from 'components/PermissionGate'
 import { useNavigate } from 'react-router-dom'
 import { formatDistanceToNow } from 'util/date-fns'
+import { PERMISSIONS } from 'util/permissions'
 
 const ForumDashboard: React.FC = () => {
   const { classes } = useStyles()
@@ -37,8 +39,9 @@ const ForumDashboard: React.FC = () => {
             icon={<IconSearch />}
             placeholder="Søk i forumet"
           />
-
-          <Button leftIcon={<IconPlus />}>Ny tråd</Button>
+          <PermissionGate permissions={PERMISSIONS.forum.add.thread}>
+            <Button leftIcon={<IconPlus />}>Ny tråd</Button>
+          </PermissionGate>
         </Group>
       </Card>
       <CardTable highlightOnHover>
