@@ -1,8 +1,15 @@
-import { Card, Stack, Text, Title } from '@mantine/core'
+import { Button, Card, Stack, Text, Title } from '@mantine/core'
+import { Link } from '@mantine/tiptap'
+import { useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
 import { Breadcrumbs } from 'components/Breadcrumbs'
+import { RichTextEditor } from 'components/RichTextEditor'
 import { formatDistanceToNow } from 'util/date-fns'
 
 const ForumThread: React.FC = () => {
+  const editor = useEditor({
+    extensions: [StarterKit, Link],
+  })
   return (
     <Stack spacing="xs">
       <Breadcrumbs
@@ -41,12 +48,12 @@ const ForumThread: React.FC = () => {
           for å begynne arbeidet med å stifte KSG-IT som en permanent gjeng, i
           stedet for en interessegruppe slik det har vært fram til nå. Etter mye
           arbeid de siste årene har man endelig kommet i mål med den nye
-          versjonen av vårt internsystem, nemlig KSG-nett. Problemet med denne
-          nye versjonen er at prosjektet er for komplekst til at det er mulig å
-          garantere at kompetansen for å vedlikeholde og videreutvikle det
-          videre ikke forsvinner over tid. Interessegrupper er en dugnad av
-          natur, og å kreve tilnærmet 20 timer arbeid hver ved siden av ordinære
-          plikter har ikke vist seg å være bærekraftig.
+          versjonen av vårt internsystem, nemlig KSG-nett. Problemet nå er at
+          prosjektet er for komplekst til at det er mulig å garantere at
+          kompetansen for å drifte det videre ikke forsvinner over tid.
+          Interessegrupper er en dugnad av natur, og å kreve tilnærmet 20 timer
+          arbeid hver uke ved siden av ordinære plikter har ikke vist seg å være
+          bærekraftig.
         </p>
         <p>
           Vi leter etter engasjerte KSG'ere som har interesse for, eller har
@@ -64,8 +71,19 @@ const ForumThread: React.FC = () => {
         <p>
           Det er absolutt ikke et krav å allerede være en veletablert utvikler,
           du vil bli lært opp i de språkene og teknologiene som er relevante
-          (Django, GraphQL og React + Typescript). Organisasjonen vår ligger på
-          github for de av dere som liker å snoke i første omgang.
+          (Django, GraphQL og React + Typescript). Organisasjonen vår ligger på{' '}
+          <a
+            href="https://github.com/KSG-IT"
+            target="_blank"
+            style={{
+              color: 'var(--mantine-color-primary)',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+            }}
+          >
+            github
+          </a>{' '}
+          for de av dere som liker å snoke i første omgang.
         </p>
         <p>
           Har du en ny killer idé for KSG-nett? Vet du hvordan vi kan gjøre noe
@@ -76,6 +94,8 @@ const ForumThread: React.FC = () => {
           innebære.
         </p>
       </Card>
+      <RichTextEditor editor={editor} />
+      <Button>Nytt innlegg</Button>
     </Stack>
   )
 }
