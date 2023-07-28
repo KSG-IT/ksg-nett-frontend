@@ -84,14 +84,16 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                       setValue('depositMethod', value as DepositMethodValues)
                     }
                   >
-                    <Radio
-                      label="Kortbetaling"
-                      value={DepositMethodValues.STRIPE}
-                    />
-                    <Radio
-                      label="Bankoverføring"
-                      value={DepositMethodValues.BANK_TRANSFER}
-                    />
+                    <Group>
+                      <Radio
+                        label="Kortbetaling"
+                        value={DepositMethodValues.STRIPE}
+                      />
+                      <Radio
+                        label="Bankoverføring"
+                        value={DepositMethodValues.BANK_TRANSFER}
+                      />
+                    </Group>
                   </Radio.Group>
                 )}
               />

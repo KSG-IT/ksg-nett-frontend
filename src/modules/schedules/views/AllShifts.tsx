@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { createStyles, Title } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
+import { DatePickerInput } from '@mantine/dates'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -69,7 +69,10 @@ export const AllShifts = () => {
     <div className={classes.wrapper}>
       <Breadcrumbs items={breadcrumbsItems} />
       <Title>Hva skjer'a?</Title>
-      <DatePicker value={date} onChange={val => val && handleDateChange(val)} />
+      <DatePickerInput
+        value={date}
+        onChange={val => val && handleDateChange(val)}
+      />
 
       <UserShiftCardList shifts={allShifts} />
     </div>
