@@ -39,7 +39,7 @@ const routes: RouteGroup[] = [
         icon: IconMessage,
         link: '/forum',
         label: 'Forum',
-        permissions: '',
+        permissions: [],
       },
       {
         icon: IconBook2,
