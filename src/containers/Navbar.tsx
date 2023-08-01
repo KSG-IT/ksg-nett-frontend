@@ -10,6 +10,7 @@ import {
   IconFlag,
   IconHandMiddleFinger,
   IconHome,
+  IconMessage,
   IconUserPlus,
 } from '@tabler/icons-react'
 import { useLocation } from 'react-router-dom'
@@ -32,6 +33,12 @@ const routes: RouteGroup[] = [
         icon: IconHome,
         link: '/dashboard',
         label: 'Kontrollpanel',
+        permissions: [],
+      },
+      {
+        icon: IconMessage,
+        link: '/forum',
+        label: 'Forum',
         permissions: [],
       },
       {

@@ -1,4 +1,3 @@
-import { Table } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { InternalGroupNode } from 'modules/organization/types'
@@ -8,7 +7,7 @@ interface DiscussApplicantsTableProps {
   applicants: ApplicantNode[]
 }
 
-export const DiscussApplicantsTable: React.VFC<DiscussApplicantsTableProps> = ({
+export const DiscussApplicantsTable: React.FC<DiscussApplicantsTableProps> = ({
   internalGroup,
   applicants,
 }) => {

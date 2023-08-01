@@ -97,6 +97,13 @@ const FeatureFlags = React.lazy(
   () => import('modules/featureFlags/views/FeatureFlags')
 )
 
+// ==== Forum ====
+
+const ForumDashboard = React.lazy(
+  () => import('modules/forum/views/ForumDashboard')
+)
+const ForumThread = React.lazy(() => import('modules/forum/views/ForumThread'))
+
 const EconomyDashboard = React.lazy(
   () => import('modules/economy/views/EconomyDashboard')
 )
@@ -496,6 +503,12 @@ export const AppRoutes: React.FC = () => {
             </RestrictedRoute>
           }
         />
+
+        {/* ==== FORUM MODULE ==== */}
+        <Route path="forum">
+          <Route index element={<ForumDashboard />} />
+          <Route path="ksg-it-har-opptak" element={<ForumThread />} />
+        </Route>
 
         {/* ==== SCHEDULES MODULE ==== */}
         <Route path="schedules">

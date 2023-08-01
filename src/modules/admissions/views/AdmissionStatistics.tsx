@@ -16,6 +16,7 @@ import { FullContentLoader } from 'components/Loading'
 import { useIsMobile } from 'util/hooks'
 import { INTERVIEW_STATISTICS_QUERY } from '../queries'
 import { InterviewStatisticsReturns } from '../types.graphql'
+import { Link } from 'react-router-dom'
 
 const AdmissionStatistics: React.FC = () => {
   const { classes } = useStyles()
@@ -85,7 +86,9 @@ const AdmissionStatistics: React.FC = () => {
           {userInterviewCounts.map(({ user, interviewCount }, index) => (
             <tr key={user.id}>
               <td>{index + 1}</td>
-              <td>{user.getFullWithNickName}</td>
+              <td>
+                <Link to={`/users/${user.id}`}>{user.getFullWithNickName}</Link>
+              </td>
               <td style={{ textAlign: 'right' }}>{interviewCount}</td>
             </tr>
           ))}
