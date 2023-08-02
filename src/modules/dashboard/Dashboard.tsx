@@ -60,18 +60,16 @@ export const Dashboard = () => {
   }
 
   return (
-    <Stack
-      spacing="md"
-      justify={'flex-start'}
-      className={classes.wrapper}
-      onClick={handlePinnedThreadClick}
-    >
+    <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
 
       <Text weight={700} color="dimmed">
         Fremhevet tråd
       </Text>
-      <Card className={classes.pinnedThreadCard}>
+      <Card
+        className={classes.pinnedThreadCard}
+        onClick={handlePinnedThreadClick}
+      >
         <Title order={3}>KSG-IT har opptak!</Title>
         Trykk her for å lese mer
       </Card>
