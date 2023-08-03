@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [2023.8.1] - 2023-8-3
+
 ### Added
 
 - Login
@@ -15,11 +17,23 @@
   - Interview booking override toggles
   - Interview default text in interview configuration
   - Order by modes in discussion table
+- Forum
+  - Bootstrap module
 
 ### Changed
 
+- Dependencies
+  - Upgrade mantine to v6
 - Admission
   - Applicant priorities moved from interview edit to applicant summary screen
+- Misc.
+  - Change bookmark icon
+
+### Removed
+
+- Dependencies
+  - remove styled-components
+  - remove react-hot-toast
 
 ## [v2023.5.1] - 2023-05-06
 
