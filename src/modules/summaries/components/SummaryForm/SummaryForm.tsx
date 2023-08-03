@@ -1,16 +1,13 @@
 import {
   Button,
   Card,
-  Group,
   SimpleGrid,
   Stack,
   TextInput,
   Title,
-  Text,
-  Divider,
 } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
-import { IconCalendar } from '@tabler/icons'
+import { DateInput, DatePicker } from '@mantine/dates'
+import { IconCalendar } from '@tabler/icons-react'
 import { RichTextEditor } from 'components/RichTextEditor'
 import {
   InternalGroupSelect,
@@ -19,9 +16,9 @@ import {
 } from 'components/Select'
 import { SummaryNode } from 'modules/summaries/types'
 import { useState } from 'react'
+import { CustomInputLabel } from './CustomInputLabel'
 import { useSummaryFormAPI } from './useSummaryFormAPI'
 import { useSummaryLogic } from './useSummaryLogic'
-import { CustomInputLabel } from './CustomInputLabel'
 
 interface SummaryFormProps {
   summary?: SummaryNode
@@ -95,14 +92,12 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
                 />
               </CustomInputLabel>
               <CustomInputLabel label={'Dato'}>
-                <DatePicker
-                  withinPortal
+                <DateInput
                   placeholder="Velg en dato"
                   icon={<IconCalendar size={14} />}
                   error={errors?.date?.message}
                   defaultValue={getValues('date')}
                   onChange={date => date && setValue('date', new Date(date))}
-                  allowFreeInput
                 />
               </CustomInputLabel>
             </Stack>

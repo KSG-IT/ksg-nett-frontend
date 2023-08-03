@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Button, createStyles, Group, Stack } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useInvoiceMutations } from 'modules/barTab/mutations.hooks'
@@ -11,7 +12,6 @@ import {
   BarTabCustomerDataReturns,
   BarTabNode,
 } from 'modules/barTab/types.graphql'
-import toast from 'react-hot-toast'
 import { BarTabSummaryTable } from './BarTabSummaryTable'
 
 interface BarTabSummaryProps {
@@ -19,7 +19,6 @@ interface BarTabSummaryProps {
 }
 
 export const BarTabSummary: React.FC<BarTabSummaryProps> = ({ barTab }) => {
-  const { classes } = useBarTabSummaryStyles()
   const { data, loading, error } = useQuery<BarTabCustomerDataReturns>(
     BAR_TAB_SUMMARY_DATA_QUERY
   )
@@ -35,17 +34,25 @@ export const BarTabSummary: React.FC<BarTabSummaryProps> = ({ barTab }) => {
   function handleCreateInvoices() {
     createInvoices({
       refetchQueries: [ACTIVE_BAR_TAB_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Fakturaer opprettet')
+        showNotification({
+          title: 'Suksess',
+          message: 'Fakturaer opprettet',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
 
   return (
-    <Stack className={classes.wrapper}>
+    <Stack>
       <Group position="right">
         <Button color="samfundet-red" onClick={handleCreateInvoices}>
           Lagre fakturaer
@@ -57,7 +64,3 @@ export const BarTabSummary: React.FC<BarTabSummaryProps> = ({ barTab }) => {
     </Stack>
   )
 }
-
-const useBarTabSummaryStyles = createStyles(theme => ({
-  wrapper: {},
-}))

@@ -2,16 +2,15 @@ import {
   Button,
   Group,
   NumberInput,
+  Radio,
   SimpleGrid,
   Stack,
   Stepper,
   Text,
-  Radio,
-  Textarea,
 } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
+import { DatePickerInput } from '@mantine/dates'
 
-import { IconCashBanknote } from '@tabler/icons'
+import { IconCashBanknote } from '@tabler/icons-react'
 import { MessageBox } from 'components/MessageBox'
 import { DepositMethodValues } from 'modules/economy/enums'
 import { useDepositMutations } from 'modules/economy/mutations.hooks'
@@ -21,20 +20,21 @@ import { Controller } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { useCurrencyFormatter, useMediaQuery } from 'util/hooks'
 import { StripeDepositPaymentForm } from '../StripeDepositPaymentForm'
-
 import { useCreateDepositAPI } from './useCreateDepositAPI'
 import { useCreateDepositLogic } from './useCreateDepositLogic'
 
 interface CreateDepositViewProps {
+  initialAmount?: number
   onCompletedCallback: () => void
   onGoingIntent: DepositNode | null
 }
 
 export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
   onGoingIntent,
+  initialAmount = 50,
 }) => {
   const { form, onSubmit } = useCreateDepositLogic(
-    useCreateDepositAPI(() => {})
+    useCreateDepositAPI(initialAmount)
   )
   const { deleteDeposit, deleteDepositLoading } = useDepositMutations()
 
@@ -84,37 +84,45 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                       setValue('depositMethod', value as DepositMethodValues)
                     }
                   >
-                    <Radio
-                      label="Kortbetaling"
-                      value={DepositMethodValues.STRIPE}
-                    />
-                    <Radio
-                      label="Bankoverføring"
-                      value={DepositMethodValues.BANK_TRANSFER}
-                    />
+                    <Group>
+                      <Radio
+                        label="Kortbetaling"
+                        value={DepositMethodValues.STRIPE}
+                      />
+                      <Radio
+                        label="Bankoverføring"
+                        value={DepositMethodValues.BANK_TRANSFER}
+                      />
+                    </Group>
                   </Radio.Group>
                 )}
               />
-
-              <NumberInput
-                hideControls
-                size={mobileSize ? 'xs' : 'sm'}
-                variant="filled"
-                error={errors?.amount?.message}
-                label="Beløp å betale"
-                required
-                min={50}
-                max={30_000}
-                placeholder="Hvor mye socistøv du vil konvertere"
-                icon={<IconCashBanknote size={14} />}
-                onChange={value => value && setValue('amount', value)}
+              <Controller
+                name="amount"
+                control={form.control}
+                render={({ field }) => (
+                  <NumberInput
+                    hideControls
+                    value={field.value}
+                    size={mobileSize ? 'xs' : 'sm'}
+                    variant="filled"
+                    error={errors?.amount?.message}
+                    label="Beløp å betale"
+                    required
+                    min={1}
+                    max={30_000}
+                    placeholder="Hvor mye socistøv du vil konvertere"
+                    icon={<IconCashBanknote size={14} />}
+                    onChange={value => value && setValue('amount', value)}
+                  />
+                )}
               />
               {depositMethod === DepositMethodValues.BANK_TRANSFER && (
                 <Controller
                   name="dateOfTransfer"
                   control={form.control}
                   render={({ field }) => (
-                    <DatePicker
+                    <DatePickerInput
                       label="Dato for overføring"
                       placeholder="Velg dato"
                       clearable={false}

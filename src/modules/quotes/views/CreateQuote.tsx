@@ -11,7 +11,7 @@ import {
   Title,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconHash, IconQuote } from '@tabler/icons'
+import { IconHash, IconQuote } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { UserMultiSelect } from 'components/Select'
 import { formatISO } from 'date-fns'

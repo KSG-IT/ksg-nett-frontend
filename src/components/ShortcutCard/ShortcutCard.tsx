@@ -1,11 +1,11 @@
 import { createStyles, Text, UnstyledButton } from '@mantine/core'
-import { TablerIcon } from '@tabler/icons'
+import { Icon } from '@tabler/icons-react'
 import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
 
 export interface ShortcutProps {
   title: string
-  icon?: TablerIcon
+  icon?: Icon
   color: string
   link: string
   permissions?: string | string[]

@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Group, Paper, Stack, Title } from '@mantine/core'
-import { IconCircleCheck, IconCircleX } from '@tabler/icons'
+import { IconCircleCheck, IconCircleX } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'

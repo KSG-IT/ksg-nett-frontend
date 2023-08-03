@@ -4,6 +4,7 @@ import { usePatchSummaryMutations } from '../../mutations'
 import { ALL_SUMMARIES, SUMMARY_QUERY } from '../../queries'
 import { SummaryNode } from '../../types'
 import { SummaryCleanedData } from './useSummaryLogic'
+import { useMe } from 'util/hooks'
 
 export function useSummaryFormAPI(
   summary?: SummaryNode,
@@ -11,6 +12,7 @@ export function useSummaryFormAPI(
 ) {
   const { patchSummary, createSummary } = usePatchSummaryMutations()
   const navigate = useNavigate()
+  const me = useMe()
 
   async function handleSubmit(data: SummaryCleanedData) {
     if (summary) {
@@ -66,7 +68,7 @@ export function useSummaryFormAPI(
     internalGroup: summary?.internalGroup?.id ?? 'other',
     title: summary?.title ?? '',
     participants: summary?.participants.map(user => user.id) ?? [],
-    reporter: summary?.reporter.id ?? '',
+    reporter: summary?.reporter.id ?? me.id,
     date: (summary?.date && new Date(summary.date)) ?? new Date(),
   }
   return {

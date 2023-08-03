@@ -1,5 +1,5 @@
 import { Button, Paper, Table } from '@mantine/core'
-import { IconEye } from '@tabler/icons'
+import { IconEye } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { ScheduleNode } from 'modules/schedules/types.graphql'
 import { Link } from 'react-router-dom'

@@ -5,7 +5,7 @@ import {
   Text,
   UnstyledButton,
 } from '@mantine/core'
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons'
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
 import { format } from 'util/date-fns'
 
 interface WeekController {

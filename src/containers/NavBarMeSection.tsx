@@ -7,7 +7,7 @@ import {
   IconLogout,
   IconPigMoney,
   IconSettings,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { UserThumbnail } from 'modules/users/components'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from 'store'

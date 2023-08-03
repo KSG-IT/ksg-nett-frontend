@@ -49,6 +49,7 @@ export function useRegisterInformationAPI({
     gdprConsent: applicant?.gdprConsent ?? false,
     dateOfBirth: null,
     phone: applicant?.phone ?? '',
+    phoneRepeated: applicant?.phone ?? '',
     wantsDigitalInterview: applicant?.wantsDigitalInterview ?? false,
   }
   return {

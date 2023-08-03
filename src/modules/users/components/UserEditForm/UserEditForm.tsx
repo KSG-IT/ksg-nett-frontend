@@ -1,5 +1,5 @@
 import { Button, FileInput, Group, SimpleGrid, TextInput } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
+import { DateInput, DatePicker } from '@mantine/dates'
 import {
   IconAt,
   IconCake,
@@ -9,7 +9,7 @@ import {
   IconSchool,
   IconSignature,
   IconUpload,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { UserNode } from 'modules/users/types'
 import { useEditProfileAPI } from './useUserEditAPI'
 import { useEditProfileLogic } from './useUserEditLogic'
@@ -72,14 +72,13 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
           error={errors?.study?.message}
           {...register('study')}
         />
-        <DatePicker
+        <DateInput
           label="Fødselsdato"
           placeholder="Velg en dato"
           icon={<IconCake size={14} />}
           error={errors?.dateOfBirth?.message}
           defaultValue={getValues('dateOfBirth')}
           onChange={date => date && setValue('dateOfBirth', new Date(date))}
-          allowFreeInput
         />
         <TextInput
           label="Telefon"

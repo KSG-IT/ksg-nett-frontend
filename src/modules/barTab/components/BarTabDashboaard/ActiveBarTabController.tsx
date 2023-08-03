@@ -5,11 +5,11 @@ import { BarTabStatusValues } from 'modules/barTab/enums'
 import { useBarTabMutations } from 'modules/barTab/mutations.hooks'
 import { ACTIVE_BAR_TAB_QUERY } from 'modules/barTab/queries'
 import { BarTabNode } from 'modules/barTab/types.graphql'
-import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { BarTabSummary } from '../BarTabSummary'
 import { CreateAndSendInvoices } from '../CreateAndSendInvoices'
 import { RegisterProductOrders } from './RegisterProductOrders'
+import { showNotification } from '@mantine/notifications'
 
 interface ActiveBarTablControllerProps {
   barTab: BarTabNode | null
@@ -24,11 +24,19 @@ export const ActiveBarTablController: React.FC<
     createBarTab({
       variables: { input: {} },
       refetchQueries: [ACTIVE_BAR_TAB_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('BSF startet')
+        showNotification({
+          title: 'Suksess',
+          message: 'Ny BSF opprettet',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

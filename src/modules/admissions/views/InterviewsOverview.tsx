@@ -9,8 +9,8 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons'
+import { DateInput } from '@mantine/dates'
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -21,7 +21,6 @@ import { PERMISSIONS } from 'util/permissions'
 import { AssignInterviewModal } from '../components/AssignInterview'
 import { AddInterviewForm } from '../components/InterviewOverview.tsx'
 import { GridItemCell } from '../components/InterviewOverview.tsx/GridItemCell'
-import { useInterviewMutations } from '../mutations.hooks'
 import { INTERVIEW_TABLE_OVERVIEW_QUERY } from '../queries'
 import {
   InterviewLocationOverviewRow,
@@ -62,8 +61,6 @@ export const InterviewsOverview: React.FC = () => {
   const [selectedInterviewId, setSelectedInterviewId] = useState<string | null>(
     null
   )
-
-  const { deleteInterview } = useInterviewMutations()
 
   const { data, loading, error } = useQuery<InterviewTableOverviewReturns>(
     INTERVIEW_TABLE_OVERVIEW_QUERY,
@@ -163,11 +160,10 @@ export const InterviewsOverview: React.FC = () => {
         <UnstyledButton onClick={handleDecrementDate}>
           <IconChevronLeft />
         </UnstyledButton>
-        <DatePicker
+        <DateInput
           value={date}
           onChange={val => val && setDate(val)}
           locale={'nb'}
-          inputFormat="dddd DD. MMMM"
         />
         <UnstyledButton>
           <IconChevronRight onClick={handleIncrementDate} />

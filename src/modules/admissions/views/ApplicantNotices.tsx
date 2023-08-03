@@ -13,9 +13,9 @@ const breadcrumbsItems = [
   { label: 'Oppfølging', path: '' },
 ]
 
-export const ApplicantNotices: React.VFC = () => {
+export const ApplicantNotices: React.FC = () => {
   const { data, loading, error } = useQuery(APPLICANT_NOTICES_QUERY, {
-    pollInterval: 30000,
+    pollInterval: 15_000,
     fetchPolicy: 'network-only',
   })
 

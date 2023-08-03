@@ -8,13 +8,12 @@ import {
   NumberInput,
   Select,
   Stack,
-  Table,
   Text,
-  TextInput,
   Title,
   UnstyledButton,
 } from '@mantine/core'
-import { IconTrash } from '@tabler/icons'
+import { showNotification } from '@mantine/notifications'
+import { IconTrash } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
 import { BarTabOrderTypeValues } from 'modules/barTab/enums'
@@ -25,7 +24,6 @@ import {
 import { ACTIVE_BAR_TAB_QUERY } from 'modules/barTab/queries'
 import { BarTabNode } from 'modules/barTab/types.graphql'
 import { useMemo, useState } from 'react'
-import toast from 'react-hot-toast'
 import { BarTabCustomerSelect } from '../BarTabCustomerSelect'
 import { BarTabProductSelect } from '../BarTabProductSelect'
 
@@ -57,12 +55,20 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
 
   function handleAddProductOrder() {
     if (customerId === '') {
-      toast.error('Mangler gjeng')
+      showNotification({
+        title: 'Mangler gjeng',
+        message: 'Du må velge en gjeng',
+        color: 'red',
+      })
       return
     }
 
     if (productId === '') {
-      toast.error('Mangler produkt')
+      showNotification({
+        title: 'Mangler vare',
+        message: 'Du må velge en vare',
+        color: 'red',
+      })
       return
     }
 
@@ -82,11 +88,19 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
     createBarTabOrder({
       variables: { input: { ...input } },
       refetchQueries: [ACTIVE_BAR_TAB_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Kryss lagret')
+        showNotification({
+          title: 'Suksess',
+          message: 'Kryss lagret',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
@@ -95,11 +109,19 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
     deleteBarTabOrder({
       variables: { id: id },
       refetchQueries: [ACTIVE_BAR_TAB_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Kryss slettet')
+        showNotification({
+          title: 'Suksess',
+          message: 'Kryss slettet',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
@@ -107,11 +129,19 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
   function handleLockBarTab() {
     lockBarTab({
       refetchQueries: [ACTIVE_BAR_TAB_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('BSF låst')
+        showNotification({
+          title: 'Suksess',
+          message: 'BSF låst',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

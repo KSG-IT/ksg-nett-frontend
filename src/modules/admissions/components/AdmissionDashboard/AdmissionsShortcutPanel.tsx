@@ -6,7 +6,7 @@ import {
   IconUsers,
   IconUserSearch,
   IconWheelchair,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { ShortcutCardGrid } from 'components/ShortcutCard'
 
 const shortcuts = [

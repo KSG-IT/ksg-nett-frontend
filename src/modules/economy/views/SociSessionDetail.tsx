@@ -1,11 +1,11 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Stack, Title } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { PermissionGate } from 'components/PermissionGate'
-import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import { DetailQueryVariables } from 'types/graphql'
 import { PERMISSIONS } from 'util/permissions'
@@ -17,7 +17,6 @@ import { MetaDataDisplay } from '../components/SociSessions/MetaDataDisplay'
 import { useSociSessionMutations } from '../mutations.hooks'
 import { ALL_SOCI_SESSIONS, SOCI_SESSION_QUERY } from '../queries'
 import { SociSessionReturns, SociSessionType } from '../types.graphql'
-import { showNotification } from '@mantine/notifications'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },

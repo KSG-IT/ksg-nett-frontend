@@ -1,5 +1,9 @@
 import { Alert, Text } from '@mantine/core'
-import { IconAlertTriangle, IconCheck, IconInfoCircle } from '@tabler/icons'
+import {
+  IconAlertTriangle,
+  IconCheck,
+  IconInfoCircle,
+} from '@tabler/icons-react'
 
 interface MessageBoxProps {
   type: 'info' | 'warning' | 'danger' | 'success'

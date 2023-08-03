@@ -1,7 +1,10 @@
 import { ReSendApplicantTokenForm } from 'modules/admissions/components/ApplicantPortal'
 import { ApplicantPortal } from 'modules/admissions/views'
-import { ForgotPassword, Login } from 'modules/login/views'
-import { ChangePasswordWithToken } from 'modules/login/views/ChangePasswordWithToken'
+import {
+  ChangePasswordWithToken,
+  ForgotPassword,
+  Login,
+} from 'modules/login/views'
 import { Route, Routes } from 'react-router-dom'
 
 const PublicRoutes: React.FC = () => {

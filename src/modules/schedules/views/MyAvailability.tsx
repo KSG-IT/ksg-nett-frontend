@@ -1,5 +1,5 @@
 import { Group, Text, Title } from '@mantine/core'
-import { IconBulldozer } from '@tabler/icons'
+import { IconBulldozer } from '@tabler/icons-react'
 import { MessageBox } from 'components/MessageBox'
 
 export const MyAvailability = () => {

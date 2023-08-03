@@ -55,3 +55,8 @@ export enum NoticeMethodValues {
   EMAIL = 'EMAIL',
   CALL = 'CALL',
 }
+
+export enum InternalGroupDiscussionDataOrderingKeyValue {
+  PRIORITY = 'priorities',
+  INTERVIEW = 'interview_time',
+}

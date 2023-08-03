@@ -1,6 +1,6 @@
 import { ActionIcon, Badge, Menu } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconBan, IconDots, IconEye } from '@tabler/icons'
+import { IconBan, IconDots, IconEye } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { useSociSessionMutations } from 'modules/economy/mutations.hooks'
 import { ALL_SOCI_SESSIONS } from 'modules/economy/queries'
@@ -61,7 +61,12 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
         <Badge>{sociSession.closed ? 'Stengt' : 'Åpen'}</Badge>
       </td>
       <td>
-        <Menu transition={'pop'} withArrow position="bottom-end" withinPortal>
+        <Menu
+          transitionProps={{ transition: 'pop' }}
+          withArrow
+          position="bottom-end"
+          withinPortal
+        >
           <Menu.Target>
             <ActionIcon>
               <IconDots size="1rem" stroke={1.5} />

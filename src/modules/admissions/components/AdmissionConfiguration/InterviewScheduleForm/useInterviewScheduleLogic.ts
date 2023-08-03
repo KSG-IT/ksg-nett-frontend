@@ -4,35 +4,33 @@ import {
   PatchInterviewScheduleTemplateReturns,
   PatchInterviewScheduleTemplateVariables,
 } from 'modules/admissions/types.graphql'
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
 import { OnFormSubmit } from 'types/forms'
 import * as yup from 'yup'
+import { showNotification } from '@mantine/notifications'
 
 export type InterviewScheduleFormData = {
   interviewPeriodStartDate: Date
-  defaultInterviewDayStart: Date
+  defaultInterviewDayStart: string
   interviewPeriodEndDate: Date
-  defaultInterviewDayEnd: Date
-  defaultInterviewDuration: Date
+  defaultInterviewDayEnd: string
+  defaultInterviewDuration: string
   defaultBlockSize: number
-  defaultPauseDuration: Date
+  defaultPauseDuration: string
 }
 
 const InterviewScheduleSchema = yup.object().shape({
   interviewPeriodStartDate: yup.date().required('Startdato må fylles ut'),
-  defaultInterviewDayStart: yup.date().required('Starttid må fylles ut'),
+  defaultInterviewDayStart: yup.string().required('Starttid må fylles ut'),
   interviewPeriodEndDate: yup.date().required('Sluttdato må fylles ut'),
-  defaultInterviewDayEnd: yup.date().required('Sluttid må fylles ut'),
-  defaultInterviewDuration: yup.date().required('Varighet må fylles ut'),
+  defaultInterviewDayEnd: yup.string().required('Sluttid må fylles ut'),
+  defaultInterviewDuration: yup.string().required('Varighet må fylles ut'),
   defaultBlockSize: yup.number().required('Blokkstørrelse må fylles ut'),
-  defaultPauseDuration: yup.date().required('Pausevarighet må fylles ut'),
+  defaultPauseDuration: yup.string().required('Pausevarighet må fylles ut'),
 })
 
 interface InterviewScheduleLogicInput {
   defaultValues: InterviewScheduleFormData
-  dataLoading: boolean
   onSubmit: OnFormSubmit<
     PatchInterviewScheduleTemplateVariables['input'],
     PatchInterviewScheduleTemplateReturns
@@ -41,7 +39,6 @@ interface InterviewScheduleLogicInput {
 }
 export function useInterviewScheduleLogic({
   defaultValues,
-  dataLoading,
   onSubmit,
   nextStageCallback,
 }: InterviewScheduleLogicInput) {
@@ -67,13 +64,10 @@ export function useInterviewScheduleLogic({
     // TimeField -> HH:mm:ss
     // DateField -> YYYY-MM-DD
     const mutationData = {
-      defaultInterviewDuration: `${format(
-        defaultInterviewDuration,
-        'HH:mm'
-      )}:00`,
-      defaultPauseDuration: `${format(defaultPauseDuration, 'HH:mm')}:00`,
-      defaultInterviewDayStart: format(defaultInterviewDayStart, 'HH:mm:ss'),
-      defaultInterviewDayEnd: format(defaultInterviewDayEnd, 'HH:mm:ss'),
+      defaultInterviewDuration: `${defaultInterviewDuration}:00`,
+      defaultPauseDuration: `${defaultPauseDuration}:00`,
+      defaultInterviewDayStart: `${defaultInterviewDayStart}`,
+      defaultInterviewDayEnd: `${defaultInterviewDayEnd}`,
       interviewPeriodStartDate: format(interviewPeriodStartDate, 'yyyy-MM-dd'),
       interviewPeriodEndDate: format(interviewPeriodEndDate, 'yyyy-MM-dd'),
       ...rest,
@@ -82,19 +76,15 @@ export function useInterviewScheduleLogic({
     await onSubmit(mutationData)
       .then(() => nextStageCallback())
       .catch(err => {
-        toast.error(err.message)
+        showNotification({
+          title: 'Noe gikk galt',
+          message: err.message,
+        })
       })
   }
 
-  useEffect(() => {
-    if (dataLoading) return
-
-    form.reset(defaultValues)
-  }, [defaultValues])
-
   return {
     form,
-    dataLoading,
     onSubmit: handleSubmit,
   }
 }

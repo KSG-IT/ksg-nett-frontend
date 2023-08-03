@@ -57,6 +57,14 @@ export const PERMISSIONS = {
     },
   },
 
+  // ===== FORUM ======
+  forum: {
+    add: {
+      thread: 'forum.add_thread',
+      post: 'forum.add_post',
+    },
+  },
+
   // ===== HANDBOOK ======
   handbook: {
     add: {

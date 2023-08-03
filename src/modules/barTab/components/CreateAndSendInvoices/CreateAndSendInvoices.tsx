@@ -1,18 +1,18 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Stack } from '@mantine/core'
-import { IconFilePlus, IconFileX } from '@tabler/icons'
+import { showNotification } from '@mantine/notifications'
+import { IconFilePlus, IconFileX } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { ACTIVE_BAR_TAB_INVOICES_QUERY } from 'modules/barTab/queries'
-import { ActiveBarTabInvoicesReturns } from 'modules/barTab/types.graphql'
-import { InvoiceTable } from './InvoiceTable'
+import { MessageBox } from 'components/MessageBox'
 import {
   useBarTabMutations,
   useInvoiceMutations,
 } from 'modules/barTab/mutations.hooks'
-import toast from 'react-hot-toast'
-import { MessageBox } from 'components/MessageBox'
+import { ACTIVE_BAR_TAB_INVOICES_QUERY } from 'modules/barTab/queries'
+import { ActiveBarTabInvoicesReturns } from 'modules/barTab/types.graphql'
 import { useMemo } from 'react'
+import { InvoiceTable } from './InvoiceTable'
 
 export const CreateAndSendInvoices: React.FC = ({}) => {
   const { data, loading, error } = useQuery<ActiveBarTabInvoicesReturns>(
@@ -40,11 +40,19 @@ export const CreateAndSendInvoices: React.FC = ({}) => {
   function handleGeneratePdf() {
     generatePdf({
       refetchQueries: [ACTIVE_BAR_TAB_INVOICES_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Fakturaer opprettet')
+        showNotification({
+          title: 'Suksess',
+          message: 'PDFer opprettet',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
@@ -52,11 +60,19 @@ export const CreateAndSendInvoices: React.FC = ({}) => {
   function handleDeletePdf() {
     deleteActiveBarTabPdfs({
       refetchQueries: [ACTIVE_BAR_TAB_INVOICES_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Fakturaer slettet')
+        showNotification({
+          title: 'Suksess',
+          message: 'PDFer slettet',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
@@ -64,11 +80,19 @@ export const CreateAndSendInvoices: React.FC = ({}) => {
   function handleFinalizeBarTab() {
     finalizeBarTab({
       refetchQueries: [ACTIVE_BAR_TAB_INVOICES_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('BSF avsluttet')
+        showNotification({
+          title: 'Suksess',
+          message: 'BSF er ferdig',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

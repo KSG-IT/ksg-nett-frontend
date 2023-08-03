@@ -1,5 +1,5 @@
 import { Center, Stack, Title } from '@mantine/core'
-import { IconSkull } from '@tabler/icons'
+import { IconSkull } from '@tabler/icons-react'
 
 export const FullPage404: React.FC = () => {
   return (

@@ -1,15 +1,18 @@
 import { useQuery } from '@apollo/client'
-import { Group, Stack, Text, Title } from '@mantine/core'
+import { Group, Radio, Stack, Text, Title, createStyles } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
+import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { SynCButton } from 'components/SyncButton'
-import { useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   DiscussApplicantsTable,
   FreeForAllApplicantsTable,
 } from '../components/DiscussionDashboard'
+import { InternalGroupDiscussionDataOrderingKeyValue } from '../consts'
 import { INTERNAL_GROUP_DISCUSSION_DATA } from '../queries'
 import { InternalGroupDiscussionDataReturns } from '../types.graphql'
 
@@ -18,6 +21,13 @@ interface InternalGroupDiscussionParams {
 }
 
 export const InternalGroupDiscussion: React.FC = () => {
+  const navigate = useNavigate()
+  const { classes } = useStyles()
+
+  const [orderingKey, setOrderingKey] =
+    useState<InternalGroupDiscussionDataOrderingKeyValue>(
+      InternalGroupDiscussionDataOrderingKeyValue.PRIORITY
+    )
   const { internalGroupId } = useParams<
     keyof InternalGroupDiscussionParams
   >() as InternalGroupDiscussionParams
@@ -26,11 +36,19 @@ export const InternalGroupDiscussion: React.FC = () => {
     useQuery<InternalGroupDiscussionDataReturns>(
       INTERNAL_GROUP_DISCUSSION_DATA,
       {
-        variables: { internalGroupId: internalGroupId },
+        variables: { internalGroupId: internalGroupId, orderingKey },
         pollInterval: 20_000,
         fetchPolicy: 'network-only',
       }
     )
+
+  function handleRedirect(module: 'applicant' | 'user', id: string) {
+    if (module === 'applicant') {
+      navigate(`/admissions/applicants/${id}`)
+    } else if (module === 'user') {
+      navigate(`/users/${id}`)
+    }
+  }
 
   if (error) return <FullPageError />
 
@@ -41,6 +59,7 @@ export const InternalGroupDiscussion: React.FC = () => {
       applicants,
       internalGroup,
       applicantsOpenForOtherPositions,
+      applicantRecommendations,
     },
   } = data
 
@@ -74,6 +93,24 @@ export const InternalGroupDiscussion: React.FC = () => {
           Obs! Du markerer ønsker på vegne av {internalGroup.name}
         </Text>
       </MessageBox>
+      <Radio.Group
+        label="Sorteringsmodus"
+        value={orderingKey}
+        onChange={val =>
+          setOrderingKey(val as InternalGroupDiscussionDataOrderingKeyValue)
+        }
+      >
+        <Group>
+          <Radio
+            label="Prioriteringer"
+            value={InternalGroupDiscussionDataOrderingKeyValue.PRIORITY}
+          />
+          <Radio
+            label="Intervjutidspunkt"
+            value={InternalGroupDiscussionDataOrderingKeyValue.INTERVIEW}
+          />
+        </Group>
+      </Radio.Group>
       <DiscussApplicantsTable
         internalGroup={internalGroup}
         applicants={applicants}
@@ -84,6 +121,45 @@ export const InternalGroupDiscussion: React.FC = () => {
         applicants={applicantsOpenForOtherPositions}
         internalGroupId={internalGroupId}
       />
+      <Title order={2}>Anbefalte kandidater</Title>
+      <CardTable>
+        <thead>
+          <tr>
+            <th>Kandidat</th>
+            <th>Begrunnelse</th>
+            <th>Anbefalt av</th>
+          </tr>
+        </thead>
+        <tbody>
+          {applicantRecommendations.map((rec, i) => (
+            <tr key={i}>
+              <td
+                className={classes.clickableTd}
+                onClick={() => handleRedirect('applicant', rec.applicant.id)}
+              >
+                {rec.applicant.fullName}
+              </td>
+              <td>{rec.reasoning}</td>
+              <td
+                className={classes.clickableTd}
+                onClick={() => handleRedirect('user', rec.recommendedBy.id)}
+              >
+                {rec.recommendedBy.fullName}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </CardTable>
     </Stack>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  clickableTd: {
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.colors.gray[0],
+      textDecoration: 'underline',
+    },
+  },
+}))

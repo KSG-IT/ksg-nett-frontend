@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
-import { IconPlus, IconSettings } from '@tabler/icons'
+import { IconPlus, IconSettings } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 
 import { FullPageError } from 'components/FullPageComponents'

@@ -20,7 +20,7 @@ import {
   IconMapPin,
   IconPhone,
   IconSchool,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { PermissionGate } from 'components/PermissionGate'
 import { useIsMobile } from 'util/hooks'
@@ -148,7 +148,7 @@ const useStyles = createStyles(theme => ({
   name: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontWeight: 500,
-    fontSize: theme.fontSizes.lg * 1.25,
+    fontSize: (theme.fontSizes.lg as unknown as number) * 1.25,
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       textAlign: 'center',
     },
