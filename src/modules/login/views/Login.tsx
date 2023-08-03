@@ -39,10 +39,9 @@ export const Login: React.FC = () => {
   const firstRender = useRef(true)
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false
-      return
-    }
+    if (!firstRender.current) return
+
+    firstRender.current = false
 
     if (token) {
       setLoginToken(token)
