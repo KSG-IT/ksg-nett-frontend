@@ -1,7 +1,9 @@
 import {
   ActionIcon,
   Affix,
+  Button,
   Collapse,
+  Divider,
   Group,
   Paper,
   Spoiler,
@@ -10,12 +12,12 @@ import {
   Title,
   createStyles,
 } from '@mantine/core'
-import { IconX } from '@tabler/icons-react'
+import { IconX, IconNews } from '@tabler/icons-react'
 import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '2023-07-13:1'
+const NOTIFICATION_KEY = '2023-08-17:1'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -41,23 +43,39 @@ export const WhatsNewNotification: React.FC = () => {
 
   return (
     <Affix className={classes.wrapper}>
-      <Paper p="m">
+      <Paper shadow="xl" className={classes.card}>
         <Stack spacing="xs">
+          <Group ml={'xs'} mt={'sm'} position="left" spacing={'xl'}>
+            <ActionIcon onClick={handleClose}>
+              <IconX />
+            </ActionIcon>
+            <Title order={4}>
+              <IconNews size={18} color="gray" /> Hva er nytt?
+            </Title>
+          </Group>
+          <Divider />
           <Spoiler
+            px={'sm'}
             pb={10}
             maxHeight={100}
-            showLabel={'Les mer'}
-            hideLabel="Gjem tekst"
+            showLabel={
+              <Button m={'xs'} size="xs" variant="subtle">
+                Les mer
+              </Button>
+            }
+            hideLabel={
+              <Button m={'xs'} size="xs" variant="subtle">
+                Skjul
+              </Button>
+            }
           >
-            <Group>
-              <ActionIcon onClick={handleClose}>
-                <IconX />
-              </ActionIcon>
-            </Group>
-            <Title my={0} order={4}>
-              👋 Hva er nytt?
-            </Title>
             <ul>
+              <li>Socisctics</li>
+              <ul>
+                <li>Ny modul, ligger under Økonomi</li>
+                <li>Grensesnitt for å se omsetning over tid</li>
+                <li>Oversikt over antall enheter</li>
+              </ul>
               <li>Opptaksforbedringer</li>
               <ul>
                 <li>
@@ -86,11 +104,15 @@ export const WhatsNewNotification: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles(theme => ({
   wrapper: {
     width: 300,
     fontSize: 14,
     borderRadius: 10,
     boxShadow: '1px  black',
+  },
+  card: {
+    border: `1px solid ${theme.colors['gray'][3]}`,
+    borderTop: `4px solid ${theme.colors['samfundet-red'][6]}`,
   },
 }))
