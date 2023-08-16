@@ -1,4 +1,5 @@
 import { Button, Group, Modal, Select, Stack, TextInput } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { ScheduleDisplayModeValues } from 'modules/schedules/consts'
 import { useScheduleMutations } from 'modules/schedules/mutations.hooks'
 import {
@@ -8,7 +9,6 @@ import {
 } from 'modules/schedules/queries'
 import { ScheduleNode } from 'modules/schedules/types.graphql'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 
 interface ScheduleSettingsModalProps {
   isOpen: boolean
@@ -40,12 +40,20 @@ export const ScheduleSettingsModal: React.FC<ScheduleSettingsModalProps> = ({
         SCHEDULE_QUERY,
         NORMALIZED_SHIFTS_FROM_RANGE_QUERY,
       ],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Vatkplan oppdatert')
+        showNotification({
+          title: 'Suksess',
+          message: 'Vaktplanen ble oppdatert',
+          color: 'green',
+        })
         onCloseCallback()
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

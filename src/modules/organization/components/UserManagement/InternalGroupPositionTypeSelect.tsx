@@ -1,5 +1,5 @@
 import { Select, SelectProps } from '@mantine/core'
-import { IconIceCream } from '@tabler/icons'
+import { IconIceCream } from '@tabler/icons-react'
 import { internalGroupPositionTypeOptions } from 'modules/organization/consts'
 import { InternalGroupPositionType } from 'modules/organization/types.graphql'
 import React from 'react'

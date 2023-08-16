@@ -1,10 +1,15 @@
-import { ActionIcon, Button, Menu } from '@mantine/core'
-import { IconDots, IconEye, IconUserMinus, IconUserPlus } from '@tabler/icons'
+import { ActionIcon, Menu } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
+import {
+  IconDots,
+  IconEye,
+  IconUserMinus,
+  IconUserPlus,
+} from '@tabler/icons-react'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import { INTERNAL_GROUP_APPLICANTS_DATA } from 'modules/admissions/queries'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { MY_INTERVIEWS_QUERY } from 'modules/admissions/views'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { MY_UPCOMING_INTERVIEWS_QUERY } from '../AdmissionDashboard'
 
@@ -35,7 +40,11 @@ export const ApplicantTableRowMenu: React.FC<{
   const handleAttendInterview = () => {
     const { interview } = applicant
     if (interview === null) {
-      toast.error('Søkeren har ikke booket intervju')
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Søkeren har ikke booket intervju',
+        color: 'red',
+      })
       return
     }
     const handler = applicant.iAmAttendingInterview

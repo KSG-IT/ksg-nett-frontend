@@ -5,7 +5,7 @@ import {
   SimpleGrid,
   TextInput,
 } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
+import { DateInput, DatePicker, DatePickerInput } from '@mantine/dates'
 import { useState } from 'react'
 import { UserWizardData } from './types'
 import { useUserMigrationWizardFormAPI } from './useUserMigrationWizardFormAPI'
@@ -67,13 +67,12 @@ export const UserMigrationWizardForm: React.FC<
           error={errors?.study?.message}
           {...register('study')}
         />
-        <DatePicker
+        <DateInput
           label="Fødselsdato"
           placeholder="Velg en dato"
           error={errors?.dateOfBirth?.message}
           defaultValue={getValues('dateOfBirth')}
           onChange={date => date && setValue('dateOfBirth', new Date(date))}
-          allowFreeInput
         />
         <TextInput
           label="Telefon"

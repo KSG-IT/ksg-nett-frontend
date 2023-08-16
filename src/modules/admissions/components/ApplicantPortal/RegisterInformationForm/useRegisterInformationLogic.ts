@@ -16,6 +16,7 @@ export type RegisterInformationFormData = {
   gdprConsent: boolean
   dateOfBirth: Date | null
   phone: string
+  phoneRepeated?: string
   wantsDigitalInterview: boolean
   profileImage?: File | null
 }
@@ -31,6 +32,7 @@ const RegisterInformationSchema = yup.object().shape({
   study: yup.string().required('Studie må fylles ut'),
   dateOfBirth: yup.date().required('Fødselsdato må fylles ut'),
   phone: yup.string().required('Telefonnummer må fylles ut'),
+  phoneRepeated: yup.string().required('Telefonnummer må fylles ut på nytt'),
   wantsDigitalInterview: yup.boolean().required(),
   profileImage: yup
     .mixed()
@@ -73,10 +75,22 @@ export function useRegisterInformationLogic(
       return
     }
 
+    const { phone, phoneRepeated } = data
+    if (phone !== phoneRepeated) {
+      showNotification({
+        message: 'Telefonnummer må være likt',
+        color: 'yellow',
+      })
+      return
+    }
+
     const mutationdata = {
       ...data,
       image: file,
     }
+
+    delete mutationdata.phoneRepeated
+
     if (doesNotWantImage) {
       mutationdata.image = null
     }

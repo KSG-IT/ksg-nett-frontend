@@ -2,19 +2,17 @@ import { createStyles, Navbar, Text } from '@mantine/core'
 import {
   IconAffiliate,
   IconBlockquote,
-  IconBook,
   IconBook2,
   IconCalendarTime,
-  IconChartAreaLine,
   IconClipboardList,
   IconCreditCard,
   IconEdit,
   IconFlag,
   IconHandMiddleFinger,
   IconHome,
-  IconReportMoney,
+  IconMessage,
   IconUserPlus,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { useLocation } from 'react-router-dom'
 import { useStore } from 'store'
 import { usePermissions } from 'util/hooks/usePermissions'
@@ -38,6 +36,18 @@ const routes: RouteGroup[] = [
         permissions: [],
       },
       {
+        icon: IconMessage,
+        link: '/forum',
+        label: 'Forum',
+        permissions: [],
+      },
+      {
+        icon: IconBook2,
+        link: '/handbook',
+        label: 'Håndboka',
+        permissions: [],
+      },
+      {
         icon: IconEdit,
         link: '/summaries',
         label: 'Møtereferater',
@@ -58,12 +68,6 @@ const routes: RouteGroup[] = [
         icon: IconBlockquote,
         link: '/quotes',
         label: 'Sitater',
-        permissions: [],
-      },
-      {
-        icon: IconBook2,
-        link: '/handbook',
-        label: 'Håndboka',
         permissions: [],
       },
     ],

@@ -1,4 +1,4 @@
-import { Button, Paper, Table } from '@mantine/core'
+import { Button } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
@@ -10,7 +10,6 @@ import {
   ApplicantNode,
   InternalGroupPositionPriority,
 } from 'modules/admissions/types.graphql'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { InternalGroupPositionPriorityBadge } from '../InternalGroupPositionPriorityBadge'
 

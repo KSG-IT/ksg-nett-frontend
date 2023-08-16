@@ -15,7 +15,7 @@ import {
 } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
-import { IconTrash, IconUserPlus, IconX } from '@tabler/icons'
+import { IconTrash, IconUserPlus, IconX } from '@tabler/icons-react'
 import { RoleValues } from 'modules/schedules/consts'
 import { useShiftSlotMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'

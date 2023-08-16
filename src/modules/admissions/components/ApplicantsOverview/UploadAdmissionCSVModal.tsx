@@ -1,6 +1,6 @@
 import { Button, FileInput, Modal, Stack } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconFileCode, IconUpload, IconUserPlus } from '@tabler/icons'
+import { IconFileCode, IconUpload, IconUserPlus } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'

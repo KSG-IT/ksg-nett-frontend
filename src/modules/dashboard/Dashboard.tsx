@@ -1,5 +1,14 @@
 import { useQuery } from '@apollo/client'
-import { createStyles, Grid, Stack, useMantineTheme } from '@mantine/core'
+import {
+  Card,
+  createStyles,
+  Grid,
+  keyframes,
+  Stack,
+  Text,
+  Title,
+  useMantineTheme,
+} from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -12,12 +21,14 @@ import { TransactionCard } from './components/TransactionCard'
 import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
 import { DashboardDataQueryReturns } from './types.graphql'
+import { useNavigate } from 'react-router-dom'
 
 const breadCrumbItems = [{ label: 'Hjem', path: '/dashboard' }]
 
 export const Dashboard = () => {
   const { classes } = useStyles()
   const theme = useMantineTheme()
+  const navigate = useNavigate()
   const mediaQuery = useMediaQuery(
     `(min-width: ${theme.breakpoints.xl + 300}px)`
   )
@@ -44,9 +55,25 @@ export const Dashboard = () => {
     },
   } = data
 
+  function handlePinnedThreadClick() {
+    navigate('/forum/ksg-it-har-opptak')
+  }
+
   return (
     <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
+
+      <Text weight={700} color="dimmed">
+        Fremhevet tråd
+      </Text>
+      <Card
+        className={classes.pinnedThreadCard}
+        onClick={handlePinnedThreadClick}
+      >
+        <Title order={3}>KSG-IT har opptak!</Title>
+        Trykk her for å lese mer
+      </Card>
+
       <ShortcutCards
         sociOrderSession={!!sociOrderSession}
         showNewbies={showNewbies}
@@ -65,6 +92,13 @@ export const Dashboard = () => {
   )
 }
 
+const bounce = keyframes({
+  'from, 20%, 53%, 80%, to': { transform: 'translate3d(0, 0, 0)' },
+  '40%, 43%': { transform: 'translate3d(0, -1.875rem, 0)' },
+  '70%': { transform: 'translate3d(0, -0.9375rem, 0)' },
+  '90%': { transform: 'translate3d(0, -0.25rem, 0)' },
+})
+
 const useStyles = createStyles(theme => ({
   wrapper: {
     width: '100%',
@@ -72,6 +106,33 @@ const useStyles = createStyles(theme => ({
 
     [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
       padding: 0,
+    },
+  },
+  pinnedThreadCard: {
+    marginBottom: theme.spacing.md,
+    ':hover': {
+      cursor: 'pointer',
+      backgroundColor: theme.colors.gray[0],
+    },
+    // Animated border rainbow
+    backgroundImage: `linear-gradient(
+      to right,
+      ${theme.colors.red[5]},
+      ${theme.colors.orange[5]},
+      ${theme.colors.yellow[5]},
+      ${theme.colors.green[5]},
+      ${theme.colors.teal[5]},
+      ${theme.colors.cyan[5]},
+      ${theme.colors.blue[5]},
+      ${theme.colors.indigo[5]},
+      ${theme.colors.violet[5]}
+    )`,
+    backgroundSize: '200% 100%',
+    backgroundPosition: 'left bottom',
+    animation: `${bounce} 3s ease-in-out infinite`,
+    '@keyframes gradient': {
+      '0%': { backgroundPosition: 'left bottom' },
+      '100%': { backgroundPosition: 'right bottom' },
     },
   },
 }))

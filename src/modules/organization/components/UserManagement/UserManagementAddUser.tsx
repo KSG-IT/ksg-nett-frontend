@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
-import { Button, Group, Stack } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { MessageBox } from 'components/MessageBox'
 import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
@@ -7,11 +8,11 @@ import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
   InternalGroupPositionType,
+  InternalGroupPositionTypeOption,
 } from 'modules/organization/types.graphql'
-import { MANAGE_USERS_DATA_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { MANAGE_USERS_DATA_QUERY } from '../../../users/queries'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 
 interface UserManagementAddUserProps {
@@ -25,7 +26,7 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
   const [
     selectedInternalGroupPositionType,
     setSelectedInternalGroupPositionType,
-  ] = useState<InternalGroupPositionType | null>(null)
+  ] = useState<InternalGroupPositionTypeOption | null>(null)
   const history = useNavigate()
 
   const [assignNewPosition, { loading }] = useMutation<
@@ -40,20 +41,26 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
   const handleAssignNewPosition = () => {
     if (selectedInternalGroupPositionType === null) return
 
-    console.log(selectedInternalGroupPositionType)
-
     assignNewPosition({
       variables: {
         userId: selectedUser,
         internalGroupPositionId: internalGroupPositionId,
-        internalGroupPositionType: selectedInternalGroupPositionType,
+        internalGroupPositionType: selectedInternalGroupPositionType.value,
       },
       refetchQueries: [MANAGE_USERS_DATA_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Bruker oppdatert!')
+        showNotification({
+          title: 'Suksess',
+          message: 'Brukeren har fått nytt verv',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
@@ -73,7 +80,7 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
       />
       <InternalGroupPositionTypeSelect
         placeholder="Status"
-        onChange={setSelectedInternalGroupPositionType}
+        //onChange={setSelectedInternalGroupPositionType}
       />
       <Group mt="md" position="apart">
         <Button variant="outline" onClick={() => setModalOpen(false)}>

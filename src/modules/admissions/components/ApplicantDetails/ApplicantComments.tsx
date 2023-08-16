@@ -4,8 +4,8 @@ import { useApplicantCommentMutations } from 'modules/admissions/mutations.hooks
 import { APPLICANT_QUERY } from 'modules/admissions/queries'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { ApplicantCommentList } from './ApplicantCommentList'
+import { showNotification } from '@mantine/notifications'
 
 interface ApplicantCommentsProps {
   applicant: Pick<ApplicantNode, 'id' | 'comments'>
@@ -25,10 +25,18 @@ export const ApplicantComments: React.FC<ApplicantCommentsProps> = ({
       refetchQueries: [APPLICANT_QUERY],
       onCompleted() {
         setComment('')
-        toast.success('Kommentar lagret')
+        showNotification({
+          title: 'Suksess',
+          message: 'Kommentar lagret',
+          color: 'green',
+        })
       },
-      onError() {
-        toast.error('Noe gikk galt')
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

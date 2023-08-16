@@ -5,7 +5,6 @@ import {
   ForgotPassword,
   Login,
 } from 'modules/login/views'
-import { ErrorBoundary } from 'react-error-boundary'
 import { Route, Routes } from 'react-router-dom'
 
 const PublicRoutes: React.FC = () => {

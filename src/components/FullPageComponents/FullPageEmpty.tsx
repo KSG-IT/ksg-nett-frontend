@@ -1,5 +1,5 @@
 import { Center, Stack, Title } from '@mantine/core'
-import { IconHourglassEmpty } from '@tabler/icons'
+import { IconHourglassEmpty } from '@tabler/icons-react'
 
 export const FullPageEmpty: React.FC = () => {
   return (

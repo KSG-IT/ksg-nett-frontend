@@ -1,12 +1,12 @@
 import { createStyles, Text } from '@mantine/core'
-import { TablerIcon } from '@tabler/icons'
+import { Icon } from '@tabler/icons-react'
 import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
-import { useIsMobile, useSidebar } from 'util/hooks'
+import { useSidebar } from 'util/hooks'
 export interface RouteItem {
   label: string
   link: string
-  icon: TablerIcon
+  icon: Icon
   onClick?: () => void
   permissions: string | string[]
 }

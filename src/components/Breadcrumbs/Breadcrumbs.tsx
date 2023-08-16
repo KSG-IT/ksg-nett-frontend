@@ -1,5 +1,5 @@
 import { Anchor, Breadcrumbs as BreadcrumbsBase } from '@mantine/core'
-import { IconChevronRight } from '@tabler/icons'
+import { IconChevronRight } from '@tabler/icons-react'
 import { Link } from 'react-router-dom'
 
 type BreadcrumbItem = {

@@ -8,8 +8,9 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core'
-import { DatePicker, TimeRangeInput } from '@mantine/dates'
-import { IconX } from '@tabler/icons'
+import { DatePickerInput, TimeInput } from '@mantine/dates'
+import { showNotification } from '@mantine/notifications'
+import { IconX } from '@tabler/icons-react'
 import {
   CREATE_INTERVIEW_LOCATION_AVAILABILITY,
   DELETE_INTERVIEW_LOCATION,
@@ -20,7 +21,6 @@ import {
   InterviewLocationNode,
 } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import { toast } from 'react-hot-toast'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import { InterviewLocationAvailabilityInline } from './InterviewLocationAvailabilityInline'
 
@@ -31,7 +31,8 @@ interface InterviewLocationAvailabilityProps {
 export const InterviewLocationAvailabilityCard: React.VFC<
   InterviewLocationAvailabilityProps
 > = ({ interviewLocation }) => {
-  const [from, setFrom] = useState<[Date, Date]>([new Date(), new Date()])
+  const [timeFrom, setTimeFrom] = useState('12:00')
+  const [timeTo, setTimeTo] = useState('20:00')
   const [date, setDate] = useState<Date | null>(new Date())
 
   const [createInterviewLocationAvailability] = useMutation<
@@ -46,21 +47,40 @@ export const InterviewLocationAvailabilityCard: React.VFC<
     DeleteMutationVariables
   >(DELETE_INTERVIEW_LOCATION, {
     refetchQueries: ['AllInterviewLocations'],
-    onCompleted: () => {
-      toast.success('Slettet Intervjulokale')
+    onCompleted() {
+      showNotification({
+        title: 'Suksess',
+        message: `${interviewLocation.name} slettet`,
+        color: 'green',
+      })
+    },
+    onError({ message }) {
+      showNotification({
+        title: 'Noe gikk galt',
+        message,
+        color: 'red',
+      })
     },
   })
 
   function concatenateDateAndTime() {
-    // We create two new datetime objects using the range of the time
-    if (date === null) return
+    if (!date) return null
+
+    // We now have a date and two timeinputs of a "HH:mm" format
+    // Need to extrapolate two datetime objects using the time strings and the date picked
+
     const fromDate = new Date(date)
-    fromDate.setHours(from[0].getHours())
-    fromDate.setMinutes(from[0].getMinutes())
-    fromDate.setSeconds(0)
     const toDate = new Date(date)
-    toDate.setHours(from[1].getHours())
-    toDate.setMinutes(from[1].getMinutes())
+
+    const [fromHours, fromMinutes] = timeFrom.split(':')
+    const [toHours, toMinutes] = timeTo.split(':')
+
+    fromDate.setHours(parseInt(fromHours))
+    fromDate.setMinutes(parseInt(fromMinutes))
+    fromDate.setSeconds(0)
+
+    toDate.setHours(parseInt(toHours))
+    toDate.setMinutes(parseInt(toMinutes))
     toDate.setSeconds(0)
 
     return {
@@ -69,9 +89,11 @@ export const InterviewLocationAvailabilityCard: React.VFC<
     }
   }
 
-  const handleCreateInterviewLocationAvailability = () => {
+  function handleCreateInterviewLocationAvailability() {
     const dates = concatenateDateAndTime()
+
     if (!dates) return
+
     const { fromDate, toDate } = dates
 
     createInterviewLocationAvailability({
@@ -118,15 +140,26 @@ export const InterviewLocationAvailabilityCard: React.VFC<
           </tbody>
         </Table>
         <Group>
-          <DatePicker value={date} onChange={setDate} />
-          <TimeRangeInput value={from} onChange={setFrom} />
+          <DatePickerInput value={date} label="Dag" onChange={setDate} />
+          <Group>
+            <TimeInput
+              value={timeFrom}
+              label="Fra"
+              onChange={evt => setTimeFrom(evt.target.value)}
+            />
+            <TimeInput
+              value={timeTo}
+              label="Til"
+              onChange={evt => setTimeTo(evt.target.value)}
+            />
+          </Group>
         </Group>
 
         <Button
           color="samfundet-red"
           onClick={handleCreateInterviewLocationAvailability}
         >
-          Legg til intervall
+          Legg til tilgjengelighet
         </Button>
       </Stack>
     </Paper>

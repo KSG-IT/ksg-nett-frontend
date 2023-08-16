@@ -1,9 +1,8 @@
-import { onError } from '@apollo/client/link/error'
 import { Button, Group, Modal, TextInput } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { useScheduleTemplateMutations } from 'modules/schedules/mutations.hooks'
 import { ALL_SCHEDULE_TEMPLATES } from 'modules/schedules/queries'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { ScheduleSelect } from '../ScheduleSelect'
 
 interface CreateScheduleTemplateModalProps {
@@ -29,12 +28,20 @@ export const CreateScheduleTemplateModal: React.FC<
         },
       },
       refetchQueries: [ALL_SCHEDULE_TEMPLATES],
-      onCompleted: () => {
-        toast.success('Vaktplanmal opprettet')
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Vaktplanmal opprettet',
+          color: 'green',
+        })
         onCloseCallback()
       },
-      onError: error => {
-        toast.error(error.message)
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

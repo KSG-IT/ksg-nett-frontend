@@ -20,7 +20,7 @@ type WizardStage =
 interface StartAdmissionProcessCardProps {
   setStageCallback: (stage: WizardStage) => void
 }
-export const StartAdmissionProcessCard: React.VFC<
+export const StartAdmissionProcessCard: React.FC<
   StartAdmissionProcessCardProps
 > = ({ setStageCallback }) => {
   const [createAdmission] = useMutation<
@@ -49,17 +49,13 @@ export const StartAdmissionProcessCard: React.VFC<
       <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
         <Text>
           Det er foreløpig ikke noe aktiv opptak. Her har du mulighet til å
-          starte et opptak og også legge til nye brukere. Er det noen du har
-          glemt å registrere på et opptak? Isåfall vil du bruke{' '}
-          <b>Legg til ny bruker</b>
+          starte et opptak og også legge til nye brukere.
         </Text>
         <Group>
           <Button color="samfundet-red" onClick={handleOpenAdmission}>
             Start nytt opptak
           </Button>
         </Group>
-        <div>Noen du har glemt å legge til?</div>
-        <Button color="samfundet-red">Legg til ny bruker</Button>
       </PermissionGate>
     </Stack>
   )

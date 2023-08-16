@@ -8,7 +8,7 @@ import {
 } from '@mantine/core'
 import { useListState } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
-import { IconCaretDown, IconCaretUp } from '@tabler/icons'
+import { IconCaretDown, IconCaretUp } from '@tabler/icons-react'
 import { MessageBox } from 'components/MessageBox'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import {
@@ -25,7 +25,7 @@ interface ApplicantPrioritiesFieldProps {
   applicant: Pick<ApplicantNode, 'id' | 'priorities'>
 }
 
-export const ApplicantPrioritiesField: React.VFC<
+export const ApplicantPrioritiesField: React.FC<
   ApplicantPrioritiesFieldProps
 > = ({ applicant }) => {
   const [priorities, setPriorities] = useState(

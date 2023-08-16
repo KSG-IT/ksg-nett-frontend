@@ -1,10 +1,11 @@
-import { Button, createStyles, Paper, Table, Text } from '@mantine/core'
-import { IconDownload, IconFilePlus, IconMailbox } from '@tabler/icons'
+import { Button, createStyles, Text } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
+import { IconDownload, IconFilePlus, IconMailbox } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { useInvoiceMutations } from 'modules/barTab/mutations.hooks'
 import { ACTIVE_BAR_TAB_INVOICES_QUERY } from 'modules/barTab/queries'
 import { BarTabInvoiceNode } from 'modules/barTab/types.graphql'
-import toast from 'react-hot-toast'
+
 import { numberWithSpaces } from 'util/parsing'
 
 interface InvoiceTableProps {
@@ -25,11 +26,19 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
         invoiceId,
       },
       refetchQueries: [ACTIVE_BAR_TAB_INVOICES_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Faktura')
+        showNotification({
+          title: 'Suksess',
+          message: 'Faktura sendt på epost',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

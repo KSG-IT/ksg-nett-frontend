@@ -8,9 +8,9 @@ import {
   Stepper,
   Text,
 } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
+import { DatePickerInput } from '@mantine/dates'
 
-import { IconCashBanknote } from '@tabler/icons'
+import { IconCashBanknote } from '@tabler/icons-react'
 import { MessageBox } from 'components/MessageBox'
 import { DepositMethodValues } from 'modules/economy/enums'
 import { useDepositMutations } from 'modules/economy/mutations.hooks'
@@ -20,7 +20,6 @@ import { Controller } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { useCurrencyFormatter, useMediaQuery } from 'util/hooks'
 import { StripeDepositPaymentForm } from '../StripeDepositPaymentForm'
-
 import { useCreateDepositAPI } from './useCreateDepositAPI'
 import { useCreateDepositLogic } from './useCreateDepositLogic'
 
@@ -85,14 +84,16 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                       setValue('depositMethod', value as DepositMethodValues)
                     }
                   >
-                    <Radio
-                      label="Kortbetaling"
-                      value={DepositMethodValues.STRIPE}
-                    />
-                    <Radio
-                      label="Bankoverføring"
-                      value={DepositMethodValues.BANK_TRANSFER}
-                    />
+                    <Group>
+                      <Radio
+                        label="Kortbetaling"
+                        value={DepositMethodValues.STRIPE}
+                      />
+                      <Radio
+                        label="Bankoverføring"
+                        value={DepositMethodValues.BANK_TRANSFER}
+                      />
+                    </Group>
                   </Radio.Group>
                 )}
               />
@@ -121,7 +122,7 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                   name="dateOfTransfer"
                   control={form.control}
                   render={({ field }) => (
-                    <DatePicker
+                    <DatePickerInput
                       label="Dato for overføring"
                       placeholder="Velg dato"
                       clearable={false}

@@ -9,7 +9,8 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core'
-import { IconPlus, IconTrash } from '@tabler/icons'
+import { showNotification } from '@mantine/notifications'
+import { IconPlus, IconTrash } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import {
@@ -21,8 +22,8 @@ import {
 import { INTERVIEW_TEMPLATE_QUERY } from 'modules/admissions/queries'
 import { InterviewTemplateReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
+import { DefaultInterviewNotesEditor } from './DefaultInterviewNotesEditor'
 
 type WizardStage =
   | 'START'
@@ -36,7 +37,7 @@ interface ConfigureInterviewTemplateProps {
   setStageCallback: (stage: WizardStage) => void
 }
 
-export const ConfigureInterviewTemplate: React.VFC<
+export const ConfigureInterviewTemplate: React.FC<
   ConfigureInterviewTemplateProps
 > = ({ setStageCallback }) => {
   const [interviewBooleanEvaluation, setInterviewBooleanEvaluation] =
@@ -94,7 +95,11 @@ export const ConfigureInterviewTemplate: React.VFC<
 
   const handleCreateInterviewBooleanEvaluation = () => {
     if (interviewBooleanEvaluation === '') {
-      toast.error('Spørsmålet kan ikke være tomt')
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Spørsmålet kan ikke være tomt',
+        color: 'red',
+      })
       return
     }
     createInterviewBooleanEvaluation()
@@ -102,7 +107,11 @@ export const ConfigureInterviewTemplate: React.VFC<
   }
   const handleCreateInterviewAdditionalEvaluationStatement = () => {
     if (interviewAdditionalEvaluationStatement === '') {
-      toast.error('Spørsmålet kan ikke være tomt')
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Spørsmålet kan ikke være tomt',
+        color: 'red',
+      })
       return
     }
     createInterviewAdditionalEvaluationStatement()
@@ -113,6 +122,7 @@ export const ConfigureInterviewTemplate: React.VFC<
     interviewTemplate: {
       interviewBooleanEvaluationStatements,
       interviewAdditionalEvaluationStatements,
+      defaultInterviewNotes,
     },
   } = data
 
@@ -183,6 +193,9 @@ export const ConfigureInterviewTemplate: React.VFC<
           Legg til
         </Button>
       </Group>
+      <Title order={2}>Intervjumal</Title>
+      {/* <RichTextEditor /> */}
+      <DefaultInterviewNotesEditor initialNotes={defaultInterviewNotes} />
       <Group>
         <Button
           color="samfundet-red"

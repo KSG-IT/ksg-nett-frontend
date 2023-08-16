@@ -1,5 +1,5 @@
 import { Center, Stack, Text, Title } from '@mantine/core'
-import { IconAlertTriangle } from '@tabler/icons'
+import { IconAlertTriangle } from '@tabler/icons-react'
 
 export const FullPageRestricted: React.FC = () => {
   return (

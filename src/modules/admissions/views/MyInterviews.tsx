@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Stack, Title } from '@mantine/core'
-import { IconEye } from '@tabler/icons'
+import { IconEye } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'

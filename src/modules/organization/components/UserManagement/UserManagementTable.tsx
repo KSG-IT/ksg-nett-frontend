@@ -9,9 +9,9 @@ import {
   ManageInternalGroupUser,
 } from 'modules/organization/types.graphql'
 import { MANAGE_USERS_DATA_QUERY } from 'modules/users/queries'
-import toast from 'react-hot-toast'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { UserManagementTableRow } from './UserManagementTableRow'
+import { showNotification } from '@mantine/notifications'
 
 interface UserManagementTableProps {
   usersData: ManageInternalGroupUser[]
@@ -64,10 +64,18 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
       },
       refetchQueries: [MANAGE_USERS_DATA_QUERY],
       onError() {
-        toast.error('Noe gikk galt')
+        showNotification({
+          title: 'Feil',
+          message: 'Noe gikk galt',
+          color: 'red',
+        })
       },
       onCompleted() {
-        toast.success('Bruker oppdatert!')
+        showNotification({
+          title: 'Suksess',
+          message: 'Brukeren har fått nytt verv',
+          color: 'green',
+        })
       },
     })
   }

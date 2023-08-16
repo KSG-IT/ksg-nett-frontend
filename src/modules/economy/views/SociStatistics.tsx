@@ -1,6 +1,6 @@
 import { Card, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
-import { IconGraph } from '@tabler/icons'
+import { DateInput, DatePicker, DatePickerInput } from '@mantine/dates'
+import { IconGraph } from '@tabler/icons-react'
 import { format, startOfMonth } from 'date-fns'
 import { useState } from 'react'
 import { MultiProductSelect } from '../components/MultiProductSelect'
@@ -24,21 +24,26 @@ export const SociStatistics: React.FC = () => {
 
   return (
     <Stack>
-      <Title order={2}>Statistikk</Title>
+      <Title order={2}>Salgsstatistikk</Title>
       <Card withBorder>
         <Group>
-          <DatePicker
+          <DatePickerInput
+            label="Startdato"
             value={new Date(dateFrom)}
             onChange={handleChangeDateFrom}
-            withinPortal
+            popoverProps={{ withinPortal: true }}
           />
-          <DatePicker
+          <DatePickerInput
+            label="Sluttdato"
             placeholder="Velg sluttdato"
             value={new Date(dateTo)}
             onChange={handleChangeDateTo}
-            withinPortal
+            popoverProps={{
+              withinPortal: true,
+            }}
           />
           <MultiProductSelect
+            label="Produkter"
             withinPortal
             products={productIds}
             setProductsCallback={setProductIds}

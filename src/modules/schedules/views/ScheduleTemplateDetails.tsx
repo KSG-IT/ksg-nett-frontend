@@ -1,13 +1,13 @@
 import { useQuery } from '@apollo/client'
 import { Button, Group, Title } from '@mantine/core'
-import { IconPlus, IconTrash } from '@tabler/icons'
+import { showNotification } from '@mantine/notifications'
+import { IconPlus, IconTrash } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import { PERMISSIONS } from 'util/permissions'
 import {
@@ -54,12 +54,20 @@ export const ScheduleTemplateDetails: React.FC = () => {
       deleteScheduleTemplate({
         variables: { id: templateId },
         refetchQueries: [ALL_SCHEDULE_TEMPLATES],
-        onCompleted: () => {
-          toast.success('Vaktplan malen ble slettet')
+        onCompleted() {
+          showNotification({
+            title: 'Suksess',
+            message: 'Vaktplan malen ble slettet',
+            color: 'green',
+          })
           navigate('/schedules/templates')
         },
-        onError: () => {
-          toast.error('Kunne ikke slette vaktplan malen')
+        onError({ message }) {
+          showNotification({
+            title: 'Noe gikk galt',
+            message,
+            color: 'red',
+          })
         },
       })
     }

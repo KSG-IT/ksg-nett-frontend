@@ -1,5 +1,5 @@
 import { Button, Group, Modal, NumberInput, Text } from '@mantine/core'
-import { DatePicker } from '@mantine/dates'
+import { DatePickerInput } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
 import { add } from 'date-fns'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
@@ -71,7 +71,7 @@ export const ApplyScheduleTemplateModal: React.FC<
         value={scheduleTemplateId}
         onChange={setScheduleTemplateId}
       />
-      <DatePicker
+      <DatePickerInput
         label="Startdato"
         value={shiftsFrom}
         onChange={setShiftsFrom}

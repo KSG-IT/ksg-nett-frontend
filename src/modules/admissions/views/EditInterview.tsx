@@ -229,7 +229,6 @@ export const EditInterview: React.FC = () => {
       <BooleanEvaluationAnswerList interview={interview} />
       <AdditionalEvaluationAnswerList interview={interview} />
       <AdditionalInformationFields applicant={interview.applicant} />
-      <ApplicantPrioritiesField applicant={interview.applicant} />
 
       {/* Interview and discussion Notes */}
       <Title order={2}>Intervjunotater</Title>
@@ -251,6 +250,7 @@ export const EditInterview: React.FC = () => {
       <Group>
         <Button onClick={handleSaveNotes}>Lagre</Button>
         <Button
+          disabled={interview.totalEvaluation === null}
           onClick={() => {
             setLockModalOpen(true)
           }}

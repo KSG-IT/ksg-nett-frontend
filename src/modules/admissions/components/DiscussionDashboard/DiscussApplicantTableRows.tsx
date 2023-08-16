@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { ActionIcon, Button, Menu, Text, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Menu, Text } from '@mantine/core'
 import {
   IconBackpack,
   IconCheck,
@@ -10,7 +10,7 @@ import {
   IconPlayerPlay,
   IconQuestionMark,
   IconWheelchair,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { InternalGroupPositionPriorityBadge } from 'modules/admissions/components'
 import { InternalGroupPositionPriorityInternalGroupPriorityValues } from 'modules/admissions/consts'
 import { PATCH_INTERNAL_GROUP_POSITION_PRIORITY } from 'modules/admissions/mutations'
@@ -47,7 +47,7 @@ const renderPrioritycell = (
           fontWeight: bold ? 'bold' : 'normal',
         }}
       >
-        {priority.internalGroupPosition.internalGroup.name}
+        {priority.internalGroupPosition.name}
       </td>
       <td>
         <InternalGroupPositionPriorityBadge priority={priority} />
@@ -61,7 +61,7 @@ interface DiscussApplicantTableRowsProps {
   internalGroupId: string
 }
 
-export const DiscussApplicantTableRows: React.VFC<
+export const DiscussApplicantTableRows: React.FC<
   DiscussApplicantTableRowsProps
 > = ({ applicant, internalGroupId }) => {
   /**
@@ -69,7 +69,6 @@ export const DiscussApplicantTableRows: React.VFC<
    * which is intended to place within a tbody element.
    */
   const navigate = useNavigate()
-  const theme = useMantineTheme()
   const { priorities } = applicant
 
   const [patchInternalGroupPositionPriority, { loading }] = useMutation<
@@ -120,7 +119,7 @@ export const DiscussApplicantTableRows: React.VFC<
       <td>
         <Menu position="left-start">
           <Menu.Target>
-            <ActionIcon>
+            <ActionIcon loading={loading}>
               <IconDots size={16} stroke={1.5} />
             </ActionIcon>
           </Menu.Target>

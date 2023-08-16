@@ -1,9 +1,9 @@
 import { FetchResult } from '@apollo/client'
 import { Button, Group, LoadingOverlay } from '@mantine/core'
-import { IconTrash } from '@tabler/icons'
+import { showNotification } from '@mantine/notifications'
+import { IconTrash } from '@tabler/icons-react'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { DeleteMutationReturns } from 'types/graphql'
 
 interface DeleteApplicantModalProps {
@@ -31,8 +31,11 @@ export const DeleteApplicantModal: React.FC<DeleteApplicantModalProps> = ({
       .then(() => {
         closeModalCallback()
       })
-      .catch(() => {
-        toast.error('Noe gikk galt')
+      .catch((err: Error) => {
+        showNotification({
+          title: 'Noe gikk galt',
+          message: err.message,
+        })
       })
   }
 

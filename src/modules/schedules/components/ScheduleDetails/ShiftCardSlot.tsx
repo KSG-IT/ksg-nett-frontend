@@ -7,7 +7,8 @@ import {
   Text,
   UnstyledButton,
 } from '@mantine/core'
-import { IconX } from '@tabler/icons'
+import { showNotification } from '@mantine/notifications'
+import { IconX } from '@tabler/icons-react'
 import { UserSelect } from 'components/Select'
 import { useShiftSlotMutations } from 'modules/schedules/mutations.hooks'
 import {
@@ -16,7 +17,6 @@ import {
 } from 'modules/schedules/queries'
 import { ShiftSlotNode } from 'modules/schedules/types.graphql'
 import { useMemo, useState } from 'react'
-import toast from 'react-hot-toast'
 
 interface ShiftCardSlotProps {
   shiftSlot: ShiftSlotNode
@@ -35,11 +35,19 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
         shiftSlotId: shiftSlotId,
       },
       refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY, MY_UPCOMING_SHIFTS],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Bruker fjernet fra vakt')
+        showNotification({
+          title: 'Suksess',
+          message: 'Bruker fjernet fra vakt',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
@@ -51,11 +59,15 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
         userId: val,
       },
       refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY, MY_UPCOMING_SHIFTS],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
         setOpened(false)
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
@@ -66,11 +78,19 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
         id: shiftSlot.id,
       },
       refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Vakt fjernet')
+        showNotification({
+          title: 'Suksess',
+          message: 'Vakt fjernet',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
@@ -99,8 +119,6 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
 
     [shiftSlot]
   )
-  console.log('rerender')
-  console.log(shiftSlot)
 
   return (
     <Popover opened={opened} onChange={setOpened} withinPortal>

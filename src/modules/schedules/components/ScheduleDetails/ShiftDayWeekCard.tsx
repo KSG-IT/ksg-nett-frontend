@@ -1,7 +1,7 @@
 import { Card, createStyles, Group, Paper, Stack, Title } from '@mantine/core'
-import { IconDotsVertical } from '@tabler/icons'
-import { ShiftDayWeek, ShiftNode } from 'modules/schedules/types.graphql'
-import toast from 'react-hot-toast'
+import { showNotification } from '@mantine/notifications'
+import { IconDotsVertical } from '@tabler/icons-react'
+import { ShiftDayWeek } from 'modules/schedules/types.graphql'
 import { format } from 'util/date-fns'
 import { ShiftCard } from './ShiftCard'
 
@@ -26,13 +26,21 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
   function handleDeleteWeekShifts() {
     // Should trigger a confirm delete dialog
 
-    toast.error('Lol ikke implementert enda')
+    showNotification({
+      title: 'Lol ikke implementert enda',
+      message: 'Lol ikke implementert enda',
+      color: 'red',
+    })
     console.error('Missing feature')
   }
 
   function handleDeleteShift() {
     // Should trigger a confirm delete dialog
-    toast.error('Lol ikke implementert enda')
+    showNotification({
+      title: 'Lol ikke implementert enda',
+      message: 'Lol ikke implementert enda',
+      color: 'red',
+    })
     console.error('Missing feature')
   }
 

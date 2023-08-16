@@ -4,7 +4,7 @@ import {
   IconBaguette,
   IconCreditCard,
   IconGraph,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { ShortcutCardGrid } from 'components/ShortcutCard'
 import { PERMISSIONS } from 'util/permissions'

@@ -5,6 +5,8 @@ export const ACTIVE_ADMISSION_QUERY = gql`
     activeAdmission {
       id
       status
+      interviewBookingLateBatchEnabled
+      interviewBookingOverrideEnabled
       availableInternalGroupPositionsData {
         availablePositions
         internalGroupPosition {
@@ -303,6 +305,7 @@ export const CURRENT_APPLICANTS_QUERY = gql`
       fullName
       email
       status
+      phone
       priorities {
         id
         internalGroupPosition {
@@ -354,8 +357,14 @@ export const ALL_INTERNAL_GROUP_APPLICANT_DATA = gql`
 
 export const INTERNAL_GROUP_DISCUSSION_DATA = gql`
   ${INTERNAL_GROUP_PRIORITY_FIELDS}
-  query InternalGroupDiscussionDataQuery($internalGroupId: ID!) {
-    internalGroupDiscussionData(internalGroupId: $internalGroupId) {
+  query InternalGroupDiscussionDataQuery(
+    $internalGroupId: ID!
+    $orderingKey: String
+  ) {
+    internalGroupDiscussionData(
+      internalGroupId: $internalGroupId
+      orderingKey: $orderingKey
+    ) {
       internalGroup {
         id
         name
@@ -371,6 +380,28 @@ export const INTERNAL_GROUP_DISCUSSION_DATA = gql`
           internalGroup {
             id
             name
+          }
+        }
+      }
+      applicantRecommendations {
+        id
+        reasoning
+        recommendedBy {
+          id
+          fullName
+        }
+        applicant {
+          id
+          fullName
+          priorities {
+            ...InternalGroupPriorityFields
+          }
+          internalGroupInterests {
+            id
+            internalGroup {
+              id
+              name
+            }
           }
         }
       }
@@ -465,6 +496,7 @@ export const INTERNAL_GROUP_POSITIONS_AVAILABLE_FOR_APPLICANTS_QUERY = gql`
 export const INTERVIEW_TEMPLATE_QUERY = gql`
   query InterviewTemplateQuery {
     interviewTemplate {
+      defaultInterviewNotes
       interviewBooleanEvaluationStatements {
         id
         statement

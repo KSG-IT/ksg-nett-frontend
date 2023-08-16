@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { Button, Card, Group, Stack, Title } from '@mantine/core'
-import { IconTrash } from '@tabler/icons'
+import { showNotification } from '@mantine/notifications'
+import { IconTrash } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -16,7 +17,6 @@ import {
   PatchAdmissionInput,
   PatchAdmissionReturns,
 } from 'modules/admissions/types.graphql'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { PatchMutationVariables } from 'types/graphql'
 import { format } from 'util/date-fns'
@@ -69,11 +69,19 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
   const handleGenerateInterviews = () => {
     generateInterviews({
       refetchQueries: [INTERVIEW_OVERVIEW_QUERY],
-      onError() {
-        toast.error('Noe gikk galt')
-      },
       onCompleted() {
-        toast.success('Genererte intervjuer')
+        showNotification({
+          title: 'Suksess',
+          message: 'Intervjuer generert',
+          color: 'green',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }
@@ -111,8 +119,19 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
         input: { status: AdmissionStatusValues.OPEN },
       },
       onCompleted() {
-        toast.success('Åpnet opptaket')
+        showNotification({
+          title: 'Suksess',
+          message: 'Opptaket er nå åpent',
+          color: 'green',
+        })
         navigate('/admissions')
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+          color: 'red',
+        })
       },
     })
   }

@@ -1,11 +1,12 @@
-import { Avatar, Badge, Table } from '@mantine/core'
-import { IconCheck, IconX } from '@tabler/icons'
+import { Avatar, Badge, Table, createStyles } from '@mantine/core'
+import { IconCheck, IconX } from '@tabler/icons-react'
 import { format } from 'util/date-fns'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { UserThumbnail } from 'modules/users/components'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { ApplicantTableRowMenu } from './ApplicantTableRowMenu'
 import { CardTable } from 'components/CardTable'
+import { useNavigate } from 'react-router-dom'
 
 function safeParseApplicantName(applicant: CoreApplicantNode) {
   if (applicant.fullName === ' ') return ''
@@ -30,9 +31,22 @@ const InterviewCoveredBadge: React.FC<{ covered: boolean }> = ({ covered }) => {
 export const ApplicantsTable: React.FC<{
   applicants: CoreApplicantNode[]
 }> = ({ applicants }) => {
+  const { classes } = useStyles()
+  const navigate = useNavigate()
+
+  function handleApplicantRedirect(applicantId: string) {
+    navigate(`/admissions/applicants/${applicantId}`)
+  }
+
   const rows = applicants.map(applicant => (
     <tr key={applicant.id}>
-      <td>{safeParseApplicantName(applicant)}</td>
+      <td
+        className={classes.interactiveTd}
+        placeholder=""
+        onClick={() => handleApplicantRedirect(applicant.id)}
+      >
+        {safeParseApplicantName(applicant)}
+      </td>
       <td>
         <ApplicantStatusBadge applicantStatus={applicant.status} />
       </td>
@@ -79,3 +93,13 @@ export const ApplicantsTable: React.FC<{
     </CardTable>
   )
 }
+
+const useStyles = createStyles(theme => ({
+  interactiveTd: {
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.colors.gray[0],
+      textDecoration: 'underline',
+    },
+  },
+}))
