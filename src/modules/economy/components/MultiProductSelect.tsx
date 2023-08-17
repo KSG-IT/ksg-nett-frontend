@@ -5,9 +5,12 @@ import {
   Select,
   SelectProps,
 } from '@mantine/core'
-import { ALL_SOCI_PRODUCTS } from '../queries'
-import { AllSociProductsReturns } from '../types.graphql'
-import { useState } from 'react'
+import { ALL_SOCI_PRODUCTS, ALL_SOCI_PRODUCTS_WITH_DEFAULT } from '../queries'
+import {
+  AllSociProductsReturns,
+  AllSociProductsWithDefaultReturns,
+} from '../types.graphql'
+import { useMemo, useState } from 'react'
 import {
   ProductSelectItemComponent,
   ProductSelectLabelComponent,
@@ -25,23 +28,30 @@ export const MultiProductSelect: React.FC<MultiProductSelectProps> = ({
   ...rest
 }) => {
   const [inputValue, setInputValue] = useState('')
-  const { data, loading } = useQuery<AllSociProductsReturns>(
-    ALL_SOCI_PRODUCTS,
+  const { data, loading } = useQuery<AllSociProductsWithDefaultReturns>(
+    ALL_SOCI_PRODUCTS_WITH_DEFAULT,
     {
       onCompleted: data => {
-        if (data?.allSociProducts) {
-          setProductsCallback?.(data.allSociProducts.map(product => product.id))
+        if (data?.allSociProductsWithDefault) {
+          const defaultOptions = data.allSociProductsWithDefault.filter(
+            product => product.isDefault
+          )
+          setProductsCallback?.(defaultOptions.map(product => product.id))
         }
       },
     }
   )
 
-  const options = data?.allSociProducts.map(product => ({
-    icon: product.icon,
-    label: product.name,
-    description: product.name + ' - ' + product.price + 'kr',
-    value: product.id,
-  }))
+  const options = useMemo(
+    () =>
+      data?.allSociProductsWithDefault.map(product => ({
+        icon: product.icon,
+        label: product.name,
+        description: product.name + ' - ' + product.price + 'kr',
+        value: product.id,
+      })),
+    [data]
+  )
 
   return (
     <MultiSelect

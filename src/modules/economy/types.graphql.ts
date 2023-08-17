@@ -67,6 +67,10 @@ export interface SociProductNode {
   icon: string // emoji string
 }
 
+export type SociProductWithDefault = SociProductNode & {
+  isDefault: boolean
+}
+
 export interface SociBankAccountNode {
   id: string
   user: UserNode
@@ -223,6 +227,10 @@ export interface SociSessionReturns {
 
 export interface AllSociProductsReturns {
   allSociProducts: SociProductNode[]
+}
+
+export interface AllSociProductsWithDefaultReturns {
+  allSociProductsWithDefault: SociProductWithDefault[]
 }
 
 export interface ActiveSociOrderSessionReturns {

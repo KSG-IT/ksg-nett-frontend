@@ -148,6 +148,29 @@ export const ALL_SOCI_PRODUCTS = gql`
   }
 `
 
+export const ALL_SOCI_PRODUCTS_WITH_DEFAULT = gql`
+  query AllSociProductsWithDefault {
+    allSociProductsWithDefault {
+      id
+      name
+      price
+      icon
+      isDefault
+    }
+  }
+`
+
+export const ALL_ACTIVE_SOCI_PRODUCTS = gql`
+  query AllActiveSociProducts {
+    allActiveSociProducts {
+      id
+      name
+      price
+      icon
+    }
+  }
+`
+
 export const ACTIVE_SOCI_ORDER_SESSION = gql`
   query ActiveSociOrderSession {
     activeSociOrderSession {
