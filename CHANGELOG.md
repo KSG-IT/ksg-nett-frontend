@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [2023.8.2] - 2023-8-21
+
+### Added
+
+- Admissions
+  - Display a warning if an applicant applies to a position that has 'functionary' member type
+
+### Changed
+
+- Dependencies
+  - Upgrade mantine patch v6.0.17 -> v6.0.18
+
 ## [2023.8.1] - 2023-8-3
 
 ### Added
