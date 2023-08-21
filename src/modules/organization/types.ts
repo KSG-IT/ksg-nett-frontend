@@ -21,6 +21,7 @@ export type InternalGroupPositionNode = {
   id: string
   internalGroup: InternalGroupNode
   name: string
+  admissionMembershipType: 'functionary' | 'gang-member' // TODO: THIS HAS TO BE CHANGED TO A ENUM. And done better on backend
 }
 
 export type InternalGroupUserHighlightNode = {

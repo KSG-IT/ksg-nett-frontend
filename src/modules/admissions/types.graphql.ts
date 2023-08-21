@@ -114,7 +114,7 @@ export type InternalGroupPositionPriorityNode = {
   id: string
   internalGroupPosition: Pick<
     InternalGroupPositionNode,
-    'id' | 'name' | 'internalGroup'
+    'id' | 'name' | 'internalGroup' | 'admissionMembershipType'
   >
   applicantPriority: InternalGroupPositionPriorityApplicantPriorityValues
   internalGroupPriority: InternalGroupPositionPriorityInternalGroupPriorityValues
