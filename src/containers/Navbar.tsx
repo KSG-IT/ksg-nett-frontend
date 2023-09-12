@@ -35,12 +35,12 @@ const routes: RouteGroup[] = [
         label: 'Kontrollpanel',
         permissions: [],
       },
-      {
-        icon: IconMessage,
-        link: '/forum',
-        label: 'Forum',
-        permissions: [],
-      },
+      // {
+      //   icon: IconMessage,
+      //   link: '/forum',
+      //   label: 'Forum',
+      //   permissions: [],
+      // },
       {
         icon: IconBook2,
         link: '/handbook',

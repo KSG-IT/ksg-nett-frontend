@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [2023.9.1] - 2023-9-12
+
+### Removed
+
+- Dashboard: Remove KSG-IT recruitement post
+- Forum: Remove module
+
+### Changed
+
+- Improved whats new popup, replacing affix with a modal. Also inverting the hide check to hide by default and flip value based on localstorage value
+
 ## [2023.8.2] - 2023-8-21
 
 ### Added
