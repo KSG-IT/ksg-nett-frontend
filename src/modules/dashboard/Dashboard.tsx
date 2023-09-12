@@ -1,14 +1,5 @@
 import { useQuery } from '@apollo/client'
-import {
-  Card,
-  createStyles,
-  Grid,
-  keyframes,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from '@mantine/core'
+import { createStyles, Grid, Stack, useMantineTheme } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -21,15 +12,12 @@ import { TransactionCard } from './components/TransactionCard'
 import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
 import { DashboardDataQueryReturns } from './types.graphql'
-import { useNavigate } from 'react-router-dom'
-import { RecruitBanner } from './components/RecruitingBanner'
 
 const breadCrumbItems = [{ label: 'Hjem', path: '/dashboard' }]
 
 export const Dashboard = () => {
   const { classes } = useStyles()
   const theme = useMantineTheme()
-  const navigate = useNavigate()
   const mediaQuery = useMediaQuery(
     `(min-width: ${theme.breakpoints.xl + 300}px)`
   )
@@ -59,11 +47,6 @@ export const Dashboard = () => {
   return (
     <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
-
-      <Text weight={700} color="dimmed">
-        Fremhevet tråd
-      </Text>
-      <RecruitBanner />
 
       <ShortcutCards
         sociOrderSession={!!sociOrderSession}

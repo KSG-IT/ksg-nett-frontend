@@ -2,6 +2,29 @@
 
 ## [Unreleased]
 
+## [2023.9.1] - 2023-9-12
+
+### Removed
+
+- Dashboard: Remove KSG-IT recruitement post
+- Forum: Remove module
+
+### Changed
+
+- Improved whats new popup, replacing affix with a modal. Also inverting the hide check to hide by default and flip value based on localstorage value
+
+## [2023.8.2] - 2023-8-21
+
+### Added
+
+- Admissions
+  - Display a warning if an applicant applies to a position that has 'functionary' member type
+
+### Changed
+
+- Dependencies
+  - Upgrade mantine patch v6.0.17 -> v6.0.18
+
 ## [2023.8.1] - 2023-8-3
 
 ### Added

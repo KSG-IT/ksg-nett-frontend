@@ -217,6 +217,35 @@ export const SetPriorities: React.FC<SetPrioritiesProps> = ({
         barservitør. Selv om de er tilgjengelige her.
       </MessageBox>
 
+      {/* If any of priorities are FUNCTIONARY we display a warning. This is such a hack */}
+      {applicant.priorities
+        .filter(prio => prio !== null)
+        .find(prio => {
+          return (
+            prio!.internalGroupPosition?.admissionMembershipType ===
+            'functionary'
+          )
+        }) && (
+        <MessageBox type="warning">
+          <b>
+            Obs!{' '}
+            {applicant.priorities
+              .filter(prio => prio !== null)
+              .filter(prio => {
+                return (
+                  prio!.internalGroupPosition?.admissionMembershipType ===
+                  'functionary'
+                )
+              })
+              .map(prio => {
+                return prio!.internalGroupPosition?.name
+              })
+              .join(', ')}
+          </b>
+          {', '} er funksjonærstilling(er) som innebærer 6 semester bindingstid
+          og ikke 3 semestere slik de andre stillingene gjør.{' '}
+        </MessageBox>
+      )}
       <Stack ref={animationParent}>
         {values.map((priority, index) => (
           <Group grow key={priority!.id} position={'apart'}>
