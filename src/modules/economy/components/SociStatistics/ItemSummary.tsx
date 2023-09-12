@@ -2,9 +2,7 @@ import { useQuery } from '@apollo/client'
 import {
   Badge,
   Card,
-  Divider,
   Group,
-  SimpleGrid,
   Stack,
   Text,
   Title,
@@ -17,6 +15,7 @@ import {
   ProductOrdersByItemAndDateListReturns,
   ProductOrdersByItemAndDateListVariables,
 } from 'modules/economy/types.graphql'
+import { useCurrencyFormatter } from 'util/hooks'
 
 interface ItemSummaryProps {
   productIds: string[]
@@ -29,6 +28,7 @@ export const ItemSummary: React.FC<ItemSummaryProps> = ({
   dateFrom,
   dateTo,
 }) => {
+  const { formatCurrency } = useCurrencyFormatter()
   const { data, loading, error } = useQuery<
     ProductOrdersByItemAndDateListReturns,
     ProductOrdersByItemAndDateListVariables
@@ -59,13 +59,6 @@ export const ItemSummary: React.FC<ItemSummaryProps> = ({
     return acc + curr.quantity
   }, 0)
 
-  const statistic = (label: string, value: number) => {
-    return (
-      <Stack>
-        <Badge size="lg">{label}</Badge>
-      </Stack>
-    )
-  }
   const theme = useMantineTheme()
 
   return (
@@ -80,8 +73,8 @@ export const ItemSummary: React.FC<ItemSummaryProps> = ({
           <Badge size="lg">Totalt antall</Badge>
         </Stack>
         <Stack>
-          <Text size={'lg'}>{sum} kr</Text>
-          <Text size={'lg'}>{avg} kr</Text>
+          <Text size={'lg'}>{formatCurrency(sum)}</Text>
+          <Text size={'lg'}>{formatCurrency(avg)}</Text>
           <Text size={'lg'}>{quantity} stk.</Text>
         </Stack>
       </Group>

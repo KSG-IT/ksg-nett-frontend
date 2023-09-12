@@ -1,5 +1,5 @@
 import { Card, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core'
-import { DateInput, DatePicker, DatePickerInput } from '@mantine/dates'
+import { DatePickerInput } from '@mantine/dates'
 import { IconGraph } from '@tabler/icons-react'
 import { format, startOfMonth } from 'date-fns'
 import { useState } from 'react'
@@ -7,11 +7,13 @@ import { MultiProductSelect } from '../components/MultiProductSelect'
 import { ItemChart } from '../components/SociStatistics/ItemChart'
 import { ItemDoughnut } from '../components/SociStatistics/ItemDoughnut'
 import { ItemSummary } from '../components/SociStatistics/ItemSummary'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 
 export const SociStatistics: React.FC = () => {
   const [dateFrom, setDateFrom] = useState<string>(
     format(startOfMonth(new Date()), 'yyyy-MM-dd')
   )
+
   const [dateTo, setDateTo] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
   const [productIds, setProductIds] = useState<string[]>([])
 
@@ -24,6 +26,13 @@ export const SociStatistics: React.FC = () => {
 
   return (
     <Stack>
+      <Breadcrumbs
+        items={[
+          { label: 'Hjem', path: '/dashboard' },
+          { label: 'Økonomi', path: '/economy' },
+          { label: 'Salgsstatistikk', path: '' },
+        ]}
+      />
       <Title order={2}>Salgsstatistikk</Title>
       <Card withBorder>
         <Group>
