@@ -84,6 +84,9 @@ export const UserSearch: React.FC = () => {
         placeholder="Søk etter bruker"
         rightSection={<IconSearch color={theme.colors['gray'][4]} />}
         searchable
+        style={{
+          width: '100%',
+        }}
       />
     </div>
   )
