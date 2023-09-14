@@ -1,7 +1,8 @@
 import { Card, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import { IconGraph } from '@tabler/icons-react'
-import { format, startOfMonth } from 'date-fns'
+import { startOfMonth } from 'date-fns'
+import { format } from 'util/date-fns'
 import { useState } from 'react'
 import { MultiProductSelect } from '../components/MultiProductSelect'
 import { ItemChart } from '../components/SociStatistics/ItemChart'
@@ -33,7 +34,10 @@ export const SociStatistics: React.FC = () => {
           { label: 'Salgsstatistikk', path: '' },
         ]}
       />
-      <Title order={2}>Salgsstatistikk</Title>
+      {/* date From and To should be date objects and not strings */}
+      <Title order={2}>
+        Salgsstatistikk: {dateFrom} - {dateTo}
+      </Title>
       <Card withBorder>
         <Group>
           <DatePickerInput

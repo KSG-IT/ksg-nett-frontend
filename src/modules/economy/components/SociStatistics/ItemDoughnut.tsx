@@ -1,46 +1,32 @@
 import { useQuery } from '@apollo/client'
-import { Card, Group, useMantineTheme, Text } from '@mantine/core'
+import { Card, useMantineTheme } from '@mantine/core'
 import {
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title as ChartTitle,
-  Tooltip,
-  TimeScale,
-  ChartOptions,
-  Colors,
   ArcElement,
   CategoryScale,
+  Chart as ChartJS,
+  ChartOptions,
+  Title as ChartTitle,
+  Legend,
+  Tooltip,
 } from 'chart.js'
 import 'chartjs-adapter-date-fns'
-import { Doughnut, Line } from 'react-chartjs-2'
-import { format } from 'util/date-fns'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { PRODUCT_ORDERS_BY_ITEM_AND_DATE_LIST_QUERY } from 'modules/economy/queries'
 import {
-  PRODUCT_ORDERS_BY_ITEM_AND_DATE_LIST_QUERY,
-  PRODUCT_ORDERS_BY_ITEM_AND_DATE_QUERY,
-} from 'modules/economy/queries'
-import {
-  ExpenditureDay,
   ProductOrdersByItemAndDateListReturns,
   ProductOrdersByItemAndDateListVariables,
-  ProductOrdersByItemAndDateReturns,
-  ProductOrdersByItemAndDateVariables,
   TotalExpenditureItem,
 } from 'modules/economy/types.graphql'
-import { Item } from 'components/Select/SelectLabel'
 import { randomizeColors } from 'modules/economy/utils'
-import { formatISO } from 'date-fns'
+import { Doughnut } from 'react-chartjs-2'
+import { format } from 'util/date-fns'
 
 interface ItemDoughnutProps {
   productIds: string[]
   dateFrom: string
   dateTo: string
 }
-
 export const ItemDoughnut: React.FC<ItemDoughnutProps> = ({
   productIds,
   dateFrom,
@@ -95,11 +81,7 @@ export const ItemDoughnut: React.FC<ItemDoughnutProps> = ({
       },
       title: {
         display: true,
-        text:
-          'Fordeling av drikkevarer: ' +
-          format(new Date(dateFrom), 'dd.MMMM') +
-          ' til ' +
-          format(new Date(dateTo), 'dd.MMMM'),
+        text: 'Omsetning per produkt',
         font: {
           size: 20,
           family: theme.fontFamily,
@@ -114,8 +96,8 @@ export const ItemDoughnut: React.FC<ItemDoughnutProps> = ({
   function createDataset(product: TotalExpenditureItem) {
     const color = colorSelection.shift()
     return {
-      label: `${product.name}, ${product.total ?? 0} kr`,
-      data: product.quantity,
+      label: `${product.name}`,
+      data: product.total,
       color: color ? theme.colors[color][1] : '#000',
       borderColor: color ? theme.colors[color][3] : '#000',
     }
@@ -127,7 +109,7 @@ export const ItemDoughnut: React.FC<ItemDoughnutProps> = ({
     labels: [...datasets.map(product => product.label)],
     datasets: [
       {
-        label: 'Total drikkevare',
+        label: 'Omseting',
         data: [...datasets.map(product => product.data)],
         backgroundColor: [...datasets.map(product => product.color)],
         borderColor: [...datasets.map(product => product.borderColor)],

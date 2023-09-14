@@ -70,7 +70,7 @@ export const ItemSummary: React.FC<ItemSummaryProps> = ({
         <Stack>
           <Badge size="lg">Total omsetning</Badge>
           <Badge size="lg">Snitt per åpen dag</Badge>
-          <Badge size="lg">Totalt antall</Badge>
+          <Badge size="lg">Solgte varer</Badge>
         </Stack>
         <Stack>
           <Text size={'lg'}>{formatCurrency(sum)}</Text>

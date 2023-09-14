@@ -24,7 +24,6 @@ import {
 } from 'modules/economy/types.graphql'
 import { randomizeColors } from 'modules/economy/utils'
 import { Line } from 'react-chartjs-2'
-import { format } from 'util/date-fns'
 
 interface ItemChartProps {
   productIds: string[]
@@ -99,11 +98,7 @@ export const ItemChart: React.FC<ItemChartProps> = ({
       },
       title: {
         display: true,
-        text:
-          'Omsetning fra ' +
-          format(new Date(dateFrom), 'dd.MMMM') +
-          ' til ' +
-          format(new Date(dateTo), 'dd.MMMM'),
+
         font: { size: 20, family: theme.fontFamily },
         color: theme.colors.gray[6],
       },
@@ -117,7 +112,7 @@ export const ItemChart: React.FC<ItemChartProps> = ({
     return {
       label: product.name,
       data: product.data.map((item: ExpenditureDay) => ({
-        x: item.day,
+        x: item.day, // This is a backend string probably and not a date object. Currently shows 'Month. DD, YYYY, HH:MM:SS AM/PM' which sucks
         y: item.sum,
       })),
       backgroundColor: color ? theme.colors[color][1] : '#000',
