@@ -21,10 +21,15 @@ import { useShiftSlotMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
 import { ShiftNode, ShiftSlotNode } from 'modules/schedules/types.graphql'
 import { UserThumbnail } from 'modules/users/components'
-import { ALL_ACTIVE_USERS_LIST_QUERY } from 'modules/users/queries'
+import {
+  ALL_ACTIVE_USERS_LIST_QUERY,
+  SEARCHBAR_USERS_QUERY,
+} from 'modules/users/queries'
 import {
   AllUsersShallowQueryReturns,
   AllUsersShallowQueryVariables,
+  SearchbarUsersQueryReturns,
+  SearchbarUsersQueryVariables,
   UserThumbnailProps,
 } from 'modules/users/types'
 import React, { useEffect, useState } from 'react'
@@ -87,6 +92,7 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
       width="target"
       position="bottom-start"
       opened={popoverOpened}
+      withinPortal
       onClose={() => setPopoverOpened(false)}
     >
       <Popover.Target>
@@ -124,15 +130,15 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
           />
           {data.length === 0 && <Text color="gray">Her var det tomt</Text>}
           <FocusTrap>
-            <Stack spacing={0}>
+            <Stack spacing={0} style={{ maxHeight: 300, overflowY: 'scroll' }}>
               {data.map(user => (
                 <UnstyledButton
                   className={classes.selectUserButton}
                   onClick={() => handleSelectUser(user)}
                 >
-                  <Group spacing="xs">
-                    <Avatar src={user.profileImage} />
-                    <Text>{user.getCleanFullName}</Text>
+                  <Group spacing="md">
+                    <Avatar size={'md'} src={user.profileImage} />
+                    <Text size="xs">{user.getCleanFullName}</Text>
                   </Group>
                 </UnstyledButton>
               ))}
@@ -175,6 +181,7 @@ const EmptyShiftSlot: React.FC<ShiftSlotProps> = ({
       width="target"
       position="bottom-start"
       opened={popoverOpened}
+      withinPortal
       onClose={handleClosePopover}
     >
       <Popover.Target>
@@ -201,16 +208,15 @@ const EmptyShiftSlot: React.FC<ShiftSlotProps> = ({
             onChange={evt => onSearchChange(evt.target.value)}
           />
           <FocusTrap>
-            <Stack spacing={0}>
+            <Stack spacing={0} style={{ maxHeight: 300, overflowY: 'scroll' }}>
               {data.map(user => (
                 <UnstyledButton
                   className={classes.selectUserButton}
                   onClick={() => handleSelectUser(user)}
                 >
                   <Group spacing="md">
-                    <Avatar src={user.profileImage} />
-
-                    <Text>{user.getCleanFullName}</Text>
+                    <Avatar size={'md'} src={user.profileImage} />
+                    <Text size="xs">{user.getCleanFullName}</Text>
                   </Group>
                 </UnstyledButton>
               ))}
@@ -228,9 +234,9 @@ interface ShallowShiftProps {
 
 export const ShiftSlot: React.FC<ShallowShiftProps> = ({ shiftSlot }) => {
   const [getUsers, { loading }] = useLazyQuery<
-    AllUsersShallowQueryReturns,
-    AllUsersShallowQueryVariables
-  >(ALL_ACTIVE_USERS_LIST_QUERY)
+    SearchbarUsersQueryReturns,
+    SearchbarUsersQueryVariables
+  >(SEARCHBAR_USERS_QUERY)
 
   const [users, setUsers] = useState<UserType[]>([])
   const [selectedUser, setSelectedUser] = useState<UserType | null>(
@@ -249,10 +255,10 @@ export const ShiftSlot: React.FC<ShallowShiftProps> = ({ shiftSlot }) => {
     }
     getUsers({
       variables: {
-        q: debouncedQuery,
+        searchString: debouncedQuery,
       },
-      onCompleted({ allActiveUsersList }) {
-        setUsers(allActiveUsersList)
+      onCompleted({ searchbarUsers }) {
+        setUsers(searchbarUsers)
       },
       onError({ message }) {
         showNotification({
