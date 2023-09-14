@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { MessageBox } from 'components/MessageBox'
 import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
@@ -7,7 +7,6 @@ import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organizat
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
-  InternalGroupPositionType,
   InternalGroupPositionTypeOption,
 } from 'modules/organization/types.graphql'
 import { useState } from 'react'
@@ -39,6 +38,7 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
   })
 
   const handleAssignNewPosition = () => {
+    console.log(selectedInternalGroupPositionType)
     if (selectedInternalGroupPositionType === null) return
 
     assignNewPosition({
@@ -79,8 +79,12 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
         onChange={setInternalGroupPositionId}
       />
       <InternalGroupPositionTypeSelect
+        /**
+         * Since we have removed the onChange stuff to do some weird as shit we never update the type
+         * and the mutation is never executed.
+         */
         placeholder="Status"
-        //onChange={setSelectedInternalGroupPositionType}
+        // onChange={setSelectedInternalGroupPositionType}
       />
       <Group mt="md" position="apart">
         <Button variant="outline" onClick={() => setModalOpen(false)}>

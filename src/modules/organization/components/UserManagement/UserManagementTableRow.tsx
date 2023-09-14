@@ -8,13 +8,10 @@ import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
   InternalGroupPositionType,
-  InternalGroupPositionTypeOption,
   ManageInternalGroupUser,
 } from 'modules/organization/types.graphql'
 import { MANAGE_USERS_DATA_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
-
-import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 
 interface UserManagementTableRowProp {
   userData: ManageInternalGroupUser
