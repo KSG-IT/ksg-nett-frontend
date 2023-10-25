@@ -12,6 +12,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Select, { components, DropdownIndicatorProps } from 'react-select'
 import { useDebounce } from 'util/hooks'
+import AdvancedSearchButton from './AdvancedSearchButton'
 
 const DropdownIndicator = (
   props: DropdownIndicatorProps<UserSearchOption, false>
@@ -73,6 +74,9 @@ export const UserSearch: React.VFC = () => {
 
   return (
     <div className={classes.wrapper}>
+      <div className={classes.button}>
+        <AdvancedSearchButton />
+      </div>
       <Select
         isLoading={loading}
         onInputChange={val => setUserQuery(val)}
@@ -105,5 +109,8 @@ const useStyles = createStyles(theme => ({
       width: '100%',
       padding: 0,
     },
+  },
+  button: {
+    paddingRight: 10,
   },
 }))
