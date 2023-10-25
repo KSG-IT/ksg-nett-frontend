@@ -71,6 +71,7 @@ import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
 import PublicRoutes from './PublicRoutes'
 import { RestrictedRoute } from './RestrictedRoute'
+import AdvancedSearch from 'modules/advancedSearch/view/AdvancedSearch'
 
 const FullPage404 = React.lazy(
   () => import('components/FullPageComponents/FullPage404')
@@ -107,6 +108,7 @@ const ForumThread = React.lazy(() => import('modules/forum/views/ForumThread'))
 const EconomyDashboard = React.lazy(
   () => import('modules/economy/views/EconomyDashboard')
 )
+
 export const AppRoutes: React.FC = () => {
   const { loading, error, data } = useQuery<MeQueryReturns>(ME_QUERY)
   const setUser = useStore(state => state.setUser)
@@ -163,7 +165,10 @@ export const AppRoutes: React.FC = () => {
         <Route index element={<Navigate to="/dashboard" replace />} />
 
         <Route path="dashboard" element={<Dashboard />} />
+
         <Route path="*" element={<FullPage404 />} />
+
+        <Route path="advanced_search" element={<AdvancedSearch />}></Route>
 
         {/* ==== BAR TAB MODULE ==== */}
         <Route path="bar-tab">

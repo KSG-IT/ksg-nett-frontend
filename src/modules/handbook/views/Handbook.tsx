@@ -16,7 +16,7 @@ import { ALL_DOCUMENTS_QUERY } from '../queries'
 import { AllDocumentsReturn, DocumentNode } from '../types.graphql'
 
 const breadcrumbs = [
-  { label: 'Home', path: '/' },
+  { label: 'Hjem', path: '/' },
   { label: 'Håndboka', path: '/handbook' },
 ]
 

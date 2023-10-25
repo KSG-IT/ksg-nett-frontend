@@ -5,6 +5,7 @@ import { FullContentLoader } from 'components/Loading'
 import { ShortcutCardGrid } from 'components/ShortcutCard'
 import { ALL_INTERNAL_GROUPS_BY_TYPE_QUERY } from '../queries'
 import { AllInternalGroupsByTypeReturns } from '../types'
+import { Breadcrumbs } from 'components/Breadcrumbs'
 
 export const InternalGroups: React.FC = () => {
   const { loading, error, data } = useQuery<AllInternalGroupsByTypeReturns>(
@@ -29,8 +30,14 @@ export const InternalGroups: React.FC = () => {
     color: 'samfundet-red',
   }))
 
+  const breadcrumbs = [
+    { label: 'Hjem', path: '/dashboard' },
+    { label: 'Interngjengene', path: '/internal-groups' },
+  ]
+
   return (
     <Stack>
+      <Breadcrumbs items={breadcrumbs} />
       <Title order={1}>Driftende gjenger</Title>
       <ShortcutCardGrid cols={3} shortcuts={internaalGroupShortcuts} />
       <Title order={1}>Interessegrupper</Title>
