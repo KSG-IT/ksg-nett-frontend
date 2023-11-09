@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { Badge, Text, TextProps, createStyles } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { CardTable } from 'components/CardTable'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
 import {
@@ -9,9 +10,10 @@ import {
   ManageInternalGroupUser,
 } from 'modules/organization/types.graphql'
 import { MANAGE_USERS_DATA_QUERY } from 'modules/users/queries'
+import { useMemo } from 'react'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { UserManagementTableRow } from './UserManagementTableRow'
-import { showNotification } from '@mantine/notifications'
+import { useNavigate } from 'react-router-dom'
 
 interface UserManagementTableProps {
   usersData: ManageInternalGroupUser[]
@@ -31,9 +33,18 @@ const useStyles = createStyles(theme => ({
     borderRadius: theme.radius.xs,
   },
 }))
-const TableData: React.FC<TextProps> = ({ children, color, weight }) => (
+
+type TableDataProps = TextProps & {
+  onClick?: () => void
+}
+const TableData: React.FC<TableDataProps> = ({ children, color, weight }) => (
   <td>
-    <Text color={color} weight={weight} size={'sm'}>
+    <Text
+      color={color}
+      weight={weight}
+      size={'sm'}
+      style={{ cursor: 'pointer' }}
+    >
       {children}
     </Text>
   </td>
@@ -44,6 +55,7 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   activeMemberships = false,
 }) => {
   const { classes } = useStyles()
+  const navigate = useNavigate()
   const [assignNewPosition, { loading }] = useMutation<
     AssignNewInternalGroupPositionMembershipReturns,
     AssignNewInternalGroupPositionMembershipVariables
@@ -80,42 +92,54 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
     })
   }
 
-  const tableRows = usersData.map(membership => (
-    <tr key={membership.userId}>
-      <TableData>{membership.fullName}</TableData>
-      <td align="center">
-        <Badge color={'samfundet-red'}>{membership.positionName}</Badge>
-      </td>
-      <td>
-        <InternalGroupPositionTypeSelect
-          withinPortal
-          style={{ width: 'fit-content' }}
-          onChange={data => {
-            if (
-              data &&
-              Object.values(InternalGroupPositionType).includes(
-                data as InternalGroupPositionType
-              )
-            ) {
-              handleAssignNewPosition(
-                membership.userId,
-                data as InternalGroupPositionType,
-                membership.internalGroupPositionMembership.position.id
-              )
-            }
-          }}
-          variant="unstyled"
-          value={membership.internalGroupPositionType}
-        />
-      </td>
-      <TableData>{membership.dateJoinedSemesterShorthand}</TableData>
-      {activeMemberships ? (
-        <UserManagementTableRow userData={membership} />
-      ) : (
-        <td>{membership.dateEndedSemesterShorthand}</td>
-      )}
-    </tr>
-  ))
+  function handleNavigateToUserPage(userId: string) {
+    navigate(`/users/${userId}`)
+  }
+
+  const tableRows = useMemo(
+    () =>
+      usersData.map(membership => (
+        <tr key={membership.userId}>
+          <TableData
+            onClick={() => handleNavigateToUserPage(membership.userId)}
+          >
+            {membership.fullName}
+          </TableData>
+          <td align="center">
+            <Badge color={'samfundet-red'}>{membership.positionName}</Badge>
+          </td>
+          <td>
+            <InternalGroupPositionTypeSelect
+              withinPortal
+              style={{ width: 'fit-content' }}
+              onChange={data => {
+                if (
+                  data &&
+                  Object.values(InternalGroupPositionType).includes(
+                    data as InternalGroupPositionType
+                  )
+                ) {
+                  handleAssignNewPosition(
+                    membership.userId,
+                    data as InternalGroupPositionType,
+                    membership.internalGroupPositionMembership.position.id
+                  )
+                }
+              }}
+              variant="unstyled"
+              value={membership.internalGroupPositionType}
+            />
+          </td>
+          <TableData>{membership.dateJoinedSemesterShorthand}</TableData>
+          {activeMemberships ? (
+            <UserManagementTableRow userData={membership} />
+          ) : (
+            <td>{membership.dateEndedSemesterShorthand}</td>
+          )}
+        </tr>
+      )),
+    [usersData, handleNavigateToUserPage]
+  )
   const Header: React.FC<TextProps> = ({ children, align }) => (
     <th>
       <Text
