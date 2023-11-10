@@ -2,7 +2,11 @@ import { Stack, Title } from '@mantine/core'
 import {
   IconBabyCarriage,
   IconBaguette,
+  IconChartArrows,
+  IconChartInfographic,
+  IconChartLine,
   IconCreditCard,
+  IconSolarPanel,
 } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { ShortcutCardGrid } from 'components/ShortcutCard'
@@ -27,6 +31,19 @@ const shortcuts = [
     icon: IconBabyCarriage,
     color: 'samfundet-red',
     link: 'soci-sessions',
+  },
+  {
+    title: 'SociNomics',
+    icon: IconChartLine,
+    color: 'samfundet-red',
+    link: '/economy/socinomics',
+  },
+
+  {
+    title: 'SociNomics',
+    icon: IconSolarPanel,
+    color: 'samfundet-red',
+    link: '/economy/socinomics-control',
   },
 ]
 
