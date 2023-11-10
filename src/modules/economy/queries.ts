@@ -248,6 +248,9 @@ export const STOCK_MARKET_PRODUCTS_QUERY = gql`
     lastMarketCrash {
       timestamp
     }
+    lastMarketCrash {
+      timestamp
+    }
   }
 `
 

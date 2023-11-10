@@ -346,6 +346,9 @@ export interface InviteUsersToOrderSessionVariables {
 
 export interface StockMarketProductsReturns {
   stockMarketProducts: StockMarketProductNode[]
+  lastMarketCrash: {
+    timestamp: string
+  }
 }
 
 export interface IncrementGhostOrderReturns {

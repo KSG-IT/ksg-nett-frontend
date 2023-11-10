@@ -1,26 +1,16 @@
-// ControlPanel.tsx
-
-import React from 'react'
+import { useMutation, useQuery } from '@apollo/client'
+import { Button, Container, SimpleGrid, Title } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
+import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
+import SociStockProductControlCard from '../components/SociStockProductControlCard'
+import { STOCK_MARKET_CRASH_MUTATION } from '../mutations'
+import { STOCK_MARKET_PRODUCTS_QUERY } from '../queries'
 import {
   StockMarketCrashMutationReturns,
   StockMarketCrashMutationVariables,
-  StockMarketProductNode,
   StockMarketProductsReturns,
 } from '../types.graphql'
-import SociStockProductControlCard from '../components/SociStockProductControlCard'
-import { Button, Container, SimpleGrid, Stack, Title } from '@mantine/core'
-import { useMutation, useQuery } from '@apollo/client'
-import { STOCK_MARKET_PRODUCTS_QUERY } from '../queries'
-import { FullPageError } from 'components/FullPageComponents'
-import { FullContentLoader } from 'components/Loading'
-import { ConfirmModal } from '@mantine/modals/lib/ConfirmModal'
-import { STOCK_MARKET_CRASH_MUTATION } from '../mutations'
-
-interface Product {
-  name: string
-  price: number
-  change: number
-}
 
 const SocinomicsControlPanel: React.FC = () => {
   // query for stock market products
@@ -49,11 +39,23 @@ const SocinomicsControlPanel: React.FC = () => {
     const check = confirm(
       'Are you sure you want to crash the stock market? This will reset all stocks to their original price.'
     )
-    if (check) {
-      mutate().then(res => {
-        console.log(res)
-      })
-    }
+    if (!check) return
+
+    mutate({
+      onCompleted() {
+        showNotification({
+          title: 'Stock market crashed',
+          message: 'All stocks have been reset to their original price',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Error',
+          message,
+          color: 'red',
+        })
+      },
+    })
   }
 
   const products = data.stockMarketProducts

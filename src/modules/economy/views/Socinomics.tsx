@@ -1,57 +1,65 @@
+import { useQuery } from '@apollo/client'
 import {
-  Card,
-  Group,
-  SimpleGrid,
-  Stack,
-  ThemeIcon,
-  Title,
-  Transition,
-  createStyles,
-  Text,
-  useMantineTheme,
   Affix,
   Button,
   Container,
+  SimpleGrid,
+  Title,
+  createStyles,
 } from '@mantine/core'
-import {
-  IconArrowDown,
-  IconArrowUp,
-  IconChevronDown,
-  IconMoneybag,
-  IconTriangle,
-  IconTriangleFilled,
-  IconTriangleInverted,
-  IconTriangleInvertedFilled,
-} from '@tabler/icons-react'
-import { SociStockProduct } from '../components/SociStockProduct'
-import { StockMarketProductsReturns } from '../types.graphql'
-import { useQuery } from '@apollo/client'
-import { STOCK_MARKET_PRODUCTS_QUERY } from '../queries'
+import { IconChevronDown } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { SociStockProduct } from '../components/SociStockProduct'
+import { STOCK_MARKET_PRODUCTS_QUERY } from '../queries'
+import { StockMarketProductsReturns } from '../types.graphql'
 
-interface SociNomicsProps {}
-
-export const SociNomics: React.FC<SociNomicsProps> = () => {
+const Socinomics: React.FC = () => {
   const [stocksLength, setStocksLength] = useState(0)
   const [fullScreen, setFullScreen] = useState(false)
-  const { classes, cx } = useStyles({ stocksLength, fullScreen })
-  const theme = useMantineTheme()
+  const [marketCrashCountdown, setMarketCrashCountdown] = useState<
+    null | number
+  >(null)
+  const { classes } = useStyles({ stocksLength, fullScreen })
 
   const { data, loading, error } = useQuery<StockMarketProductsReturns>(
     STOCK_MARKET_PRODUCTS_QUERY,
     {
       fetchPolicy: 'network-only',
-      pollInterval: 5000,
+      pollInterval: 10_000,
     }
   )
+
+  useEffect(() => {
+    if (!data) return
+
+    if (!data.lastMarketCrash) return
+
+    if (!data.lastMarketCrash.timestamp) return
+
+    const interval = setInterval(() => {
+      setMarketCrashCountdown(
+        Math.floor(
+          (new Date().getTime() -
+            new Date(data.lastMarketCrash.timestamp).getTime()) /
+            1000
+        )
+      )
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [data])
 
   if (error) return <FullPageError error={error} />
 
   if (loading || !data) return <FullContentLoader />
 
-  const stocks = data.stockMarketProducts
+  const { stockMarketProducts: stocks, lastMarketCrash } = data
+
+  // display if timestamp is not null and is less than 10 minutes ago
+  const displayMarketCrashBaner =
+    marketCrashCountdown && marketCrashCountdown < 60 * 10
 
   if (stocks.length !== stocksLength) {
     setStocksLength(stocks.length)
@@ -59,20 +67,22 @@ export const SociNomics: React.FC<SociNomicsProps> = () => {
 
   return (
     <div className={fullScreen ? classes.root : classes.windowed}>
-      <Container py={'sm'} mb={'sm'} fluid bg={'samfundet-red'}>
-        <Title
-          className={classes.scrollingInner}
-          align="center"
-          style={{
-            color: 'white',
-            textShadow: '1px 1px 2px black',
-            animationDuration: '11s',
-          }}
-          order={1}
-        >
-          Time since last crack:{' '}
-        </Title>
-      </Container>
+      {displayMarketCrashBaner && (
+        <Container py={'sm'} mb={'sm'} fluid bg={'samfundet-red'}>
+          <Title
+            className={classes.scrollingInner}
+            align="center"
+            style={{
+              color: 'white',
+              textShadow: '1px 1px 2px black',
+              animationDuration: '11s',
+            }}
+            order={1}
+          >
+            Børskrakk: {marketCrashCountdown} sekunder siden
+          </Title>
+        </Container>
+      )}
       <div className={classes.scrollingContainer}>
         <div className={classes.scrollingInner}>
           {stocks.map((stock, index) => (
@@ -140,3 +150,5 @@ const useStyles = createStyles(
     },
   })
 )
+
+export default Socinomics

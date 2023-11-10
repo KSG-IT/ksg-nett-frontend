@@ -51,9 +51,9 @@ import {
   MyAvailability,
   MyUpcomingShifts,
   ScheduleDetails,
-  Schedules,
   ScheduleTemplateDetails,
   ScheduleTemplates,
+  Schedules,
 } from 'modules/schedules/views'
 import { CreateSummary, Summaries, SummaryDetail } from 'modules/summaries'
 import { ME_QUERY } from 'modules/users/queries'
@@ -71,8 +71,6 @@ import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
 import PublicRoutes from './PublicRoutes'
 import { RestrictedRoute } from './RestrictedRoute'
-import { SociNomics } from 'modules/economy/views/Socinomics'
-import SocinomicsControlPanel from 'modules/economy/views/SocinomicsControl'
 
 const FullPage404 = React.lazy(
   () => import('components/FullPageComponents/FullPage404')
@@ -93,6 +91,12 @@ const AdmissionStatistics = React.lazy(
 // ==== Users ====
 const MySettings = React.lazy(() => import('modules/users/views/MySettings'))
 const Newbies = React.lazy(() => import('modules/users/views/Newbies'))
+
+// ==== Economy ====
+const Socinomics = React.lazy(() => import('modules/economy/views/Socinomics'))
+const SocinomicsControlPanel = React.lazy(
+  () => import('modules/economy/views/SocinomicsControl')
+)
 
 // ==== Feature flags ====
 const FeatureFlags = React.lazy(
@@ -466,10 +470,16 @@ export const AppRoutes: React.FC = () => {
           </Route>
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
-          <Route path="socinomics" element={<SociNomics />} />
+          <Route path="socinomics" element={<Socinomics />} />
           <Route
             path="socinomics-control"
-            element={<SocinomicsControlPanel />}
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.economy.add.stockMarketCrash}
+              >
+                <SocinomicsControlPanel />
+              </RestrictedRoute>
+            }
           />
           <Route path="soci-sessions">
             <Route
