@@ -235,3 +235,29 @@ export const ALL_SOCI_ORDERR_SESSION_DRINK_ORDERS_QUERY = gql`
     }
   }
 `
+
+export const STOCK_MARKET_PRODUCTS_QUERY = gql`
+  query StockMarketProducts {
+    stockMarketProducts {
+      name
+      id
+      price
+      trend
+      percentageChange
+    }
+    lastMarketCrash {
+      timestamp
+    }
+    lastMarketCrash {
+      timestamp
+    }
+  }
+`
+
+export const LAST_MARKET_CRASH_QUERY = gql`
+  query lastMarketCrash {
+    lastMarketCrash {
+      timestamp
+    }
+  }
+`

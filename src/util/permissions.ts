@@ -26,6 +26,7 @@ export const PERMISSIONS = {
     add: {
       sociSession: 'economy.add_socisession',
       sociOrderSession: 'economy.add_sociordersession',
+      stockMarketCrash: 'economy.add_stockmarketcrash',
     },
     view: {
       sociSession: 'economy.view_socisession',

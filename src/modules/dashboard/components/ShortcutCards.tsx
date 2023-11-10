@@ -4,8 +4,10 @@ import {
   IconCreditCard,
   IconEdit,
   IconMeat,
+  IconMoneybag,
   IconMoodKid,
   IconQuote,
+  IconReportMoney,
 } from '@tabler/icons-react'
 import { ShortcutCard, ShortcutCardGrid } from 'components/ShortcutCard'
 import { useMemo } from 'react'
@@ -42,11 +44,13 @@ const shortcuts = [
 interface ShortcutCardsProps {
   sociOrderSession: boolean
   showNewbies: boolean
+  showStockMarketShortcut: boolean
 }
 
 export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
   sociOrderSession,
   showNewbies,
+  showStockMarketShortcut,
 }) => {
   const { classes } = useStyles()
 
@@ -71,6 +75,15 @@ export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
       <Text color="dimmed" className={classes.title}>
         Snarveier
       </Text>
+
+      {showStockMarketShortcut && (
+        <ShortcutCard
+          title="Børsen er åpen"
+          icon={IconReportMoney}
+          color="green"
+          link="/economy/socinomics"
+        />
+      )}
 
       {sociOrderSession && (
         <ShortcutCard
