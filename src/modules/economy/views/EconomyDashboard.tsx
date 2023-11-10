@@ -2,8 +2,6 @@ import { Stack, Title } from '@mantine/core'
 import {
   IconBabyCarriage,
   IconBaguette,
-  IconChartArrows,
-  IconChartInfographic,
   IconChartLine,
   IconCreditCard,
   IconSolarPanel,
@@ -33,14 +31,14 @@ const shortcuts = [
     link: 'soci-sessions',
   },
   {
-    title: 'SociNomics',
+    title: 'Børsen',
     icon: IconChartLine,
     color: 'samfundet-red',
     link: '/economy/socinomics',
   },
 
   {
-    title: 'SociNomics',
+    title: 'Børskontroll',
     icon: IconSolarPanel,
     color: 'samfundet-red',
     link: '/economy/socinomics-control',

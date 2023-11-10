@@ -8,33 +8,19 @@ import {
   useMantineTheme,
 } from '@mantine/core'
 import {
-  IconArrowDown,
-  IconArrowUp,
-  IconChevronDown,
   IconMoneybag,
   IconTriangle,
-  IconTriangleFilled,
   IconTriangleInverted,
-  IconTriangleInvertedFilled,
 } from '@tabler/icons-react'
 import { StockMarketProductNode } from '../types.graphql'
-
-interface StockMarketProduct extends StockMarketProductNode {
-  change: number
-}
 
 interface SociStockProductProps {
   stock: StockMarketProductNode
 }
 
 export const SociStockProduct: React.FC<SociStockProductProps> = ({
-  stock: stock1,
+  stock,
 }) => {
-  // dirty logic to make the types work temporarily
-  const stock = {
-    ...stock1,
-    change: -4,
-  } as StockMarketProduct
   const { classes, cx } = useStyles()
   const theme = useMantineTheme()
   return (

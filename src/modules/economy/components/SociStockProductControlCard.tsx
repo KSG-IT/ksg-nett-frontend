@@ -1,15 +1,14 @@
-// StockMarketProduct.tsx
-
+import { useMutation } from '@apollo/client'
+import { Badge, Button, Card, Group, Text, Title } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import React from 'react'
-import { Card, Title, Text, Badge, Button, Group } from '@mantine/core'
+import { CREATE_GHOST_ORDER_MUTATION } from '../mutations'
+import { STOCK_MARKET_PRODUCTS_QUERY } from '../queries'
 import {
   IncrementGhostOrderReturns,
   IncrementGhostOrderVariables,
   StockMarketProductNode,
 } from '../types.graphql'
-import { useMutation } from '@apollo/client'
-import { CREATE_GHOST_ORDER_MUTATION } from '../mutations'
-import { STOCK_MARKET_PRODUCTS_QUERY } from '../queries'
 
 interface StockMarketProductProps {
   stock: StockMarketProductNode
@@ -18,8 +17,7 @@ interface StockMarketProductProps {
 const SociStockProductControlCard: React.FC<StockMarketProductProps> = ({
   stock,
 }) => {
-  // create a function to mutate the stock market product
-  const [mutate, { data, loading, error }] = useMutation<
+  const [createGhostOrder] = useMutation<
     IncrementGhostOrderReturns,
     IncrementGhostOrderVariables
   >(CREATE_GHOST_ORDER_MUTATION, {
@@ -30,14 +28,18 @@ const SociStockProductControlCard: React.FC<StockMarketProductProps> = ({
     ],
   })
 
-  // create a function to increment the ghost order
-  const incrementGhostOrder = async () => {
-    await mutate({
+  async function handleIncrementGhostOrder() {
+    await createGhostOrder({
       variables: {
         productId: stock.id,
       },
-    }).then(res => {
-      console.log(res)
+      onError({ message }) {
+        showNotification({
+          title: 'Error',
+          message,
+          color: 'red',
+        })
+      },
     })
   }
 
@@ -51,7 +53,7 @@ const SociStockProductControlCard: React.FC<StockMarketProductProps> = ({
           : `${stock.percentageChange}%`}
       </Badge>
       <Group position="right">
-        <Button onClick={incrementGhostOrder}>Kjøp</Button>
+        <Button onClick={handleIncrementGhostOrder}>Kjøp</Button>
       </Group>
     </Card>
   )

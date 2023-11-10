@@ -20,7 +20,7 @@ const SocinomicsControlPanel: React.FC = () => {
       pollInterval: 5000,
     }
   )
-  const [mutate] = useMutation<
+  const [crashStockMarket] = useMutation<
     StockMarketCrashMutationReturns,
     StockMarketCrashMutationVariables
   >(STOCK_MARKET_CRASH_MUTATION, {
@@ -41,7 +41,7 @@ const SocinomicsControlPanel: React.FC = () => {
     )
     if (!check) return
 
-    mutate({
+    crashStockMarket({
       onCompleted() {
         showNotification({
           title: 'Stock market crashed',
