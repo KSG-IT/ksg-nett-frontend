@@ -12,6 +12,7 @@ import {
   IconTriangle,
   IconTriangleInverted,
 } from '@tabler/icons-react'
+import { useIsMobile } from 'util/hooks'
 import { StockMarketProductNode } from '../types.graphql'
 
 interface SociStockProductProps {
@@ -23,23 +24,26 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
 }) => {
   const { classes, cx } = useStyles()
   const theme = useMantineTheme()
+  const isMobile = useIsMobile()
+
   return (
     <Card className={classes.stock}>
       <Group noWrap>
-        <ThemeIcon size={60}>
+        <ThemeIcon size={isMobile ? 30 : 60}>
           <IconMoneybag size={58} />
         </ThemeIcon>
         <Stack spacing={0}>
-          <Title className={classes.stockText} order={1}>
+          <Title className={classes.stockText} order={isMobile ? 4 : 1}>
             {stock.name}
           </Title>
-          <Group noWrap>
+          <Group noWrap spacing={0}>
             <Title
               className={cx(classes.stockText, {
                 [classes.stockTextPositive]: stock.percentageChange > 0,
                 [classes.stockTextNegative]: stock.percentageChange < 0,
               })}
-              order={1}
+              order={isMobile ? 4 : 1}
+              mr="sm"
             >
               {stock.price}
             </Title>
@@ -47,13 +51,15 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
               <IconTriangle
                 color={theme.colors.green[4]}
                 fill={theme.colors.green[4]}
-                size={24}
+                size={isMobile ? 12 : 24}
+                style={{ marginRight: '5px' }}
               />
             ) : (
               <IconTriangleInverted
                 color={theme.colors.red[4]}
                 fill={theme.colors.red[4]}
-                size={24}
+                size={isMobile ? 12 : 24}
+                style={{ marginRight: '5px' }}
               />
             )}
             <Title
@@ -61,7 +67,7 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
                 [classes.stockTextPositive]: stock.percentageChange > 0,
                 [classes.stockTextNegative]: stock.percentageChange < 0,
               })}
-              order={2}
+              order={isMobile ? 4 : 2}
             >
               {stock.percentageChange}%
             </Title>
@@ -78,6 +84,9 @@ const useStyles = createStyles(theme => ({
     border: '2px dotted gray',
     color: 'white',
     overflow: 'clip',
+    '@media (max-width: 600px)': {
+      minWidth: '250px',
+    },
   },
   stockText: {
     fontFamily: 'monospace',

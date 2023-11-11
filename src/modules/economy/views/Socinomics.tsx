@@ -7,10 +7,11 @@ import {
   Title,
   createStyles,
 } from '@mantine/core'
-import { IconChevronDown } from '@tabler/icons-react'
+import { IconChevronDown, IconMaximize } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useEffect, useState } from 'react'
+import { useIsMobile } from 'util/hooks'
 import { SociStockProduct } from '../components/SociStockProduct'
 import { STOCK_MARKET_PRODUCTS_QUERY } from '../queries'
 import { StockMarketProductsReturns } from '../types.graphql'
@@ -18,6 +19,7 @@ import { StockMarketProductsReturns } from '../types.graphql'
 const Socinomics: React.FC = () => {
   const [stocksLength, setStocksLength] = useState(0)
   const [fullScreen, setFullScreen] = useState(false)
+  const isMobile = useIsMobile()
   const [marketCrashCountdown, setMarketCrashCountdown] = useState<
     null | number
   >(null)
@@ -90,18 +92,26 @@ const Socinomics: React.FC = () => {
           ))}
         </div>
       </div>
-      <SimpleGrid my={'lg'} cols={2}>
+      <SimpleGrid my={'lg'} cols={isMobile ? 1 : 2}>
         {stocks.map((stock, index) => (
           <SociStockProduct stock={stock} key={index} />
         ))}
       </SimpleGrid>
-      <Affix
-        style={{ position: 'absolute', bottom: 0, right: 0, zIndex: 9001 }}
-      >
-        <Button variant="subtle" onClick={() => setFullScreen(!fullScreen)}>
-          <IconChevronDown />
-        </Button>
-      </Affix>
+      {!isMobile && (
+        <Affix
+          style={{
+            position: 'absolute',
+            bottom: 24,
+            right: 24,
+            zIndex: 9001,
+            backgroundColor: 'darkgrey',
+          }}
+        >
+          <Button variant="subtle" onClick={() => setFullScreen(!fullScreen)}>
+            <IconMaximize />
+          </Button>
+        </Affix>
+      )}
     </div>
   )
 }
