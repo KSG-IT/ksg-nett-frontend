@@ -47,6 +47,7 @@ export const Dashboard = () => {
       myUpcomingShifts,
       sociOrderSession,
       showNewbies,
+      showStockMarketShortcut,
     },
   } = data
 
@@ -57,6 +58,7 @@ export const Dashboard = () => {
       <ShortcutCards
         sociOrderSession={!!sociOrderSession}
         showNewbies={showNewbies}
+        showStockMarketShortcut={showStockMarketShortcut}
       />
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
