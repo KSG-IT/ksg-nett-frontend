@@ -84,9 +84,7 @@ const useStyles = createStyles(theme => ({
     border: '2px dotted gray',
     color: 'white',
     overflow: 'clip',
-    '@media (max-width: 600px)': {
-      minWidth: '250px',
-    },
+    minWidth: '250px',
   },
   stockText: {
     fontFamily: 'monospace',
