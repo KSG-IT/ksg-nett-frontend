@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Center } from '@mantine/core'
+import { Center, Loader } from '@mantine/core'
 import * as Sentry from '@sentry/react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -71,6 +71,7 @@ import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
 import PublicRoutes from './PublicRoutes'
 import { RestrictedRoute } from './RestrictedRoute'
+import TutorialHome from 'modules/tutorial/TutorialHome'
 
 const FullPage404 = React.lazy(
   () => import('components/FullPageComponents/FullPage404')
@@ -524,6 +525,10 @@ export const AppRoutes: React.FC = () => {
         <Route path="forum">
           <Route index element={<ForumDashboard />} />
           <Route path="ksg-it-har-opptak" element={<ForumThread />} />
+        </Route>
+
+        <Route path="tutorial">
+          <Route index element={<TutorialHome />} />
         </Route>
 
         {/* ==== SCHEDULES MODULE ==== */}

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import {
+  Button,
   createStyles,
   Grid,
   keyframes,
@@ -18,6 +19,7 @@ import { TransactionCard } from './components/TransactionCard'
 import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
 import { DashboardDataQueryReturns } from './types.graphql'
+import { Link } from 'react-router-dom'
 
 const breadCrumbItems = [{ label: 'Hjem', path: '/dashboard' }]
 
@@ -60,6 +62,9 @@ export const Dashboard = () => {
         showNewbies={showNewbies}
         showStockMarketShortcut={showStockMarketShortcut}
       />
+      <Button component={Link} to="/tutorial">
+        Tutorial her
+      </Button>
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
         <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>

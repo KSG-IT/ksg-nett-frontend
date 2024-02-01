@@ -12,6 +12,7 @@ import {
   IconHome,
   IconMessage,
   IconUserPlus,
+  IconWashHand,
 } from '@tabler/icons-react'
 import { useLocation } from 'react-router-dom'
 import { useStore } from 'store'
@@ -110,6 +111,17 @@ const routes: RouteGroup[] = [
         link: 'feature-flags',
         label: 'Feature flags',
         permissions: PERMISSIONS.featureFlags.view.featureFlag,
+      },
+    ],
+  },
+  {
+    title: 'IT',
+    items: [
+      {
+        icon: IconWashHand,
+        link: 'tutorial',
+        label: 'Tutorial',
+        permissions: [],
       },
     ],
   },
