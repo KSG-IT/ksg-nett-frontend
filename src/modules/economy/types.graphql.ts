@@ -14,6 +14,12 @@ export enum SociSessionType {
   BURGERLISTE = 'BURGERLISTE',
 }
 
+export enum SociNomicsTrendType {
+  UP = 'UP',
+  DOWN = 'DOWN',
+  NEUTRAL = 'STALE',
+}
+
 // balance typing
 export type Liquidity =
   | 'negative' // balance < 0
@@ -150,6 +156,13 @@ export type SociOrderSessionOrder = {
     getCleanFullName: string
   }
   session: SociOrderSessionNode
+}
+
+export type StockMarketProductNode = {
+  id: string
+  name: string
+  price: number
+  percentageChange: number
 }
 // QUERIES
 
@@ -366,4 +379,31 @@ export interface InviteUsersToOrderSessionReturns {
 
 export interface InviteUsersToOrderSessionVariables {
   users: string[]
+}
+
+export interface StockMarketProductsReturns {
+  stockMarketProducts: StockMarketProductNode[]
+  lastMarketCrash: {
+    timestamp: string
+  }
+}
+
+export interface IncrementGhostOrderReturns {
+  success: boolean
+}
+
+export interface IncrementGhostOrderVariables {
+  productId: string
+}
+
+export interface StockMarketCrashMutationReturns {
+  success: boolean
+}
+
+export interface StockMarketCrashMutationVariables {}
+
+export interface LAST_MARKET_CRASH_QUERY {
+  lastMarketCrash: {
+    timestamp: string
+  }
 }
