@@ -27,7 +27,7 @@ export const APPROVED_QUOTES_QUERY = gql`
   }
 `
 
-export const PENDING_QUOTES_QUERY = gql`
+export const PNEDING_QUOTES_QUERY = gql`
   query PendingQuotes {
     pendingQuotes {
       id

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Button,
   Checkbox,
@@ -9,23 +9,30 @@ import {
   Title,
   createStyles,
   Grid,
+  TextInput,
 } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
+import { LinkProps } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
+import { useDebouncedValue } from '@mantine/hooks'
+import { IconSearch } from '@tabler/icons-react'
+import { UserGrid } from '../components/UserGrid'
 
-const AdvancedSearch = () => {
-  const breadcrumbs = [
-    { label: 'Hjem', path: '/' },
-    { label: 'Avansert søk', path: '/advanced_search' },
-  ]
+const breadcrumbs = [
+  { label: 'Hjem', path: '/dashboard' },
+  { label: 'Avansert søk', path: '/advanced_search' },
+]
+
+export const AdvancedSearch = () => {
+  const [query, setQuery] = useState('')
+  const [debouncedQuery] = useDebouncedValue(query, 200)
+  /**
+   * For reference from QuotesLlist.tsx:
+   * This view lags like crazy on search. Fix at some point
+   */
 
   const { classes } = useStyles()
 
-  /**
-   *
-   * se sitatsøk eller referatsøk for resultater
-   *
-   *
-   */
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbs} />
@@ -33,7 +40,12 @@ const AdvancedSearch = () => {
       <Title>Avansert personsøk</Title>
       <div className={classes.searchWrapper}>
         <Stack>
-          <Input placeholder="Søk på navn" />
+          <TextInput
+            icon={<IconSearch />}
+            placeholder="Søk på navn"
+            value={query}
+            onChange={evt => setQuery(evt.target.value)}
+          />
 
           <Grid>
             <Grid.Col span={1}>Status:</Grid.Col>
@@ -41,8 +53,8 @@ const AdvancedSearch = () => {
               <Group>
                 <Checkbox label="Aktiv" value="Aktiv" />
                 <Checkbox label="Pang" value="Pang" />
-                <Checkbox label="Nypang" value="Nypang" />
                 <Checkbox label="Nyopptatt" value="Nyopptatt" />
+                <Checkbox label="Nypang" value="Nypang" />
                 <Checkbox label="Z person" value="Z person" />
               </Group>
             </Grid.Col>
@@ -88,11 +100,7 @@ const AdvancedSearch = () => {
             </Grid.Col>
           </Grid>
 
-          <Group>
-            <div className={classes.button}>
-              <Button>Personsøk</Button>
-            </div>
-          </Group>
+          <UserGrid search={debouncedQuery} />
         </Stack>
       </div>
     </Stack>

@@ -10,13 +10,7 @@ import {
   UnstyledButton,
   useMantineTheme,
 } from '@mantine/core'
-import { showNotification } from '@mantine/notifications'
-import {
-  IconArrowBackUp,
-  IconHash,
-  IconThumbUp,
-  IconTrash,
-} from '@tabler/icons-react'
+import { IconArrowBackUp, IconHash, IconTrash } from '@tabler/icons-react'
 import { PermissionGate } from 'components/PermissionGate'
 
 import { UserThumbnail } from 'modules/users/components'
@@ -27,40 +21,19 @@ import { PERMISSIONS } from 'util/permissions'
 import { useQuoteMutations } from '../mutations.hooks'
 import {
   APPROVED_QUOTES_QUERY,
-  PENDING_QUOTES_QUERY,
+  PNEDING_QUOTES_QUERY,
   POPULAR_QUOTES_QUERY,
 } from '../queries'
 import { QuoteNode } from '../types.graphql'
 
-interface VoteIconProps {
-  upvoted: boolean
-  onClick: () => void
-}
-
-const UpvoteIcon: React.FC<VoteIconProps> = ({ upvoted, onClick }) => {
-  const theme = useMantineTheme()
-  return (
-    <IconThumbUp
-      color={upvoted ? `${theme.colors.brand}` : 'gray'}
-      size={24}
-      strokeWidth={upvoted ? 2 : 1}
-      style={{ cursor: 'pointer' }}
-      onClick={onClick}
-    />
-  )
-}
-
-interface QuoteCardProps {
-  quote: Pick<
+interface UserCardProps {
+  user: Pick<
     QuoteNode,
     'text' | 'id' | 'tagged' | 'context' | 'sum' | 'semester'
   >
   displaySemester?: boolean
 }
-export const QuoteCard: React.FC<QuoteCardProps> = ({
-  quote,
-  displaySemester = false,
-}) => {
+export const UserCard: React.FC<UserCardProps> = ({ user }) => {
   const { classes } = useStyles()
   const refetchQueries = [
     POPULAR_QUOTES_QUERY,
@@ -70,65 +43,9 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
   ]
 
   const me = useStore(state => state.user)!
-  const [upvoted, setUpvoted] = useState(me.upvotedQuoteIds.includes(quote.id))
-  const [voteSum, setVoteSum] = useState(quote.sum)
-
-  const { invalidateQuote, deleteQuote, upvote, deleteUpvote } =
-    useQuoteMutations()
-
-  function handleUpvote() {
-    if (!upvoted) {
-      setVoteSum(sum => sum + 1)
-      setUpvoted(true)
-      upvote({
-        variables: { input: { quote: quote.id, value: 1 } },
-        refetchQueries,
-      })
-    } else {
-      setVoteSum(sum => sum - 1)
-      setUpvoted(false)
-      deleteUpvote({ variables: { quoteId: quote.id }, refetchQueries })
-    }
-  }
-
-  function handleInvalidateQuote() {
-    invalidateQuote({
-      variables: { quoteId: quote.id },
-      refetchQueries: [APPROVED_QUOTES_QUERY, PENDING_QUOTES_QUERY],
-      onCompleted() {
-        showNotification({
-          message: 'Sitat underkjent',
-        })
-      },
-      onError({ message }) {
-        showNotification({
-          title: 'Noe gikk galt',
-          message,
-        })
-      },
-    })
-  }
-
-  function handleDeleteQuote() {
-    deleteQuote({
-      variables: { id: quote.id },
-      refetchQueries: [APPROVED_QUOTES_QUERY, PENDING_QUOTES_QUERY],
-      onCompleted() {
-        showNotification({
-          message: 'Sitat slettet',
-        })
-      },
-      onError({ message }) {
-        showNotification({
-          title: 'Noe gikk galt',
-          message,
-        })
-      },
-    })
-  }
 
   return (
-    <Card radius={'md'} className={classes.card} key={quote.id} withBorder>
+    <Card radius={'md'} className={classes.card} key={user.id} withBorder>
       <Stack justify={'space-between'} spacing={'xs'} className={classes.card}>
         <Stack spacing={'xs'}>
           <Text size={'sm'} className={classes.quoteText}>
@@ -178,8 +95,6 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
                 {quote.semester}
               </Badge>
             )}
-            <Text size={'sm'}>{voteSum}</Text>
-            <UpvoteIcon upvoted={upvoted} onClick={handleUpvote} />
           </Group>
         </Group>
       </Stack>

@@ -1,11 +1,11 @@
 import { useQuery } from '@apollo/client'
 import { Button, Indicator } from '@mantine/core'
 import { Link, LinkProps } from 'react-router-dom'
-import { PNEDING_QUOTES_QUERY } from '../queries'
+import { PENDING_QUOTES_QUERY } from '../queries'
 import { PendingQuotesReturns } from '../types.graphql'
 
 export const PendingQuotesButton: React.FC<LinkProps> = ({ ...rest }) => {
-  const { data } = useQuery<PendingQuotesReturns>(PNEDING_QUOTES_QUERY, {
+  const { data } = useQuery<PendingQuotesReturns>(PENDING_QUOTES_QUERY, {
     fetchPolicy: 'network-only',
   })
 

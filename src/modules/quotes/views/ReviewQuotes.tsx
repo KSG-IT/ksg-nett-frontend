@@ -25,7 +25,7 @@ import { PERMISSIONS } from 'util/permissions'
 import { QuotesTabs } from '../components/QuotesTabs'
 import { DELETE_QUOTE } from '../mutations'
 import { useQuoteMutations } from '../mutations.hooks'
-import { APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY } from '../queries'
+import { APPROVED_QUOTES_QUERY, PENDING_QUOTES_QUERY } from '../queries'
 import { PendingQuotesReturns } from '../types.graphql'
 
 const breadcrumbsItems = [
@@ -37,14 +37,14 @@ const breadcrumbsItems = [
 export const ReviewQuotes: React.FC = () => {
   const { classes } = useStyles()
   const { data, loading, error } = useQuery<PendingQuotesReturns>(
-    PNEDING_QUOTES_QUERY,
+    PENDING_QUOTES_QUERY,
     { fetchPolicy: 'network-only' }
   )
 
   const { approveQuote } = useQuoteMutations()
 
   const [deleteQuote] = useMutation(DELETE_QUOTE, {
-    refetchQueries: [PNEDING_QUOTES_QUERY, APPROVED_QUOTES_QUERY],
+    refetchQueries: [PENDING_QUOTES_QUERY, APPROVED_QUOTES_QUERY],
   })
 
   function handleDeleteQuote(quoteId: string) {
@@ -72,7 +72,7 @@ export const ReviewQuotes: React.FC = () => {
       variables: {
         quoteId: quoteId,
       },
-      refetchQueries: [PNEDING_QUOTES_QUERY, APPROVED_QUOTES_QUERY],
+      refetchQueries: [PENDING_QUOTES_QUERY, APPROVED_QUOTES_QUERY],
       onCompleted() {
         showNotification({
           title: 'Suksess',

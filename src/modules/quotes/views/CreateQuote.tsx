@@ -20,7 +20,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'util/hooks'
 import { CREATE_QUOTE } from '../mutations'
-import { PNEDING_QUOTES_QUERY } from '../queries'
+import { PENDING_QUOTES_QUERY } from '../queries'
 import { CreateQuoteReturns, CreateQuoteVariables } from '../types.graphql'
 
 const quoteTextPlaceholder =
@@ -73,7 +73,7 @@ export const CreateQuote: React.FC = () => {
           createdAt: formatISO(new Date()),
         },
       },
-      refetchQueries: [PNEDING_QUOTES_QUERY],
+      refetchQueries: [PENDING_QUOTES_QUERY],
       onCompleted() {
         showNotification({
           title: 'Suksess',
