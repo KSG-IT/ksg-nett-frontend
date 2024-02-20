@@ -7,7 +7,7 @@ import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organizat
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
-  InternalGroupPositionTypeOption,
+  InternalGroupPositionType,
 } from 'modules/organization/types.graphql'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -25,7 +25,7 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
   const [
     selectedInternalGroupPositionType,
     setSelectedInternalGroupPositionType,
-  ] = useState<InternalGroupPositionTypeOption | null>(null)
+  ] = useState<InternalGroupPositionType | null>(null)
   const history = useNavigate()
 
   const [assignNewPosition, { loading }] = useMutation<
@@ -38,14 +38,24 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
   })
 
   const handleAssignNewPosition = () => {
-    console.log(selectedInternalGroupPositionType)
-    if (selectedInternalGroupPositionType === null) return
+    if (
+      selectedInternalGroupPositionType === null ||
+      selectedUser === '' ||
+      internalGroupPositionId === ''
+    ) {
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Du må velge en bruker, et verv og en status for vervet',
+        color: 'red',
+      })
+      return null
+    }
 
     assignNewPosition({
       variables: {
         userId: selectedUser,
         internalGroupPositionId: internalGroupPositionId,
-        internalGroupPositionType: selectedInternalGroupPositionType.value,
+        internalGroupPositionType: selectedInternalGroupPositionType,
       },
       refetchQueries: [MANAGE_USERS_DATA_QUERY],
       onCompleted() {
@@ -79,12 +89,9 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
         onChange={setInternalGroupPositionId}
       />
       <InternalGroupPositionTypeSelect
-        /**
-         * Since we have removed the onChange stuff to do some weird as shit we never update the type
-         * and the mutation is never executed.
-         */
+        value={selectedInternalGroupPositionType}
         placeholder="Status"
-        // onChange={setSelectedInternalGroupPositionType}
+        onChange={setSelectedInternalGroupPositionType}
       />
       <Group mt="md" position="apart">
         <Button variant="outline" onClick={() => setModalOpen(false)}>

@@ -12,6 +12,15 @@ export const ALL_INTERNAL_GROUP_POSITIONS = gql`
   }
 `
 
+export const INTERNAL_GROUP_POSITIONS_BY_INTERNAL_GROUP = gql`
+  query InternalGroupPositionsByInternalGroup($id: ID!) {
+    internalGroupPositionsByInternalGroup(internalGroupId: $id) {
+      id
+      name
+    }
+  }
+`
+
 export const INTERNAL_GROUP_QUERY = gql`
   query InternalGroup($id: ID!) {
     internalGroup(id: $id) {

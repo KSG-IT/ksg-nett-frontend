@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
-import { Badge, Text, TextProps, createStyles } from '@mantine/core'
+import { Text, TextProps, createStyles } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import { IconChevronDown } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
 import {
@@ -11,13 +12,16 @@ import {
 } from 'modules/organization/types.graphql'
 import { MANAGE_USERS_DATA_QUERY } from 'modules/users/queries'
 import { useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { InternalGroupMembershipDate } from './InternalGroupMembershipDate'
+import { InternalGroupPositionByInternalGroupSelect } from './InternalGroupPositionSelect'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 import { UserManagementTableRow } from './UserManagementTableRow'
-import { useNavigate } from 'react-router-dom'
 
 interface UserManagementTableProps {
   usersData: ManageInternalGroupUser[]
   activeMemberships?: boolean
+  internalGroupId: string
 }
 
 const useStyles = createStyles(theme => ({
@@ -32,18 +36,47 @@ const useStyles = createStyles(theme => ({
   headerRow: {
     borderRadius: theme.radius.xs,
   },
+  positionSelect: {
+    color: theme.colors['samfundet-red'][6],
+    backgroundColor: theme.colors['samfundet-red'][0],
+    fontWeight: 'bold',
+    borderRadius: theme.radius.lg,
+    textAlign: 'start',
+    paddingLeft: 12,
+    textOverflow: 'ellipsis',
+  },
+  positionSelectRightSection: {
+    color: theme.colors['samfundet-red'][6],
+    pointerEvents: 'none',
+  },
+  positionSelectRoot: {
+    paddingLeft: 12,
+    width: 'fit-content',
+    maxWidth: 200,
+  },
+  tableBody: {
+    '& td': {
+      minWidth: 'max-content',
+    },
+  },
 }))
 
 type TableDataProps = TextProps & {
   onClick?: () => void
 }
-const TableData: React.FC<TableDataProps> = ({ children, color, weight }) => (
+const TableData: React.FC<TableDataProps> = ({
+  children,
+  color,
+  weight,
+  ...props
+}) => (
   <td>
     <Text
       color={color}
       weight={weight}
       size={'sm'}
       style={{ cursor: 'pointer' }}
+      {...props}
     >
       {children}
     </Text>
@@ -53,6 +86,7 @@ const TableData: React.FC<TableDataProps> = ({ children, color, weight }) => (
 export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   usersData,
   activeMemberships = false,
+  internalGroupId,
 }) => {
   const { classes } = useStyles()
   const navigate = useNavigate()
@@ -96,6 +130,35 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
     navigate(`/users/${userId}`)
   }
 
+  const handleSelectPosition = (
+    data: string,
+    membership: ManageInternalGroupUser
+  ) => {
+    handleAssignNewPosition(
+      membership.userId,
+      membership.internalGroupPositionType,
+      data
+    )
+  }
+
+  const handleSelectPositionType = (
+    data: InternalGroupPositionType,
+    membership: ManageInternalGroupUser
+  ) => {
+    if (
+      data &&
+      Object.values(InternalGroupPositionType).includes(
+        data as InternalGroupPositionType
+      )
+    ) {
+      handleAssignNewPosition(
+        membership.userId,
+        data as InternalGroupPositionType,
+        membership.internalGroupPositionMembership.position.id
+      )
+    }
+  }
+
   const tableRows = useMemo(
     () =>
       usersData.map(membership => (
@@ -106,35 +169,38 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
             {membership.fullName}
           </TableData>
           <td align="center">
-            <Badge color={'samfundet-red'}>{membership.positionName}</Badge>
+            <InternalGroupPositionByInternalGroupSelect
+              rightSection={<IconChevronDown size="1rem" />}
+              variant="unstyled"
+              classNames={{
+                input: classes.positionSelect,
+                rightSection: classes.positionSelectRightSection,
+                root: classes.positionSelectRoot,
+              }}
+              value={membership.internalGroupPositionMembership.position.id}
+              internalGroupId={internalGroupId}
+              onChange={data => handleSelectPosition(data, membership)}
+            />
           </td>
-          <td>
+          <td align="center">
             <InternalGroupPositionTypeSelect
               withinPortal
               style={{ width: 'fit-content' }}
-              onChange={data => {
-                if (
-                  data &&
-                  Object.values(InternalGroupPositionType).includes(
-                    data as InternalGroupPositionType
-                  )
-                ) {
-                  handleAssignNewPosition(
-                    membership.userId,
-                    data as InternalGroupPositionType,
-                    membership.internalGroupPositionMembership.position.id
-                  )
-                }
-              }}
+              onChange={data => handleSelectPositionType(data, membership)}
               variant="unstyled"
               value={membership.internalGroupPositionType}
             />
           </td>
-          <TableData>{membership.dateJoinedSemesterShorthand}</TableData>
+          <td align="center">
+            <InternalGroupMembershipDate
+              membership={membership}
+              activeMemberships={activeMemberships}
+            />
+          </td>
           {activeMemberships ? (
             <UserManagementTableRow userData={membership} />
           ) : (
-            <td>{membership.dateEndedSemesterShorthand}</td>
+            <UserManagementTableRow userData={membership} />
           )}
         </tr>
       )),
@@ -160,18 +226,14 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
         <tr>
           <Header>Navn</Header>
           <Header align="center">Stilling</Header>
-          <Header>Gruppe</Header>
-          <Header>Startet</Header>
-          {activeMemberships ? (
-            <>
-              <Header></Header>
-            </>
-          ) : (
-            <Header>Sluttet</Header>
-          )}
+          <Header align="center">Gruppe</Header>
+          <Header align="center">
+            {activeMemberships ? 'Medlem siden' : 'Vervperiode'}
+          </Header>
+          <Header></Header>
         </tr>
       </thead>
-      <tbody>{tableRows}</tbody>
+      <tbody className={classes.tableBody}>{tableRows}</tbody>
     </CardTable>
   )
 }

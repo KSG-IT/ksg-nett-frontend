@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { ActionIcon, Menu } from '@mantine/core'
+import { ActionIcon, Menu, createStyles } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconDots, IconGrave, IconTrash } from '@tabler/icons-react'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
@@ -17,6 +17,13 @@ interface UserManagementTableRowProp {
   userData: ManageInternalGroupUser
 }
 
+const useStyles = createStyles(theme => ({
+  menuOption: {
+    fontSize: theme.fontSizes.xs,
+    color: theme.colors['samfundet-red'][6],
+  },
+}))
+
 export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
   userData,
 }) => {
@@ -31,7 +38,10 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
     refetchQueries: ['ManageUsersDataQuery'],
   })
 
-  const { quitKSG } = useInternalGroupPositionMembershipMutations()
+  const { classes } = useStyles()
+
+  const { quitKSG, deleteInternalGroupPositionMembership, removeMember } =
+    useInternalGroupPositionMembershipMutations()
 
   const handleAssignNewPosition = () => {
     if (selectedInternalGroupPositionType === null) return
@@ -91,6 +101,31 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
     })
   }
 
+  const handleRemovePosition = () => {
+    const confirmed = confirm('Er du sikker på at du vil fjerne vervet?')
+
+    if (!confirmed) return
+
+    removeMember({
+      variables: {
+        id: userData.internalGroupPositionMembership.id,
+      },
+      refetchQueries: [MANAGE_USERS_DATA_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Fjernet verv',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
+    })
+  }
+
   return (
     <>
       <td>
@@ -102,14 +137,18 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item
-              style={{ fontWeight: 800 }}
-              color="samfundet-red"
-              icon={<IconGrave />}
+              fw={'bold'}
+              className={classes.menuOption}
+              icon={<IconGrave size={16} />}
               onClick={handleQuitKSG}
             >
               Ferdig i KSG
             </Menu.Item>
-            <Menu.Item color="samfundet-red.2" icon={<IconTrash />}>
+            <Menu.Item
+              className={classes.menuOption}
+              icon={<IconTrash size={16} />}
+              onClick={handleRemovePosition}
+            >
               Fjern verv
             </Menu.Item>
           </Menu.Dropdown>

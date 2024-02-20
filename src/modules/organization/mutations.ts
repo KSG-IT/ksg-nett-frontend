@@ -76,6 +76,24 @@ export const ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP = gql`
   }
 `
 
+export const PATCH_INTERNAL_GROUP_POSITION_MEMBERSHIP_DATES_MUTATION = gql`
+  mutation PatchInternalGroupPositionMembershipDate(
+    $membershipId: ID!
+    $dateJoined: Date
+    $dateEnded: Date
+  ) {
+    patchInternalGroupPositionMembershipDate(
+      membershipId: $membershipId
+      dateJoined: $dateJoined
+      dateEnded: $dateEnded
+    ) {
+      internalGroupPositionMembership {
+        id
+      }
+    }
+  }
+`
+
 export const PATCH_INTERNAL_GROUP_MUTATION = gql`
   mutation PatchInternalGroup($id: ID!, $input: PatchInternalGroupInput!) {
     patchInternalGroup(id: $id, input: $input) {

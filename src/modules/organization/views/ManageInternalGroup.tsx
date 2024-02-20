@@ -67,12 +67,16 @@ export const ManageInternalGroup: React.FC = () => {
         i tabellen. Om personen har fått et nytt verv f.eks Barista til KA må du
         bruke knappen over.
       </MessageBox>
-      <UserManagementTable usersData={active} activeMemberships />
+      <UserManagementTable
+        usersData={active}
+        activeMemberships
+        internalGroupId={internalGroupId}
+      />
 
       <Title order={2} color="dimmed">
         Tidligere medlemskap
       </Title>
-      <UserManagementTable usersData={all} />
+      <UserManagementTable usersData={all} internalGroupId={internalGroupId} />
       <Modal
         title="Legg til verv"
         opened={modalOpen}
