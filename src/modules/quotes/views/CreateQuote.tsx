@@ -22,6 +22,7 @@ import { useMediaQuery } from 'util/hooks'
 import { CREATE_QUOTE } from '../mutations'
 import { PENDING_QUOTES_QUERY } from '../queries'
 import { CreateQuoteReturns, CreateQuoteVariables } from '../types.graphql'
+import { MessageBox } from 'components/MessageBox'
 
 const quoteTextPlaceholder =
   'Wow, du har sykt myke hender! Vanligvis når en jente gir meg en håndjob, sier jeg du kan jo suge meg i stedet, men de hendene'
@@ -104,6 +105,11 @@ export const CreateQuote: React.FC = () => {
       <Card radius={'md'} withBorder className={classes.card}>
         <Stack spacing={'lg'} p={mobileSize ? 0 : 'xl'}>
           <SimpleGrid cols={1} spacing={'md'}>
+            <MessageBox type="info">
+              Tenk deg om før du sender inn sitater om andre. Det er ikke
+              sikkert de synes det er like morsomt som deg.
+            </MessageBox>
+
             <Textarea
               value={text}
               variant={'filled'}
@@ -117,9 +123,9 @@ export const CreateQuote: React.FC = () => {
             <Textarea
               value={context}
               label={'Kontekst'}
-              minRows={mobileSize ? 4 : 2}
+              minRows={mobileSize ? 4 : 1}
               variant={'filled'}
-              size={mobileSize ? 'xs' : 'sm'}
+              size={mobileSize ? 'sm' : 'md'}
               icon={<IconHash />}
               onChange={evt => setContext(evt.target.value)}
               placeholder={quoteContextPlaceholder}

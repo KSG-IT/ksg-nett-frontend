@@ -163,3 +163,19 @@ export const INVITE_USERS_TO_ORDER_SESSION_MUTATION = gql`
     }
   }
 `
+
+export const CREATE_GHOST_ORDER_MUTATION = gql`
+  mutation IncrementProductGhostOrder($productId: ID!) {
+    incrementProductGhostOrder(productId: $productId) {
+      success
+    }
+  }
+`
+
+export const STOCK_MARKET_CRASH_MUTATION = gql`
+  mutation crashStockMarket {
+    crashStockMarket {
+      success
+    }
+  }
+`
