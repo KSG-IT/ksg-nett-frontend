@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Added
+
+- Economy: Stock market mode
+  - Display sotck market shortcut on dashboard if feature is enabled
+  - Add view to show active stock prices on different products
+  - Add controller view to jack up price and crash market
+
 ## [2023.9.1] - 2023-9-12
 
 ### Removed
