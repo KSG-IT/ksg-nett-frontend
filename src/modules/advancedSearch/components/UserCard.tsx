@@ -5,12 +5,9 @@ import { UserNode } from 'modules/users/types'
 
 interface UserCardProps {
   user: Pick<UserNode, 'id' | 'firstName' | 'lastName' | 'profileImage'>
-  displaySemester?: boolean
+  onClick?: () => void
 }
-export const UserCard: React.FC<UserCardProps> = ({
-  user,
-  displaySemester,
-}) => {
+export const UserCard: React.FC<UserCardProps> = ({ user }) => {
   const { classes } = useStyles()
 
   const me = useStore(state => state.user)!
@@ -29,7 +26,6 @@ export const UserCard: React.FC<UserCardProps> = ({
           <Text size={'sm'} className={classes.nameText}>
             {user.firstName + ' ' + user.lastName}
           </Text>
-          <Text>{displaySemester}</Text>
         </Stack>
       </Stack>
     </Card>

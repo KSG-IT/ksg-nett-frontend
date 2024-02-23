@@ -21,7 +21,6 @@ import { useSidebar } from 'util/hooks'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
 import { WhatsNewNotification } from 'components/WhatsNewNotification'
-import AdvancedSearchButton from 'modules/header/AdvancedSearchButton'
 interface ErrorFallbackProps {
   error: Error
   resetErrorBoundary: () => void
