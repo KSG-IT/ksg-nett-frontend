@@ -9,8 +9,10 @@ import {
   Stack,
   Textarea,
   Title,
+  Text,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import { modals } from '@mantine/modals'
 import { IconHash, IconQuote } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { UserMultiSelect } from 'components/Select'
@@ -22,6 +24,7 @@ import { useMediaQuery } from 'util/hooks'
 import { CREATE_QUOTE } from '../mutations'
 import { PNEDING_QUOTES_QUERY } from '../queries'
 import { CreateQuoteReturns, CreateQuoteVariables } from '../types.graphql'
+import { MessageBox } from 'components/MessageBox'
 
 const quoteTextPlaceholder =
   'Wow, du har sykt myke hender! Vanligvis når en jente gir meg en håndjob, sier jeg du kan jo suge meg i stedet, men de hendene'
@@ -64,29 +67,44 @@ export const CreateQuote: React.FC = () => {
       return
     }
 
-    createQuote({
-      variables: {
-        input: {
-          text: text,
-          context: context,
-          tagged: tagged,
-          createdAt: formatISO(new Date()),
-        },
+    modals.openConfirmModal({
+      title: 'Bekreft innsending av sitatet ditt',
+      children: (
+        <Text size={'sm'}>
+          Er du sikker på at du vil sende inn sitatet? Husk at sitatet ikke skal
+          være støtende eller krenkende for dem det gjelder.
+        </Text>
+      ),
+      labels: {
+        cancel: 'Angre',
+        confirm: 'Bekreft',
       },
-      refetchQueries: [PNEDING_QUOTES_QUERY],
-      onCompleted() {
-        showNotification({
-          title: 'Suksess',
-          message: 'Sitat sendt inn til godkjenning',
-        })
-        navigate('/quotes')
-      },
-      onError({ message }) {
-        showNotification({
-          title: 'Noe gikk galt',
-          message,
-        })
-      },
+      onConfirm: () =>
+        createQuote({
+          variables: {
+            input: {
+              text: text,
+              context: context,
+              tagged: tagged,
+              createdAt: formatISO(new Date()),
+            },
+          },
+          refetchQueries: [PNEDING_QUOTES_QUERY],
+          onCompleted() {
+            showNotification({
+              title: 'Suksess',
+              message: 'Sitat sendt inn til godkjenning',
+            })
+            navigate('/quotes')
+          },
+          onError({ message }) {
+            showNotification({
+              title: 'Noe gikk galt',
+              message,
+            })
+          },
+        }),
+      onCancel: () => null,
     })
   }
 
@@ -104,6 +122,11 @@ export const CreateQuote: React.FC = () => {
       <Card radius={'md'} withBorder className={classes.card}>
         <Stack spacing={'lg'} p={mobileSize ? 0 : 'xl'}>
           <SimpleGrid cols={1} spacing={'md'}>
+            <MessageBox type="info">
+              Tenk deg om før du sender inn sitater om andre. Det er ikke
+              sikkert de synes det er like morsomt som deg.
+            </MessageBox>
+
             <Textarea
               value={text}
               variant={'filled'}
@@ -117,9 +140,9 @@ export const CreateQuote: React.FC = () => {
             <Textarea
               value={context}
               label={'Kontekst'}
-              minRows={mobileSize ? 4 : 2}
+              minRows={mobileSize ? 4 : 1}
               variant={'filled'}
-              size={mobileSize ? 'xs' : 'sm'}
+              size={mobileSize ? 'sm' : 'md'}
               icon={<IconHash />}
               onChange={evt => setContext(evt.target.value)}
               placeholder={quoteContextPlaceholder}

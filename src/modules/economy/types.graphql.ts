@@ -150,7 +150,19 @@ export type StockMarketProductNode = {
   name: string
   price: number
   percentageChange: number
+  marketHistory?: StockMarketDataPoints[]
 }
+
+export type StockPriceHistoryNode = {
+  productName: string
+  dataPoints: StockMarketDataPoints[]
+}
+
+export interface StockMarketDataPoints {
+  price: number
+  timestamp: number
+}
+
 // QUERIES
 
 export interface AllDepositsQuery {
@@ -203,6 +215,18 @@ export interface AllSociSessionsVariables {
 
 export interface SociSessionReturns {
   sociSession: SociSessionNode
+}
+
+export interface SociProductReturns {
+  sociProduct: SociProductNode
+}
+
+export interface SociProductVariables {
+  id: string
+}
+
+export interface ProductOrdersReturns {
+  productOrdersWithinTimeFrame: ProductOrderNode[]
 }
 
 export interface AllSociProductsReturns {
@@ -349,6 +373,10 @@ export interface StockMarketProductsReturns {
   lastMarketCrash: {
     timestamp: string
   }
+}
+
+export interface StockPriceHistoryReturns {
+  stockPriceHistory: StockPriceHistoryNode[]
 }
 
 export interface IncrementGhostOrderReturns {

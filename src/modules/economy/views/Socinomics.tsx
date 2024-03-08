@@ -1,11 +1,13 @@
 import { useQuery } from '@apollo/client'
 import {
   Affix,
+  Box,
   Button,
   Container,
   SimpleGrid,
   Title,
   createStyles,
+  keyframes,
 } from '@mantine/core'
 import { IconMaximize } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
@@ -13,8 +15,16 @@ import { FullContentLoader } from 'components/Loading'
 import { useEffect, useState } from 'react'
 import { useIsMobile } from 'util/hooks'
 import { SociStockProduct } from '../components/SociStockProduct'
-import { STOCK_MARKET_PRODUCTS_QUERY } from '../queries'
-import { StockMarketProductsReturns } from '../types.graphql'
+import {
+  STOCK_MARKET_PRODUCTS_QUERY,
+  STOCK_PRICE_HISTORY_QUERY,
+} from '../queries'
+import {
+  StockMarketProductNode,
+  StockMarketProductsReturns,
+  StockPriceHistoryNode,
+  StockPriceHistoryReturns,
+} from '../types.graphql'
 
 const Socinomics: React.FC = () => {
   const [stocksLength, setStocksLength] = useState(0)
@@ -29,9 +39,18 @@ const Socinomics: React.FC = () => {
     STOCK_MARKET_PRODUCTS_QUERY,
     {
       fetchPolicy: 'network-only',
-      pollInterval: 30_000,
+      pollInterval: 10_000,
     }
   )
+
+  const {
+    data: priceHistoryData,
+    loading: priceHistoryLoading,
+    error: priceHistoryError,
+  } = useQuery<StockPriceHistoryReturns>(STOCK_PRICE_HISTORY_QUERY, {
+    fetchPolicy: 'network-only',
+    pollInterval: 10_000,
+  })
 
   useEffect(() => {
     if (!data) return
@@ -53,14 +72,32 @@ const Socinomics: React.FC = () => {
     return () => clearInterval(interval)
   }, [data])
 
-  if (error) return <FullPageError error={error} />
+  if (error || priceHistoryError) return <FullPageError error={error} />
 
-  if (loading || !data) return <FullContentLoader />
+  if (loading || priceHistoryLoading || !data || !priceHistoryData)
+    return <FullContentLoader />
 
   const { stockMarketProducts: stocks, lastMarketCrash } = data
 
+  const { stockPriceHistory } = priceHistoryData
+
+  // find matching stock price history to the stock, and append it to the stock object
+  stocks.forEach((stock: StockMarketProductNode) => {
+    const matchingPriceHistory = stockPriceHistory.find(
+      (priceHistory: StockPriceHistoryNode) =>
+        priceHistory.productName === stock.name
+    )
+
+    if (matchingPriceHistory) {
+      stock.marketHistory = matchingPriceHistory.dataPoints
+    }
+  })
+
+  console.log(stocks)
+  console.log('Stock price history: ', stockPriceHistory)
+
   // display if timestamp is not null and is less than 10 minutes ago
-  const displayMarketCrashBaner =
+  const displayMarketCrashBanner =
     marketCrashCountdown && marketCrashCountdown < 60 * 10
 
   if (stocks.length !== stocksLength) {
@@ -69,8 +106,14 @@ const Socinomics: React.FC = () => {
 
   return (
     <div className={fullScreen ? classes.root : classes.windowed}>
-      {displayMarketCrashBaner && (
-        <Container py={'sm'} mb={'sm'} fluid bg={'samfundet-red'}>
+      {displayMarketCrashBanner && (
+        <Container
+          className={classes.crackContainer}
+          py={'sm'}
+          mb={'sm'}
+          fluid
+          bg={'samfundet-red'}
+        >
           <Title
             className={classes.scrollingInner}
             align="center"
@@ -85,16 +128,18 @@ const Socinomics: React.FC = () => {
           </Title>
         </Container>
       )}
-      <div className={classes.scrollingContainer}>
+
+      <Box className={classes.scrollingContainer}>
         <div className={classes.scrollingInner}>
           {stocks.map((stock, index) => (
             <SociStockProduct stock={stock} key={index} />
           ))}
         </div>
-      </div>
+      </Box>
+
       <SimpleGrid my={'lg'} cols={isMobile ? 1 : 2}>
         {stocks.map((stock, index) => (
-          <SociStockProduct stock={stock} key={index} />
+          <SociStockProduct showMarketHistory stock={stock} key={index} />
         ))}
       </SimpleGrid>
       {!isMobile && (
@@ -115,6 +160,19 @@ const Socinomics: React.FC = () => {
     </div>
   )
 }
+
+const blink = keyframes({
+  '0%': { borderColor: 'black' },
+  '50%': { borderColor: 'red' },
+  '100%': { borderColor: 'black' },
+})
+
+const border = keyframes({
+  '33%': { borderColor: 'lightblue', borderRightColor: 'lime' },
+  '66%': { borderColor: 'lightblue', borderBottomColor: 'lime' },
+  '90%': { borderColor: 'lightblue', borderLeftColor: 'lime' },
+  '100%': { borderColor: 'lightblue', borderTopColor: 'lime' },
+})
 
 const useStyles = createStyles(
   (theme, variables: { stocksLength: number; fullScreen: boolean }) => ({
@@ -137,9 +195,17 @@ const useStyles = createStyles(
       overflow: 'hidden',
     },
     scrollingContainer: {
-      border: '2px dotted yellow',
+      border: '4px solid silver',
+      borderTopColor: 'lime',
       overflow: 'hidden',
+      animation: `${border} 3s ease-out infinite`,
     },
+    crackContainer: {
+      border: '4px solid silver',
+      overflow: 'hidden',
+      animation: `${blink} 2s ease-in-out infinite alternate`,
+    },
+
     scrollingInner: {
       paddingBlock: theme.spacing.md,
       display: 'flex',
