@@ -39,7 +39,7 @@ const Socinomics: React.FC = () => {
     STOCK_MARKET_PRODUCTS_QUERY,
     {
       fetchPolicy: 'network-only',
-      pollInterval: 30_000,
+      pollInterval: 10_000,
     }
   )
 
