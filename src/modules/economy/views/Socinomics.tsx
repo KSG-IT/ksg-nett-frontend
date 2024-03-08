@@ -9,7 +9,7 @@ import {
   createStyles,
   keyframes,
 } from '@mantine/core'
-import { IconChevronDown, IconMaximize } from '@tabler/icons-react'
+import { IconMaximize } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useEffect, useState } from 'react'
@@ -39,7 +39,7 @@ const Socinomics: React.FC = () => {
     STOCK_MARKET_PRODUCTS_QUERY,
     {
       fetchPolicy: 'network-only',
-      pollInterval: 10_000,
+      pollInterval: 30_000,
     }
   )
 
