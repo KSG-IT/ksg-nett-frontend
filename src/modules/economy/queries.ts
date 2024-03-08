@@ -137,6 +137,36 @@ export const SOCI_SESSION_QUERY = gql`
   }
 `
 
+export const SOCI_PRODUCT = gql`
+  query SociProduct($id: ID!) {
+    sociProduct(id: $id) {
+      id
+      name
+      price
+      icon
+    }
+  }
+`
+
+export const PRODUCT_ORDERS_WITHIN_TIME_FRAME = gql`
+  query ProductOrdersWithinTimeFrame(
+    $productId: ID!
+    $timeStart: DateTime
+    $timeEnd: DateTime
+  ) {
+    productOrdersWithinTimeFrame(
+      productId: $productId
+      timeStart: $timeStart
+      timeEnd: $timeEnd
+    ) {
+      id
+      purchasedAt
+      cost
+      orderSize
+    }
+  }
+`
+
 export const ALL_SOCI_PRODUCTS = gql`
   query AllSociProducts {
     allSociProducts {
@@ -258,6 +288,19 @@ export const LAST_MARKET_CRASH_QUERY = gql`
   query lastMarketCrash {
     lastMarketCrash {
       timestamp
+    }
+  }
+`
+
+export const STOCK_PRICE_HISTORY_QUERY = gql`
+  query StockPriceHistory {
+    stockPriceHistory {
+      productId
+      productName
+      dataPoints {
+        price
+        timestamp
+      }
     }
   }
 `
