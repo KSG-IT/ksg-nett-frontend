@@ -97,13 +97,25 @@ export const EditShiftForm: React.FC<EditShiftFormProps> = ({ shift }) => {
         name="location"
         control={control}
         render={({ field }) => (
-          <Select label="Lokale" {...field} data={locationOptions} />
+          <Select
+            label="Lokale"
+            {...field}
+            data={locationOptions}
+            withinPortal
+          />
         )}
       />
       <Controller
         name="day"
         control={control}
-        render={({ field }) => <DatePickerInput {...field} />}
+        render={({ field }) => (
+          <DatePickerInput
+            popoverProps={{
+              withinPortal: true,
+            }}
+            {...field}
+          />
+        )}
       />
       <Group>
         <TimeInput label="Starttid" {...register('startTime')} />

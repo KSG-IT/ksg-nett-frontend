@@ -5,6 +5,18 @@ export const ALL_INTERNAL_GROUP_POSITIONS = gql`
     allInternalGroupPositions {
       id
       name
+      internalGroup {
+        type
+      }
+    }
+  }
+`
+
+export const INTERNAL_GROUP_POSITIONS_BY_INTERNAL_GROUP = gql`
+  query InternalGroupPositionsByInternalGroup($id: ID!) {
+    internalGroupPositionsByInternalGroup(internalGroupId: $id) {
+      id
+      name
     }
   }
 `

@@ -137,12 +137,66 @@ export const SOCI_SESSION_QUERY = gql`
   }
 `
 
+export const SOCI_PRODUCT = gql`
+  query SociProduct($id: ID!) {
+    sociProduct(id: $id) {
+      id
+      name
+      price
+      icon
+    }
+  }
+`
+
+export const PRODUCT_ORDERS_WITHIN_TIME_FRAME = gql`
+  query ProductOrdersWithinTimeFrame(
+    $productId: ID!
+    $timeStart: DateTime
+    $timeEnd: DateTime
+  ) {
+    productOrdersWithinTimeFrame(
+      productId: $productId
+      timeStart: $timeStart
+      timeEnd: $timeEnd
+    ) {
+      id
+      purchasedAt
+      cost
+      orderSize
+    }
+  }
+`
+
 export const ALL_SOCI_PRODUCTS = gql`
   query AllSociProducts {
     allSociProducts {
       id
       name
       price
+      icon
+    }
+  }
+`
+
+export const ALL_SOCI_PRODUCTS_WITH_DEFAULT = gql`
+  query AllSociProductsWithDefault {
+    allSociProductsWithDefault {
+      id
+      name
+      price
+      icon
+      isDefault
+    }
+  }
+`
+
+export const ALL_ACTIVE_SOCI_PRODUCTS = gql`
+  query AllActiveSociProducts {
+    allActiveSociProducts {
+      id
+      name
+      price
+      icon
     }
   }
 `
@@ -236,6 +290,48 @@ export const ALL_SOCI_ORDERR_SESSION_DRINK_ORDERS_QUERY = gql`
   }
 `
 
+export const PRODUCT_ORDERS_BY_ITEM_AND_DATE_QUERY = gql`
+  query ProductOrdersByItemAndDate(
+    $productId: ID!
+    $dateFrom: Date!
+    $dateTo: Date!
+  ) {
+    productOrdersByItemAndDate(
+      productId: $productId
+      dateFrom: $dateFrom
+      dateTo: $dateTo
+    ) {
+      total
+      data {
+        day
+        sum
+      }
+    }
+  }
+`
+
+export const PRODUCT_ORDERS_BY_ITEM_AND_DATE_LIST_QUERY = gql`
+  query ProductOrdersByItemAndDateList(
+    $productIds: [ID!]!
+    $dateFrom: Date!
+    $dateTo: Date!
+  ) {
+    productOrdersByItemAndDateList(
+      productIds: $productIds
+      dateFrom: $dateFrom
+      dateTo: $dateTo
+    ) {
+      total
+      data {
+        day
+        sum
+      }
+      quantity
+      average
+      name
+    }
+  }
+`
 export const STOCK_MARKET_PRODUCTS_QUERY = gql`
   query StockMarketProducts {
     stockMarketProducts {
@@ -258,6 +354,19 @@ export const LAST_MARKET_CRASH_QUERY = gql`
   query lastMarketCrash {
     lastMarketCrash {
       timestamp
+    }
+  }
+`
+
+export const STOCK_PRICE_HISTORY_QUERY = gql`
+  query StockPriceHistory {
+    stockPriceHistory {
+      productId
+      productName
+      dataPoints {
+        price
+        timestamp
+      }
     }
   }
 `

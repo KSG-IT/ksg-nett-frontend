@@ -21,6 +21,15 @@ export interface PatchInternalGroupPositionMembershipReturns {
   >
 }
 
+export interface PatchInternalGroupPositionMembershipDatesReturns
+  extends PatchInternalGroupPositionMembershipReturns {}
+
+export interface PatchInternalGroupPositionMembershipDatesVariables {
+  membershipId: string
+  dateJoined: string
+  dateEnded: string
+}
+
 export interface PatchInternalGroupPositionMembershipVariables {
   id: string
   input: Partial<Omit<InternalGroupPositionMembershipNode, 'id'>>
@@ -87,7 +96,7 @@ export type ManageInternalGroupUser = {
   // Better typing on this
   internalGroupPositionMembership: Pick<
     InternalGroupPositionMembershipNode,
-    'id' | 'getTypeDisplay' | 'position'
+    'id' | 'getTypeDisplay' | 'position' | 'dateJoined' | 'dateEnded'
   >
   dateJoinedSemesterShorthand: string
   dateEndedSemesterShorthand: string | null
@@ -126,4 +135,15 @@ export interface AssignNewInternalGroupPositionMembershipVariables {
 export interface InternalGroupPositionTypeOption {
   value: InternalGroupPositionType
   label: string
+}
+
+export interface InternalGroupPositionsByInternalGroupReturns {
+  internalGroupPositionsByInternalGroup: Pick<
+    InternalGroupPositionNode,
+    'id' | 'name'
+  >[]
+}
+
+export interface InternalGroupPositionsByInternalGroupVariables {
+  id: string
 }

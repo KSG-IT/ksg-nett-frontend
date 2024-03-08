@@ -9,8 +9,10 @@ import {
   Stack,
   Textarea,
   Title,
+  Text,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import { modals } from '@mantine/modals'
 import { IconHash, IconQuote } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { UserMultiSelect } from 'components/Select'
@@ -65,29 +67,44 @@ export const CreateQuote: React.FC = () => {
       return
     }
 
-    createQuote({
-      variables: {
-        input: {
-          text: text,
-          context: context,
-          tagged: tagged,
-          createdAt: formatISO(new Date()),
-        },
+    modals.openConfirmModal({
+      title: 'Bekreft innsending av sitatet ditt',
+      children: (
+        <Text size={'sm'}>
+          Er du sikker på at du vil sende inn sitatet? Husk at sitatet ikke skal
+          være støtende eller krenkende for dem det gjelder.
+        </Text>
+      ),
+      labels: {
+        cancel: 'Angre',
+        confirm: 'Bekreft',
       },
-      refetchQueries: [PNEDING_QUOTES_QUERY],
-      onCompleted() {
-        showNotification({
-          title: 'Suksess',
-          message: 'Sitat sendt inn til godkjenning',
-        })
-        navigate('/quotes')
-      },
-      onError({ message }) {
-        showNotification({
-          title: 'Noe gikk galt',
-          message,
-        })
-      },
+      onConfirm: () =>
+        createQuote({
+          variables: {
+            input: {
+              text: text,
+              context: context,
+              tagged: tagged,
+              createdAt: formatISO(new Date()),
+            },
+          },
+          refetchQueries: [PNEDING_QUOTES_QUERY],
+          onCompleted() {
+            showNotification({
+              title: 'Suksess',
+              message: 'Sitat sendt inn til godkjenning',
+            })
+            navigate('/quotes')
+          },
+          onError({ message }) {
+            showNotification({
+              title: 'Noe gikk galt',
+              message,
+            })
+          },
+        }),
+      onCancel: () => null,
     })
   }
 

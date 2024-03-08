@@ -48,6 +48,15 @@ export type TotalExpenditure = {
   data: ExpenditureDay[]
   total: number
 }
+
+export type TotalExpenditureItem = {
+  data: ExpenditureDay[]
+  total: number
+  average: number
+  quantity: number
+  name: string
+}
+
 export interface BankAccountActivity {
   name: string
   amount: number
@@ -62,6 +71,10 @@ export interface SociProductNode {
   price: number
   description: string
   icon: string // emoji string
+}
+
+export type SociProductWithDefault = SociProductNode & {
+  isDefault: boolean
 }
 
 export interface SociBankAccountNode {
@@ -150,7 +163,19 @@ export type StockMarketProductNode = {
   name: string
   price: number
   percentageChange: number
+  marketHistory?: StockMarketDataPoints[]
 }
+
+export type StockPriceHistoryNode = {
+  productName: string
+  dataPoints: StockMarketDataPoints[]
+}
+
+export interface StockMarketDataPoints {
+  price: number
+  timestamp: number
+}
+
 // QUERIES
 
 export interface AllDepositsQuery {
@@ -192,6 +217,26 @@ export interface MyExpendituresVariables {
   dateRange: ExpenditureDateRangeEnum
 }
 
+export interface ProductOrdersByItemAndDateReturns {
+  productOrdersByItemAndDate: TotalExpenditure
+}
+
+export interface ProductOrdersByItemAndDateListReturns {
+  productOrdersByItemAndDateList: TotalExpenditureItem[]
+}
+
+export interface ProductOrdersByItemAndDateListVariables {
+  productIds: string[]
+  dateFrom: string
+  dateTo: string
+}
+
+export interface ProductOrdersByItemAndDateVariables {
+  productId: string
+  dateFrom: string
+  dateTo: string
+}
+
 export interface AllSociSessionsReturns {
   allSociSessions: RelayEdgesWithPageInfo<SociSessionNode>
 }
@@ -205,8 +250,24 @@ export interface SociSessionReturns {
   sociSession: SociSessionNode
 }
 
+export interface SociProductReturns {
+  sociProduct: SociProductNode
+}
+
+export interface SociProductVariables {
+  id: string
+}
+
+export interface ProductOrdersReturns {
+  productOrdersWithinTimeFrame: ProductOrderNode[]
+}
+
 export interface AllSociProductsReturns {
   allSociProducts: SociProductNode[]
+}
+
+export interface AllSociProductsWithDefaultReturns {
+  allSociProductsWithDefault: SociProductWithDefault[]
 }
 
 export interface ActiveSociOrderSessionReturns {
@@ -349,6 +410,10 @@ export interface StockMarketProductsReturns {
   lastMarketCrash: {
     timestamp: string
   }
+}
+
+export interface StockPriceHistoryReturns {
+  stockPriceHistory: StockPriceHistoryNode[]
 }
 
 export interface IncrementGhostOrderReturns {

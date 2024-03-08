@@ -4,6 +4,7 @@ import {
   IconBaguette,
   IconChartLine,
   IconCreditCard,
+  IconGraph,
   IconSolarPanel,
 } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
@@ -30,6 +31,13 @@ const shortcuts = [
     color: 'samfundet-red',
     link: 'soci-sessions',
   },
+  {
+    title: 'Statistikk',
+    icon: IconGraph,
+    color: 'samfundet-red',
+    link: '/economy/statistics',
+  },
+
   {
     title: 'Børsen',
     icon: IconChartLine,

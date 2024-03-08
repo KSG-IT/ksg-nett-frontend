@@ -1,8 +1,5 @@
 import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
-import builtins from 'rollup-plugin-node-builtins'
-import globals from 'rollup-plugin-node-globals'
-import nodePolyfills from 'rollup-plugin-polyfill-node'
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 dotenv.config()
@@ -22,9 +19,6 @@ export default defineConfig({
     APP_VERSION: JSON.stringify(process.env.npm_package_version),
   },
   build: {
-    rollupOptions: {
-      plugins: [nodePolyfills(), builtins(), globals()],
-    },
     sourcemap: true,
   },
 })

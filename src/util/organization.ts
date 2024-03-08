@@ -1,6 +1,6 @@
 import {
-  AllInternalGroupPositionsReturns,
-  AllInternalGroupsReturns,
+  InternalGroupNode,
+  InternalGroupPositionNode,
 } from 'modules/organization/types'
 
 interface SelectOption {
@@ -9,7 +9,7 @@ interface SelectOption {
 }
 
 export const internalGroupToSelectOptions = (
-  allInternalGroups?: AllInternalGroupsReturns['allInternalGroups']
+  allInternalGroups?: InternalGroupNode[]
 ): SelectOption[] =>
   allInternalGroups?.map(internalGroup => ({
     value: internalGroup.id,
@@ -17,7 +17,7 @@ export const internalGroupToSelectOptions = (
   })) || []
 
 export const internalGroupPositionToSelectOptions = (
-  allInternalGroups?: AllInternalGroupPositionsReturns['allInternalGroupPositions']
+  allInternalGroups?: InternalGroupPositionNode[]
 ): SelectOption[] =>
   allInternalGroups?.map(internalGroupPosition => ({
     value: internalGroupPosition.id,

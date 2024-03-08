@@ -1,3 +1,4 @@
+import { useMantineTheme } from '@mantine/core'
 import { Liquidity, SociSessionType } from './types.graphql'
 
 export const getLiquidity = (balance: number): Liquidity => {
@@ -25,4 +26,32 @@ export function getSoiSeccionTypeColor(type: SociSessionType) {
     default:
       return 'samfundet-red'
   }
+}
+
+export function randomizeColors() {
+  // I'll admit this is kinda scuffed, but I gave up on making something more complex
+  // TODO: Make it not scuffed
+  const theme = useMantineTheme()
+  let colors = []
+  const mantineColors = theme.colors
+  colors.push(
+    ...Object.keys(mantineColors).map(color => {
+      if (
+        color !== 'dark' &&
+        color !== 'white' &&
+        color !== 'gray' &&
+        color !== 'brand'
+      ) {
+        return color
+      } else return null
+    })
+  )
+  colors = colors.filter(color => color !== null)
+
+  // Shuffle colors
+  for (let i = colors.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[colors[i], colors[j]] = [colors[j], colors[i]]
+  }
+  return colors
 }

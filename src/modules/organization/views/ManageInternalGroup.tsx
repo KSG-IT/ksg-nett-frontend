@@ -65,17 +65,23 @@ export const ManageInternalGroup: React.FC = () => {
         Her har du mulighet til å administrere aktive medlemskap i gjengen din.
         Om noen tar permisjon eller blir aktiv pang er det mulig å dette direkte
         i tabellen. Om personen har fått et nytt verv f.eks Barista til KA må du
-        bruke knappen over. <b>Obs!</b> Funksjonærer vil bli gitt tilgang til
-        opptakssystemet her også, denne mister de når du endrer til en annen
-        type
+        bruke knappen over.
       </MessageBox>
-      <UserManagementTable usersData={active} activeMemberships />
+      <UserManagementTable
+        usersData={active}
+        activeMemberships
+        internalGroupId={internalGroupId}
+      />
 
       <Title order={2} color="dimmed">
         Tidligere medlemskap
       </Title>
-      <UserManagementTable usersData={all} />
-      <Modal opened={modalOpen} onClose={() => setModalOpen(false)}>
+      <UserManagementTable usersData={all} internalGroupId={internalGroupId} />
+      <Modal
+        title="Legg til verv"
+        opened={modalOpen}
+        onClose={() => setModalOpen(false)}
+      >
         <UserManagementAddUser setModalOpen={setModalOpen} />
       </Modal>
     </Stack>

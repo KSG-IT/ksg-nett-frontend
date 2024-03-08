@@ -1,22 +1,28 @@
 import { useMutation } from '@apollo/client'
-import { Button, Group } from '@mantine/core'
+import { ActionIcon, Menu, createStyles } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import { IconDots, IconGrave, IconTrash } from '@tabler/icons-react'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
 import { useInternalGroupPositionMembershipMutations } from 'modules/organization/mutations.hooks'
 import {
   AssignNewInternalGroupPositionMembershipReturns,
   AssignNewInternalGroupPositionMembershipVariables,
   InternalGroupPositionType,
-  InternalGroupPositionTypeOption,
   ManageInternalGroupUser,
 } from 'modules/organization/types.graphql'
+import { MANAGE_USERS_DATA_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
-import { MANAGE_USERS_DATA_QUERY } from '../../../users/queries'
-import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 
 interface UserManagementTableRowProp {
   userData: ManageInternalGroupUser
 }
+
+const useStyles = createStyles(theme => ({
+  menuOption: {
+    fontSize: theme.fontSizes.xs,
+    color: theme.colors['samfundet-red'][6],
+  },
+}))
 
 export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
   userData,
@@ -32,7 +38,10 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
     refetchQueries: ['ManageUsersDataQuery'],
   })
 
-  const { quitKSG } = useInternalGroupPositionMembershipMutations()
+  const { classes } = useStyles()
+
+  const { quitKSG, deleteInternalGroupPositionMembership, removeMember } =
+    useInternalGroupPositionMembershipMutations()
 
   const handleAssignNewPosition = () => {
     if (selectedInternalGroupPositionType === null) return
@@ -68,6 +77,10 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
   }
 
   function handleQuitKSG() {
+    const confirmed = confirm('Er du sikker på at du vil avslutte vervet?')
+
+    if (!confirmed) return
+
     quitKSG({
       variables: {
         membershipId: userData.internalGroupPositionMembership.id,
@@ -76,15 +89,38 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
       onCompleted() {
         showNotification({
           title: 'Suksess',
-          message: 'Snakkes aldri',
-          color: 'green',
+          message: 'Avsluttet verv i KSG',
         })
       },
       onError({ message }) {
         showNotification({
           title: 'Noe gikk galt',
           message,
-          color: 'red',
+        })
+      },
+    })
+  }
+
+  const handleRemovePosition = () => {
+    const confirmed = confirm('Er du sikker på at du vil fjerne vervet?')
+
+    if (!confirmed) return
+
+    removeMember({
+      variables: {
+        id: userData.internalGroupPositionMembership.id,
+      },
+      refetchQueries: [MANAGE_USERS_DATA_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Fjernet verv',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
         })
       },
     })
@@ -93,31 +129,30 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
   return (
     <>
       <td>
-        <InternalGroupPositionTypeSelect
-          searchable
-          placeholder="Velg verv"
-          onChange={setSelectedInternalGroupPositionType}
-        />
-      </td>
-      <td>
-        <Group>
-          <Button
-            color={'samfundet-red'}
-            onClick={() => {
-              handleAssignNewPosition()
-            }}
-            disabled={loading}
-          >
-            Oppdater status
-          </Button>
-          <Button
-            variant="outline"
-            color="samfundet-red"
-            onClick={handleQuitKSG}
-          >
-            Ferdig med KSG
-          </Button>
-        </Group>
+        <Menu withArrow position="bottom-end">
+          <Menu.Target>
+            <ActionIcon>
+              <IconDots />
+            </ActionIcon>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item
+              fw={'bold'}
+              className={classes.menuOption}
+              icon={<IconGrave size={16} />}
+              onClick={handleQuitKSG}
+            >
+              Ferdig i KSG
+            </Menu.Item>
+            <Menu.Item
+              className={classes.menuOption}
+              icon={<IconTrash size={16} />}
+              onClick={handleRemovePosition}
+            >
+              Fjern verv
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
       </td>
     </>
   )

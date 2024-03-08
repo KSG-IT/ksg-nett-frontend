@@ -44,6 +44,7 @@ export const SHIFT_DETAIL_QUERY = gql`
           getCleanFullName
           profileImage
           initials
+          firstName
         }
       }
     }

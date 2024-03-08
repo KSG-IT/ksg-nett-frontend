@@ -4,6 +4,7 @@ import { UserNode } from 'modules/users/types'
 export type InternalGroupNode = {
   id: string
   name: string
+  type?: InternalGroupType
   currentlyDiscussing: ApplicantNode | null
   groupImage: string
   groupIcon: string
