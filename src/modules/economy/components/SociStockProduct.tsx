@@ -44,8 +44,7 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
   const isMobile = useIsMobile()
 
   const { data, loading, error } = useQuery<SociProductReturns>(SOCI_PRODUCT, {
-    fetchPolicy: 'network-only',
-    pollInterval: 20000,
+    fetchPolicy: 'cache-only',
     variables: {
       id: stock.id,
     },
