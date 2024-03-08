@@ -9,7 +9,7 @@ import {
   createStyles,
   keyframes,
 } from '@mantine/core'
-import { IconChevronDown, IconMaximize } from '@tabler/icons-react'
+import { IconMaximize } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useEffect, useState } from 'react'
