@@ -111,6 +111,8 @@ export const MANAGE_USERS_DATA_QUERY = gql`
         dateJoinedSemesterShorthand
         dateEndedSemesterShorthand
         internalGroupPositionMembership {
+          dateEnded
+          dateJoined
           id
           getTypeDisplay
           position {
@@ -126,6 +128,8 @@ export const MANAGE_USERS_DATA_QUERY = gql`
         dateJoinedSemesterShorthand
         dateEndedSemesterShorthand
         internalGroupPositionMembership {
+          dateEnded
+          dateJoined
           id
           getTypeDisplay
           position {

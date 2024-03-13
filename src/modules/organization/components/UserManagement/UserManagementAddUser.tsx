@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { MessageBox } from 'components/MessageBox'
 import { InternalGroupPositionSelect, UserSelect } from 'components/Select'
@@ -10,6 +10,7 @@ import {
   InternalGroupPositionType,
 } from 'modules/organization/types.graphql'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { MANAGE_USERS_DATA_QUERY } from '../../../users/queries'
 import { InternalGroupPositionTypeSelect } from './InternalGroupPositionTypeSelect'
 
@@ -25,6 +26,7 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
     selectedInternalGroupPositionType,
     setSelectedInternalGroupPositionType,
   ] = useState<InternalGroupPositionType | null>(null)
+  const history = useNavigate()
 
   const [assignNewPosition, { loading }] = useMutation<
     AssignNewInternalGroupPositionMembershipReturns,
@@ -36,7 +38,18 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
   })
 
   const handleAssignNewPosition = () => {
-    if (selectedInternalGroupPositionType === null) return
+    if (
+      selectedInternalGroupPositionType === null ||
+      selectedUser === '' ||
+      internalGroupPositionId === ''
+    ) {
+      showNotification({
+        title: 'Noe gikk galt',
+        message: 'Du må velge en bruker, et verv og en status for vervet',
+        color: 'red',
+      })
+      return null
+    }
 
     assignNewPosition({
       variables: {
@@ -64,24 +77,20 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
 
   return (
     <Stack>
-      <Title>Gi bruker nytt verv</Title>
       <MessageBox type="info">
         <b>Merk! </b> En person kan bare ha ett verv fra en interngjeng
         samtidig. Om du gir en person et nytt verv i en interngjeng samtidig som
         de har et gammelt et vil det gamle vervet automatisk termineres og få en
         sluttdato. Dette gjelder ikke interessegrupper.
       </MessageBox>
-      <label>Bruker</label>
-      <UserSelect setUserCallback={setSelectedUser} />
-      <label>Verv</label>
-
+      <UserSelect label="Bruker" setUserCallback={setSelectedUser} />
       <InternalGroupPositionSelect
-        setInternalGroupPositionCallback={setInternalGroupPositionId}
+        placeholder="Verv"
+        onChange={setInternalGroupPositionId}
       />
-      <label>Type</label>
       <InternalGroupPositionTypeSelect
+        value={selectedInternalGroupPositionType}
         placeholder="Status"
-        searchable
         onChange={setSelectedInternalGroupPositionType}
       />
       <Group mt="md" position="apart">

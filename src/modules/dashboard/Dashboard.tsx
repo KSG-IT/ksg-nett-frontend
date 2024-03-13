@@ -1,11 +1,5 @@
 import { useQuery } from '@apollo/client'
-import {
-  createStyles,
-  Grid,
-  keyframes,
-  Stack,
-  useMantineTheme,
-} from '@mantine/core'
+import { createStyles, Grid, Stack, useMantineTheme } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -73,13 +67,6 @@ export const Dashboard = () => {
     </Stack>
   )
 }
-
-const bounce = keyframes({
-  'from, 20%, 53%, 80%, to': { transform: 'translate3d(0, 0, 0)' },
-  '40%, 43%': { transform: 'translate3d(0, -1.875rem, 0)' },
-  '70%': { transform: 'translate3d(0, -0.9375rem, 0)' },
-  '90%': { transform: 'translate3d(0, -0.25rem, 0)' },
-})
 
 const useStyles = createStyles(theme => ({
   wrapper: {

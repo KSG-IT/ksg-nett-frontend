@@ -1,7 +1,13 @@
 import { useMutation } from '@apollo/client'
 import {
+  DELETE_INTERNAL_GROUP_POSITION_MEMBERSHIP_MUTATION,
+  DELETE_INTERNAL_GROUP_POSITION_PRIORITY_MUTATION,
+} from 'modules/admissions/mutations'
+import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
+import {
   CREATE_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION,
   PATCH_INTERNAL_GROUP_MUTATION,
+  PATCH_INTERNAL_GROUP_POSITION_MEMBERSHIP_DATES_MUTATION,
   PATCH_INTERNAL_GROUP_POSITION_MEMBERSHIP_MUTATION,
   PATCH_INTERNAL_GROUP_USER_HIGHLIGHT_MUTATION,
   QUIT_KSG_MUTATION,
@@ -9,6 +15,8 @@ import {
 import { PatchInternalGroupReturns, PatchInternalGroupVariables } from './types'
 import {
   CreateInternalGroupUserHighlightReturns,
+  PatchInternalGroupPositionMembershipDatesReturns,
+  PatchInternalGroupPositionMembershipDatesVariables,
   PatchInternalGroupPositionMembershipReturns,
   PatchInternalGroupPositionMembershipVariables,
   PatchInternalGroupUserHighlightReturns,
@@ -38,16 +46,40 @@ export function useInternalGroupPositionMembershipMutations() {
     PatchInternalGroupPositionMembershipVariables
   >(PATCH_INTERNAL_GROUP_POSITION_MEMBERSHIP_MUTATION)
 
+  const [
+    deleteInternalGroupPositionMembership,
+    { loading: deleteInternalGroupPositionMembershipLoading },
+  ] = useMutation<DeleteMutationReturns, DeleteMutationVariables>(
+    DELETE_INTERNAL_GROUP_POSITION_PRIORITY_MUTATION
+  )
+
+  const [removeMember, { loading: removeMemberLoading }] = useMutation<
+    DeleteMutationReturns,
+    DeleteMutationVariables
+  >(DELETE_INTERNAL_GROUP_POSITION_MEMBERSHIP_MUTATION)
+
   const [quitKSG, { loading: quitKSGLoading }] = useMutation<
     QuitKSGReturns,
     QuitKSGVariables
   >(QUIT_KSG_MUTATION)
+
+  const [changeMembershipDate, { loading: changeMembershipDateLoading }] =
+    useMutation<
+      PatchInternalGroupPositionMembershipDatesReturns,
+      PatchInternalGroupPositionMembershipDatesVariables
+    >(PATCH_INTERNAL_GROUP_POSITION_MEMBERSHIP_DATES_MUTATION)
 
   return {
     patchInternalGroupPositionMembership,
     patchInternalGroupPositionMembershipLoading,
     quitKSG,
     quitKSGLoading,
+    deleteInternalGroupPositionMembership,
+    deleteInternalGroupPositionMembershipLoading,
+    removeMember,
+    removeMemberLoading,
+    changeMembershipDate,
+    changeMembershipDateLoading,
   }
 }
 
