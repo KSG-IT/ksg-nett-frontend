@@ -63,18 +63,6 @@ export const Dashboard = () => {
   return (
     <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
-
-      <Text weight={700} color="dimmed">
-        Fremhevet dokument
-      </Text>
-      <Card
-        className={classes.pinnedThreadCard}
-        onClick={handlePinnedThreadClick}
-      >
-        <Title order={3}>Det Gyldne Tappetaarn er åpen for nominasjoner!</Title>
-        Trykk her for å lese mer
-      </Card>
-
       <ShortcutCards
         sociOrderSession={!!sociOrderSession}
         showNewbies={showNewbies}
