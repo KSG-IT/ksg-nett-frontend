@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { ActionIcon, Group, Stack } from '@mantine/core'
+import { ActionIcon, Group, Stack, useMantineTheme } from '@mantine/core'
 import { IconEdit, IconX } from '@tabler/icons-react'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -23,6 +23,7 @@ interface SummaryDetailParams {
 
 export const SummaryDetail = () => {
   const params = useParams<keyof SummaryDetailParams>() as SummaryDetailParams
+  const theme = useMantineTheme()
   const [editMode, setEditMode] = useState(false)
 
   const breadcrumbItems = [
