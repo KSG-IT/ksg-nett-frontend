@@ -1,14 +1,8 @@
-import {
-  Card,
-  createStyles,
-  Group,
-  Stack,
-  Text,
-  UnstyledButton,
-} from '@mantine/core'
+import { Card, Group, Stack, Text, UnstyledButton } from '@mantine/core'
 import { Link } from 'react-router-dom'
 import { format } from 'util/date-fns'
 import { UpcomingShiftNode } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 interface ShiftProps {
   shifts: UpcomingShiftNode[]

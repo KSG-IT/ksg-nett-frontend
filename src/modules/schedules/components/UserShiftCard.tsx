@@ -1,18 +1,11 @@
-import {
-  Badge,
-  Card,
-  createStyles,
-  Group,
-  Stack,
-  Text,
-  useMantineTheme,
-} from '@mantine/core'
+import { Badge, Card, Group, Stack, Text, useMantineTheme } from '@mantine/core'
 import { format } from 'util/date-fns'
 import { UserThumbnail } from 'modules/users/components'
 import { ShiftNode } from '../types.graphql'
 import { parseLocation, parseShiftRole } from '../util'
 import { useIsMobile } from 'util/hooks'
 import { capitalizeFirstLetter } from 'util/parsing'
+import { createStyles } from '@mantine/emotion'
 
 interface UserShiftCardProps {
   shift: Pick<

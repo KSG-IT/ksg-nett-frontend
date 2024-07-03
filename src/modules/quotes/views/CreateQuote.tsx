@@ -3,7 +3,6 @@ import {
   Button,
   Card,
   Container,
-  createStyles,
   Group,
   SimpleGrid,
   Stack,
@@ -25,6 +24,7 @@ import { CREATE_QUOTE } from '../mutations'
 import { PNEDING_QUOTES_QUERY } from '../queries'
 import { CreateQuoteReturns, CreateQuoteVariables } from '../types.graphql'
 import { MessageBox } from 'components/MessageBox'
+import { createStyles } from '@mantine/emotion'
 
 const quoteTextPlaceholder =
   'Wow, du har sykt myke hender! Vanligvis når en jente gir meg en håndjob, sier jeg du kan jo suge meg i stedet, men de hendene'

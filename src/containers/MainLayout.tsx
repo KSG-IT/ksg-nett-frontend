@@ -4,23 +4,21 @@ import {
   Burger,
   Button,
   Container,
-  createStyles,
   Group,
-  Header,
   Image,
-  MediaQuery,
   Text,
   useMantineTheme,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { FullContentLoader } from 'components/Loading'
+import { WhatsNewNotification } from 'components/WhatsNewNotification'
 import { UserSearch } from 'modules/header/UserSearch'
 import React, { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Link } from 'react-router-dom'
-import { useSidebar } from 'util/hooks'
+import { useIsMobile, useSidebar } from 'util/hooks'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
-import { WhatsNewNotification } from 'components/WhatsNewNotification'
 interface ErrorFallbackProps {
   error: Error
   resetErrorBoundary: () => void
@@ -45,11 +43,19 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const theme = useMantineTheme()
+  const isMobile = useIsMobile()
   const { sidebarOpen, toggleSidebar } = useSidebar()
   const { classes } = useStyles()
 
   return (
     <AppShell
+      header={{ height: 60 }}
+      navbar={{
+        width: 300,
+        breakpoint: 'sm',
+        collapsed: { mobile: !sidebarOpen },
+      }}
+      padding="md"
       styles={{
         root: {
           fontFamily: 'Inter',
@@ -58,56 +64,50 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           background: theme.colors.gray[0],
         },
       }}
-      navbarOffsetBreakpoint="sm"
-      asideOffsetBreakpoint="sm"
-      navbar={<AppNavbar opened={sidebarOpen} />}
-      header={
-        <Header height={70} p="md">
-          <div
-            style={{ display: 'flex', alignItems: 'center', height: '100%' }}
-          >
-            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-              <Burger
-                opened={sidebarOpen}
-                onClick={toggleSidebar}
-                size="sm"
-                color={theme.colors.gray[6]}
-                mr="xl"
-              />
-            </MediaQuery>
-
-            <Group className={classes.header}>
-              <MediaQuery smallerThan={'md'} styles={{ display: 'none' }}>
-                <Group>
-                  <Link to="/dashboard">
-                    <Image src={logoUrl} width={48} height={48} />
-                  </Link>
-                  <Link to="/dashboard">
-                    <Text weight={700} size="lg">
-                      Kafe- og serveringsnett
-                    </Text>
-                  </Link>
-                  <a
-                    target="_blank"
-                    href="https://github.com/KSG-IT/ksg-nett-frontend/blob/develop/CHANGELOG.md"
-                  >
-                    <Badge style={{ color: 'black' }} color="gray">
-                      v{APP_VERSION}
-                    </Badge>
-                  </a>
-                </Group>
-              </MediaQuery>
-              <UserSearch />
-            </Group>
-          </div>
-        </Header>
-      }
     >
-      {/* Main content being rendered */}
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <Suspense fallback={<FullContentLoader />}>{children}</Suspense>
-      </ErrorBoundary>
-      <WhatsNewNotification />
+      <AppShell.Header p="md">
+        <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+          {isMobile && (
+            <Burger
+              className={classes.mobileOnly}
+              opened={sidebarOpen}
+              onClick={toggleSidebar}
+              size="sm"
+              color={theme.colors.gray[6]}
+              mr="xl"
+            />
+          )}
+          <Group className={classes.header}>
+            {!isMobile && (
+              <Group>
+                <Link to="/dashboard">
+                  <Image src={logoUrl} width={48} height={48} />
+                </Link>
+                <Link to="/dashboard">
+                  <Text fw={700} size="lg">
+                    Kafe- og serveringsnett
+                  </Text>
+                </Link>
+                <a
+                  target="_blank"
+                  href="https://github.com/KSG-IT/ksg-nett-frontend/blob/develop/CHANGELOG.md"
+                >
+                  <Badge color="gray">v{APP_VERSION}</Badge>
+                </a>
+              </Group>
+            )}
+            <UserSearch />
+          </Group>
+        </div>
+      </AppShell.Header>
+      <AppNavbar opened={sidebarOpen} />
+      <AppShell.Main>
+        {/* Main content being rendered */}
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Suspense fallback={<FullContentLoader />}>{children}</Suspense>
+        </ErrorBoundary>
+        <WhatsNewNotification />
+      </AppShell.Main>
     </AppShell>
   )
 }
@@ -116,8 +116,15 @@ const useStyles = createStyles(t => ({
   header: {
     width: '100%',
     justifyContent: 'space-between',
+
     [`@media (max-width: ${t.breakpoints.sm}px)`]: {
       flexDirection: 'row-reverse',
+    },
+  },
+
+  mobileOnly: {
+    [`@media (max-width: ${t.breakpoints.sm}px)`]: {
+      display: 'none',
     },
   },
 }))

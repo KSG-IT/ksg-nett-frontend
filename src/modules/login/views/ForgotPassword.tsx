@@ -1,18 +1,10 @@
-import { useApolloClient } from '@apollo/client'
 import { yupResolver } from '@hookform/resolvers/yup'
-import {
-  Anchor,
-  Button,
-  createStyles,
-  Paper,
-  Text,
-  TextInput,
-  Title,
-} from '@mantine/core'
+import { Button, Paper, Text, TextInput, Title } from '@mantine/core'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { useLoginMutations } from '../mutations.hooks'
+import { createStyles } from '@mantine/emotion'
 
 let schema = yup.object().shape({
   username: yup.string().required('Du må skrive inn en epost'),

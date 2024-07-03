@@ -1,4 +1,5 @@
-import { Button, createStyles, Text } from '@mantine/core'
+import { Button, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { IconDownload, IconFilePlus, IconMailbox } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'

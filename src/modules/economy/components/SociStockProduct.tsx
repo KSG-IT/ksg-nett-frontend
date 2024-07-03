@@ -4,12 +4,9 @@ import {
   Card,
   Group,
   Stack,
-  Title,
   Text,
-  createStyles,
+  Title,
   useMantineTheme,
-  keyframes,
-  Center,
 } from '@mantine/core'
 import {
   IconMoneybag,
@@ -19,16 +16,13 @@ import {
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useIsMobile } from 'util/hooks'
-import { PRODUCT_ORDERS_WITHIN_TIME_FRAME, SOCI_PRODUCT } from '../queries'
+import { SOCI_PRODUCT } from '../queries'
 import {
-  ProductOrderNode,
-  ProductOrdersReturns,
   SociProductReturns,
   StockMarketDataPoints,
   StockMarketProductNode,
 } from '../types.graphql'
-import { format } from 'date-fns'
-import { useCallback, useEffect } from 'react'
+import { createStyles } from '@mantine/emotion'
 
 interface SociStockProductProps {
   stock: StockMarketProductNode
@@ -133,14 +127,6 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
   )
 }
 
-const borderAnimation = keyframes({
-  // light up the bars in the graph with gradient colors
-
-  '0%': { borderColor: 'black' },
-  '50%': { borderColor: 'lime' },
-  '100%': { borderColor: 'black' },
-})
-
 const useStyles = createStyles(theme => ({
   stock: {
     backgroundColor: '#222',
@@ -167,7 +153,6 @@ const useStyles = createStyles(theme => ({
   stockActivity: {
     backgroundColor: theme.colors.green[8],
     border: '1px solid black',
-    animation: `${borderAnimation} 4s linear infinite`,
     position: 'relative',
   },
 }))

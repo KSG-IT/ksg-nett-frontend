@@ -5,9 +5,9 @@ import {
   NumberInput,
   Select,
   TextInput,
-  createStyles,
 } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { useSociSessionMutations } from 'modules/economy/mutations.hooks'
 import { ALL_SOCI_SESSIONS } from 'modules/economy/queries'

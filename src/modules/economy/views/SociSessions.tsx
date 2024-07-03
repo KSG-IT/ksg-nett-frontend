@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Title } from '@mantine/core'
+import { Button, Group, Title } from '@mantine/core'
 import { IconChartArea, IconGlass, IconPlus } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
@@ -18,6 +18,7 @@ import {
   AllSociSessionsVariables,
 } from '../types.graphql'
 import { MessageBox } from 'components/MessageBox'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },

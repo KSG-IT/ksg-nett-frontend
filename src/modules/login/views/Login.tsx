@@ -2,7 +2,6 @@ import { useApolloClient } from '@apollo/client'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
   Button,
-  createStyles,
   Paper,
   PasswordInput,
   Text,
@@ -19,6 +18,7 @@ import { setLoginToken } from 'util/auth'
 import * as yup from 'yup'
 import { useJwtTokenFromQueryString } from '../hooks'
 import { useLoginMutations } from '../mutations.hooks'
+import { createStyles } from '@mantine/emotion'
 
 let schema = yup.object().shape({
   username: yup.string().required('Du må skrive et brukernavn'),

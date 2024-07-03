@@ -8,7 +8,6 @@ import {
   Stack,
   Text,
   Title,
-  createStyles,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { Breadcrumbs } from 'components/Breadcrumbs'
@@ -27,6 +26,7 @@ import { DELETE_QUOTE } from '../mutations'
 import { useQuoteMutations } from '../mutations.hooks'
 import { APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY } from '../queries'
 import { PendingQuotesReturns } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },

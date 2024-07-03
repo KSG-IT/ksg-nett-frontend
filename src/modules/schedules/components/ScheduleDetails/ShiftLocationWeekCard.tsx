@@ -1,5 +1,6 @@
-import { createStyles, Group, Paper, Stack, Text, Title } from '@mantine/core'
-import { ShiftLocationWeek, ShiftNode } from 'modules/schedules/types.graphql'
+import { Group, Paper, Stack, Text, Title } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
+import { ShiftLocationWeek } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import { format } from 'util/date-fns'
 import { ShiftCard } from './ShiftCard'

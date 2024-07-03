@@ -1,11 +1,11 @@
 import { gql, useQuery } from '@apollo/client'
-import { Card, Container, createStyles, Tabs, Title } from '@mantine/core'
-import { IconBuildingBank, IconCreditCard } from '@tabler/icons-react'
+import { Card, Container, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useMediaQuery } from 'util/hooks'
 import { CreateDepositForm, CreateDepositInfoBox } from '../components'
+import { createStyles } from '@mantine/emotion'
 
 const breadCrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -41,13 +41,8 @@ export const CreateDeposit: React.FC<DepositProps> = () => {
   return (
     <Container size={'sm'} p={mobileSize ? 0 : 'xl'}>
       <Breadcrumbs items={breadCrumbItems} />
-      <Title
-        my={'xs'}
-        transform="uppercase"
-        className={classes.title}
-        order={3}
-      >
-        Legg til innskudd
+      <Title my={'xs'} className={classes.title} order={3}>
+        LEGG TIL INNSKUDD
       </Title>
       <CreateDepositInfoBox />
 

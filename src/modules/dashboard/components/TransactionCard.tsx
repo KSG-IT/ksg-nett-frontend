@@ -1,16 +1,8 @@
-import {
-  Badge,
-  Card,
-  createStyles,
-  Stack,
-  Table,
-  Text,
-  TextProps,
-} from '@mantine/core'
+import { Badge, Stack, Text, TextProps } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { CardTable } from 'components/CardTable'
-import { format } from 'util/date-fns'
-import { UserNode } from 'modules/users/types'
 import React from 'react'
+import { format } from 'util/date-fns'
 import { BankAccountActivity } from '../../economy/types.graphql'
 
 interface TransactionCardProps {

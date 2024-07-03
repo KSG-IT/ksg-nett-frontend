@@ -2,12 +2,12 @@ import {
   Avatar,
   Badge,
   Card,
-  createStyles,
   Divider,
   Group,
   Text,
   Tooltip,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { IconAlertTriangle, IconClock } from '@tabler/icons-react'
 import { ShiftNode } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'

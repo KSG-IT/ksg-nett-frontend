@@ -3,7 +3,6 @@ import {
   Button,
   Card,
   Checkbox,
-  createStyles,
   Group,
   NumberInput,
   Select,
@@ -26,6 +25,7 @@ import { BarTabNode } from 'modules/barTab/types.graphql'
 import { useMemo, useState } from 'react'
 import { BarTabCustomerSelect } from '../BarTabCustomerSelect'
 import { BarTabProductSelect } from '../BarTabProductSelect'
+import { createStyles } from '@mantine/emotion'
 
 interface ActiveBarTablControllerProps {
   barTab: BarTabNode

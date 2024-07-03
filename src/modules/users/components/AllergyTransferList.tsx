@@ -1,11 +1,5 @@
 import { AllergyNode } from '../types'
-import {
-  Button,
-  Stack,
-  Title,
-  TransferList,
-  TransferListData,
-} from '@mantine/core'
+import { Button, Stack, Title } from '@mantine/core'
 import { useState } from 'react'
 import { useUserMutations } from '../mutations.hooks'
 import { MY_SETTINGS_QUERY } from '../queries'
@@ -20,7 +14,7 @@ export const AllergyTransferList: React.FC<AllergyTransferListProps> = ({
   userAllergies,
   allAllergies,
 }) => {
-  const [data, setData] = useState<TransferListData>([
+  const [data, setData] = useState<any>([
     allAllergies
       .filter(
         allergy =>
@@ -36,7 +30,7 @@ export const AllergyTransferList: React.FC<AllergyTransferListProps> = ({
 
   const { updateMyAllergies, updateMyAllergiesLoading } = useUserMutations()
 
-  function handleChange(data: TransferListData) {
+  function handleChange(data: any) {
     setIsDirty(true)
     setData(data)
   }
@@ -44,7 +38,7 @@ export const AllergyTransferList: React.FC<AllergyTransferListProps> = ({
   function handleSave() {
     updateMyAllergies({
       variables: {
-        allergyIds: data[1].map(allergy => allergy.value),
+        allergyIds: data[1].map(allergy => allergy.value as string),
       },
       refetchQueries: [MY_SETTINGS_QUERY],
       onCompleted() {
@@ -63,10 +57,14 @@ export const AllergyTransferList: React.FC<AllergyTransferListProps> = ({
     })
   }
 
+  /**
+   * TODO: https://mantine.dev/combobox/?e=TransferList
+   */
   return (
     <Stack>
       <Title order={3}>Mine allergener</Title>
-      <TransferList
+      <Title order={4}>NEEDS REIMPLEMENTATION</Title>
+      {/* <TransferList
         value={data}
         onChange={handleChange}
         nothingFound="Tomt"
@@ -75,7 +73,7 @@ export const AllergyTransferList: React.FC<AllergyTransferListProps> = ({
       />
       <Button disabled={!isDirty} onClick={handleSave}>
         Oppdater
-      </Button>
+      </Button> */}
     </Stack>
   )
 }

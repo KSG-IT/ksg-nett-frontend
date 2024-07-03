@@ -1,4 +1,5 @@
-import { createStyles, List, Title } from '@mantine/core'
+import { List, Title } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { Link } from 'react-router-dom'
 

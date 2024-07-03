@@ -1,4 +1,5 @@
-import { Badge, createStyles, Group, Paper, Text } from '@mantine/core'
+import { Badge, Group, Paper, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { SociSessionNode } from 'modules/economy/types.graphql'
 import { format } from 'util/date-fns'
 import { useCurrencyFormatter } from 'util/hooks'

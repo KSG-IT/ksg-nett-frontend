@@ -1,10 +1,5 @@
-import {
-  Container,
-  createStyles,
-  Group,
-  Text,
-  UnstyledButton,
-} from '@mantine/core'
+import { Container, Group, Text, UnstyledButton } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
 import { format } from 'util/date-fns'
 

@@ -1,14 +1,5 @@
 import { useQuery } from '@apollo/client'
-import {
-  Card,
-  createStyles,
-  Grid,
-  keyframes,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from '@mantine/core'
+import { Grid, Stack, useMantineTheme } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -22,12 +13,12 @@ import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
 import { DashboardDataQueryReturns } from './types.graphql'
 import { useNavigate } from 'react-router-dom'
+import { createStyles } from '@mantine/emotion'
 
 const breadCrumbItems = [{ label: 'Hjem', path: '/dashboard' }]
 
 export const Dashboard = () => {
   const { classes } = useStyles()
-  const navigate = useNavigate()
   const theme = useMantineTheme()
   const mediaQuery = useMediaQuery(
     `(min-width: ${theme.breakpoints.xl + 300}px)`
@@ -40,10 +31,6 @@ export const Dashboard = () => {
       pollInterval: 10_000,
     }
   )
-
-  function handlePinnedThreadClick() {
-    navigate('/handbook/document/RG9jdW1lbnROb2RlOjk=')
-  }
 
   if (error) return <FullPageError />
 
@@ -61,7 +48,7 @@ export const Dashboard = () => {
   } = data
 
   return (
-    <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
+    <Stack gap="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
       <ShortcutCards
         sociOrderSession={!!sociOrderSession}
@@ -70,24 +57,17 @@ export const Dashboard = () => {
       />
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
-        <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>
+        <Grid.Col span={{ sm: 6, lg: mediaQuery ? 5 : 6 }}>
           <FutureShifts shifts={myUpcomingShifts} />
           <TransactionCard activities={user.lastTransactions} />
         </Grid.Col>
-        <Grid.Col sm={6} lg={mediaQuery ? 5 : 6}>
+        <Grid.Col span={{ sm: 6, lg: mediaQuery ? 5 : 6 }}>
           <RecentQuotes quotes={lastQuotes} />
         </Grid.Col>
       </Grid>
     </Stack>
   )
 }
-
-const bounce = keyframes({
-  'from, 20%, 53%, 80%, to': { transform: 'translate3d(0, 0, 0)' },
-  '40%, 43%': { transform: 'translate3d(0, -1.875rem, 0)' },
-  '70%': { transform: 'translate3d(0, -0.9375rem, 0)' },
-  '90%': { transform: 'translate3d(0, -0.25rem, 0)' },
-})
 
 const useStyles = createStyles(theme => ({
   wrapper: {
@@ -96,32 +76,6 @@ const useStyles = createStyles(theme => ({
 
     [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
       padding: 0,
-    },
-  },
-  pinnedThreadCard: {
-    marginBottom: theme.spacing.md,
-    ':hover': {
-      cursor: 'pointer',
-      backgroundColor: theme.colors.gray[0],
-    },
-    backgroundImage: `linear-gradient(
-      to right,
-      ${theme.colors.red[5]},
-      ${theme.colors.orange[5]},
-      ${theme.colors.yellow[5]},
-      ${theme.colors.green[5]},
-      ${theme.colors.teal[5]},
-      ${theme.colors.cyan[5]},
-      ${theme.colors.blue[5]},
-      ${theme.colors.indigo[5]},
-      ${theme.colors.violet[5]}
-    )`,
-    backgroundSize: '200% 100%',
-    backgroundPosition: 'left bottom',
-    animation: `${bounce} 3s ease-in-out infinite`,
-    '@keyframes gradient': {
-      '0%': { backgroundPosition: 'left bottom' },
-      '100%': { backgroundPosition: 'right bottom' },
     },
   },
 }))

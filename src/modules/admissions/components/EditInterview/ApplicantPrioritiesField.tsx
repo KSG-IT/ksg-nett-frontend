@@ -1,11 +1,6 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import {
-  Button,
-  createStyles,
-  Stack,
-  Text,
-  UnstyledButton,
-} from '@mantine/core'
+import { Button, Stack, Text, UnstyledButton } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { useListState } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
 import { IconCaretDown, IconCaretUp } from '@tabler/icons-react'

@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
-import { createStyles, Title } from '@mantine/core'
+import { Title } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
+import { createStyles } from '@mantine/emotion'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'

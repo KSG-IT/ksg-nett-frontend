@@ -1,7 +1,8 @@
-import { Badge, createStyles, Text, TextProps } from '@mantine/core'
+import { Badge, Text, TextProps } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { ManageInternalGroupUser } from 'modules/organization/types.graphql'
 import { UserManagementTableRow } from './UserManagementTableRow'
+import { createStyles } from '@mantine/emotion'
 
 interface UserManagementTableProps {
   usersData: ManageInternalGroupUser[]

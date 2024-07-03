@@ -1,5 +1,6 @@
 import { useLazyQuery } from '@apollo/client'
-import { createStyles, Group } from '@mantine/core'
+import { Group } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { IconSearch } from '@tabler/icons-react'
 import { UserThumbnail } from 'modules/users/components'
 import { SEARCHBAR_USERS_QUERY } from 'modules/users/queries'
@@ -30,7 +31,7 @@ interface UserSearchOption {
 }
 
 const Option = (props: UserSearchOption) => (
-  <Group position="apart">
+  <Group align="apart">
     {props.label}
     <UserThumbnail user={props.user} size="sm" />
   </Group>
@@ -100,6 +101,7 @@ const useStyles = createStyles(theme => ({
     position: 'relative',
     alignItems: 'center',
     padding: 5,
+    zIndex: 9000,
 
     [theme.breakpoints.xs]: {
       width: '100%',

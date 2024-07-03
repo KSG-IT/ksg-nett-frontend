@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, createStyles, Text } from '@mantine/core'
+import { ActionIcon, Badge, Text } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconTrash } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
@@ -7,6 +7,7 @@ import { useCurrencyFormatter } from 'util/hooks'
 import { useDepositMutations } from '../mutations.hooks'
 import { MY_BANK_ACCOUNT_QUERY } from '../queries'
 import { DepositNode } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 interface MyDepositsProps {
   deposits: DepositNode[]

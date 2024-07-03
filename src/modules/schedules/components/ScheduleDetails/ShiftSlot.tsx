@@ -3,7 +3,6 @@ import {
   ActionIcon,
   Avatar,
   Card,
-  createStyles,
   FocusTrap,
   Group,
   Popover,
@@ -29,6 +28,7 @@ import {
 } from 'modules/users/types'
 import React, { useEffect, useState } from 'react'
 import { SHIFT_DETAIL_QUERY } from './ShiftCardModal'
+import { createStyles } from '@mantine/emotion'
 
 type UserType = {
   id: string

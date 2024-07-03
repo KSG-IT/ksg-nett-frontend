@@ -1,16 +1,8 @@
-import {
-  Badge,
-  createStyles,
-  Image,
-  Paper,
-  SimpleGrid,
-  Stack,
-  Text,
-} from '@mantine/core'
+import { Badge, Image, Paper, SimpleGrid, Stack, Text } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
 import { useIsMobile } from 'util/hooks'
 import { UserNode } from '../types'
-
+import { createStyles } from '@mantine/emotion'
 interface NewbieCardProps {
   newbies: Pick<
     UserNode,

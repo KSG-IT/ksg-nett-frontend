@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
-import { Container, createStyles, Stack, Title } from '@mantine/core'
+import { Container, Stack, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -28,9 +28,6 @@ const MY_WIZARD_QUERY = gql`
 `
 
 export const MigrationWizard: React.FC = () => {
-  const { classes } = useMigrationWizardStyles()
-
-  // me query
   const { data, loading, error } =
     useQuery<MyWizardQueryReturns>(MY_WIZARD_QUERY)
 
@@ -43,7 +40,7 @@ export const MigrationWizard: React.FC = () => {
   const { me } = data
 
   return (
-    <Container className={classes.container}>
+    <Container>
       <Stack>
         <Title>Velkommen til KSG-nett</Title>
         <MessageBox type="info">
@@ -59,7 +56,3 @@ export const MigrationWizard: React.FC = () => {
     </Container>
   )
 }
-
-const useMigrationWizardStyles = createStyles(theme => ({
-  container: {},
-}))

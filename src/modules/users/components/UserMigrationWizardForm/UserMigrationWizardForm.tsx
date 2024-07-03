@@ -1,11 +1,5 @@
-import {
-  Button,
-  Checkbox,
-  createStyles,
-  SimpleGrid,
-  TextInput,
-} from '@mantine/core'
-import { DateInput, DatePicker, DatePickerInput } from '@mantine/dates'
+import { Button, Checkbox, SimpleGrid, TextInput } from '@mantine/core'
+import { DateInput } from '@mantine/dates'
 import { useState } from 'react'
 import { UserWizardData } from './types'
 import { useUserMigrationWizardFormAPI } from './useUserMigrationWizardFormAPI'
@@ -98,8 +92,3 @@ export const UserMigrationWizardForm: React.FC<
     </form>
   )
 }
-
-const useUserMigrationWizardFormStyles = createStyles(theme => ({
-  container: {},
-  title: {},
-}))

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { createStyles, Group, Select, Text } from '@mantine/core'
+import { Group, Select, Text } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import {
@@ -19,6 +19,7 @@ import {
   MyExpendituresReturns,
   MyExpendituresVariables,
 } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 interface MyExpendituresProps {
   moneySpent: number

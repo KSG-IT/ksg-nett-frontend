@@ -21,7 +21,7 @@ export const QuotesList = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
-      <Group position="apart">
+      <Group justify="apart">
         <Title order={2} color="dimmed">
           Sitater
         </Title>

@@ -1,9 +1,9 @@
-import { createStyles, Group, Navbar, Stack, Text } from '@mantine/core'
+import { AppShell, Group, Stack, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import * as Sentry from '@sentry/react'
 import {
   IconCashBanknote,
   IconHandRock,
-  IconJumpRope,
   IconLogout,
   IconPigMoney,
   IconSettings,
@@ -48,17 +48,17 @@ export const NavBarMeSection: React.FC = () => {
   }
 
   return (
-    <Navbar.Section>
-      <Group className={classes.meGroup} onClick={handleClick}>
-        <UserThumbnail user={me} size="md" />
+    <AppShell.Section>
+      <Group className={classes.meGroup} onClick={handleClick} wrap="nowrap">
+        <UserThumbnail user={me} />
 
-        <Stack spacing={0}>
-          <Text style={{ textOverflow: 'ellipsis' }} size="xs">
+        <Stack gap="xs">
+          <Text style={{ textOverflow: me.firstName }} size="xs">
             {me.getFullWithNickName}
           </Text>
-          <Group spacing={0} align="center">
+          <Group gap="xs" align="center">
             <IconPigMoney size={16} />
-            <Text size={'xs'} weight={500} color={liquidityColor(me.balance)}>
+            <Text size={'xs'} fw={500} color={liquidityColor(me.balance)}>
               {formatCurrency(me.balance)}
             </Text>
           </Group>
@@ -93,7 +93,7 @@ export const NavBarMeSection: React.FC = () => {
         permissions={[]}
         onClick={handleLogoutAlert}
       />
-    </Navbar.Section>
+    </AppShell.Section>
   )
 }
 

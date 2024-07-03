@@ -1,6 +1,7 @@
-import { Accordion, createStyles, Group, Paper, Text } from '@mantine/core'
+import { Accordion, Group, Paper, Text } from '@mantine/core'
 import { ShiftTemplateNode } from 'modules/schedules/types.graphql'
 import { ShiftTemplateAccordionItem } from './ShiftTemplateAccordionItem'
+import { createStyles } from '@mantine/emotion'
 
 interface ShiftTemplateAccordionProps {
   shiftTemplates: ShiftTemplateNode[]

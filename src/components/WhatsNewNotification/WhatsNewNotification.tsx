@@ -1,12 +1,4 @@
-import {
-  Button,
-  Divider,
-  Group,
-  Modal,
-  Text,
-  Title,
-  createStyles,
-} from '@mantine/core'
+import { Button, Divider, Group, Modal, Text, Title } from '@mantine/core'
 import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
@@ -103,18 +95,9 @@ export const WhatsNewNotification: React.FC = () => {
           </li>
         </ul>
       </ul>
-      <Group position="right">
+      <Group justify="flex-end">
         <Button onClick={handleClose}>Lukk vindu</Button>
       </Group>
     </Modal>
   )
 }
-
-const useStyles = createStyles(() => ({
-  wrapper: {
-    width: 300,
-    fontSize: 14,
-    borderRadius: 10,
-    boxShadow: '1px  black',
-  },
-}))
