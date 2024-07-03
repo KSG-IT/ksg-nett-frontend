@@ -1,6 +1,6 @@
-import { MantineThemeOverride } from '@mantine/core'
+import { createTheme, localStorageColorSchemeManager } from '@mantine/core'
 
-export const theme: MantineThemeOverride = {
+export const theme = createTheme({
   colors: {
     white: ['#fff'],
     brand: ['#A03033'],
@@ -19,6 +19,6 @@ export const theme: MantineThemeOverride = {
   },
   primaryColor: 'samfundet-red',
   fontFamily: '"Inter"',
-}
+})
 
 // https://www.petarstefanov.com/blog/2020-03-10-react-styled-components-mobile-first-aproach/

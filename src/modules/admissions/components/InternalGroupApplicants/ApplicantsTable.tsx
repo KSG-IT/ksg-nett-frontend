@@ -1,12 +1,13 @@
-import { Avatar, Badge, Table, createStyles } from '@mantine/core'
+import { Avatar, Badge } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { IconCheck, IconX } from '@tabler/icons-react'
-import { format } from 'util/date-fns'
+import { CardTable } from 'components/CardTable'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { UserThumbnail } from 'modules/users/components'
+import { useNavigate } from 'react-router-dom'
+import { format } from 'util/date-fns'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { ApplicantTableRowMenu } from './ApplicantTableRowMenu'
-import { CardTable } from 'components/CardTable'
-import { useNavigate } from 'react-router-dom'
 
 function safeParseApplicantName(applicant: CoreApplicantNode) {
   if (applicant.fullName === ' ') return ''

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -10,6 +10,7 @@ import { API_URL } from 'util/env'
 import { UserShiftCardList } from '../components'
 import { MY_UPCOMING_SHIFTS } from '../queries'
 import { MyUpcomingShiftsReturns } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },

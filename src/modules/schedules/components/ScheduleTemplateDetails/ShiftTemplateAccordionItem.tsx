@@ -1,11 +1,5 @@
-import {
-  Accordion,
-  Button,
-  createStyles,
-  Group,
-  Table,
-  Text,
-} from '@mantine/core'
+import { Accordion, Button, Group, Table, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { IconPlus, IconTrash } from '@tabler/icons-react'
 import { RoleValues } from 'modules/schedules/consts'

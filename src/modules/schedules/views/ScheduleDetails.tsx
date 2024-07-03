@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { IconPlus, IconSettings } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 
@@ -17,6 +17,7 @@ import { CreateShiftDrawer } from '../components/ScheduleDetails/CreateShiftDraw
 
 import { ShiftRenderer } from '../components/ScheduleDetails/ShiftRenderer'
 import { SCHEDULE_QUERY } from '../queries'
+import { createStyles } from '@mantine/emotion'
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
   { label: 'Vaktlister', path: '/schedules' },

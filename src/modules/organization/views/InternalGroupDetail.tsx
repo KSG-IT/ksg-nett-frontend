@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Image, Stack, Title } from '@mantine/core'
+import { Button, Group, Image, Stack, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading/FullContentLoader'
@@ -9,6 +9,7 @@ import { PERMISSIONS } from 'util/permissions'
 import { InternalGroupTabs } from '../components/InternalGroupDetail'
 import { INTERNAL_GROUP_QUERY } from '../queries'
 import { InternalGroupReturns, InternalGroupVariables } from '../types'
+import { createStyles } from '@mantine/emotion'
 
 const breadCrumbsItems = [
   {

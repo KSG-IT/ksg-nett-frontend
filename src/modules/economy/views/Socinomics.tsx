@@ -1,14 +1,5 @@
 import { useQuery } from '@apollo/client'
-import {
-  Affix,
-  Box,
-  Button,
-  Container,
-  SimpleGrid,
-  Title,
-  createStyles,
-  keyframes,
-} from '@mantine/core'
+import { Affix, Box, Button, Container, SimpleGrid, Title } from '@mantine/core'
 import { IconMaximize } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -25,6 +16,7 @@ import {
   StockPriceHistoryNode,
   StockPriceHistoryReturns,
 } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 const Socinomics: React.FC = () => {
   const [stocksLength, setStocksLength] = useState(0)
@@ -161,19 +153,6 @@ const Socinomics: React.FC = () => {
   )
 }
 
-const blink = keyframes({
-  '0%': { borderColor: 'black' },
-  '50%': { borderColor: 'red' },
-  '100%': { borderColor: 'black' },
-})
-
-const border = keyframes({
-  '33%': { borderColor: 'lightblue', borderRightColor: 'lime' },
-  '66%': { borderColor: 'lightblue', borderBottomColor: 'lime' },
-  '90%': { borderColor: 'lightblue', borderLeftColor: 'lime' },
-  '100%': { borderColor: 'lightblue', borderTopColor: 'lime' },
-})
-
 const useStyles = createStyles(
   (theme, variables: { stocksLength: number; fullScreen: boolean }) => ({
     windowed: {
@@ -198,12 +177,10 @@ const useStyles = createStyles(
       border: '4px solid silver',
       borderTopColor: 'lime',
       overflow: 'hidden',
-      animation: `${border} 3s ease-out infinite`,
     },
     crackContainer: {
       border: '4px solid silver',
       overflow: 'hidden',
-      animation: `${blink} 2s ease-in-out infinite alternate`,
     },
 
     scrollingInner: {

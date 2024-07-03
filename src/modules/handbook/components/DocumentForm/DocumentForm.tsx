@@ -27,7 +27,7 @@ export const DocumentForm: React.FC<DocumentForm> = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack>
-        <Group position={'apart'}>
+        <Group justify={'space-between'}>
           <TextInput
             size={'md'}
             placeholder="Navn"
