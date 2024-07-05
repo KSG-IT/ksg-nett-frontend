@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { createStyles, Grid, Modal, Stack, Title } from '@mantine/core'
+import { Grid, Modal, Stack, Title } from '@mantine/core'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { UserEditForm, UserHistory, UserQuotes } from 'modules/users/components'
@@ -9,6 +9,7 @@ import { UserDetails } from '../components/UserDetails'
 
 import { USER_QUERY } from '../queries'
 import { UserQueryReturns, UserQueryVariables } from '../types'
+import { createStyles } from '@mantine/emotion'
 
 interface UserProfileParams {
   userId: string

@@ -1,5 +1,4 @@
 import { Avatar, Badge, Divider, Group, Title } from '@mantine/core'
-import { useEditor } from '@tiptap/react'
 import { UserThumbnail } from '../../users/components'
 import { SummaryNode } from '../types'
 
@@ -10,21 +9,20 @@ interface SummaryProps {
 export const Summary: React.FC<SummaryProps> = ({ summary }: SummaryProps) => {
   return (
     <>
-      <Group position={'left'}>
+      <Group>
         <Badge variant={'filled'} size={'lg'} color={'samfundet-red'}>
           {summary.displayName}
         </Badge>
         <Divider orientation={'vertical'} />
         <Group>
-          <Title weight={'normal'} order={4} color={'dark'}>
+          <Title fw={'normal'} order={4} c={'dark'}>
             Referent
           </Title>
-
           <UserThumbnail user={summary.reporter} size="md" />
         </Group>
         <Divider orientation={'vertical'} />
         <Group>
-          <Title weight={'normal'} order={4} color={'dark'}>
+          <Title fw={'normal'} order={4} c={'dark'}>
             Deltakere
           </Title>
 

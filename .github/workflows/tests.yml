@@ -11,13 +11,26 @@ jobs:
         node-version: [16.13.2]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+
+      - name: Restore dependencies cache
+        uses: actions/cache@v4
+        id: yarn-cache
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+
+
       - name: Install dependencies
-        run: yarn install
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        run: |
+          yarn install
+
       - name: Build
         env:
           NODE_OPTIONS: "--max_old_space_size=4096"

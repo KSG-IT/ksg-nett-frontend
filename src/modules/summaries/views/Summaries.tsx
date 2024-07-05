@@ -3,7 +3,6 @@ import {
   Avatar,
   Badge,
   Button,
-  createStyles,
   Group,
   Stack,
   Text,
@@ -25,6 +24,7 @@ import { UserThumbnail } from '../../users/components'
 import { PermissionGate } from 'components/PermissionGate'
 import { PERMISSIONS } from 'util/permissions'
 import { FullContentLoader } from 'components/Loading'
+import { createStyles } from '@mantine/emotion'
 
 const breadCrumbItems = [
   { label: 'Hjem', path: '/dashboard' },

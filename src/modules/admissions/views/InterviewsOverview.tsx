@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client'
 import {
   Button,
   Card,
-  createStyles,
   Group,
   Modal,
   Stack,
@@ -26,6 +25,7 @@ import {
   InterviewLocationOverviewRow,
   InterviewTableOverviewReturns,
 } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },

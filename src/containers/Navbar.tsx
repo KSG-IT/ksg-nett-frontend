@@ -1,4 +1,5 @@
-import { createStyles, Navbar, Text } from '@mantine/core'
+import { AppShell, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import {
   IconAffiliate,
   IconBlockquote,
@@ -10,7 +11,6 @@ import {
   IconFlag,
   IconHandMiddleFinger,
   IconHome,
-  IconMessage,
   IconUserPlus,
 } from '@tabler/icons-react'
 import { useLocation } from 'react-router-dom'
@@ -127,17 +127,15 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
   const { classes } = useNavbarStyles()
 
   return (
-    <Navbar
+    <AppShell.Navbar
       p="md"
-      hiddenBreakpoint="sm"
       hidden={!isOpen}
-      width={{ sm: 200, lg: 250 }}
-      style={{
-        backgroundColor: 'white',
-        overflowY: 'auto',
-        overscrollBehavior: 'contain',
-        fontSize: '12px',
-      }}
+      style={
+        {
+          // TODO: Setting width here still leaves global padding. Needs to be overridden somewhere probably
+          // width: 200
+        }
+      }
     >
       <NavBarMeSection />
       {routes.map((routeGroup, index) => {
@@ -147,7 +145,7 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
         if (!hasAny) return null
         return (
           <div className={classes.group} key={index}>
-            <Text weight={600} mb="xs" id={routeGroup.title}>
+            <Text size="xs" fw={600} mb="xs" id={routeGroup.title}>
               {routeGroup.title}
             </Text>
             {routeGroup.items.map((item, index) => {
@@ -162,7 +160,7 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
           </div>
         )
       })}
-    </Navbar>
+    </AppShell.Navbar>
   )
 }
 

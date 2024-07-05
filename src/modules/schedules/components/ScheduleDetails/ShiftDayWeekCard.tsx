@@ -1,9 +1,10 @@
-import { Card, createStyles, Group, Paper, Stack, Title } from '@mantine/core'
+import { Card, Group, Paper, Stack, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconDotsVertical } from '@tabler/icons-react'
 import { ShiftDayWeek } from 'modules/schedules/types.graphql'
 import { format } from 'util/date-fns'
 import { ShiftCard } from './ShiftCard'
+import { createStyles } from '@mantine/emotion'
 
 interface ShiftDayWeekCardProps {
   shiftDayWeek: ShiftDayWeek

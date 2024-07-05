@@ -1,4 +1,5 @@
-import { createStyles, Stack, Text } from '@mantine/core'
+import { Stack, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { useMemo } from 'react'
 
 type GridItemProp = {

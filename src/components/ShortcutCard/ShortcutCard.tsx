@@ -1,4 +1,5 @@
-import { createStyles, Text, UnstyledButton } from '@mantine/core'
+import { Text, UnstyledButton } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { Icon } from '@tabler/icons-react'
 import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
@@ -29,12 +30,7 @@ export const ShortcutCard: React.FC<ShortcutProps> = ({
         className={classes.item}
       >
         {Icon && <Icon color={theme.colors[color][6]} size={32} />}
-        <Text
-          size={'md'}
-          color={'dimmed'}
-          weight={800}
-          className={classes.text}
-        >
+        <Text size={'md'} c={'dimmed'} fw={800} className={classes.text}>
           {title}
         </Text>
       </UnstyledButton>
@@ -53,14 +49,8 @@ const useStyles = createStyles(theme => ({
     textAlign: 'center',
     borderRadius: theme.radius.md,
     height: 90,
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.white,
+    backgroundColor: theme.white,
     transition: 'box-shadow 150ms ease, transform 100ms ease',
-
-    '&:hover': {
-      boxShadow: `${theme.shadows.sm} !important`,
-      transform: 'scale(1.05)',
-    },
   },
   text: {
     [`@media (max-width: ${theme.breakpoints.xs}px)`]: {

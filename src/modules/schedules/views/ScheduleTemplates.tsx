@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Title } from '@mantine/core'
+import { Button, Group, Title } from '@mantine/core'
 import { IconPlus } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
@@ -22,7 +22,6 @@ const breadcrumbItems = [
 
 export const ScheduleTemplates: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
-  const { classes } = useScheduleTemplateStyles()
   const { data, loading, error } = useQuery<AllScheduleTemplatesReturns>(
     ALL_SCHEDULE_TEMPLATES
   )
@@ -34,7 +33,7 @@ export const ScheduleTemplates: React.FC = () => {
   const { allScheduleTemplates } = data
 
   return (
-    <div className={classes.wrapper}>
+    <div>
       <Breadcrumbs items={breadcrumbItems} />
       <Group position="apart" my="md">
         <Title>Vaktplan maler</Title>
@@ -58,7 +57,3 @@ export const ScheduleTemplates: React.FC = () => {
     </div>
   )
 }
-
-const useScheduleTemplateStyles = createStyles(theme => ({
-  wrapper: {},
-}))

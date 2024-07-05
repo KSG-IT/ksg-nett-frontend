@@ -11,12 +11,8 @@ export const ShortcutCardGrid: React.FC<ShortcutCardGridProps> = ({
 }) => {
   return (
     <SimpleGrid
-      cols={cols}
-      breakpoints={[
-        { maxWidth: 980, cols: 3, spacing: 'md' },
-        { maxWidth: 755, cols: 2, spacing: 'sm' },
-        { maxWidth: 600, cols: 2, spacing: 'sm' },
-      ]}
+      cols={{ base: 22, sm: 2, lg: 5 }}
+      spacing={{ base: 10, sm: 'xl' }}
     >
       {shortcuts.map((shortcut, index) => (
         <ShortcutCard key={index} {...shortcut} />

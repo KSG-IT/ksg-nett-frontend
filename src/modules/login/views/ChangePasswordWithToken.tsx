@@ -1,16 +1,11 @@
-import {
-  Button,
-  createStyles,
-  Paper,
-  PasswordInput,
-  Title,
-} from '@mantine/core'
+import { Button, Paper, PasswordInput, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { setLoginToken } from 'util/auth'
 import { useJwtTokenFromQueryString } from '../hooks'
 import { useLoginMutations } from '../mutations.hooks'
+import { createStyles } from '@mantine/emotion'
 
 export const ChangePasswordWithToken: React.FC = () => {
   const { classes } = useStyles()

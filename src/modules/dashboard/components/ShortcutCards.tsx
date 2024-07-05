@@ -1,10 +1,10 @@
-import { createStyles, Stack, Text } from '@mantine/core'
+import { Stack, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import {
   IconBabyCarriage,
   IconCreditCard,
   IconEdit,
   IconMeat,
-  IconMoneybag,
   IconMoodKid,
   IconQuote,
   IconReportMoney,
@@ -72,9 +72,7 @@ export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
 
   return (
     <Stack>
-      <Text color="dimmed" className={classes.title}>
-        Snarveier
-      </Text>
+      <Text className={classes.title}>Snarveier</Text>
 
       {showStockMarketShortcut && (
         <ShortcutCard

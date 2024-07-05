@@ -1,14 +1,6 @@
-import {
-  Avatar,
-  Card,
-  createStyles,
-  SimpleGrid,
-  Stack,
-  Text,
-} from '@mantine/core'
+import { SimpleGrid, Stack, Text } from '@mantine/core'
 import { QuoteCard } from 'modules/quotes/components'
 import { QuoteNode } from 'modules/quotes/types.graphql'
-import { UserThumbnail } from 'modules/users/components/UserThumbnail'
 
 interface UserQuotesProps {
   quotes: Pick<
@@ -36,13 +28,3 @@ export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
     </Stack>
   )
 }
-
-const useStyles = createStyles(theme => ({
-  quoteText: {
-    color: theme.colors.gray[7],
-    fontStyle: 'italic',
-  },
-  card: {
-    maxWidth: 200,
-  },
-}))

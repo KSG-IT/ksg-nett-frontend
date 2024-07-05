@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Group, Radio, Stack, Text, Title, createStyles } from '@mantine/core'
+import { Group, Radio, Stack, Text, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
@@ -15,6 +15,7 @@ import {
 import { InternalGroupDiscussionDataOrderingKeyValue } from '../consts'
 import { INTERNAL_GROUP_DISCUSSION_DATA } from '../queries'
 import { InternalGroupDiscussionDataReturns } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 interface InternalGroupDiscussionParams {
   internalGroupId: string

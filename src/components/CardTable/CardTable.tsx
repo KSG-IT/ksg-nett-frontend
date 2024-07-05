@@ -1,10 +1,5 @@
-import {
-  createStyles,
-  Paper,
-  ScrollArea,
-  Table,
-  TableProps,
-} from '@mantine/core'
+import { Paper, Table, TableProps } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 
 interface CardTableProps extends TableProps {
   p?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | string
@@ -22,7 +17,7 @@ export const CardTable: React.FC<CardTableProps> = ({
 
   return (
     <Paper className={`${classes.card} ${className}`} p={p}>
-      <Table fontSize={compact ? 12 : 14} {...rest}>
+      <Table fz={compact ? 12 : 14} {...rest}>
         {children}
       </Table>
     </Paper>

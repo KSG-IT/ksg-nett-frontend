@@ -1,8 +1,8 @@
+import { useQuery } from '@apollo/client'
 import {
   ActionIcon,
   Badge,
   Card,
-  createStyles,
   Divider,
   Group,
   Image,
@@ -13,21 +13,21 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core'
-import { useQuery } from '@apollo/client'
-import { INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY } from '../../queries'
+import { createStyles } from '@mantine/emotion'
+import { IconNotes, IconPlus } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { PermissionGate } from 'components/PermissionGate'
+import { InternalGroupUserHighlightEditForm } from 'modules/organization/components/InternalGroupDetail/components/EditHighlights/InternalGroupUserHighlightEditForm'
+import { useState } from 'react'
+import { useIsMobile } from 'util/hooks'
+import { PERMISSIONS } from 'util/permissions'
+import { INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY } from '../../queries'
 import {
   InternalGroupUserHighlightNode,
   InternalGroupUserHighlightsByInternalGroupReturns,
   InternalGroupUserHighlightsByInternalGroupVariables,
 } from '../../types'
-import { InternalGroupUserHighlightEditForm } from 'modules/organization/components/InternalGroupDetail/components/EditHighlights/InternalGroupUserHighlightEditForm'
-import { useState } from 'react'
-import { IconNotes, IconPlus } from '@tabler/icons-react'
-import { useIsMobile } from 'util/hooks'
-import { PermissionGate } from 'components/PermissionGate'
-import { PERMISSIONS } from 'util/permissions'
 
 interface InternalGroupUserHighlightsProps {
   internalGroupId: string
