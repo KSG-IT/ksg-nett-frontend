@@ -28,9 +28,14 @@ export const Schedules: React.FC = () => {
       <Breadcrumbs items={breadcrumbItems} />
       <Group position="apart" align="center">
         <Title>Vaktplaner</Title>
-        <Link to="/schedules/templates">
-          <Button color="samfundet-red">Se vaktplanmaler</Button>
-        </Link>
+        <Group>
+          <Link to="/schedules/allergies">
+            <Button color="samfundet-red">Allergenoversikt</Button>
+          </Link>
+          <Link to="/schedules/templates">
+            <Button color="samfundet-red">Se vaktplanmaler</Button>
+          </Link>
+        </Group>
       </Group>
       <SchedulesTable schedules={allSchedules} />
     </div>
