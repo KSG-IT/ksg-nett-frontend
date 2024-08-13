@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '2024-03-21'
+const NOTIFICATION_KEY = '2024-08-13'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -40,7 +40,15 @@ export const WhatsNewNotification: React.FC = () => {
         👋 Hva er nytt?
       </Title>
       <Text size="sm" color="gray" mt={0}>
-        Siste oppdatering: 2024-03-21
+        Siste oppdatering: 2024-08-13
+      </Text>
+      <Divider mb="md" />
+      <Title order={4}>Oppdatering vaktlister</Title>
+      <Text>
+        Det er nå mulig å for vaktlisteansvarlige å se ukentlige oversikter over
+        allergener per dag. Husk å registrere allergenene dine riktig, og
+        oppdatere vaktbytter. Servering C, D og K har blit lagt til listen over
+        tilgjengelige lokaler.
       </Text>
       <Divider mb="md" />
       <Title order={4}>Mer info vakt epost - 20. Mars 2024</Title>
@@ -49,6 +57,7 @@ export const WhatsNewNotification: React.FC = () => {
         vakt - Sendt inn av 'Peder "høye peder" Brandstorp Sanden', løst av
         Håkon 'that / guy' Telje.
       </Text>
+      <Divider mb="md" />
       <Title order={4}>Børsen inntar societeten - 11. November 2023</Title>
       <Text>
         KSG-IT introduserer socibørsen. Ekslusivt for én kveld vil priser være

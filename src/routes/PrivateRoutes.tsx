@@ -98,6 +98,11 @@ const SocinomicsControlPanel = React.lazy(
   () => import('modules/economy/views/SocinomicsControl')
 )
 
+// === Schedules ===
+const ScheduleAllergies = React.lazy(
+  () => import('modules/schedules/views/ScheduleAllergies')
+)
+
 // ==== Feature flags ====
 const FeatureFlags = React.lazy(
   () => import('modules/featureFlags/views/FeatureFlags')
@@ -554,6 +559,7 @@ export const AppRoutes: React.FC = () => {
             <Route path="availability" element={<MyAvailability />} />
           </Route>
           <Route path="all-shifts" element={<AllShifts />} />
+          <Route path="allergies" element={<ScheduleAllergies />} />
 
           <Route path="templates">
             <Route

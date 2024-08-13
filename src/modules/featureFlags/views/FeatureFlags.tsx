@@ -1,20 +1,8 @@
 import { useQuery } from '@apollo/client'
-import {
-  Card,
-  Group,
-  Stack,
-  Switch,
-  Table,
-  Text,
-  Title,
-  Tooltip,
-} from '@mantine/core'
-import { IconInfoCircle } from '@tabler/icons-react'
+import { Card, Stack, Switch, Table, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
-import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { MessageBox } from 'components/MessageBox'
 import { useFeatureFlagMutations } from '../mutations.hooks'
 import { ALL_FEATURE_FLAGS } from '../queries'
 import { AllFeatureFlagsQuery } from '../types.graphql'
