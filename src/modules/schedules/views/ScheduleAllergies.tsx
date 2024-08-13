@@ -29,6 +29,7 @@ const ALLERGY_FOR_WEEK_QUERY = gql`
   query AllergyForWeekQuery($shiftsFrom: Date!) {
     scheduleAllergies(shiftsFrom: $shiftsFrom) {
       date
+      totalUserCount
       allergyList {
         name
         count
@@ -44,6 +45,7 @@ export interface AllergyQueryVariables {
 export interface AllergyQueryReturns {
   scheduleAllergies: {
     date: string
+    totalUserCount: number
     allergyList: {
       name: string
       count: number
