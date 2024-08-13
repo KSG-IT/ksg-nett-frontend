@@ -31,6 +31,12 @@ export function parseLocation(location: LocationValues | null) {
       return { name: 'Strossa', color: 'pink' }
     case LocationValues.KONTORET:
       return { name: 'Kontoret', color: 'gray' }
+    case LocationValues.SERVERING_C:
+      return { name: 'Servering C', color: 'gray' }
+    case LocationValues.SERVERING_D:
+      return { name: 'Servering D', color: 'gray' }
+    case LocationValues.SERVERING_K:
+      return { name: 'Servering K', color: 'gray' }
     default:
       return { name: '', color: 'gray' }
   }
