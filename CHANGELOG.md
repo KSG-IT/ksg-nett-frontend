@@ -1,6 +1,16 @@
 # CHANGELOG
 
-## [Unreleased]
+## [unreleased]
+
+## [2024.8.1]
+
+### Added
+
+- Schedules
+  - New location options [Servering C, Servering D, Servering K]
+  - New page to see allergies
+
+## [2024.3.1]
 
 ### Added
 
