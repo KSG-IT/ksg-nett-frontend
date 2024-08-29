@@ -228,3 +228,11 @@ export interface UpdateMyEmailNotificationsVariables {
   notifyOnDeposit: boolean
   notifyOnShift: boolean
 }
+
+export interface UpdateMyAddressReturns {
+  user: Pick<UserNode, 'id'>
+}
+
+export interface UpdateMyAddressVariables {
+  studyAddress: string
+}

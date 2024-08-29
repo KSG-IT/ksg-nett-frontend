@@ -4,6 +4,7 @@ import {
   PATCH_USER_MUTATION,
   REMOVE_USER_FROM_USER_TYPE_MUTATION,
   UPDATE_ABOUT_ME_MUTATION,
+  UPDATE_MY_ADDRESS_MUTATION,
   UPDATE_MY_ALLERGIES_MUTATION,
   UPDATE_MY_EMAIL_NOTIFICATIONS_MUTATION,
   UPDATE_MY_INFO_MUTATION,
@@ -15,6 +16,8 @@ import {
   RemoveUserFromUserTypeVariables,
   UpdateAboutMeReturns,
   UpdateAboutMeVariables,
+  UpdateMyAddressReturns,
+  UpdateMyAddressVariables,
   UpdateMyAllergiesReturns,
   UpdateMyAllergiesVariables,
   UpdateMyEmailNotificationsReturns,
@@ -79,6 +82,11 @@ export function useUserMutations() {
     UpdateMyEmailNotificationsVariables
   >(UPDATE_MY_EMAIL_NOTIFICATIONS_MUTATION)
 
+  const [updateMyAddress, { loading: updateMyAddressLoading }] = useMutation<
+    UpdateMyAddressReturns,
+    UpdateMyAddressVariables
+  >(UPDATE_MY_ADDRESS_MUTATION)
+
   return {
     patchUser,
     patchUserLoading,
@@ -92,6 +100,8 @@ export function useUserMutations() {
     updateMyAllergiesLoading,
     updateMyEmailNotifications,
     updateMyEmailNotificationsLoading,
+    updateMyAddress,
+    updateMyAddressLoading,
   }
 }
 

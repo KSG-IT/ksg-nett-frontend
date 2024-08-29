@@ -97,3 +97,13 @@ export const UPDATE_MY_EMAIL_NOTIFICATIONS_MUTATION = gql`
     }
   }
 `
+
+export const UPDATE_MY_ADDRESS_MUTATION = gql`
+  mutation UpdateMyAddress($studyAddress: String) {
+    updateMyAddress(studyAddress: $studyAddress) {
+      user {
+        id
+      }
+    }
+  }
+`
