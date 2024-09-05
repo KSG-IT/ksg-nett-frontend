@@ -43,7 +43,9 @@ export const NewbieCards: React.FC<NewbieCardProps> = ({ newbies }) => {
           />
           <Stack spacing={0} p="xs" my="xs">
             <Text>{newbie.fullName}</Text>
-            <Badge>{newbie.activeInternalGroupPosition.name}</Badge>
+            {newbie.activeInternalGroupPosition && (
+              <Badge>{newbie.activeInternalGroupPosition.name}</Badge>
+            )}
           </Stack>
         </Paper>
       ))}

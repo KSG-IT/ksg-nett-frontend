@@ -42,7 +42,10 @@ export type UserNode = {
   lastTransactions: BankAccountActivity[]
   upvotedQuoteIds: string[]
   internalGroupPositionMembershipHistory: InternalGroupPositionMembershipNode[]
-  activeInternalGroupPosition: Pick<InternalGroupPositionNode, 'id' | 'name'>
+  activeInternalGroupPosition: Pick<
+    InternalGroupPositionNode,
+    'id' | 'name'
+  > | null
   legacyWorkHistory: LegacyUserrWorkHistoryNode[]
   allPermissions: string[]
   allergies: AllergyNode[]
