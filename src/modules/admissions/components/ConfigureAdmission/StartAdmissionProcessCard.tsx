@@ -25,7 +25,7 @@ interface StartAdmissionProcessCardProps {
 export const StartAdmissionProcessCard: React.FC<
   StartAdmissionProcessCardProps
 > = ({ setStageCallback }) => {
-  const [addUserOpen, setAddUserOpen] = useState(true)
+  const [addUserOpen, setAddUserOpen] = useState(false)
   const [createAdmission] = useMutation<
     CreateAdmissionReturns,
     CreateAdmissionVariables
@@ -62,7 +62,10 @@ export const StartAdmissionProcessCard: React.FC<
           <Button color="samfundet-red">Legg til ny bruker</Button>
         </Group>
       </PermissionGate>
-      <AddSingleUserModal opened={addUserOpen} onClose={() => void 0} />
+      <AddSingleUserModal
+        opened={addUserOpen}
+        onClose={() => setAddUserOpen(false)}
+      />
     </Stack>
   )
 }
