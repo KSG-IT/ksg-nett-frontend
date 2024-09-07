@@ -8,6 +8,8 @@ import {
   CreateAdmissionVariables,
 } from 'modules/admissions/types.graphql'
 import { PERMISSIONS } from 'util/permissions'
+import { AddSingleUserModal } from './AddSingleUserModal'
+import { useState } from 'react'
 
 type WizardStage =
   | 'START'
@@ -23,6 +25,7 @@ interface StartAdmissionProcessCardProps {
 export const StartAdmissionProcessCard: React.FC<
   StartAdmissionProcessCardProps
 > = ({ setStageCallback }) => {
+  const [addUserOpen, setAddUserOpen] = useState(false)
   const [createAdmission] = useMutation<
     CreateAdmissionReturns,
     CreateAdmissionVariables
@@ -55,8 +58,14 @@ export const StartAdmissionProcessCard: React.FC<
           <Button color="samfundet-red" onClick={handleOpenAdmission}>
             Start nytt opptak
           </Button>
+
+          <Button color="samfundet-red">Legg til ny bruker</Button>
         </Group>
       </PermissionGate>
+      <AddSingleUserModal
+        opened={addUserOpen}
+        onClose={() => setAddUserOpen(false)}
+      />
     </Stack>
   )
 }
