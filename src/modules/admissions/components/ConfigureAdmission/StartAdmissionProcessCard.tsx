@@ -46,6 +46,10 @@ export const StartAdmissionProcessCard: React.FC<
       },
     })
   }
+
+  function handleSetAddUserOpen() {
+    setAddUserOpen(true)
+  }
   return (
     <Stack>
       <Title>Opptak</Title>
@@ -59,7 +63,9 @@ export const StartAdmissionProcessCard: React.FC<
             Start nytt opptak
           </Button>
 
-          <Button color="samfundet-red">Legg til ny bruker</Button>
+          <Button color="samfundet-red" onClick={handleSetAddUserOpen}>
+            Legg til ny bruker
+          </Button>
         </Group>
       </PermissionGate>
       <AddSingleUserModal
