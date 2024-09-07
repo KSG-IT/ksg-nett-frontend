@@ -17,13 +17,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 const CreateUserSchema = yup.object().shape({
-  email: yup.string().email('Ugyldig epost'),
-  firstName: yup.string().min(1).max(16),
-  lastName: yup.string().min(1).max(20),
+  email: yup.string().email('Ugyldig epost').required('Påkrevd'),
+  firstName: yup.string().min(1).max(16).required('Påkrevd'),
+  lastName: yup.string().min(1).max(20).required('Påkrevd'),
   sendWelcomeEmail: yup.boolean(),
 })
 
-type CreateUserType = {
+type CreateUserForm = {
   email: string
   firstName: string
   lastName: string
@@ -32,7 +32,7 @@ type CreateUserType = {
 
 export const AddSingleUserModal = ({ onClose, opened }: ModalProps) => {
   const { inviteNewUser, inviteNewUserLoading } = useUserMutations()
-  const { handleSubmit, register } = useForm<CreateUserType>({
+  const { handleSubmit, register } = useForm<CreateUserForm>({
     resolver: yupResolver(CreateUserSchema),
     defaultValues: {
       email: '',
@@ -41,7 +41,7 @@ export const AddSingleUserModal = ({ onClose, opened }: ModalProps) => {
       sendWelcomeEmail: true,
     },
   })
-  async function onSubmit(data: CreateUserType) {
+  async function onSubmit(data: CreateUserForm) {
     await inviteNewUser({
       variables: data,
       onCompleted({ inviteNewUser: { user } }) {
@@ -61,6 +61,7 @@ export const AddSingleUserModal = ({ onClose, opened }: ModalProps) => {
           parsedMessage = 'En bruker med denne eposten eksisterer allerede'
         }
         showNotification({
+          title: 'Noe gikk galt',
           message: parsedMessage,
           color: 'red',
         })
