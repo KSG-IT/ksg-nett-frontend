@@ -16,6 +16,7 @@ import {
 } from '@mantine/core'
 import { InternalGroupSelect, UserSelect } from 'components/Select'
 import { IconPhoto } from '@tabler/icons-react'
+import { Controller } from 'react-hook-form'
 
 interface InternalGroupUserHighlightEditProps {
   highlight?: InternalGroupUserHighlightNode
@@ -28,7 +29,8 @@ export const InternalGroupUserHighlightEditForm: React.FC<
   const { form, onSubmit } = useEditHighlightLogic(
     useEditHighlightAPI({ highlight, onCompletedCallback })
   )
-  const { formState, register, handleSubmit, getValues, setValue } = form
+  const { formState, register, handleSubmit, getValues, setValue, control } =
+    form
   const { errors, isSubmitting } = formState
   const [user, setUser] = useState<string>(getValues('user'))
   const [internalGroup, setInternalGroup] = useState<string>(
@@ -76,7 +78,19 @@ export const InternalGroupUserHighlightEditForm: React.FC<
             {...register('occupation', { required: true })}
             error={errors.occupation?.message}
           />
-          <Switch my={'sm'} {...register('archived')} label={'Arkivert'} />
+
+          <Controller
+            control={control}
+            name="archived"
+            render={({ field }) => (
+              <Switch
+                my={'sm'}
+                label={'Arkivert'}
+                checked={field.value}
+                onChange={field.onChange}
+              />
+            )}
+          ></Controller>
         </Stack>
         <Stack>
           <FileInput

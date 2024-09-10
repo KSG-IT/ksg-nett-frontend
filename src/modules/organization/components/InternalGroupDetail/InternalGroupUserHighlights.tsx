@@ -9,6 +9,8 @@ import {
   Modal,
   SimpleGrid,
   Spoiler,
+  Stack,
+  Switch,
   Text,
   Title,
   UnstyledButton,
@@ -36,11 +38,12 @@ interface InternalGroupUserHighlightsProps {
 export const InternalGroupUserHighlights: React.FC<
   InternalGroupUserHighlightsProps
 > = ({ internalGroupId }) => {
+  const [includeArchived, setIncludeArchived] = useState(false)
   const { data, loading, error } = useQuery<
     InternalGroupUserHighlightsByInternalGroupReturns,
     InternalGroupUserHighlightsByInternalGroupVariables
   >(INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY, {
-    variables: { internalGroupId: internalGroupId },
+    variables: { internalGroupId: internalGroupId, includeArchived },
   })
   const [modalOpened, setModalOpened] = useState(false)
   const [selectedHighlight, setSelectedHighlight] = useState<
@@ -53,85 +56,92 @@ export const InternalGroupUserHighlights: React.FC<
 
   const { internalGroupUserHighlightsByInternalGroup: highlightData } = data
   return (
-    <SimpleGrid
-      cols={3}
-      p={isMobile ? 0 : 'md'}
-      spacing={isMobile ? 0 : 'lg'}
-      verticalSpacing={isMobile ? 'lg' : 'xl'}
-      breakpoints={[
-        { maxWidth: 900, cols: 1, spacing: 'sm' },
-        { maxWidth: 1200, cols: 2, spacing: 'sm' },
-      ]}
-    >
-      {highlightData.map(highlight => (
-        <Card key={highlight.id} withBorder radius={'lg'}>
-          <Card.Section>
-            {highlight.image && (
-              <Image src={highlight.image.toString()} height={300} />
-            )}
-          </Card.Section>
-          <Group grow position={'apart'} mt="md" mb="xs">
-            <Text weight={700}>{highlight.user.getFullWithNickName}</Text>
-            <Group position={'right'} spacing={0}>
-              <Badge>{highlight.occupation}</Badge>
-              <PermissionGate
-                permissions={
-                  PERMISSIONS.organization.change.internalGroupUserHighlight
-                }
-              >
-                <ActionIcon
-                  onClick={() => {
-                    setModalOpened(true)
-                    setSelectedHighlight(highlight)
-                  }}
+    <Stack>
+      <Switch
+        label="Inkludert arkiverte"
+        checked={includeArchived}
+        onChange={() => setIncludeArchived(prev => !prev)}
+      />
+      <SimpleGrid
+        cols={3}
+        p={isMobile ? 0 : 'md'}
+        spacing={isMobile ? 0 : 'lg'}
+        verticalSpacing={isMobile ? 'lg' : 'xl'}
+        breakpoints={[
+          { maxWidth: 900, cols: 1, spacing: 'sm' },
+          { maxWidth: 1200, cols: 2, spacing: 'sm' },
+        ]}
+      >
+        {highlightData.map(highlight => (
+          <Card key={highlight.id} withBorder radius={'lg'}>
+            <Card.Section>
+              {highlight.image && (
+                <Image src={highlight.image.toString()} height={300} />
+              )}
+            </Card.Section>
+            <Group grow position={'apart'} mt="md" mb="xs">
+              <Text weight={700}>{highlight.user.getFullWithNickName}</Text>
+              <Group position={'right'} spacing={0}>
+                <Badge>{highlight.occupation}</Badge>
+                <PermissionGate
+                  permissions={
+                    PERMISSIONS.organization.change.internalGroupUserHighlight
+                  }
                 >
-                  <IconNotes />
-                </ActionIcon>
-              </PermissionGate>
+                  <ActionIcon
+                    onClick={() => {
+                      setModalOpened(true)
+                      setSelectedHighlight(highlight)
+                    }}
+                  >
+                    <IconNotes />
+                  </ActionIcon>
+                </PermissionGate>
+              </Group>
             </Group>
-          </Group>
-          <Spoiler maxHeight={120} showLabel={'Vis mer'} hideLabel="Hide">
-            <Text size={'sm'} color={'dimmed'}>
-              {highlight.description}
-            </Text>
-          </Spoiler>
-        </Card>
-      ))}
+            <Spoiler maxHeight={120} showLabel={'Vis mer'} hideLabel="Hide">
+              <Text size={'sm'} color={'dimmed'}>
+                {highlight.description}
+              </Text>
+            </Spoiler>
+          </Card>
+        ))}
 
-      <Modal
-        size={'lg'}
-        opened={modalOpened}
-        onClose={() => setModalOpened(false)}
-      >
-        <Title
-          align={'center'}
-          order={4}
-          color={'dimmed'}
-          transform={'uppercase'}
+        <Modal
+          size={'lg'}
+          opened={modalOpened}
+          onClose={() => setModalOpened(false)}
         >
-          Rediger/legg til høydepunkt
-        </Title>
-        <Divider my={'md'} />
+          <Title
+            align={'center'}
+            order={4}
+            color={'dimmed'}
+            transform={'uppercase'}
+          >
+            Rediger/legg til høydepunkt
+          </Title>
+          <Divider my={'md'} />
 
-        <InternalGroupUserHighlightEditForm
-          highlight={selectedHighlight}
-          onCompletedCallback={() => {
-            setModalOpened(false)
+          <InternalGroupUserHighlightEditForm
+            highlight={selectedHighlight}
+            onCompletedCallback={() => {
+              setModalOpened(false)
+            }}
+          />
+        </Modal>
+
+        <UnstyledButton
+          p={'xl'}
+          className={classes.addButton}
+          onClick={() => {
+            setSelectedHighlight(undefined)
+            setModalOpened(true)
           }}
-        />
-      </Modal>
-
-      <UnstyledButton
-        p={'xl'}
-        className={classes.addButton}
-        onClick={() => {
-          setSelectedHighlight(undefined)
-          setModalOpened(true)
-        }}
-      >
-        <IconPlus size={30} />
-      </UnstyledButton>
-    </SimpleGrid>
+        >
+          <IconPlus size={30} />
+        </UnstyledButton>
+      </SimpleGrid>
+    </Stack>
   )
 }
 
