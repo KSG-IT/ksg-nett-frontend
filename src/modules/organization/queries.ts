@@ -32,9 +32,13 @@ export const INTERNAL_GROUP_QUERY = gql`
 `
 
 export const INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY = gql`
-  query InternalGroupUserHighlightsByInternalGroup($internalGroupId: ID!) {
+  query InternalGroupUserHighlightsByInternalGroup(
+    $internalGroupId: ID!
+    $includeArchived: Boolean
+  ) {
     internalGroupUserHighlightsByInternalGroup(
       internalGroupId: $internalGroupId
+      includeArchived: $includeArchived
     ) {
       id
       image
