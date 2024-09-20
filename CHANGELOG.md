@@ -1,6 +1,15 @@
 # CHANGELOG
 
-## [unreleased]
+## [v2024.9.2]
+
+### Fixed
+
+- Organization: Archive toggle actually archives highlighted position
+
+### Added
+
+- Organization: Highlight view now allows user to only display active highlights or also
+  include archived ones.
 
 ## [2024.8.1]
 
