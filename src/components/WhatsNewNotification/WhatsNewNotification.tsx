@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '2024-08-13'
+const NOTIFICATION_KEY = '2024-09-21'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -40,7 +40,13 @@ export const WhatsNewNotification: React.FC = () => {
         👋 Hva er nytt?
       </Title>
       <Text size="sm" color="gray" mt={0}>
-        Siste oppdatering: 2024-08-13
+        Siste oppdatering: 2024-09-21
+      </Text>
+      <Divider mb="md" />
+      <Title order={4}>Arkivering av funksjonærbeskrivelser</Title>
+      <Text>
+        Det er nå mulig å arkivere gamle funksjonærbeskrivelser - Sendt inn av
+        Karen 'KniseKaren Queen Bestemor' Johanne Øfstaas
       </Text>
       <Divider mb="md" />
       <Title order={4}>Oppdatering vaktlister</Title>

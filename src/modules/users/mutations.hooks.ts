@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import {
   ADD_USER_TO_USER_TYPE_MUTATION,
+  INVITE_NEW_USER_MUTATION,
   PATCH_USER_MUTATION,
   REMOVE_USER_FROM_USER_TYPE_MUTATION,
   UPDATE_ABOUT_ME_MUTATION,
@@ -53,7 +54,26 @@ interface UpdateMyInfoVariables {
   cardUuid: string
 }
 
+interface InviteNewUserVariables {
+  email: string
+  firstName: string
+  lastName: string
+  sendWelcomeEmail: boolean
+}
+
+interface InviteNewUserReturns {
+  inviteNewUser: {
+    user: Pick<UserNode, 'id' | 'email' | 'firstName' | 'lastName'>
+  }
+}
+
 export function useUserMutations() {
+  const [
+    inviteNewUser,
+    { loading: inviteNewUserLoading, error: inviteNewUserError },
+  ] = useMutation<InviteNewUserReturns, InviteNewUserVariables>(
+    INVITE_NEW_USER_MUTATION
+  )
   const [patchUser, { loading: patchUserLoading, error: patchUserError }] =
     useMutation<PatchUserReturns, PatchUserVariables>(PATCH_USER_MUTATION)
 
@@ -88,6 +108,9 @@ export function useUserMutations() {
   >(UPDATE_MY_ADDRESS_MUTATION)
 
   return {
+    inviteNewUser,
+    inviteNewUserLoading,
+    inviteNewUserError,
     patchUser,
     patchUserLoading,
     patchUserError,

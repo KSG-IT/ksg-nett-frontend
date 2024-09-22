@@ -57,6 +57,7 @@ export type InternalGroupUserHighlightsByInternalGroupReturns = {
 
 export type InternalGroupUserHighlightsByInternalGroupVariables = {
   internalGroupId: string
+  includeArchived: boolean
 }
 
 export enum InternalGroupType {

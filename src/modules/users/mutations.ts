@@ -107,3 +107,24 @@ export const UPDATE_MY_ADDRESS_MUTATION = gql`
     }
   }
 `
+export const INVITE_NEW_USER_MUTATION = gql`
+  mutation InviteNewUserMutation(
+    $email: String!
+    $firstName: String!
+    $lastName: String!
+    $sendWelcomeEmail: Boolean!
+  ) {
+    inviteNewUser(
+      email: $email
+      firstName: $firstName
+      lastName: $lastName
+      sendWelcomeEmail: $sendWelcomeEmail
+    ) {
+      user {
+        email
+        firstName
+        lastName
+      }
+    }
+  }
+`
