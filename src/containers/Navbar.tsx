@@ -11,6 +11,7 @@ import {
   IconHandMiddleFinger,
   IconHome,
   IconMessage,
+  IconTrophyFilled,
   IconUserPlus,
 } from '@tabler/icons-react'
 import { useLocation } from 'react-router-dom'
@@ -19,6 +20,7 @@ import { usePermissions } from 'util/hooks/usePermissions'
 import { PERMISSIONS } from 'util/permissions'
 import { NavBarMeSection } from './NavBarMeSection'
 import { NavItem, RouteItem } from './NavItem'
+import { IconTrophy } from '@tabler/icons-react'
 
 interface RouteGroup {
   title: string
@@ -68,6 +70,12 @@ const routes: RouteGroup[] = [
         icon: IconBlockquote,
         link: '/quotes',
         label: 'Sitater',
+        permissions: [],
+      },
+      {
+        icon: IconTrophy,
+        link: '/economy/ranked',
+        label: 'Ledertavle',
         permissions: [],
       },
     ],

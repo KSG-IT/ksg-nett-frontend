@@ -11,6 +11,7 @@ import {
 } from '../components'
 import { MY_SETTINGS_QUERY } from '../queries'
 import { MySettingsQueryReturns } from '../types'
+import { MyAddressSettings } from '../components/MyAddressSettings'
 
 const MySettings: React.FC = () => {
   const { data, loading, error } =
@@ -31,6 +32,7 @@ const MySettings: React.FC = () => {
         ]}
       />
       <Title>Min profil</Title>
+      <MyAddressSettings user={me} />
       <MyEmailSettings user={me} />
       <AllergyTransferList
         userAllergies={me.allergies}

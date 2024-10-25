@@ -398,3 +398,20 @@ export interface LAST_MARKET_CRASH_QUERY {
     timestamp: string
   }
 }
+
+export type RankedSeason = {
+  currentRankedSeason: {
+    seasonStart: Date
+    seasonEnd: Date | null
+    participantCount: number | null
+    seasonExpenditure: number | null
+    topTen:
+      | {
+          name: string
+          expenditure: number
+        }[]
+      | null
+    isParticipant: boolean
+    placement: number | null
+  }
+}

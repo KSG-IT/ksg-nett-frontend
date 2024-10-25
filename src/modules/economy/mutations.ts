@@ -179,3 +179,12 @@ export const STOCK_MARKET_CRASH_MUTATION = gql`
     }
   }
 `
+
+export const JOIN_RANKED_SEASON_MUTATION = gql`
+  mutation JoinRankedSeasonMutation {
+    joinRankedSeason {
+      success
+      message
+    }
+  }
+`

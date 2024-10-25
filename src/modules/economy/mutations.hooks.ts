@@ -1,5 +1,9 @@
 import { useMutation } from '@apollo/client'
-import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
+import {
+  DeleteMutationReturns,
+  DeleteMutationVariables,
+  SuccessPayload,
+} from 'types/graphql'
 import {
   APPROVE_DEPOSIT_MUTATION,
   CLOSE_SOCI_SESSION_MUTATION,
@@ -10,6 +14,7 @@ import {
   DELETE_SOCI_ORDER_SESSION_FOOD_ORDER_MUTATION,
   INVALIDATE_DEPOSIT_MUTATION,
   INVITE_USERS_TO_ORDER_SESSION_MUTATION,
+  JOIN_RANKED_SEASON_MUTATION,
   PLACE_PROUCT_ORDER_MUTATION,
   PLACE_SOCI_ORDER_SESSION_ORDER_MUTATION,
   SOCI_ORDER_SESSION_NEXT_STATUS_MUTATION,
@@ -159,5 +164,15 @@ export function useSociOrderSessionMutations() {
     deleteSociOrderSessionFoodOrderLoading,
     inviteUsersToOrderSession,
     inviteUsersToOrderSessionLoading,
+  }
+}
+
+export function useSociRankedSeasonMutations() {
+  const [joinRankedSeason] = useMutation<SuccessPayload>(
+    JOIN_RANKED_SEASON_MUTATION
+  )
+
+  return {
+    joinRankedSeason,
   }
 }
