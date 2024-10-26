@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Card, Group, Stack, Title } from '@mantine/core'
+import { Button, Card, Group, Stack, Text, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
@@ -50,7 +50,10 @@ const CONFIRM_TEXTS = {
 
 const SociRanked = () => {
   const { formatCurrency } = useCurrencyFormatter()
-  const { data, loading, error } = useQuery<RankedSeason>(CURRENT_SEASON_QUERY)
+  const { data, loading, error } = useQuery<RankedSeason>(
+    CURRENT_SEASON_QUERY,
+    { pollInterval: 10_000 }
+  )
   const { joinRankedSeason } = useSociRankedSeasonMutations()
 
   async function handleParticipateInRanked() {
@@ -91,16 +94,17 @@ const SociRanked = () => {
   const { currentRankedSeason } = data
 
   const isParticipant = data?.currentRankedSeason.isParticipant || false
+  const viewTitle = `Societeten ranked sesong ${currentRankedSeason.rankedSeason}`
 
   if (!isParticipant) {
     return (
       <Stack>
         <Breadcrumbs items={breadcrumbs} />
-        <Title>Ledertavle</Title>
+        <Title>{viewTitle}</Title>
         <MessageBox type="warning">
           For å kunne se ledertavlen må du også delta dette semesteret. Alle
           deltakere kan se forbruket til top 10. Det er for øyeblikket
-          <b> {currentRankedSeason.participantCount} deltakere </b> . Samtykke
+          <b> {currentRankedSeason.participantCount} deltakere </b>. Samtykke
           nullstilles neste semester.{' '}
           {participateButtonDisabled &&
             'Konkurransen er stengt. Du kan melde deg på neste gang'}
@@ -120,22 +124,22 @@ const SociRanked = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbs} />
-      <Title>Ledertavle</Title>
-      <Card w={'300px'}>
-        <Group>
-          <span>Ditt konsum</span>
-          <span>
+      <Title>{viewTitle}</Title>
+      <Group>
+        <Card>
+          <Title order={4}>Ditt forbruk</Title>
+          <Text fz={'xl'}>
             {formatCurrency(currentRankedSeason.seasonExpenditure || 0)}
-          </span>
-        </Group>
-        <Group>
-          <span>Plass</span>
-          <span>
+          </Text>
+        </Card>
+        <Card>
+          <Title order={4}>Plassering</Title>
+          <Text fz="xl">
             {currentRankedSeason.placement} av{' '}
             {currentRankedSeason.participantCount}
-          </span>
-        </Group>
-      </Card>
+          </Text>
+        </Card>
+      </Group>
       {displayOffSeasonMessage && (
         <MessageBox type="info">
           Denne sesongen er nå stengt. Gratulerer til {firstPlaceName}! Du må

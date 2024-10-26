@@ -310,6 +310,7 @@ export const CURRENT_SEASON_QUERY = gql`
     currentRankedSeason {
       isParticipant
       placement
+      rankedSeason
       seasonEnd
       seasonExpenditure
       seasonStart
