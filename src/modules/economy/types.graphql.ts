@@ -402,6 +402,7 @@ export interface LAST_MARKET_CRASH_QUERY {
 export type RankedSeason = {
   currentRankedSeason: {
     seasonStart: Date
+    rankedSeason: number
     seasonEnd: Date | null
     participantCount: number | null
     seasonExpenditure: number | null
