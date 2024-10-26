@@ -35,3 +35,8 @@ export interface DetailQueryVariables {
 export interface OkMutationReturns {
   ok: boolean
 }
+
+export interface SuccessPayload {
+  success: boolean
+  message?: string
+}

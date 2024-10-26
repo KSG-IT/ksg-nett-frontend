@@ -304,3 +304,21 @@ export const STOCK_PRICE_HISTORY_QUERY = gql`
     }
   }
 `
+
+export const CURRENT_SEASON_QUERY = gql`
+  query CurrentRankSeasonQuery {
+    currentRankedSeason {
+      isParticipant
+      placement
+      rankedSeason
+      seasonEnd
+      seasonExpenditure
+      seasonStart
+      participantCount
+      topTen {
+        name
+        expenditure
+      }
+    }
+  }
+`
