@@ -188,3 +188,12 @@ export const JOIN_RANKED_SEASON_MUTATION = gql`
     }
   }
 `
+
+export const REVOKE_RANKED_CONSENT_MUTATION = gql`
+  mutation RevokeRankedConsentMutation {
+    revokeRankedConsent {
+      success
+      message
+    }
+  }
+`

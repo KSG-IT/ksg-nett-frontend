@@ -309,6 +309,7 @@ export const CURRENT_SEASON_QUERY = gql`
   query CurrentRankSeasonQuery {
     currentRankedSeason {
       isParticipant
+      hasRevokedRankedConsent
       placement
       rankedSeason
       seasonEnd

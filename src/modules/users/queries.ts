@@ -32,6 +32,7 @@ export const USER_QUERY = gql`
   query User($id: ID!) {
     user(id: $id) {
       id
+      hasRevokedRankedConsent
       getFullWithNickName
       getCleanFullName
       firstName

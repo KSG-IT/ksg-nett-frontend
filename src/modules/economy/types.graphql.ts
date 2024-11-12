@@ -402,6 +402,7 @@ export interface LAST_MARKET_CRASH_QUERY {
 export type RankedSeason = {
   currentRankedSeason: {
     seasonStart: Date
+    hasRevokedRankedConsent: boolean
     rankedSeason: number
     seasonEnd: Date | null
     participantCount: number | null

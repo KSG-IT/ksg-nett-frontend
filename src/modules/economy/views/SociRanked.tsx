@@ -4,10 +4,11 @@ import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
 import { useMemo } from 'react'
-import { useCurrencyFormatter, useMe } from 'util/hooks'
+import { useCurrencyFormatter } from 'util/hooks'
 import { useSociRankedSeasonMutations } from '../mutations.hooks'
 import { CURRENT_SEASON_QUERY } from '../queries'
 import { RankedSeason } from '../types.graphql'
+import { showNotification } from '@mantine/notifications'
 
 function getLeaderboardRowStyle(place: number) {
   /**
@@ -46,6 +47,8 @@ const CONFIRM_TEXTS = {
   participate:
     'Er du sikker på at du vil delta? Alle andre deltakere vil kunne se forbruket ditt dette semesteret om du er på topplisten. Samtykke kan ikke trekkes tilbake',
   endSeason: 'Er du sikker på at du vil avslutte sesongen?',
+  revokeConsent:
+    'Ai smellen. Ingen skam å snu, men merk at du ikke vil ha mulighet til å melde deg på nytt igjen denne sesongen.',
 }
 
 const SociRanked = () => {
@@ -54,7 +57,8 @@ const SociRanked = () => {
     CURRENT_SEASON_QUERY,
     { pollInterval: 10_000 }
   )
-  const { joinRankedSeason } = useSociRankedSeasonMutations()
+  const { joinRankedSeason, revokeRankedConsent, revokeConsentLoading } =
+    useSociRankedSeasonMutations()
 
   async function handleParticipateInRanked() {
     const confirmation = confirm(CONFIRM_TEXTS.participate)
@@ -62,6 +66,28 @@ const SociRanked = () => {
     if (!confirmation) return
 
     await joinRankedSeason({ refetchQueries: [CURRENT_SEASON_QUERY] })
+  }
+
+  async function handleRevokeConsent() {
+    const confirmation = confirm(CONFIRM_TEXTS.revokeConsent)
+    if (!confirmation) return
+
+    await revokeRankedConsent({
+      refetchQueries: [CURRENT_SEASON_QUERY],
+      onCompleted({ success, message }) {
+        if (success === false)
+          showNotification({
+            title: 'Noe gikk galt',
+            message: message,
+          })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
+    })
   }
 
   const displayOffSeasonMessage = useMemo(() => {
@@ -84,8 +110,13 @@ const SociRanked = () => {
   }, [data?.currentRankedSeason.topTen])
 
   const participateButtonDisabled = useMemo(() => {
-    return data?.currentRankedSeason.seasonEnd !== null
-  }, [data?.currentRankedSeason])
+    if (!data) return false
+    const {
+      currentRankedSeason: { hasRevokedRankedConsent, seasonEnd },
+    } = data
+    const buttonDisabled = seasonEnd !== null || hasRevokedRankedConsent
+    return buttonDisabled
+  }, [data])
 
   if (error) return <span>Error</span>
 
@@ -164,6 +195,9 @@ const SociRanked = () => {
           ))}
         </tbody>
       </CardTable>
+      <Button loading={revokeConsentLoading} onClick={handleRevokeConsent}>
+        Jeg angrer
+      </Button>
     </Stack>
   )
 }

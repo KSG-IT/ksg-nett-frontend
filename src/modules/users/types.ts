@@ -53,6 +53,7 @@ export type UserNode = {
   notifyOnShift: boolean
   notifyOnDeposit: boolean
   canRewriteAboutMe: boolean
+  hasRevokedRankedConsent: boolean
   bankAccount: {
     id: string
     cardUuid: string

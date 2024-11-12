@@ -17,6 +17,7 @@ import {
   JOIN_RANKED_SEASON_MUTATION,
   PLACE_PROUCT_ORDER_MUTATION,
   PLACE_SOCI_ORDER_SESSION_ORDER_MUTATION,
+  REVOKE_RANKED_CONSENT_MUTATION,
   SOCI_ORDER_SESSION_NEXT_STATUS_MUTATION,
   UNDO_PRODUCT_ORDER_MUTATION,
 } from './mutations'
@@ -172,7 +173,12 @@ export function useSociRankedSeasonMutations() {
     JOIN_RANKED_SEASON_MUTATION
   )
 
+  const [revokeRankedConsent, { loading: revokeConsentLoading }] =
+    useMutation<SuccessPayload>(REVOKE_RANKED_CONSENT_MUTATION)
+
   return {
     joinRankedSeason,
+    revokeRankedConsent,
+    revokeConsentLoading,
   }
 }
