@@ -17,6 +17,7 @@ import {
   IconBook2,
   IconCake,
   IconHome,
+  IconIceSkating,
   IconMapPin,
   IconPhone,
   IconSchool,
@@ -85,7 +86,10 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
             <IconWithData icon={IconPhone} userData={user.phone} type="tel" />
             <IconWithData icon={IconHome} userData={user.homeTown} />
             <IconWithData icon={IconMapPin} userData={user.studyAddress} />
-            <IconWithData icon={IconSchool} userData={user.study} />
+            <IconWithData
+              icon={user.hasRevokedRankedConsent ? IconIceSkating : IconSchool}
+              userData={user.study}
+            />
             <IconWithData icon={IconCake} userData={user.dateOfBirth} />
             <Group spacing={'xs'} className={classes.bio} noWrap mt={'xl'}>
               <Text className={classes.aboutMe}>Om meg</Text>

@@ -45,6 +45,7 @@ export const UserPlaceholder: UserNode = {
   notifyOnShift: false,
   notifyOnDeposit: false,
   canRewriteAboutMe: false,
+  hasRevokedRankedConsent: false,
   legacyWorkHistory: [],
   homeTown: '',
   bankAccount: {
