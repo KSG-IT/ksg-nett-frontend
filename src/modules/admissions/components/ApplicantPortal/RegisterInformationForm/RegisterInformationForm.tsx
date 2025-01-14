@@ -90,12 +90,6 @@ export const RegisterInformationForm: React.FC<
             error={errors?.phoneRepeated?.message}
             {...register('phoneRepeated')}
           />
-          <Checkbox
-            color="samfundet-red"
-            label="Ønsker digitalt intervju"
-            {...register('wantsDigitalInterview')}
-          />
-
           <MessageBox type="warning">
             Jeg samtykker til at personopplysninger oppgitt her blir lagret
             under behandlingen av søknaden min. Disse vil bli slettet etter
