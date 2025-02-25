@@ -477,7 +477,6 @@ export const AppRoutes: React.FC = () => {
           </Route>
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
-          <Route path="ranked" element={<SociRanked />} />
           <Route path="socinomics" element={<Socinomics />} />
           <Route
             path="socinomics-control"

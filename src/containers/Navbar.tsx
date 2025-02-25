@@ -72,12 +72,6 @@ const routes: RouteGroup[] = [
         label: 'Sitater',
         permissions: [],
       },
-      {
-        icon: IconTrophy,
-        link: '/economy/ranked',
-        label: 'Ledertavle',
-        permissions: [],
-      },
     ],
   },
   {
