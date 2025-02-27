@@ -104,6 +104,9 @@ const SociRanked = React.lazy(() => import('modules/economy/views/SociRanked'))
 const ScheduleAllergies = React.lazy(
   () => import('modules/schedules/views/ScheduleAllergies')
 )
+const ScheduleAutofill = React.lazy(
+  () => import('modules/schedules/views/ScheduleAutofill')
+)
 
 // ==== Feature flags ====
 const FeatureFlags = React.lazy(
@@ -546,16 +549,28 @@ export const AppRoutes: React.FC = () => {
               </RestrictedRoute>
             }
           />
-          <Route
-            path=":id"
-            element={
-              <RestrictedRoute
-                permissions={PERMISSIONS.schedules.change.schedule}
-              >
-                <ScheduleDetails />
-              </RestrictedRoute>
-            }
-          />
+          <Route path=":id">
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.schedules.change.schedule}
+                >
+                  <ScheduleDetails />
+                </RestrictedRoute>
+              }
+            />
+            <Route
+              path="autofill"
+              element={
+                <RestrictedRoute
+                  permissions={PERMISSIONS.schedules.change.schedule}
+                >
+                  <ScheduleAutofill />
+                </RestrictedRoute>
+              }
+            />
+          </Route>
           <Route path="me">
             <Route index element={<MyUpcomingShifts />} />
             <Route path="history" element={<AllMyShifts />} />

@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client'
 import { InterestChoices } from './types'
 
 const MOCK_SHIFTS_MAP: Record<
@@ -103,3 +104,11 @@ export function useGetShiftInterestsByRosterId({
 }) {
   return MOCK_SHIFTS_MAP
 }
+
+const QUERY = gql`
+  query GetShiftInterestDataByRosterId {
+    getShiftInterestDataByRosterId {
+      id
+    }
+  }
+`

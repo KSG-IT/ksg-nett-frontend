@@ -1,4 +1,4 @@
-import { Popover, Stack } from '@mantine/core'
+import { createStyles, Popover, Stack } from '@mantine/core'
 import {
   addDays,
   endOfMonth,
@@ -12,13 +12,6 @@ import { format } from 'util/date-fns'
 import { useMonth } from 'util/hooks'
 import { useGetShiftInterestsByRosterId } from '../queries.hooks'
 import { InterestChoices } from '../types'
-
-/**
- *
- * 1. Fetch roster (99% cases will only be a single roster for a user, if multiple allow user to select)
- *  1a) this can be bootstrapped on UserNode: user.rosters
- * 2.
- */
 
 /**
  *
@@ -101,31 +94,34 @@ const DateShifts = ({
     interest: InterestChoices
   }[]
 }) => {
+  const { classes } = useShiftSlotStyles()
+
+  if (!shifts) return null
+
   return (
-    <div style={{ width: '100%' }}>
+    <div className={classes.container}>
       {shifts.map(item => (
-        <Popover position="right">
+        <Popover position="right" withArrow>
           <Popover.Target>
             <div
+              className={
+                item.interest === InterestChoices.CANNOT_WORK
+                  ? classes.shiftUnavailable
+                  : item.interest === InterestChoices.CAN_WORK
+                  ? classes.shiftAvailable
+                  : classes.shiftWantsToWork
+              }
               key={item.id}
-              style={{
-                backgroundColor: getStatusColor(item.interest),
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                cursor: 'pointer',
-                fontSize: 12,
-                marginBottom: 2,
-                padding: 1,
-              }}
             >
               <span>{item.location}</span>
               <span>{item.timeDisplay}</span>
             </div>
           </Popover.Target>
-          <Popover.Dropdown>
-            <span>{item?.name}</span>
+          <Popover.Dropdown className={classes.popoverContainer}>
             <Stack spacing={0}>
+              <span>{item?.name}</span>
+              <span>{item.location}</span>
+              <span>{item.timeDisplay}</span>
               <button>Vil jobbe</button>
               <button>Kan jobbe</button>
               <button>Kan ikke jobbe</button>
@@ -137,8 +133,58 @@ const DateShifts = ({
   )
 }
 
+const useShiftSlotStyles = createStyles(theme => ({
+  container: {
+    width: '100%',
+    color: 'white',
+  },
+  popoverContainer: {
+    fontSize: 12,
+    padding: 6,
+    color: 'black',
+    backgroundColor: '#E9EEF6',
+  },
+  shiftAvailable: {
+    backgroundColor: theme.colors.yellow[6],
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    cursor: 'pointer',
+    borderRadius: 5,
+    fontSize: 13,
+    marginBottom: 2,
+    padding: 4,
+    fontWeight: 600,
+  },
+  shiftWantsToWork: {
+    backgroundColor: theme.colors.green[5],
+    width: '100%',
+    display: 'flex',
+    borderRadius: 5,
+    flexDirection: 'column',
+    cursor: 'pointer',
+    fontSize: 13,
+    marginBottom: 2,
+    padding: 4,
+    fontWeight: 600,
+  },
+  shiftUnavailable: {
+    backgroundColor: theme.colors.red[6],
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: 5,
+    cursor: 'pointer',
+    fontSize: 13,
+    marginBottom: 2,
+    padding: 4,
+    fontWeight: 600,
+  },
+}))
+
 const Calendar = ({ initialMonth, rosterId }: CalendarProps) => {
   const { month, incrementMonth, decrementMonth } = useMonth(initialMonth)
+  const { classes } = useCalendarStyles()
   const {
     dateList: data,
     dateOfFirstWeek,
@@ -161,13 +207,21 @@ const Calendar = ({ initialMonth, rosterId }: CalendarProps) => {
       <div
         style={{
           display: 'grid',
-          gap: 0,
+          gap: 2,
+          backgroundColor: '#E9EEF6',
+          padding: 1,
           gridTemplateColumns: 'repeat(7, 1fr)',
           columnGap: 0,
           flexDirection: 'column',
-          backgroundColor: 'white',
         }}
       >
+        <div>Mandag</div>
+        <div>Tirsdag</div>
+        <div>Onsdag</div>
+        <div>Torsdag</div>
+        <div>Fredag</div>
+        <div>Lørdag</div>
+        <div>Søndag</div>
         {data.map(weekList => (
           <>
             {weekList.map(day => {
@@ -178,9 +232,9 @@ const Calendar = ({ initialMonth, rosterId }: CalendarProps) => {
                 <div
                   style={{
                     width: '100%',
-                    minHeight: 120,
+                    backgroundColor: 'white',
+                    minHeight: 200,
                     height: '100%',
-                    border: '1px solid black',
                   }}
                 >
                   <div
@@ -188,11 +242,14 @@ const Calendar = ({ initialMonth, rosterId }: CalendarProps) => {
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
+                      padding: '2px 4px',
+                      gap: 2,
                     }}
                   >
-                    <span>{format(day, 'EE')}</span>
-                    <span>{format(day, 'd')}</span>
-                    {shifts && <DateShifts shifts={shifts} />}
+                    <div className={classes.calendarDayMarker}>
+                      {format(day, 'd')}
+                    </div>
+                    <DateShifts shifts={shifts} />
                   </div>
                 </div>
               )
@@ -216,3 +273,22 @@ function getStatusColor(interestType: InterestChoices) {
     return 'red'
   }
 }
+
+const useCalendarStyles = createStyles(theme => ({
+  calendarDayMarker: {
+    borderRadius: 100,
+    // backgroundColor: theme.colors.red[5],
+    fontSize: 12,
+    // color: 'white',
+    // fontWeight: 600,
+    width: 20,
+    height: 20,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  calendarDayContainer: {},
+  shiftAvailable: {},
+  shiftWantsToWork: {},
+  shiftUnavailable: {},
+}))
