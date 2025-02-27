@@ -21,11 +21,6 @@ export const SchedulesTable: React.FC<SchedulesTableProps> = ({
       </Table.Td>
       <Table.Td>
         <Button color="samfundet-red" variant="subtle" disabled>
-          Gjør jobben min for meg
-        </Button>
-      </Table.Td>
-      <Table.Td>
-        <Button color="samfundet-red" variant="subtle" disabled>
           Vaktbytteforespørsler
         </Button>
       </Table.Td>
@@ -36,7 +31,6 @@ export const SchedulesTable: React.FC<SchedulesTableProps> = ({
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Navn</Table.Th>
-          <Table.Th></Table.Th>
           <Table.Th></Table.Th>
           <Table.Th></Table.Th>
         </Table.Tr>
