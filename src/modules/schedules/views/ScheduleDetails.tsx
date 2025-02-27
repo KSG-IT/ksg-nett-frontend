@@ -1,11 +1,11 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
+import { Button, createStyles, Group, Modal, Stack, Title } from '@mantine/core'
 import { IconPlus, IconSettings } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { add } from 'date-fns'
+import { add, addDays } from 'date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {
@@ -15,6 +15,7 @@ import {
 } from '../components/ScheduleDetails'
 import { CreateShiftDrawer } from '../components/ScheduleDetails/CreateShiftDrawer'
 
+import { DateInput } from '@mantine/dates'
 import { ShiftRenderer } from '../components/ScheduleDetails/ShiftRenderer'
 import { SCHEDULE_QUERY } from '../queries'
 const breadcrumbsItems = [
@@ -26,6 +27,35 @@ interface ScheduleDetailsParams {
   id: string
 }
 
+type ScheduleAutofillModalProps = {
+  opened: boolean
+  onClose: () => void
+}
+const ScheduleAutofillModal = ({
+  opened,
+  onClose,
+}: ScheduleAutofillModalProps) => {
+  const [fromDate, setFromDate] = useState(new Date())
+  const [toDate, setToDate] = useState(addDays(new Date(), 7))
+
+  async function handleGenerate() {}
+  return (
+    <Modal onClose={onClose} opened={opened} title="Autofill">
+      <Stack>
+        <Group>
+          <DateInput value={fromDate} label="Fra" />
+          <DateInput value={toDate} label="Til" />
+        </Group>
+
+        <Group position="right">
+          <Button>Avbryt</Button>
+          <Button>Del ut vakter</Button>
+        </Group>
+      </Stack>
+    </Modal>
+  )
+}
+
 export const ScheduleDetails: React.FC = () => {
   const { classes } = useScheduleDetailsStyles()
   const { id } = useParams<
@@ -33,6 +63,8 @@ export const ScheduleDetails: React.FC = () => {
   >() as ScheduleDetailsParams
   const [applyTemplateModalOpen, setApplyTemplateModalOpen] = useState(false)
   const [createShiftDrawerOpen, setCreateShiftDrawerOpen] = useState(false)
+  const [scheduleAutofillModalOpen, setScheduleAutofillModalOpen] =
+    useState(false)
   const [scheduleSettingsModalOpen, setScheduleSettingsModalOpen] =
     useState(false)
   const [shiftsFrom, setShiftsFrom] = useState<Date>(new Date())
@@ -100,6 +132,12 @@ export const ScheduleDetails: React.FC = () => {
           >
             Generer vakter fra mal
           </Button>
+          <Button
+            color="samfundet-red"
+            onClick={() => setScheduleAutofillModalOpen(true)}
+          >
+            Gjør jobben min for meg
+          </Button>
         </Group>
       </Group>
 
@@ -127,6 +165,10 @@ export const ScheduleDetails: React.FC = () => {
         title="Opprett nytt skift"
         opened={createShiftDrawerOpen}
         onClose={() => setCreateShiftDrawerOpen(false)}
+      />
+      <ScheduleAutofillModal
+        opened={scheduleAutofillModalOpen}
+        onClose={() => setScheduleAutofillModalOpen(false)}
       />
     </Stack>
   )
