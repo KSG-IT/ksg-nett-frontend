@@ -18,7 +18,7 @@ export const theme: MantineThemeOverride = {
     ],
   },
   primaryColor: 'samfundet-red',
-  fontFamily: '"Inter"',
+  fontFamily: '"Inter", "Baskerville"',
 }
 
 // https://www.petarstefanov.com/blog/2020-03-10-react-styled-components-mobile-first-aproach/
