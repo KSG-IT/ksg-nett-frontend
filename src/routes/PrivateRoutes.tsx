@@ -71,6 +71,7 @@ import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
 import PublicRoutes from './PublicRoutes'
 import { RestrictedRoute } from './RestrictedRoute'
+import KnightHoodDashboard from 'modules/knighthood/KnightHoodDashBoard'
 
 const FullPage404 = React.lazy(
   () => import('components/FullPageComponents/FullPage404')
@@ -531,6 +532,11 @@ export const AppRoutes: React.FC = () => {
         <Route path="forum">
           <Route index element={<ForumDashboard />} />
           <Route path="ksg-it-har-opptak" element={<ForumThread />} />
+        </Route>
+
+        {/* ==== KNIGHTHOOD MODULE ==== */}
+        <Route path="knighthood">
+          <Route index element={<KnightHoodDashboard />} />
         </Route>
 
         {/* ==== SCHEDULES MODULE ==== */}
