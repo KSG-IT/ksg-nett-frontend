@@ -2,7 +2,7 @@ import { UserNode } from 'modules/users/types'
 
 export type KnightHoodNode = {
   id: string
-  user: UserNode
+  user: Pick<UserNode, 'id' | 'getCleanFullName'>
   knightedAt: Date
   description: string
 }

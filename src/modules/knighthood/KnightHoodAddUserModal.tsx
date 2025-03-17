@@ -9,10 +9,11 @@ import {
 import { DateInput } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
 import { UserSelect } from 'components/Select'
-import { format } from 'date-fns'
+
 import { useState } from 'react'
 import { useKnightHoodMutations } from './mutations.hooks'
 import { ALL_KNIGHTHOODS_QUERY } from './queries'
+import { format } from 'util/date-fns'
 
 interface KnightHoodAddUserModalProps extends ModalProps {}
 

@@ -6,6 +6,7 @@ import {
   createStyles,
   Group,
   Image,
+  MantineProvider,
   Stack,
   Table,
   Text,
@@ -23,7 +24,7 @@ import { KnightHoodAddUserModal } from './KnightHoodAddUserModal'
 import { ALL_KNIGHTHOODS_QUERY } from './queries'
 import { AllKnightHoodsQueryReturns, KnightHoodNode } from './types'
 
-const KnightHoodDashboard: React.FC = () => {
+export const KnightHoodDashboard: React.FC = () => {
   const [open, setOpen] = useState(false)
   const { data, loading, error } = useQuery<AllKnightHoodsQueryReturns>(
     ALL_KNIGHTHOODS_QUERY
@@ -52,98 +53,110 @@ const KnightHoodDashboard: React.FC = () => {
   }
 
   const { allKnighthoods } = data
-  console.log(allKnighthoods)
+
   return (
-    <Stack>
-      <Group position="apart">
-        <Breadcrumbs
-          items={[
-            { label: 'Hjem', path: '/dashboard' },
-            { label: 'Ridderskap', path: '' },
-          ]}
-        />
-        <PermissionGate permissions={PERMISSIONS.users.change.user}>
-          <Button
-            leftIcon={<IconPlus />}
-            onClick={() => {
-              setOpen(true)
-            }}
-          >
-            Nytt ridderskap
-          </Button>
-        </PermissionGate>
-      </Group>
-
-      <Card className={classes.card} withBorder>
-        <Stack align="center">
-          <Image
-            className={classes.image}
-            src="https://i.imgur.com/s5pNI5t.png"
-            alt="Det Gyldne Tappetaarn"
-            height={250}
-            width={250}
+    <MantineProvider
+      theme={{
+        components: {
+          Card: { styles: { root: { fontFamily: 'Baskerville, serif' } } },
+          Text: { styles: { root: { fontFamily: 'inherit' } } },
+          Title: { styles: { root: { fontFamily: 'inherit' } } },
+          Table: { styles: { root: { fontFamily: 'inherit' } } },
+        },
+      }}
+      inherit
+    >
+      <Stack>
+        <Group position="apart">
+          <Breadcrumbs
+            items={[
+              { label: 'Hjem', path: '/dashboard' },
+              { label: 'Ridderskap', path: '' },
+            ]}
           />
-          <Text>
-            <Title
-              ff={'Baskerville'}
-              transform="uppercase"
-              fw={500}
-              className={classes.title}
-              order={1}
+          <PermissionGate permissions={PERMISSIONS.users.change.user}>
+            <Button
+              leftIcon={<IconPlus />}
+              onClick={() => {
+                setOpen(true)
+              }}
             >
-              Det Gyldne Tappetaarn
-            </Title>
-          </Text>
-        </Stack>
-        <Stack ml={'15%'} w={'70%'} my={'xl'}>
-          <Text className={classes.text}>
-            <Title className={classes.subtitle} align="center" order={3}>
-              Om ordenen
-            </Title>
-            Riddere av Det Gyldne Tappetaarn er personer som har blitt erkjent
-            for sine utmerkede bidrag til KSG (KISS og SG). Ordenen ble
-            opprettet i 2024 for å hedre de som har gjort en ekstraordinær
-            innsats for å forme KSG.
-          </Text>
-          <Text className={classes.text}>
-            <Title className={classes.subtitle} order={3}>
-              Nominering
-            </Title>
-            Det åpnes årlig for nominasjon av nye riddere. Nominasjonsteksten
-            bør inneholde hva den nominerte har bidratt til og hvorfor
-            vedkommende har gjort en innsats utover det forventede av vervet
-            sitt. Det kan f.eks. være en person som har tatt på seg et prosjekt
-            utenfor sitt eget ansvarsområde, eller som har bidratt til å løse en
-            vanskelig utfordring i organisasjonen. Nominasjonen sendes til
-            gjengsjef, som sammen med de andre ridderne vurderer om den
-            nominerte er verdig en plass i ordenen.
-          </Text>
-          <Text className={classes.text}>
-            <Title className={classes.subtitle} order={3}>
-              Medlemmer
-            </Title>
-            Det er for tiden {allKnighthoods.length} medlemmer av Det Gyldne
-            Tappetaarn. Under kan du se en oversikt over de som har blitt slått
-            til ridder. Ved innmelding i orden utmerkes medlemmet med en
-            ridderdalje.
-          </Text>
-        </Stack>
+              Nytt ridderskap
+            </Button>
+          </PermissionGate>
+        </Group>
 
-        <Box p="xl"></Box>
-        <Stack justify="center" align="center">
-          <Table className={classes.table} fontSize={'lg'}>
-            <thead>
-              <tr>
-                <th>Navn</th>
-                <th>Ble slått til ridder</th>
-              </tr>
-            </thead>
-            <tbody>{rows(allKnighthoods)}</tbody>
-          </Table>
-        </Stack>
-      </Card>
-      <KnightHoodAddUserModal opened={open} onClose={() => setOpen(false)} />
-    </Stack>
+        <Card className={classes.card} withBorder>
+          <Stack align="center">
+            <Image
+              className={classes.image}
+              src="https://i.imgur.com/s5pNI5t.png"
+              alt="Det Gyldne Tappetaarn"
+              height={250}
+              width={250}
+            />
+            <Text>
+              <Title
+                ff={'Baskerville'}
+                transform="uppercase"
+                fw={500}
+                className={classes.title}
+                order={1}
+              >
+                Det Gyldne Tappetaarn
+              </Title>
+            </Text>
+          </Stack>
+          <Stack ml={'15%'} w={'70%'} my={'xl'}>
+            <Text className={classes.text}>
+              <Title className={classes.subtitle} align="center" order={3}>
+                Om ordenen
+              </Title>
+              Riddere av Det Gyldne Tappetaarn er personer som har blitt erkjent
+              for sine utmerkede bidrag til KSG (KISS og SG). Ordenen ble
+              opprettet i 2024 for å hedre de som har gjort en ekstraordinær
+              innsats for å forme KSG.
+            </Text>
+            <Text className={classes.text}>
+              <Title className={classes.subtitle} order={3}>
+                Nominering
+              </Title>
+              Det åpnes årlig for nominasjon av nye riddere. Nominasjonsteksten
+              bør inneholde hva den nominerte har bidratt til og hvorfor
+              vedkommende har gjort en innsats utover det forventede av vervet
+              sitt. Det kan f.eks. være en person som har tatt på seg et
+              prosjekt utenfor sitt eget ansvarsområde, eller som har bidratt
+              til å løse en vanskelig utfordring i organisasjonen. Nominasjonen
+              sendes til gjengsjef, som sammen med de andre ridderne vurderer om
+              den nominerte er verdig en plass i ordenen.
+            </Text>
+            <Text className={classes.text}>
+              <Title className={classes.subtitle} order={3}>
+                Medlemmer
+              </Title>
+              Det er for tiden {allKnighthoods.length} medlemmer av Det Gyldne
+              Tappetaarn. Under kan du se en oversikt over de som har blitt
+              slått til ridder. Ved innmelding i orden utmerkes medlemmet med en
+              ridderdalje.
+            </Text>
+          </Stack>
+
+          <Box p="xl"></Box>
+          <Stack justify="center" align="center">
+            <Table className={classes.table} fontSize={'lg'}>
+              <thead>
+                <tr>
+                  <th>Navn</th>
+                  <th>Ble slått til ridder</th>
+                </tr>
+              </thead>
+              <tbody>{rows(allKnighthoods)}</tbody>
+            </Table>
+          </Stack>
+        </Card>
+        <KnightHoodAddUserModal opened={open} onClose={() => setOpen(false)} />
+      </Stack>
+    </MantineProvider>
   )
 }
 
@@ -165,15 +178,12 @@ const useStyles = createStyles(() => ({
   card: {
     width: '100%',
     backgroundColor: '#f8f0e5',
-    fontFamily: 'Baskerville',
   },
   text: {
     color: '#102c57',
-    fontFamily: 'Baskerville',
   },
   subtitle: {
     color: '#102c57',
-    fontFamily: 'Baskerville',
     textAlign: 'center',
     textTransform: 'uppercase',
     fontWeight: 500,
@@ -182,7 +192,6 @@ const useStyles = createStyles(() => ({
   table: {
     width: '60%',
     borderCollapse: 'collapse',
-    fontFamily: 'Baskerville',
     color: '#102c57',
     fontSize: 24,
     '& th': {
@@ -209,5 +218,3 @@ const useStyles = createStyles(() => ({
     },
   },
 }))
-
-export default KnightHoodDashboard
