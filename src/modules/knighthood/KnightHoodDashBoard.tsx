@@ -38,7 +38,7 @@ export const KnightHoodDashboard: React.FC = () => {
         {members.map(member => (
           <tr key={member.id} className={classes.tableRow}>
             <td>{member.user.getCleanFullName}</td>
-            <td>{new Date(member.knightedAt).getFullYear()}</td>
+            <td>{new Date(member.knightedDate).getFullYear()}</td>
           </tr>
         ))}
       </>
