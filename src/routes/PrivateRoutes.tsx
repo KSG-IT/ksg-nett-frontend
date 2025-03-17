@@ -71,7 +71,7 @@ import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
 import PublicRoutes from './PublicRoutes'
 import { RestrictedRoute } from './RestrictedRoute'
-import KnightHoodDashboard from 'modules/knighthood/KnightHoodDashBoard'
+import { KnightHoodDashboard } from 'modules/knighthood/KnightHoodDashBoard'
 
 const FullPage404 = React.lazy(
   () => import('components/FullPageComponents/FullPage404')
