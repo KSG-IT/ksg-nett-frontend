@@ -45,10 +45,10 @@ export const KnightHoodDashboard: React.FC = () => {
     )
   }
 
-  if (error || !data) {
+  if (error) {
     return <FullPageError />
   }
-  if (loading) {
+  if (loading || !data) {
     return <FullContentLoader />
   }
 
@@ -56,6 +56,8 @@ export const KnightHoodDashboard: React.FC = () => {
 
   return (
     <MantineProvider
+      // We are overriding the default theme by nesting MantineProvider with `inherit` prop, while changing font family
+      // This will make sure that the theme is inherited from the parent MantineProvider, keeping the global theme consistent
       theme={{
         components: {
           Card: { styles: { root: { fontFamily: 'Baskerville, serif' } } },
