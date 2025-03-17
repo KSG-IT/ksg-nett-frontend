@@ -23,6 +23,7 @@ import { PERMISSIONS } from 'util/permissions'
 import { KnightHoodAddUserModal } from './KnightHoodAddUserModal'
 import { ALL_KNIGHTHOODS_QUERY } from './queries'
 import { AllKnightHoodsQueryReturns, KnightHoodNode } from './types'
+import knightHoodLogo from 'src/../assets/images/knighthood_logo.png'
 
 export const KnightHoodDashboard: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -36,7 +37,11 @@ export const KnightHoodDashboard: React.FC = () => {
     return (
       <>
         {members.map(member => (
-          <tr key={member.id} className={classes.tableRow}>
+          <tr
+            onClick={() => navigate(`/users/${member.user.id}`)}
+            key={member.id}
+            className={classes.tableRow}
+          >
             <td>{member.user.getCleanFullName}</td>
             <td>{new Date(member.knightedDate).getFullYear()}</td>
           </tr>
@@ -76,7 +81,7 @@ export const KnightHoodDashboard: React.FC = () => {
               { label: 'Ridderskap', path: '' },
             ]}
           />
-          <PermissionGate permissions={PERMISSIONS.users.change.user}>
+          <PermissionGate permissions={PERMISSIONS.users.add.knightHood}>
             <Button
               leftIcon={<IconPlus />}
               onClick={() => {
@@ -92,7 +97,7 @@ export const KnightHoodDashboard: React.FC = () => {
           <Stack align="center">
             <Image
               className={classes.image}
-              src="https://i.imgur.com/s5pNI5t.png"
+              src={knightHoodLogo}
               alt="Det Gyldne Tappetaarn"
               height={250}
               width={250}
