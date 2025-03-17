@@ -5,7 +5,7 @@ export const ALL_KNIGHTHOODS_QUERY = gql`
     allKnighthoods {
       id
       description
-      knightedAt
+      knightedDate
       user {
         id
         getCleanFullName

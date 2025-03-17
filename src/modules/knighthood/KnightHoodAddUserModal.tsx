@@ -31,7 +31,7 @@ export const KnightHoodAddUserModal: React.FC<KnightHoodAddUserModalProps> = ({
     addUserToKnightHood({
       variables: {
         userId: selectedUser,
-        knightedAt: format(selectedDate ?? new Date(), 'yyyy-MM-dd'),
+        knightedDate: format(selectedDate ?? new Date(), 'yyyy-MM-dd'),
       },
       refetchQueries: [ALL_KNIGHTHOODS_QUERY],
       onCompleted() {
