@@ -137,6 +137,9 @@ export const PERMISSIONS = {
       user: 'users.view_user',
       userType: 'users.view_usertype',
     },
+    add: {
+      knightHood: 'users.add_knighthood',
+    },
   },
   // ===== ORGANIZATION =====
   organization: {
