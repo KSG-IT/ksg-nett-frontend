@@ -7,6 +7,8 @@ export const ACTIVE_ADMISSION_QUERY = gql`
       status
       interviewBookingLateBatchEnabled
       interviewBookingOverrideEnabled
+      bookingSoftWallEnabled
+      bookingSoftWallTimestamp
       availableInternalGroupPositionsData {
         availablePositions
         internalGroupPosition {
