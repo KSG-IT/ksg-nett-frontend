@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v2025.8.1]
+
+- Admissions: Add UI controls for soft wall booking
+
 ## [v2024.9.2]
 
 ### Fixed

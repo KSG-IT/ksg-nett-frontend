@@ -212,6 +212,8 @@ export type AdmissionNode = {
   applicants: ApplicantNode[]
   interviewBookingLateBatchEnabled: boolean
   interviewBookingOverrideEnabled: boolean
+  bookingSoftWallEnabled: boolean
+  bookingSoftWallTimestamp: Date | null
 }
 
 export type InterviewScheduleTemplateNode = {
@@ -240,6 +242,8 @@ export interface ActiveAdmissioneturns {
     | 'status'
     | 'interviewBookingLateBatchEnabled'
     | 'interviewBookingOverrideEnabled'
+    | 'bookingSoftWallEnabled'
+    | 'bookingSoftWallTimestamp'
   > | null
 }
 

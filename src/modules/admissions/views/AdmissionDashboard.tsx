@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { Button, Group, Stack, Switch, Title } from '@mantine/core'
+import { DateTimePicker } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
 import { IconClock } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
@@ -90,7 +91,7 @@ export const AdmissionDashboard: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Stack>
         <Title>Kontrollpanel opptak</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
           <Group>
@@ -101,6 +102,12 @@ export const AdmissionDashboard: React.FC = () => {
               }
               overrideEnabledInitial={
                 activeAdmission.interviewBookingOverrideEnabled
+              }
+              softWallEnabledInitial={activeAdmission.bookingSoftWallEnabled}
+              softWallEnabledTimestampInitial={
+                activeAdmission.bookingSoftWallTimestamp
+                  ? new Date(activeAdmission.bookingSoftWallTimestamp)
+                  : new Date()
               }
             />
             <Button
@@ -115,7 +122,7 @@ export const AdmissionDashboard: React.FC = () => {
             </Button>
           </Group>
         </PermissionGate>
-      </Group>
+      </Stack>
       <AdmissionsShortcutPanel />
 
       <InternalGroupsNav />
@@ -128,11 +135,23 @@ const InterviewBookingSettingSwitches: React.FC<{
   admissionId: string
   lateBatchEnabledInitial: boolean
   overrideEnabledInitial: boolean
-}> = ({ lateBatchEnabledInitial, overrideEnabledInitial, admissionId }) => {
+  softWallEnabledInitial: boolean
+  softWallEnabledTimestampInitial: Date | null
+}> = ({
+  lateBatchEnabledInitial,
+  overrideEnabledInitial,
+  admissionId,
+  softWallEnabledInitial,
+  softWallEnabledTimestampInitial,
+}) => {
   const [lateBatchEnabled, setLateBatchEnabled] = useState(
     lateBatchEnabledInitial
   )
   const [overrideEnabled, setOverrideEnabled] = useState(overrideEnabledInitial)
+  const [softWallEnabled, setSoftWallEnabled] = useState(softWallEnabledInitial)
+  const [softWallTimestamp, setSoftWallTimestamp] = useState(
+    softWallEnabledTimestampInitial
+  )
 
   // Needs to be a fucking hook now
   const [patchAdmission] = useMutation<
@@ -181,8 +200,57 @@ const InterviewBookingSettingSwitches: React.FC<{
       },
     })
   }
+
+  async function handleSoftWallEnabledChange(
+    evt: React.ChangeEvent<HTMLInputElement>
+  ) {
+    const value = evt.target.checked
+    if (value && !softWallTimestamp) {
+      showNotification({ message: 'Mangler gyldi tidspunkt' })
+      return
+    }
+
+    setSoftWallEnabled(evt.target.checked)
+    await patchAdmission({
+      variables: {
+        id: admissionId,
+        input: {
+          bookingSoftWallEnabled: value,
+        },
+      },
+    })
+  }
+
+  async function handleUpdateSoftWallTimestamp() {
+    if (!softWallTimestamp) return
+
+    await patchAdmission({
+      variables: {
+        id: admissionId,
+        input: {
+          bookingSoftWallTimestamp: softWallTimestamp,
+        },
+      },
+    })
+  }
+
   return (
     <Group>
+      <DateTimePicker
+        value={softWallTimestamp}
+        onChange={date => {
+          console.log(date)
+          setSoftWallTimestamp(date)
+        }}
+      />
+      <Button onClick={handleUpdateSoftWallTimestamp}>
+        Oppdater tidspunkt
+      </Button>
+      <Switch
+        label="Skjul intervjuer"
+        checked={softWallEnabled}
+        onChange={handleSoftWallEnabledChange}
+      />
       <Switch
         label="Sene intervjuer først"
         checked={lateBatchEnabled}
