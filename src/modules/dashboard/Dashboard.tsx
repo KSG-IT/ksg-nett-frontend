@@ -63,6 +63,12 @@ export const Dashboard = () => {
   return (
     <Stack spacing="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
+      <Card
+        style={{ backgroundColor: 'yellow' }}
+        onClick={() => navigate('/schedules/me/availability')}
+      >
+        <Text>Nærmer seg vakt tid</Text>
+      </Card>
       <ShortcutCards
         sociOrderSession={!!sociOrderSession}
         showNewbies={showNewbies}
