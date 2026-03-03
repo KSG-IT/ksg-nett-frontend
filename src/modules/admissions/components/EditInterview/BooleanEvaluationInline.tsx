@@ -7,7 +7,7 @@ import {
 } from 'modules/admissions/types.graphql'
 import React, { useState } from 'react'
 import { PatchMutationVariables } from 'types/graphql'
-import { booleanToRadio, radioToBoolean } from 'util/parsing'
+import { booleanToRadio, radioToBoolean, yesNoHandler } from 'util/parsing'
 
 interface BooleanEvaluationInlineProps {
   booleanEvaluationAnswer: InterviewBooleanEvaluationAnswerNode
@@ -25,23 +25,21 @@ export const BooleanEvaluationInline: React.FC<
     PatchMutationVariables<InterviewBooleanEvaluationAnswerNode>
   >(PATCH_INTERVIEW_BOOLEAN_EVALUATION_ANSWER)
 
-  const handleChange = (val: string) => {
-    setValue(val as '' | 'yes' | 'no')
-    const parsedValue = radioToBoolean(val as '' | 'yes' | 'no')
-
+  const handleChange = yesNoHandler(yesNo => {
+    setValue(yesNo)
     patchBooleanEvaluationAnswer({
       variables: {
         id: booleanEvaluationAnswer.id,
-        input: { value: parsedValue },
+        input: { value: radioToBoolean(yesNo) },
       },
     })
-  }
+  })
 
   return (
     <Group>
       <Radio.Group
         value={value}
-        onChange={val => handleChange(val as 'yes' | 'no')}
+        onChange={handleChange}
         label={booleanEvaluationAnswer.statement.statement}
       >
         <Group>

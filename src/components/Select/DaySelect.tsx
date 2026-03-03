@@ -1,5 +1,6 @@
 import { Select } from '@mantine/core'
 import { DayValues } from 'modules/schedules/consts'
+import { enumHandler } from 'util/parsing'
 
 interface DaySelectProps {
   value: DayValues
@@ -24,7 +25,7 @@ export const DaySelect: React.FC<DaySelectProps> = ({
     <Select
       label="Dag i uken"
       value={value}
-      onChange={val => val && onChangeCallback(val as DayValues)}
+      onChange={enumHandler(DayValues, onChangeCallback)}
       data={data}
     />
   )

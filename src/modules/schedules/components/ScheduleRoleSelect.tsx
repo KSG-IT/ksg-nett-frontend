@@ -1,6 +1,7 @@
 import { Select, SelectProps } from '@mantine/core'
 import { RoleValues } from '../consts'
 import { parseShiftRole } from '../util'
+import { enumHandler } from 'util/parsing'
 
 const shiftRoleData = [
   {
@@ -87,7 +88,7 @@ export const ShiftRoleSelect: React.FC<ShiftRoleSelectProps> = ({
   return (
     <Select
       value={value}
-      onChange={val => val && onChangeCallback(val as RoleValues)}
+      onChange={enumHandler(RoleValues, onChangeCallback)}
       data={shiftRoleData}
       {...rest}
     />
