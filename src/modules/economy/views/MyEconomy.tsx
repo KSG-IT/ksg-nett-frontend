@@ -8,7 +8,6 @@ import {
   Stack,
   Text,
   Title,
-  getGradient,
 } from '@mantine/core'
 import { createStyles } from '@mantine/emotion'
 import { IconExternalLink, IconRefresh } from '@tabler/icons-react'
@@ -118,18 +117,19 @@ export const MyEconomy: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   cardWithBorder: {
-    borderTop: `5px solid ${theme.colors.brand}`,
+    borderTop: '5px solid var(--mantine-color-brand-6)',
     '@media (max-width: 800px)': {
-      padding: theme.spacing.xs,
+      padding: 'var(--mantine-spacing-xs)',
     },
   },
   balanceCard: {
-    backgroundImage: getGradient({ from: 'cyan.8', to: 'cyan.4' }, theme),
-    color: theme.white,
+    backgroundImage:
+      'linear-gradient(45deg, var(--mantine-color-cyan-8), var(--mantine-color-cyan-4))',
+    color: 'white',
     maxWidth: 450,
     maxHeight: 300,
-    borderRadius: theme.radius.lg,
+    borderRadius: 'var(--mantine-radius-lg)',
   },
-}))
+})

@@ -9,7 +9,6 @@ import {
   Text,
   TextInput,
   Title,
-  getGradient,
 } from '@mantine/core'
 import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
@@ -128,23 +127,14 @@ export const AccountCard: React.FC<AccountCardProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
-  cardWithBorder: {
-    borderTop: `5px solid ${theme.colors.brand}`,
-  },
+const useStyles = createStyles({
   balanceCard: {
     padding: '8px 12px',
-    backgroundImage: getGradient(
-      {
-        from: 'samfundet-red.7',
-        to: 'samfundet-red.4',
-        deg: 360,
-      },
-      theme
-    ),
-    color: theme.white,
+    backgroundImage:
+      'linear-gradient(360deg, var(--mantine-color-samfundet-red-7), var(--mantine-color-samfundet-red-4))',
+    color: 'white',
     aspectRatio: 16 / 10,
     maxWidth: '400px',
-    borderRadius: theme.radius.lg,
+    borderRadius: 'var(--mantine-radius-lg)',
   },
-}))
+})
