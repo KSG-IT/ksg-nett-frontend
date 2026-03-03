@@ -13,6 +13,7 @@ import { useSociSessionMutations } from 'modules/economy/mutations.hooks'
 import { ALL_SOCI_SESSIONS } from 'modules/economy/queries'
 import { SociSessionType } from 'modules/economy/types.graphql'
 import { useState } from 'react'
+import { enumHandler } from 'util/parsing'
 import { useNavigate } from 'react-router-dom'
 import { format } from 'util/date-fns'
 
@@ -104,7 +105,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
               value: SociSessionType.KRYSSELISTE,
             },
           ]}
-          onChange={val => val && setType(val as SociSessionType)}
+          onChange={enumHandler(SociSessionType, setType)}
         />
         <NumberInput
           label="Minstebeløp gjenværende saldo"

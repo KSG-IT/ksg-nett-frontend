@@ -2,7 +2,7 @@ import { Radio, Stack } from '@mantine/core'
 import { usePatchApplicant } from 'modules/admissions/mutations.hooks'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import { booleanToRadio, radioToBoolean } from 'util/parsing'
+import { booleanToRadio, radioToBoolean, yesNoHandler } from 'util/parsing'
 
 interface AdditionalInformationFieldsProps {
   applicant: Pick<
@@ -23,39 +23,31 @@ export const AdditionalInformationFields: React.VFC<
 
   const { patchApplicant } = usePatchApplicant()
 
-  const handleChangeCanCommit = (val: string) => {
-    setCanCommitThreeSemesters(val as '' | 'yes' | 'no')
-    const parsedCanCommitThreeSemesters = radioToBoolean(
-      val as '' | 'yes' | 'no'
-    )
+  const handleChangeCanCommit = yesNoHandler(yesNo => {
+    setCanCommitThreeSemesters(yesNo)
     patchApplicant({
       variables: {
         id: applicant.id,
-        input: {
-          canCommitThreeSemesters: parsedCanCommitThreeSemesters,
-        },
+        input: { canCommitThreeSemesters: radioToBoolean(yesNo) },
       },
     })
-  }
+  })
 
-  const handleChangeOpenForOtherPositions = (val: string) => {
-    setOpenForOtherPositions(val as '' | 'yes' | 'no')
-    const parsedOpenForOtherPositions = radioToBoolean(val as '' | 'yes' | 'no')
+  const handleChangeOpenForOtherPositions = yesNoHandler(yesNo => {
+    setOpenForOtherPositions(yesNo)
     patchApplicant({
       variables: {
         id: applicant.id,
-        input: {
-          openForOtherPositions: parsedOpenForOtherPositions,
-        },
+        input: { openForOtherPositions: radioToBoolean(yesNo) },
       },
     })
-  }
+  })
 
   return (
     <Stack>
       <Radio.Group
         label="Kandidat åpen for andre verv?"
-        onChange={val => handleChangeOpenForOtherPositions(val as 'yes' | 'no')}
+        onChange={handleChangeOpenForOtherPositions}
         value={openForOtherPositions}
       >
         <Radio value="yes" label="Ja" />
@@ -63,7 +55,7 @@ export const AdditionalInformationFields: React.VFC<
       </Radio.Group>
       <Radio.Group
         label="Kan bli i 3 semestre?"
-        onChange={val => handleChangeCanCommit(val as 'yes' | 'no')}
+        onChange={handleChangeCanCommit}
         value={canCommitThreeSemesters}
       >
         <Radio value="yes" label="Ja" />
