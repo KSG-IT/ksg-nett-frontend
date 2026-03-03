@@ -59,10 +59,10 @@ export const InterviewsAvailableForBooking: React.FC<
     <>
       {data.interviewsAvailableForBooking.map(interviewDay => (
         <Stack key={`${interviewDay.date}`}>
-          <Title color={'dimmed'} order={3}>
+          <Title c={'dimmed'} order={3}>
             Tilgjengelige tidspunkter
           </Title>
-          <Title order={5} transform={'uppercase'}>
+          <Title order={5} tt={'uppercase'}>
             {format(new Date(interviewDay.date), 'EEEE dd MMM')}
           </Title>
           <SimpleGrid

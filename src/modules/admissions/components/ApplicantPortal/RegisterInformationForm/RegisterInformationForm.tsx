@@ -135,7 +135,7 @@ export const RegisterInformationForm: React.FC<
             </MessageBox>
           )}
 
-          <Group position="right" mt="md">
+          <Group justify="flex-end" mt="md">
             <Button
               loading={isSubmitting}
               disabled={!doesNotWantImage && !file}

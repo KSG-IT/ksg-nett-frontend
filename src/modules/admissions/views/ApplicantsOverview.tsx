@@ -41,7 +41,7 @@ export const ApplicantsOverview: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Søkeroversikt</Title>
         <SynCButton
           refetchCallback={() => refetch()}

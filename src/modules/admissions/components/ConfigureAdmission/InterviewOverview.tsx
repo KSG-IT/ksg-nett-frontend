@@ -141,7 +141,7 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
       <Group>
         <Title my="md">Genererte intervjuer</Title>
         <Button
-          leftIcon={<IconTrash />}
+          leftSection={<IconTrash />}
           color="red"
           onClick={() => deleteAllInterviews()}
         >

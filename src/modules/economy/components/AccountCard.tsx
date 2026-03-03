@@ -92,7 +92,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
           </div>
         </Card.Section>
         <Card.Section>
-          <Text pb="xs" size={'sm'} color={'samfundet-red.1'}>
+          <Text pb="xs" size={'sm'} c={'samfundet-red.1'}>
             Fyll på
           </Text>
           <Button

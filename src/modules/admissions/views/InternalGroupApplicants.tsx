@@ -63,7 +63,7 @@ export const InternalGroupApplicants: React.FC = ({}) => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Søkeroversikt {internalGroupName}</Title>
         <SynCButton
           refetchCallback={() => refetch()}

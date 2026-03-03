@@ -13,7 +13,7 @@ export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
   const cards = quotes.map(quote => <QuoteCard key={quote.id} quote={quote} />)
   return (
     <Stack>
-      <Text color={'dimmed'} weight={700}>
+      <Text c={'dimmed'} fw={700}>
         Siste sitater
       </Text>
       <SimpleGrid

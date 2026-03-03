@@ -23,7 +23,7 @@ type SummaryInput = {
 
 export const CreateSummary: React.FC = () => {
   return (
-    <Stack spacing="sm">
+    <Stack gap="sm">
       <Breadcrumbs items={breadcrumbItems} />
       <Title>Opprett referat</Title>
       <SummaryForm onCompletedCallback={() => null} />

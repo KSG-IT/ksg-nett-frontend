@@ -83,7 +83,7 @@ export const CloseAdmission: React.FC = () => {
         </Button>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
           <a href={`${API_URL}/admissions/callsheet`} target="_blank">
-            <Button leftIcon={<IconFileAnalytics />} color="samfundet-red">
+            <Button leftSection={<IconFileAnalytics />} color="samfundet-red">
               Last ned ringeliste
             </Button>
           </a>

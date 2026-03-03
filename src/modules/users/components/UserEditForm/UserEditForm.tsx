@@ -103,7 +103,7 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
         />
       </SimpleGrid>
 
-      <Group position="apart" mt="md">
+      <Group justify="space-between" mt="md">
         <Button
           variant="outline"
           color="samfundet-red"

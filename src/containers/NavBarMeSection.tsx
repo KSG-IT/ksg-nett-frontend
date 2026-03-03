@@ -58,7 +58,7 @@ export const NavBarMeSection: React.FC = () => {
           </Text>
           <Group gap="xs" align="center">
             <IconPigMoney size={16} />
-            <Text size={'xs'} fw={500} color={liquidityColor(me.balance)}>
+            <Text size={'xs'} fw={500} c={liquidityColor(me.balance)}>
               {formatCurrency(me.balance)}
             </Text>
           </Group>

@@ -83,7 +83,7 @@ export const ScheduleSettingsModal: React.FC<ScheduleSettingsModalProps> = ({
           onChange={evt => setDisplayMode(evt as ScheduleDisplayModeValues)}
         />
 
-        <Group position="right">
+        <Group justify="flex-end">
           <Button color="gray" onClick={onCloseCallback}>
             Avbryt
           </Button>

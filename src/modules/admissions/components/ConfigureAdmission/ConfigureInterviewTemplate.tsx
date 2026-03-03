@@ -153,7 +153,7 @@ export const ConfigureInterviewTemplate: React.FC<
         <Button
           color="samfundet-red"
           variant="subtle"
-          leftIcon={<IconPlus />}
+          leftSection={<IconPlus />}
           onClick={handleCreateInterviewBooleanEvaluation}
         >
           Legg til
@@ -187,7 +187,7 @@ export const ConfigureInterviewTemplate: React.FC<
         <Button
           color="samfundet-red"
           variant="subtle"
-          leftIcon={<IconPlus />}
+          leftSection={<IconPlus />}
           onClick={handleCreateInterviewAdditionalEvaluationStatement}
         >
           Legg til

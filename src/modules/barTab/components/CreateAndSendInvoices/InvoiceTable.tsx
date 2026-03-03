@@ -56,7 +56,7 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
           <a href={invoice.pdf} target="_blank">
             <Button
               color="samfundet-red"
-              leftIcon={<IconDownload />}
+              leftSection={<IconDownload />}
               variant="subtle"
             >
               Last ned
@@ -65,7 +65,7 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
         ) : (
           <Button
             disabled
-            leftIcon={<IconFilePlus />}
+            leftSection={<IconFilePlus />}
             color="samfundet-red"
             variant="subtle"
           >
@@ -78,7 +78,7 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
           <Text>Sent</Text>
         ) : (
           <Button
-            leftIcon={<IconMailbox />}
+            leftSection={<IconMailbox />}
             color="samfundet-red"
             variant="subtle"
             disabled={!invoice.pdf}

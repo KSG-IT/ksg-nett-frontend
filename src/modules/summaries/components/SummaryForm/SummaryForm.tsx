@@ -103,7 +103,7 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
             </Stack>
             <UserMultiSelect
               label={
-                <Title mb={'xs'} order={5} color={'dimmed'}>
+                <Title mb={'xs'} order={5} c={'dimmed'}>
                   Deltakere
                 </Title>
               }

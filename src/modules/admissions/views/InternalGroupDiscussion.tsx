@@ -73,7 +73,7 @@ export const InternalGroupDiscussion: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Fordelingsmøte {internalGroup.name}</Title>
         <SynCButton
           refetchCallback={() => refetch()}
@@ -90,7 +90,7 @@ export const InternalGroupDiscussion: React.FC = () => {
         kandidater må bli vurdert før fordelingsmøtet kan stenges.
       </MessageBox>
       <MessageBox type="warning">
-        <Text weight="bold">
+        <Text fw="bold">
           Obs! Du markerer ønsker på vegne av {internalGroup.name}
         </Text>
       </MessageBox>

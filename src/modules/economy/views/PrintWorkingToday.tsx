@@ -83,10 +83,10 @@ export const PrintWorkingToday: React.FC = ({}) => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Krysseliste for jobbende</Title>
         <Button
-          leftIcon={<IconFileDownload />}
+          leftSection={<IconFileDownload />}
           color="samfundet-red"
           onClick={handleFetchList}
         >

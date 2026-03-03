@@ -51,18 +51,18 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
 
   return (
     <Card className={classes.stock}>
-      <Group noWrap position="apart">
-        <Group align="flex-end" noWrap>
+      <Group wrap="nowrap" justify="space-between">
+        <Group align="flex-end" wrap="nowrap">
           {sociProduct.icon ? (
             <Text size={48}>{sociProduct.icon}</Text>
           ) : (
             <IconMoneybag />
           )}
-          <Stack spacing={0}>
+          <Stack gap={0}>
             <Title className={classes.stockText} order={isMobile ? 4 : 1}>
               {stock.name}
             </Title>
-            <Group noWrap spacing={0}>
+            <Group wrap="nowrap" gap={0}>
               <Title
                 className={cx(classes.stockText, {
                   [classes.stockTextPositive]: stock.percentageChange > 0,
@@ -102,7 +102,7 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
         </Group>
         {showMarketHistory && (
           <Box>
-            <Group spacing={2} noWrap align="flex-end" position="right">
+            <Group gap={2} wrap="nowrap" align="flex-end" justify="flex-end">
               {stock.marketHistory?.map(
                 (order: StockMarketDataPoints, index: number) => {
                   return (

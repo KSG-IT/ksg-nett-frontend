@@ -115,7 +115,7 @@ export const InterviewLocationAvailabilityCard: React.VFC<
   return (
     <Paper p="sm">
       <Stack>
-        <Group position="apart">
+        <Group justify="space-between">
           <Title order={3}>{interviewLocation.name}</Title>
           <UnstyledButton onClick={handleDeleteInterviewLocation}>
             <IconX />

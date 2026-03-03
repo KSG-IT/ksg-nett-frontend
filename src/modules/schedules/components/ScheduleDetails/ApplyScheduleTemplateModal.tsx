@@ -99,7 +99,7 @@ export const ApplyScheduleTemplateModal: React.FC<
             'EEE dd.MMM'
           )}
       </Text>
-      <Group my="md" position="right">
+      <Group my="md" justify="flex-end">
         <Button color={'gray'} onClick={onCloseCallback}>
           Avbryt
         </Button>

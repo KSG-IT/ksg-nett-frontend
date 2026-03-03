@@ -94,7 +94,7 @@ export const MyEconomy: React.FC = () => {
         }}
       >
         <Stack>
-          <Text color={'dimmed'} fw={700} p={'xs'}>
+          <Text c={'dimmed'} fw={700} p={'xs'}>
             Forbruk
           </Text>
           <Card withBorder className={classes.cardWithBorder}>

@@ -123,7 +123,7 @@ export const ApplicantPrioritiesField: React.FC<
 
   return (
     <Stack>
-      <Text size="lg" weight="bold">
+      <Text size="lg" fw="bold">
         Kandidat prioriteringer
       </Text>
       <MessageBox type="warning">

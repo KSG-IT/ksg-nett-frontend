@@ -85,9 +85,9 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
         </BarChart>
       </ResponsiveContainer>
 
-      <Group position="apart">
-        <Text weight={'bold'}>Sum</Text>
-        <Text weight="bold">{numberWithSpaces(moneySpent)} kr</Text>
+      <Group justify="space-between">
+        <Text fw={'bold'}>Sum</Text>
+        <Text fw="bold">{numberWithSpaces(moneySpent)} kr</Text>
       </Group>
     </>
   )

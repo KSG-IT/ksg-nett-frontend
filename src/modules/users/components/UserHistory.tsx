@@ -25,10 +25,10 @@ export const UserHistory: React.FC<UserHistoryProps> = ({ memberships }) => {
         key={id}
         title={position.name}
       >
-        <Text color={'dimmed'} size={'sm'}>
+        <Text c={'dimmed'} size={'sm'}>
           {position.internalGroup.name}
         </Text>
-        <Text size={'sm'} weight={800} color={`${theme.colors.brand}`}>
+        <Text size={'sm'} fw={800} c={`${theme.colors.brand}`}>
           {membershipStart} {membershipEnd && ` - ${membershipEnd}`}
         </Text>
       </Timeline.Item>

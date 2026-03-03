@@ -112,7 +112,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
           min={0}
           onChange={val => val && setMinimumRemainingBalance(val)}
         />
-        <Group position="right">
+        <Group justify="flex-end">
           <Button color="gray" onClick={handleCancel}>
             Avbryt
           </Button>

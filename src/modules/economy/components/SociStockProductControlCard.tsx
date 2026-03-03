@@ -52,7 +52,7 @@ const SociStockProductControlCard: React.FC<StockMarketProductProps> = ({
           ? `+${stock.percentageChange}%`
           : `${stock.percentageChange}%`}
       </Badge>
-      <Group position="right">
+      <Group justify="flex-end">
         <Button onClick={handleIncrementGhostOrder}>Kjøp</Button>
       </Group>
     </Card>

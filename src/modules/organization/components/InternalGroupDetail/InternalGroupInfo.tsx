@@ -23,12 +23,7 @@ export const InternalGroupInfo: React.FC<InternalGroupInfoProps> = ({
       )}
 
       <Card p="sm" withBorder>
-        <Title
-          align={'center'}
-          transform={'uppercase'}
-          color={'gray.7'}
-          order={3}
-        >
+        <Title ta={'center'} tt={'uppercase'} c={'gray.7'} order={3}>
           Gjengens medlemmer
         </Title>
         {internalGroup.membershipData.map(position => {
@@ -37,9 +32,9 @@ export const InternalGroupInfo: React.FC<InternalGroupInfoProps> = ({
             <Stack
               key={position.internalGroupPositionName}
               my={'sm'}
-              spacing={'xs'}
+              gap={'xs'}
             >
-              <Title color={'dimmed'} order={4}>
+              <Title c={'dimmed'} order={4}>
                 {position.internalGroupPositionName}
               </Title>
               <Group>

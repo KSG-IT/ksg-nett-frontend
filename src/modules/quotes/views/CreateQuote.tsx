@@ -111,16 +111,11 @@ export const CreateQuote: React.FC = () => {
   return (
     <Container size={'sm'} p={mobileSize ? 0 : 'sm'}>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Title
-        my={'lg'}
-        transform="uppercase"
-        className={classes.title}
-        order={3}
-      >
+      <Title my={'lg'} tt="uppercase" className={classes.title} order={3}>
         Send inn sitat
       </Title>
       <Card radius={'md'} withBorder className={classes.card}>
-        <Stack spacing={'lg'} p={mobileSize ? 0 : 'xl'}>
+        <Stack gap={'lg'} p={mobileSize ? 0 : 'xl'}>
           <SimpleGrid cols={1} spacing={'md'}>
             <MessageBox type="info">
               Tenk deg om før du sender inn sitater om andre. Det er ikke
@@ -149,7 +144,7 @@ export const CreateQuote: React.FC = () => {
             />
             <UserMultiSelect users={tagged} setUsersCallback={setTagged} />
           </SimpleGrid>
-          <Group position="apart">
+          <Group justify="space-between">
             <Button
               variant="outline"
               color={'samfundet-red'}

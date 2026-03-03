@@ -131,7 +131,7 @@ export const Login: React.FC = () => {
             </Button>
           </form>
 
-          <Text align="center" mt="md">
+          <Text ta="center" mt="md">
             Glemt passordet ditt?{' '}
             <Link to="/forgot-password" color="samfundet-red">
               Trykk her

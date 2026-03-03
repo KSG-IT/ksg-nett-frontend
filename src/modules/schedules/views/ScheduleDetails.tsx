@@ -70,8 +70,8 @@ export const ScheduleDetails: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={overloadedBreadcrumbs} />
-      <Group position="apart">
-        <Group position="apart">
+      <Group justify="space-between">
+        <Group justify="space-between">
           <Title>Vaktplan {schedule.name}</Title>
           <WeekController
             week={shiftsFrom}
@@ -81,7 +81,7 @@ export const ScheduleDetails: React.FC = () => {
 
           <Button
             color="samfundet-red"
-            leftIcon={<IconSettings />}
+            leftSection={<IconSettings />}
             onClick={() => setScheduleSettingsModalOpen(true)}
           >
             Innstillinger
@@ -89,7 +89,7 @@ export const ScheduleDetails: React.FC = () => {
         </Group>
         <Group>
           <Button
-            leftIcon={<IconPlus />}
+            leftSection={<IconPlus />}
             onClick={() => setCreateShiftDrawerOpen(true)}
           >
             {' '}

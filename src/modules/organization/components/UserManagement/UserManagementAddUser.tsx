@@ -84,7 +84,7 @@ export const UserManagementAddUser: React.FC<UserManagementAddUserProps> = ({
         searchable
         onChange={setSelectedInternalGroupPositionType}
       />
-      <Group mt="md" position="apart">
+      <Group mt="md" justify="space-between">
         <Button variant="outline" onClick={() => setModalOpen(false)}>
           Avbryt
         </Button>

@@ -109,8 +109,8 @@ export const ReviewQuotes: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
-        <Title order={2} color="dimmed">
+      <Group justify="space-between">
+        <Title order={2} c="dimmed">
           Godkjenning av sitater
         </Title>
         <QuotesTabs />
@@ -124,17 +124,17 @@ export const ReviewQuotes: React.FC = () => {
       >
         {pendingQuotes.map(quote => (
           <Card key={quote.id} withBorder>
-            <Group position="center">
-              <Stack justify={'space-between'} spacing={'xs'}>
+            <Group justify="center">
+              <Stack justify={'space-between'} gap={'xs'}>
                 <Card withBorder>
                   <Text size={'sm'} className={classes.quoteText}>
                     {quote.text}
                   </Text>
 
-                  <Text size={'xs'} color={'gray'}>
+                  <Text size={'xs'} c={'gray'}>
                     {quote.context}
                   </Text>
-                  <Group position="apart" spacing={'xs'}>
+                  <Group justify="space-between" gap={'xs'}>
                     <Avatar.Group spacing={5}>
                       {quote.tagged.map(user => (
                         <UserThumbnail size={'sm'} key={user.id} user={user} />
@@ -143,12 +143,12 @@ export const ReviewQuotes: React.FC = () => {
                   </Group>
                 </Card>
 
-                <Stack spacing={0}>
-                  <Text size="sm" color="dark">
+                <Stack gap={0}>
+                  <Text size="sm" c="dark">
                     {/* Legacy quotes have no reported by */}
                     Sendt inn av: {quote?.reportedBy?.fullName}
                   </Text>
-                  <Text size="sm" color="dark">
+                  <Text size="sm" c="dark">
                     Tidspunkt: {format(new Date(quote.createdAt), 'eeee HH:mm')}
                   </Text>
                 </Stack>

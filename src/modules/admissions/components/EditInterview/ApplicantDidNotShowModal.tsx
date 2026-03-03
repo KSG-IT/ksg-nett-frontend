@@ -13,13 +13,13 @@ export const ApplicantDidNotShowModal: React.FC<
     <Modal
       opened={opened}
       onClose={onClose}
-      title={<Text weight="bold">Kandidat møtte ikke opp</Text>}
+      title={<Text fw="bold">Kandidat møtte ikke opp</Text>}
     >
       <Text>
         Er du sikker på at du vil melde at kandidaten ikke møtte opp? Det er
         ikke mulig å angre på denne handling
       </Text>
-      <Group position="right">
+      <Group justify="flex-end">
         <Button onClick={onClose}>Avbryt</Button>
         <Button color="red" onClick={applicantDidNotShowCallback}>
           Møtte aldri opp

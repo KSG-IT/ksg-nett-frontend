@@ -42,13 +42,13 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
       )}
       <Card>
         <Group>
-          <Text weight="bold">Intervjutid</Text>
+          <Text fw="bold">Intervjutid</Text>
           <Text>
             {format(new Date(interview.interviewStart), 'iii d MMM HH:mm')}
           </Text>
         </Group>
         <Group>
-          <Text weight="bold">Intervjusted</Text>
+          <Text fw="bold">Intervjusted</Text>
           <Text>{interview.location.name}</Text>
         </Group>
       </Card>
@@ -85,7 +85,7 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
           <Stack justify="flex-start">
             {interview.booleanEvaluationAnswers.map(evaluation => (
               <Stack mt="xs">
-                <Text weight="bold">{evaluation.statement.statement}</Text>
+                <Text fw="bold">{evaluation.statement.statement}</Text>
                 <Text>{parseBooleanEvaluation(evaluation.value)}</Text>
               </Stack>
             ))}
@@ -93,7 +93,7 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
           <Stack justify="flex-start">
             {interview.additionalEvaluationAnswers.map(evaluation => (
               <Stack mt="xs">
-                <Text weight="bold">{evaluation.statement.statement}</Text>
+                <Text fw="bold">{evaluation.statement.statement}</Text>
                 <Text>{parseAdditionalEvaluation(evaluation.answer)}</Text>
               </Stack>
             ))}

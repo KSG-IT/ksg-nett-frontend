@@ -135,7 +135,7 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
             {quote.text}
           </Text>
 
-          <Text size={'xs'} color={'gray'}>
+          <Text size={'xs'} c={'gray'}>
             {quote.context}
           </Text>
         </Stack>

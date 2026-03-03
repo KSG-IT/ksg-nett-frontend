@@ -181,7 +181,7 @@ export const SetPriorities: React.FC<SetPrioritiesProps> = ({
     const moveDown = index < values.length - 1
 
     return (
-      <Stack spacing={0}>
+      <Stack gap={0}>
         <ActionIcon
           disabled={!moveUp}
           onClick={() => handlePriorityChange(index, -1)}
@@ -248,19 +248,19 @@ export const SetPriorities: React.FC<SetPrioritiesProps> = ({
       )}
       <Stack ref={animationParent}>
         {values.map((priority, index) => (
-          <Group grow key={priority!.id} position={'apart'}>
+          <Group grow key={priority!.id} justify={'space-between'}>
             <Text>
               <ThemeIcon mr={'sm'} radius={'md'}>
                 {index + 1}
               </ThemeIcon>{' '}
               {priority?.internalGroupPosition.name}
             </Text>
-            <Group position={'right'}>
+            <Group justify={'flex-end'}>
               {renderChangePriorityButtons(index)}
               <Button
                 color="samfundet-red"
                 variant={'outline'}
-                leftIcon={<IconTrash />}
+                leftSection={<IconTrash />}
                 onClick={() => {
                   handleDeletePriority(priority!.internalGroupPosition.id)
                 }}
@@ -273,7 +273,7 @@ export const SetPriorities: React.FC<SetPrioritiesProps> = ({
       </Stack>
       <Divider />
       <Stack>
-        <Title color={'dimmed'} order={3}>
+        <Title c={'dimmed'} order={3}>
           Tilgjengelige stillinger
         </Title>
         <SimpleGrid breakpoints={[{ minWidth: 'sm', cols: 4 }]} cols={1}>

@@ -102,7 +102,7 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
           {shiftSlot.role}
         </Text>
       ) : (
-        <Group position="apart">
+        <Group justify="space-between">
           <Text
             className={classes.hoverableGreen}
             onClick={() => setOpened(true)}
@@ -123,12 +123,12 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
   return (
     <Popover opened={opened} onChange={setOpened} withinPortal>
       <Popover.Target>
-        <Text color={'white'}>{renderedText}</Text>
+        <Text c={'white'}>{renderedText}</Text>
       </Popover.Target>
       <Popover.Dropdown>
-        <Stack spacing="xs" className={classes.wrapper}>
-          <Group position="apart" align="flex-end">
-            <Text transform="uppercase" color={'dimmed'}>
+        <Stack gap="xs" className={classes.wrapper}>
+          <Group justify="space-between" align="flex-end">
+            <Text tt="uppercase" c={'dimmed'}>
               Velg bruker for skift
             </Text>
             <Button color="samfundet-red" onClick={handleDeleteShiftSlot}>

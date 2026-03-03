@@ -51,9 +51,9 @@ export const ManageInternalGroup: React.FC = () => {
     <Stack>
       <Breadcrumbs items={breadcrumbs} />
       <Title>Administrer medlemskap</Title>
-      <Group position="apart">
+      <Group justify="space-between">
         <Group>
-          <Title order={2} color="dimmed">
+          <Title order={2} c="dimmed">
             Aktive medlemskap
           </Title>
         </Group>
@@ -71,7 +71,7 @@ export const ManageInternalGroup: React.FC = () => {
       </MessageBox>
       <UserManagementTable usersData={active} activeMemberships />
 
-      <Title order={2} color="dimmed">
+      <Title order={2} c="dimmed">
         Tidligere medlemskap
       </Title>
       <UserManagementTable usersData={all} />

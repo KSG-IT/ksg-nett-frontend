@@ -33,12 +33,12 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({
         className={classes.shift}
         onClick={() => setShiftModalCallback(shift.id)}
       >
-        <Group position="apart" align={'flex-end'}>
+        <Group justify="space-between" align={'flex-end'}>
           <Text className={classes.title}>{shift.name}</Text>
         </Group>
-        <Group position="apart" className={classes.roster}>
+        <Group justify="space-between" className={classes.roster}>
           <Badge variant="filled" color={`${color}.1`} size="sm" radius="sm">
-            <Text weight={700} transform={'uppercase'} color={`${color}.9`}>
+            <Text fw={700} tt={'uppercase'} c={`${color}.9`}>
               {location}
             </Text>
           </Badge>
@@ -60,7 +60,7 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({
           </Avatar.Group>
         </Group>
         <Divider mt="md" mb="xs" />
-        <Group position="apart">
+        <Group justify="space-between">
           <div className={classes.shiftTime}>
             <IconClock size="20" color="gray" />
             <Text className={classes.timeText}>

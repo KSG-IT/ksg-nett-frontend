@@ -33,9 +33,9 @@ export const MyUpcomingShifts: React.FC = () => {
   const { myUpcomingShifts } = data
 
   return (
-    <Stack className={classes.container} spacing="xs">
+    <Stack className={classes.container} gap="xs">
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart" align="baseline">
+      <Group justify="space-between" align="baseline">
         <Title>Mine kommende vakter</Title>
         <Link to="history">
           <Button>Alle mine vakter</Button>

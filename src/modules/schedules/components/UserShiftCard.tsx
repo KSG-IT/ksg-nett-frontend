@@ -24,12 +24,12 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({
   const theme = useMantineTheme()
   return (
     <Card withBorder className={classes.card} shadow="md">
-      <Group position={'apart'} mb={'md'}>
-        <Stack align={'flex-start'} spacing={0}>
+      <Group justify={'space-between'} mb={'md'}>
+        <Stack align={'flex-start'} gap={0}>
           <Badge variant={'filled'} radius={'sm'} color={theme.primaryColor}>
             {shift.name}
           </Badge>
-          <Text weight={'thin'} color={'dimmed'}>
+          <Text fw={'thin'} c={'dimmed'}>
             {capitalizeFirstLetter(
               format(
                 new Date(shift.datetimeStart),
@@ -38,19 +38,19 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({
             )}
           </Text>
         </Stack>
-        <Stack spacing={0} align={'flex-end'}>
+        <Stack gap={0} align={'flex-end'}>
           {shift.location && (
             <Badge>{parseLocation(shift.location).name}</Badge>
           )}
-          <Text align={'center'}>
+          <Text ta={'center'}>
             {format(new Date(shift.datetimeStart), 'HH:mm')} -{' '}
             {format(new Date(shift.datetimeEnd), 'HH:mm')}
           </Text>
         </Stack>
       </Group>
-      <Group noWrap>
+      <Group wrap="nowrap">
         {shift.filledSlots.map(slot => (
-          <Stack spacing="xs" align={'center'}>
+          <Stack gap="xs" align={'center'}>
             <UserThumbnail
               user={slot.user}
               size={isMobile ? 'md' : 'lg'}

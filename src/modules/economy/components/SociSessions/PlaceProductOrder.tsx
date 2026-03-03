@@ -52,7 +52,7 @@ export const PlaceProductOrder: React.FC<PlaceProductOrderProps> = ({
   }
   return (
     <Paper p="md">
-      <Group spacing="lg">
+      <Group gap="lg">
         <UserSelect setUserCallback={setUserId} />
         <PermissionGate permissions={PERMISSIONS.economy.canOvercharge}>
           <Checkbox

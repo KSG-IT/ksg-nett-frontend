@@ -118,12 +118,12 @@ export const ShiftCardModal: React.FC<ShiftCardDrawerProps> = ({
   return (
     <Modal
       title={
-        <Group position="apart" align="flex-start">
-          <Stack spacing={0} my={0}>
+        <Group justify="space-between" align="flex-start">
+          <Stack gap={0} my={0}>
             <Title order={3} my={0}>
               {shift?.name}
             </Title>
-            <Text size="sm" color="gray">
+            <Text size="sm" c="gray">
               {shift?.location}
             </Text>
           </Stack>
@@ -143,7 +143,7 @@ export const ShiftCardModal: React.FC<ShiftCardDrawerProps> = ({
         </Tabs.List>
 
         <Tabs.Panel value="info" pt="xs">
-          <Stack spacing={'xs'}>
+          <Stack gap={'xs'}>
             {shift.slots.map(slot => (
               <ShiftSlot shiftSlot={slot} />
             ))}

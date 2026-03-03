@@ -22,16 +22,16 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
         </Badge>
       </td>
       <td>
-        <Text align="center">{transaction.quantity}</Text>
+        <Text ta="center">{transaction.quantity}</Text>
       </td>
       <td>
-        <Text align="right" color={'samfundet-red.7'}>
+        <Text ta="right" c={'samfundet-red.7'}>
           {transaction.amount} kr
         </Text>
       </td>
 
       <td>
-        <Text align="right" color={'dimmed'}>
+        <Text ta="right" c={'dimmed'}>
           {format(new Date(transaction.timestamp), 'd.MM.yy HH:mm')}
         </Text>
       </td>
@@ -40,7 +40,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
 
   const Header: React.FC<TextProps> = ({ children, ...rest }) => (
     <th>
-      <Text weight={800} size={'sm'} className={classes.tableHeader} {...rest}>
+      <Text fw={800} size={'sm'} className={classes.tableHeader} {...rest}>
         {children}
       </Text>
     </th>
@@ -48,7 +48,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
 
   return (
     <Stack>
-      <Text color={'dimmed'} weight={700} p={'xs'}>
+      <Text c={'dimmed'} fw={700} p={'xs'}>
         Siste transaksjoner
       </Text>
       <CardTable className={classes.card}>

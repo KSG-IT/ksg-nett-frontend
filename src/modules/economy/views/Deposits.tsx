@@ -49,11 +49,11 @@ export const Deposits: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Innskudd</Title>
         <Button
           color="samfundet-red"
-          leftIcon={<IconRefresh />}
+          leftSection={<IconRefresh />}
           onClick={() => refetch()}
         >
           Oppdater

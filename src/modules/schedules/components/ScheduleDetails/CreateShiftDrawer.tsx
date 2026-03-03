@@ -235,7 +235,7 @@ export const CreateShiftDrawer: React.FC<CreateShiftDrawerProps> = ({
         ))}
         <Grid.Col span={2}>
           <Button
-            leftIcon={<IconPlus />}
+            leftSection={<IconPlus />}
             variant="outline"
             onClick={handleAddRole}
           >

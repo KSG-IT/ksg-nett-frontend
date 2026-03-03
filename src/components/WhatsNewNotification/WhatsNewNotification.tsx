@@ -31,7 +31,7 @@ export const WhatsNewNotification: React.FC = () => {
       <Title my={0} order={1}>
         👋 Hva er nytt?
       </Title>
-      <Text size="sm" color="gray" mt={0}>
+      <Text size="sm" c="gray" mt={0}>
         Siste oppdatering: 2024-09-21
       </Text>
       <Divider mb="md" />

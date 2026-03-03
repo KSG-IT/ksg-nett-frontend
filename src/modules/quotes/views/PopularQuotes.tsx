@@ -35,8 +35,8 @@ export const PopularQuotes: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
-      <Group position="apart">
-        <Title order={2} color="dimmed">
+      <Group justify="space-between">
+        <Title order={2} c="dimmed">
           Populære sitater
         </Title>
         <QuotesTabs />

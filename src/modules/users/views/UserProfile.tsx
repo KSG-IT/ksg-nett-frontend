@@ -64,7 +64,7 @@ export const UserProfile: React.FC = () => {
         opened={editUserModalOpen}
         onClose={() => setEditUserModalOpen(false)}
         title={
-          <Title color={'dimmed'} order={3}>
+          <Title c={'dimmed'} order={3}>
             Rediger profilinfo
           </Title>
         }

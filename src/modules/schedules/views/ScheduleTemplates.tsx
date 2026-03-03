@@ -35,14 +35,14 @@ export const ScheduleTemplates: React.FC = () => {
   return (
     <div>
       <Breadcrumbs items={breadcrumbItems} />
-      <Group position="apart" my="md">
+      <Group justify="space-between" my="md">
         <Title>Vaktplan maler</Title>
         <PermissionGate
           permissions={PERMISSIONS.schedules.add.scheduleTemplate}
         >
           <Button
             color="samfundet-red"
-            leftIcon={<IconPlus />}
+            leftSection={<IconPlus />}
             onClick={() => setModalOpen(true)}
           >
             Opprett ny mal

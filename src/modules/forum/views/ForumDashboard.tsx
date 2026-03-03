@@ -33,14 +33,14 @@ const ForumDashboard: React.FC = () => {
       />
       <Title>Forum</Title>
       <Card>
-        <Group position="apart">
+        <Group justify="space-between">
           <TextInput
             className={classes.searchInput}
             icon={<IconSearch />}
             placeholder="Søk i forumet"
           />
           <PermissionGate permissions={PERMISSIONS.forum.add.thread}>
-            <Button leftIcon={<IconPlus />}>Ny tråd</Button>
+            <Button leftSection={<IconPlus />}>Ny tråd</Button>
           </PermissionGate>
         </Group>
       </Card>

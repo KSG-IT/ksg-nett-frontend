@@ -78,7 +78,7 @@ export const MyInterviews: React.FC = () => {
       <td>
         <Button
           color="samfundet-red"
-          leftIcon={<IconEye />}
+          leftSection={<IconEye />}
           onClick={() => {
             handleRedirectToInterview(interview.applicant.id)
           }}
@@ -92,7 +92,7 @@ export const MyInterviews: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Mine intervjuer</Title>
         <SynCButton
           refetchCallback={() => refetch()}

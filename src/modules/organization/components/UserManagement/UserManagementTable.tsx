@@ -30,7 +30,7 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   const { classes } = useStyles()
   const TableData: React.FC<TextProps> = ({ children, color, weight }) => (
     <td>
-      <Text color={color} weight={weight} size={'sm'}>
+      <Text c={color} fw={weight} size={'sm'}>
         {children}
       </Text>
     </td>
@@ -55,12 +55,7 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   ))
   const Header: React.FC<TextProps> = ({ children, align }) => (
     <th>
-      <Text
-        align={align}
-        weight={800}
-        size={'sm'}
-        className={classes.tableHeader}
-      >
+      <Text align={align} fw={800} size={'sm'} className={classes.tableHeader}>
         {children}
       </Text>
     </th>

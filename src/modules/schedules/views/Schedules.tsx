@@ -27,7 +27,7 @@ export const Schedules: React.FC = () => {
   return (
     <div className={classes.wrapper}>
       <Breadcrumbs items={breadcrumbItems} />
-      <Group position="apart" align="center">
+      <Group justify="space-between" align="center">
         <Title>Vaktplaner</Title>
         <Group>
           <Link to="/schedules/allergies">

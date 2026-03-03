@@ -33,7 +33,7 @@ export const NewbieCards: React.FC<NewbieCardProps> = ({ newbies }) => {
               'https://m.media-amazon.com/images/M/MV5BMjA5NTE4NTE5NV5BMl5BanBnXkFtZTcwMTcyOTY5Mw@@._V1_.jpg'
             }
           />
-          <Stack spacing={0} p="xs" my="xs">
+          <Stack gap={0} p="xs" my="xs">
             <Text>{newbie.fullName}</Text>
             {newbie.activeInternalGroupPosition && (
               <Badge>{newbie.activeInternalGroupPosition.name}</Badge>

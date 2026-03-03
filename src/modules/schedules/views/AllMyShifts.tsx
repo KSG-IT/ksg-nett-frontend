@@ -28,7 +28,7 @@ export const AllMyShifts: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart" align="baseline" style={{ maxWidth: 900 }}>
+      <Group justify="space-between" align="baseline" style={{ maxWidth: 900 }}>
         <Title>Alle mine vakter</Title>
         <Link to="/schedules/me">
           <Button>Mine kommende vakter</Button>

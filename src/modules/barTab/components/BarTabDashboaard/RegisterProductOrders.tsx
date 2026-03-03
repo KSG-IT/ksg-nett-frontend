@@ -179,7 +179,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
 
   return (
     <Stack className={classes.wrapper}>
-      <Group position="apart">
+      <Group justify="space-between">
         <Group>
           <Button color="samfundet-red" onClick={handleLockBarTab}>
             Lås BSF

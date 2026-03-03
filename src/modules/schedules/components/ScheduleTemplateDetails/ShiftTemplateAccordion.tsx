@@ -24,20 +24,20 @@ export const ShiftTemplateAccordion: React.FC<ShiftTemplateAccordionProps> = ({
       <Accordion multiple>
         <Accordion.Item value="header">
           <Accordion.Control chevron={false}>
-            <Group className={classes.shiftTemplateRow} position="apart">
-              <Text className={classes.shiftTemplateColumnCell} weight={600}>
+            <Group className={classes.shiftTemplateRow} justify="space-between">
+              <Text className={classes.shiftTemplateColumnCell} fw={600}>
                 Navn
               </Text>
-              <Text className={classes.shiftTemplateColumnCell} weight={600}>
+              <Text className={classes.shiftTemplateColumnCell} fw={600}>
                 Dag
               </Text>
-              <Text className={classes.shiftTemplateColumnCell} weight={600}>
+              <Text className={classes.shiftTemplateColumnCell} fw={600}>
                 Lokale
               </Text>
-              <Text className={classes.shiftTemplateColumnCell} weight={600}>
+              <Text className={classes.shiftTemplateColumnCell} fw={600}>
                 Start
               </Text>
-              <Text className={classes.shiftTemplateColumnCell} weight={600}>
+              <Text className={classes.shiftTemplateColumnCell} fw={600}>
                 Slutt
               </Text>
             </Group>

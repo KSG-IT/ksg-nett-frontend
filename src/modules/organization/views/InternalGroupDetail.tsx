@@ -61,7 +61,7 @@ export const InternalGroupDetail: React.FC = () => {
       {internalGroup.groupImage && (
         <Image className={classes.banner} src={internalGroup.groupImage} />
       )}
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>{internalGroup.name}</Title>
         <PermissionGate
           permissions={

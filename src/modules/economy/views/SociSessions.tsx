@@ -81,25 +81,29 @@ export const SosiSessions: React.FC = () => {
   return (
     <div className={classes.wrapper}>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Innkryssinger</Title>
         <Group>
           <PermissionGate permissions={PERMISSIONS.economy.add.sociSession}>
             <Button
               color="samfundet-red"
-              leftIcon={<IconPlus />}
+              leftSection={<IconPlus />}
               onClick={() => setCreateModalOpen(true)}
             >
               Ny liste
             </Button>
           </PermissionGate>
           <PermissionGate permissions={PERMISSIONS.economy.view.sociSession}>
-            <Button disabled color="samfundet-red" leftIcon={<IconChartArea />}>
+            <Button
+              disabled
+              color="samfundet-red"
+              leftSection={<IconChartArea />}
+            >
               Statistikk
             </Button>
           </PermissionGate>
           <PermissionGate permissions={PERMISSIONS.economy.change.sociProduct}>
-            <Button disabled color="samfundet-red" leftIcon={<IconGlass />}>
+            <Button disabled color="samfundet-red" leftSection={<IconGlass />}>
               Vareutvalg
             </Button>
           </PermissionGate>

@@ -11,11 +11,11 @@ export const CustomInputLabel: React.FC<CustomInputLabelProps> = ({
   description,
 }) => (
   <div style={{ maxWidth: '100%' }}>
-    <Group position={'apart'}>
-      <Title size="sm" color={'dimmed'}>
+    <Group justify={'space-between'}>
+      <Title size="sm" c={'dimmed'}>
         {label}
         {description && (
-          <Text size="xs" weight={'lighter'} color={'gray.6'}>
+          <Text size="xs" fw={'lighter'} c={'gray.6'}>
             {description}
           </Text>
         )}
