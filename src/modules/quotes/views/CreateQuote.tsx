@@ -128,7 +128,7 @@ export const CreateQuote: React.FC = () => {
               label={'Sitat'}
               minRows={mobileSize ? 4 : 2}
               size={mobileSize ? 'sm' : 'md'}
-              icon={<IconQuote />}
+              leftSection={<IconQuote />}
               onChange={evt => setText(evt.target.value)}
               placeholder={quoteTextPlaceholder}
             />
@@ -138,7 +138,7 @@ export const CreateQuote: React.FC = () => {
               minRows={mobileSize ? 4 : 1}
               variant={'filled'}
               size={mobileSize ? 'sm' : 'md'}
-              icon={<IconHash />}
+              leftSection={<IconHash />}
               onChange={evt => setContext(evt.target.value)}
               placeholder={quoteContextPlaceholder}
             />

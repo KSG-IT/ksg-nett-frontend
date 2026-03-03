@@ -73,11 +73,14 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
             </ActionIcon>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Item icon={<IconEye size="1rem" stroke={1.5} />} color="blue">
+            <Menu.Item
+              leftSection={<IconEye size="1rem" stroke={1.5} />}
+              color="blue"
+            >
               <Link to={`${sociSession.id}`}>Mer info</Link>
             </Menu.Item>
             <Menu.Item
-              icon={<IconBan size="1rem" stroke={1.5} />}
+              leftSection={<IconBan size="1rem" stroke={1.5} />}
               color="red"
               disabled={
                 sociSession.type === SociSessionType.SOCIETETEN ||

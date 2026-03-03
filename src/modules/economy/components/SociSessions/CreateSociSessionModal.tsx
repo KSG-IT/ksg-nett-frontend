@@ -92,7 +92,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
         <DatePickerInput
           label="Dato for innkryssing"
           value={date}
-          onChange={val => val && setDate(val)}
+          onChange={val => val && setDate(new Date(val))}
         />
         <Select
           label="Listetype"
@@ -110,7 +110,9 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
           label="Minstebeløp gjenværende saldo"
           value={minimumRemainingBalance}
           min={0}
-          onChange={val => val && setMinimumRemainingBalance(val)}
+          onChange={val =>
+            typeof val === 'number' && setMinimumRemainingBalance(val)
+          }
         />
         <Group justify="flex-end">
           <Button color="gray" onClick={handleCancel}>

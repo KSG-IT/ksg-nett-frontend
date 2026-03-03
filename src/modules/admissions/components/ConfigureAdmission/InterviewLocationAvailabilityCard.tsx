@@ -140,7 +140,11 @@ export const InterviewLocationAvailabilityCard: React.VFC<
           </tbody>
         </Table>
         <Group>
-          <DatePickerInput value={date} label="Dag" onChange={setDate} />
+          <DatePickerInput
+            value={date}
+            label="Dag"
+            onChange={val => setDate(val ? new Date(val) : null)}
+          />
           <Group>
             <TimeInput
               value={timeFrom}

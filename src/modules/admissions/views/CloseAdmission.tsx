@@ -60,7 +60,7 @@ export const CloseAdmission: React.FC = () => {
       <TextInput
         value={nameFilter}
         placeholder="Søk på navn"
-        icon={<IconSearch />}
+        leftSection={<IconSearch />}
         onChange={e => setNameFilter(e.currentTarget.value)}
       />
       <CloseAdmissionTable

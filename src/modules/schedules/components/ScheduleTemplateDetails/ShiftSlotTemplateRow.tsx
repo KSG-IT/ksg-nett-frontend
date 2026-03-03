@@ -76,7 +76,10 @@ export const ShiftSlotTemplateRow: React.FC<ShiftSlotTemplateRowProps> = ({
         <Text>{parseShiftRole(shiftSlotTemplate.role)}</Text>
       </td>
       <td>
-        <NumberInput value={count} onChange={evt => evt && setCount(evt)} />
+        <NumberInput
+          value={count}
+          onChange={evt => typeof evt === 'number' && setCount(evt)}
+        />
       </td>
       <td>
         <Button variant="subtle" onClick={handleSaveCount}>

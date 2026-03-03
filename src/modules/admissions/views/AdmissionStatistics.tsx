@@ -3,12 +3,12 @@ import {
   Card,
   Center,
   Container,
-  createStyles,
   SimpleGrid,
   Stack,
   Text,
   Title,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'

@@ -38,7 +38,10 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
     </tr>
   ))
 
-  const Header: React.FC<TextProps> = ({ children, ...rest }) => (
+  const Header: React.FC<TextProps & { children?: React.ReactNode }> = ({
+    children,
+    ...rest
+  }) => (
     <th>
       <Text fw={800} size={'sm'} className={classes.tableHeader} {...rest}>
         {children}
@@ -55,9 +58,9 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
         <thead>
           <tr className={classes.headerRow}>
             <Header>Type</Header>
-            <Header align="left">Antall</Header>
-            <Header align="right">Pris</Header>
-            <Header align="right">Tidspunkt</Header>
+            <Header ta="left">Antall</Header>
+            <Header ta="right">Pris</Header>
+            <Header ta="right">Tidspunkt</Header>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

@@ -59,13 +59,7 @@ export const ForgotPassword: React.FC = () => {
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
-        <Title
-          order={2}
-          className={classes.title}
-          align="center"
-          mt="md"
-          mb={50}
-        >
+        <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
           Glemt passord
         </Title>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>

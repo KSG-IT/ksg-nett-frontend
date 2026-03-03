@@ -49,7 +49,8 @@ export const InternalGroupUserHighlightEditForm: React.FC<
     setValue('internalGroup', value)
   }
 
-  function handleImageCallback(value: File) {
+  function handleImageCallback(value: File | null) {
+    if (!value) return
     setImage(value)
     setValue('image', value)
     setIsDirty(true)
@@ -62,7 +63,7 @@ export const InternalGroupUserHighlightEditForm: React.FC<
           <UserSelect
             label={'Bruker'}
             userId={user}
-            onChange={handleUserCallback}
+            onChange={val => val && handleUserCallback(val)}
           />
           <InternalGroupSelect
             label={'Interngjeng'}
@@ -93,7 +94,7 @@ export const InternalGroupUserHighlightEditForm: React.FC<
           <FileInput
             onChange={handleImageCallback}
             error={errors.image?.message}
-            icon={<IconPhoto />}
+            leftSection={<IconPhoto />}
             label={'Bilde'}
             placeholder={'Velg bilde av personen'}
             accept={'image/png,image/jpeg,image/jpg'}

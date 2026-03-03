@@ -84,7 +84,7 @@ export const UploadAdmissionCSVModal: React.FC<
           label="Velg en opptaksfil"
           accept="text/csv"
           placeholder="Trykk her"
-          icon={<IconFileCode />}
+          leftSection={<IconFileCode />}
           clearable
         />
         <Button

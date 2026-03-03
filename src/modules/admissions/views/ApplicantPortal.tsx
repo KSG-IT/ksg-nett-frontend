@@ -107,7 +107,7 @@ export const ApplicantPortal: React.FC = () => {
       <Stack p="md">
         <Title>KSG søkerportal</Title>
         <Group>
-          <Stepper color="samfundet-red" active={active} breakpoint="sm">
+          <Stepper color="samfundet-red" active={active}>
             <Stepper.Step allowStepClick={false} label="Registrer personalia">
               <RegisterInformationForm applicant={applicant} />
             </Stepper.Step>

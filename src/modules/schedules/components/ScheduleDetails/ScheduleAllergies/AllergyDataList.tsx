@@ -26,7 +26,7 @@ export const AllergyDataList = ({
     <Group display={'inline-flex'} align="flex-start">
       {scheduleAllergies.map(day => (
         <Card key={day.date}>
-          <Stack spacing={'xs'}>
+          <Stack gap={'xs'}>
             <span>
               <b>{format(new Date(day.date), 'EEEE d MMMM')}</b>
             </span>

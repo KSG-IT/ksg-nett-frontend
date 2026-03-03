@@ -179,7 +179,7 @@ export const CreateShiftDrawer: React.FC<CreateShiftDrawerProps> = ({
           <DatePickerInput
             label="Dato"
             value={date}
-            onChange={date => date && setDate(date)}
+            onChange={date => date && setDate(new Date(date))}
           />
         </Grid.Col>
         <Grid.Col span={1}>
@@ -223,7 +223,8 @@ export const CreateShiftDrawer: React.FC<CreateShiftDrawerProps> = ({
                 <NumberInput
                   value={role.count}
                   onChange={val =>
-                    val && handleUpdateRoleList(index, val, role.role)
+                    typeof val === 'number' &&
+                    handleUpdateRoleList(index, val, role.role)
                   }
                 />
                 <UnstyledButton onClick={() => handleRemoveRole(index)}>

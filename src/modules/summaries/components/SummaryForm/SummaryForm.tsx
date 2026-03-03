@@ -60,7 +60,6 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
             <Stack>
               <CustomInputLabel label={'Referent'}>
                 <UserSelect
-                  withinPortal
                   userId={reporter}
                   setUserCallback={value => {
                     setReporter(value)
@@ -70,7 +69,6 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
               </CustomInputLabel>
               <CustomInputLabel label={'Interngjeng'}>
                 <InternalGroupSelect
-                  withinPortal
                   withOtherOption
                   internalGroupId={internalGroup}
                   setInternalGroupCallback={handleInternalGroupCallback}
@@ -88,7 +86,7 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
               <CustomInputLabel label={'Dato'}>
                 <DateInput
                   placeholder="Velg en dato"
-                  icon={<IconCalendar size={14} />}
+                  leftSection={<IconCalendar size={14} />}
                   error={errors?.date?.message}
                   defaultValue={getValues('date')}
                   onChange={date => date && setValue('date', new Date(date))}

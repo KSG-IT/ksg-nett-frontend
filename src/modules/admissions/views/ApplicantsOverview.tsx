@@ -54,7 +54,7 @@ export const ApplicantsOverview: React.FC = () => {
       <TextInput
         label="Søk"
         placeholder="Søk etter navn, epost eller telefonnummer"
-        icon={<IconSearch />}
+        leftSection={<IconSearch />}
         onChange={e => setFilterQuery(e.currentTarget.value)}
       />
       <ApplicantsTable

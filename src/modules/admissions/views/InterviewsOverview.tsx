@@ -162,7 +162,7 @@ export const InterviewsOverview: React.FC = () => {
         </UnstyledButton>
         <DateInput
           value={date}
-          onChange={val => val && setDate(val)}
+          onChange={val => val && setDate(new Date(val))}
           locale={'nb'}
         />
         <UnstyledButton>

@@ -34,58 +34,58 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <SimpleGrid cols={{ base: 1, sm: 2 }}>
         <TextInput
-          icon={<IconSignature size={14} />}
+          leftSection={<IconSignature size={14} />}
           error={errors?.firstName?.message}
           label="Fornavn"
           {...register('firstName')}
         />
         <TextInput
-          icon={<IconSignature size={14} />}
+          leftSection={<IconSignature size={14} />}
           label="Etternavn"
           error={errors?.lastName?.message}
           {...register('lastName')}
         />
         <TextInput
           label={'Kallenavn'}
-          icon={<IconSignature size={14} />}
+          leftSection={<IconSignature size={14} />}
           error={errors?.nickname?.message}
           {...register('nickname')}
         />
         <TextInput
           label="Hjemby"
-          icon={<IconHome size={14} />}
+          leftSection={<IconHome size={14} />}
           error={errors?.homeTown?.message}
           {...register('homeTown')}
         />
         <TextInput
           label="Adresse"
-          icon={<IconMapPin size={14} />}
+          leftSection={<IconMapPin size={14} />}
           error={errors?.studyAddress?.message}
           {...register('studyAddress')}
         />
         <TextInput
           label="Studie"
-          icon={<IconSchool size={14} />}
+          leftSection={<IconSchool size={14} />}
           error={errors?.study?.message}
           {...register('study')}
         />
         <DateInput
           label="Fødselsdato"
           placeholder="Velg en dato"
-          icon={<IconCake size={14} />}
+          leftSection={<IconCake size={14} />}
           error={errors?.dateOfBirth?.message}
           defaultValue={getValues('dateOfBirth')}
           onChange={date => date && setValue('dateOfBirth', new Date(date))}
         />
         <TextInput
           label="Telefon"
-          icon={<IconPhone size={14} />}
+          leftSection={<IconPhone size={14} />}
           error={errors?.phone?.message}
           {...register('phone')}
         />
         <TextInput
           label="Epostadresse"
-          icon={<IconAt size={14} />}
+          leftSection={<IconAt size={14} />}
           error={errors?.email?.message}
           {...register('email')}
         />
@@ -93,7 +93,7 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
         <FileInput
           placeholder="Profilbilde"
           label="Profilbilde"
-          icon={<IconUpload size={14} />}
+          leftSection={<IconUpload size={14} />}
           error={errors?.profileImage?.message}
           accept="image/png,image/jpeg,image/jpg"
           onChange={value => value && setValue('profileImage', value)}

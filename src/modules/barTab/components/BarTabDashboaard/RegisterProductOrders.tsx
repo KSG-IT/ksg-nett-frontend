@@ -231,7 +231,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
           <Select
             label="Type"
             value={orderType}
-            onChange={(val: BarTabOrderTypeValues) => val && setOrderType(val)}
+            onChange={val => val && setOrderType(val as BarTabOrderTypeValues)}
             data={[
               {
                 value: BarTabOrderTypeValues.LIST,
@@ -253,7 +253,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
             value={quantity}
             min={1}
             max={100}
-            onChange={val => val && setQuantity(val)}
+            onChange={val => typeof val === 'number' && setQuantity(val)}
           />
         </Group>
       </Card>

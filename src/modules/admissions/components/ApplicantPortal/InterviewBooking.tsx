@@ -98,7 +98,7 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
             maxDate={new Date(endDate)}
             value={day}
             onChange={date => {
-              date && handleDayChange(date)
+              date && handleDayChange(new Date(date))
             }}
           />
         </Container>

@@ -1,6 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
 import {
-  createStyles,
   DrawerProps,
   Group,
   LoadingOverlay,
@@ -11,6 +10,7 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { IconTrash } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'

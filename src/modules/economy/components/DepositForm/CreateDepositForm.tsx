@@ -63,7 +63,7 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
   return (
     <Stack gap={'lg'} p={mobileSize ? 'xs' : 'xl'}>
       <SimpleGrid cols={1} spacing={'md'}>
-        <Stepper active={active} breakpoint="sm" allowNextStepsSelect={false}>
+        <Stepper active={active} allowNextStepsSelect={false}>
           <Stepper.Step label="Opprett innskudd">
             {depositMethod === DepositMethodValues.BANK_TRANSFER && (
               <MessageBox type="warning">
@@ -112,8 +112,10 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                     min={1}
                     max={30_000}
                     placeholder="Hvor mye socistøv du vil konvertere"
-                    icon={<IconCashBanknote size={14} />}
-                    onChange={value => value && setValue('amount', value)}
+                    leftSection={<IconCashBanknote size={14} />}
+                    onChange={value =>
+                      typeof value === 'number' && setValue('amount', value)
+                    }
                   />
                 )}
               />
@@ -129,7 +131,7 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                       maxDate={new Date()}
                       value={field.value}
                       onChange={value =>
-                        value && setValue('dateOfTransfer', value)
+                        value && setValue('dateOfTransfer', new Date(value))
                       }
                     />
                   )}

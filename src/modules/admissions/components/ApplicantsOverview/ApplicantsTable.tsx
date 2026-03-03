@@ -92,7 +92,7 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
               <Menu.Dropdown>
                 <Menu.Label>Valg</Menu.Label>
                 <Menu.Item
-                  icon={<IconEye />}
+                  leftSection={<IconEye />}
                   onClick={() => handleMoreInfo(applicant.id)}
                 >
                   Mer info
@@ -101,7 +101,7 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
                 <PermissionGate permissions={'admissions.delete_applicant'}>
                   <Menu.Label>Admin</Menu.Label>
                   <Menu.Item
-                    icon={<IconTrash />}
+                    leftSection={<IconTrash />}
                     color="red"
                     onClick={() => {
                       setApplicantToDelete(applicant)

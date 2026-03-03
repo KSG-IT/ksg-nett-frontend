@@ -108,7 +108,7 @@ const Socinomics: React.FC = () => {
         >
           <Title
             className={classes.scrollingInner}
-            align="center"
+            ta="center"
             style={{
               color: 'white',
               textShadow: '1px 1px 2px black',

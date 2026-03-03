@@ -25,9 +25,9 @@ export const BooleanEvaluationInline: React.FC<
     PatchMutationVariables<InterviewBooleanEvaluationAnswerNode>
   >(PATCH_INTERVIEW_BOOLEAN_EVALUATION_ANSWER)
 
-  const handleChange = (val: 'yes' | 'no') => {
-    setValue(val)
-    const parsedValue = radioToBoolean(val)
+  const handleChange = (val: string) => {
+    setValue(val as '' | 'yes' | 'no')
+    const parsedValue = radioToBoolean(val as '' | 'yes' | 'no')
 
     patchBooleanEvaluationAnswer({
       variables: {

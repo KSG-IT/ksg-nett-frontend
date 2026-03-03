@@ -58,7 +58,7 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
           >
             <Stack>
               <Group justify="space-between">
-                <Title tt="capitalize" color="gray.9" fw={900} order={5}>
+                <Title tt="capitalize" c="gray.9" fw={900} order={5}>
                   {format(new Date(shiftDay.date), 'EEEE dd.MM')}
                 </Title>
                 <IconDotsVertical />

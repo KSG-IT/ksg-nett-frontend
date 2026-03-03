@@ -101,7 +101,7 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
           <DatePickerInput
             label="Dato"
             value={shiftDate}
-            onChange={setShiftDate}
+            onChange={val => setShiftDate(val ? new Date(val) : null)}
           />
           <TimeInput
             value={startTime}

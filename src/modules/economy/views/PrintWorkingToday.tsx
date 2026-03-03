@@ -94,7 +94,7 @@ export const PrintWorkingToday: React.FC = ({}) => {
         </Button>
       </Group>
 
-      <CardTable withColumnBorders withBorder>
+      <CardTable withColumnBorders>
         <thead>
           <tr>
             <th>Navn</th>

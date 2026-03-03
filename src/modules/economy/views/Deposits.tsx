@@ -68,7 +68,7 @@ export const Deposits: React.FC = () => {
           <TextInput
             value={query}
             onChange={evt => setQuery(evt.target.value)}
-            icon={<IconSearch />}
+            leftSection={<IconSearch />}
             placeholder="Søk etter bruker..."
           />
           <Checkbox

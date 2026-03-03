@@ -97,7 +97,7 @@ export const Login: React.FC = () => {
           <Title
             order={2}
             className={classes.title}
-            align="center"
+            ta="center"
             mt="md"
             mb={50}
           >

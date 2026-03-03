@@ -72,7 +72,7 @@ export const AllShifts = () => {
       <Title>Hva skjer'a?</Title>
       <DatePickerInput
         value={date}
-        onChange={val => val && handleDateChange(val)}
+        onChange={val => val && handleDateChange(new Date(val))}
       />
 
       <UserShiftCardList shifts={allShifts} />

@@ -26,7 +26,7 @@ export const QuotesList = () => {
           Sitater
         </Title>
         <TextInput
-          icon={<IconSearch />}
+          leftSection={<IconSearch />}
           placeholder="Søk etter innhold..."
           value={query}
           onChange={evt => setQuery(evt.target.value)}

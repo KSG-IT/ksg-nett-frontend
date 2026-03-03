@@ -28,9 +28,13 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   activeMemberships = false,
 }) => {
   const { classes } = useStyles()
-  const TableData: React.FC<TextProps> = ({ children, color, weight }) => (
+  const TableData: React.FC<TextProps & { children?: React.ReactNode }> = ({
+    children,
+    color,
+    fw,
+  }) => (
     <td>
-      <Text c={color} fw={weight} size={'sm'}>
+      <Text c={color} fw={fw} size={'sm'}>
         {children}
       </Text>
     </td>
@@ -53,9 +57,12 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
       )}
     </tr>
   ))
-  const Header: React.FC<TextProps> = ({ children, align }) => (
+  const Header: React.FC<TextProps & { children?: React.ReactNode }> = ({
+    children,
+    ta,
+  }) => (
     <th>
-      <Text align={align} fw={800} size={'sm'} className={classes.tableHeader}>
+      <Text ta={ta} fw={800} size={'sm'} className={classes.tableHeader}>
         {children}
       </Text>
     </th>
@@ -67,7 +74,7 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
       <thead>
         <tr>
           <Header>Navn</Header>
-          <Header align="center">Stilling</Header>
+          <Header ta="center">Stilling</Header>
           <Header>Gruppe</Header>
           <Header>Startet</Header>
           {activeMemberships ? (

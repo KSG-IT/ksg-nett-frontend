@@ -108,7 +108,7 @@ export const RegisterInformationForm: React.FC<
               label="Last opp søkerbilde"
               accept="image/png,image/jpeg,image/jpg"
               placeholder="Trykk her"
-              icon={<IconFileCode />}
+              leftSection={<IconFileCode />}
               clearable
             />
           </Group>

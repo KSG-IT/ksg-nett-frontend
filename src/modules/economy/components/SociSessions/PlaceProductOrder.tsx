@@ -65,7 +65,7 @@ export const PlaceProductOrder: React.FC<PlaceProductOrderProps> = ({
         <NumberInput
           placeholder="Antall"
           value={orderSize}
-          onChange={val => val && setOrderSize(val)}
+          onChange={val => typeof val === 'number' && setOrderSize(val)}
         />
         <Button color="samfundet-red" onClick={handlePlaceProductOrder}>
           Legg til

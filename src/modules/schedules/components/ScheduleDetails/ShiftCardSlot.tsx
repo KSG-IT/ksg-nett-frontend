@@ -1,12 +1,12 @@
 import {
   Button,
-  createStyles,
   Group,
   Popover,
   Stack,
   Text,
   UnstyledButton,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { IconX } from '@tabler/icons-react'
 import { UserSelect } from 'components/Select'

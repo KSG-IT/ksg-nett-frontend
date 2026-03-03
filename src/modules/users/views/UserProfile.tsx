@@ -41,7 +41,7 @@ export const UserProfile: React.FC = () => {
   return (
     <>
       <Grid align={'flex-start'}>
-        <Grid.Col md={12} lg={9}>
+        <Grid.Col span={{ base: 12, lg: 9 }}>
           <UserDetails user={user} onClick={() => setEditUserModalOpen(true)} />
           <Stack mt={'xl'} className={classes.memberships}>
             <Title order={3} className={classes.title}>

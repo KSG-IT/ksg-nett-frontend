@@ -17,7 +17,7 @@ const locationOptions = [
   { value: LocationValues.RUNDHALLEN, label: 'Rundhallen' },
   { value: LocationValues.KONTORET, label: 'Kontoret' },
 ]
-interface LocationSelectProps extends Omit<SelectProps, 'data'> {
+interface LocationSelectProps extends Omit<SelectProps, 'data' | 'onChange'> {
   value: LocationValues | null
   onChange: (val: LocationValues) => void
 }
@@ -31,7 +31,7 @@ export const LocationSelect: React.FC<LocationSelectProps> = ({
     <Select
       data={locationOptions}
       value={value}
-      onChange={onChange}
+      onChange={val => val && onChange(val as LocationValues)}
       {...rest}
     />
   )

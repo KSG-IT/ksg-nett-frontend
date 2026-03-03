@@ -25,7 +25,7 @@ export const InterviewLocationSelect: React.FC<
       data={options}
       label="Inervjulokale"
       placeholder="Velg et intervjulokale"
-      onChange={onSelectCallback}
+      onChange={val => val && onSelectCallback(val)}
     ></Select>
   )
 }

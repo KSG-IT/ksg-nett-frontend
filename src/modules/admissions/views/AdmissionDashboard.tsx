@@ -240,7 +240,7 @@ const InterviewBookingSettingSwitches: React.FC<{
         value={softWallTimestamp}
         onChange={date => {
           console.log(date)
-          setSoftWallTimestamp(date)
+          setSoftWallTimestamp(date ? new Date(date) : null)
         }}
       />
       <Button onClick={handleUpdateSoftWallTimestamp}>
