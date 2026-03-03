@@ -47,6 +47,7 @@ const useNavItemStyles = createStyles((t, { active }: { active: boolean }) => ({
     width: '100%',
     borderRadius: t.radius.sm,
     padding: `8px 4px`,
+    backgroundColor: active ? t.colors['samfundet-red'][5] : undefined,
     '&:hover': {
       backgroundColor: !active ? t.colors.red[0] : 'none',
     },
