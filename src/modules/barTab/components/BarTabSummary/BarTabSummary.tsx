@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Stack } from '@mantine/core'
+import { Button, Group, Stack } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -53,7 +53,7 @@ export const BarTabSummary: React.FC<BarTabSummaryProps> = ({ barTab }) => {
 
   return (
     <Stack>
-      <Group position="right">
+      <Group justify="flex-end">
         <Button color="samfundet-red" onClick={handleCreateInvoices}>
           Lagre fakturaer
         </Button>
