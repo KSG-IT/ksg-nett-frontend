@@ -9,22 +9,22 @@ import {
   TextInput,
   Title,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { IconPlus, IconSearch } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
+import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { format } from 'util/date-fns'
 import { useDebounce } from 'util/hooks/useDebounce'
+import { PERMISSIONS } from 'util/permissions'
+import { UserThumbnail } from '../../users/components'
 import { AllSummariesQueryReturns, AllSummariesQueryVariables } from '../index'
 import { ALL_SUMMARIES } from '../queries'
-import { UserThumbnail } from '../../users/components'
-import { PermissionGate } from 'components/PermissionGate'
-import { PERMISSIONS } from 'util/permissions'
-import { FullContentLoader } from 'components/Loading'
-import { createStyles } from '@mantine/emotion'
 
 const breadCrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -61,7 +61,7 @@ export const Summaries: React.FC = () => {
       key={summary.id}
     >
       <td>
-        <Text color={'dimmed'} weight={'bold'}>
+        <Text c={'dimmed'} fw={700}>
           {format(new Date(summary.date), 'dd.MM.yy')}
         </Text>
       </td>
@@ -119,7 +119,7 @@ export const Summaries: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
-      <Group position="apart" align={'baseline'}>
+      <Group justify="space-between" align={'baseline'}>
         <Title>Referater</Title>
         <PermissionGate permissions={PERMISSIONS.summaries.view.summary}>
           <Button
@@ -127,7 +127,7 @@ export const Summaries: React.FC = () => {
             onClick={() => {
               navigate('/summaries/create')
             }}
-            leftIcon={<IconPlus />}
+            leftSection={<IconPlus />}
           >
             Nytt referat
           </Button>
@@ -136,7 +136,7 @@ export const Summaries: React.FC = () => {
       <TextInput
         value={query}
         placeholder="Søk etter innhold"
-        icon={<IconSearch />}
+        leftSection={<IconSearch />}
         onChange={evt => setQuery(evt.target.value)}
       />
 

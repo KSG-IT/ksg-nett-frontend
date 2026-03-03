@@ -9,7 +9,6 @@ import {
   Text,
   Title,
   getGradient,
-  useMantineTheme,
 } from '@mantine/core'
 import { createStyles } from '@mantine/emotion'
 import { IconExternalLink, IconRefresh } from '@tabler/icons-react'

@@ -43,13 +43,17 @@ export const MyDeposits: React.VFC<MyDepositsProps> = ({ deposits }) => {
 
   const rows = deposits.map(deposit => (
     <tr key={deposit.id}>
-      <td>{format(new Date(deposit.createdAt), 'yy.MM.dd')}</td>
       <td>
-        <Text color={'red'}>{formatCurrency(deposit.amount)}</Text>
+        <Text>{format(new Date(deposit.createdAt), 'yy.MM.dd')}</Text>
+      </td>
+      <td>
+        <Text ta="left" c={'red'}>
+          {formatCurrency(deposit.amount)}
+        </Text>
       </td>
       <td>
         {deposit.resolvedAmount && (
-          <Text color={'green'}>{formatCurrency(deposit.resolvedAmount)}</Text>
+          <Text c={'green'}>{formatCurrency(deposit.resolvedAmount)}</Text>
         )}
       </td>
       <td>
@@ -77,11 +81,17 @@ export const MyDeposits: React.VFC<MyDepositsProps> = ({ deposits }) => {
     <CardTable className={classes.table}>
       <thead>
         <tr>
-          <th>Dato</th>
-          <th>Betalt</th>
-          <th>Inn på konto</th>
           <th>
-            <Text align={'center'}>Status</Text>
+            <Text ta="left">Dato</Text>
+          </th>
+          <th>
+            <Text ta="left">Betalt</Text>
+          </th>
+          <th>
+            <Text ta="left">Inn på konto</Text>
+          </th>
+          <th>
+            <Text ta={'center'}>Status</Text>
           </th>
           <th></th>
         </tr>
