@@ -46,9 +46,6 @@ export const AllergyTransferList: React.FC<AllergyTransferListProps> = ({
     })
   }
 
-  /**
-   * TODO: https://mantine.dev/combobox/?e=TransferList
-   */
   return (
     <Stack>
       <Title order={3}>Mine allergener</Title>
