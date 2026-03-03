@@ -56,10 +56,10 @@ export const SummaryDetail = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbItems} />
-      <Group position={'right'}>
+      <Group justify={'flex-end'}>
         <PermissionGate permissions={PERMISSIONS.summaries.change.summary}>
           <ActionIcon onClick={() => setEditMode(!editMode)}>
-            {!editMode ? <IconEdit color={'gray'} /> : <IconX color={'gray'} />}
+            {!editMode ? <IconEdit /> : <IconX />}
           </ActionIcon>
         </PermissionGate>
       </Group>

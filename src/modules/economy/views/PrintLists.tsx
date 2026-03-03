@@ -1,4 +1,5 @@
-import { createStyles, List, Title } from '@mantine/core'
+import { List, Title } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { Link } from 'react-router-dom'
 
@@ -24,11 +25,11 @@ export const PrintLists = () => {
   )
 }
 
-const usePrintListsStyles = createStyles(theme => ({
+const usePrintListsStyles = createStyles({
   wrapper: {
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
-}))
+})

@@ -1,14 +1,8 @@
-import {
-  Card,
-  createStyles,
-  Group,
-  Stack,
-  Text,
-  UnstyledButton,
-} from '@mantine/core'
+import { Card, Group, Stack, Text, UnstyledButton } from '@mantine/core'
 import { Link } from 'react-router-dom'
 import { format } from 'util/date-fns'
 import { UpcomingShiftNode } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 interface ShiftProps {
   shifts: UpcomingShiftNode[]
@@ -23,22 +17,17 @@ export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
     ) => (
       <UnstyledButton component={Link} key={index} to="/schedules/me">
         <Card p={'lg'} className={classes.shiftButton} radius={'lg'} withBorder>
-          <Text
-            weight={'bold'}
-            size={'sm'}
-            color="dimmed"
-            transform="uppercase"
-          >
+          <Text fw={'bold'} size={'sm'} c="dimmed" tt="uppercase">
             {format(new Date(datetimeStart), 'dd.MMMM')}
           </Text>
           <Text>
             {format(new Date(datetimeStart), 'HH:mm')} -{' '}
             {format(new Date(datetimeEnd), 'HH:mm')}
           </Text>
-          <Text size={'sm'} color={'maroon'}>
+          <Text size={'sm'} c={'maroon'}>
             {roleDisplay}
           </Text>
-          <Text color={'dark'} size={'xs'}>
+          <Text c={'dark'} size={'xs'}>
             {locationDisplay}
           </Text>
         </Card>
@@ -47,14 +36,14 @@ export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
   )
   return (
     <Stack>
-      <Text color={'dimmed'} weight={700}>
+      <Text c={'dimmed'} fw={700}>
         Neste vakter
       </Text>
       <Card withBorder radius={'md'} className={classes.card}>
         {shiftCards.length > 0 ? (
           <Group>{shiftCards}</Group>
         ) : (
-          <Text p={'lg'} align="center" color={'dimmed'}>
+          <Text p={'lg'} ta="center" c={'dimmed'}>
             Du har ingen vakter for øyeblikket.
           </Text>
         )}
@@ -63,10 +52,10 @@ export const FutureShifts: React.FC<ShiftProps> = ({ shifts }) => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
-    backgroundColor: theme.colors.white,
-    borderTop: `5px solid ${theme.colors.brand}`,
+    backgroundColor: 'white',
+    borderTop: '5px solid var(--mantine-color-brand-6)',
   },
   shiftButton: {
     '&:hover': {
@@ -74,4 +63,4 @@ const useStyles = createStyles(theme => ({
     },
     width: '100%',
   },
-}))
+})

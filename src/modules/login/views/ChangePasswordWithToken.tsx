@@ -1,16 +1,11 @@
-import {
-  Button,
-  createStyles,
-  Paper,
-  PasswordInput,
-  Title,
-} from '@mantine/core'
+import { Button, Paper, PasswordInput, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { setLoginToken } from 'util/auth'
 import { useJwtTokenFromQueryString } from '../hooks'
 import { useLoginMutations } from '../mutations.hooks'
+import { createStyles } from '@mantine/emotion'
 
 export const ChangePasswordWithToken: React.FC = () => {
   const { classes } = useStyles()
@@ -53,13 +48,7 @@ export const ChangePasswordWithToken: React.FC = () => {
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
-        <Title
-          order={2}
-          className={classes.title}
-          align="center"
-          mt="md"
-          mb={50}
-        >
+        <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
           Nytt passord
         </Title>
         <PasswordInput
@@ -89,7 +78,7 @@ export const ChangePasswordWithToken: React.FC = () => {
     </div>
   )
 }
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((_theme, _, u) => ({
   wrapper: {
     height: '100vh',
     backgroundSize: 'cover',
@@ -98,25 +87,23 @@ const useStyles = createStyles(theme => ({
   },
 
   form: {
-    borderRight: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
-    }`,
+    borderRight: `1px solid ${'var(--mantine-color-gray-3)'}`,
     height: '100vh',
     maxWidth: 450,
     paddingTop: 80,
 
-    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+    [u.smallerThan('sm')]: {
       maxWidth: '100%',
     },
   },
 
   title: {
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    color: 'black',
+    fontFamily: `Greycliff CF, var(--mantine-font-family)`,
   },
 
   logo: {
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    color: 'black',
     width: 120,
     display: 'block',
     marginLeft: 'auto',

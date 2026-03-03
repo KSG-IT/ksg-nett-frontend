@@ -84,7 +84,7 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item
-              icon={<IconMail />}
+              leftSection={<IconMail />}
               onClick={() =>
                 handleUpdateNotice(applicant, NoticeMethodValues.EMAIL)
               }
@@ -92,7 +92,7 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
               Sendt epost
             </Menu.Item>
             <Menu.Item
-              icon={<IconPhone />}
+              leftSection={<IconPhone />}
               onClick={() =>
                 handleUpdateNotice(applicant, NoticeMethodValues.CALL)
               }
@@ -103,7 +103,7 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
             <PermissionGate permissions={'admissions.delete_applicant'}>
               <Menu.Label>Admin</Menu.Label>
               <Menu.Item
-                icon={<IconTrash />}
+                leftSection={<IconTrash />}
                 color="red"
                 onClick={() => {
                   // setApplicantToDelete(applicant)
@@ -120,7 +120,7 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
   ))
 
   return (
-    <CardTable fontSize={12}>
+    <CardTable>
       <thead>
         <tr>
           <th>Navn</th>

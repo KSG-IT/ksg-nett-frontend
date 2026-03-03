@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Group, Radio, Stack, Text, Title, createStyles } from '@mantine/core'
+import { Group, Radio, Stack, Text, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
@@ -15,6 +15,7 @@ import {
 import { InternalGroupDiscussionDataOrderingKeyValue } from '../consts'
 import { INTERNAL_GROUP_DISCUSSION_DATA } from '../queries'
 import { InternalGroupDiscussionDataReturns } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 interface InternalGroupDiscussionParams {
   internalGroupId: string
@@ -72,7 +73,7 @@ export const InternalGroupDiscussion: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Fordelingsmøte {internalGroup.name}</Title>
         <SynCButton
           refetchCallback={() => refetch()}
@@ -89,7 +90,7 @@ export const InternalGroupDiscussion: React.FC = () => {
         kandidater må bli vurdert før fordelingsmøtet kan stenges.
       </MessageBox>
       <MessageBox type="warning">
-        <Text weight="bold">
+        <Text fw="bold">
           Obs! Du markerer ønsker på vegne av {internalGroup.name}
         </Text>
       </MessageBox>
@@ -154,12 +155,12 @@ export const InternalGroupDiscussion: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   clickableTd: {
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: 'var(--mantine-color-gray-0)',
       textDecoration: 'underline',
     },
   },
-}))
+})

@@ -1,16 +1,8 @@
-import {
-  Badge,
-  Card,
-  createStyles,
-  Stack,
-  Table,
-  Text,
-  TextProps,
-} from '@mantine/core'
+import { Badge, Stack, Text, TextProps } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { CardTable } from 'components/CardTable'
-import { format } from 'util/date-fns'
-import { UserNode } from 'modules/users/types'
 import React from 'react'
+import { format } from 'util/date-fns'
 import { BankAccountActivity } from '../../economy/types.graphql'
 
 interface TransactionCardProps {
@@ -30,25 +22,28 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
         </Badge>
       </td>
       <td>
-        <Text align="center">{transaction.quantity}</Text>
+        <Text ta="center">{transaction.quantity}</Text>
       </td>
       <td>
-        <Text align="right" color={'samfundet-red.7'}>
+        <Text ta="right" c={'samfundet-red.7'}>
           {transaction.amount} kr
         </Text>
       </td>
 
       <td>
-        <Text align="right" color={'dimmed'}>
+        <Text ta="right" c={'dimmed'}>
           {format(new Date(transaction.timestamp), 'd.MM.yy HH:mm')}
         </Text>
       </td>
     </tr>
   ))
 
-  const Header: React.FC<TextProps> = ({ children, ...rest }) => (
+  const Header: React.FC<TextProps & { children?: React.ReactNode }> = ({
+    children,
+    ...rest
+  }) => (
     <th>
-      <Text weight={800} size={'sm'} className={classes.tableHeader} {...rest}>
+      <Text fw={800} size={'sm'} className={classes.tableHeader} {...rest}>
         {children}
       </Text>
     </th>
@@ -56,16 +51,16 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
 
   return (
     <Stack>
-      <Text color={'dimmed'} weight={700} p={'xs'}>
+      <Text c={'dimmed'} fw={700} p={'xs'}>
         Siste transaksjoner
       </Text>
       <CardTable className={classes.card}>
         <thead>
           <tr className={classes.headerRow}>
             <Header>Type</Header>
-            <Header align="left">Antall</Header>
-            <Header align="right">Pris</Header>
-            <Header align="right">Tidspunkt</Header>
+            <Header ta="left">Antall</Header>
+            <Header ta="right">Pris</Header>
+            <Header ta="right">Tidspunkt</Header>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
@@ -74,17 +69,17 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
-    backgroundColor: theme.colors.white,
-    border: `1px solid ${theme.colors.gray[3]}`,
-    borderTop: `5px solid ${theme.colors.brand}`,
+    backgroundColor: 'white',
+    border: '1px solid var(--mantine-color-gray-3)',
+    borderTop: '5px solid var(--mantine-color-brand-6)',
   },
   tableHeader: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     textTransform: 'uppercase',
   },
   headerRow: {
-    borderRadius: theme.radius.xs,
+    borderRadius: 'var(--mantine-radius-xs)',
   },
-}))
+})

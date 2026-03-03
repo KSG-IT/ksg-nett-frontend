@@ -24,7 +24,7 @@ export const DaySelect: React.FC<DaySelectProps> = ({
     <Select
       label="Dag i uken"
       value={value}
-      onChange={onChangeCallback}
+      onChange={val => val && onChangeCallback(val as DayValues)}
       data={data}
     />
   )

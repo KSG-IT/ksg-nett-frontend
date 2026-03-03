@@ -35,21 +35,15 @@ export const PopularQuotes: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
-      <Group position="apart">
-        <Title order={2} color="dimmed">
+      <Group justify="space-between">
+        <Title order={2} c="dimmed">
           Populære sitater
         </Title>
         <QuotesTabs />
       </Group>
       <Stack>
         <Title order={3}>{currentSemesterShorthand}</Title>
-        <SimpleGrid
-          cols={3}
-          breakpoints={[
-            { maxWidth: 'lg', cols: 2, spacing: 'md' },
-            { maxWidth: 'sm', cols: 1, spacing: 'sm' },
-          ]}
-        >
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }}>
           {popularQuotesCurrentSemester.map(quote => (
             <QuoteCard quote={quote} key={quote.id} />
           ))}
@@ -57,13 +51,7 @@ export const PopularQuotes: React.FC = () => {
       </Stack>
       <Stack>
         <Title order={3}>Siden tidenes morgen</Title>
-        <SimpleGrid
-          cols={3}
-          breakpoints={[
-            { maxWidth: 'lg', cols: 2, spacing: 'md' },
-            { maxWidth: 'sm', cols: 1, spacing: 'sm' },
-          ]}
-        >
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }}>
           {popularQuotesAllTime.map(quote => (
             <QuoteCard quote={quote} key={quote.id} displaySemester />
           ))}

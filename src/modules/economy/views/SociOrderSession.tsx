@@ -115,7 +115,7 @@ export const SociOrderSession: React.FC = ({}) => {
             { label: 'Stilletime', path: '/economy/soci-sessions/live' },
           ]}
         />
-        <Group position="apart">
+        <Group justify="space-between">
           <Title order={2}>Burgerliste</Title>
           <Group>
             <PermissionGate
@@ -160,14 +160,14 @@ export const SociOrderSession: React.FC = ({}) => {
           <Title order={2}>Stilletime</Title>
           <Button
             variant="outline"
-            leftIcon={<IconMeat />}
+            leftSection={<IconMeat />}
             onClick={() => setBurgerModalOpen(true)}
           >
             Burgerliste
           </Button>
           {activeSociOrderSession.orderPdf && (
             <a href={activeSociOrderSession.orderPdf} target="_blank">
-              <Button variant="outline" leftIcon={<IconDownload />}>
+              <Button variant="outline" leftSection={<IconDownload />}>
                 Last ned
               </Button>
             </a>

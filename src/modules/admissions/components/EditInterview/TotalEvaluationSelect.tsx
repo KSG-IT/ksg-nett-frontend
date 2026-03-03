@@ -38,13 +38,14 @@ export const TotalEvaluationSelect: React.VFC<TotalEvaluationSelectProps> = ({
   const [selectedValue, setSelectedValue] = useState(interview.totalEvaluation)
   const { patchInterview } = useInterviewMutations()
 
-  const handleChange = (value: InterviewTotalEvaluationValues) => {
-    setSelectedValue(value)
+  const handleChange = (value: string | null) => {
+    if (!value) return
+    setSelectedValue(value as InterviewTotalEvaluationValues)
     patchInterview({
       variables: {
         id: interview.id,
         input: {
-          totalEvaluation: value,
+          totalEvaluation: value as InterviewTotalEvaluationValues,
         },
       },
       refetchQueries: [INTERVIEW_DETAIL_QUERY],

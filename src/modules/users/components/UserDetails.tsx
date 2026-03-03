@@ -3,7 +3,6 @@ import {
   Button,
   Card,
   Center,
-  createStyles,
   Divider,
   Grid,
   Group,
@@ -11,6 +10,7 @@ import {
   Text,
   ThemeIcon,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import {
   IconAt,
   IconBook,
@@ -59,7 +59,7 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
       <Breadcrumbs items={overloadedBreadcrumbs} />
       <Card withBorder radius={'md'} className={classes.card}>
         <Grid p={'xl'}>
-          <Grid.Col xs={6} lg={6}>
+          <Grid.Col span={{ xs: 6, lg: 6 }}>
             <Text className={classes.role}>{user.ksgStatus}</Text>
             {isMobile && (
               <Center>
@@ -87,7 +87,7 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
             <IconWithData icon={IconMapPin} userData={user.studyAddress} />
             <IconWithData icon={IconSchool} userData={user.study} />
             <IconWithData icon={IconCake} userData={user.dateOfBirth} />
-            <Group spacing={'xs'} className={classes.bio} noWrap mt={'xl'}>
+            <Group gap={'xs'} className={classes.bio} wrap="nowrap" mt={'xl'}>
               <Text className={classes.aboutMe}>Om meg</Text>
               <ThemeIcon variant="light" color={'samfundet-red'}>
                 {user.canRewriteAboutMe ? (
@@ -100,7 +100,7 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
             <Text mt={'xs'}>{user.aboutMe}</Text>
           </Grid.Col>
           {!isMobile && (
-            <Grid.Col xs={5} lg={5} offset={1}>
+            <Grid.Col span={{ xs: 5, lg: 5 }} offset={1}>
               <Stack
                 justify={'space-between'}
                 style={{ height: '100%' }}
@@ -128,9 +128,9 @@ export const UserDetails: React.FC<UserDetailsProps> = ({ user, onClick }) => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((_theme, _, u) => ({
   title: {
-    color: theme.colors.gray[6],
+    color: 'var(--mantine-color-gray-6)',
     fontWeight: 'bold',
   },
   profileImage: {
@@ -146,41 +146,41 @@ const useStyles = createStyles(theme => ({
     fit: 'cover',
   },
   name: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: `Greycliff CF, var(--mantine-font-family)`,
     fontWeight: 500,
-    fontSize: (theme.fontSizes.lg as unknown as number) * 1.25,
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+    fontSize: ('var(--mantine-font-size-lg)' as unknown as number) * 1.25,
+    [u.smallerThan('md')]: {
       textAlign: 'center',
     },
   },
   role: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     fontWeight: 700,
     textTransform: 'uppercase',
-    fontSize: theme.fontSizes.lg,
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+    fontSize: 'var(--mantine-font-size-lg)',
+    [u.smallerThan('md')]: {
       textAlign: 'center',
     },
   },
   aboutMe: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     fontWeight: 700,
     textTransform: 'uppercase',
-    fontSize: theme.fontSizes.lg,
+    fontSize: 'var(--mantine-font-size-lg)',
   },
   container: {
     // Media query with value from theme
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+    [u.smallerThan('md')]: {
       marginLeft: 0,
       marginRight: 0,
     },
   },
   wrapper: {
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+    [u.smallerThan('md')]: {
       marginLeft: 0,
       marginRight: 0,
     },
-    marginTop: theme.spacing.md,
+    marginTop: 'var(--mantine-spacing-md)',
   },
   card: {},
   memberships: {},

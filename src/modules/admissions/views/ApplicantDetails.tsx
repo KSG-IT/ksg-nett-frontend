@@ -69,7 +69,7 @@ export const ApplicantDetails: React.FC = () => {
           },
         ]}
       />
-      <Group spacing="xl">
+      <Group gap="xl">
         <Title order={2}>{applicant.fullName}</Title>
         <Button onClick={() => setRecommendationModalOpen(true)}>
           Anbefal

@@ -25,12 +25,13 @@ export const AdditionalEvaluationInline: React.VFC<
     PatchInterviewAdditionalEvaluationAnswerVariables
   >(PATCH_INTERVIEW_ADDITIONAL_EVALUATION_ANSWER)
 
-  const handleChange = (
-    selected: InterviewAdditionalEvaluationAnswerValues | ''
-  ) => {
+  const handleChange = (selected: string | null) => {
     if (selected === additionalEvaluation.answer) return
 
-    const parsedValue = selected === '' ? null : selected
+    const parsedValue =
+      selected === '' || selected === null
+        ? null
+        : (selected as InterviewAdditionalEvaluationAnswerValues)
 
     patchAnswer({
       variables: {
@@ -40,7 +41,9 @@ export const AdditionalEvaluationInline: React.VFC<
         },
       },
     })
-    setSelectedValue(selected)
+    setSelectedValue(
+      (selected ?? '') as InterviewAdditionalEvaluationAnswerValues | ''
+    )
   }
 
   return (

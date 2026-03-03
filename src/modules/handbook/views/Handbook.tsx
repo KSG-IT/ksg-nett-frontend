@@ -61,7 +61,7 @@ const Handbook = () => {
   return (
     <Stack ref={ref}>
       <Breadcrumbs items={breadcrumbs} />
-      <Group position="apart">
+      <Group justify="apart">
         <Title>Håndboka</Title>
         <Group>
           <PermissionGate permissions={PERMISSIONS.handbook.delete.document}>
@@ -94,7 +94,7 @@ const Handbook = () => {
               disabled={deleteDocumentLoading}
               component={Link}
               to={'create'}
-              leftIcon={<IconFilePlus />}
+              leftSection={<IconFilePlus />}
               variant="subtle"
             >
               Nytt dokument

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -10,6 +10,7 @@ import { API_URL } from 'util/env'
 import { UserShiftCardList } from '../components'
 import { MY_UPCOMING_SHIFTS } from '../queries'
 import { MyUpcomingShiftsReturns } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -32,9 +33,9 @@ export const MyUpcomingShifts: React.FC = () => {
   const { myUpcomingShifts } = data
 
   return (
-    <Stack className={classes.container} spacing="xs">
+    <Stack className={classes.container} gap="xs">
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart" align="baseline">
+      <Group justify="space-between" align="baseline">
         <Title>Mine kommende vakter</Title>
         <Link to="history">
           <Button>Alle mine vakter</Button>
@@ -55,11 +56,11 @@ export const MyUpcomingShifts: React.FC = () => {
   )
 }
 
-const useMyUpcomingShiftStyles = createStyles(theme => ({
+const useMyUpcomingShiftStyles = createStyles({
   container: {
     maxWidth: 900,
   },
   icalUrl: {
     wordBreak: 'break-word',
   },
-}))
+})

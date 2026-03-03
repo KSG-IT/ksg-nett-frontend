@@ -82,7 +82,7 @@ const ScheduleAllergies: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title order={1}>Allergenoversikt uke {format(shiftsFrom, 'w')}</Title>
         <Button onClick={handleRefetch}>Oppdater</Button>
       </Group>

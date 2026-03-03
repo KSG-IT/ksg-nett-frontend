@@ -1,4 +1,5 @@
-import { Button, createStyles, Text } from '@mantine/core'
+import { Button, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { IconDownload, IconFilePlus, IconMailbox } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
@@ -55,7 +56,7 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
           <a href={invoice.pdf} target="_blank">
             <Button
               color="samfundet-red"
-              leftIcon={<IconDownload />}
+              leftSection={<IconDownload />}
               variant="subtle"
             >
               Last ned
@@ -64,7 +65,7 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
         ) : (
           <Button
             disabled
-            leftIcon={<IconFilePlus />}
+            leftSection={<IconFilePlus />}
             color="samfundet-red"
             variant="subtle"
           >
@@ -77,7 +78,7 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
           <Text>Sent</Text>
         ) : (
           <Button
-            leftIcon={<IconMailbox />}
+            leftSection={<IconMailbox />}
             color="samfundet-red"
             variant="subtle"
             disabled={!invoice.pdf}

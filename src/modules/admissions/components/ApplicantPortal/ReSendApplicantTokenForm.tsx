@@ -57,7 +57,10 @@ export const ReSendApplicantTokenForm: React.VFC = () => {
             Følg med på inboxen din. Om eposten din er registrert i systemet
             vårt skal du straks få en epost.
           </Alert>
-          <Button onClick={() => setEmailSent(false)} leftIcon={<IconPlane />}>
+          <Button
+            onClick={() => setEmailSent(false)}
+            leftSection={<IconPlane />}
+          >
             Send epost på nytt?
           </Button>
         </Stack>

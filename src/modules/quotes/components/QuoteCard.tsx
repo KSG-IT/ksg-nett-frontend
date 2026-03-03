@@ -2,13 +2,11 @@ import {
   Avatar,
   Badge,
   Card,
-  createStyles,
   Group,
   Menu,
   Stack,
   Text,
   UnstyledButton,
-  useMantineTheme,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import {
@@ -19,6 +17,7 @@ import {
 } from '@tabler/icons-react'
 import { PermissionGate } from 'components/PermissionGate'
 
+import { createStyles } from '@mantine/emotion'
 import { UserThumbnail } from 'modules/users/components'
 import { ME_QUERY, USER_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
@@ -38,10 +37,9 @@ interface VoteIconProps {
 }
 
 const UpvoteIcon: React.FC<VoteIconProps> = ({ upvoted, onClick }) => {
-  const theme = useMantineTheme()
   return (
     <IconThumbUp
-      color={upvoted ? `${theme.colors.brand}` : 'gray'}
+      color={upvoted ? 'var(--mantine-color-brand-0)' : 'gray'}
       size={24}
       strokeWidth={upvoted ? 2 : 1}
       style={{ cursor: 'pointer' }}
@@ -129,24 +127,24 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
 
   return (
     <Card radius={'md'} className={classes.card} key={quote.id} withBorder>
-      <Stack justify={'space-between'} spacing={'xs'} className={classes.card}>
-        <Stack spacing={'xs'}>
+      <Stack justify={'space-between'} gap={'xs'} className={classes.card}>
+        <Stack gap={'xs'}>
           <Text size={'sm'} className={classes.quoteText}>
             {quote.text}
           </Text>
 
-          <Text size={'xs'} color={'gray'}>
+          <Text size={'xs'} c={'gray'}>
             {quote.context}
           </Text>
         </Stack>
-        <Group position="apart" spacing={'xs'}>
+        <Group justify="space-between" gap={'xs'}>
           <Avatar.Group spacing={5}>
             {quote.tagged.map(user => (
               <UserThumbnail size={'sm'} key={user.id} user={user} />
             ))}
           </Avatar.Group>
 
-          <Group spacing={'xs'}>
+          <Group gap={'xs'}>
             <PermissionGate permissions={PERMISSIONS.quotes.invalidate.quote}>
               <Menu>
                 <Menu.Target>
@@ -159,14 +157,19 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
                     permissions={PERMISSIONS.quotes.invalidate.quote}
                   >
                     <Menu.Item
-                      icon={<IconArrowBackUp />}
+                      color="yellow"
+                      leftSection={<IconArrowBackUp />}
                       onClick={handleInvalidateQuote}
                     >
                       Underkjenn
                     </Menu.Item>
                   </PermissionGate>
                   <PermissionGate permissions={PERMISSIONS.quotes.delete.quote}>
-                    <Menu.Item icon={<IconTrash />} onClick={handleDeleteQuote}>
+                    <Menu.Item
+                      color="red"
+                      leftSection={<IconTrash />}
+                      onClick={handleDeleteQuote}
+                    >
                       Slett
                     </Menu.Item>
                   </PermissionGate>
@@ -187,9 +190,9 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   quoteText: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     fontWeight: 500,
   },
   card: {
@@ -202,4 +205,4 @@ const useStyles = createStyles(theme => ({
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
-}))
+})

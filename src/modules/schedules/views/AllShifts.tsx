@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
-import { createStyles, Title } from '@mantine/core'
+import { Title } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
+import { createStyles } from '@mantine/emotion'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -71,7 +72,7 @@ export const AllShifts = () => {
       <Title>Hva skjer'a?</Title>
       <DatePickerInput
         value={date}
-        onChange={val => val && handleDateChange(val)}
+        onChange={val => val && handleDateChange(new Date(val))}
       />
 
       <UserShiftCardList shifts={allShifts} />
@@ -79,11 +80,11 @@ export const AllShifts = () => {
   )
 }
 
-const useAllShiftsStyles = createStyles(theme => ({
+const useAllShiftsStyles = createStyles({
   wrapper: {
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
-}))
+})

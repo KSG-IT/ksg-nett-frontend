@@ -3,13 +3,13 @@ import {
   ActionIcon,
   Anchor,
   Card,
-  createStyles,
   Group,
   SimpleGrid,
   Stack,
   Text,
   Title,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { IconExternalLink, IconRefresh } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
@@ -47,7 +47,7 @@ const DigiBong: React.FC = () => {
   return (
     <Group>
       <Anchor href={myExternalChargeQrCodeUrl} target="_blank">
-        <Group spacing={0}>
+        <Group gap={0}>
           <Text>Digibong QR kode</Text>
           <IconExternalLink stroke={1.5} size={18} />
         </Group>
@@ -83,14 +83,17 @@ export const MyEconomy: React.FC = () => {
         account={data.myBankAccount}
       />
       <SimpleGrid
-        cols={2}
-        breakpoints={[
-          { maxWidth: 'md', cols: 1, spacing: 'md' },
-          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
-        ]}
+        cols={{
+          md: 1,
+          sm: 1,
+        }}
+        spacing={{
+          md: 'md',
+          sm: 'sm',
+        }}
       >
         <Stack>
-          <Text color={'dimmed'} weight={700} p={'xs'}>
+          <Text c={'dimmed'} fw={700} p={'xs'}>
             Forbruk
           </Text>
           <Card withBorder className={classes.cardWithBorder}>
@@ -102,7 +105,7 @@ export const MyEconomy: React.FC = () => {
           activities={data.myBankAccount.user.lastTransactions}
         />
         <Stack>
-          <Text color={'dimmed'} weight={700} p={'xs'}>
+          <Text c={'dimmed'} fw={700} p={'xs'}>
             Innskudd
           </Text>
           <Card withBorder className={classes.cardWithBorder}>
@@ -114,18 +117,19 @@ export const MyEconomy: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   cardWithBorder: {
-    borderTop: `5px solid ${theme.colors.brand}`,
+    borderTop: '5px solid var(--mantine-color-brand-6)',
     '@media (max-width: 800px)': {
-      padding: theme.spacing.xs,
+      padding: 'var(--mantine-spacing-xs)',
     },
   },
   balanceCard: {
-    backgroundImage: theme.fn.gradient({ from: 'cyan.8', to: 'cyan.4' }),
-    color: theme.white,
+    backgroundImage:
+      'linear-gradient(45deg, var(--mantine-color-cyan-8), var(--mantine-color-cyan-4))',
+    color: 'white',
     maxWidth: 450,
     maxHeight: 300,
-    borderRadius: theme.radius.lg,
+    borderRadius: 'var(--mantine-radius-lg)',
   },
-}))
+})

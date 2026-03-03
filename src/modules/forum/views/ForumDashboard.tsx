@@ -1,12 +1,5 @@
-import {
-  Button,
-  Card,
-  Group,
-  Stack,
-  TextInput,
-  Title,
-  createStyles,
-} from '@mantine/core'
+import { Button, Card, Group, Stack, TextInput, Title } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import {
   IconEye,
   IconMessage2,
@@ -33,14 +26,14 @@ const ForumDashboard: React.FC = () => {
       />
       <Title>Forum</Title>
       <Card>
-        <Group position="apart">
+        <Group justify="space-between">
           <TextInput
             className={classes.searchInput}
-            icon={<IconSearch />}
+            leftSection={<IconSearch />}
             placeholder="Søk i forumet"
           />
           <PermissionGate permissions={PERMISSIONS.forum.add.thread}>
-            <Button leftIcon={<IconPlus />}>Ny tråd</Button>
+            <Button leftSection={<IconPlus />}>Ny tråd</Button>
           </PermissionGate>
         </Group>
       </Card>

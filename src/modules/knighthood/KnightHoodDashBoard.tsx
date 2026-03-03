@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Card,
-  createStyles,
   Group,
   Image,
   MantineProvider,
@@ -12,6 +11,7 @@ import {
   Text,
   Title,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { IconPlus } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
@@ -71,10 +71,9 @@ export const KnightHoodDashboard: React.FC = () => {
           Table: { styles: { root: { fontFamily: 'inherit' } } },
         },
       }}
-      inherit
     >
       <Stack>
-        <Group position="apart">
+        <Group justify="space-between">
           <Breadcrumbs
             items={[
               { label: 'Hjem', path: '/dashboard' },
@@ -83,7 +82,7 @@ export const KnightHoodDashboard: React.FC = () => {
           />
           <PermissionGate permissions={PERMISSIONS.users.add.knightHood}>
             <Button
-              leftIcon={<IconPlus />}
+              leftSection={<IconPlus />}
               onClick={() => {
                 setOpen(true)
               }}
@@ -105,7 +104,7 @@ export const KnightHoodDashboard: React.FC = () => {
             <Text>
               <Title
                 ff={'Baskerville'}
-                transform="uppercase"
+                tt="uppercase"
                 fw={500}
                 className={classes.title}
                 order={1}
@@ -116,7 +115,7 @@ export const KnightHoodDashboard: React.FC = () => {
           </Stack>
           <Stack ml={'15%'} w={'70%'} my={'xl'}>
             <Text className={classes.text}>
-              <Title className={classes.subtitle} align="center" order={3}>
+              <Title className={classes.subtitle} ta="center" order={3}>
                 Om ordenen
               </Title>
               Riddere av Det Gyldne Tappetaarn er personer som har blitt erkjent
@@ -150,7 +149,7 @@ export const KnightHoodDashboard: React.FC = () => {
 
           <Box p="xl"></Box>
           <Stack justify="center" align="center">
-            <Table className={classes.table} fontSize={'lg'}>
+            <Table className={classes.table}>
               <thead>
                 <tr>
                   <th>Navn</th>

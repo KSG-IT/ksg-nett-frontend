@@ -23,9 +23,11 @@ export const AdditionalInformationFields: React.VFC<
 
   const { patchApplicant } = usePatchApplicant()
 
-  const handleChangeCanCommit = (val: 'yes' | 'no') => {
-    setCanCommitThreeSemesters(val)
-    const parsedCanCommitThreeSemesters = radioToBoolean(val)
+  const handleChangeCanCommit = (val: string) => {
+    setCanCommitThreeSemesters(val as '' | 'yes' | 'no')
+    const parsedCanCommitThreeSemesters = radioToBoolean(
+      val as '' | 'yes' | 'no'
+    )
     patchApplicant({
       variables: {
         id: applicant.id,
@@ -36,9 +38,9 @@ export const AdditionalInformationFields: React.VFC<
     })
   }
 
-  const handleChangeOpenForOtherPositions = (val: 'yes' | 'no') => {
-    setOpenForOtherPositions(val)
-    const parsedOpenForOtherPositions = radioToBoolean(val)
+  const handleChangeOpenForOtherPositions = (val: string) => {
+    setOpenForOtherPositions(val as '' | 'yes' | 'no')
+    const parsedOpenForOtherPositions = radioToBoolean(val as '' | 'yes' | 'no')
     patchApplicant({
       variables: {
         id: applicant.id,

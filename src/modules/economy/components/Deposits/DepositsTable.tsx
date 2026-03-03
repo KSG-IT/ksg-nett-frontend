@@ -165,7 +165,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item
-                icon={<IconCheck />}
+                leftSection={<IconCheck />}
                 color="green"
                 disabled={deposit.approved}
                 onClick={() => handleApproveDeposit(deposit)}
@@ -173,7 +173,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
                 Godkjenn
               </Menu.Item>
               <Menu.Item
-                icon={<IconEditCircle />}
+                leftSection={<IconEditCircle />}
                 color="orange"
                 disabled={deposit.approved}
                 onClick={() => handleApproveDeposit(deposit, true)}
@@ -181,7 +181,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
                 Korrriger og godkjenn
               </Menu.Item>
               <Menu.Item
-                icon={<IconX />}
+                leftSection={<IconX />}
                 color="purple"
                 disabled={!deposit.approved}
                 onClick={() => handleInvalidateDeposit(deposit)}
@@ -190,7 +190,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
               </Menu.Item>
               <Menu.Item
                 color="red"
-                icon={<IconTrash />}
+                leftSection={<IconTrash />}
                 disabled={deposit.approved}
                 onClick={() => handleDeleteDeposit(deposit)}
               >

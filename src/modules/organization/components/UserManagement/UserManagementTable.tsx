@@ -1,35 +1,40 @@
-import { Badge, createStyles, Text, TextProps } from '@mantine/core'
+import { Badge, Text, TextProps } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { ManageInternalGroupUser } from 'modules/organization/types.graphql'
 import { UserManagementTableRow } from './UserManagementTableRow'
+import { createStyles } from '@mantine/emotion'
 
 interface UserManagementTableProps {
   usersData: ManageInternalGroupUser[]
   activeMemberships?: boolean
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
-    backgroundColor: theme.colors.white,
-    borderTop: `5px solid ${theme.colors.brand}`,
+    backgroundColor: 'white',
+    borderTop: '5px solid var(--mantine-color-brand-6)',
   },
   tableHeader: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     textTransform: 'uppercase',
   },
   headerRow: {
-    borderRadius: theme.radius.xs,
+    borderRadius: 'var(--mantine-radius-xs)',
   },
-}))
+})
 
 export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   usersData,
   activeMemberships = false,
 }) => {
   const { classes } = useStyles()
-  const TableData: React.FC<TextProps> = ({ children, color, weight }) => (
+  const TableData: React.FC<TextProps & { children?: React.ReactNode }> = ({
+    children,
+    color,
+    fw,
+  }) => (
     <td>
-      <Text color={color} weight={weight} size={'sm'}>
+      <Text c={color} fw={fw} size={'sm'}>
         {children}
       </Text>
     </td>
@@ -52,14 +57,12 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
       )}
     </tr>
   ))
-  const Header: React.FC<TextProps> = ({ children, align }) => (
+  const Header: React.FC<TextProps & { children?: React.ReactNode }> = ({
+    children,
+    ta,
+  }) => (
     <th>
-      <Text
-        align={align}
-        weight={800}
-        size={'sm'}
-        className={classes.tableHeader}
-      >
+      <Text ta={ta} fw={800} size={'sm'} className={classes.tableHeader}>
         {children}
       </Text>
     </th>
@@ -71,7 +74,7 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
       <thead>
         <tr>
           <Header>Navn</Header>
-          <Header align="center">Stilling</Header>
+          <Header ta="center">Stilling</Header>
           <Header>Gruppe</Header>
           <Header>Startet</Header>
           {activeMemberships ? (

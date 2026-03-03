@@ -11,7 +11,7 @@ const ForumThread: React.FC = () => {
     extensions: [StarterKit, Link],
   })
   return (
-    <Stack spacing="xs">
+    <Stack gap="xs">
       <Breadcrumbs
         items={[
           { label: 'Hjem', path: '/dashboard' },

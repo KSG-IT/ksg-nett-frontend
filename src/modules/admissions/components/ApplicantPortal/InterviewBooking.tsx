@@ -84,10 +84,7 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
           nok. Helst book et intevju så tidlig som mulig.
         </Text>
       </MessageBox>
-      <SimpleGrid
-        cols={2}
-        breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
-      >
+      <SimpleGrid cols={{ base: 1, sm: 2 }}>
         <Container>
           <DatePicker
             size={'md'}
@@ -101,7 +98,7 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
             maxDate={new Date(endDate)}
             value={day}
             onChange={date => {
-              date && handleDayChange(date)
+              date && handleDayChange(new Date(date))
             }}
           />
         </Container>

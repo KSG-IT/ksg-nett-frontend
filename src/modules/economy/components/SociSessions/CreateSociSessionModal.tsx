@@ -5,9 +5,9 @@ import {
   NumberInput,
   Select,
   TextInput,
-  createStyles,
 } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { useSociSessionMutations } from 'modules/economy/mutations.hooks'
 import { ALL_SOCI_SESSIONS } from 'modules/economy/queries'
@@ -92,7 +92,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
         <DatePickerInput
           label="Dato for innkryssing"
           value={date}
-          onChange={val => val && setDate(val)}
+          onChange={val => val && setDate(new Date(val))}
         />
         <Select
           label="Listetype"
@@ -110,9 +110,11 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
           label="Minstebeløp gjenværende saldo"
           value={minimumRemainingBalance}
           min={0}
-          onChange={val => val && setMinimumRemainingBalance(val)}
+          onChange={val =>
+            typeof val === 'number' && setMinimumRemainingBalance(val)
+          }
         />
-        <Group position="right">
+        <Group justify="flex-end">
           <Button color="gray" onClick={handleCancel}>
             Avbryt
           </Button>
@@ -125,10 +127,10 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
-}))
+})

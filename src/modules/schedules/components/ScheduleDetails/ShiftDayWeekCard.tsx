@@ -1,9 +1,10 @@
-import { Card, createStyles, Group, Paper, Stack, Title } from '@mantine/core'
+import { Card, Group, Paper, Stack, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconDotsVertical } from '@tabler/icons-react'
 import { ShiftDayWeek } from 'modules/schedules/types.graphql'
 import { format } from 'util/date-fns'
 import { ShiftCard } from './ShiftCard'
+import { createStyles } from '@mantine/emotion'
 
 interface ShiftDayWeekCardProps {
   shiftDayWeek: ShiftDayWeek
@@ -56,13 +57,8 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
             key={shiftDay.date}
           >
             <Stack>
-              <Group position="apart">
-                <Title
-                  transform="capitalize"
-                  color="gray.9"
-                  weight={900}
-                  order={5}
-                >
+              <Group justify="space-between">
+                <Title tt="capitalize" c="gray.9" fw={900} order={5}>
                   {format(new Date(shiftDay.date), 'EEEE dd.MM')}
                 </Title>
                 <IconDotsVertical />
@@ -84,7 +80,7 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
 
 // #F6F5F8
 // #F1F3F5
-const useShiftDayWeekCardStyles = createStyles(theme => ({
+const useShiftDayWeekCardStyles = createStyles({
   wrapper: {
     width: '100%',
   },
@@ -92,7 +88,7 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     width: '100%',
     display: 'flex',
     gap: '2px',
-    backgroundColor: theme.colors.gray[0],
+    backgroundColor: 'var(--mantine-color-gray-0)',
     overflow: 'scroll',
   },
 
@@ -100,7 +96,7 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     minWidth: '270px',
-    backgroundColor: theme.colors.gray[1],
-    borderRadius: theme.radius.md,
+    backgroundColor: 'var(--mantine-color-gray-1)',
+    borderRadius: 'var(--mantine-radius-md)',
   },
-}))
+})

@@ -91,7 +91,7 @@ export const AdmissionDashboard: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Stack>
+      <Group justify="space-between">
         <Title>Kontrollpanel opptak</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
           <Group>
@@ -111,7 +111,7 @@ export const AdmissionDashboard: React.FC = () => {
               }
             />
             <Button
-              leftIcon={<IconClock />}
+              leftSection={<IconClock />}
               disabled={nextPhaseLoading}
               color="samfundet-red"
               onClick={() => {
@@ -122,7 +122,7 @@ export const AdmissionDashboard: React.FC = () => {
             </Button>
           </Group>
         </PermissionGate>
-      </Stack>
+      </Group>
       <AdmissionsShortcutPanel />
 
       <InternalGroupsNav />
@@ -240,7 +240,7 @@ const InterviewBookingSettingSwitches: React.FC<{
         value={softWallTimestamp}
         onChange={date => {
           console.log(date)
-          setSoftWallTimestamp(date)
+          setSoftWallTimestamp(date ? new Date(date) : null)
         }}
       />
       <Button onClick={handleUpdateSoftWallTimestamp}>

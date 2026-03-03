@@ -1,5 +1,6 @@
-import { createStyles, Group, Paper, Stack, Text, Title } from '@mantine/core'
-import { ShiftLocationWeek, ShiftNode } from 'modules/schedules/types.graphql'
+import { Group, Paper, Stack, Text, Title } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
+import { ShiftLocationWeek } from 'modules/schedules/types.graphql'
 import { parseLocation } from 'modules/schedules/util'
 import { format } from 'util/date-fns'
 import { ShiftCard } from './ShiftCard'
@@ -56,7 +57,7 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
   )
 }
 
-const useShiftDayWeekCardStyles = createStyles(theme => ({
+const useShiftDayWeekCardStyles = createStyles({
   card: {
     width: '100%',
     display: 'inline-grid',
@@ -71,4 +72,4 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     height: '100%',
     width: '270px',
   },
-}))
+})

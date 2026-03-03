@@ -88,7 +88,7 @@ export const SociSessionDetail: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={overloadedBreadcrumbs} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>{sociSession.getNameDisplay}</Title>
         <PermissionGate permissions={PERMISSIONS.economy.change.sociSession}>
           <Button

@@ -1,8 +1,8 @@
+import { useQuery } from '@apollo/client'
 import {
   ActionIcon,
   Badge,
   Card,
-  createStyles,
   Divider,
   Group,
   Image,
@@ -15,21 +15,21 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core'
-import { useQuery } from '@apollo/client'
-import { INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY } from '../../queries'
+import { createStyles } from '@mantine/emotion'
+import { IconNotes, IconPlus } from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { PermissionGate } from 'components/PermissionGate'
+import { InternalGroupUserHighlightEditForm } from 'modules/organization/components/InternalGroupDetail/components/EditHighlights/InternalGroupUserHighlightEditForm'
+import { useState } from 'react'
+import { useIsMobile } from 'util/hooks'
+import { PERMISSIONS } from 'util/permissions'
+import { INTERNAL_GROUP_USER_HIGHLIGHTS_BY_INTERNAL_GROUP_QUERY } from '../../queries'
 import {
   InternalGroupUserHighlightNode,
   InternalGroupUserHighlightsByInternalGroupReturns,
   InternalGroupUserHighlightsByInternalGroupVariables,
 } from '../../types'
-import { InternalGroupUserHighlightEditForm } from 'modules/organization/components/InternalGroupDetail/components/EditHighlights/InternalGroupUserHighlightEditForm'
-import { useState } from 'react'
-import { IconNotes, IconPlus } from '@tabler/icons-react'
-import { useIsMobile } from 'util/hooks'
-import { PermissionGate } from 'components/PermissionGate'
-import { PERMISSIONS } from 'util/permissions'
 
 interface InternalGroupUserHighlightsProps {
   internalGroupId: string
@@ -63,14 +63,10 @@ export const InternalGroupUserHighlights: React.FC<
         onChange={() => setIncludeArchived(prev => !prev)}
       />
       <SimpleGrid
-        cols={3}
+        cols={{ base: 1, md: 2, lg: 3 }}
         p={isMobile ? 0 : 'md'}
         spacing={isMobile ? 0 : 'lg'}
         verticalSpacing={isMobile ? 'lg' : 'xl'}
-        breakpoints={[
-          { maxWidth: 900, cols: 1, spacing: 'sm' },
-          { maxWidth: 1200, cols: 2, spacing: 'sm' },
-        ]}
       >
         {highlightData.map(highlight => (
           <Card key={highlight.id} withBorder radius={'lg'}>
@@ -79,9 +75,9 @@ export const InternalGroupUserHighlights: React.FC<
                 <Image src={highlight.image.toString()} height={300} />
               )}
             </Card.Section>
-            <Group grow position={'apart'} mt="md" mb="xs">
-              <Text weight={700}>{highlight.user.getFullWithNickName}</Text>
-              <Group position={'right'} spacing={0}>
+            <Group grow justify={'space-between'} mt="md" mb="xs">
+              <Text fw={700}>{highlight.user.getFullWithNickName}</Text>
+              <Group justify={'flex-end'} gap={0}>
                 <Badge>{highlight.occupation}</Badge>
                 <PermissionGate
                   permissions={
@@ -100,7 +96,7 @@ export const InternalGroupUserHighlights: React.FC<
               </Group>
             </Group>
             <Spoiler maxHeight={120} showLabel={'Vis mer'} hideLabel="Hide">
-              <Text size={'sm'} color={'dimmed'}>
+              <Text size={'sm'} c={'dimmed'}>
                 {highlight.description}
               </Text>
             </Spoiler>
@@ -112,12 +108,7 @@ export const InternalGroupUserHighlights: React.FC<
           opened={modalOpened}
           onClose={() => setModalOpened(false)}
         >
-          <Title
-            align={'center'}
-            order={4}
-            color={'dimmed'}
-            transform={'uppercase'}
-          >
+          <Title ta={'center'} order={4} c={'dimmed'} tt={'uppercase'}>
             Rediger/legg til høydepunkt
           </Title>
           <Divider my={'md'} />
@@ -145,15 +136,15 @@ export const InternalGroupUserHighlights: React.FC<
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   addButton: {
     width: '100%',
-    backgroundColor: theme.colors.gray[2],
-    borderRadius: theme.radius.lg,
-    border: '1px solid ' + theme.colors.gray[3],
+    backgroundColor: 'var(--mantine-color-gray-2)',
+    borderRadius: 'var(--mantine-radius-lg)',
+    border: '1px solid var(--mantine-color-gray-3)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    color: theme.colors.gray[5],
+    color: 'var(--mantine-color-gray-5)',
   },
-}))
+})

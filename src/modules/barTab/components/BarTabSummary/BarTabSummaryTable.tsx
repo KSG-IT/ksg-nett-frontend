@@ -1,4 +1,5 @@
-import { createStyles, Paper, Stack, Table, Title } from '@mantine/core'
+import { Stack, Title } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { CardTable } from 'components/CardTable'
 import { BarTabCustomerData } from 'modules/barTab/types.graphql'
 import { numberWithSpaces } from 'util/parsing'
@@ -60,7 +61,7 @@ export const BarTabSummaryTable: React.FC<BarTabSummaryTableProps> = ({
   )
 }
 
-const useBarTabSummaryTableStyles = createStyles(theme => ({
+const useBarTabSummaryTableStyles = createStyles({
   wrapper: {},
   card: {
     overflowX: 'scroll',
@@ -84,4 +85,4 @@ const useBarTabSummaryTableStyles = createStyles(theme => ({
   rightAligned: {
     textAlign: 'right',
   },
-}))
+})

@@ -114,7 +114,7 @@ export const AddInterviewForm: React.FC<AddInterviewFormProps> = ({
         <DatePickerInput
           value={date}
           label="Dato"
-          onChange={val => val && setDate(val)}
+          onChange={val => val && setDate(new Date(val))}
         />
 
         <Group>

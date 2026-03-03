@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Badge, createStyles, Stack, Title } from '@mantine/core'
+import { Badge, Stack, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
@@ -11,6 +11,7 @@ import { parseApplicantPriorityInternalGroupPosition } from '../parsing'
 import { FINISHED_INTERVIEWS_QUERY } from '../queries'
 import { FinishedInterviewsReturns, InterviewNode } from '../types.graphql'
 import { Breadcrumbs } from 'components/Breadcrumbs'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Home', path: '/dashboard' },

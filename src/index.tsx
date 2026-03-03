@@ -6,6 +6,10 @@ import { createRoot } from 'react-dom/client'
 import Root from './containers/Root'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
+import '@mantine/core/styles.css'
+import '@mantine/tiptap/styles.css'
+import '@mantine/dates/styles.css'
+import '@mantine/notifications/styles.css'
 
 Sentry.init({
   dsn: 'https://30278c22042e4403a9fbbe081d5fe999@o487192.ingest.sentry.io/6110504',

@@ -3,7 +3,6 @@ import {
   ActionIcon,
   Avatar,
   Card,
-  createStyles,
   FocusTrap,
   Group,
   Popover,
@@ -29,6 +28,7 @@ import {
 } from 'modules/users/types'
 import React, { useEffect, useState } from 'react'
 import { SHIFT_DETAIL_QUERY } from './ShiftCardModal'
+import { createStyles } from '@mantine/emotion'
 
 type UserType = {
   id: string
@@ -91,12 +91,12 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
     >
       <Popover.Target>
         <UnstyledButton className={classes.shiftSlot} onClick={togglePopover}>
-          <Group position="apart" noWrap>
-            <Group spacing="xs">
+          <Group justify="space-between" wrap="nowrap">
+            <Group gap="xs">
               <div className={classes.iconContainer}>
                 <UserThumbnail user={shiftSlot.user} />
               </div>
-              <Stack spacing={0} className={classes.nameOverflow}>
+              <Stack gap={0} className={classes.nameOverflow}>
                 <Text className={classes.shiftSlotRoleText}>
                   {shiftSlot.role}
                 </Text>
@@ -122,15 +122,15 @@ const FilledShiftSlot: React.FC<FilledShiftSlotProps> = ({
             placeholder="Søk etter bruker"
             onChange={evt => onSearchChange(evt.target.value)}
           />
-          {data.length === 0 && <Text color="gray">Her var det tomt</Text>}
+          {data.length === 0 && <Text c="gray">Her var det tomt</Text>}
           <FocusTrap>
-            <Stack spacing={0}>
+            <Stack gap={0}>
               {data.map(user => (
                 <UnstyledButton
                   className={classes.selectUserButton}
                   onClick={() => handleSelectUser(user)}
                 >
-                  <Group spacing="xs">
+                  <Group gap="xs">
                     <Avatar src={user.profileImage} />
                     <Text>{user.getCleanFullName}</Text>
                   </Group>
@@ -179,15 +179,15 @@ const EmptyShiftSlot: React.FC<ShiftSlotProps> = ({
     >
       <Popover.Target>
         <UnstyledButton className={classes.shiftSlot} onClick={togglePopover}>
-          <Group spacing="xs">
+          <Group gap="xs">
             <div className={classes.iconContainer}>
               <IconUserPlus size={24} />
             </div>
-            <Stack spacing={0}>
+            <Stack gap={0}>
               <Text className={classes.shiftSlotRoleText}>
                 {shiftSlot.role}
               </Text>
-              <Text color="gray">Tom vakt</Text>
+              <Text c="gray">Tom vakt</Text>
             </Stack>
           </Group>
         </UnstyledButton>
@@ -201,13 +201,13 @@ const EmptyShiftSlot: React.FC<ShiftSlotProps> = ({
             onChange={evt => onSearchChange(evt.target.value)}
           />
           <FocusTrap>
-            <Stack spacing={0}>
+            <Stack gap={0}>
               {data.map(user => (
                 <UnstyledButton
                   className={classes.selectUserButton}
                   onClick={() => handleSelectUser(user)}
                 >
-                  <Group spacing="md">
+                  <Group gap="md">
                     <Avatar src={user.profileImage} />
 
                     <Text>{user.getCleanFullName}</Text>
@@ -323,7 +323,7 @@ export const ShiftSlot: React.FC<ShallowShiftProps> = ({ shiftSlot }) => {
 
   if (shiftSlot.user) {
     return (
-      <Group position="apart">
+      <Group justify="space-between">
         <FilledShiftSlot
           shiftSlot={shiftSlot as FilledShiftSlotProps['shiftSlot']}
           data={users}
@@ -341,7 +341,7 @@ export const ShiftSlot: React.FC<ShallowShiftProps> = ({ shiftSlot }) => {
   }
 
   return (
-    <Group position="apart">
+    <Group justify="space-between">
       <EmptyShiftSlot
         shiftSlot={shiftSlot}
         data={users}

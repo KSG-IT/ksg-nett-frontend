@@ -1,15 +1,9 @@
-import {
-  createStyles,
-  Group,
-  Paper,
-  Stack,
-  Text,
-  useMantineTheme,
-} from '@mantine/core'
+import { Group, Paper, Stack, Text } from '@mantine/core'
 import { IconFile } from '@tabler/icons-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { DocumentNode } from '../types.graphql'
 import { formatDistanceToNow } from '../../../util/date-fns'
+import { createStyles } from '@mantine/emotion'
 
 interface DocumentStackProps {
   documents: Pick<
@@ -33,7 +27,6 @@ export const DocumentStack: React.FC<DocumentStackProps> = ({
   selectedCallback,
   selectedDocument,
 }) => {
-  const theme = useMantineTheme()
   const { classes } = useStyles()
   const navigate = useNavigate()
 
@@ -52,7 +45,7 @@ export const DocumentStack: React.FC<DocumentStackProps> = ({
   }
 
   return (
-    <Stack spacing={0}>
+    <Stack gap={0}>
       {documents.map(document => (
         <Paper
           className={
@@ -66,39 +59,33 @@ export const DocumentStack: React.FC<DocumentStackProps> = ({
           key={document.id}
           p="xs"
         >
-          <Group position="apart">
+          <Group justify="space-between">
             <Group>
               <IconFile
-                color={theme.colors[theme.primaryColor][6]}
-                fill={theme.colors[theme.primaryColor][0]}
+                color="var(--mantine-color-samfundet-red-6)"
+                fill="var(--mantine-color-samfundet-red-0)"
                 stroke={1.4}
               />
               <Text
                 component={Link}
                 to={`document/${document.id}`}
                 size={'sm'}
-                color={selectedDocument?.id === document.id ? 'black' : 'dark'}
-                weight={
-                  selectedDocument?.id === document.id ? 'bold' : 'lighter'
-                }
+                c={selectedDocument?.id === document.id ? 'black' : 'dark'}
+                fw={selectedDocument?.id === document.id ? 'bold' : 'lighter'}
               >
                 {document.name}
               </Text>
             </Group>
             <Group>
               <Text
-                color={
-                  selectedDocument?.id === document.id ? 'black' : 'dimmed'
-                }
+                c={selectedDocument?.id === document.id ? 'black' : 'dimmed'}
                 truncate
                 size={'xs'}
               >
                 Oppdatert sist av: {document.updatedBy?.firstName}
               </Text>
               <Text
-                color={
-                  selectedDocument?.id === document.id ? 'black' : 'dimmed'
-                }
+                c={selectedDocument?.id === document.id ? 'black' : 'dimmed'}
                 size={'xs'}
               >
                 for {formatDistanceToNow(new Date(document.updatedAt))} siden
@@ -111,14 +98,14 @@ export const DocumentStack: React.FC<DocumentStackProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: 'var(--mantine-color-gray-0)',
     },
   },
   cardActive: {
-    backgroundColor: theme.colors[theme.primaryColor][0],
+    backgroundColor: 'var(--mantine-color-samfundet-red-0)',
   },
-}))
+})

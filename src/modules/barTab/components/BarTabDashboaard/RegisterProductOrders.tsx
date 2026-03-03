@@ -3,7 +3,6 @@ import {
   Button,
   Card,
   Checkbox,
-  createStyles,
   Group,
   NumberInput,
   Select,
@@ -26,6 +25,7 @@ import { BarTabNode } from 'modules/barTab/types.graphql'
 import { useMemo, useState } from 'react'
 import { BarTabCustomerSelect } from '../BarTabCustomerSelect'
 import { BarTabProductSelect } from '../BarTabProductSelect'
+import { createStyles } from '@mantine/emotion'
 
 interface ActiveBarTablControllerProps {
   barTab: BarTabNode
@@ -179,7 +179,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
 
   return (
     <Stack className={classes.wrapper}>
-      <Group position="apart">
+      <Group justify="space-between">
         <Group>
           <Button color="samfundet-red" onClick={handleLockBarTab}>
             Lås BSF
@@ -231,7 +231,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
           <Select
             label="Type"
             value={orderType}
-            onChange={(val: BarTabOrderTypeValues) => val && setOrderType(val)}
+            onChange={val => val && setOrderType(val as BarTabOrderTypeValues)}
             data={[
               {
                 value: BarTabOrderTypeValues.LIST,
@@ -253,7 +253,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
             value={quantity}
             min={1}
             max={100}
-            onChange={val => val && setQuantity(val)}
+            onChange={val => typeof val === 'number' && setQuantity(val)}
           />
         </Group>
       </Card>
@@ -266,7 +266,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
   )
 }
 
-const useRegisterProductOrdersStyles = createStyles(theme => ({
+const useRegisterProductOrdersStyles = createStyles({
   wrapper: {},
   card: {
     overflowX: 'scroll',
@@ -274,4 +274,4 @@ const useRegisterProductOrdersStyles = createStyles(theme => ({
   addOrderWrapper: {
     overflow: 'visible',
   },
-}))
+})

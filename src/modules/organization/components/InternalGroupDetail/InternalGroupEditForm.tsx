@@ -84,7 +84,7 @@ export const InternalGroupEditForm: React.FC<InternalGroupEditFormProps> = ({
         label="Velg bildefil"
         accept="image/png,image/jpeg,image/jpg"
         placeholder="Trykk her"
-        icon={<IconFileCode />}
+        leftSection={<IconFileCode />}
         clearable
       />
 

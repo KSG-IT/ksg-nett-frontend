@@ -115,7 +115,7 @@ export const InterviewLocationAvailabilityCard: React.VFC<
   return (
     <Paper p="sm">
       <Stack>
-        <Group position="apart">
+        <Group justify="space-between">
           <Title order={3}>{interviewLocation.name}</Title>
           <UnstyledButton onClick={handleDeleteInterviewLocation}>
             <IconX />
@@ -140,7 +140,11 @@ export const InterviewLocationAvailabilityCard: React.VFC<
           </tbody>
         </Table>
         <Group>
-          <DatePickerInput value={date} label="Dag" onChange={setDate} />
+          <DatePickerInput
+            value={date}
+            label="Dag"
+            onChange={val => setDate(val ? new Date(val) : null)}
+          />
           <Group>
             <TimeInput
               value={timeFrom}

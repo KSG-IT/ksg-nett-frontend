@@ -13,7 +13,7 @@ export const SynCButton: React.FC<SyncButtonProps> = ({
   return (
     <Button
       color="samfundet-red"
-      leftIcon={<IconRefresh />}
+      leftSection={<IconRefresh />}
       onClick={refetchCallback}
       loading={refetchLoading}
     >

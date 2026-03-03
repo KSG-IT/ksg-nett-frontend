@@ -1,4 +1,5 @@
-import { createStyles, UnstyledButton } from '@mantine/core'
+import { UnstyledButton } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { IconTrash } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
@@ -97,10 +98,10 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
   )
 }
 
-const useProductOrderStyles = createStyles(theme => ({
+const useProductOrderStyles = createStyles({
   summaryRow: {
     fontWeight: 'bold',
-    backgroundColor: theme.colors.gray[2],
+    backgroundColor: 'var(--mantine-color-gray-2)',
   },
   tableRow: {
     td: {
@@ -110,4 +111,4 @@ const useProductOrderStyles = createStyles(theme => ({
       textAlign: 'right',
     },
   },
-}))
+})

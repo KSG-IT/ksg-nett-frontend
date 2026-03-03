@@ -1,11 +1,5 @@
-import {
-  Accordion,
-  Button,
-  createStyles,
-  Group,
-  Table,
-  Text,
-} from '@mantine/core'
+import { Accordion, Button, Group, Table, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { IconPlus, IconTrash } from '@tabler/icons-react'
 import { RoleValues } from 'modules/schedules/consts'
@@ -87,7 +81,7 @@ export const ShiftTemplateAccordionItem: React.FC<
   return (
     <Accordion.Item value={shiftTemplate.id}>
       <Accordion.Control>
-        <Group className={classes.shiftTemplateRow} position="apart">
+        <Group className={classes.shiftTemplateRow} justify="space-between">
           <Text className={classes.shiftTemplateColumnCell}>
             {shiftTemplate.name}
           </Text>
@@ -124,19 +118,19 @@ export const ShiftTemplateAccordionItem: React.FC<
             ))}
           </tbody>
         </Table>
-        <Group position="apart">
+        <Group justify="space-between">
           <Group align={'flex-end'}>
             <ShiftRoleSelect value={role} onChangeCallback={setRole} />
             <Button
               variant="subtle"
-              leftIcon={<IconPlus />}
+              leftSection={<IconPlus />}
               onClick={handleCreateShiftSlotTemplate}
             >
               Legg til rolle
             </Button>
           </Group>
           <Button
-            leftIcon={<IconTrash />}
+            leftSection={<IconTrash />}
             color="red"
             loading={deleteShiftTemplateLoading}
             onClick={handleDeleteShiftTemplate}
@@ -149,7 +143,7 @@ export const ShiftTemplateAccordionItem: React.FC<
   )
 }
 
-const shiftTemplateAccordionItemStyles = createStyles(theme => ({
+const shiftTemplateAccordionItemStyles = createStyles({
   shiftTemplateRow: {
     ':nth-child(3)': {
       textAlign: 'right',
@@ -159,4 +153,4 @@ const shiftTemplateAccordionItemStyles = createStyles(theme => ({
     width: '120px',
     textAlign: 'left',
   },
-}))
+})

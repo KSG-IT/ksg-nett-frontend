@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client'
 import {
   Button,
   Card,
-  createStyles,
   Group,
   Modal,
   Stack,
@@ -26,6 +25,7 @@ import {
   InterviewLocationOverviewRow,
   InterviewTableOverviewReturns,
 } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -147,7 +147,7 @@ export const InterviewsOverview: React.FC = () => {
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
 
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Intervjuoversikt</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.add.interview}>
           <Button onClick={() => setAddInterviewModalOpen(true)}>
@@ -156,13 +156,13 @@ export const InterviewsOverview: React.FC = () => {
         </PermissionGate>
       </Group>
 
-      <Group position="center" align={'center'}>
+      <Group justify="center" align={'center'}>
         <UnstyledButton onClick={handleDecrementDate}>
           <IconChevronLeft />
         </UnstyledButton>
         <DateInput
           value={date}
-          onChange={val => val && setDate(val)}
+          onChange={val => val && setDate(new Date(val))}
           locale={'nb'}
         />
         <UnstyledButton>

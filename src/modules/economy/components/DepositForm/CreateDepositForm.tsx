@@ -61,9 +61,9 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
   }
 
   return (
-    <Stack spacing={'lg'} p={mobileSize ? 'xs' : 'xl'}>
+    <Stack gap={'lg'} p={mobileSize ? 'xs' : 'xl'}>
       <SimpleGrid cols={1} spacing={'md'}>
-        <Stepper active={active} breakpoint="sm" allowNextStepsSelect={false}>
+        <Stepper active={active} allowNextStepsSelect={false}>
           <Stepper.Step label="Opprett innskudd">
             {depositMethod === DepositMethodValues.BANK_TRANSFER && (
               <MessageBox type="warning">
@@ -112,8 +112,10 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                     min={1}
                     max={30_000}
                     placeholder="Hvor mye socistøv du vil konvertere"
-                    icon={<IconCashBanknote size={14} />}
-                    onChange={value => value && setValue('amount', value)}
+                    leftSection={<IconCashBanknote size={14} />}
+                    onChange={value =>
+                      typeof value === 'number' && setValue('amount', value)
+                    }
                   />
                 )}
               />
@@ -129,14 +131,14 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                       maxDate={new Date()}
                       value={field.value}
                       onChange={value =>
-                        value && setValue('dateOfTransfer', value)
+                        value && setValue('dateOfTransfer', new Date(value))
                       }
                     />
                   )}
                 />
               )}
 
-              <Group position="apart" mt={'md'}>
+              <Group justify="space-between" mt={'md'}>
                 <Button
                   variant="outline"
                   color={'samfundet-red'}
@@ -158,16 +160,14 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
           </Stepper.Step>
           <Stepper.Step label="Betaling">
             {onGoingIntent && (
-              <Stack spacing={'xs'}>
+              <Stack gap={'xs'}>
                 <label style={{ fontSize: 14 }}>Beløp som du betaler</label>
-                <Text weight={'bold'}>
-                  {formatCurrency(onGoingIntent.amount)}
-                </Text>
+                <Text fw={'bold'}>{formatCurrency(onGoingIntent.amount)}</Text>
 
                 <label style={{ fontSize: 14 }}>
                   Beløp som kommer på konto
                 </label>
-                <Text weight={'bold'}>
+                <Text fw={'bold'}>
                   {formatCurrency(onGoingIntent.resolvedAmount!)}
                 </Text>
                 <StripeDepositPaymentForm depositId={onGoingIntent.id} />

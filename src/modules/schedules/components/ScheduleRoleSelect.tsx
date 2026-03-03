@@ -87,7 +87,7 @@ export const ShiftRoleSelect: React.FC<ShiftRoleSelectProps> = ({
   return (
     <Select
       value={value}
-      onChange={onChangeCallback}
+      onChange={val => val && onChangeCallback(val as RoleValues)}
       data={shiftRoleData}
       {...rest}
     />

@@ -3,7 +3,8 @@ import { Select, SelectProps } from '@mantine/core'
 import { ALL_SCHEDULE_TEMPLATES } from '../queries'
 import { AllScheduleTemplatesReturns } from '../types.graphql'
 
-interface ScheduleTemplateSelectProps extends Omit<SelectProps, 'data'> {
+interface ScheduleTemplateSelectProps
+  extends Omit<SelectProps, 'data' | 'onChange'> {
   value: string
   onChange: (val: string) => void
 }
@@ -26,7 +27,7 @@ export const ScheduleTemplateSelect: React.FC<ScheduleTemplateSelectProps> = ({
       label="Vaktplan"
       placeholder="Velg vaktplan"
       value={value}
-      onChange={onChange}
+      onChange={val => val && onChange(val)}
       data={scheduleTemplateOptions}
     />
   )

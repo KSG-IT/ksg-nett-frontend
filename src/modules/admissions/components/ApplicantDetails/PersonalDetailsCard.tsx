@@ -9,7 +9,7 @@ interface LabelProps {
 
 const Label: React.FC<LabelProps> = ({ children }) => {
   return (
-    <Text weight="bold" size="xs" color="gray.500">
+    <Text fw="bold" size="xs" c="gray.500">
       {children}
     </Text>
   )
@@ -29,33 +29,33 @@ export const PersonalDetailsCard: React.FC<PersonalDetailsCardProps> = ({
           <Image height={250} width={250} src={applicant.image} />
         )}
         <Stack>
-          <Group align="flex-start" spacing={'xs'} p="xl">
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
+          <Group align="flex-start" gap={'xs'} p="xl">
+            <Stack justify={'flex-start'} align="flex-start" gap="xs">
               <Label>Epost</Label>
               <Text m="0"> {applicant.email}</Text>
             </Stack>
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
+            <Stack justify={'flex-start'} align="flex-start" gap="xs">
               <Label>Hjemby</Label>
               <Text>{applicant.hometown}</Text>
             </Stack>
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
+            <Stack justify={'flex-start'} align="flex-start" gap="xs">
               <Label>Studie</Label>
               <Text>{applicant.study}</Text>
             </Stack>
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
+            <Stack justify={'flex-start'} align="flex-start" gap="xs">
               <Label>Telefon</Label>
               <Text>{applicant.phone}</Text>
             </Stack>
           </Group>
 
-          <Group align="flex-start" spacing={'xs'} p="xl">
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
+          <Group align="flex-start" gap={'xs'} p="xl">
+            <Stack justify={'flex-start'} align="flex-start" gap="xs">
               <Label>Fødselsdato</Label>
               <Text>
                 {format(new Date(applicant.dateOfBirth), 'dd.MM.yyyy')}
               </Text>
             </Stack>
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
+            <Stack justify={'flex-start'} align="flex-start" gap="xs">
               <Label>Adresse</Label>
               <Text>{applicant.address}</Text>
             </Stack>

@@ -84,12 +84,12 @@ export const UploadAdmissionCSVModal: React.FC<
           label="Velg en opptaksfil"
           accept="text/csv"
           placeholder="Trykk her"
-          icon={<IconFileCode />}
+          leftSection={<IconFileCode />}
           clearable
         />
         <Button
           color="samfundet-red"
-          leftIcon={<IconUpload />}
+          leftSection={<IconUpload />}
           disabled={!file}
           type="submit"
           onClick={handleUploadFile}
@@ -101,7 +101,7 @@ export const UploadAdmissionCSVModal: React.FC<
         color="samfundet-red"
         disabled={result.length === 0 || !file}
         loading={createApplicantsFromCSVLoading}
-        leftIcon={<IconUserPlus />}
+        leftSection={<IconUserPlus />}
         my="md"
         onClick={handleCreateProfiles}
       >

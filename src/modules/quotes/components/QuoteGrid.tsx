@@ -65,13 +65,7 @@ export const QuoteGrid: React.FC<QuoteGridProps> = ({ search }) => {
 
   return (
     <>
-      <SimpleGrid
-        cols={4}
-        breakpoints={[
-          { maxWidth: 'lg', cols: 3, spacing: 'md' },
-          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
-        ]}
-      >
+      <SimpleGrid cols={{ base: 1, sm: 3, lg: 4 }}>
         {quotes.map(quote => (
           <QuoteCard quote={quote} key={quote.id} displaySemester />
         ))}

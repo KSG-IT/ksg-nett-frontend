@@ -124,11 +124,11 @@ export const DiscussApplicantTableRows: React.FC<
             </ActionIcon>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Item icon={<IconEye />}>
+            <Menu.Item leftSection={<IconEye />}>
               <Text onClick={() => handleMoreInfo(applicant)}>Mer info</Text>
             </Menu.Item>
             <Menu.Label>Handlinger</Menu.Label>
-            <Menu.Item icon={<IconPlayerPlay />} color="blue">
+            <Menu.Item leftSection={<IconPlayerPlay />} color="blue">
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -139,7 +139,7 @@ export const DiscussApplicantTableRows: React.FC<
                 Diskuteres
               </Text>
             </Menu.Item>
-            <Menu.Item color="green" icon={<IconCheck />}>
+            <Menu.Item color="green" leftSection={<IconCheck />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -150,7 +150,7 @@ export const DiscussApplicantTableRows: React.FC<
                 Vil ha
               </Text>
             </Menu.Item>
-            <Menu.Item color="orange" icon={<IconQuestionMark />}>
+            <Menu.Item color="orange" leftSection={<IconQuestionMark />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -161,7 +161,7 @@ export const DiscussApplicantTableRows: React.FC<
                 Vil sannsynligvis ha
               </Text>
             </Menu.Item>
-            <Menu.Item color="grape" icon={<IconBackpack />}>
+            <Menu.Item color="grape" leftSection={<IconBackpack />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -173,7 +173,7 @@ export const DiscussApplicantTableRows: React.FC<
               </Text>
             </Menu.Item>
 
-            <Menu.Item color="yellow" icon={<IconWheelchair />}>
+            <Menu.Item color="yellow" leftSection={<IconWheelchair />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -184,7 +184,7 @@ export const DiscussApplicantTableRows: React.FC<
                 Reserve
               </Text>
             </Menu.Item>
-            <Menu.Item color="pink" icon={<IconHourglass />}>
+            <Menu.Item color="pink" leftSection={<IconHourglass />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -195,7 +195,7 @@ export const DiscussApplicantTableRows: React.FC<
                 Send på runde
               </Text>
             </Menu.Item>
-            <Menu.Item color="red" icon={<IconCreativeCommonsSa />}>
+            <Menu.Item color="red" leftSection={<IconCreativeCommonsSa />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(

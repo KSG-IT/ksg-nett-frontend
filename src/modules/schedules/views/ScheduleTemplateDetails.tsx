@@ -93,7 +93,7 @@ export const ScheduleTemplateDetails: React.FC = () => {
   return (
     <div>
       <Breadcrumbs items={overloadedItems} />
-      <Group position="apart" my="md">
+      <Group justify="space-between" my="md">
         <Title>
           {scheduleTemplate.name} {scheduleTemplate.schedule.name}
         </Title>
@@ -102,14 +102,14 @@ export const ScheduleTemplateDetails: React.FC = () => {
             permissions={PERMISSIONS.schedules.delete.scheduleTemplate}
           >
             <Button
-              leftIcon={<IconTrash />}
+              leftSection={<IconTrash />}
               color="red"
               onClick={handleDeleteScheduleTemplate}
             >
               Slett mal
             </Button>
           </PermissionGate>
-          <Button leftIcon={<IconPlus />} onClick={() => setModalOpen(true)}>
+          <Button leftSection={<IconPlus />} onClick={() => setModalOpen(true)}>
             Legg til vakt
           </Button>
         </Group>

@@ -1,11 +1,5 @@
 import { AllergyNode } from '../types'
-import {
-  Button,
-  Stack,
-  Title,
-  TransferList,
-  TransferListData,
-} from '@mantine/core'
+import { Button, MultiSelect, Stack, Title } from '@mantine/core'
 import { useState } from 'react'
 import { useUserMutations } from '../mutations.hooks'
 import { MY_SETTINGS_QUERY } from '../queries'
@@ -20,32 +14,21 @@ export const AllergyTransferList: React.FC<AllergyTransferListProps> = ({
   userAllergies,
   allAllergies,
 }) => {
-  const [data, setData] = useState<TransferListData>([
-    allAllergies
-      .filter(
-        allergy =>
-          !userAllergies.find(userAllergy => userAllergy.id === allergy.id)
-      )
-      .map(allergy => ({
-        label: allergy.name,
-        value: allergy.id,
-      })),
-    userAllergies.map(allergy => ({ label: allergy.name, value: allergy.id })),
-  ])
+  const [selectedIds, setSelectedIds] = useState<string[]>(
+    userAllergies.map(a => a.id)
+  )
   const [isDirty, setIsDirty] = useState(false)
 
   const { updateMyAllergies, updateMyAllergiesLoading } = useUserMutations()
 
-  function handleChange(data: TransferListData) {
+  function handleChange(values: string[]) {
     setIsDirty(true)
-    setData(data)
+    setSelectedIds(values)
   }
 
   function handleSave() {
     updateMyAllergies({
-      variables: {
-        allergyIds: data[1].map(allergy => allergy.value),
-      },
+      variables: { allergyIds: selectedIds },
       refetchQueries: [MY_SETTINGS_QUERY],
       onCompleted() {
         setIsDirty(false)
@@ -66,14 +49,17 @@ export const AllergyTransferList: React.FC<AllergyTransferListProps> = ({
   return (
     <Stack>
       <Title order={3}>Mine allergener</Title>
-      <TransferList
-        value={data}
+      <MultiSelect
+        label="Mine allergener"
+        data={allAllergies.map(a => ({ label: a.name, value: a.id }))}
+        value={selectedIds}
         onChange={handleChange}
-        nothingFound="Tomt"
-        titles={['Alle allergener', 'Mine allergener']}
-        breakpoint="sm"
+        placeholder="Velg allergener"
       />
-      <Button disabled={!isDirty} onClick={handleSave}>
+      <Button
+        disabled={!isDirty || updateMyAllergiesLoading}
+        onClick={handleSave}
+      >
         Oppdater
       </Button>
     </Stack>

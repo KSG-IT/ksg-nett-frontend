@@ -44,7 +44,7 @@ export const DeleteApplicantModal: React.FC<DeleteApplicantModalProps> = ({
       <p>Er du sikker på at du har lyst til å slette {applicant!.fullName}</p>
       <Group>
         <Button
-          leftIcon={<IconTrash />}
+          leftSection={<IconTrash />}
           color="red"
           onClick={handleDeleteApplicant}
         >

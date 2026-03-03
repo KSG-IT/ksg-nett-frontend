@@ -35,9 +35,7 @@ export const PositionAvailabilityInput: React.VFC<
     refetchQueries: ['ExternallyAvailableInternalGroupPositionsQuery'],
   })
 
-  function handleMembershipTypeChange(
-    val: 'GANG_MEMBER' | 'FUNCTIONARY' | null
-  ) {
+  function handleMembershipTypeChange(val: string | null) {
     patchInternalGroupAvailability({
       variables: {
         id: availablePosition.id,
@@ -54,7 +52,8 @@ export const PositionAvailabilityInput: React.VFC<
     )
   }
 
-  function handleAvailableNumberChange(val: number) {
+  function handleAvailableNumberChange(val: string | number) {
+    if (typeof val !== 'number') return
     setAvailabilityNumber(val)
     patchInternalGroupAvailability({
       variables: {

@@ -27,7 +27,7 @@ export const IconWithData: React.FC<IconWithDataProps> = ({
       )
     } else {
       return (
-        <Text size="sm" color={'dimmed'}>
+        <Text size="sm" c={'dimmed'}>
           {userData}
         </Text>
       )

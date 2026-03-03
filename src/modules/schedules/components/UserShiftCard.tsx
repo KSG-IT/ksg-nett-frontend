@@ -1,18 +1,11 @@
-import {
-  Badge,
-  Card,
-  createStyles,
-  Group,
-  Stack,
-  Text,
-  useMantineTheme,
-} from '@mantine/core'
+import { Badge, Card, Group, Stack, Text } from '@mantine/core'
 import { format } from 'util/date-fns'
 import { UserThumbnail } from 'modules/users/components'
 import { ShiftNode } from '../types.graphql'
 import { parseLocation, parseShiftRole } from '../util'
 import { useIsMobile } from 'util/hooks'
 import { capitalizeFirstLetter } from 'util/parsing'
+import { createStyles } from '@mantine/emotion'
 
 interface UserShiftCardProps {
   shift: Pick<
@@ -28,15 +21,14 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({
 }) => {
   const { classes } = useStyles()
   const isMobile = useIsMobile()
-  const theme = useMantineTheme()
   return (
     <Card withBorder className={classes.card} shadow="md">
-      <Group position={'apart'} mb={'md'}>
-        <Stack align={'flex-start'} spacing={0}>
-          <Badge variant={'filled'} radius={'sm'} color={theme.primaryColor}>
+      <Group justify={'space-between'} mb={'md'}>
+        <Stack align={'flex-start'} gap={0}>
+          <Badge variant={'filled'} radius={'sm'} color="samfundet-red">
             {shift.name}
           </Badge>
-          <Text weight={'thin'} color={'dimmed'}>
+          <Text fw={'thin'} c={'dimmed'}>
             {capitalizeFirstLetter(
               format(
                 new Date(shift.datetimeStart),
@@ -45,19 +37,19 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({
             )}
           </Text>
         </Stack>
-        <Stack spacing={0} align={'flex-end'}>
+        <Stack gap={0} align={'flex-end'}>
           {shift.location && (
             <Badge>{parseLocation(shift.location).name}</Badge>
           )}
-          <Text align={'center'}>
+          <Text ta={'center'}>
             {format(new Date(shift.datetimeStart), 'HH:mm')} -{' '}
             {format(new Date(shift.datetimeEnd), 'HH:mm')}
           </Text>
         </Stack>
       </Group>
-      <Group noWrap>
+      <Group wrap="nowrap">
         {shift.filledSlots.map(slot => (
-          <Stack spacing="xs" align={'center'}>
+          <Stack gap="xs" align={'center'}>
             <UserThumbnail
               user={slot.user}
               size={isMobile ? 'md' : 'lg'}
@@ -76,15 +68,15 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   title: {
-    color: theme.colors.gray[6],
+    color: 'var(--mantine-color-gray-6)',
     fontWeight: 'bold',
   },
   card: {
-    borderTop: `4px solid ${theme.colors.brand}`,
-    margin: `${theme.spacing.sm}px 0`,
+    borderTop: '4px solid var(--mantine-color-brand-0)',
+    margin: 'var(--mantine-spacing-sm) 0',
     maxWidth: 700,
     overflowX: 'scroll',
   },
-}))
+})

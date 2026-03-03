@@ -1,4 +1,4 @@
-import { Text, ThemeIcon, Timeline, useMantineTheme } from '@mantine/core'
+import { Text, ThemeIcon, Timeline } from '@mantine/core'
 import { IconUsers } from '@tabler/icons-react'
 import { InternalGroupPositionMembershipNode } from 'modules/organization/types.graphql'
 
@@ -7,11 +7,9 @@ interface UserHistoryProps {
 }
 
 export const UserHistory: React.FC<UserHistoryProps> = ({ memberships }) => {
-  const theme = useMantineTheme()
   const fields = memberships.map(
     ({ id, position, membershipStart, membershipEnd }) => (
       <Timeline.Item
-        bulletSize={28}
         bullet={
           <ThemeIcon
             size={30}
@@ -25,10 +23,10 @@ export const UserHistory: React.FC<UserHistoryProps> = ({ memberships }) => {
         key={id}
         title={position.name}
       >
-        <Text color={'dimmed'} size={'sm'}>
+        <Text c={'dimmed'} size={'sm'}>
           {position.internalGroup.name}
         </Text>
-        <Text size={'sm'} weight={800} color={`${theme.colors.brand}`}>
+        <Text size={'sm'} fw={800} c="brand.0">
           {membershipStart} {membershipEnd && ` - ${membershipEnd}`}
         </Text>
       </Timeline.Item>

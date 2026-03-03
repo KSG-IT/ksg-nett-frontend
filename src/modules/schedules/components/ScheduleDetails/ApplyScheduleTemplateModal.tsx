@@ -74,14 +74,14 @@ export const ApplyScheduleTemplateModal: React.FC<
       <DatePickerInput
         label="Startdato"
         value={shiftsFrom}
-        onChange={setShiftsFrom}
+        onChange={val => setShiftsFrom(val ? new Date(val) : null)}
       />
       <NumberInput
         label="Antall uker"
         value={numberOfWeeks}
         min={1}
         max={20}
-        onChange={val => val && setNumberOfWeeks(val)}
+        onChange={val => typeof val === 'number' && setNumberOfWeeks(val)}
       />
 
       <Text>
@@ -99,7 +99,7 @@ export const ApplyScheduleTemplateModal: React.FC<
             'EEE dd.MMM'
           )}
       </Text>
-      <Group my="md" position="right">
+      <Group my="md" justify="flex-end">
         <Button color={'gray'} onClick={onCloseCallback}>
           Avbryt
         </Button>

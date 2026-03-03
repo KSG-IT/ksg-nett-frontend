@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { createStyles, Grid, Modal, Stack, Title } from '@mantine/core'
+import { Grid, Modal, Stack, Title } from '@mantine/core'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { UserEditForm, UserHistory, UserQuotes } from 'modules/users/components'
@@ -9,6 +9,7 @@ import { UserDetails } from '../components/UserDetails'
 
 import { USER_QUERY } from '../queries'
 import { UserQueryReturns, UserQueryVariables } from '../types'
+import { createStyles } from '@mantine/emotion'
 
 interface UserProfileParams {
   userId: string
@@ -40,7 +41,7 @@ export const UserProfile: React.FC = () => {
   return (
     <>
       <Grid align={'flex-start'}>
-        <Grid.Col md={12} lg={9}>
+        <Grid.Col span={{ base: 12, lg: 9 }}>
           <UserDetails user={user} onClick={() => setEditUserModalOpen(true)} />
           <Stack mt={'xl'} className={classes.memberships}>
             <Title order={3} className={classes.title}>
@@ -63,7 +64,7 @@ export const UserProfile: React.FC = () => {
         opened={editUserModalOpen}
         onClose={() => setEditUserModalOpen(false)}
         title={
-          <Title color={'dimmed'} order={3}>
+          <Title c={'dimmed'} order={3}>
             Rediger profilinfo
           </Title>
         }
@@ -79,9 +80,9 @@ export const UserProfile: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((_theme, _, u) => ({
   title: {
-    color: theme.colors.gray[6],
+    color: 'var(--mantine-color-gray-6)',
     fontWeight: 'bold',
   },
   profileImage: {
@@ -97,44 +98,44 @@ const useStyles = createStyles(theme => ({
     fit: 'cover',
   },
   name: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: `Greycliff CF, var(--mantine-font-family)`,
     fontWeight: 500,
-    fontSize: (theme.fontSizes.lg as unknown as number) * 1.25, // Shady ??
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+    fontSize: ('var(--mantine-font-size-lg)' as unknown as number) * 1.25, // Shady ??
+    [u.smallerThan('md')]: {
       textAlign: 'center',
     },
   },
   role: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     fontWeight: 700,
     textTransform: 'uppercase',
-    fontSize: theme.fontSizes.lg,
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+    fontSize: 'var(--mantine-font-size-lg)',
+    [u.smallerThan('md')]: {
       textAlign: 'center',
     },
   },
   aboutMe: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     fontWeight: 700,
     textTransform: 'uppercase',
-    fontSize: theme.fontSizes.lg,
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+    fontSize: 'var(--mantine-font-size-lg)',
+    [u.smallerThan('md')]: {
       textAlign: 'center',
     },
   },
   container: {
     // Media query with value from theme
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+    [u.smallerThan('md')]: {
       marginLeft: 0,
       marginRight: 0,
     },
   },
   wrapper: {
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+    [u.smallerThan('md')]: {
       marginLeft: 0,
       marginRight: 0,
     },
-    marginTop: theme.spacing.md,
+    marginTop: 'var(--mantine-spacing-md)',
   },
   card: {
     width: '70%',
