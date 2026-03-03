@@ -167,15 +167,15 @@ export const CreateQuote: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   title: {
-    color: theme.colors.gray[6],
+    color: 'var(--mantine-color-gray-6)',
     fontWeight: 'bold',
   },
   card: {
-    borderTop: `5px solid ${theme.colors.brand}`,
+    borderTop: '5px solid var(--mantine-color-brand-6)',
   },
   select: {
     color: 'green',
   },
-}))
+})

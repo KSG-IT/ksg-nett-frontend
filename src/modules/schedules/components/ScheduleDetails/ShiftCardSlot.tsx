@@ -142,25 +142,25 @@ export const ShiftCardSlot: React.FC<ShiftCardSlotProps> = ({ shiftSlot }) => {
   )
 }
 
-const useShiftCardSlotStyles = createStyles(theme => ({
+const useShiftCardSlotStyles = createStyles({
   hoverableGreen: {
-    color: theme.colors.green[7],
+    color: 'var(--mantine-color-green-7)',
     ':hover': {
       cursor: 'pointer',
-      backgroundColor: theme.colors.green[1],
-      borderRadius: theme.radius.sm,
+      backgroundColor: 'var(--mantine-color-green-1)',
+      borderRadius: 'var(--mantine-radius-sm)',
     },
   },
   hoverableRed: {
-    color: theme.colors.gray[4],
+    color: 'var(--mantine-color-gray-4)',
     fontWeight: 800,
     ':hover': {
       cursor: 'pointer',
-      backgroundColor: theme.colors.gray[0],
-      borderRadius: theme.radius.sm,
+      backgroundColor: 'var(--mantine-color-gray-0)',
+      borderRadius: 'var(--mantine-radius-sm)',
     },
   },
   wrapper: {
     color: 'black',
   },
-}))
+})

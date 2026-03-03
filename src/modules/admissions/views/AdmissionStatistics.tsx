@@ -98,12 +98,12 @@ const AdmissionStatistics: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   statisticNumber: {
     fontSize: '32px',
     fontWeight: 700,
     color: 'hotpink',
   },
-}))
+})
 
 export default AdmissionStatistics

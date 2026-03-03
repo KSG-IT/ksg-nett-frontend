@@ -35,6 +35,6 @@ export const BarTabDashboard: React.FC = () => {
   )
 }
 
-const useBarTabDashboardStyles = createStyles(theme => ({
+const useBarTabDashboardStyles = createStyles({
   wrapper: {},
-}))
+})

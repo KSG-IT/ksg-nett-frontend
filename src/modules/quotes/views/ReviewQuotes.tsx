@@ -115,13 +115,7 @@ export const ReviewQuotes: React.FC = () => {
         </Title>
         <QuotesTabs />
       </Group>
-      <SimpleGrid
-        cols={3}
-        breakpoints={[
-          { maxWidth: 'lg', cols: 3, spacing: 'md' },
-          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
-        ]}
-      >
+      <SimpleGrid cols={{ base: 1, sm: 3 }}>
         {pendingQuotes.map(quote => (
           <Card key={quote.id} withBorder>
             <Group justify="center">
@@ -181,9 +175,9 @@ export const ReviewQuotes: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   quoteText: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     fontWeight: 500,
   },
-}))
+})

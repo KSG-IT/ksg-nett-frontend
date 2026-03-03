@@ -97,9 +97,9 @@ export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: `Greycliff CF, var(--mantine-font-family)`,
     fontWeight: 700,
   },
-}))
+})

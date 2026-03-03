@@ -16,15 +16,7 @@ export const RecentQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
       <Text c={'dimmed'} fw={700}>
         Siste sitater
       </Text>
-      <SimpleGrid
-        cols={2}
-        breakpoints={[
-          { maxWidth: 'md', cols: 1, spacing: 'md' },
-          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
-        ]}
-      >
-        {cards}
-      </SimpleGrid>
+      <SimpleGrid cols={{ base: 1, md: 2 }}>{cards}</SimpleGrid>
     </Stack>
   )
 }

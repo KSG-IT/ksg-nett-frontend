@@ -126,11 +126,11 @@ export const SosiSessions: React.FC = () => {
   )
 }
 
-const useSociSessionsStyles = createStyles(theme => ({
+const useSociSessionsStyles = createStyles({
   wrapper: {
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
-}))
+})

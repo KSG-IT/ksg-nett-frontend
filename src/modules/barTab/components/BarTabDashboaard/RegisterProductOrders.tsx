@@ -266,7 +266,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
   )
 }
 
-const useRegisterProductOrdersStyles = createStyles(theme => ({
+const useRegisterProductOrdersStyles = createStyles({
   wrapper: {},
   card: {
     overflowX: 'scroll',
@@ -274,4 +274,4 @@ const useRegisterProductOrdersStyles = createStyles(theme => ({
   addOrderWrapper: {
     overflow: 'visible',
   },
-}))
+})

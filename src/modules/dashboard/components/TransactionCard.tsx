@@ -66,17 +66,17 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
-    backgroundColor: theme.colors.white,
-    border: `1px solid ${theme.colors.gray[3]}`,
-    borderTop: `5px solid ${theme.colors.brand}`,
+    backgroundColor: 'white',
+    border: '1px solid var(--mantine-color-gray-3)',
+    borderTop: '5px solid var(--mantine-color-brand-6)',
   },
   tableHeader: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     textTransform: 'uppercase',
   },
   headerRow: {
-    borderRadius: theme.radius.xs,
+    borderRadius: 'var(--mantine-radius-xs)',
   },
-}))
+})

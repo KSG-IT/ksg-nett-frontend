@@ -65,10 +65,7 @@ export const InterviewsAvailableForBooking: React.FC<
           <Title order={5} tt={'uppercase'}>
             {format(new Date(interviewDay.date), 'EEEE dd MMM')}
           </Title>
-          <SimpleGrid
-            cols={2}
-            breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
-          >
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
             {interviewDay.interviewSlots.map((slot, i) => {
               const unavailable = slot.interviewIds.length === 0
               return (

@@ -101,7 +101,7 @@ export const MyDeposits: React.VFC<MyDepositsProps> = ({ deposits }) => {
   )
 }
 
-const useMyDepositsStyles = createStyles(theme => ({
+const useMyDepositsStyles = createStyles({
   table: {
     'td:nth-child(2)': {
       textAlign: 'right',
@@ -110,4 +110,4 @@ const useMyDepositsStyles = createStyles(theme => ({
       textAlign: 'right',
     },
   },
-}))
+})

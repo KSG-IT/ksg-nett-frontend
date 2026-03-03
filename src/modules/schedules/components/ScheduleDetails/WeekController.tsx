@@ -36,7 +36,7 @@ export const WeekController: React.FC<WeekController> = ({
   )
 }
 
-const useWeekControllerStyles = createStyles(theme => ({
+const useWeekControllerStyles = createStyles({
   weekController: {
     backgroundColor: 'white',
     border: '1px solid gray',
@@ -53,4 +53,4 @@ const useWeekControllerStyles = createStyles(theme => ({
       cursor: 'pointer',
     },
   },
-}))
+})

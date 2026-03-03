@@ -57,10 +57,7 @@ export const InternalGroupUserHighlightEditForm: React.FC<
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <SimpleGrid
-        cols={2}
-        breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
-      >
+      <SimpleGrid cols={{ base: 1, sm: 2 }}>
         <Stack>
           <UserSelect
             label={'Bruker'}

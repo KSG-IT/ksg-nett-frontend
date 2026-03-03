@@ -81,29 +81,29 @@ export const ShiftCard: React.FC<ShiftCardProps> = ({
   )
 }
 
-const useShiftCardStyles = createStyles(theme => ({
+const useShiftCardStyles = createStyles({
   title: {
     fontWeight: 600,
-    fontSize: theme.fontSizes.lg,
-    color: theme.colors.gray[9],
+    fontSize: 'var(--mantine-font-size-lg)',
+    color: 'var(--mantine-color-gray-9)',
   },
   shift: {
     display: 'flex',
     flexDirection: 'column',
     fontSize: '14px',
-    padding: theme.spacing.md,
-    boxShadow: theme.shadows.xs,
-    marginBottom: theme.spacing.sm,
-    borderRadius: theme.radius.md,
-    backgroundColor: theme.white,
-    color: theme.black,
+    padding: 'var(--mantine-spacing-md)',
+    boxShadow: 'var(--mantine-shadow-xs)',
+    marginBottom: 'var(--mantine-spacing-sm)',
+    borderRadius: 'var(--mantine-radius-md)',
+    backgroundColor: 'white',
+    color: 'black',
     '&:hover': {
       cursor: 'pointer',
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: 'var(--mantine-color-gray-0)',
     },
   },
   roster: {
-    marginTop: theme.spacing.xs,
+    marginTop: 'var(--mantine-spacing-xs)',
     minHeight: '26px',
   },
   shiftTime: {
@@ -113,16 +113,16 @@ const useShiftCardStyles = createStyles(theme => ({
   },
   timeText: {
     marginLeft: '4px',
-    color: theme.colors.gray[6],
+    color: 'var(--mantine-color-gray-6)',
     fontWeight: 500,
   },
   isFilled: {
     display: 'flex',
     alignItems: 'center',
-    color: theme.colors.yellow[5],
+    color: 'var(--mantine-color-yellow-5)',
   },
   rowReverse: {
     display: 'flex',
     flexDirection: 'row-reverse',
   },
-}))
+})

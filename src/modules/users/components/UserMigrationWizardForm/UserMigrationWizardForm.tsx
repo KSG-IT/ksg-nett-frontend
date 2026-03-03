@@ -26,10 +26,7 @@ export const UserMigrationWizardForm: React.FC<
         checked={readMessageBox}
         onChange={evt => setReadMessageBox(!readMessageBox)}
       />
-      <SimpleGrid
-        cols={2}
-        breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
-      >
+      <SimpleGrid cols={{ base: 1, sm: 2 }}>
         <TextInput
           error={errors?.firstName?.message}
           label="Fornavn"

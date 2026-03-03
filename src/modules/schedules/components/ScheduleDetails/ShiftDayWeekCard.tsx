@@ -80,7 +80,7 @@ export const ShiftDayWeekCard: React.FC<ShiftDayWeekCardProps> = ({
 
 // #F6F5F8
 // #F1F3F5
-const useShiftDayWeekCardStyles = createStyles(theme => ({
+const useShiftDayWeekCardStyles = createStyles({
   wrapper: {
     width: '100%',
   },
@@ -88,7 +88,7 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     width: '100%',
     display: 'flex',
     gap: '2px',
-    backgroundColor: theme.colors.gray[0],
+    backgroundColor: 'var(--mantine-color-gray-0)',
     overflow: 'scroll',
   },
 
@@ -96,7 +96,7 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     minWidth: '270px',
-    backgroundColor: theme.colors.gray[1],
-    borderRadius: theme.radius.md,
+    backgroundColor: 'var(--mantine-color-gray-1)',
+    borderRadius: 'var(--mantine-radius-md)',
   },
-}))
+})

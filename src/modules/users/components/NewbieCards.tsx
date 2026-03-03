@@ -45,16 +45,16 @@ export const NewbieCards: React.FC<NewbieCardProps> = ({ newbies }) => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
     height: 'auto',
     width: 200,
     ':hover': {
-      boxShadow: theme.shadows.md,
+      boxShadow: 'var(--mantine-shadow-md)',
       cursor: 'pointer',
     },
     '@media (max-width: 600px)': {
       width: '100%',
     },
   },
-}))
+})

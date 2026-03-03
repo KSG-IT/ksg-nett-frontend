@@ -84,10 +84,7 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
           nok. Helst book et intevju så tidlig som mulig.
         </Text>
       </MessageBox>
-      <SimpleGrid
-        cols={2}
-        breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
-      >
+      <SimpleGrid cols={{ base: 1, sm: 2 }}>
         <Container>
           <DatePicker
             size={'md'}

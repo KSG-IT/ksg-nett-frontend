@@ -125,10 +125,10 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
-}))
+})

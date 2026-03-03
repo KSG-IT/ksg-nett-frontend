@@ -69,9 +69,9 @@ export const MetaDataDisplay: React.FC<MetaDataDisplayProps> = ({
   )
 }
 
-const useMetaDisplayStyles = createStyles(theme => ({
+const useMetaDisplayStyles = createStyles({
   label: {
     fontWeight: 600,
     fontSize: 16,
   },
-}))
+})

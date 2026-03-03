@@ -56,13 +56,13 @@ export const CreateDeposit: React.FC<DepositProps> = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   title: {
-    color: theme.colors.gray[6],
+    color: 'var(--mantine-color-gray-6)',
     fontWeight: 'bold',
   },
   card: {
-    borderTop: `5px solid ${theme.colors.brand}`,
-    margin: `${theme.spacing.sm}px 0`,
+    borderTop: '5px solid var(--mantine-color-brand-6)',
+    margin: `var(--mantine-spacing-sm) 0`,
   },
-}))
+})

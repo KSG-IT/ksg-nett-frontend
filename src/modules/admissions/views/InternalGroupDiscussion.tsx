@@ -155,12 +155,12 @@ export const InternalGroupDiscussion: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   clickableTd: {
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: 'var(--mantine-color-gray-0)',
       textDecoration: 'underline',
     },
   },
-}))
+})

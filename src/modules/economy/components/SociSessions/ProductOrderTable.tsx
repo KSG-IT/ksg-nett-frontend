@@ -98,10 +98,10 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
   )
 }
 
-const useProductOrderStyles = createStyles(theme => ({
+const useProductOrderStyles = createStyles({
   summaryRow: {
     fontWeight: 'bold',
-    backgroundColor: theme.colors.gray[2],
+    backgroundColor: 'var(--mantine-color-gray-2)',
   },
   tableRow: {
     td: {
@@ -111,4 +111,4 @@ const useProductOrderStyles = createStyles(theme => ({
       textAlign: 'right',
     },
   },
-}))
+})

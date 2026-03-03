@@ -133,12 +133,12 @@ export const ScheduleDetails: React.FC = () => {
   )
 }
 
-const useScheduleDetailsStyles = createStyles(theme => ({
+const useScheduleDetailsStyles = createStyles({
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
 
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
 
   shifts: {
@@ -146,4 +146,4 @@ const useScheduleDetailsStyles = createStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-}))
+})

@@ -143,7 +143,7 @@ export const ShiftTemplateAccordionItem: React.FC<
   )
 }
 
-const shiftTemplateAccordionItemStyles = createStyles(theme => ({
+const shiftTemplateAccordionItemStyles = createStyles({
   shiftTemplateRow: {
     ':nth-child(3)': {
       textAlign: 'right',
@@ -153,4 +153,4 @@ const shiftTemplateAccordionItemStyles = createStyles(theme => ({
     width: '120px',
     textAlign: 'left',
   },
-}))
+})

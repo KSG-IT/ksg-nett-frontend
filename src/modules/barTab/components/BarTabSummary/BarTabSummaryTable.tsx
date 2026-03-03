@@ -61,7 +61,7 @@ export const BarTabSummaryTable: React.FC<BarTabSummaryTableProps> = ({
   )
 }
 
-const useBarTabSummaryTableStyles = createStyles(theme => ({
+const useBarTabSummaryTableStyles = createStyles({
   wrapper: {},
   card: {
     overflowX: 'scroll',
@@ -85,4 +85,4 @@ const useBarTabSummaryTableStyles = createStyles(theme => ({
   rightAligned: {
     textAlign: 'right',
   },
-}))
+})

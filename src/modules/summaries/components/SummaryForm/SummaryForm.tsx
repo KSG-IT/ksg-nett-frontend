@@ -56,13 +56,7 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack>
         <Card withBorder style={{ overflow: 'visible' }}>
-          <SimpleGrid
-            cols={2}
-            breakpoints={[
-              { maxWidth: 755, cols: 1, spacing: 'sm' },
-              { maxWidth: 600, cols: 1, spacing: 'sm' },
-            ]}
-          >
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <Stack>
               <CustomInputLabel label={'Referent'}>
                 <UserSelect

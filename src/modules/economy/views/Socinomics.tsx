@@ -159,7 +159,7 @@ const useStyles = createStyles(
       backgroundColor: '#111',
       height: '100%',
       overflow: 'hidden',
-      padding: theme.spacing.md,
+      padding: 'var(--mantine-spacing-md)',
     },
     root: {
       position: 'absolute',
@@ -170,7 +170,7 @@ const useStyles = createStyles(
       bottom: 0,
       zIndex: variables.fullScreen ? 9000 : 0,
       color: 'white',
-      padding: theme.spacing.md,
+      padding: 'var(--mantine-spacing-md)',
       overflow: 'hidden',
     },
     scrollingContainer: {
@@ -184,9 +184,9 @@ const useStyles = createStyles(
     },
 
     scrollingInner: {
-      paddingBlock: theme.spacing.md,
+      paddingBlock: 'var(--mantine-spacing-md)',
       display: 'flex',
-      gap: theme.spacing.md,
+      gap: 'var(--mantine-spacing-md)',
       animationName: 'scroll',
       animationDuration: '10s',
       animationTimingFunction: 'linear',

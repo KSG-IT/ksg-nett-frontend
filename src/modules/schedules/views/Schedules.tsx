@@ -43,11 +43,11 @@ export const Schedules: React.FC = () => {
   )
 }
 
-const useSchedulesStyles = createStyles(theme => ({
+const useSchedulesStyles = createStyles({
   wrapper: {
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
-}))
+})

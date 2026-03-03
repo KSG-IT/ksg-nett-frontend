@@ -56,11 +56,11 @@ export const MyUpcomingShifts: React.FC = () => {
   )
 }
 
-const useMyUpcomingShiftStyles = createStyles(theme => ({
+const useMyUpcomingShiftStyles = createStyles({
   container: {
     maxWidth: 900,
   },
   icalUrl: {
     wordBreak: 'break-word',
   },
-}))
+})

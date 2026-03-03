@@ -91,7 +91,7 @@ export const UserSearch: React.VFC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((_theme, _, u) => ({
   wrapper: {
     height: 35,
     width: 300,
@@ -103,7 +103,7 @@ const useStyles = createStyles(theme => ({
     padding: 5,
     zIndex: 9000,
 
-    [theme.breakpoints.xs]: {
+    [u.smallerThan('xs')]: {
       width: '100%',
       padding: 0,
     },

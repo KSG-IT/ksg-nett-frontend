@@ -276,7 +276,7 @@ export const SetPriorities: React.FC<SetPrioritiesProps> = ({
         <Title c={'dimmed'} order={3}>
           Tilgjengelige stillinger
         </Title>
-        <SimpleGrid breakpoints={[{ minWidth: 'sm', cols: 4 }]} cols={1}>
+        <SimpleGrid cols={{ base: 1, sm: 4 }}>
           {filteredInternalGroupPositions.map(position => (
             <Button
               key={position.name}

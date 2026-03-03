@@ -155,11 +155,11 @@ export const Summaries: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
-    border: `1px solid ${theme.colors.gray[3]}`,
+    border: '1px solid var(--mantine-color-gray-3)',
   },
   tableRow: {
     cursor: 'pointer',
   },
-}))
+})

@@ -93,7 +93,7 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   totalRow: {
     maxWidth: '700px',
   },
@@ -101,4 +101,4 @@ const useStyles = createStyles(theme => ({
     padding: '0px',
     margin: '0px',
   },
-}))
+})

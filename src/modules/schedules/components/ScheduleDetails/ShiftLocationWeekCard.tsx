@@ -57,7 +57,7 @@ export const ShiftLocationWeekCard: React.FC<ShiftLocationWeekCardProps> = ({
   )
 }
 
-const useShiftDayWeekCardStyles = createStyles(theme => ({
+const useShiftDayWeekCardStyles = createStyles({
   card: {
     width: '100%',
     display: 'inline-grid',
@@ -72,4 +72,4 @@ const useShiftDayWeekCardStyles = createStyles(theme => ({
     height: '100%',
     width: '270px',
   },
-}))
+})

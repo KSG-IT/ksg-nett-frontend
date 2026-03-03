@@ -80,11 +80,11 @@ export const AllShifts = () => {
   )
 }
 
-const useAllShiftsStyles = createStyles(theme => ({
+const useAllShiftsStyles = createStyles({
   wrapper: {
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
-}))
+})
