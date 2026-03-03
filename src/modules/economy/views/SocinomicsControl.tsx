@@ -62,15 +62,7 @@ const SocinomicsControlPanel: React.FC = () => {
   return (
     <Container>
       <Title c="dimmed">Control Panel</Title>
-      <SimpleGrid
-        cols={3}
-        breakpoints={[
-          { maxWidth: 'sm', cols: 1 },
-          { maxWidth: 'md', cols: 2 },
-          { maxWidth: 'xl', cols: 3 },
-        ]}
-        spacing="md"
-      >
+      <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
         {products.map((product, index) => (
           <SociStockProductControlCard key={index} stock={product} />
         ))}

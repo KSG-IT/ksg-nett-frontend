@@ -63,14 +63,10 @@ export const InternalGroupUserHighlights: React.FC<
         onChange={() => setIncludeArchived(prev => !prev)}
       />
       <SimpleGrid
-        cols={3}
+        cols={{ base: 1, md: 2, lg: 3 }}
         p={isMobile ? 0 : 'md'}
         spacing={isMobile ? 0 : 'lg'}
         verticalSpacing={isMobile ? 'lg' : 'xl'}
-        breakpoints={[
-          { maxWidth: 900, cols: 1, spacing: 'sm' },
-          { maxWidth: 1200, cols: 2, spacing: 'sm' },
-        ]}
       >
         {highlightData.map(highlight => (
           <Card key={highlight.id} withBorder radius={'lg'}>
@@ -140,15 +136,15 @@ export const InternalGroupUserHighlights: React.FC<
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   addButton: {
     width: '100%',
-    backgroundColor: theme.colors.gray[2],
-    borderRadius: theme.radius.lg,
-    border: '1px solid ' + theme.colors.gray[3],
+    backgroundColor: 'var(--mantine-color-gray-2)',
+    borderRadius: 'var(--mantine-radius-lg)',
+    border: '1px solid var(--mantine-color-gray-3)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    color: theme.colors.gray[5],
+    color: 'var(--mantine-color-gray-5)',
   },
-}))
+})

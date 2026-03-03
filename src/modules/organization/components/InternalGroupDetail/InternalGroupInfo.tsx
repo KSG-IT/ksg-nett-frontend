@@ -10,10 +10,7 @@ export const InternalGroupInfo: React.FC<InternalGroupInfoProps> = ({
   internalGroup,
 }) => {
   return (
-    <SimpleGrid
-      cols={2}
-      breakpoints={[{ maxWidth: 900, cols: 1, spacing: 'sm' }]}
-    >
+    <SimpleGrid cols={{ base: 1, md: 2 }}>
       {internalGroup.description && (
         <Card p="sm" withBorder>
           <div
