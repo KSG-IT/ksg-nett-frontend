@@ -53,9 +53,8 @@ export const AddShiftSlotPopover: React.FC<AddShiftSlotPopoverProps> = ({
     >
       <Popover.Target>
         <Button
-          size="md"
+          size="compact-md"
           variant="outline"
-          compact
           color={'gray'}
           onClick={togglePopover}
           mt="sm"
