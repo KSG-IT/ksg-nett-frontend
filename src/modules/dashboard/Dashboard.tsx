@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Grid, Stack, useMantineTheme } from '@mantine/core'
+import { Grid, Stack } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -12,17 +12,13 @@ import { TransactionCard } from './components/TransactionCard'
 import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
 import { DashboardDataQueryReturns } from './types.graphql'
-import { useNavigate } from 'react-router-dom'
 import { createStyles } from '@mantine/emotion'
 
 const breadCrumbItems = [{ label: 'Hjem', path: '/dashboard' }]
 
 export const Dashboard = () => {
   const { classes } = useStyles()
-  const theme = useMantineTheme()
-  const mediaQuery = useMediaQuery(
-    `(min-width: ${theme.breakpoints.xl + 300}px)`
-  )
+  const mediaQuery = useMediaQuery('(min-width: 1708px)')
   const user = useStore(state => state.user)!
 
   const { data, loading, error } = useQuery<DashboardDataQueryReturns>(
@@ -69,12 +65,12 @@ export const Dashboard = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((_theme, _, u) => ({
   wrapper: {
     width: '100%',
     maxWidth: '1600px',
 
-    [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
+    [u.smallerThan('xl')]: {
       padding: 0,
     },
   },

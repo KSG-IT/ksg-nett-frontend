@@ -1,4 +1,4 @@
-import { Badge, Card, Group, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Badge, Card, Group, Stack, Text } from '@mantine/core'
 import { format } from 'util/date-fns'
 import { UserThumbnail } from 'modules/users/components'
 import { ShiftNode } from '../types.graphql'
@@ -21,12 +21,11 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({
 }) => {
   const { classes } = useStyles()
   const isMobile = useIsMobile()
-  const theme = useMantineTheme()
   return (
     <Card withBorder className={classes.card} shadow="md">
       <Group justify={'space-between'} mb={'md'}>
         <Stack align={'flex-start'} gap={0}>
-          <Badge variant={'filled'} radius={'sm'} color={theme.primaryColor}>
+          <Badge variant={'filled'} radius={'sm'} color="samfundet-red">
             {shift.name}
           </Badge>
           <Text fw={'thin'} c={'dimmed'}>
@@ -69,15 +68,15 @@ export const UserShiftCard: React.FC<UserShiftCardProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   title: {
-    color: theme.colors.gray[6],
+    color: 'var(--mantine-color-gray-6)',
     fontWeight: 'bold',
   },
   card: {
-    borderTop: `4px solid ${theme.colors.brand}`,
-    margin: `${theme.spacing.sm}px 0`,
+    borderTop: '4px solid var(--mantine-color-brand-0)',
+    margin: 'var(--mantine-spacing-sm) 0',
     maxWidth: 700,
     overflowX: 'scroll',
   },
-}))
+})

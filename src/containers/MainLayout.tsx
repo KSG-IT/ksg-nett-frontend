@@ -7,7 +7,6 @@ import {
   Group,
   Image,
   Text,
-  useMantineTheme,
 } from '@mantine/core'
 import { createStyles } from '@mantine/emotion'
 import { FullContentLoader } from 'components/Loading'
@@ -42,7 +41,6 @@ interface MainLayoutProps {
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const theme = useMantineTheme()
   const isMobile = useIsMobile()
   const { sidebarOpen, toggleSidebar } = useSidebar()
   const { classes } = useStyles()
@@ -61,7 +59,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           fontFamily: 'Inter',
         },
         main: {
-          background: theme.colors.gray[0],
+          background: 'var(--mantine-color-gray-0)',
         },
       }}
     >
@@ -73,7 +71,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               opened={sidebarOpen}
               onClick={toggleSidebar}
               size="sm"
-              color={theme.colors.gray[6]}
+              color="gray.6"
               mr="xl"
             />
           )}

@@ -1,13 +1,5 @@
 import { useQuery } from '@apollo/client'
-import {
-  Box,
-  Card,
-  Group,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from '@mantine/core'
+import { Box, Card, Group, Stack, Text, Title } from '@mantine/core'
 import {
   IconMoneybag,
   IconTriangle,
@@ -34,7 +26,6 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
   showMarketHistory,
 }) => {
   const { classes, cx } = useStyles()
-  const theme = useMantineTheme()
   const isMobile = useIsMobile()
 
   const { data, loading, error } = useQuery<SociProductReturns>(SOCI_PRODUCT, {
@@ -54,7 +45,7 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
       <Group wrap="nowrap" justify="space-between">
         <Group align="flex-end" wrap="nowrap">
           {sociProduct.icon ? (
-            <Text size={48}>{sociProduct.icon}</Text>
+            <Text size="48px">{sociProduct.icon}</Text>
           ) : (
             <IconMoneybag />
           )}
@@ -75,15 +66,15 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
               </Title>
               {stock.percentageChange >= 0 ? (
                 <IconTriangle
-                  color={theme.colors.green[4]}
-                  fill={theme.colors.green[4]}
+                  color="var(--mantine-color-green-4)"
+                  fill="var(--mantine-color-green-4)"
                   size={isMobile ? 12 : 24}
                   style={{ marginRight: '5px' }}
                 />
               ) : (
                 <IconTriangleInverted
-                  color={theme.colors.red[4]}
-                  fill={theme.colors.red[4]}
+                  color="var(--mantine-color-red-4)"
+                  fill="var(--mantine-color-red-4)"
                   size={isMobile ? 12 : 24}
                   style={{ marginRight: '5px' }}
                 />
@@ -103,22 +94,20 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
         {showMarketHistory && (
           <Box>
             <Group gap={2} wrap="nowrap" align="flex-end" justify="flex-end">
-              {stock.marketHistory?.map(
-                (order: StockMarketDataPoints, index: number) => {
-                  return (
-                    <Box
-                      className={classes.stockActivity}
-                      sx={{
-                        height: `${1.5 * order.price}px`,
-                        maxHeight: '160px',
-                        width: `300px / ${stock.marketHistory?.length}px`,
-                        minWidth: '8px',
-                        maxWidth: '300px',
-                      }}
-                    />
-                  )
-                }
-              )}
+              {stock.marketHistory?.map((order: StockMarketDataPoints) => {
+                return (
+                  <Box
+                    className={classes.stockActivity}
+                    style={{
+                      height: `${1.5 * order.price}px`,
+                      maxHeight: '160px',
+                      width: `300px / ${stock.marketHistory?.length}px`,
+                      minWidth: '8px',
+                      maxWidth: '300px',
+                    }}
+                  />
+                )
+              })}
             </Group>
           </Box>
         )}
@@ -127,7 +116,7 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   stock: {
     backgroundColor: '#222',
     border: '1px dotted gray',
@@ -142,17 +131,17 @@ const useStyles = createStyles(theme => ({
     fontFamily: 'monospace',
   },
   stockTextPositive: {
-    color: theme.colors.green[5],
+    color: 'var(--mantine-color-green-5)',
   },
   stockTextNegative: {
-    color: theme.colors.red[5],
+    color: 'var(--mantine-color-red-5)',
   },
   stockTextNeutral: {
-    color: theme.colors.gray[5],
+    color: 'var(--mantine-color-gray-5)',
   },
   stockActivity: {
-    backgroundColor: theme.colors.green[8],
+    backgroundColor: 'var(--mantine-color-green-8)',
     border: '1px solid black',
     position: 'relative',
   },
-}))
+})

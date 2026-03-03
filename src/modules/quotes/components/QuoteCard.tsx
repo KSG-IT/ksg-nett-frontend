@@ -7,7 +7,6 @@ import {
   Stack,
   Text,
   UnstyledButton,
-  useMantineTheme,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import {
@@ -38,10 +37,9 @@ interface VoteIconProps {
 }
 
 const UpvoteIcon: React.FC<VoteIconProps> = ({ upvoted, onClick }) => {
-  const theme = useMantineTheme()
   return (
     <IconThumbUp
-      color={upvoted ? `${theme.colors.brand}` : 'gray'}
+      color={upvoted ? 'var(--mantine-color-brand-0)' : 'gray'}
       size={24}
       strokeWidth={upvoted ? 2 : 1}
       style={{ cursor: 'pointer' }}
@@ -192,9 +190,9 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   quoteText: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     fontWeight: 500,
   },
   card: {
@@ -207,4 +205,4 @@ const useStyles = createStyles(theme => ({
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
-}))
+})

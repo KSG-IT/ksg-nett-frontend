@@ -1,4 +1,4 @@
-import { Group, Paper, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Group, Paper, Stack, Text } from '@mantine/core'
 import { IconFile } from '@tabler/icons-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { DocumentNode } from '../types.graphql'
@@ -27,7 +27,6 @@ export const DocumentStack: React.FC<DocumentStackProps> = ({
   selectedCallback,
   selectedDocument,
 }) => {
-  const theme = useMantineTheme()
   const { classes } = useStyles()
   const navigate = useNavigate()
 
@@ -63,8 +62,8 @@ export const DocumentStack: React.FC<DocumentStackProps> = ({
           <Group justify="space-between">
             <Group>
               <IconFile
-                color={theme.colors[theme.primaryColor][6]}
-                fill={theme.colors[theme.primaryColor][0]}
+                color="var(--mantine-color-samfundet-red-6)"
+                fill="var(--mantine-color-samfundet-red-0)"
                 stroke={1.4}
               />
               <Text
@@ -99,14 +98,14 @@ export const DocumentStack: React.FC<DocumentStackProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: 'var(--mantine-color-gray-0)',
     },
   },
   cardActive: {
-    backgroundColor: theme.colors[theme.primaryColor][0],
+    backgroundColor: 'var(--mantine-color-samfundet-red-0)',
   },
-}))
+})
