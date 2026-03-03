@@ -6,7 +6,8 @@ import {
   TextInput,
   Title,
 } from '@mantine/core'
-import { DateInput, DatePicker } from '@mantine/dates'
+import { DateInput } from '@mantine/dates'
+import { format } from 'date-fns'
 import { IconCalendar } from '@tabler/icons-react'
 import { RichTextEditor } from 'components/RichTextEditor'
 import {
@@ -88,7 +89,7 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
                   placeholder="Velg en dato"
                   leftSection={<IconCalendar size={14} />}
                   error={errors?.date?.message}
-                  defaultValue={getValues('date')}
+                  defaultValue={format(getValues('date'), 'yyyy-MM-dd')}
                   onChange={date => date && setValue('date', new Date(date))}
                 />
               </CustomInputLabel>

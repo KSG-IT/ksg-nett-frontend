@@ -1,4 +1,5 @@
 import { showNotification } from '@mantine/notifications'
+import { format } from 'date-fns'
 import { DepositMethodValues } from 'modules/economy/enums'
 import { useDepositMutations } from 'modules/economy/mutations.hooks'
 import { CreateDepositMutationVariables } from 'modules/economy/types.graphql'
@@ -36,7 +37,7 @@ export function useCreateDepositAPI(initialAmount: number) {
 
   const defaultValues = {
     amount: initialAmount,
-    dateOfTransfer: new Date(),
+    dateOfTransfer: format(new Date(), 'yyyy-MM-dd'),
     depositMethod: DepositMethodValues.STRIPE,
   }
   return {

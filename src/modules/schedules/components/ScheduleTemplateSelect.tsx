@@ -27,7 +27,7 @@ export const ScheduleTemplateSelect: React.FC<ScheduleTemplateSelectProps> = ({
       label="Vaktplan"
       placeholder="Velg vaktplan"
       value={value}
-      onChange={val => val && onChange(val)}
+      onChange={val => val !== null && onChange(val)}
       data={scheduleTemplateOptions}
     />
   )

@@ -92,7 +92,7 @@ export const InternalGroupUserHighlightEditForm: React.FC<
         </Stack>
         <Stack>
           <FileInput
-            onChange={handleImageCallback}
+            onChange={val => val && handleImageCallback(val)}
             error={errors.image?.message}
             leftSection={<IconPhoto />}
             label={'Bilde'}

@@ -33,7 +33,7 @@ export const InterviewLocationAvailabilityCard: React.VFC<
 > = ({ interviewLocation }) => {
   const [timeFrom, setTimeFrom] = useState('12:00')
   const [timeTo, setTimeTo] = useState('20:00')
-  const [date, setDate] = useState<Date | null>(new Date())
+  const [date, setDate] = useState<string | null>(null)
 
   const [createInterviewLocationAvailability] = useMutation<
     CreateInterviewLocationAvailabilityReturns,
@@ -143,7 +143,7 @@ export const InterviewLocationAvailabilityCard: React.VFC<
           <DatePickerInput
             value={date}
             label="Dag"
-            onChange={val => setDate(val ? new Date(val) : null)}
+            onChange={val => setDate(val)}
           />
           <Group>
             <TimeInput

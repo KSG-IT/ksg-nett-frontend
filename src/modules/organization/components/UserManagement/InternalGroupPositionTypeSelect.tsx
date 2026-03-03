@@ -17,7 +17,7 @@ export const InternalGroupPositionTypeSelect: React.FC<
       {...props}
       ref={ref}
       data={options}
-      onChange={val => val && onChange?.(val as InternalGroupPositionType)}
+      onChange={val => onChange?.(val as InternalGroupPositionType)}
     />
   )
 }

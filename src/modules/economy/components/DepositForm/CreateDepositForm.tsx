@@ -19,6 +19,7 @@ import { ONGOING_DEPOSIT_INTENT_QUERY } from 'modules/economy/views'
 import { Controller } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { useCurrencyFormatter, useMediaQuery } from 'util/hooks'
+import { enumHandler } from 'util/parsing'
 import { StripeDepositPaymentForm } from '../StripeDepositPaymentForm'
 import { useCreateDepositAPI } from './useCreateDepositAPI'
 import { useCreateDepositLogic } from './useCreateDepositLogic'
@@ -80,9 +81,9 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                   <Radio.Group
                     value={field.value}
                     label="Betalingsmåte"
-                    onChange={value =>
-                      setValue('depositMethod', value as DepositMethodValues)
-                    }
+                    onChange={enumHandler(DepositMethodValues, value =>
+                      setValue('depositMethod', value)
+                    )}
                   >
                     <Group>
                       <Radio
@@ -131,7 +132,7 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                       maxDate={new Date()}
                       value={field.value}
                       onChange={value =>
-                        value && setValue('dateOfTransfer', new Date(value))
+                        value && setValue('dateOfTransfer', value)
                       }
                     />
                   )}

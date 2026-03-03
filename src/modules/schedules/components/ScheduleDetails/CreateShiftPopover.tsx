@@ -2,7 +2,6 @@ import { Button, Popover, Stack, TextInput } from '@mantine/core'
 import { DatePickerInput, TimeInput } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
 import { IconPlus } from '@tabler/icons-react'
-import { format } from 'date-fns'
 import { LocationValues } from 'modules/schedules/consts'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
@@ -20,9 +19,7 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [location, setLocation] = useState<LocationValues | null>(null)
-  const [shiftDate, setShiftDate] = useState<Date | null>(
-    new Date(format(new Date(date), 'yyyy-MM-dd'))
-  )
+  const [shiftDate, setShiftDate] = useState<string | null>(date)
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
   const [shiftName, setShiftName] = useState<string>('')
@@ -101,7 +98,7 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
           <DatePickerInput
             label="Dato"
             value={shiftDate}
-            onChange={val => setShiftDate(val ? new Date(val) : null)}
+            onChange={val => setShiftDate(val)}
           />
           <TimeInput
             value={startTime}

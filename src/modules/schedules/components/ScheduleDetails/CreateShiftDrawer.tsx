@@ -10,6 +10,7 @@ import {
   UnstyledButton,
 } from '@mantine/core'
 import { DatePickerInput, TimeInput } from '@mantine/dates'
+import { format } from 'date-fns'
 import { useListState } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
 import { IconPlus, IconX } from '@tabler/icons-react'
@@ -33,7 +34,7 @@ export const CreateShiftDrawer: React.FC<CreateShiftDrawerProps> = ({
   onClose,
   ...rest
 }) => {
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState('')
   const [location, setLocation] = useState<LocationValues | null>(null)
@@ -179,7 +180,7 @@ export const CreateShiftDrawer: React.FC<CreateShiftDrawerProps> = ({
           <DatePickerInput
             label="Dato"
             value={date}
-            onChange={date => date && setDate(new Date(date))}
+            onChange={date => date && setDate(date)}
           />
         </Grid.Col>
         <Grid.Col span={1}>

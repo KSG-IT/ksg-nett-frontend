@@ -57,7 +57,7 @@ export const InterviewsOverview: React.FC = () => {
   const [addInterviewModalOpen, setAddInterviewModalOpen] = useState(false)
   const [assignInterviewModalOpen, setAssignInterviewModalOpen] =
     useState(false)
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'))
   const [selectedInterviewId, setSelectedInterviewId] = useState<string | null>(
     null
   )
@@ -66,7 +66,7 @@ export const InterviewsOverview: React.FC = () => {
     INTERVIEW_TABLE_OVERVIEW_QUERY,
     {
       variables: {
-        date: format(date, 'yyyy-MM-dd'),
+        date: date,
       },
       pollInterval: 10_000,
     }
@@ -136,11 +136,15 @@ export const InterviewsOverview: React.FC = () => {
   }
 
   function handleIncrementDate() {
-    setDate(new Date(date.setDate(date.getDate() + 1)))
+    const d = new Date(date)
+    d.setDate(d.getDate() + 1)
+    setDate(format(d, 'yyyy-MM-dd'))
   }
 
   function handleDecrementDate() {
-    setDate(new Date(date.setDate(date.getDate() - 1)))
+    const d = new Date(date)
+    d.setDate(d.getDate() - 1)
+    setDate(format(d, 'yyyy-MM-dd'))
   }
 
   return (
@@ -162,7 +166,7 @@ export const InterviewsOverview: React.FC = () => {
         </UnstyledButton>
         <DateInput
           value={date}
-          onChange={val => val && setDate(new Date(val))}
+          onChange={val => val && setDate(val)}
           locale={'nb'}
         />
         <UnstyledButton>

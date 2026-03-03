@@ -84,14 +84,16 @@ export const PositionAvailabilityInput: React.VFC<
             { label: 'Funksjonær', value: 'FUNCTIONARY' },
             { label: 'Gjengmedlem', value: 'GANG_MEMBER' },
           ]}
-          onChange={handleMembershipTypeChange}
+          onChange={val => handleMembershipTypeChange(val)}
           defaultValue={availablePosition.membershipType}
         />
       </td>
       <td>
         <NumberInput
           value={availabilityNumber}
-          onChange={handleAvailableNumberChange}
+          onChange={val =>
+            typeof val === 'number' && handleAvailableNumberChange(val)
+          }
         />
       </td>
       <td>

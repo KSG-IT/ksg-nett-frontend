@@ -13,6 +13,7 @@ import {
   FreeForAllApplicantsTable,
 } from '../components/DiscussionDashboard'
 import { InternalGroupDiscussionDataOrderingKeyValue } from '../consts'
+import { enumHandler } from 'util/parsing'
 import { INTERNAL_GROUP_DISCUSSION_DATA } from '../queries'
 import { InternalGroupDiscussionDataReturns } from '../types.graphql'
 import { createStyles } from '@mantine/emotion'
@@ -97,9 +98,10 @@ export const InternalGroupDiscussion: React.FC = () => {
       <Radio.Group
         label="Sorteringsmodus"
         value={orderingKey}
-        onChange={val =>
-          setOrderingKey(val as InternalGroupDiscussionDataOrderingKeyValue)
-        }
+        onChange={enumHandler(
+          InternalGroupDiscussionDataOrderingKeyValue,
+          setOrderingKey
+        )}
       >
         <Group>
           <Radio

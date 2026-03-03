@@ -120,7 +120,7 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
   ))
 
   return (
-    <CardTable>
+    <CardTable compact>
       <thead>
         <tr>
           <th>Navn</th>

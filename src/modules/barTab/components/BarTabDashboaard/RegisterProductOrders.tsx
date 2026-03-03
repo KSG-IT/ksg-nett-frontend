@@ -23,6 +23,7 @@ import {
 import { ACTIVE_BAR_TAB_QUERY } from 'modules/barTab/queries'
 import { BarTabNode } from 'modules/barTab/types.graphql'
 import { useMemo, useState } from 'react'
+import { enumHandler } from 'util/parsing'
 import { BarTabCustomerSelect } from '../BarTabCustomerSelect'
 import { BarTabProductSelect } from '../BarTabProductSelect'
 import { createStyles } from '@mantine/emotion'
@@ -231,7 +232,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
           <Select
             label="Type"
             value={orderType}
-            onChange={val => val && setOrderType(val as BarTabOrderTypeValues)}
+            onChange={enumHandler(BarTabOrderTypeValues, setOrderType)}
             data={[
               {
                 value: BarTabOrderTypeValues.LIST,
