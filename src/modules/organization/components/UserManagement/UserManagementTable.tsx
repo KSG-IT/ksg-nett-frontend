@@ -1,4 +1,4 @@
-import { Badge, Text, TextProps } from '@mantine/core'
+import { Badge, Text } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { ManageInternalGroupUser } from 'modules/organization/types.graphql'
 import { UserManagementTableRow } from './UserManagementTableRow'
@@ -28,11 +28,11 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   activeMemberships = false,
 }) => {
   const { classes } = useStyles()
-  const TableData: React.FC<TextProps & { children?: React.ReactNode }> = ({
-    children,
-    color,
-    fw,
-  }) => (
+  const TableData: React.FC<{
+    children?: React.ReactNode
+    color?: string
+    fw?: number
+  }> = ({ children, color, fw }) => (
     <td>
       <Text c={color} fw={fw} size={'sm'}>
         {children}
@@ -57,10 +57,10 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
       )}
     </tr>
   ))
-  const Header: React.FC<TextProps & { children?: React.ReactNode }> = ({
-    children,
-    ta,
-  }) => (
+  const Header: React.FC<{
+    children?: React.ReactNode
+    ta?: 'left' | 'center' | 'right'
+  }> = ({ children, ta }) => (
     <th>
       <Text ta={ta} fw={800} size={'sm'} className={classes.tableHeader}>
         {children}

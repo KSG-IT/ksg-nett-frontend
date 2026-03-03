@@ -29,7 +29,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
   const [name, setName] = useState('')
   const [minimumRemainingBalance, setMinimumRemainingBalance] = useState(0)
   const [type, setType] = useState<SociSessionType>(SociSessionType.KRYSSELISTE)
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
   const navigate = useNavigate()
 
   const { createSociSession } = useSociSessionMutations()
@@ -45,7 +45,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
       name: name.trim(),
       minimumRemainingBalance: minimumRemainingBalance,
       type,
-      creationDate: format(date, 'yyyy-MM-dd'),
+      creationDate: date,
     }
 
     if (type === SociSessionType.STILLETIME) {
@@ -92,7 +92,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
         <DatePickerInput
           label="Dato for innkryssing"
           value={date}
-          onChange={val => val && setDate(new Date(val))}
+          onChange={val => val && setDate(val)}
         />
         <Select
           label="Listetype"

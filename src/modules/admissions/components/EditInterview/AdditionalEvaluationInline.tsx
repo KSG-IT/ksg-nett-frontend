@@ -50,7 +50,11 @@ export const AdditionalEvaluationInline: React.VFC<
     <Group>
       <Select
         label={additionalEvaluation.statement.statement}
-        onChange={handleChange}
+        onChange={val =>
+          handleChange(
+            (val ?? '') as InterviewAdditionalEvaluationAnswerValues | ''
+          )
+        }
         value={selectedValue}
         data={additionalEvaluationOptions}
       />

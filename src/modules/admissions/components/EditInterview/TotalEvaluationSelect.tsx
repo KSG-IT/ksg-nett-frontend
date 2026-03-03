@@ -59,7 +59,9 @@ export const TotalEvaluationSelect: React.VFC<TotalEvaluationSelectProps> = ({
       placeholder="Velg verdi"
       value={selectedValue}
       data={totalEvaluationOptions}
-      onChange={handleChange}
+      onChange={val =>
+        val && handleChange(val as InterviewTotalEvaluationValues)
+      }
     />
   )
 }

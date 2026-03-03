@@ -18,7 +18,7 @@ const breadcrumbsItems = [
 ]
 
 export const AllShifts = () => {
-  const [date, setDate] = useState<Date>(new Date())
+  const [date, setDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
   const { classes } = useAllShiftsStyles()
   const firstRender = useRef(true)
 
@@ -26,7 +26,7 @@ export const AllShifts = () => {
     AllShiftsReturns,
     AllShiftsVariables
   >(ALL_SHIFTS, {
-    variables: { date: format(date, 'yyyy-MM-dd') },
+    variables: { date: date },
     pollInterval: 30_000,
   })
 
@@ -39,15 +39,11 @@ export const AllShifts = () => {
     const dateString = search.date as string
 
     if (dateString) {
-      const date = new Date(dateString)
-      setDate(date)
+      setDate(dateString)
     } else {
-      setDate(new Date())
-      history.pushState(
-        {},
-        '',
-        `${location.pathname}?date=${format(new Date(), 'yyyy-MM-dd')}`
-      )
+      const today = format(new Date(), 'yyyy-MM-dd')
+      setDate(today)
+      history.pushState({}, '', `${location.pathname}?date=${today}`)
     }
   }, [setDate])
 
@@ -57,13 +53,9 @@ export const AllShifts = () => {
 
   const { allShifts } = data
 
-  function handleDateChange(date: Date) {
+  function handleDateChange(date: string) {
     setDate(date)
-    history.pushState(
-      {},
-      '',
-      `/schedules/all-shifts?date=${format(date, 'yyyy-MM-dd')}`
-    )
+    history.pushState({}, '', `/schedules/all-shifts?date=${date}`)
   }
 
   return (
@@ -72,7 +64,7 @@ export const AllShifts = () => {
       <Title>Hva skjer'a?</Title>
       <DatePickerInput
         value={date}
-        onChange={val => val && handleDateChange(new Date(val))}
+        onChange={val => val && handleDateChange(val)}
       />
 
       <UserShiftCardList shifts={allShifts} />

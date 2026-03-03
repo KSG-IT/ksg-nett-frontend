@@ -33,14 +33,16 @@ export const ApplyScheduleTemplateModal: React.FC<
     useShiftMutations()
   const [scheduleTemplateId, setScheduleTemplateId] = useState('')
   const [numberOfWeeks, setNumberOfWeeks] = useState(1)
-  const [shiftsFrom, setShiftsFrom] = useState<Date | null>(new Date())
+  const [shiftsFrom, setShiftsFrom] = useState<string | null>(
+    format(new Date(), 'yyyy-MM-dd')
+  )
 
   function handleGenerate() {
     if (!shiftsFrom) return
     generateShiftsFromTemplate({
       variables: {
         scheduleTemplateId: scheduleTemplateId,
-        startDate: format(shiftsFrom, 'yyyy-MM-dd'),
+        startDate: shiftsFrom,
         numberOfWeeks: numberOfWeeks,
       },
       refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
@@ -74,7 +76,7 @@ export const ApplyScheduleTemplateModal: React.FC<
       <DatePickerInput
         label="Startdato"
         value={shiftsFrom}
-        onChange={val => setShiftsFrom(val ? new Date(val) : null)}
+        onChange={val => setShiftsFrom(val)}
       />
       <NumberInput
         label="Antall uker"
@@ -87,14 +89,14 @@ export const ApplyScheduleTemplateModal: React.FC<
       <Text>
         Første vakt genererert fra{' '}
         {shiftsFrom &&
-          format(getMondayOfWeekFromDate(shiftsFrom), 'EEEE dd.MMM')}
+          format(getMondayOfWeekFromDate(new Date(shiftsFrom)), 'EEEE dd.MMM')}
       </Text>
       <Text>
         Siste vakt generert til{' '}
         {shiftsFrom &&
           format(
             getSundayOfWeekFromDate(
-              add(shiftsFrom, { weeks: numberOfWeeks - 1 })
+              add(new Date(shiftsFrom), { weeks: numberOfWeeks - 1 })
             ),
             'EEE dd.MMM'
           )}

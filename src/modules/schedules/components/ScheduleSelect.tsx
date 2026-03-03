@@ -26,7 +26,7 @@ export const ScheduleSelect: React.FC<ScheduleSelectProps> = ({
       label="Vaktplan"
       placeholder="Velg vaktplan"
       value={value}
-      onChange={val => val && onChange(val)}
+      onChange={val => val !== null && onChange(val)}
       data={scheduleOptions}
     />
   )

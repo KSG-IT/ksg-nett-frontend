@@ -4,6 +4,7 @@ import { showNotification } from '@mantine/notifications'
 import { MessageBox } from 'components/MessageBox'
 import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import { INTERVIEW_TABLE_OVERVIEW_QUERY } from 'modules/admissions/queries'
+import { format } from 'date-fns'
 import { useState } from 'react'
 import { InterviewLocationSelect } from '../InterviewLocationSelect'
 
@@ -15,7 +16,7 @@ export const AddInterviewForm: React.FC<AddInterviewFormProps> = ({
   onCloseCallback,
 }) => {
   const [locationId, setLocationId] = useState('')
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
   const [timeSTart, setTimeStart] = useState('12:00')
   const [timeEnd, setTimeEnd] = useState('12:30')
 
@@ -114,7 +115,7 @@ export const AddInterviewForm: React.FC<AddInterviewFormProps> = ({
         <DatePickerInput
           value={date}
           label="Dato"
-          onChange={val => val && setDate(new Date(val))}
+          onChange={val => val && setDate(val)}
         />
 
         <Group>

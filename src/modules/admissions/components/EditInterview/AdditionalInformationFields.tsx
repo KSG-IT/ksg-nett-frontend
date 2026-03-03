@@ -55,7 +55,7 @@ export const AdditionalInformationFields: React.VFC<
     <Stack>
       <Radio.Group
         label="Kandidat åpen for andre verv?"
-        onChange={handleChangeOpenForOtherPositions}
+        onChange={val => handleChangeOpenForOtherPositions(val as 'yes' | 'no')}
         value={openForOtherPositions}
       >
         <Radio value="yes" label="Ja" />
@@ -63,7 +63,7 @@ export const AdditionalInformationFields: React.VFC<
       </Radio.Group>
       <Radio.Group
         label="Kan bli i 3 semestre?"
-        onChange={handleChangeCanCommit}
+        onChange={val => handleChangeCanCommit(val as 'yes' | 'no')}
         value={canCommitThreeSemesters}
       >
         <Radio value="yes" label="Ja" />

@@ -5,13 +5,12 @@ import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { isAfter } from 'date-fns'
+import { format, isAfter } from 'date-fns'
 import 'dayjs/locale/nb'
 import { BOOK_INTERRVIEW_MUTATION } from 'modules/admissions/mutations'
 import { INTERVIEW_PERIOD_DATES_QUERY } from 'modules/admissions/queries'
 import { InterviewPeriodDatesReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import { format } from 'util/date-fns'
 import { InterviewsAvailableForBooking } from './components/InterviewsAvailableForBooking'
 
 interface InterviewBookingProps {
@@ -22,8 +21,8 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
   applicantToken,
 }) => {
   const [selectedInterviews, setSelectedInterviews] = useState<string[]>([])
-  const [day, setDay] = useState(new Date())
-  const handleDayChange = (newDay: Date) => {
+  const [day, setDay] = useState(format(new Date(), 'yyyy-MM-dd'))
+  const handleDayChange = (newDay: string) => {
     setDay(newDay)
     setSelectedInterviews([])
   }
@@ -98,14 +97,14 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
             maxDate={new Date(endDate)}
             value={day}
             onChange={date => {
-              date && handleDayChange(new Date(date))
+              date && handleDayChange(date)
             }}
           />
         </Container>
 
         <Stack>
           <InterviewsAvailableForBooking
-            dateSelected={format(day, 'yyyy-MM-dd')}
+            dateSelected={day}
             handleCallback={setSelectedInterviews}
             currentlySelected={selectedInterviews}
           />

@@ -1,5 +1,6 @@
 import { Button, Checkbox, SimpleGrid, TextInput } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
+import { format } from 'date-fns'
 import { useState } from 'react'
 import { UserWizardData } from './types'
 import { useUserMigrationWizardFormAPI } from './useUserMigrationWizardFormAPI'
@@ -62,7 +63,11 @@ export const UserMigrationWizardForm: React.FC<
           label="Fødselsdato"
           placeholder="Velg en dato"
           error={errors?.dateOfBirth?.message}
-          defaultValue={getValues('dateOfBirth')}
+          defaultValue={
+            getValues('dateOfBirth')
+              ? format(getValues('dateOfBirth')!, 'yyyy-MM-dd')
+              : undefined
+          }
           onChange={date => date && setValue('dateOfBirth', new Date(date))}
         />
         <TextInput

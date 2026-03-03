@@ -131,7 +131,7 @@ export const CreateDepositForm: React.FC<CreateDepositViewProps> = ({
                       maxDate={new Date()}
                       value={field.value}
                       onChange={value =>
-                        value && setValue('dateOfTransfer', new Date(value))
+                        value && setValue('dateOfTransfer', value)
                       }
                     />
                   )}

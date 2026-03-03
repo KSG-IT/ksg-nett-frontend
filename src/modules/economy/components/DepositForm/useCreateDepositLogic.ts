@@ -11,7 +11,7 @@ import * as yup from 'yup'
 
 export type CreateDepositFormData = {
   amount: number
-  dateOfTransfer: Date
+  dateOfTransfer: string
   depositMethod: DepositMethodValues
 }
 
@@ -43,7 +43,7 @@ export function useCreateDepositLogic(input: UseCreateDepositLogicInput) {
     let description = ''
     if (data.depositMethod === DepositMethodValues.BANK_TRANSFER) {
       // Write out date in YYYY-MM-DD format
-      description = format(data.dateOfTransfer, 'd. MMMM')
+      description = format(new Date(data.dateOfTransfer), 'd. MMMM')
     }
 
     const parsedData = {

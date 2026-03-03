@@ -41,7 +41,7 @@ export const BooleanEvaluationInline: React.FC<
     <Group>
       <Radio.Group
         value={value}
-        onChange={handleChange}
+        onChange={val => handleChange(val as 'yes' | 'no')}
         label={booleanEvaluationAnswer.statement.statement}
       >
         <Group>
