@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '2024-09-21'
+const NOTIFICATION_KEY = '2026-03-03'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -32,7 +32,15 @@ export const WhatsNewNotification: React.FC = () => {
         👋 Hva er nytt?
       </Title>
       <Text size="sm" c="gray" mt={0}>
-        Siste oppdatering: 2024-09-21
+        Siste oppdatering: 2026-03-03
+      </Text>
+      <Divider mb="md" />
+      <Title order={4}>Oppgradering - 3. Mars 2026</Title>
+      <Text>
+        KSG-nett har fått en større oppgradering av UI-biblioteket vi bruker.
+        Det meste er under panseret, men noen ting kan ende opp med å se litt
+        rart ut eller slutte å funke. Om du legger merke til noe gjerne, gi
+        beskjed til KSG-IT (ksg-it@samfundet.no).
       </Text>
       <Divider mb="md" />
       <Title order={4}>Arkivering av funksjonærbeskrivelser</Title>
