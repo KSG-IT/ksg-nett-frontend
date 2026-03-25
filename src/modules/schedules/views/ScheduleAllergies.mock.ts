@@ -87,4 +87,12 @@ export const MOCK_ALLERGY_DATA: MockShiftDay[] = [
       { name: 'Camilla Vold', allergies: [] },
     ],
   },
+  {
+    date: addDays(today, 5),
+    users: [
+      { name: 'Silje Holm', allergies: ['Egg'] },
+      { name: 'Erik Solberg', allergies: ['Hvete', 'Egg'] },
+      { name: 'Silje Holm', allergies: ['Hvete', 'Egg'] },
+    ],
+  },
 ]
