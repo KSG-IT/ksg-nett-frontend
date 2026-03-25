@@ -9,32 +9,31 @@ import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
 import { format } from 'util/date-fns'
 
 interface WeekController {
-  week: Date
-  previousWeekCallback: () => void
-  nextWeekCallback: () => void
+  value: Date
+  onPrevious: () => void
+  onNext: () => void
+  label?: string
 }
 
 export const WeekController: React.FC<WeekController> = ({
-  week,
-  previousWeekCallback,
-  nextWeekCallback,
+  value,
+  onPrevious,
+  onNext,
+  label,
 }) => {
   const { classes } = useWeekControllerStyles()
   return (
     <Group className={classes.weekController} spacing={0} align={'center'}>
       <UnstyledButton
         className={classes.weekControllerButton}
-        onClick={previousWeekCallback}
+        onClick={onPrevious}
       >
         <IconChevronLeft />
       </UnstyledButton>
       <Container>
-        <Text>Uke {format(week, 'w')}</Text>
+        <Text>{label ?? `Uke ${format(value, 'w')}`}</Text>
       </Container>
-      <UnstyledButton
-        className={classes.weekControllerButton}
-        onClick={nextWeekCallback}
-      >
+      <UnstyledButton className={classes.weekControllerButton} onClick={onNext}>
         <IconChevronRight />
       </UnstyledButton>
     </Group>
@@ -43,14 +42,25 @@ export const WeekController: React.FC<WeekController> = ({
 
 const useWeekControllerStyles = createStyles(theme => ({
   weekController: {
-    backgroundColor: 'white',
-    border: '1px solid gray',
+    backgroundColor:
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+    }`,
     borderRadius: '5px',
     'button:first-of-type': {
-      borderRight: '1px solid gray',
+      borderRight: `1px solid ${
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[4]
+          : theme.colors.gray[3]
+      }`,
     },
     'button:last-of-type': {
-      borderLeft: '1px solid gray',
+      borderLeft: `1px solid ${
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[4]
+          : theme.colors.gray[3]
+      }`,
     },
   },
   weekControllerButton: {
