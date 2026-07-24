@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v2026.7.1]
+
+- Navbar: Add support for highlighted handbook documents
+
 ## [v2025.8.1]
 
 - Admissions: Add UI controls for soft wall booking

@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '2024-09-21'
+const NOTIFICATION_KEY = '2026-7-24'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -40,7 +40,13 @@ export const WhatsNewNotification: React.FC = () => {
         👋 Hva er nytt?
       </Title>
       <Text size="sm" color="gray" mt={0}>
-        Siste oppdatering: 2024-09-21
+        Siste oppdatering: 2026-07-24
+      </Text>
+      <Divider mb="md" />
+      <Title order={4}>Fremhevede artikler</Title>
+      <Text>
+        Det er nå mulig å fremheve spesifikke artikler fra håndboken slik at de
+        er tilgjengelige direkte fra sidemenyen.
       </Text>
       <Divider mb="md" />
       <Title order={4}>Arkivering av funksjonærbeskrivelser</Title>
