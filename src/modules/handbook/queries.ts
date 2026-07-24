@@ -11,6 +11,7 @@ export const ALL_DOCUMENTS_QUERY = gql`
         firstName
         getCleanFullName
       }
+      highlighted
     }
   }
 `

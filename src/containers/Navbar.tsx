@@ -1,136 +1,18 @@
 import { createStyles, Navbar, Text } from '@mantine/core'
-import {
-  IconAffiliate,
-  IconBlockquote,
-  IconBook2,
-  IconCalendarTime,
-  IconChessKing,
-  IconChessKnight,
-  IconClipboardList,
-  IconCreditCard,
-  IconCrown,
-  IconEdit,
-  IconFlag,
-  IconHandMiddleFinger,
-  IconHome,
-  IconMessage,
-  IconTrophyFilled,
-  IconUserPlus,
-} from '@tabler/icons-react'
 import { useLocation } from 'react-router-dom'
 import { useStore } from 'store'
 import { usePermissions } from 'util/hooks/usePermissions'
-import { PERMISSIONS } from 'util/permissions'
 import { NavBarMeSection } from './NavBarMeSection'
-import { NavItem, RouteItem } from './NavItem'
-import { IconTrophy } from '@tabler/icons-react'
-
-interface RouteGroup {
-  title: string
-  items: RouteItem[]
-}
-
-const routes: RouteGroup[] = [
-  {
-    title: 'Generelt',
-    items: [
-      {
-        icon: IconHome,
-        link: '/dashboard',
-        label: 'Kontrollpanel',
-        permissions: [],
-      },
-      // {
-      //   icon: IconMessage,
-      //   link: '/forum',
-      //   label: 'Forum',
-      //   permissions: [],
-      // },
-      {
-        icon: IconBook2,
-        link: '/handbook',
-        label: 'Håndboka',
-        permissions: [],
-      },
-      {
-        icon: IconEdit,
-        link: '/summaries',
-        label: 'Møtereferater',
-        permissions: [],
-      },
-      {
-        icon: IconAffiliate,
-        link: '/internal-groups',
-        label: 'Interngjenger',
-        permissions: [],
-      },
-    ],
-  },
-  {
-    title: 'Underholdning',
-    items: [
-      {
-        icon: IconBlockquote,
-        link: '/quotes',
-        label: 'Sitater',
-        permissions: [],
-      },
-      {
-        icon: IconChessKing,
-        link: '/knighthood',
-        label: 'Ridderskap',
-        permissions: [],
-      },
-    ],
-  },
-  {
-    title: 'Admin',
-    items: [
-      {
-        icon: IconCalendarTime,
-        link: '/schedules',
-        label: 'Vaktlister',
-        permissions: PERMISSIONS.schedules.view.schedule,
-      },
-      {
-        icon: IconUserPlus,
-        link: '/admissions',
-        label: 'Orvik',
-        permissions: PERMISSIONS.admissions.view.admission,
-      },
-      {
-        icon: IconHandMiddleFinger,
-        link: '/users/user-types',
-        label: 'Tilganger',
-        permissions: PERMISSIONS.users.change.userType,
-      },
-      {
-        icon: IconCreditCard,
-        link: '/economy',
-        label: 'Økonomi',
-        permissions: PERMISSIONS.economy.view.sociSession,
-      },
-      {
-        icon: IconClipboardList,
-        link: '/economy/soci-sessions/live',
-        label: 'Stilletime',
-        permissions: PERMISSIONS.economy.add.sociOrderSession,
-      },
-      {
-        icon: IconFlag,
-        link: 'feature-flags',
-        label: 'Feature flags',
-        permissions: PERMISSIONS.featureFlags.view.featureFlag,
-      },
-    ],
-  },
-]
+import { NavItem } from './NavItem'
+import { useRouteGroups } from './useNavbarRoutes'
 
 interface AppNavbarProps {
   opened: boolean
 }
 
 export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
+  const routeGroups = useRouteGroups()
+
   const location = useLocation()
   const isOpen = useStore(state => state.sidebarOpen)
   const { hasPermissions } = usePermissions()
@@ -151,7 +33,7 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
       }}
     >
       <NavBarMeSection />
-      {routes.map((routeGroup, index) => {
+      {routeGroups.map((routeGroup, index) => {
         const hasAny = routeGroup.items.some(item =>
           hasPermissions(item.permissions)
         )
