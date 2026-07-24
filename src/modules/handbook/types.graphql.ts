@@ -6,6 +6,7 @@ export type DocumentNode = {
   content: string
   createdAt: string
   updatedAt: string
+  highlighted: boolean
   createdBy: UserNode
   updatedBy: UserNode
 }
@@ -15,7 +16,7 @@ export type DocumentNode = {
 export interface AllDocumentsReturn {
   allDocuments: Pick<
     DocumentNode,
-    'id' | 'name' | 'createdAt' | 'updatedAt' | 'updatedBy'
+    'id' | 'name' | 'createdAt' | 'updatedAt' | 'updatedBy' | 'highlighted'
   >[]
 }
 

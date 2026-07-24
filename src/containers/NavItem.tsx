@@ -29,7 +29,9 @@ export const NavItem: React.FC<RouteItem & { active: boolean }> = props => {
           data-active={props.active}
           size={16}
         />
-        <Text className={classes.text}>{props.label}</Text>
+        <Text className={classes.text} truncate>
+          {props.label}
+        </Text>
       </Link>
     </PermissionGate>
   )
