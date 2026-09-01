@@ -73,9 +73,9 @@ export const ScheduleDetails: React.FC = () => {
         <Group position="apart">
           <Title>Vaktplan {schedule.name}</Title>
           <WeekController
-            week={shiftsFrom}
-            previousWeekCallback={handlePreviousWeek}
-            nextWeekCallback={handleNextWeek}
+            value={shiftsFrom}
+            onPrevious={handlePreviousWeek}
+            onNext={handleNextWeek}
           />
 
           <Button
