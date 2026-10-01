@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
+import { Button, Card, Group, Stack, Table, Text, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { MessageBox } from 'components/MessageBox'
@@ -8,7 +8,6 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { format } from 'util/date-fns'
 import { WeekController } from '../components/ScheduleDetails'
-import { AllergyDataList } from '../components/ScheduleDetails/ScheduleAllergies/AllergyDataList'
 
 const breadcrumbItems = [
   {
@@ -52,6 +51,14 @@ export interface AllergyQueryReturns {
     }[]
   }[]
 }
+
+const MOCK_ALLERGIES = ['Peanøtter', 'Løk', 'Hvete', 'Gluten', 'Edamamebønner']
+
+const NEW_MOCK_DATA = [
+  { name: 'Alexander Orvik', allergies: MOCK_ALLERGIES.map(() => true) },
+  { name: 'Sebastian Småladn', allergies: MOCK_ALLERGIES.map(() => false) },
+]
+
 const ScheduleAllergies: React.FC = () => {
   const [shiftsFrom, setShiftsFrom] = useState<Date>(new Date())
 
@@ -79,6 +86,22 @@ const ScheduleAllergies: React.FC = () => {
     )
   }
 
+  const totals = MOCK_ALLERGIES.reduce(
+    (acc, curr) => ({ ...acc, [curr]: 0 }),
+    {}
+  )
+  MOCK_ALLERGIES.forEach((allergy, index) => {
+    NEW_MOCK_DATA.forEach((user, index2) => {
+      const oldTotal = totals[allergy]
+
+      if (user.allergies[index] === true) {
+        totals[allergy] = oldTotal + 1
+      }
+    })
+  })
+
+  console.log(totals)
+
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbItems} />
@@ -100,7 +123,45 @@ const ScheduleAllergies: React.FC = () => {
         nextWeekCallback={handleNextWeek}
       />
 
-      <AllergyDataList data={data} loading={loading} error={error} />
+      {/* <AllergyDataList data={data} loading={loading} error={error} /> */}
+
+      <Card>
+        <Table style={{ overflowX: 'scroll' }}>
+          <thead>
+            <tr>
+              <>
+                <th>Navn</th>
+                {MOCK_ALLERGIES.map(allergy => (
+                  <th>{allergy}</th>
+                ))}
+              </>
+            </tr>
+          </thead>
+          <tbody>
+            {NEW_MOCK_DATA.map(user => (
+              <tr>
+                <td>{user.name}</td>
+                <>
+                  {user.allergies.map(allergy =>
+                    allergy ? <td>✅</td> : <td>❌</td>
+                  )}
+                </>
+              </tr>
+            ))}
+            <tr>
+              <td>
+                <Text fw="bold">Total</Text>
+              </td>
+
+              {Object.keys(totals).map(key => (
+                <td>
+                  <Text fw="bold">{totals[key]}</Text>
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </Table>
+      </Card>
     </Stack>
   )
 }
