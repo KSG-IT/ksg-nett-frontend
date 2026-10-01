@@ -88,7 +88,7 @@ const ScheduleAllergies: React.FC = () => {
 
   const totals = MOCK_ALLERGIES.reduce(
     (acc, curr) => ({ ...acc, [curr]: 0 }),
-    {}
+    {} as Record<string, number>
   )
   MOCK_ALLERGIES.forEach((allergy, index) => {
     NEW_MOCK_DATA.forEach((user, index2) => {
