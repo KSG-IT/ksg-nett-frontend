@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Stack, Text, Title } from '@mantine/core'
+import { Button, Group, Stack, Table, Text, Title } from '@mantine/core'
 import { IconFileDownload } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
@@ -72,21 +72,21 @@ export const PrintWorkingToday: React.FC = ({}) => {
   if (loading || !data) return <FullContentLoader />
 
   const rows = userNames.map((userName, index) => (
-    <tr>
-      <td>{userName}</td>
+    <Table.Tr key={index}>
+      <Table.Td>{userName}</Table.Td>
       {productNames.map((productName, index) => (
-        <td></td>
+        <Table.Td key={index}></Table.Td>
       ))}
-    </tr>
+    </Table.Tr>
   ))
 
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Krysseliste for jobbende</Title>
         <Button
-          leftIcon={<IconFileDownload />}
+          leftSection={<IconFileDownload />}
           color="samfundet-red"
           onClick={handleFetchList}
         >
@@ -94,16 +94,16 @@ export const PrintWorkingToday: React.FC = ({}) => {
         </Button>
       </Group>
 
-      <CardTable withColumnBorders withBorder>
-        <thead>
-          <tr>
-            <th>Navn</th>
+      <CardTable withColumnBorders>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Navn</Table.Th>
             {productNames.map((productName, index) => (
-              <th key={index}>{productName}</th>
+              <Table.Th key={index}>{productName}</Table.Th>
             ))}
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
       </CardTable>
       <Group>
         <Text>Mangler det noen?</Text>

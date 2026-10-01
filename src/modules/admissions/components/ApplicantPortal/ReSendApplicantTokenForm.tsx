@@ -10,7 +10,7 @@ import {
 } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
 
-export const ReSendApplicantTokenForm: React.VFC = () => {
+export const ReSendApplicantTokenForm: React.FC = () => {
   const [email, setEmail] = useState('')
   const [emailSent, setEmailSent] = useState(false)
   const [sendResetMail] = useMutation<
@@ -57,7 +57,10 @@ export const ReSendApplicantTokenForm: React.VFC = () => {
             Følg med på inboxen din. Om eposten din er registrert i systemet
             vårt skal du straks få en epost.
           </Alert>
-          <Button onClick={() => setEmailSent(false)} leftIcon={<IconPlane />}>
+          <Button
+            onClick={() => setEmailSent(false)}
+            leftSection={<IconPlane />}
+          >
             Send epost på nytt?
           </Button>
         </Stack>

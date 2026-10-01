@@ -1,3 +1,4 @@
+import { useRichTextEditor } from 'components/RichTextEditor'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { format } from 'date-fns'
 import {
@@ -7,9 +8,6 @@ import {
 import { useForm } from 'react-hook-form'
 import { OnFormSubmit } from 'types/forms'
 import * as yup from 'yup'
-import { RichTextEditor, Link } from '@mantine/tiptap'
-import { useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
 import { showNotification } from '@mantine/notifications'
 
 export type SummaryFormData = {
@@ -44,10 +42,7 @@ interface SummaryLogicInput {
 export function useSummaryLogic(input: SummaryLogicInput) {
   const { defaultValues, onSubmit } = input
 
-  const editor = useEditor({
-    extensions: [StarterKit, Link],
-    content: defaultValues.contents,
-  })
+  const editor = useRichTextEditor(defaultValues.contents)
 
   const form = useForm<SummaryFormData>({
     mode: 'onSubmit',

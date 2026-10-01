@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Group, Stack, Text, Title } from '@mantine/core'
+import { Button, Group, Stack, Table, Text, Title } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -27,7 +27,7 @@ interface ConfigurePosistionAvailabilityProps {
   setStageCallback: (stage: WizardStage) => void
 }
 
-export const ConfigurePosistionAvailability: React.VFC<
+export const ConfigurePosistionAvailability: React.FC<
   ConfigurePosistionAvailabilityProps
 > = ({ setStageCallback }) => {
   const [availablePositionsToAdd, setAvailablePositionsToAdd] = useState<
@@ -89,48 +89,48 @@ export const ConfigurePosistionAvailability: React.VFC<
         opp i hver av stillingene.
       </MessageBox>
       <CardTable>
-        <thead>
-          <tr>
-            <th>Stilling</th>
-            <th>Type</th>
-            <th>Antall</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Stilling</Table.Th>
+            <Table.Th>Type</Table.Th>
+            <Table.Th>Antall</Table.Th>
+            <Table.Th></Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
           {currentAdmissionInternalGroupPositionData.map(position => (
             <PositionAvailabilityInput
               availablePosition={position}
               key={position.id}
             />
           ))}
-        </tbody>
+        </Table.Tbody>
       </CardTable>
       <Title order={3}>Legg til verv</Title>
       <CardTable>
-        <thead>
-          <tr>
-            <th>Verv</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Verv</Table.Th>
+            <Table.Th></Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
           {availablePositionsToAdd.map(position => (
-            <tr key={position.id}>
-              <td>
+            <Table.Tr key={position.id}>
+              <Table.Td>
                 <Text>{position.name}</Text>
-              </td>
-              <td>
+              </Table.Td>
+              <Table.Td>
                 <Button
                   color="samfundet-red"
                   onClick={() => handleAddPosition(position.id)}
                 >
                   Gjør tilgjengelig
                 </Button>
-              </td>
-            </tr>
+              </Table.Td>
+            </Table.Tr>
           ))}
-        </tbody>
+        </Table.Tbody>
       </CardTable>
       <Group>
         <Button

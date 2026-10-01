@@ -28,7 +28,7 @@ export const BarTabCustomerSelect: React.FC<BarTabCustomerSelectProps> = ({
     <Select
       value={customerId}
       data={options}
-      onChange={onSelectCallback}
+      onChange={val => val && onSelectCallback(val)}
       {...props}
     />
   )

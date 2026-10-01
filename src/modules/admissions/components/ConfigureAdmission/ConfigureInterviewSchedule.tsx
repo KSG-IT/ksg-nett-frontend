@@ -16,7 +16,7 @@ interface ConfigureInterviewScheduleProps {
   setStageCallback: (stage: WizardStage) => void
 }
 
-export const ConfigureInterviewSchedule: React.VFC<
+export const ConfigureInterviewSchedule: React.FC<
   ConfigureInterviewScheduleProps
 > = ({ setStageCallback }) => {
   const { data, loading } = useQuery(INTERVIEW_SCHEDULE_TEMPLATE, {

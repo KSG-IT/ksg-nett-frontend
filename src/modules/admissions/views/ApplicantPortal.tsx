@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client'
 import { Center, Group, Stack, Stepper, Text, Title } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ApplicantSummary } from '../components/ApplicantPortal/components'
 import { InterviewBooking } from '../components/ApplicantPortal/InterviewBooking'
@@ -38,9 +37,6 @@ interface ApplicantPortalParams {
 }
 
 export const ApplicantPortal: React.FC = () => {
-  const [active, setActive] = useState(0)
-  const nextStep = () =>
-    setActive(current => (current < 4 ? current + 1 : current))
   const { applicantToken } = useParams<
     keyof ApplicantPortalParams
   >() as ApplicantPortalParams
@@ -50,9 +46,6 @@ export const ApplicantPortal: React.FC = () => {
     GetApplicantFromTokenVariables
   >(GET_APPLICATION_FROM_TOKEN, {
     variables: { token: applicantToken },
-    onCompleted({ getApplicantFromToken }) {
-      setActive(translateStatusToStep(getApplicantFromToken.status))
-    },
   })
 
   if (error) return <FullPageError />
@@ -102,12 +95,16 @@ export const ApplicantPortal: React.FC = () => {
     )
   }
 
+  // The step follows the applicant status, so a refetch after each mutation
+  // moves the portal forward.
+  const active = translateStatusToStep(applicant.status)
+
   return (
     <Center>
       <Stack p="md">
         <Title>KSG søkerportal</Title>
         <Group>
-          <Stepper color="samfundet-red" active={active} breakpoint="sm">
+          <Stepper color="samfundet-red" active={active}>
             <Stepper.Step allowStepClick={false} label="Registrer personalia">
               <RegisterInformationForm applicant={applicant} />
             </Stepper.Step>
@@ -116,10 +113,7 @@ export const ApplicantPortal: React.FC = () => {
               label="Prioriter stillinger"
               description="Velg hvilke verv du søker i KSG"
             >
-              <SetPriorities
-                applicant={applicant}
-                nextStepCallback={nextStep}
-              />
+              <SetPriorities applicant={applicant} />
             </Stepper.Step>
             <Stepper.Step
               allowStepClick={false}

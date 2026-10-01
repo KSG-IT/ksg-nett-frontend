@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Table, Title } from '@mantine/core'
 import { IconEye } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
@@ -67,32 +67,34 @@ export const MyInterviews: React.FC = () => {
   }
 
   const rows = myInterviews.map(interview => (
-    <tr>
-      <td>
+    <Table.Tr key={interview.id}>
+      <Table.Td>
         {interview.applicant !== null
           ? interview.applicant.fullName
           : 'Ingen søker'}
-      </td>
-      <td>{format(new Date(interview.interviewStart), 'iii d MMM HH:mm')}</td>
-      <td>{interview.location.name}</td>
-      <td>
+      </Table.Td>
+      <Table.Td>
+        {format(new Date(interview.interviewStart), 'iii d MMM HH:mm')}
+      </Table.Td>
+      <Table.Td>{interview.location.name}</Table.Td>
+      <Table.Td>
         <Button
           color="samfundet-red"
-          leftIcon={<IconEye />}
+          leftSection={<IconEye />}
           onClick={() => {
             handleRedirectToInterview(interview.applicant.id)
           }}
         >
           Mer info
         </Button>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Mine intervjuer</Title>
         <SynCButton
           refetchCallback={() => refetch()}
@@ -100,15 +102,15 @@ export const MyInterviews: React.FC = () => {
         />
       </Group>
       <CardTable>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th>Tidspunkt</th>
-            <th>Sted</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Navn</Table.Th>
+            <Table.Th>Tidspunkt</Table.Th>
+            <Table.Th>Sted</Table.Th>
+            <Table.Th></Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
       </CardTable>
     </Stack>
   )

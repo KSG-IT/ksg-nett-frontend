@@ -1,16 +1,9 @@
-import {
-  Badge,
-  Card,
-  createStyles,
-  Stack,
-  Table,
-  Text,
-  TextProps,
-} from '@mantine/core'
+import { Stack, Table, Text, TextProps } from '@mantine/core'
+import { Badge } from 'components/Badge'
+import { createStyles } from '@mantine/emotion'
 import { CardTable } from 'components/CardTable'
-import { format } from 'util/date-fns'
-import { UserNode } from 'modules/users/types'
 import React from 'react'
+import { format } from 'util/date-fns'
 import { BankAccountActivity } from '../../economy/types.graphql'
 
 interface TransactionCardProps {
@@ -23,68 +16,71 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   const { classes } = useStyles()
 
   const rows = activities.map((transaction, index) => (
-    <tr key={index}>
-      <td>
+    <Table.Tr key={index}>
+      <Table.Td>
         <Badge variant="outline" color={'green'}>
           {transaction.name}
         </Badge>
-      </td>
-      <td>
-        <Text align="center">{transaction.quantity}</Text>
-      </td>
-      <td>
-        <Text align="right" color={'samfundet-red.7'}>
+      </Table.Td>
+      <Table.Td>
+        <Text ta="center">{transaction.quantity}</Text>
+      </Table.Td>
+      <Table.Td>
+        <Text ta="right" c={'samfundet-red.7'}>
           {transaction.amount} kr
         </Text>
-      </td>
+      </Table.Td>
 
-      <td>
-        <Text align="right" color={'dimmed'}>
+      <Table.Td>
+        <Text ta="right" c={'dimmed'}>
           {format(new Date(transaction.timestamp), 'd.MM.yy HH:mm')}
         </Text>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
-  const Header: React.FC<TextProps> = ({ children, ...rest }) => (
-    <th>
-      <Text weight={800} size={'sm'} className={classes.tableHeader} {...rest}>
+  const Header: React.FC<TextProps & { children?: React.ReactNode }> = ({
+    children,
+    ...rest
+  }) => (
+    <Table.Th>
+      <Text fw={800} size={'sm'} className={classes.tableHeader} {...rest}>
         {children}
       </Text>
-    </th>
+    </Table.Th>
   )
 
   return (
     <Stack>
-      <Text color={'dimmed'} weight={700} p={'xs'}>
+      <Text c={'dimmed'} fw={700} p={'xs'}>
         Siste transaksjoner
       </Text>
       <CardTable className={classes.card}>
-        <thead>
-          <tr className={classes.headerRow}>
+        <Table.Thead>
+          <Table.Tr className={classes.headerRow}>
             <Header>Type</Header>
-            <Header align="left">Antall</Header>
-            <Header align="right">Pris</Header>
-            <Header align="right">Tidspunkt</Header>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
+            <Header ta="left">Antall</Header>
+            <Header ta="right">Pris</Header>
+            <Header ta="right">Tidspunkt</Header>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
       </CardTable>
     </Stack>
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
-    backgroundColor: theme.colors.white,
-    border: `1px solid ${theme.colors.gray[3]}`,
-    borderTop: `5px solid ${theme.colors.brand}`,
+    backgroundColor: 'white',
+    border: '1px solid var(--mantine-color-gray-3)',
+    borderTop: '5px solid var(--mantine-color-brand-6)',
   },
   tableHeader: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     textTransform: 'uppercase',
   },
   headerRow: {
-    borderRadius: theme.radius.xs,
+    borderRadius: 'var(--mantine-radius-xs)',
   },
-}))
+})

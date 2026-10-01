@@ -15,7 +15,7 @@ export const WantedList: React.FC<WantedListProps> = ({ users }) => {
       <Title order={3}>Wanted</Title>
       <Group>
         {users.map(user => (
-          <Card>
+          <Card key={user.id}>
             <UserThumbnail size="sm" user={user} />
             <span>{user.fullName}</span>
             <span>Skylder: {user.balance},- NOK</span>

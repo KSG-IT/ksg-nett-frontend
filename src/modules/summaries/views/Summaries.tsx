@@ -1,30 +1,31 @@
 import { useQuery } from '@apollo/client'
 import {
   Avatar,
-  Badge,
   Button,
-  createStyles,
   Group,
   Stack,
+  Table,
   Text,
   TextInput,
   Title,
 } from '@mantine/core'
+import { Badge } from 'components/Badge'
+import { createStyles } from '@mantine/emotion'
 import { IconPlus, IconSearch } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
+import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
 import { format } from 'util/date-fns'
 import { useDebounce } from 'util/hooks/useDebounce'
+import { PERMISSIONS } from 'util/permissions'
+import { UserThumbnail } from '../../users/components'
 import { AllSummariesQueryReturns, AllSummariesQueryVariables } from '../index'
 import { ALL_SUMMARIES } from '../queries'
-import { UserThumbnail } from '../../users/components'
-import { PermissionGate } from 'components/PermissionGate'
-import { PERMISSIONS } from 'util/permissions'
-import { FullContentLoader } from 'components/Loading'
 
 const breadCrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -55,32 +56,32 @@ export const Summaries: React.FC = () => {
   const hasNextPage = data?.allSummaries.pageInfo.hasNextPage ?? false
 
   const rows = summaries.map(summary => (
-    <tr
+    <Table.Tr
       className={classes.tableRow}
       onClick={() => navigate(`/summaries/${summary.id}`)}
       key={summary.id}
     >
-      <td>
-        <Text color={'dimmed'} weight={'bold'}>
+      <Table.Td>
+        <Text c={'dimmed'} fw={700}>
           {format(new Date(summary.date), 'dd.MM.yy')}
         </Text>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Badge variant={'filled'} color={'samfundet-red'}>
           {summary.displayName}
         </Badge>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Avatar.Group spacing={'sm'}>
           {summary.participants.map(user => (
-            <UserThumbnail user={user} />
+            <UserThumbnail key={user.id} user={user} />
           ))}
         </Avatar.Group>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <UserThumbnail user={summary.reporter} />
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   const handleFetchMore = async () => {
@@ -119,7 +120,7 @@ export const Summaries: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
-      <Group position="apart" align={'baseline'}>
+      <Group justify="space-between" align={'baseline'}>
         <Title>Referater</Title>
         <PermissionGate permissions={PERMISSIONS.summaries.view.summary}>
           <Button
@@ -127,7 +128,7 @@ export const Summaries: React.FC = () => {
             onClick={() => {
               navigate('/summaries/create')
             }}
-            leftIcon={<IconPlus />}
+            leftSection={<IconPlus />}
           >
             Nytt referat
           </Button>
@@ -136,18 +137,20 @@ export const Summaries: React.FC = () => {
       <TextInput
         value={query}
         placeholder="Søk etter innhold"
-        icon={<IconSearch />}
+        leftSection={<IconSearch />}
         onChange={evt => setQuery(evt.target.value)}
       />
 
       <CardTable className={classes.card} highlightOnHover>
-        <thead>
-          <td>Dato</td>
-          <td>Type</td>
-          <td>Deltakere</td>
-          <td>Referent</td>
-        </thead>
-        <tbody>{rows}</tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Dato</Table.Th>
+            <Table.Th>Type</Table.Th>
+            <Table.Th>Deltakere</Table.Th>
+            <Table.Th>Referent</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
       </CardTable>
 
       {hasNextPage && <Button onClick={handleFetchMore}>Hent fler</Button>}
@@ -155,11 +158,11 @@ export const Summaries: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
-    border: `1px solid ${theme.colors.gray[3]}`,
+    border: '1px solid var(--mantine-color-gray-3)',
   },
   tableRow: {
     cursor: 'pointer',
   },
-}))
+})

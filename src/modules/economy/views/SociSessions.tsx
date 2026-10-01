@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Title } from '@mantine/core'
+import { Button, Group, Title } from '@mantine/core'
 import { IconChartArea, IconGlass, IconPlus } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
@@ -18,6 +18,7 @@ import {
   AllSociSessionsVariables,
 } from '../types.graphql'
 import { MessageBox } from 'components/MessageBox'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -80,25 +81,29 @@ export const SosiSessions: React.FC = () => {
   return (
     <div className={classes.wrapper}>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Innkryssinger</Title>
         <Group>
           <PermissionGate permissions={PERMISSIONS.economy.add.sociSession}>
             <Button
               color="samfundet-red"
-              leftIcon={<IconPlus />}
+              leftSection={<IconPlus />}
               onClick={() => setCreateModalOpen(true)}
             >
               Ny liste
             </Button>
           </PermissionGate>
           <PermissionGate permissions={PERMISSIONS.economy.view.sociSession}>
-            <Button disabled color="samfundet-red" leftIcon={<IconChartArea />}>
+            <Button
+              disabled
+              color="samfundet-red"
+              leftSection={<IconChartArea />}
+            >
               Statistikk
             </Button>
           </PermissionGate>
           <PermissionGate permissions={PERMISSIONS.economy.change.sociProduct}>
-            <Button disabled color="samfundet-red" leftIcon={<IconGlass />}>
+            <Button disabled color="samfundet-red" leftSection={<IconGlass />}>
               Vareutvalg
             </Button>
           </PermissionGate>
@@ -121,11 +126,11 @@ export const SosiSessions: React.FC = () => {
   )
 }
 
-const useSociSessionsStyles = createStyles(theme => ({
+const useSociSessionsStyles = createStyles({
   wrapper: {
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
-}))
+})

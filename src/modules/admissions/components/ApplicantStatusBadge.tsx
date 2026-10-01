@@ -1,4 +1,4 @@
-import { Badge } from '@mantine/core'
+import { Badge } from 'components/Badge'
 import { ApplicantStatusValues } from 'modules/admissions/consts'
 import { parseApplicantStatus } from '../parsing'
 interface ApplicantStatusBadgeProps {
@@ -20,7 +20,7 @@ function resolveStatusColor(applicantStatus: ApplicantStatusValues) {
   }
 }
 
-export const ApplicantStatusBadge: React.VFC<ApplicantStatusBadgeProps> = ({
+export const ApplicantStatusBadge: React.FC<ApplicantStatusBadgeProps> = ({
   applicantStatus,
 }) => {
   return (

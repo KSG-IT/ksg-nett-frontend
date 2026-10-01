@@ -70,7 +70,7 @@ export const AddSingleUserModal = ({ onClose, opened }: ModalProps) => {
   }
   return (
     <Modal onClose={onClose} opened={opened}>
-      <Stack mb="md" spacing={'xs'}>
+      <Stack mb="md" gap={'xs'}>
         <Title order={2}>Legg til enkelt bruker</Title>
         <MessageBox type="info">
           Har du behov for å legge til en enkelt bruker utenom opptaket? Da er
@@ -78,7 +78,7 @@ export const AddSingleUserModal = ({ onClose, opened }: ModalProps) => {
         </MessageBox>
       </Stack>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing={'xs'}>
+        <Stack gap={'xs'}>
           <label htmlFor="email">Epost</label>
           <Input id="email" {...register('email')} />
           <label htmlFor="first-name">Fornavn</label>

@@ -3,10 +3,11 @@ import {
   Card,
   Group,
   Stack,
+  Table,
   TextInput,
   Title,
-  createStyles,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import {
   IconEye,
   IconMessage2,
@@ -33,43 +34,43 @@ const ForumDashboard: React.FC = () => {
       />
       <Title>Forum</Title>
       <Card>
-        <Group position="apart">
+        <Group justify="space-between">
           <TextInput
             className={classes.searchInput}
-            icon={<IconSearch />}
+            leftSection={<IconSearch />}
             placeholder="Søk i forumet"
           />
           <PermissionGate permissions={PERMISSIONS.forum.add.thread}>
-            <Button leftIcon={<IconPlus />}>Ny tråd</Button>
+            <Button leftSection={<IconPlus />}>Ny tråd</Button>
           </PermissionGate>
         </Group>
       </Card>
       <CardTable highlightOnHover>
-        <thead>
-          <tr>
-            <th>Tittel</th>
-            <th>Forfatter</th>
-            <th>Lagt ut</th>
-            <th>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Tittel</Table.Th>
+            <Table.Th>Forfatter</Table.Th>
+            <Table.Th>Lagt ut</Table.Th>
+            <Table.Th>
               <IconMessage2 />
-            </th>
-            <th>
+            </Table.Th>
+            <Table.Th>
               <IconEye />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
+            </Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          <Table.Tr
             className={classes.tableRow}
             onClick={() => navigate('ksg-it-har-opptak')}
           >
-            <td>KSG-IT har opptak!</td>
-            <td>Alexander "Bøtte²" Orvik</td>
-            <td>{formatDistanceToNow(new Date())}</td>
-            <td>93</td>
-            <td>417</td>
-          </tr>
-        </tbody>
+            <Table.Td>KSG-IT har opptak!</Table.Td>
+            <Table.Td>Alexander "Bøtte²" Orvik</Table.Td>
+            <Table.Td>{formatDistanceToNow(new Date())}</Table.Td>
+            <Table.Td>93</Table.Td>
+            <Table.Td>417</Table.Td>
+          </Table.Tr>
+        </Table.Tbody>
       </CardTable>
     </Stack>
   )

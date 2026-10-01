@@ -39,28 +39,29 @@ const FeatureFlags = () => {
       <Title>Feature flags</Title>
       <Card p="sm">
         <Table>
-          <thead>
-            <tr>
-              <th>Navn</th>
-              <th>Beskrivelse</th>
-              <th>Aktivert</th>
-            </tr>
-          </thead>
-          <tbody>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Navn</Table.Th>
+              <Table.Th>Beskrivelse</Table.Th>
+              <Table.Th>Aktivert</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
             {allFeatureFlags.map(flag => (
-              <tr key={flag.id}>
-                <td>{flag.name}</td>
+              <Table.Tr key={flag.id}>
+                <Table.Td>{flag.name}</Table.Td>
 
-                <td>{flag.description}</td>
-                <td>
+                <Table.Td>{flag.description}</Table.Td>
+                <Table.Td>
                   <Switch
+                    style={{ cursor: 'crosshair' }}
                     checked={flag.enabled}
                     onClick={() => handleToggleFeatureFlag(flag.id)}
                   />
-                </td>
-              </tr>
+                </Table.Td>
+              </Table.Tr>
             ))}
-          </tbody>
+          </Table.Tbody>
         </Table>
       </Card>
     </Stack>

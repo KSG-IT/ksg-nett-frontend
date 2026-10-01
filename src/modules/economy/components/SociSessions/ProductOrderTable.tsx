@@ -1,4 +1,5 @@
-import { createStyles, UnstyledButton } from '@mantine/core'
+import { Table, UnstyledButton } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { IconTrash } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
@@ -45,14 +46,16 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
   }
 
   const rows = productOrders.map(productOrder => (
-    <tr key={productOrder.id}>
-      <td>{format(new Date(productOrder.purchasedAt), 'yyyy.MM.dd HH:mm')}</td>
-      <td>{productOrder.source.user.fullName}</td>
-      <td>{productOrder.product.name}</td>
-      <td>{productOrder.orderSize}</td>
-      <td>{numberWithSpaces(productOrder.product.price)},- NOK</td>
-      <td>{numberWithSpaces(productOrder.cost)},- NOK</td>
-      <td>
+    <Table.Tr key={productOrder.id}>
+      <Table.Td>
+        {format(new Date(productOrder.purchasedAt), 'yyyy.MM.dd HH:mm')}
+      </Table.Td>
+      <Table.Td>{productOrder.source.user.fullName}</Table.Td>
+      <Table.Td>{productOrder.product.name}</Table.Td>
+      <Table.Td>{productOrder.orderSize}</Table.Td>
+      <Table.Td>{numberWithSpaces(productOrder.product.price)},- NOK</Table.Td>
+      <Table.Td>{numberWithSpaces(productOrder.cost)},- NOK</Table.Td>
+      <Table.Td>
         {!closed && (
           <UnstyledButton
             onClick={() => handleUndoProductOrder(productOrder.id)}
@@ -60,47 +63,47 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
             <IconTrash />
           </UnstyledButton>
         )}
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   const summaryRow = (
-    <tr className={classes.summaryRow}>
-      <td>Sum</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>{numberWithSpaces(sociSession.moneySpent)},- NOK</td>
-      <td></td>
-    </tr>
+    <Table.Tr className={classes.summaryRow}>
+      <Table.Td>Sum</Table.Td>
+      <Table.Td></Table.Td>
+      <Table.Td></Table.Td>
+      <Table.Td></Table.Td>
+      <Table.Td></Table.Td>
+      <Table.Td>{numberWithSpaces(sociSession.moneySpent)},- NOK</Table.Td>
+      <Table.Td></Table.Td>
+    </Table.Tr>
   )
 
   return (
     <CardTable>
-      <thead>
-        <tr>
-          <th>Tidsstempel</th>
-          <th>Navn</th>
-          <th>Vare</th>
-          <th>Antall</th>
-          <th>Pris</th>
-          <th>Total</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Tidsstempel</Table.Th>
+          <Table.Th>Navn</Table.Th>
+          <Table.Th>Vare</Table.Th>
+          <Table.Th>Antall</Table.Th>
+          <Table.Th>Pris</Table.Th>
+          <Table.Th>Total</Table.Th>
+          <Table.Th></Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>
         {rows}
         {summaryRow}
-      </tbody>
+      </Table.Tbody>
     </CardTable>
   )
 }
 
-const useProductOrderStyles = createStyles(theme => ({
+const useProductOrderStyles = createStyles({
   summaryRow: {
     fontWeight: 'bold',
-    backgroundColor: theme.colors.gray[2],
+    backgroundColor: 'var(--mantine-color-gray-2)',
   },
   tableRow: {
     td: {
@@ -110,4 +113,4 @@ const useProductOrderStyles = createStyles(theme => ({
       textAlign: 'right',
     },
   },
-}))
+})

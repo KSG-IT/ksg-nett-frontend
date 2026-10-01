@@ -1,46 +1,52 @@
-import { Badge, createStyles, Text, TextProps } from '@mantine/core'
+import { Table, Text } from '@mantine/core'
+import { Badge } from 'components/Badge'
 import { CardTable } from 'components/CardTable'
 import { ManageInternalGroupUser } from 'modules/organization/types.graphql'
 import { UserManagementTableRow } from './UserManagementTableRow'
+import { createStyles } from '@mantine/emotion'
 
 interface UserManagementTableProps {
   usersData: ManageInternalGroupUser[]
   activeMemberships?: boolean
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
-    backgroundColor: theme.colors.white,
-    borderTop: `5px solid ${theme.colors.brand}`,
+    backgroundColor: 'white',
+    borderTop: '5px solid var(--mantine-color-brand-6)',
   },
   tableHeader: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     textTransform: 'uppercase',
   },
   headerRow: {
-    borderRadius: theme.radius.xs,
+    borderRadius: 'var(--mantine-radius-xs)',
   },
-}))
+})
 
 export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   usersData,
   activeMemberships = false,
 }) => {
   const { classes } = useStyles()
-  const TableData: React.FC<TextProps> = ({ children, color, weight }) => (
-    <td>
-      <Text color={color} weight={weight} size={'sm'}>
+  const TableData: React.FC<{
+    children?: React.ReactNode
+    color?: string
+    fw?: number
+  }> = ({ children, color, fw }) => (
+    <Table.Td>
+      <Text c={color} fw={fw} size={'sm'}>
         {children}
       </Text>
-    </td>
+    </Table.Td>
   )
 
   const tableRows = usersData.map(membership => (
-    <tr key={membership.userId}>
+    <Table.Tr key={membership.userId}>
       <TableData>{membership.fullName}</TableData>
-      <td align="center">
+      <Table.Td align="center">
         <Badge color={'samfundet-red'}>{membership.positionName}</Badge>
-      </td>
+      </Table.Td>
       <TableData>
         {membership.internalGroupPositionMembership.getTypeDisplay}
       </TableData>
@@ -48,44 +54,42 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
       {activeMemberships ? (
         <UserManagementTableRow userData={membership} />
       ) : (
-        <td>{membership.dateEndedSemesterShorthand}</td>
+        <Table.Td>{membership.dateEndedSemesterShorthand}</Table.Td>
       )}
-    </tr>
+    </Table.Tr>
   ))
-  const Header: React.FC<TextProps> = ({ children, align }) => (
-    <th>
-      <Text
-        align={align}
-        weight={800}
-        size={'sm'}
-        className={classes.tableHeader}
-      >
+  const Header: React.FC<{
+    children?: React.ReactNode
+    ta?: 'left' | 'center' | 'right'
+  }> = ({ children, ta }) => (
+    <Table.Th>
+      <Text ta={ta} fw={800} size={'sm'} className={classes.tableHeader}>
         {children}
       </Text>
-    </th>
+    </Table.Th>
   )
 
   return (
     <CardTable>
       {/* Should parse data in here and show loading state here */}
-      <thead>
-        <tr>
+      <Table.Thead>
+        <Table.Tr>
           <Header>Navn</Header>
-          <Header align="center">Stilling</Header>
+          <Header ta="center">Stilling</Header>
           <Header>Gruppe</Header>
           <Header>Startet</Header>
           {activeMemberships ? (
             <>
               <Header>Sett verv</Header>
-              <th></th>
-              <th></th>
+              <Table.Th></Table.Th>
+              <Table.Th></Table.Th>
             </>
           ) : (
             <Header>Sluttet</Header>
           )}
-        </tr>
-      </thead>
-      <tbody>{tableRows}</tbody>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{tableRows}</Table.Tbody>
     </CardTable>
   )
 }

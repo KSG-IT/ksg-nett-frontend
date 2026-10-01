@@ -1,16 +1,9 @@
-import {
-  Badge,
-  createStyles,
-  Image,
-  Paper,
-  SimpleGrid,
-  Stack,
-  Text,
-} from '@mantine/core'
+import { Image, Paper, SimpleGrid, Stack, Text } from '@mantine/core'
+import { Badge } from 'components/Badge'
 import { useNavigate } from 'react-router-dom'
 import { useIsMobile } from 'util/hooks'
 import { UserNode } from '../types'
-
+import { createStyles } from '@mantine/emotion'
 interface NewbieCardProps {
   newbies: Pick<
     UserNode,
@@ -31,6 +24,7 @@ export const NewbieCards: React.FC<NewbieCardProps> = ({ newbies }) => {
     <SimpleGrid cols={isMobile ? 1 : 4}>
       {newbies.map(newbie => (
         <Paper
+          key={newbie.id}
           className={classes.card}
           radius={'md'}
           onClick={() => handleClickCard(newbie.id)}
@@ -41,7 +35,7 @@ export const NewbieCards: React.FC<NewbieCardProps> = ({ newbies }) => {
               'https://m.media-amazon.com/images/M/MV5BMjA5NTE4NTE5NV5BMl5BanBnXkFtZTcwMTcyOTY5Mw@@._V1_.jpg'
             }
           />
-          <Stack spacing={0} p="xs" my="xs">
+          <Stack gap={0} p="xs" my="xs">
             <Text>{newbie.fullName}</Text>
             {newbie.activeInternalGroupPosition && (
               <Badge>{newbie.activeInternalGroupPosition.name}</Badge>
@@ -53,16 +47,16 @@ export const NewbieCards: React.FC<NewbieCardProps> = ({ newbies }) => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
     height: 'auto',
     width: 200,
     ':hover': {
-      boxShadow: theme.shadows.md,
+      boxShadow: 'var(--mantine-shadow-md)',
       cursor: 'pointer',
     },
     '@media (max-width: 600px)': {
       width: '100%',
     },
   },
-}))
+})

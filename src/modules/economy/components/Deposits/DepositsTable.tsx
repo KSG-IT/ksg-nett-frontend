@@ -1,4 +1,4 @@
-import { ActionIcon, Menu } from '@mantine/core'
+import { ActionIcon, Menu, Table } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import {
   IconCheck,
@@ -136,26 +136,28 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
   }
 
   const rows = deposits.map((deposit, index) => (
-    <tr key={deposit.id}>
-      <td>{format(new Date(deposit.createdAt), 'yyyy.MM.dd HH:mm')}</td>
-      <td>
+    <Table.Tr key={deposit.id}>
+      <Table.Td>
+        {format(new Date(deposit.createdAt), 'yyyy.MM.dd HH:mm')}
+      </Table.Td>
+      <Table.Td>
         <Link to={`/users/${deposit.account.user.id}`}>
           {deposit.account.user.fullName}
         </Link>
-      </td>
-      <td>{deposit.amount}</td>
-      <td>
+      </Table.Td>
+      <Table.Td>{deposit.amount}</Table.Td>
+      <Table.Td>
         {deposit.depositMethod === DepositMethodValues.BANK_TRANSFER
           ? 'Bankoverføring'
           : 'Stripe'}
-      </td>
-      <td>{deposit.description}</td>
-      <td>
+      </Table.Td>
+      <Table.Td>{deposit.description}</Table.Td>
+      <Table.Td>
         {deposit.approvedBy ? (
           <UserThumbnail user={deposit.approvedBy} />
         ) : null}
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <PermissionGate permissions={PERMISSIONS.economy.approve.deposit}>
           <Menu position="left-start">
             <Menu.Target>
@@ -165,7 +167,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item
-                icon={<IconCheck />}
+                leftSection={<IconCheck />}
                 color="green"
                 disabled={deposit.approved}
                 onClick={() => handleApproveDeposit(deposit)}
@@ -173,7 +175,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
                 Godkjenn
               </Menu.Item>
               <Menu.Item
-                icon={<IconEditCircle />}
+                leftSection={<IconEditCircle />}
                 color="orange"
                 disabled={deposit.approved}
                 onClick={() => handleApproveDeposit(deposit, true)}
@@ -181,7 +183,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
                 Korrriger og godkjenn
               </Menu.Item>
               <Menu.Item
-                icon={<IconX />}
+                leftSection={<IconX />}
                 color="purple"
                 disabled={!deposit.approved}
                 onClick={() => handleInvalidateDeposit(deposit)}
@@ -190,7 +192,7 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
               </Menu.Item>
               <Menu.Item
                 color="red"
-                icon={<IconTrash />}
+                leftSection={<IconTrash />}
                 disabled={deposit.approved}
                 onClick={() => handleDeleteDeposit(deposit)}
               >
@@ -199,24 +201,24 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
             </Menu.Dropdown>
           </Menu>
         </PermissionGate>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <CardTable compact>
-      <thead>
-        <tr>
-          <th>Tidsstempel</th>
-          <th>Navn</th>
-          <th>Sum</th>
-          <th>Betalingsmetode</th>
-          <th>Kommentar</th>
-          <th>Godkjent av</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Tidsstempel</Table.Th>
+          <Table.Th>Navn</Table.Th>
+          <Table.Th>Sum</Table.Th>
+          <Table.Th>Betalingsmetode</Table.Th>
+          <Table.Th>Kommentar</Table.Th>
+          <Table.Th>Godkjent av</Table.Th>
+          <Table.Th></Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </CardTable>
   )
 }

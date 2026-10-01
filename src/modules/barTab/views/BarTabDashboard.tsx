@@ -1,11 +1,12 @@
 import { useQuery } from '@apollo/client'
-import { createStyles, Title } from '@mantine/core'
+import { Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { ActiveBarTablController } from '../components/BarTabDashboaard'
 import { ACTIVE_BAR_TAB_QUERY } from '../queries'
 import { ActiveBarTabReturns } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -34,6 +35,6 @@ export const BarTabDashboard: React.FC = () => {
   )
 }
 
-const useBarTabDashboardStyles = createStyles(theme => ({
+const useBarTabDashboardStyles = createStyles({
   wrapper: {},
-}))
+})

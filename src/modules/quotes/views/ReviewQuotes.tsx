@@ -8,7 +8,6 @@ import {
   Stack,
   Text,
   Title,
-  createStyles,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { Breadcrumbs } from 'components/Breadcrumbs'
@@ -27,6 +26,7 @@ import { DELETE_QUOTE } from '../mutations'
 import { useQuoteMutations } from '../mutations.hooks'
 import { APPROVED_QUOTES_QUERY, PNEDING_QUOTES_QUERY } from '../queries'
 import { PendingQuotesReturns } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -109,32 +109,26 @@ export const ReviewQuotes: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
-        <Title order={2} color="dimmed">
+      <Group justify="space-between">
+        <Title order={2} c="dimmed">
           Godkjenning av sitater
         </Title>
         <QuotesTabs />
       </Group>
-      <SimpleGrid
-        cols={3}
-        breakpoints={[
-          { maxWidth: 'lg', cols: 3, spacing: 'md' },
-          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
-        ]}
-      >
+      <SimpleGrid cols={{ base: 1, sm: 3 }}>
         {pendingQuotes.map(quote => (
           <Card key={quote.id} withBorder>
-            <Group position="center">
-              <Stack justify={'space-between'} spacing={'xs'}>
+            <Group justify="center">
+              <Stack justify={'space-between'} gap={'xs'}>
                 <Card withBorder>
                   <Text size={'sm'} className={classes.quoteText}>
                     {quote.text}
                   </Text>
 
-                  <Text size={'xs'} color={'gray'}>
+                  <Text size={'xs'} c={'gray'}>
                     {quote.context}
                   </Text>
-                  <Group position="apart" spacing={'xs'}>
+                  <Group justify="space-between" gap={'xs'}>
                     <Avatar.Group spacing={5}>
                       {quote.tagged.map(user => (
                         <UserThumbnail size={'sm'} key={user.id} user={user} />
@@ -143,12 +137,12 @@ export const ReviewQuotes: React.FC = () => {
                   </Group>
                 </Card>
 
-                <Stack spacing={0}>
-                  <Text size="sm" color="dark">
+                <Stack gap={0}>
+                  <Text size="sm" c="dark">
                     {/* Legacy quotes have no reported by */}
                     Sendt inn av: {quote?.reportedBy?.fullName}
                   </Text>
-                  <Text size="sm" color="dark">
+                  <Text size="sm" c="dark">
                     Tidspunkt: {format(new Date(quote.createdAt), 'eeee HH:mm')}
                   </Text>
                 </Stack>
@@ -181,9 +175,9 @@ export const ReviewQuotes: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   quoteText: {
-    color: theme.colors.gray[7],
+    color: 'var(--mantine-color-gray-7)',
     fontWeight: 500,
   },
-}))
+})

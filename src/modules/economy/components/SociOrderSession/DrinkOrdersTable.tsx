@@ -1,3 +1,4 @@
+import { Table } from '@mantine/core'
 import { useQuery } from '@apollo/client'
 import { CardTable } from 'components/CardTable'
 import { ALL_SOCI_ORDERR_SESSION_DRINK_ORDERS_QUERY } from 'modules/economy/queries'
@@ -13,25 +14,25 @@ export const DrinkOrdersTable: React.FC = ({}) => {
   const orders = data?.allSociOrderSessionDrinkOrders ?? []
 
   const rows = orders.map((order: SociOrderSessionOrder) => (
-    <tr key={order.id}>
-      <td>{format(new Date(order.orderedAt), 'HH:mm:ss')}</td>
-      <td>{order.user.getCleanFullName}</td>
-      <td>{order.product.name}</td>
-      <td>{order.product.price} kr</td>
-    </tr>
+    <Table.Tr key={order.id}>
+      <Table.Td>{format(new Date(order.orderedAt), 'HH:mm:ss')}</Table.Td>
+      <Table.Td>{order.user.getCleanFullName}</Table.Td>
+      <Table.Td>{order.product.name}</Table.Td>
+      <Table.Td>{order.product.price} kr</Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <CardTable>
-      <thead>
-        <tr>
-          <th>Tidsstempel</th>
-          <th>Navn</th>
-          <th>Produkt</th>
-          <th>Pris</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Tidsstempel</Table.Th>
+          <Table.Th>Navn</Table.Th>
+          <Table.Th>Produkt</Table.Th>
+          <Table.Th>Pris</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </CardTable>
   )
 }

@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client'
 import {
   Button,
   Card,
-  createStyles,
   Group,
   Modal,
   Stack,
@@ -26,6 +25,7 @@ import {
   InterviewLocationOverviewRow,
   InterviewTableOverviewReturns,
 } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -57,7 +57,7 @@ export const InterviewsOverview: React.FC = () => {
   const [addInterviewModalOpen, setAddInterviewModalOpen] = useState(false)
   const [assignInterviewModalOpen, setAssignInterviewModalOpen] =
     useState(false)
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'))
   const [selectedInterviewId, setSelectedInterviewId] = useState<string | null>(
     null
   )
@@ -66,7 +66,7 @@ export const InterviewsOverview: React.FC = () => {
     INTERVIEW_TABLE_OVERVIEW_QUERY,
     {
       variables: {
-        date: format(date, 'yyyy-MM-dd'),
+        date: date,
       },
       pollInterval: 10_000,
     }
@@ -136,18 +136,22 @@ export const InterviewsOverview: React.FC = () => {
   }
 
   function handleIncrementDate() {
-    setDate(new Date(date.setDate(date.getDate() + 1)))
+    const d = new Date(date)
+    d.setDate(d.getDate() + 1)
+    setDate(format(d, 'yyyy-MM-dd'))
   }
 
   function handleDecrementDate() {
-    setDate(new Date(date.setDate(date.getDate() - 1)))
+    const d = new Date(date)
+    d.setDate(d.getDate() - 1)
+    setDate(format(d, 'yyyy-MM-dd'))
   }
 
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
 
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Intervjuoversikt</Title>
         <PermissionGate permissions={PERMISSIONS.admissions.add.interview}>
           <Button onClick={() => setAddInterviewModalOpen(true)}>
@@ -156,7 +160,7 @@ export const InterviewsOverview: React.FC = () => {
         </PermissionGate>
       </Group>
 
-      <Group position="center" align={'center'}>
+      <Group justify="center" align={'center'}>
         <UnstyledButton onClick={handleDecrementDate}>
           <IconChevronLeft />
         </UnstyledButton>

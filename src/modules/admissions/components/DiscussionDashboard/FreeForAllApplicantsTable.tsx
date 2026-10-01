@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core'
+import { Button, Table } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
@@ -18,17 +18,17 @@ const renderPrioritycell = (priority: InternalGroupPositionPriority) => {
   if (priority === null)
     return (
       <>
-        <td></td>
-        <td></td>
+        <Table.Td></Table.Td>
+        <Table.Td></Table.Td>
       </>
     )
 
   return (
     <>
-      <td>{priority.internalGroupPosition.internalGroup.name}</td>
-      <td>
+      <Table.Td>{priority.internalGroupPosition.internalGroup.name}</Table.Td>
+      <Table.Td>
         <InternalGroupPositionPriorityBadge priority={priority} />
-      </td>
+      </Table.Td>
     </>
   )
 }
@@ -115,34 +115,34 @@ export const FreeForAllApplicantsTable: React.FC<
 
   // Render rows
   const rows = applicants.map(applicant => (
-    <tr key={applicant.id}>
-      <td>{applicant.fullName}</td>
+    <Table.Tr key={applicant.id}>
+      <Table.Td>{applicant.fullName}</Table.Td>
       {applicant.priorities.map(priority => renderPrioritycell(priority))}
-      <td>
+      <Table.Td>
         <Button onClick={() => handleMoreInfo(applicant)} variant="outline">
           Kandidatdetaljer
         </Button>
-      </td>
-      <td>{renderActionButton(applicant, internalGroupId)}</td>
-    </tr>
+      </Table.Td>
+      <Table.Td>{renderActionButton(applicant, internalGroupId)}</Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <CardTable>
-      <thead>
-        <tr>
-          <th>Navn</th>
-          <th>Førstevalg</th>
-          <th></th>
-          <th>Andrevalg</th>
-          <th></th>
-          <th>Tredjevalg</th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Navn</Table.Th>
+          <Table.Th>Førstevalg</Table.Th>
+          <Table.Th></Table.Th>
+          <Table.Th>Andrevalg</Table.Th>
+          <Table.Th></Table.Th>
+          <Table.Th>Tredjevalg</Table.Th>
+          <Table.Th></Table.Th>
+          <Table.Th></Table.Th>
+          <Table.Th></Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </CardTable>
   )
 }

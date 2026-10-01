@@ -1,11 +1,9 @@
+import { useRichTextEditor } from 'components/RichTextEditor'
 import { OnFormSubmit } from 'types/forms'
 import { CreateDocumentReturns, PatchDocumentReturns } from '../../mutations'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { showNotification } from '@mantine/notifications'
-import StarterKit from '@tiptap/starter-kit'
-import { Link } from '@mantine/tiptap'
-import { useEditor } from '@tiptap/react'
 import * as yup from 'yup'
 
 export type DocumentFormData = {
@@ -32,10 +30,7 @@ interface DocumentLogicInput {
 export function useDocumentLogic(input: DocumentLogicInput) {
   const { defaultValues, onSubmit } = input
 
-  const editor = useEditor({
-    extensions: [StarterKit, Link],
-    content: defaultValues.content,
-  })
+  const editor = useRichTextEditor(defaultValues.content)
 
   const form = useForm<DocumentFormData>({
     mode: 'onSubmit',

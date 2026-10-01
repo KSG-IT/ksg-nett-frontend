@@ -1,4 +1,4 @@
-import { Button, FileInput, Modal, Stack } from '@mantine/core'
+import { Button, FileInput, Modal, Stack, Table } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconFileCode, IconUpload, IconUserPlus } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
@@ -84,12 +84,12 @@ export const UploadAdmissionCSVModal: React.FC<
           label="Velg en opptaksfil"
           accept="text/csv"
           placeholder="Trykk her"
-          icon={<IconFileCode />}
+          leftSection={<IconFileCode />}
           clearable
         />
         <Button
           color="samfundet-red"
-          leftIcon={<IconUpload />}
+          leftSection={<IconUpload />}
           disabled={!file}
           type="submit"
           onClick={handleUploadFile}
@@ -101,7 +101,7 @@ export const UploadAdmissionCSVModal: React.FC<
         color="samfundet-red"
         disabled={result.length === 0 || !file}
         loading={createApplicantsFromCSVLoading}
-        leftIcon={<IconUserPlus />}
+        leftSection={<IconUserPlus />}
         my="md"
         onClick={handleCreateProfiles}
       >
@@ -109,22 +109,22 @@ export const UploadAdmissionCSVModal: React.FC<
       </Button>
 
       <CardTable>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th>Telefon</th>
-            <th>E-post</th>
-          </tr>
-        </thead>
-        <tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Navn</Table.Th>
+            <Table.Th>Telefon</Table.Th>
+            <Table.Th>E-post</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
           {result.map(applicant => (
-            <tr key={applicant.email}>
-              <td>{applicant.fullName}</td>
-              <td>{applicant.phone}</td>
-              <td>{applicant.email}</td>
-            </tr>
+            <Table.Tr key={applicant.email}>
+              <Table.Td>{applicant.fullName}</Table.Td>
+              <Table.Td>{applicant.phone}</Table.Td>
+              <Table.Td>{applicant.email}</Table.Td>
+            </Table.Tr>
           ))}
-        </tbody>
+        </Table.Tbody>
       </CardTable>
     </Modal>
   )

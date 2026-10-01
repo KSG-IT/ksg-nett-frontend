@@ -11,27 +11,27 @@ export const ScheduleTemplateTable: React.FC<ScheduleTemplateTableProps> = ({
   scheduleTemplates,
 }) => {
   const rows = scheduleTemplates.map(scheduleTemplate => (
-    <tr key={scheduleTemplate.id}>
-      <td>{scheduleTemplate.name}</td>
-      <td>{scheduleTemplate.schedule.name}</td>
-      <td>
+    <Table.Tr key={scheduleTemplate.id}>
+      <Table.Td>{scheduleTemplate.name}</Table.Td>
+      <Table.Td>{scheduleTemplate.schedule.name}</Table.Td>
+      <Table.Td>
         <Link to={`${scheduleTemplate.id}`}>
           <Button color="samfundet-red">Endre</Button>
         </Link>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <CardTable>
-      <thead>
-        <tr>
-          <th>Navn</th>
-          <th>Vaktplan</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Navn</Table.Th>
+          <Table.Th>Vaktplan</Table.Th>
+          <Table.Th></Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </CardTable>
   )
 }

@@ -5,14 +5,15 @@ import {
   NumberInput,
   Select,
   TextInput,
-  createStyles,
 } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { useSociSessionMutations } from 'modules/economy/mutations.hooks'
 import { ALL_SOCI_SESSIONS } from 'modules/economy/queries'
 import { SociSessionType } from 'modules/economy/types.graphql'
 import { useState } from 'react'
+import { enumHandler } from 'util/parsing'
 import { useNavigate } from 'react-router-dom'
 import { format } from 'util/date-fns'
 
@@ -29,7 +30,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
   const [name, setName] = useState('')
   const [minimumRemainingBalance, setMinimumRemainingBalance] = useState(0)
   const [type, setType] = useState<SociSessionType>(SociSessionType.KRYSSELISTE)
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
   const navigate = useNavigate()
 
   const { createSociSession } = useSociSessionMutations()
@@ -45,7 +46,7 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
       name: name.trim(),
       minimumRemainingBalance: minimumRemainingBalance,
       type,
-      creationDate: format(date, 'yyyy-MM-dd'),
+      creationDate: date,
     }
 
     if (type === SociSessionType.STILLETIME) {
@@ -104,15 +105,17 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
               value: SociSessionType.KRYSSELISTE,
             },
           ]}
-          onChange={val => val && setType(val as SociSessionType)}
+          onChange={enumHandler(SociSessionType, setType)}
         />
         <NumberInput
           label="Minstebeløp gjenværende saldo"
           value={minimumRemainingBalance}
           min={0}
-          onChange={val => val && setMinimumRemainingBalance(val)}
+          onChange={val =>
+            typeof val === 'number' && setMinimumRemainingBalance(val)
+          }
         />
-        <Group position="right">
+        <Group justify="flex-end">
           <Button color="gray" onClick={handleCancel}>
             Avbryt
           </Button>
@@ -125,10 +128,10 @@ export const CreateSociSessionModal: React.FC<CreateSociSessionModalProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
-}))
+})

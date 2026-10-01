@@ -32,7 +32,7 @@ interface ConfigureInterviewLocationAvailabilityProps {
   setStageCallback: (stage: WizardStage) => void
 }
 
-export const ConfigureInterviewLocationAvailability: React.VFC<
+export const ConfigureInterviewLocationAvailability: React.FC<
   ConfigureInterviewLocationAvailabilityProps
 > = ({ setStageCallback }) => {
   const [interviewLocationName, setInterviewLocationName] = useState('')

@@ -12,36 +12,36 @@ export const SchedulesTable: React.FC<SchedulesTableProps> = ({
   schedules,
 }) => {
   const rows = schedules.map(schedule => (
-    <tr key={schedule.id}>
-      <td>{schedule.name}</td>
-      <td>
+    <Table.Tr key={schedule.id}>
+      <Table.Td>{schedule.name}</Table.Td>
+      <Table.Td>
         <Link to={`${schedule.id}`}>
           <Button color="samfundet-red">Se vakter</Button>
         </Link>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Button color="samfundet-red" variant="subtle" disabled>
           Gjør jobben min for meg
         </Button>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Button color="samfundet-red" variant="subtle" disabled>
           Vaktbytteforespørsler
         </Button>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
   return (
     <CardTable>
-      <thead>
-        <tr>
-          <th>Navn</th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Navn</Table.Th>
+          <Table.Th></Table.Th>
+          <Table.Th></Table.Th>
+          <Table.Th></Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </CardTable>
   )
 }

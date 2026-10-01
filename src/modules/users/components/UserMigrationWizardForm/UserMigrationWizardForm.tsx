@@ -1,11 +1,6 @@
-import {
-  Button,
-  Checkbox,
-  createStyles,
-  SimpleGrid,
-  TextInput,
-} from '@mantine/core'
-import { DateInput, DatePicker, DatePickerInput } from '@mantine/dates'
+import { Button, Checkbox, SimpleGrid, TextInput } from '@mantine/core'
+import { DateInput } from '@mantine/dates'
+import { format } from 'date-fns'
 import { useState } from 'react'
 import { UserWizardData } from './types'
 import { useUserMigrationWizardFormAPI } from './useUserMigrationWizardFormAPI'
@@ -32,10 +27,7 @@ export const UserMigrationWizardForm: React.FC<
         checked={readMessageBox}
         onChange={evt => setReadMessageBox(!readMessageBox)}
       />
-      <SimpleGrid
-        cols={2}
-        breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
-      >
+      <SimpleGrid cols={{ base: 1, xs: 2 }}>
         <TextInput
           error={errors?.firstName?.message}
           label="Fornavn"
@@ -71,7 +63,11 @@ export const UserMigrationWizardForm: React.FC<
           label="Fødselsdato"
           placeholder="Velg en dato"
           error={errors?.dateOfBirth?.message}
-          defaultValue={getValues('dateOfBirth')}
+          defaultValue={
+            getValues('dateOfBirth')
+              ? format(getValues('dateOfBirth')!, 'yyyy-MM-dd')
+              : undefined
+          }
           onChange={date => date && setValue('dateOfBirth', new Date(date))}
         />
         <TextInput
@@ -98,8 +94,3 @@ export const UserMigrationWizardForm: React.FC<
     </form>
   )
 }
-
-const useUserMigrationWizardFormStyles = createStyles(theme => ({
-  container: {},
-  title: {},
-}))

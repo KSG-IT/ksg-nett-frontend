@@ -36,13 +36,9 @@ interface InternalGroupPosition {
 
 interface SetPrioritiesProps {
   applicant: ApplicantNode
-  nextStepCallback: () => void
 }
 
-export const SetPriorities: React.FC<SetPrioritiesProps> = ({
-  applicant,
-  nextStepCallback,
-}) => {
+export const SetPriorities: React.FC<SetPrioritiesProps> = ({ applicant }) => {
   // === Local state variables ===
   // Initial priority state are applicant non-null priorities
   const { applicantToken } = useParams() as { applicantToken: string }
@@ -160,7 +156,6 @@ export const SetPriorities: React.FC<SetPrioritiesProps> = ({
             title: 'Lagret prioriteringer',
             message: 'Du har nå lagret dine prioriteringer',
           })
-          nextStepCallback()
         },
         onError() {
           showNotification({
@@ -181,7 +176,7 @@ export const SetPriorities: React.FC<SetPrioritiesProps> = ({
     const moveDown = index < values.length - 1
 
     return (
-      <Stack spacing={0}>
+      <Stack gap={0}>
         <ActionIcon
           disabled={!moveUp}
           onClick={() => handlePriorityChange(index, -1)}
@@ -246,21 +241,32 @@ export const SetPriorities: React.FC<SetPrioritiesProps> = ({
           og ikke 3 semestere slik de andre stillingene gjør.{' '}
         </MessageBox>
       )}
-      <Stack ref={animationParent}>
+      <Stack
+        component="ol"
+        ref={animationParent}
+        m={0}
+        p={0}
+        style={{ listStyle: 'none' }}
+      >
         {values.map((priority, index) => (
-          <Group grow key={priority!.id} position={'apart'}>
-            <Text>
-              <ThemeIcon mr={'sm'} radius={'md'}>
+          <Group
+            component="li"
+            grow
+            key={priority!.id}
+            justify={'space-between'}
+          >
+            <Group gap="sm" wrap="nowrap">
+              <ThemeIcon radius={'md'} aria-hidden>
                 {index + 1}
-              </ThemeIcon>{' '}
-              {priority?.internalGroupPosition.name}
-            </Text>
-            <Group position={'right'}>
+              </ThemeIcon>
+              <Text>{priority?.internalGroupPosition.name}</Text>
+            </Group>
+            <Group justify={'flex-end'}>
               {renderChangePriorityButtons(index)}
               <Button
                 color="samfundet-red"
                 variant={'outline'}
-                leftIcon={<IconTrash />}
+                leftSection={<IconTrash />}
                 onClick={() => {
                   handleDeletePriority(priority!.internalGroupPosition.id)
                 }}
@@ -273,10 +279,10 @@ export const SetPriorities: React.FC<SetPrioritiesProps> = ({
       </Stack>
       <Divider />
       <Stack>
-        <Title color={'dimmed'} order={3}>
+        <Title c={'dimmed'} order={3}>
           Tilgjengelige stillinger
         </Title>
-        <SimpleGrid breakpoints={[{ minWidth: 'sm', cols: 4 }]} cols={1}>
+        <SimpleGrid cols={{ base: 1, sm: 4 }}>
           {filteredInternalGroupPositions.map(position => (
             <Button
               key={position.name}

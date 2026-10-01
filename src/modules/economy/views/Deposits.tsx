@@ -49,11 +49,11 @@ export const Deposits: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Innskudd</Title>
         <Button
           color="samfundet-red"
-          leftIcon={<IconRefresh />}
+          leftSection={<IconRefresh />}
           onClick={() => refetch()}
         >
           Oppdater
@@ -68,7 +68,7 @@ export const Deposits: React.FC = () => {
           <TextInput
             value={query}
             onChange={evt => setQuery(evt.target.value)}
-            icon={<IconSearch />}
+            leftSection={<IconSearch />}
             placeholder="Søk etter bruker..."
           />
           <Checkbox

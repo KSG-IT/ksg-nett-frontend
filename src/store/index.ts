@@ -1,5 +1,5 @@
 import { UserNode } from 'modules/users/types'
-import create from 'zustand'
+import { create } from 'zustand'
 export const LOGIN_TOKEN_KEY = 'login-token'
 
 export const UserPlaceholder: UserNode = {
@@ -70,7 +70,7 @@ export const useStore = create<Store>(set => ({
     localStorage.setItem(LOGIN_TOKEN_KEY, token)
     set(() => ({ token: token }))
   },
-  sidebarOpen: false,
+  sidebarOpen: true,
   toggleSidebarOpen: () => {
     set(state => ({ sidebarOpen: !state.sidebarOpen }))
   },

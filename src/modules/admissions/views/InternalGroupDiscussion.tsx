@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Group, Radio, Stack, Text, Title, createStyles } from '@mantine/core'
+import { Group, Radio, Stack, Table, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
@@ -13,8 +13,10 @@ import {
   FreeForAllApplicantsTable,
 } from '../components/DiscussionDashboard'
 import { InternalGroupDiscussionDataOrderingKeyValue } from '../consts'
+import { enumHandler } from 'util/parsing'
 import { INTERNAL_GROUP_DISCUSSION_DATA } from '../queries'
 import { InternalGroupDiscussionDataReturns } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 interface InternalGroupDiscussionParams {
   internalGroupId: string
@@ -72,7 +74,7 @@ export const InternalGroupDiscussion: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Fordelingsmøte {internalGroup.name}</Title>
         <SynCButton
           refetchCallback={() => refetch()}
@@ -89,16 +91,17 @@ export const InternalGroupDiscussion: React.FC = () => {
         kandidater må bli vurdert før fordelingsmøtet kan stenges.
       </MessageBox>
       <MessageBox type="warning">
-        <Text weight="bold">
+        <strong>
           Obs! Du markerer ønsker på vegne av {internalGroup.name}
-        </Text>
+        </strong>
       </MessageBox>
       <Radio.Group
         label="Sorteringsmodus"
         value={orderingKey}
-        onChange={val =>
-          setOrderingKey(val as InternalGroupDiscussionDataOrderingKeyValue)
-        }
+        onChange={enumHandler(
+          InternalGroupDiscussionDataOrderingKeyValue,
+          setOrderingKey
+        )}
       >
         <Group>
           <Radio
@@ -123,43 +126,43 @@ export const InternalGroupDiscussion: React.FC = () => {
       />
       <Title order={2}>Anbefalte kandidater</Title>
       <CardTable>
-        <thead>
-          <tr>
-            <th>Kandidat</th>
-            <th>Begrunnelse</th>
-            <th>Anbefalt av</th>
-          </tr>
-        </thead>
-        <tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Kandidat</Table.Th>
+            <Table.Th>Begrunnelse</Table.Th>
+            <Table.Th>Anbefalt av</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
           {applicantRecommendations.map((rec, i) => (
-            <tr key={i}>
-              <td
+            <Table.Tr key={i}>
+              <Table.Td
                 className={classes.clickableTd}
                 onClick={() => handleRedirect('applicant', rec.applicant.id)}
               >
                 {rec.applicant.fullName}
-              </td>
-              <td>{rec.reasoning}</td>
-              <td
+              </Table.Td>
+              <Table.Td>{rec.reasoning}</Table.Td>
+              <Table.Td
                 className={classes.clickableTd}
                 onClick={() => handleRedirect('user', rec.recommendedBy.id)}
               >
                 {rec.recommendedBy.fullName}
-              </td>
-            </tr>
+              </Table.Td>
+            </Table.Tr>
           ))}
-        </tbody>
+        </Table.Tbody>
       </CardTable>
     </Stack>
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   clickableTd: {
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: 'var(--mantine-color-gray-0)',
       textDecoration: 'underline',
     },
   },
-}))
+})

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Modal, Stack, Title } from '@mantine/core'
+import { Button, Group, Modal, Stack, Table, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconDownload, IconMeat } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
@@ -115,7 +115,7 @@ export const SociOrderSession: React.FC = ({}) => {
             { label: 'Stilletime', path: '/economy/soci-sessions/live' },
           ]}
         />
-        <Group position="apart">
+        <Group justify="space-between">
           <Title order={2}>Burgerliste</Title>
           <Group>
             <PermissionGate
@@ -160,14 +160,14 @@ export const SociOrderSession: React.FC = ({}) => {
           <Title order={2}>Stilletime</Title>
           <Button
             variant="outline"
-            leftIcon={<IconMeat />}
+            leftSection={<IconMeat />}
             onClick={() => setBurgerModalOpen(true)}
           >
             Burgerliste
           </Button>
           {activeSociOrderSession.orderPdf && (
             <a href={activeSociOrderSession.orderPdf} target="_blank">
-              <Button variant="outline" leftIcon={<IconDownload />}>
+              <Button variant="outline" leftSection={<IconDownload />}>
                 Last ned
               </Button>
             </a>
@@ -202,22 +202,22 @@ export const SociOrderSession: React.FC = ({}) => {
           onClose={() => setBurgerModalOpen(false)}
         >
           <CardTable>
-            <thead>
-              <tr>
-                <th>Navn</th>
-                <th>Antall</th>
-                <th>Vare</th>
-              </tr>
-            </thead>
-            <tbody>
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th>Navn</Table.Th>
+                <Table.Th>Antall</Table.Th>
+                <Table.Th>Vare</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>
               {activeSociOrderSession.foodOrders.map(order => (
-                <tr key={order.id}>
-                  <td>{order.user.getCleanFullName}</td>
-                  <td>{order.amount}</td>
-                  <td>{order.product.name}</td>
-                </tr>
+                <Table.Tr key={order.id}>
+                  <Table.Td>{order.user.getCleanFullName}</Table.Td>
+                  <Table.Td>{order.amount}</Table.Td>
+                  <Table.Td>{order.product.name}</Table.Td>
+                </Table.Tr>
               ))}
-            </tbody>
+            </Table.Tbody>
           </CardTable>
         </Modal>
       </Stack>

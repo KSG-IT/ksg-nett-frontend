@@ -2,14 +2,11 @@ import { useQuery } from '@apollo/client'
 import { Button, Group, Kbd, Stack, Title } from '@mantine/core'
 import { useOs } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
-import Link from '@tiptap/extension-link'
-import { useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { RichTextEditor } from 'components/RichTextEditor'
+import { RichTextEditor, useRichTextEditor } from 'components/RichTextEditor'
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
@@ -43,14 +40,8 @@ export const EditInterview: React.FC = () => {
 
   const { patchInterview } = useInterviewMutations()
 
-  const notesEditor = useEditor({
-    extensions: [StarterKit, Link],
-    content: '',
-  })
-  const discussionEditor = useEditor({
-    extensions: [StarterKit, Link],
-    content: '',
-  })
+  const notesEditor = useRichTextEditor()
+  const discussionEditor = useRichTextEditor()
 
   const navigate = useNavigate()
 

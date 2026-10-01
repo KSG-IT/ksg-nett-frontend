@@ -61,14 +61,14 @@ export const KnightHoodAddUserModal: React.FC<KnightHoodAddUserModalProps> = ({
         blur: 5,
       }}
     >
-      <Stack align="stretch" spacing="md">
-        <UserSelect withinPortal setUserCallback={setSelectedUser} />
+      <Stack align="stretch" gap="md">
+        <UserSelect setUserCallback={setSelectedUser} />
         <DateInput
           value={selectedDate}
-          onChange={setSelectedDate}
+          onChange={val => setSelectedDate(val ? new Date(val) : null)}
           popoverProps={{ withinPortal: true }}
         />
-        <Group position="right">
+        <Group justify="flex-end">
           <Button onClick={onClose} color="gray">
             Avbryt
           </Button>

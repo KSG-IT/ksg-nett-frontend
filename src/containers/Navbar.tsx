@@ -1,4 +1,5 @@
-import { createStyles, Navbar, Text } from '@mantine/core'
+import { AppShell, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { useLocation } from 'react-router-dom'
 import { useStore } from 'store'
 import { usePermissions } from 'util/hooks/usePermissions'
@@ -20,17 +21,10 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
   const { classes } = useNavbarStyles()
 
   return (
-    <Navbar
+    <AppShell.Navbar
       p="md"
-      hiddenBreakpoint="sm"
       hidden={!isOpen}
-      width={{ sm: 200, lg: 250 }}
-      style={{
-        backgroundColor: 'white',
-        overflowY: 'auto',
-        overscrollBehavior: 'contain',
-        fontSize: '12px',
-      }}
+      style={{ overflowY: 'auto', overscrollBehavior: 'contain' }}
     >
       <NavBarMeSection />
       {routeGroups.map((routeGroup, index) => {
@@ -40,7 +34,7 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
         if (!hasAny) return null
         return (
           <div className={classes.group} key={index}>
-            <Text weight={600} mb="xs" id={routeGroup.title}>
+            <Text size="xs" fw={600} mb="xs" id={routeGroup.title}>
               {routeGroup.title}
             </Text>
             {routeGroup.items.map((item, index) => {
@@ -55,7 +49,7 @@ export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
           </div>
         )
       })}
-    </Navbar>
+    </AppShell.Navbar>
   )
 }
 

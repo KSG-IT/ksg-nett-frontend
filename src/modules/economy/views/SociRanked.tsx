@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Card, Group, Stack, Text, Title } from '@mantine/core'
+import { Button, Card, Group, Stack, Table, Text, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { MessageBox } from 'components/MessageBox'
@@ -147,22 +147,22 @@ const SociRanked = () => {
         </MessageBox>
       )}
       <CardTable>
-        <thead>
-          <tr>
-            <th>Plass</th>
-            <th>Navn</th>
-            <th>Forbruk</th>
-          </tr>
-        </thead>
-        <tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Plass</Table.Th>
+            <Table.Th>Navn</Table.Th>
+            <Table.Th>Forbruk</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
           {currentRankedSeason?.topTen?.map((user, index) => (
-            <tr key={index} style={getLeaderboardRowStyle(index)}>
-              <td>{index + 1}</td>
-              <td>{user.name}</td>
-              <td>{formatCurrency(user.expenditure)}</td>
-            </tr>
+            <Table.Tr key={index} style={getLeaderboardRowStyle(index)}>
+              <Table.Td>{index + 1}</Table.Td>
+              <Table.Td>{user.name}</Table.Td>
+              <Table.Td>{formatCurrency(user.expenditure)}</Table.Td>
+            </Table.Tr>
           ))}
-        </tbody>
+        </Table.Tbody>
       </CardTable>
     </Stack>
   )
