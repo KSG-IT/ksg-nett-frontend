@@ -18,7 +18,7 @@ function Root() {
               <AppRoutes />
             </BrowserRouter>
           </ModalsProvider>
-          <Notifications pauseResetOnHover="notification" />
+          <Notifications />
         </MantineEmotionProvider>
       </MantineProvider>
     </ApolloProvider>

@@ -1,15 +1,11 @@
 import {
   ActionIcon,
-  Badge,
   createTheme,
   localStorageColorSchemeManager,
-  rem,
   Text,
 } from '@mantine/core'
 
 export const theme = createTheme({
-  // Mantine 9 changed the default from 'sm' to 'md'; keep the 8.x look
-  defaultRadius: 'sm',
   colors: {
     white: [
       '#fff',
@@ -50,12 +46,10 @@ export const theme = createTheme({
   },
   primaryColor: 'samfundet-red',
   fontFamily: 'Inter, "Open Sans", Helvetica, Arial, sans-serif',
-  // Mantine 7 changed xl from 24px to 32px; keep the Mantine 6 value
-  spacing: { xl: rem(24) },
-  // Mantine 7 changed these defaults to 'filled'; keep the Mantine 6 look
+  // Mantine 7 changed the ActionIcon default to 'filled'. 'subtle' fits the
+  // icon buttons on coloured backgrounds, for example the shift slots.
   components: {
     ActionIcon: ActionIcon.extend({ defaultProps: { variant: 'subtle' } }),
-    Badge: Badge.extend({ defaultProps: { variant: 'light' } }),
     // In Mantine 6 Text without size inherited the font size of its parent.
     // Since Mantine 7 it is always md.
     Text: Text.extend({
