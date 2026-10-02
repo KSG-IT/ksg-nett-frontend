@@ -35,10 +35,6 @@ export type TransactionHistoryType =
 
 // Should this be a node? Node is reserved for Relay type queries aren't they?
 
-export enum ExpenditureDateRangeEnum {
-  THIS_MONTH = 'THIS_MONTH',
-}
-
 export type ExpenditureDay = {
   day: Date
   sum: number
@@ -194,14 +190,6 @@ export interface MyBankAccountReturns {
       lastTransactions: BankAccountActivity[]
     }
   }
-}
-
-export interface MyExpendituresReturns {
-  myExpenditures: TotalExpenditure
-}
-
-export interface MyExpendituresVariables {
-  dateRange: ExpenditureDateRangeEnum
 }
 
 export interface AllSociSessionsReturns {
@@ -443,6 +431,17 @@ export interface SalesStatisticsVariables {
   // null: all products with sales in the range
   productIds: string[] | null
   // null: from the first sale
+  dateFrom: string | null
+  dateTo: string
+  granularity: 'DAY' | 'WEEK' | 'MONTH' | 'SEMESTER'
+}
+
+export interface MyPurchasesByPeriodReturns {
+  myPurchasesByPeriod: ProductSales[]
+}
+
+export interface MyPurchasesByPeriodVariables {
+  // null: from my first purchase
   dateFrom: string | null
   dateTo: string
   granularity: 'DAY' | 'WEEK' | 'MONTH' | 'SEMESTER'

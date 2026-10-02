@@ -21,7 +21,7 @@ import {
 } from 'modules/economy/salesStatistics'
 import { ProductSales } from 'modules/economy/types.graphql'
 
-const kr = (value: number) => `${value.toLocaleString('nb-NO')} kr`
+export const kr = (value: number) => `${value.toLocaleString('nb-NO')} kr`
 
 interface SalesChartsProps {
   products: ProductSales[]
@@ -37,7 +37,7 @@ const PERIOD_FORMATS: Record<Exclude<SalesGranularity, 'SEMESTER'>, string> = {
   MONTH: 'MMM YYYY',
 }
 
-const periodLabel = (day: string, granularity: SalesGranularity) =>
+export const periodLabel = (day: string, granularity: SalesGranularity) =>
   granularity === 'SEMESTER'
     ? semesterLabel(day)
     : dayjs(day).locale('nb').format(PERIOD_FORMATS[granularity])
@@ -121,7 +121,16 @@ export const RevenueOverTimeChart: React.FC<GroupedSalesChartsProps> = ({
   )
 }
 
-export const RevenuePerProduct: React.FC<SalesChartsProps> = ({ products }) => {
+interface RevenuePerProductProps extends SalesChartsProps {
+  title?: string
+  amountLabel?: string
+}
+
+export const RevenuePerProduct: React.FC<RevenuePerProductProps> = ({
+  products,
+  title = 'Omsetning per produkt',
+  amountLabel = 'Omsetning',
+}) => {
   const total = products.reduce((sum, product) => sum + product.total, 0)
   // Keep the colour index of each product, so it matches the line chart
   const sold = products
@@ -133,7 +142,7 @@ export const RevenuePerProduct: React.FC<SalesChartsProps> = ({ products }) => {
   return (
     <Card withBorder padding="md">
       <Title order={4} mb="sm">
-        Omsetning per produkt
+        {title}
       </Title>
       <Table verticalSpacing={6} fz="sm" highlightOnHover>
         <Table.Thead>
@@ -141,7 +150,7 @@ export const RevenuePerProduct: React.FC<SalesChartsProps> = ({ products }) => {
             <Table.Th>Produkt</Table.Th>
             <Table.Th ta="right">Stk</Table.Th>
             <Table.Th w="35%">Andel</Table.Th>
-            <Table.Th ta="right">Omsetning</Table.Th>
+            <Table.Th ta="right">{amountLabel}</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>

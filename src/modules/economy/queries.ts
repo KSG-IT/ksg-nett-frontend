@@ -58,18 +58,6 @@ export const ALL_DEPOSITS = gql`
   }
 `
 
-export const MY_EXPENDITURES = gql`
-  query MyExpenditures($dateRange: TotalExpenditureDateRange) {
-    myExpenditures(dateRange: $dateRange) {
-      total
-      data {
-        day
-        sum
-      }
-    }
-  }
-`
-
 export const ALL_SOCI_SESSIONS = gql`
   query AllSociSessions($first: Int, $after: String) {
     allSociSessions(first: $first, after: $after) {
@@ -343,6 +331,30 @@ export const SALES_STATISTICS_QUERY = gql`
   ) {
     productOrdersByItemAndDateList(
       productIds: $productIds
+      dateFrom: $dateFrom
+      dateTo: $dateTo
+      granularity: $granularity
+    ) {
+      productId
+      name
+      total
+      quantity
+      average
+      data {
+        day
+        sum
+      }
+    }
+  }
+`
+
+export const MY_PURCHASES_BY_PERIOD_QUERY = gql`
+  query MyPurchasesByPeriod(
+    $dateFrom: Date
+    $dateTo: Date!
+    $granularity: SalesGranularity
+  ) {
+    myPurchasesByPeriod(
       dateFrom: $dateFrom
       dateTo: $dateTo
       granularity: $granularity
