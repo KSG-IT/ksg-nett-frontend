@@ -1,15 +1,6 @@
-import {
-  Button,
-  Checkbox,
-  FileInput,
-  Group,
-  Image,
-  Stack,
-  TextInput,
-  Title,
-} from '@mantine/core'
+import { Button, Checkbox, Group, Stack, TextInput, Title } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
-import { IconFileCode } from '@tabler/icons-react'
+import { ImageCropInput } from 'components/ImageCropInput'
 import { MessageBox } from 'components/MessageBox'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { Controller } from 'react-hook-form'
@@ -102,25 +93,11 @@ export const RegisterInformationForm: React.FC<
             error={errors?.gdprConsent?.message}
             {...register('gdprConsent')}
           />
-          <Group>
-            <FileInput
-              value={file}
-              onChange={setFile}
-              label="Last opp søkerbilde"
-              accept="image/png,image/jpeg,image/jpg"
-              placeholder="Trykk her"
-              leftSection={<IconFileCode />}
-              clearable
-            />
-          </Group>
-          {file && (
-            <Image
-              src={URL.createObjectURL(file)}
-              radius={'md'}
-              alt="Opptaksbildet ditt"
-              width={300}
-            />
-          )}
+          <ImageCropInput
+            value={file}
+            onChange={setFile}
+            label="Last opp søkerbilde"
+          />
 
           <Checkbox
             checked={doesNotWantImage}
