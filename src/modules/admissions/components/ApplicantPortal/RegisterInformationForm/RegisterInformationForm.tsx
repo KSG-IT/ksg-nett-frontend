@@ -99,6 +99,7 @@ export const RegisterInformationForm: React.FC<
           <Checkbox
             color="samfundet-red"
             label="Samtykke om personopplysninger"
+            error={errors?.gdprConsent?.message}
             {...register('gdprConsent')}
           />
           <Group>

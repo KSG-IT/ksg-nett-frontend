@@ -1,4 +1,4 @@
-import { yupResolver } from '@hookform/resolvers/yup'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Button,
   Checkbox,
@@ -14,26 +14,21 @@ import { MessageBox } from 'components/MessageBox'
 import { useUserMutations } from 'modules/users/mutations.hooks'
 import { useForm } from 'react-hook-form'
 
-import * as yup from 'yup'
+import { z } from 'zod'
 
-const CreateUserSchema = yup.object().shape({
-  email: yup.string().email('Ugyldig epost').required('Påkrevd'),
-  firstName: yup.string().min(1).max(16).required('Påkrevd'),
-  lastName: yup.string().min(1).max(20).required('Påkrevd'),
-  sendWelcomeEmail: yup.boolean(),
+const CreateUserSchema = z.object({
+  email: z.email('Ugyldig epost'),
+  firstName: z.string().min(1, 'Påkrevd').max(16),
+  lastName: z.string().min(1, 'Påkrevd').max(20),
+  sendWelcomeEmail: z.boolean(),
 })
 
-type CreateUserForm = {
-  email: string
-  firstName: string
-  lastName: string
-  sendWelcomeEmail: boolean
-}
+type CreateUserForm = z.infer<typeof CreateUserSchema>
 
 export const AddSingleUserModal = ({ onClose, opened }: ModalProps) => {
   const { inviteNewUser, inviteNewUserLoading } = useUserMutations()
   const { handleSubmit, register } = useForm<CreateUserForm>({
-    resolver: yupResolver(CreateUserSchema),
+    resolver: zodResolver(CreateUserSchema),
     defaultValues: {
       email: '',
       firstName: '',

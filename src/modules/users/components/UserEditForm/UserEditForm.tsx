@@ -1,6 +1,5 @@
 import { Button, FileInput, Group, SimpleGrid, TextInput } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
-import { format } from 'date-fns'
 import {
   IconAt,
   IconCake,
@@ -75,12 +74,8 @@ export const UserEditForm: React.FC<EditProfileViewProps> = ({
           placeholder="Velg en dato"
           leftSection={<IconCake size={14} />}
           error={errors?.dateOfBirth?.message}
-          defaultValue={
-            getValues('dateOfBirth')
-              ? format(getValues('dateOfBirth')!, 'yyyy-MM-dd')
-              : undefined
-          }
-          onChange={date => date && setValue('dateOfBirth', new Date(date))}
+          defaultValue={getValues('dateOfBirth') ?? undefined}
+          onChange={date => setValue('dateOfBirth', date)}
         />
         <TextInput
           label="Telefon"

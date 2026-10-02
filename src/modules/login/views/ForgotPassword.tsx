@@ -1,18 +1,17 @@
-import { yupResolver } from '@hookform/resolvers/yup'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Paper, Text, TextInput, Title } from '@mantine/core'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import * as yup from 'yup'
+import { requiredString } from 'util/validation'
+import { z } from 'zod'
 import { useLoginMutations } from '../mutations.hooks'
 import { createStyles } from '@mantine/emotion'
 
-let schema = yup.object().shape({
-  username: yup.string().required('Du må skrive inn en epost'),
+const schema = z.object({
+  username: requiredString('Du må skrive inn en epost'),
 })
 
-type ResetMyPasswordInput = {
-  username: string
-}
+type ResetMyPasswordInput = z.infer<typeof schema>
 
 export const ForgotPassword: React.FC = () => {
   const { classes } = useStyles()
@@ -22,7 +21,7 @@ export const ForgotPassword: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ResetMyPasswordInput>({ resolver: yupResolver(schema) })
+  } = useForm<ResetMyPasswordInput>({ resolver: zodResolver(schema) })
 
   const { resetPassword, resetPasswordLoading } = useLoginMutations()
 

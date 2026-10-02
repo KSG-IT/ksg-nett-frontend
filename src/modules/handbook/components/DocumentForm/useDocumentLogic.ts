@@ -2,22 +2,18 @@ import { useRichTextEditor } from 'components/RichTextEditor'
 import { OnFormSubmit } from 'types/forms'
 import { CreateDocumentReturns, PatchDocumentReturns } from '../../mutations'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { showNotification } from '@mantine/notifications'
-import * as yup from 'yup'
+import { requiredString } from 'util/validation'
+import { z } from 'zod'
 
-export type DocumentFormData = {
-  name: string
-  content: string
-}
-
-export type DocumentCleanedData = {
-  name: string
-  content: string
-}
-const DocumentSchema = yup.object().shape({
-  name: yup.string().required('Navn er påkrevd'),
+const DocumentSchema = z.object({
+  name: requiredString('Navn er påkrevd'),
+  content: z.string(),
 })
+
+export type DocumentFormData = z.infer<typeof DocumentSchema>
+export type DocumentCleanedData = DocumentFormData
 
 interface DocumentLogicInput {
   defaultValues: DocumentFormData
@@ -35,7 +31,7 @@ export function useDocumentLogic(input: DocumentLogicInput) {
   const form = useForm<DocumentFormData>({
     mode: 'onSubmit',
     defaultValues,
-    resolver: yupResolver(DocumentSchema),
+    resolver: zodResolver(DocumentSchema),
   })
 
   const handleSubmit = async (data: DocumentFormData) => {

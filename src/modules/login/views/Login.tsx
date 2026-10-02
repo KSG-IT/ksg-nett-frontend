@@ -1,5 +1,5 @@
 import { useApolloClient } from '@apollo/client'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Button,
   Paper,
@@ -15,20 +15,18 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { useStore } from 'store'
 import { setLoginToken } from 'util/auth'
-import * as yup from 'yup'
+import { requiredString } from 'util/validation'
+import { z } from 'zod'
 import { useJwtTokenFromQueryString } from '../hooks'
 import { useLoginMutations } from '../mutations.hooks'
 import { createStyles } from '@mantine/emotion'
 
-let schema = yup.object().shape({
-  username: yup.string().required('Du må skrive et brukernavn'),
-  password: yup.string().required('Du må skrive et passord'),
+const schema = z.object({
+  username: requiredString('Du må skrive et brukernavn'),
+  password: requiredString('Du må skrive et passord'),
 })
 
-type LoginInput = {
-  username: string
-  password: string
-}
+type LoginInput = z.infer<typeof schema>
 
 export const Login: React.FC = () => {
   const { classes } = useStyles()
@@ -54,7 +52,7 @@ export const Login: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginInput>({ resolver: yupResolver(schema) })
+  } = useForm<LoginInput>({ resolver: zodResolver(schema) })
   const setUser = useStore(state => state.setUser)
 
   const { login, loginLoading } = useLoginMutations()

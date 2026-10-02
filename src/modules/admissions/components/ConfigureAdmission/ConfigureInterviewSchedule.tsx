@@ -44,12 +44,9 @@ export const ConfigureInterviewSchedule: React.FC<
     defaultInterviewDayStart:
       interviewScheduleTemplate.defaultInterviewDayStart,
     defaultInterviewDayEnd: interviewScheduleTemplate.defaultInterviewDayEnd,
-    interviewPeriodStartDate: new Date(
-      interviewScheduleTemplate.interviewPeriodStartDate
-    ),
-    interviewPeriodEndDate: new Date(
-      interviewScheduleTemplate.interviewPeriodEndDate
-    ),
+    interviewPeriodStartDate:
+      interviewScheduleTemplate.interviewPeriodStartDate,
+    interviewPeriodEndDate: interviewScheduleTemplate.interviewPeriodEndDate,
   }
 
   return (

@@ -218,9 +218,9 @@ export type AdmissionNode = {
 
 export type InterviewScheduleTemplateNode = {
   id: string
-  interviewPeriodStartDate: Date
+  interviewPeriodStartDate: string
   defaultInterviewDayStart: string
-  interviewPeriodEndDate: Date
+  interviewPeriodEndDate: string
   defaultInterviewDayEnd: string
   defaultInterviewDuration: string
   defaultBlockSize: number

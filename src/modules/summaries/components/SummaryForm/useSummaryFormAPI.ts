@@ -1,4 +1,5 @@
 import { showNotification } from '@mantine/notifications'
+import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 import { usePatchSummaryMutations } from '../../mutations'
 import { ALL_SUMMARIES, SUMMARY_QUERY } from '../../queries'
@@ -69,7 +70,7 @@ export function useSummaryFormAPI(
     title: summary?.title ?? '',
     participants: summary?.participants.map(user => user.id) ?? [],
     reporter: summary?.reporter.id ?? me.id,
-    date: (summary?.date && new Date(summary.date)) ?? new Date(),
+    date: summary?.date ?? format(new Date(), 'yyyy-MM-dd'),
   }
   return {
     defaultValues,
