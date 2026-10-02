@@ -69,21 +69,23 @@ const Socinomics: React.FC = () => {
   if (loading || priceHistoryLoading || !data || !priceHistoryData)
     return <FullContentLoader />
 
-  const { stockMarketProducts: stocks, lastMarketCrash } = data
+  const { lastMarketCrash } = data
 
   const { stockPriceHistory } = priceHistoryData
 
-  // find matching stock price history to the stock, and append it to the stock object
-  stocks.forEach((stock: StockMarketProductNode) => {
-    const matchingPriceHistory = stockPriceHistory.find(
-      (priceHistory: StockPriceHistoryNode) =>
-        priceHistory.productName === stock.name
-    )
+  // Apollo freezes query results, so copy each stock before adding its price history
+  const stocks = data.stockMarketProducts.map(
+    (stock: StockMarketProductNode) => {
+      const matchingPriceHistory = stockPriceHistory.find(
+        (priceHistory: StockPriceHistoryNode) =>
+          priceHistory.productName === stock.name
+      )
 
-    if (matchingPriceHistory) {
-      stock.marketHistory = matchingPriceHistory.dataPoints
+      return matchingPriceHistory
+        ? { ...stock, marketHistory: matchingPriceHistory.dataPoints }
+        : stock
     }
-  })
+  )
 
   console.log(stocks)
   console.log('Stock price history: ', stockPriceHistory)
