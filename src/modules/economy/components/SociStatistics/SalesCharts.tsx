@@ -145,55 +145,62 @@ export const RevenuePerProduct: React.FC<RevenuePerProductProps> = ({
       <Title order={4} mb="sm">
         {title}
       </Title>
-      <Table verticalSpacing={6} fz="sm" highlightOnHover>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Produkt</Table.Th>
-            <Table.Th ta="right">Stk</Table.Th>
-            <Table.Th w="35%">Andel</Table.Th>
-            <Table.Th ta="right">{amountLabel}</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          {sold.map(({ product, color }) => {
-            // Refunds can make a product negative; show those as 0 %
-            const share =
-              total > 0 ? Math.max(0, (product.total / total) * 100) : 0
-            return (
-              <Table.Tr key={product.productId}>
-                <Table.Td style={{ whiteSpace: 'nowrap' }}>
-                  <Group gap={8} wrap="nowrap">
-                    <ColorSwatch
-                      color={`var(--mantine-color-${color.replace('.', '-')})`}
-                      size={10}
-                    />
-                    {product.name}
-                  </Group>
-                </Table.Td>
-                <Table.Td ta="right">
-                  {product.quantity.toLocaleString('nb-NO')}
-                </Table.Td>
-                <Table.Td>
-                  <Group gap="xs" wrap="nowrap">
-                    <Progress
-                      value={share}
-                      color={color}
-                      size="sm"
-                      style={{ flex: 1 }}
-                    />
-                    <Text fz="xs" c="dimmed" w={36} ta="right">
-                      {Math.round(share)} %
-                    </Text>
-                  </Group>
-                </Table.Td>
-                <Table.Td ta="right" style={{ whiteSpace: 'nowrap' }}>
-                  {kr(product.total)}
-                </Table.Td>
-              </Table.Tr>
-            )
-          })}
-        </Table.Tbody>
-      </Table>
+      {/* The card hides overflow, so the table scrolls in its own container
+          on narrow screens. 480 px leaves room for the share bar. */}
+      <Table.ScrollContainer minWidth={480}>
+        <Table verticalSpacing={6} fz="sm" highlightOnHover>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Produkt</Table.Th>
+              <Table.Th ta="right">Stk</Table.Th>
+              <Table.Th w="35%">Andel</Table.Th>
+              <Table.Th ta="right">{amountLabel}</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            {sold.map(({ product, color }) => {
+              // Refunds can make a product negative; show those as 0 %
+              const share =
+                total > 0 ? Math.max(0, (product.total / total) * 100) : 0
+              return (
+                <Table.Tr key={product.productId}>
+                  <Table.Td style={{ whiteSpace: 'nowrap' }}>
+                    <Group gap={8} wrap="nowrap">
+                      <ColorSwatch
+                        color={`var(--mantine-color-${color.replace(
+                          '.',
+                          '-'
+                        )})`}
+                        size={10}
+                      />
+                      {product.name}
+                    </Group>
+                  </Table.Td>
+                  <Table.Td ta="right">
+                    {product.quantity.toLocaleString('nb-NO')}
+                  </Table.Td>
+                  <Table.Td>
+                    <Group gap="xs" wrap="nowrap">
+                      <Progress
+                        value={share}
+                        color={color}
+                        size="sm"
+                        style={{ flex: 1 }}
+                      />
+                      <Text fz="xs" c="dimmed" w={36} ta="right">
+                        {Math.round(share)} %
+                      </Text>
+                    </Group>
+                  </Table.Td>
+                  <Table.Td ta="right" style={{ whiteSpace: 'nowrap' }}>
+                    {kr(product.total)}
+                  </Table.Td>
+                </Table.Tr>
+              )
+            })}
+          </Table.Tbody>
+        </Table>
+      </Table.ScrollContainer>
       {unsold > 0 && (
         <Text fz="xs" c="dimmed" mt="xs">
           {unsold} {unsold === 1 ? 'produkt' : 'produkter'} uten salg i perioden
