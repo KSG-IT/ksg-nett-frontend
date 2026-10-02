@@ -1,17 +1,10 @@
+import { InterviewScheduleFormValues } from './useInterviewScheduleLogic'
 import { useInterviewScheduleMutations } from 'modules/admissions/mutations.hooks'
 import { INTERVIEW_SCHEDULE_TEMPLATE } from 'modules/admissions/queries'
 
 interface UseInterviewScheduleAPIInput {
   interviewScheduleId: string
-  defaultValues: {
-    defaultInterviewDuration: string
-    defaultPauseDuration: string
-    defaultBlockSize: number
-    defaultInterviewDayStart: string
-    defaultInterviewDayEnd: string
-    interviewPeriodStartDate: Date
-    interviewPeriodEndDate: Date
-  }
+  defaultValues: InterviewScheduleFormValues
 }
 export function useInterviewScheduleAPI(input: UseInterviewScheduleAPIInput) {
   const { interviewScheduleId, defaultValues } = input

@@ -47,7 +47,7 @@ export function useEditProfileAPI(input: EditProfileApiProps) {
     homeTown: user?.homeTown ?? '',
     studyAddress: user?.studyAddress ?? '',
     study: user?.study ?? '',
-    dateOfBirth: new Date(user?.dateOfBirth) ?? new Date(),
+    dateOfBirth: user?.dateOfBirth ?? null,
     phone: user?.phone ?? '',
     email: user?.email ?? '',
     profileImage: null,

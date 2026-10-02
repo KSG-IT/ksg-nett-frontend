@@ -50,7 +50,7 @@ export function useUserMigrationWizardFormAPI({
     study: user.study ?? '',
     phone: user.phone ?? '',
 
-    dateOfBirth: new Date(user.dateOfBirth) ?? new Date(),
+    dateOfBirth: user.dateOfBirth ?? null,
     homeTown: user.homeTown ?? '',
     studyAddress: user.studyAddress ?? '',
     cardUuid: user.bankAccount?.cardUuid ?? '',

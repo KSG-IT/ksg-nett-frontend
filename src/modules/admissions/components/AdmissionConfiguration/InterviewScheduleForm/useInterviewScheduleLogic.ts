@@ -1,36 +1,31 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { format } from 'util/date-fns'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   PatchInterviewScheduleTemplateReturns,
   PatchInterviewScheduleTemplateVariables,
 } from 'modules/admissions/types.graphql'
 import { useForm } from 'react-hook-form'
 import { OnFormSubmit } from 'types/forms'
-import * as yup from 'yup'
+import { requiredIsoDate, requiredString } from 'util/validation'
+import { z } from 'zod'
 import { showNotification } from '@mantine/notifications'
 
-export type InterviewScheduleFormData = {
-  interviewPeriodStartDate: Date
-  defaultInterviewDayStart: string
-  interviewPeriodEndDate: Date
-  defaultInterviewDayEnd: string
-  defaultInterviewDuration: string
-  defaultBlockSize: number
-  defaultPauseDuration: string
-}
-
-const InterviewScheduleSchema = yup.object().shape({
-  interviewPeriodStartDate: yup.date().required('Startdato må fylles ut'),
-  defaultInterviewDayStart: yup.string().required('Starttid må fylles ut'),
-  interviewPeriodEndDate: yup.date().required('Sluttdato må fylles ut'),
-  defaultInterviewDayEnd: yup.string().required('Sluttid må fylles ut'),
-  defaultInterviewDuration: yup.string().required('Varighet må fylles ut'),
-  defaultBlockSize: yup.number().required('Blokkstørrelse må fylles ut'),
-  defaultPauseDuration: yup.string().required('Pausevarighet må fylles ut'),
+const InterviewScheduleSchema = z.object({
+  interviewPeriodStartDate: requiredIsoDate('Startdato må fylles ut'),
+  defaultInterviewDayStart: requiredString('Starttid må fylles ut'),
+  interviewPeriodEndDate: requiredIsoDate('Sluttdato må fylles ut'),
+  defaultInterviewDayEnd: requiredString('Sluttid må fylles ut'),
+  defaultInterviewDuration: requiredString('Varighet må fylles ut'),
+  defaultBlockSize: z.number({ error: 'Blokkstørrelse må fylles ut' }),
+  defaultPauseDuration: requiredString('Pausevarighet må fylles ut'),
 })
 
+export type InterviewScheduleFormValues = z.input<
+  typeof InterviewScheduleSchema
+>
+type InterviewScheduleFormData = z.output<typeof InterviewScheduleSchema>
+
 interface InterviewScheduleLogicInput {
-  defaultValues: InterviewScheduleFormData
+  defaultValues: InterviewScheduleFormValues
   onSubmit: OnFormSubmit<
     PatchInterviewScheduleTemplateVariables['input'],
     PatchInterviewScheduleTemplateReturns
@@ -42,10 +37,14 @@ export function useInterviewScheduleLogic({
   onSubmit,
   nextStageCallback,
 }: InterviewScheduleLogicInput) {
-  const form = useForm<InterviewScheduleFormData>({
+  const form = useForm<
+    InterviewScheduleFormValues,
+    unknown,
+    InterviewScheduleFormData
+  >({
     mode: 'onSubmit',
     defaultValues: defaultValues,
-    resolver: yupResolver(InterviewScheduleSchema),
+    resolver: zodResolver(InterviewScheduleSchema),
   })
 
   async function handleSubmit(data: InterviewScheduleFormData) {
@@ -54,22 +53,17 @@ export function useInterviewScheduleLogic({
       defaultPauseDuration,
       defaultInterviewDayStart,
       defaultInterviewDayEnd,
-      interviewPeriodStartDate,
-      interviewPeriodEndDate,
       ...rest
     } = data
 
     // The input in the actual mutation differs a bit from the form input.
     // We parse them to mutation field friendly strings.
     // TimeField -> HH:mm:ss
-    // DateField -> YYYY-MM-DD
     const mutationData = {
       defaultInterviewDuration: `${defaultInterviewDuration}:00`,
       defaultPauseDuration: `${defaultPauseDuration}:00`,
       defaultInterviewDayStart: `${defaultInterviewDayStart}`,
       defaultInterviewDayEnd: `${defaultInterviewDayEnd}`,
-      interviewPeriodStartDate: format(interviewPeriodStartDate, 'yyyy-MM-dd'),
-      interviewPeriodEndDate: format(interviewPeriodEndDate, 'yyyy-MM-dd'),
       ...rest,
     }
 
