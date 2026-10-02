@@ -567,7 +567,16 @@ export const AppRoutes: React.FC = () => {
             <Route path="availability" element={<MyAvailability />} />
           </Route>
           <Route path="all-shifts" element={<AllShifts />} />
-          <Route path="allergies" element={<ScheduleAllergies />} />
+          <Route
+            path="allergies"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleAllergies />
+              </RestrictedRoute>
+            }
+          />
 
           <Route path="templates">
             <Route
