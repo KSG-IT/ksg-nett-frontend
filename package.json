@@ -2,6 +2,7 @@
   "name": "ksg-nett-frontend",
   "version": "2026.10.1",
   "private": true,
+  "packageManager": "yarn@4.18.1",
   "dependencies": {
     "@apollo/client": "^3.14.1",
     "@emotion/cache": "^11.14.0",
@@ -59,7 +60,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
-    "prepare": "husky install",
+    "postinstall": "husky install",
     "build:development": "vite build --mode development",
     "deploy:development": "npm run build:development && npm run push:development",
     "push:development": "./deploy.sh development",
@@ -97,7 +98,7 @@
   "devDependencies": {
     "@types/apollo-upload-client": "^17.0.1",
     "@types/jest": "^27.4.1",
-    "@types/node": "^12.0.0",
+    "@types/node": "^22.16.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@types/styled-components": "^5.1.9",

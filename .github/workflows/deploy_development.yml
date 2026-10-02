@@ -33,8 +33,10 @@ jobs:
           version: 2 # default
           verbose: false # default
           arch: amd64 # allowed values: amd64, arm64
+      - name: Enable corepack
+        run: corepack enable
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
       - name: Deploy development
         env:
           NODE_OPTIONS: "--max_old_space_size=4096"
