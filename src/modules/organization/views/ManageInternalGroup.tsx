@@ -17,6 +17,7 @@ import { IconInfoCircle, IconPlus, IconSearch } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { DensityToggle, useTableDensity } from 'components/Table'
 import { MembershipHistoryEditor } from 'modules/organization/components/MembershipHistoryEditor'
 import { UserManagementAddUser } from 'modules/organization/components/UserManagement'
 import {
@@ -47,6 +48,8 @@ export const ManageInternalGroup: React.FC = () => {
   const [view, setView] = useState<View>('active')
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState<string | null>(null)
+  const { density, setDensity, tableProps } =
+    useTableDensity('manage-memberships')
 
   const { data, loading, error } = useQuery<
     ManageUsersDataReturns,
@@ -132,6 +135,7 @@ export const ManageInternalGroup: React.FC = () => {
             onChange={setTypeFilter}
             w={180}
           />
+          <DensityToggle density={density} onChange={setDensity} />
           <Popover width={360} position="bottom-end" withArrow shadow="md">
             <Popover.Target>
               <ActionIcon
@@ -166,7 +170,12 @@ export const ManageInternalGroup: React.FC = () => {
         </Group>
       </Group>
 
-      <UserManagementTable records={records} onEditHistory={setHistoryUserId} />
+      <UserManagementTable
+        records={records}
+        onEditHistory={setHistoryUserId}
+        density={density}
+        tableProps={tableProps}
+      />
 
       <Modal opened={modalOpen} onClose={() => setModalOpen(false)}>
         <UserManagementAddUser setModalOpen={setModalOpen} />

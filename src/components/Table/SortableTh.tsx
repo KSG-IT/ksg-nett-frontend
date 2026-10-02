@@ -38,7 +38,7 @@ export const SortableTh: React.FC<SortableThProps> = ({
     >
       <UnstyledButton onClick={onSort} className={classes.control}>
         <Group justify="space-between" wrap="nowrap" gap="xs">
-          <Text fw={600} fz="sm">
+          <Text fw={600} fz="inherit">
             {children}
           </Text>
           <Center c={sorted ? undefined : 'dimmed'}>
@@ -53,7 +53,9 @@ export const SortableTh: React.FC<SortableThProps> = ({
 const useStyles = createStyles({
   control: {
     width: '100%',
-    padding: 'var(--mantine-spacing-xs) var(--mantine-spacing-sm)',
+    fontSize: 'inherit',
+    // Follow the spacing of the surrounding Table, so density applies
+    padding: 'var(--table-vertical-spacing) var(--table-horizontal-spacing)',
     '&:hover': {
       backgroundColor: 'var(--mantine-color-default-hover)',
     },

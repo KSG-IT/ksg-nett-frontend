@@ -1,5 +1,10 @@
 import { Table, Text, VisuallyHidden } from '@mantine/core'
-import { SortableTh, UserCell, useTableSort } from 'components/Table'
+import {
+  SortableTh,
+  TableDensity,
+  UserCell,
+  useTableSort,
+} from 'components/Table'
 import { ManageInternalGroupUser } from 'modules/organization/types.graphql'
 import {
   MembershipRowMenu,
@@ -29,11 +34,15 @@ const SORT_GETTERS = {
 interface UserManagementTableProps {
   records: ManageMembershipRecord[]
   onEditHistory: (userId: string) => void
+  density: TableDensity
+  tableProps: React.ComponentProps<typeof Table>
 }
 
 export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   records,
   onEditHistory,
+  density,
+  tableProps,
 }) => {
   const { sorted, headerProps } = useTableSort(records, SORT_GETTERS, {
     sortBy: 'name',
@@ -44,8 +53,9 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
     <Table.Tr key={record.internalGroupPositionMembership.id}>
       <Table.Td>
         <UserCell
-          userId={record.userId}
+          to={`/users/${record.userId}`}
           name={record.fullName}
+          compact={density === 'compact'}
           description={record.positionName}
         />
       </Table.Td>
@@ -70,7 +80,7 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
 
   return (
     <Table.ScrollContainer minWidth={560}>
-      <Table verticalSpacing="xs" highlightOnHover stickyHeader withTableBorder>
+      <Table {...tableProps} highlightOnHover stickyHeader withTableBorder>
         <Table.Thead>
           <Table.Tr>
             <SortableTh {...headerProps('name')}>Navn</SortableTh>
