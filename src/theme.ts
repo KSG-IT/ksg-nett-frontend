@@ -2,6 +2,7 @@ import {
   ActionIcon,
   createTheme,
   localStorageColorSchemeManager,
+  NumberFormatter,
   Text,
 } from '@mantine/core'
 
@@ -38,6 +39,9 @@ export const theme = createTheme({
   // icon buttons on coloured backgrounds, for example the shift slots.
   components: {
     ActionIcon: ActionIcon.extend({ defaultProps: { variant: 'subtle' } }),
+    NumberFormatter: NumberFormatter.extend({
+      defaultProps: { thousandSeparator: ' ' },
+    }),
     // In Mantine 6 Text without size inherited the font size of its parent.
     // Since Mantine 7 it is always md.
     Text: Text.extend({

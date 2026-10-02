@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Group, Select, Text } from '@mantine/core'
+import { Group, NumberFormatter, Select, Text } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import {
@@ -12,7 +12,6 @@ import {
   YAxis,
 } from 'recharts'
 import { format } from 'util/date-fns'
-import { numberWithSpaces } from 'util/parsing'
 import { MY_EXPENDITURES } from '../queries'
 import {
   ExpenditureDateRangeEnum,
@@ -87,7 +86,9 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
 
       <Group justify="space-between">
         <Text fw={'bold'}>Sum</Text>
-        <Text fw="bold">{numberWithSpaces(moneySpent)} kr</Text>
+        <Text fw="bold">
+          <NumberFormatter value={moneySpent} suffix=" kr" />
+        </Text>
       </Group>
     </>
   )

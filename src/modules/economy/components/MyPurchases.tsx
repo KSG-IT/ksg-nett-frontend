@@ -1,7 +1,6 @@
-import { Table } from '@mantine/core'
+import { NumberFormatter, Table } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { format } from 'util/date-fns'
-import { numberWithSpaces } from 'util/parsing'
 import { BankAccountActivity } from '../types.graphql'
 
 interface MyPurchasesProps {
@@ -14,7 +13,9 @@ export const MyPurchases: React.FC<MyPurchasesProps> = ({ activities }) => {
       <Table.Td>{format(new Date(activity.timestamp), 'yy.MM.dd')}</Table.Td>
       <Table.Td>{activity.name}</Table.Td>
       <Table.Td>{activity.quantity}</Table.Td>
-      <Table.Td>{numberWithSpaces(activity.amount)},- NOK</Table.Td>
+      <Table.Td>
+        <NumberFormatter value={activity.amount} suffix=",- NOK" />
+      </Table.Td>
     </Table.Tr>
   ))
   return (

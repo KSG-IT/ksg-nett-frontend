@@ -1,4 +1,4 @@
-import { Table, UnstyledButton } from '@mantine/core'
+import { NumberFormatter, Table, UnstyledButton } from '@mantine/core'
 import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { IconTrash } from '@tabler/icons-react'
@@ -8,7 +8,6 @@ import { SOCI_SESSION_QUERY } from 'modules/economy/queries'
 import { SociSessionNode } from 'modules/economy/types.graphql'
 import { ME_QUERY } from 'modules/users/queries'
 import { format } from 'util/date-fns'
-import { numberWithSpaces } from 'util/parsing'
 
 interface ProductOrderTableProps {
   sociSession: Pick<
@@ -53,8 +52,12 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
       <Table.Td>{productOrder.source.user.fullName}</Table.Td>
       <Table.Td>{productOrder.product.name}</Table.Td>
       <Table.Td>{productOrder.orderSize}</Table.Td>
-      <Table.Td>{numberWithSpaces(productOrder.product.price)},- NOK</Table.Td>
-      <Table.Td>{numberWithSpaces(productOrder.cost)},- NOK</Table.Td>
+      <Table.Td>
+        <NumberFormatter value={productOrder.product.price} suffix=",- NOK" />
+      </Table.Td>
+      <Table.Td>
+        <NumberFormatter value={productOrder.cost} suffix=",- NOK" />
+      </Table.Td>
       <Table.Td>
         {!closed && (
           <UnstyledButton
@@ -74,7 +77,9 @@ export const ProductOrderTable: React.FC<ProductOrderTableProps> = ({
       <Table.Td></Table.Td>
       <Table.Td></Table.Td>
       <Table.Td></Table.Td>
-      <Table.Td>{numberWithSpaces(sociSession.moneySpent)},- NOK</Table.Td>
+      <Table.Td>
+        <NumberFormatter value={sociSession.moneySpent} suffix=",- NOK" />
+      </Table.Td>
       <Table.Td></Table.Td>
     </Table.Tr>
   )

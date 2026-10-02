@@ -5,6 +5,7 @@ import {
   Card,
   CardProps,
   Group,
+  NumberFormatter,
   Text,
   TextInput,
   Title,
@@ -15,7 +16,6 @@ import { showNotification } from '@mantine/notifications'
 import { IconCash, IconCheck, IconEdit, IconPlus } from '@tabler/icons-react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { numberWithSpaces } from 'util/parsing'
 import { useMe } from '../../../util/hooks'
 import { PATCH_SOCI_BANK_ACCOUNT } from '../mutations'
 import {
@@ -88,7 +88,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
               Saldo
             </Badge>
             <Text fz={30} fw={'bold'} c={'samfundet-red.0'}>
-              {numberWithSpaces(account.balance)} kr
+              <NumberFormatter value={account.balance} suffix=" kr" />
             </Text>
           </div>
         </Card.Section>

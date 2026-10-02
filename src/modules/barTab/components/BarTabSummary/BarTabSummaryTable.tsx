@@ -1,8 +1,7 @@
-import { Stack, Table, Title } from '@mantine/core'
+import { NumberFormatter, Stack, Table, Title } from '@mantine/core'
 import { createStyles } from '@mantine/emotion'
 import { CardTable } from 'components/CardTable'
 import { BarTabCustomerData } from 'modules/barTab/types.graphql'
-import { numberWithSpaces } from 'util/parsing'
 
 interface BarTabSummaryTableProps {
   barTabCustomerData: BarTabCustomerData
@@ -19,8 +18,12 @@ export const BarTabSummaryTable: React.FC<BarTabSummaryTableProps> = ({
       <Table.Td>{order.purchasedWhere}</Table.Td>
       <Table.Td>{order.product.name}</Table.Td>
       <Table.Td>{order.quantity}</Table.Td>
-      <Table.Td>{numberWithSpaces(order.product.price)},- NOK</Table.Td>
-      <Table.Td>{numberWithSpaces(order.cost)},- NOK</Table.Td>
+      <Table.Td>
+        <NumberFormatter value={order.product.price} suffix=",- NOK" />
+      </Table.Td>
+      <Table.Td>
+        <NumberFormatter value={order.cost} suffix=",- NOK" />
+      </Table.Td>
     </Table.Tr>
   ))
 
@@ -43,17 +46,23 @@ export const BarTabSummaryTable: React.FC<BarTabSummaryTableProps> = ({
           <Table.Tr className={classes.summaryRow}>
             <Table.Td>De har krysset hos oss</Table.Td>
             <Table.Td colSpan={4}></Table.Td>
-            <Table.Td>{numberWithSpaces(total)},- NOK</Table.Td>
+            <Table.Td>
+              <NumberFormatter value={total} suffix=",- NOK" />
+            </Table.Td>
           </Table.Tr>
           <Table.Tr className={classes.summaryRow}>
             <Table.Td>Vi har krysset hos de</Table.Td>
             <Table.Td colSpan={4}></Table.Td>
-            <Table.Td>-{numberWithSpaces(weOwe)},- NOK</Table.Td>
+            <Table.Td>
+              <NumberFormatter value={weOwe} prefix="-" suffix=",- NOK" />
+            </Table.Td>
           </Table.Tr>
           <Table.Tr className={classes.summaryRow}>
             <Table.Td>Differanse</Table.Td>
             <Table.Td colSpan={4}></Table.Td>
-            <Table.Td>{numberWithSpaces(debt)},- NOK</Table.Td>
+            <Table.Td>
+              <NumberFormatter value={debt} suffix=",- NOK" />
+            </Table.Td>
           </Table.Tr>
         </Table.Tbody>
       </CardTable>
