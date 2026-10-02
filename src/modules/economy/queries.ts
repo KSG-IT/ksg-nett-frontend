@@ -330,14 +330,13 @@ export const STATISTICS_PRODUCTS_QUERY = gql`
       name
       price
       icon
-      isDefault
     }
   }
 `
 
 export const SALES_STATISTICS_QUERY = gql`
   query SalesStatistics(
-    $productIds: [ID!]!
+    $productIds: [ID!]
     $dateFrom: Date
     $dateTo: Date!
     $granularity: SalesGranularity

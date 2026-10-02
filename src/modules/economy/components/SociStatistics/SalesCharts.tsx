@@ -16,6 +16,7 @@ import {
   periodRows,
   SalesGranularity,
   salesSummary,
+  semesterLabel,
   seriesColor,
 } from 'modules/economy/salesStatistics'
 import { ProductSales } from 'modules/economy/types.graphql'
@@ -30,11 +31,16 @@ interface GroupedSalesChartsProps extends SalesChartsProps {
   granularity: SalesGranularity
 }
 
-const PERIOD_FORMATS: Record<SalesGranularity, string> = {
+const PERIOD_FORMATS: Record<Exclude<SalesGranularity, 'SEMESTER'>, string> = {
   DAY: 'D. MMM',
   WEEK: '[uke fra] D. MMM',
   MONTH: 'MMM YYYY',
 }
+
+const periodLabel = (day: string, granularity: SalesGranularity) =>
+  granularity === 'SEMESTER'
+    ? semesterLabel(day)
+    : dayjs(day).locale('nb').format(PERIOD_FORMATS[granularity])
 
 export const SalesSummaryCards: React.FC<GroupedSalesChartsProps> = ({
   products,
@@ -82,11 +88,14 @@ export const RevenueOverTimeChart: React.FC<GroupedSalesChartsProps> = ({
 }) => {
   const data = periodRows(products).map(row => ({
     ...row,
-    day: dayjs(String(row.day))
-      .locale('nb')
-      .format(PERIOD_FORMATS[granularity]),
+    day: periodLabel(String(row.day), granularity),
   }))
-  const title = { DAY: 'per dag', WEEK: 'per uke', MONTH: 'per måned' }
+  const title = {
+    DAY: 'per dag',
+    WEEK: 'per uke',
+    MONTH: 'per måned',
+    SEMESTER: 'per semester',
+  }
 
   return (
     <Card withBorder padding="md">

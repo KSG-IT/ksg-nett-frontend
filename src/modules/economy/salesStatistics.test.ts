@@ -1,10 +1,12 @@
 import {
+  allowedGranularities,
   defaultGranularity,
   periodRange,
   periodRows,
   previousSemester,
   salesSummary,
   semesterStart,
+  semesterLabel,
   seriesColor,
 } from './salesStatistics'
 
@@ -127,11 +129,26 @@ describe('periodRange', () => {
   })
 })
 
-describe('defaultGranularity', () => {
-  it('picks day, week or month from the length of the range', () => {
-    expect(defaultGranularity('2026-09-01', '2026-10-02')).toEqual('DAY')
-    expect(defaultGranularity('2026-08-01', '2026-10-15')).toEqual('WEEK')
-    expect(defaultGranularity('2026-01-01', '2026-10-02')).toEqual('MONTH')
-    expect(defaultGranularity(null, '2026-10-02')).toEqual('MONTH')
+describe('granularity', () => {
+  it('defaults to month, to day for a month or less, to semester for all time', () => {
+    expect(
+      defaultGranularity('this-semester', '2026-08-01', '2026-10-02')
+    ).toEqual('MONTH')
+    expect(
+      defaultGranularity('last-30-days', '2026-09-03', '2026-10-02')
+    ).toEqual('DAY')
+    expect(defaultGranularity('all-time', null, '2026-10-02')).toEqual(
+      'SEMESTER'
+    )
+  })
+
+  it('only allows semester for all time', () => {
+    expect(allowedGranularities('all-time')).toEqual(['SEMESTER'])
+    expect(allowedGranularities('custom')).not.toContain('SEMESTER')
+  })
+
+  it('labels semesters like the backend', () => {
+    expect(semesterLabel('2023-08-01')).toEqual('H23')
+    expect(semesterLabel('2024-01-01')).toEqual('V24')
   })
 })

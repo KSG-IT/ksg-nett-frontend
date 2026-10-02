@@ -22,6 +22,7 @@ import {
 } from '../components/SociStatistics/SalesCharts'
 import { SALES_STATISTICS_QUERY, STATISTICS_PRODUCTS_QUERY } from '../queries'
 import {
+  allowedGranularities,
   defaultGranularity,
   GRANULARITY_LABELS,
   isoDate,
@@ -42,10 +43,6 @@ const breadcrumbs = [
   { label: 'Salgsstatistikk', path: '/economy/statistics' },
 ]
 
-const granularityOptions = (
-  Object.keys(GRANULARITY_LABELS) as SalesGranularity[]
-).map(value => ({ value, label: GRANULARITY_LABELS[value].option }))
-
 export const SociStatistics: React.FC = () => {
   const today = useMemo(() => new Date(), [])
   const [period, setPeriod] = useState<SalesPeriod>('this-semester')
@@ -55,26 +52,32 @@ export const SociStatistics: React.FC = () => {
   // null: use the default for the length of the period
   const [pickedGranularity, setPickedGranularity] =
     useState<SalesGranularity | null>(null)
-  // null until the user picks products: then the default products are shown
-  const [picked, setPicked] = useState<string[] | null>(null)
+  // Empty: all products with sales in the period (the backend picks them)
+  const [picked, setPicked] = useState<string[]>([])
 
   const { dateFrom, dateTo } = periodRange(period, today, customRange)
-  const granularity = pickedGranularity ?? defaultGranularity(dateFrom, dateTo)
+  const allowed = allowedGranularities(period)
+  const granularity =
+    pickedGranularity && allowed.includes(pickedGranularity)
+      ? pickedGranularity
+      : defaultGranularity(period, dateFrom, dateTo)
 
   const products = useQuery<StatisticsProductsReturns>(
     STATISTICS_PRODUCTS_QUERY
   )
   const allProducts = products.data?.allSociProducts ?? []
-  const productIds =
-    picked ??
-    allProducts.filter(product => product.isDefault).map(product => product.id)
 
   const customIncomplete = period === 'custom' && (!dateFrom || !dateTo)
   const sales = useQuery<SalesStatisticsReturns, SalesStatisticsVariables>(
     SALES_STATISTICS_QUERY,
     {
-      variables: { productIds, dateFrom, dateTo: dateTo!, granularity },
-      skip: customIncomplete || productIds.length === 0,
+      variables: {
+        productIds: picked.length ? picked : null,
+        dateFrom,
+        dateTo: dateTo!,
+        granularity,
+      },
+      skip: customIncomplete,
     }
   )
 
@@ -132,7 +135,11 @@ export const SociStatistics: React.FC = () => {
         )}
         <Input.Wrapper label="Vis per">
           <SegmentedControl
-            data={granularityOptions}
+            data={allowed.map(value => ({
+              value,
+              label: GRANULARITY_LABELS[value].option,
+            }))}
+            disabled={allowed.length === 1}
             value={granularity}
             onChange={value => setPickedGranularity(value as SalesGranularity)}
             display="flex"
@@ -141,20 +148,23 @@ export const SociStatistics: React.FC = () => {
       </Group>
       <MultiSelect
         label="Produkter"
-        placeholder={productIds.length ? undefined : 'Velg produkter'}
+        placeholder={
+          picked.length ? undefined : 'Alle produkter med salg i perioden'
+        }
+        description={
+          picked.length
+            ? undefined
+            : 'Velg produkter for å se bare dem. Tøm valget for å se alle igjen.'
+        }
         data={productOptions}
-        value={productIds}
+        value={picked}
         onChange={setPicked}
         searchable
         clearable
         maxDropdownHeight={320}
       />
 
-      {productIds.length === 0 ? (
-        <MessageBox type="info">
-          Velg ett eller flere produkter for å se statistikk.
-        </MessageBox>
-      ) : customIncomplete ? (
+      {customIncomplete ? (
         <MessageBox type="info">Velg en start- og sluttdato.</MessageBox>
       ) : sales.loading && !sales.data ? (
         <FullContentLoader />
@@ -171,7 +181,9 @@ export const SociStatistics: React.FC = () => {
             </>
           ) : (
             <MessageBox type="info">
-              Ingen salg i perioden for de valgte produktene.
+              {picked.length
+                ? 'Ingen salg i perioden for de valgte produktene.'
+                : 'Ingen salg i perioden.'}
             </MessageBox>
           )}
         </>

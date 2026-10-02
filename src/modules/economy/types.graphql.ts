@@ -423,7 +423,6 @@ export interface StatisticsProductsReturns {
     name: string
     price: number
     icon: string | null
-    isDefault: boolean
   }[]
 }
 
@@ -441,9 +440,10 @@ export interface SalesStatisticsReturns {
 }
 
 export interface SalesStatisticsVariables {
-  productIds: string[]
+  // null: all products with sales in the range
+  productIds: string[] | null
   // null: from the first sale
   dateFrom: string | null
   dateTo: string
-  granularity: 'DAY' | 'WEEK' | 'MONTH'
+  granularity: 'DAY' | 'WEEK' | 'MONTH' | 'SEMESTER'
 }

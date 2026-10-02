@@ -3,7 +3,7 @@
 // or month), also periods without sales, so all products share the same
 // periods.
 
-export type SalesGranularity = 'DAY' | 'WEEK' | 'MONTH'
+export type SalesGranularity = 'DAY' | 'WEEK' | 'MONTH' | 'SEMESTER'
 
 export interface ProductSalesInput {
   productId: string
@@ -136,17 +136,32 @@ export function periodRange(
   }
 }
 
-// Days up to about two months, weeks up to about half a year, then months
+// All time is only shown per semester. It is the longest range, and per
+// month it was too heavy to load and to read.
+export function allowedGranularities(period: SalesPeriod): SalesGranularity[] {
+  return period === 'all-time' ? ['SEMESTER'] : ['DAY', 'WEEK', 'MONTH']
+}
+
+// Month keeps the first load small. A month or less is shown per day,
+// because one or two points per line say nothing.
 export function defaultGranularity(
+  period: SalesPeriod,
   dateFrom: string | null,
   dateTo: string | null
 ): SalesGranularity {
-  if (!dateFrom || !dateTo) return 'MONTH'
-  const days =
-    (new Date(dateTo).getTime() - new Date(dateFrom).getTime()) / 86_400_000
-  if (days > 186) return 'MONTH'
-  if (days > 62) return 'WEEK'
-  return 'DAY'
+  if (period === 'all-time') return 'SEMESTER'
+  if (dateFrom && dateTo) {
+    const days =
+      (new Date(dateTo).getTime() - new Date(dateFrom).getTime()) / 86_400_000
+    if (days < 31) return 'DAY'
+  }
+  return 'MONTH'
+}
+
+// "H23" for 2023-08-01, "V24" for 2024-01-01
+export function semesterLabel(day: string) {
+  const [year, month] = day.split('-').map(Number)
+  return `${month >= 8 ? 'H' : 'V'}${String(year).slice(2)}`
 }
 
 export const GRANULARITY_LABELS: Record<
@@ -159,5 +174,10 @@ export const GRANULARITY_LABELS: Record<
     option: 'Måned',
     average: 'Snitt per måned med salg',
     periods: 'måneder',
+  },
+  SEMESTER: {
+    option: 'Semester',
+    average: 'Snitt per semester med salg',
+    periods: 'semestre',
   },
 }
