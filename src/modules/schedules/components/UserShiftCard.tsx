@@ -75,7 +75,7 @@ const useStyles = createStyles({
     fontWeight: 'bold',
   },
   card: {
-    borderTop: '4px solid var(--mantine-color-brand-0)',
+    borderTop: '4px solid var(--mantine-color-samfundet-red-0)',
     margin: 'var(--mantine-spacing-sm) 0',
     maxWidth: 700,
     overflowX: 'scroll',

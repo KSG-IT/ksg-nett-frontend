@@ -110,7 +110,7 @@ export const MyEconomy: React.FC = () => {
 
 const useStyles = createStyles({
   cardWithBorder: {
-    borderTop: '5px solid var(--mantine-color-brand-6)',
+    borderTop: '5px solid var(--mantine-color-samfundet-red-7)',
     '@media (max-width: 800px)': {
       padding: 'var(--mantine-spacing-xs)',
     },

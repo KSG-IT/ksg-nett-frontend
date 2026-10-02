@@ -39,7 +39,7 @@ interface VoteIconProps {
 const UpvoteIcon: React.FC<VoteIconProps> = ({ upvoted, onClick }) => {
   return (
     <IconThumbUp
-      color={upvoted ? 'var(--mantine-color-brand-5)' : 'gray'}
+      color={upvoted ? 'var(--mantine-color-samfundet-red-6)' : 'gray'}
       size={24}
       strokeWidth={upvoted ? 2 : 1}
       style={{ cursor: 'pointer' }}

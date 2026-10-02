@@ -74,10 +74,10 @@ const useGridItemStyles = createStyles(
       },
       // if the cell is the first row or column, we want to add a border to the top and left
       ...(firstRowOrColumn && {
-        backgroundColor: 'var(--mantine-color-brand-0)',
+        backgroundColor: 'var(--mantine-color-samfundet-red-0)',
         boxShadow: '4px 4px 0px #000',
         ':hover': {
-          backgroundColor: 'var(--mantine-color-brand-0)',
+          backgroundColor: 'var(--mantine-color-samfundet-red-0)',
         },
       }),
     },

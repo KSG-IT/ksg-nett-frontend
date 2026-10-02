@@ -74,7 +74,7 @@ const useStyles = createStyles({
   card: {
     backgroundColor: 'white',
     border: '1px solid var(--mantine-color-gray-3)',
-    borderTop: '5px solid var(--mantine-color-brand-6)',
+    borderTop: '5px solid var(--mantine-color-samfundet-red-7)',
   },
   tableHeader: {
     color: 'var(--mantine-color-gray-7)',
