@@ -100,8 +100,6 @@ const ScheduleAllergies: React.FC = () => {
     })
   })
 
-  console.log(totals)
-
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbItems} />
@@ -127,39 +125,37 @@ const ScheduleAllergies: React.FC = () => {
 
       <Card>
         <Table style={{ overflowX: 'scroll' }}>
-          <thead>
-            <tr>
-              <>
-                <th>Navn</th>
-                {MOCK_ALLERGIES.map(allergy => (
-                  <th>{allergy}</th>
-                ))}
-              </>
-            </tr>
-          </thead>
-          <tbody>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Navn</Table.Th>
+              {MOCK_ALLERGIES.map(allergy => (
+                <Table.Th key={allergy}>{allergy}</Table.Th>
+              ))}
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
             {NEW_MOCK_DATA.map(user => (
-              <tr>
-                <td>{user.name}</td>
-                <>
-                  {user.allergies.map(allergy =>
-                    allergy ? <td>✅</td> : <td>❌</td>
-                  )}
-                </>
-              </tr>
+              <Table.Tr key={user.name}>
+                <Table.Td>{user.name}</Table.Td>
+                {user.allergies.map((hasAllergy, index) => (
+                  <Table.Td key={MOCK_ALLERGIES[index]}>
+                    {hasAllergy ? '✅' : '❌'}
+                  </Table.Td>
+                ))}
+              </Table.Tr>
             ))}
-            <tr>
-              <td>
+            <Table.Tr>
+              <Table.Td>
                 <Text fw="bold">Total</Text>
-              </td>
+              </Table.Td>
 
               {Object.keys(totals).map(key => (
-                <td>
+                <Table.Td key={key}>
                   <Text fw="bold">{totals[key]}</Text>
-                </td>
+                </Table.Td>
               ))}
-            </tr>
-          </tbody>
+            </Table.Tr>
+          </Table.Tbody>
         </Table>
       </Card>
     </Stack>
