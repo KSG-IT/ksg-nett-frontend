@@ -4709,6 +4709,7 @@ __metadata:
     graphql: "npm:^16.0.1"
     husky: "npm:^7.0.0"
     jest: "npm:^27.5.1"
+    mantine-datatable: "npm:^9.4.0"
     normalize.css: "npm:^8.0.1"
     prettier: "npm:^2.5.0"
     prettier-plugin-organize-imports: "npm:^2.3.4"
@@ -4956,6 +4957,19 @@ __metadata:
   dependencies:
     tmpl: "npm:1.0.5"
   checksum: 10c0/b0e6e599780ce6bab49cc413eba822f7d1f0dfebd1c103eaa3785c59e43e22c59018323cf9e1708f0ef5329e94a745d163fcbb6bff8e4c6742f9be9e86f3500c
+  languageName: node
+  linkType: hard
+
+"mantine-datatable@npm:^9.4.0":
+  version: 9.4.0
+  resolution: "mantine-datatable@npm:9.4.0"
+  peerDependencies:
+    "@mantine/core": ">=9.0"
+    "@mantine/hooks": ">=9.0"
+    clsx: ">=2"
+    react: ">=19"
+    react-dom: ">=19"
+  checksum: 10c0/c41a0e0f3dcff1ce2e73f66752e2440d47f40613da2d9d03bb44ce7484351e98a26d1100003b165553d492d0e9bb6ae33e7c474dbfd4dfcae855468dd660b46d
   languageName: node
   linkType: hard
 

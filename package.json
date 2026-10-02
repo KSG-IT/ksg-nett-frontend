@@ -36,6 +36,7 @@
     "dotenv": "^16.0.0",
     "fontsource-roboto": "^4.0.0",
     "graphql": "^16.0.1",
+    "mantine-datatable": "^9.4.0",
     "normalize.css": "^8.0.1",
     "prettier": "^2.5.0",
     "query-string": "^7.1.1",
