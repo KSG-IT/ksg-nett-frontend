@@ -16,6 +16,7 @@
 
 ### Fixed
 
+- Text areas: Restore the minimum height and grow with the content, for example when pasting applicant emails
 - Admissions: The selected interview time stays highlighted while booking
 - Rich text editor: Underline button now underlines text
 - Schedules: Location column in shift templates is right-aligned
