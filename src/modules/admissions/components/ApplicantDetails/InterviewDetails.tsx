@@ -15,7 +15,7 @@ interface InterviewDetailsProps {
   canEdit: boolean
 }
 
-export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
+export const InterviewDetails: React.FC<InterviewDetailsProps> = ({
   applicant,
   canEdit,
 }) => {
@@ -42,13 +42,13 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
       )}
       <Card>
         <Group>
-          <Text weight="bold">Intervjutid</Text>
+          <Text fw="bold">Intervjutid</Text>
           <Text>
             {format(new Date(interview.interviewStart), 'iii d MMM HH:mm')}
           </Text>
         </Group>
         <Group>
-          <Text weight="bold">Intervjusted</Text>
+          <Text fw="bold">Intervjusted</Text>
           <Text>{interview.location.name}</Text>
         </Group>
       </Card>
@@ -75,7 +75,7 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
       <Card>
         <Group>
           {interview.interviewers.map(user => (
-            <UserThumbnail user={user} size="md" />
+            <UserThumbnail key={user.id} user={user} size="md" />
           ))}
         </Group>
       </Card>
@@ -84,16 +84,16 @@ export const InterviewDetails: React.VFC<InterviewDetailsProps> = ({
         <Group align="flex-start">
           <Stack justify="flex-start">
             {interview.booleanEvaluationAnswers.map(evaluation => (
-              <Stack mt="xs">
-                <Text weight="bold">{evaluation.statement.statement}</Text>
+              <Stack key={evaluation.id} mt="xs">
+                <Text fw="bold">{evaluation.statement.statement}</Text>
                 <Text>{parseBooleanEvaluation(evaluation.value)}</Text>
               </Stack>
             ))}
           </Stack>
           <Stack justify="flex-start">
             {interview.additionalEvaluationAnswers.map(evaluation => (
-              <Stack mt="xs">
-                <Text weight="bold">{evaluation.statement.statement}</Text>
+              <Stack key={evaluation.id} mt="xs">
+                <Text fw="bold">{evaluation.statement.statement}</Text>
                 <Text>{parseAdditionalEvaluation(evaluation.answer)}</Text>
               </Stack>
             ))}

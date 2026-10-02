@@ -64,7 +64,9 @@ export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
           label="Antall intervjuer på rad"
           description="Hvor mange intervjuer på rad før man har en pause"
           error={errors?.defaultBlockSize?.message}
-          onChange={num => num && setValue('defaultBlockSize', num)}
+          onChange={num =>
+            typeof num === 'number' && setValue('defaultBlockSize', num)
+          }
         />
         <div></div>
         <TimeInput

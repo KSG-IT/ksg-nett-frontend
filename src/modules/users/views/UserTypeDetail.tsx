@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Table, Title } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
@@ -74,10 +74,10 @@ export const UserTypeDetail: React.FC = ({}) => {
   }
 
   const userRows = userType.users.map(user => (
-    <tr>
-      <td>{user.getCleanFullName}</td>
-      <td>
-        <Group position="right">
+    <Table.Tr key={user.id}>
+      <Table.Td>{user.getCleanFullName}</Table.Td>
+      <Table.Td>
+        <Group justify="flex-end">
           <Button
             color="samfundet-red"
             onClick={() => handleRemoveUserFromUserType(user.id)}
@@ -85,17 +85,19 @@ export const UserTypeDetail: React.FC = ({}) => {
             Fjern fra gruppe
           </Button>
         </Group>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   const changelogRows = userType.changelog.map(logEntry => (
-    <tr>
-      <td>{format(new Date(logEntry.timestamp), 'yyyy.MM.dd HH:mm:ss')}</td>
-      <td>{logEntry.user.getCleanFullName}</td>
-      <td>{logEntry.doneBy.getCleanFullName}</td>
-      <td>{logEntry.action}</td>
-    </tr>
+    <Table.Tr key={logEntry.id}>
+      <Table.Td>
+        {format(new Date(logEntry.timestamp), 'yyyy.MM.dd HH:mm:ss')}
+      </Table.Td>
+      <Table.Td>{logEntry.user.getCleanFullName}</Table.Td>
+      <Table.Td>{logEntry.doneBy.getCleanFullName}</Table.Td>
+      <Table.Td>{logEntry.action}</Table.Td>
+    </Table.Tr>
   ))
 
   const overloadedBreadcrumbItems = [
@@ -105,7 +107,7 @@ export const UserTypeDetail: React.FC = ({}) => {
   return (
     <Stack>
       <Breadcrumbs items={overloadedBreadcrumbItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>{userType.name}</Title>
         <Button color="samfundet-red" onClick={() => setAddUserModalOpen(true)}>
           Legg til bruker
@@ -117,26 +119,26 @@ export const UserTypeDetail: React.FC = ({}) => {
 
       <Title order={2}>Aktive medlemskap</Title>
       <CardTable>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{userRows}</tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Navn</Table.Th>
+            <Table.Th></Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{userRows}</Table.Tbody>
       </CardTable>
 
       <Title order={2}>Endringslogg</Title>
       <CardTable>
-        <thead>
-          <tr>
-            <th>Tidsstempel</th>
-            <th>Bruker</th>
-            <th>Gjort av</th>
-            <th>Handling</th>
-          </tr>
-        </thead>
-        <tbody>{changelogRows}</tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Tidsstempel</Table.Th>
+            <Table.Th>Bruker</Table.Th>
+            <Table.Th>Gjort av</Table.Th>
+            <Table.Th>Handling</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{changelogRows}</Table.Tbody>
       </CardTable>
       <AddUserToUserTypeModal
         userTypeId={userType.id}

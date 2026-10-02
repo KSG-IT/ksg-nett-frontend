@@ -51,31 +51,31 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
   }
 
   const rows = applicants.map(applicant => (
-    <tr key={applicant.id}>
-      <td>{applicant.fullName}</td>
-      <td>{applicant.email}</td>
-      <td>
+    <Table.Tr key={applicant.id}>
+      <Table.Td>{applicant.fullName}</Table.Td>
+      <Table.Td>{applicant.email}</Table.Td>
+      <Table.Td>
         <a href={`tel:${applicant.phone}`}>{applicant.phone}</a>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <ApplicantStatusBadge applicantStatus={applicant.status} />
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         {applicant.lastActivity &&
           formatDistanceToNow(new Date(applicant.lastActivity))}
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         {applicant.lastNotice &&
           formatDistanceToNow(new Date(applicant.lastNotice))}
-      </td>
-      <td>{parseApplicantNoticeMethod(applicant.noticeMethod)}</td>
-      <td>
+      </Table.Td>
+      <Table.Td>{parseApplicantNoticeMethod(applicant.noticeMethod)}</Table.Td>
+      <Table.Td>
         <ApplicantNoticeCommentInput applicant={applicant} />
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         {applicant.noticeUser && <UserThumbnail user={applicant.noticeUser} />}
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Menu position="left-start" withinPortal>
           <Menu.Target>
             <ActionIcon>
@@ -84,7 +84,7 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item
-              icon={<IconMail />}
+              leftSection={<IconMail />}
               onClick={() =>
                 handleUpdateNotice(applicant, NoticeMethodValues.EMAIL)
               }
@@ -92,7 +92,7 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
               Sendt epost
             </Menu.Item>
             <Menu.Item
-              icon={<IconPhone />}
+              leftSection={<IconPhone />}
               onClick={() =>
                 handleUpdateNotice(applicant, NoticeMethodValues.CALL)
               }
@@ -103,7 +103,7 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
             <PermissionGate permissions={'admissions.delete_applicant'}>
               <Menu.Label>Admin</Menu.Label>
               <Menu.Item
-                icon={<IconTrash />}
+                leftSection={<IconTrash />}
                 color="red"
                 onClick={() => {
                   // setApplicantToDelete(applicant)
@@ -115,27 +115,27 @@ export const NoticeTable: React.FC<NoticeTableProps> = ({ applicants }) => {
             </PermissionGate>
           </Menu.Dropdown>
         </Menu>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   return (
-    <CardTable fontSize={12}>
-      <thead>
-        <tr>
-          <th>Navn</th>
-          <th>Epost</th>
-          <th>Telefon</th>
-          <th>Status</th>
-          <th>Sist aktiv</th>
-          <th>Sist varslet</th>
-          <th>Varslingsmetode</th>
-          <th>Kommentar</th>
-          <th>Varslet av</th>
-          <td></td>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+    <CardTable compact>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Navn</Table.Th>
+          <Table.Th>Epost</Table.Th>
+          <Table.Th>Telefon</Table.Th>
+          <Table.Th>Status</Table.Th>
+          <Table.Th>Sist aktiv</Table.Th>
+          <Table.Th>Sist varslet</Table.Th>
+          <Table.Th>Varslingsmetode</Table.Th>
+          <Table.Th>Kommentar</Table.Th>
+          <Table.Th>Varslet av</Table.Th>
+          <Table.Td></Table.Td>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </CardTable>
   )
 }

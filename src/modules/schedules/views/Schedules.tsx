@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Title } from '@mantine/core'
+import { Button, Group, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { SchedulesTable } from '../components/Schedules'
 import { ALL_SCHEDULES } from '../queries'
 import { AllSchedulesReturns } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
@@ -26,7 +27,7 @@ export const Schedules: React.FC = () => {
   return (
     <div className={classes.wrapper}>
       <Breadcrumbs items={breadcrumbItems} />
-      <Group position="apart" align="center">
+      <Group justify="space-between" align="center">
         <Title>Vaktplaner</Title>
         <Group>
           <Link to="/schedules/allergies">
@@ -42,11 +43,11 @@ export const Schedules: React.FC = () => {
   )
 }
 
-const useSchedulesStyles = createStyles(theme => ({
+const useSchedulesStyles = createStyles({
   wrapper: {
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
-}))
+})

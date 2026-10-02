@@ -1,4 +1,5 @@
-import { ActionIcon, Badge, Menu } from '@mantine/core'
+import { ActionIcon, Menu, Table } from '@mantine/core'
+import { Badge } from 'components/Badge'
 import { showNotification } from '@mantine/notifications'
 import { IconBan, IconDots, IconEye } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
@@ -45,22 +46,24 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
   }
 
   const rows = sociSessions.map(sociSession => (
-    <tr key={sociSession.id}>
-      <td>
+    <Table.Tr key={sociSession.id}>
+      <Table.Td>
         <Link to={`${sociSession.id}`}>{sociSession.getNameDisplay}</Link>
-      </td>
-      <td>{format(new Date(sociSession.createdAt), 'yyyy.MM.dd')}</td>
-      <td>
+      </Table.Td>
+      <Table.Td>
+        {format(new Date(sociSession.createdAt), 'yyyy.MM.dd')}
+      </Table.Td>
+      <Table.Td>
         <Badge color={getSoiSeccionTypeColor(sociSession.type)}>
           {sociSession.type}
         </Badge>
-      </td>
-      <td>{formatCurrency(sociSession.minimumRemainingBalance)}</td>
-      <td>{formatCurrency(sociSession.moneySpent)}</td>
-      <td>
+      </Table.Td>
+      <Table.Td>{formatCurrency(sociSession.minimumRemainingBalance)}</Table.Td>
+      <Table.Td>{formatCurrency(sociSession.moneySpent)}</Table.Td>
+      <Table.Td>
         <Badge>{sociSession.closed ? 'Stengt' : 'Åpen'}</Badge>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Menu
           transitionProps={{ transition: 'pop' }}
           withArrow
@@ -73,11 +76,14 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
             </ActionIcon>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Item icon={<IconEye size="1rem" stroke={1.5} />} color="blue">
+            <Menu.Item
+              leftSection={<IconEye size="1rem" stroke={1.5} />}
+              color="blue"
+            >
               <Link to={`${sociSession.id}`}>Mer info</Link>
             </Menu.Item>
             <Menu.Item
-              icon={<IconBan size="1rem" stroke={1.5} />}
+              leftSection={<IconBan size="1rem" stroke={1.5} />}
               color="red"
               disabled={
                 sociSession.type === SociSessionType.SOCIETETEN ||
@@ -91,24 +97,24 @@ export const SociSessionsTable: React.FC<SociSessionsTableProps> = ({
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <CardTable compact>
-      <thead>
-        <tr>
-          <th>Navn</th>
-          <th>Opprettet</th>
-          <th>Type</th>
-          <th>Beløpsgrense</th>
-          <th>Forbruk</th>
-          <th>Status</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Navn</Table.Th>
+          <Table.Th>Opprettet</Table.Th>
+          <Table.Th>Type</Table.Th>
+          <Table.Th>Beløpsgrense</Table.Th>
+          <Table.Th>Forbruk</Table.Th>
+          <Table.Th>Status</Table.Th>
+          <Table.Th></Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </CardTable>
   )
 }

@@ -9,7 +9,7 @@ interface RetractApplicationModalProps {
   setOpened: (open: boolean) => void
 }
 
-export const RetractApplicationModal: React.VFC<
+export const RetractApplicationModal: React.FC<
   RetractApplicationModalProps
 > = ({ applicant, opened, setOpened }) => {
   const { patchApplicant, loading } = usePatchApplicant()

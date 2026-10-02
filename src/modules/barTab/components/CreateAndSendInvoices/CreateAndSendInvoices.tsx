@@ -101,9 +101,9 @@ export const CreateAndSendInvoices: React.FC = ({}) => {
 
   return (
     <Stack>
-      <Group position="right">
+      <Group justify="flex-end">
         <Button
-          leftIcon={<IconFilePlus />}
+          leftSection={<IconFilePlus />}
           color="samfundet-red"
           onClick={handleGeneratePdf}
           loading={generatePdfLoading}
@@ -112,7 +112,7 @@ export const CreateAndSendInvoices: React.FC = ({}) => {
         </Button>
         <Button
           color="samfundet-red"
-          leftIcon={<IconFileX />}
+          leftSection={<IconFileX />}
           onClick={handleDeletePdf}
         >
           Slett PDFer

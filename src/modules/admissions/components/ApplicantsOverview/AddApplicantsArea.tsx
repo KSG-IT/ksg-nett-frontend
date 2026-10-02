@@ -55,7 +55,7 @@ export const AddApplicantsArea: React.FC = () => {
       <Group>
         <Button
           color="samfundet-red"
-          leftIcon={<IconPlane />}
+          leftSection={<IconPlane />}
           onClick={handleCreateApplicants}
           disabled={createApplicantsLoading}
         >
@@ -63,7 +63,7 @@ export const AddApplicantsArea: React.FC = () => {
         </Button>
         <Button
           color="samfundet-red"
-          leftIcon={<IconFileUpload />}
+          leftSection={<IconFileUpload />}
           onClick={() => setOpen(true)}
         >
           Last opp fil

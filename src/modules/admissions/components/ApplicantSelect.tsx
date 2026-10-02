@@ -29,7 +29,7 @@ export const ApplicantSelect: React.FC<ApplicantSelectProps> = ({
       searchable
       placeholder="Søk etter søker"
       data={applicantData}
-      onChange={onApplicantSelect}
+      onChange={val => val && onApplicantSelect(val)}
     />
   )
 }

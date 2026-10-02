@@ -35,7 +35,7 @@ export const UserSelect: React.FC<UserSelectProps> = ({
       limit={20}
       defaultValue={initialValue?.value}
       data={options}
-      onChange={setUserCallback}
+      onChange={val => val && setUserCallback?.(val)}
       {...rest}
     />
   )

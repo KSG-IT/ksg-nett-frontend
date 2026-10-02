@@ -2,7 +2,7 @@ import { Radio, Stack } from '@mantine/core'
 import { usePatchApplicant } from 'modules/admissions/mutations.hooks'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import { booleanToRadio, radioToBoolean } from 'util/parsing'
+import { booleanToRadio, radioToBoolean, yesNoHandler } from 'util/parsing'
 
 interface AdditionalInformationFieldsProps {
   applicant: Pick<
@@ -11,7 +11,7 @@ interface AdditionalInformationFieldsProps {
   >
 }
 
-export const AdditionalInformationFields: React.VFC<
+export const AdditionalInformationFields: React.FC<
   AdditionalInformationFieldsProps
 > = ({ applicant }) => {
   const [openForOtherPositions, setOpenForOtherPositions] = useState(
@@ -23,31 +23,25 @@ export const AdditionalInformationFields: React.VFC<
 
   const { patchApplicant } = usePatchApplicant()
 
-  const handleChangeCanCommit = (val: 'yes' | 'no') => {
-    setCanCommitThreeSemesters(val)
-    const parsedCanCommitThreeSemesters = radioToBoolean(val)
+  const handleChangeCanCommit = yesNoHandler(yesNo => {
+    setCanCommitThreeSemesters(yesNo)
     patchApplicant({
       variables: {
         id: applicant.id,
-        input: {
-          canCommitThreeSemesters: parsedCanCommitThreeSemesters,
-        },
+        input: { canCommitThreeSemesters: radioToBoolean(yesNo) },
       },
     })
-  }
+  })
 
-  const handleChangeOpenForOtherPositions = (val: 'yes' | 'no') => {
-    setOpenForOtherPositions(val)
-    const parsedOpenForOtherPositions = radioToBoolean(val)
+  const handleChangeOpenForOtherPositions = yesNoHandler(yesNo => {
+    setOpenForOtherPositions(yesNo)
     patchApplicant({
       variables: {
         id: applicant.id,
-        input: {
-          openForOtherPositions: parsedOpenForOtherPositions,
-        },
+        input: { openForOtherPositions: radioToBoolean(yesNo) },
       },
     })
-  }
+  })
 
   return (
     <Stack>

@@ -55,7 +55,7 @@ export const InviteUsersModalButton: React.FC = () => {
       >
         <Stack>
           <UserMultiSelect users={users} setUsersCallback={setUsers} />
-          <Group position="right">
+          <Group justify="flex-end">
             <Button color="gray" onClick={handleClose}>
               Avbryt
             </Button>

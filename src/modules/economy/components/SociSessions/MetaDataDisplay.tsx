@@ -1,4 +1,6 @@
-import { Badge, createStyles, Group, Paper, Text } from '@mantine/core'
+import { Group, Paper, Text } from '@mantine/core'
+import { Badge } from 'components/Badge'
+import { createStyles } from '@mantine/emotion'
 import { SociSessionNode } from 'modules/economy/types.graphql'
 import { format } from 'util/date-fns'
 import { useCurrencyFormatter } from 'util/hooks'
@@ -68,9 +70,9 @@ export const MetaDataDisplay: React.FC<MetaDataDisplayProps> = ({
   )
 }
 
-const useMetaDisplayStyles = createStyles(theme => ({
+const useMetaDisplayStyles = createStyles({
   label: {
     fontWeight: 600,
     fontSize: 16,
   },
-}))
+})

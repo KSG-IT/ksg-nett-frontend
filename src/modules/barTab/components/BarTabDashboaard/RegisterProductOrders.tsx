@@ -3,11 +3,11 @@ import {
   Button,
   Card,
   Checkbox,
-  createStyles,
   Group,
   NumberInput,
   Select,
   Stack,
+  Table,
   Text,
   Title,
   UnstyledButton,
@@ -24,8 +24,10 @@ import {
 import { ACTIVE_BAR_TAB_QUERY } from 'modules/barTab/queries'
 import { BarTabNode } from 'modules/barTab/types.graphql'
 import { useMemo, useState } from 'react'
+import { enumHandler } from 'util/parsing'
 import { BarTabCustomerSelect } from '../BarTabCustomerSelect'
 import { BarTabProductSelect } from '../BarTabProductSelect'
+import { createStyles } from '@mantine/emotion'
 
 interface ActiveBarTablControllerProps {
   barTab: BarTabNode
@@ -147,39 +149,39 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
   }
 
   const rows = barTab.orders.map(order => (
-    <tr key={order.id}>
-      <td>
+    <Table.Tr key={order.id}>
+      <Table.Td>
         <Text>{order.getNameDisplay}</Text>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Text>{order.customer.name}</Text>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Text>{order.purchasedWhere}</Text>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Text>{order.product.name}</Text>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Text>{order.product.price},- NOK</Text>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Text>{order.quantity}</Text>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Text>{order.cost},- NOK</Text>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <UnstyledButton onClick={() => handleDeleteBarTabOrder(order.id)}>
           <IconTrash />
         </UnstyledButton>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <Stack className={classes.wrapper}>
-      <Group position="apart">
+      <Group justify="space-between">
         <Group>
           <Button color="samfundet-red" onClick={handleLockBarTab}>
             Lås BSF
@@ -188,19 +190,19 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
       </Group>
 
       <CardTable>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th>Gjeng</th>
-            <th>Sted</th>
-            <th>Vare</th>
-            <th>Pris</th>
-            <th>Antall</th>
-            <th>Totalpris</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Navn</Table.Th>
+            <Table.Th>Gjeng</Table.Th>
+            <Table.Th>Sted</Table.Th>
+            <Table.Th>Vare</Table.Th>
+            <Table.Th>Pris</Table.Th>
+            <Table.Th>Antall</Table.Th>
+            <Table.Th>Totalpris</Table.Th>
+            <Table.Th></Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
       </CardTable>
 
       <Title order={3}>Registrer kryss</Title>
@@ -231,7 +233,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
           <Select
             label="Type"
             value={orderType}
-            onChange={(val: BarTabOrderTypeValues) => val && setOrderType(val)}
+            onChange={enumHandler(BarTabOrderTypeValues, setOrderType)}
             data={[
               {
                 value: BarTabOrderTypeValues.LIST,
@@ -253,7 +255,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
             value={quantity}
             min={1}
             max={100}
-            onChange={val => val && setQuantity(val)}
+            onChange={val => typeof val === 'number' && setQuantity(val)}
           />
         </Group>
       </Card>
@@ -266,7 +268,7 @@ export const RegisterProductOrders: React.FC<ActiveBarTablControllerProps> = ({
   )
 }
 
-const useRegisterProductOrdersStyles = createStyles(theme => ({
+const useRegisterProductOrdersStyles = createStyles({
   wrapper: {},
   card: {
     overflowX: 'scroll',
@@ -274,4 +276,4 @@ const useRegisterProductOrdersStyles = createStyles(theme => ({
   addOrderWrapper: {
     overflow: 'visible',
   },
-}))
+})

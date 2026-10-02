@@ -1,5 +1,6 @@
 import { Select, SelectProps } from '@mantine/core'
 import { LocationValues } from '../consts'
+import { enumHandler } from 'util/parsing'
 
 const locationOptions = [
   { value: LocationValues.BODEGAEN, label: 'Bodegaen' },
@@ -17,7 +18,7 @@ const locationOptions = [
   { value: LocationValues.RUNDHALLEN, label: 'Rundhallen' },
   { value: LocationValues.KONTORET, label: 'Kontoret' },
 ]
-interface LocationSelectProps extends Omit<SelectProps, 'data'> {
+interface LocationSelectProps extends Omit<SelectProps, 'data' | 'onChange'> {
   value: LocationValues | null
   onChange: (val: LocationValues) => void
 }
@@ -31,7 +32,7 @@ export const LocationSelect: React.FC<LocationSelectProps> = ({
     <Select
       data={locationOptions}
       value={value}
-      onChange={onChange}
+      onChange={enumHandler(LocationValues, onChange)}
       {...rest}
     />
   )

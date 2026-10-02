@@ -36,12 +36,10 @@ export const ApplicantsOverview: React.FC = () => {
 
   const { currentApplicants } = data
 
-  console.log(filterQuery)
-
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Group position="apart">
+      <Group justify="space-between">
         <Title>Søkeroversikt</Title>
         <SynCButton
           refetchCallback={() => refetch()}
@@ -54,7 +52,7 @@ export const ApplicantsOverview: React.FC = () => {
       <TextInput
         label="Søk"
         placeholder="Søk etter navn, epost eller telefonnummer"
-        icon={<IconSearch />}
+        leftSection={<IconSearch />}
         onChange={e => setFilterQuery(e.currentTarget.value)}
       />
       <ApplicantsTable

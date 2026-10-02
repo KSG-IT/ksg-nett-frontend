@@ -3,7 +3,6 @@ import {
   Button,
   Card,
   Container,
-  createStyles,
   Group,
   SimpleGrid,
   Stack,
@@ -25,6 +24,7 @@ import { CREATE_QUOTE } from '../mutations'
 import { PNEDING_QUOTES_QUERY } from '../queries'
 import { CreateQuoteReturns, CreateQuoteVariables } from '../types.graphql'
 import { MessageBox } from 'components/MessageBox'
+import { createStyles } from '@mantine/emotion'
 
 const quoteTextPlaceholder =
   'Wow, du har sykt myke hender! Vanligvis når en jente gir meg en håndjob, sier jeg du kan jo suge meg i stedet, men de hendene'
@@ -111,16 +111,11 @@ export const CreateQuote: React.FC = () => {
   return (
     <Container size={'sm'} p={mobileSize ? 0 : 'sm'}>
       <Breadcrumbs items={breadcrumbsItems} />
-      <Title
-        my={'lg'}
-        transform="uppercase"
-        className={classes.title}
-        order={3}
-      >
+      <Title my={'lg'} tt="uppercase" className={classes.title} order={3}>
         Send inn sitat
       </Title>
       <Card radius={'md'} withBorder className={classes.card}>
-        <Stack spacing={'lg'} p={mobileSize ? 0 : 'xl'}>
+        <Stack gap={'lg'} p={mobileSize ? 0 : 'xl'}>
           <SimpleGrid cols={1} spacing={'md'}>
             <MessageBox type="info">
               Tenk deg om før du sender inn sitater om andre. Det er ikke
@@ -133,7 +128,7 @@ export const CreateQuote: React.FC = () => {
               label={'Sitat'}
               minRows={mobileSize ? 4 : 2}
               size={mobileSize ? 'sm' : 'md'}
-              icon={<IconQuote />}
+              leftSection={<IconQuote />}
               onChange={evt => setText(evt.target.value)}
               placeholder={quoteTextPlaceholder}
             />
@@ -143,13 +138,13 @@ export const CreateQuote: React.FC = () => {
               minRows={mobileSize ? 4 : 1}
               variant={'filled'}
               size={mobileSize ? 'sm' : 'md'}
-              icon={<IconHash />}
+              leftSection={<IconHash />}
               onChange={evt => setContext(evt.target.value)}
               placeholder={quoteContextPlaceholder}
             />
             <UserMultiSelect users={tagged} setUsersCallback={setTagged} />
           </SimpleGrid>
-          <Group position="apart">
+          <Group justify="space-between">
             <Button
               variant="outline"
               color={'samfundet-red'}
@@ -172,15 +167,15 @@ export const CreateQuote: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   title: {
-    color: theme.colors.gray[6],
+    color: 'var(--mantine-color-gray-6)',
     fontWeight: 'bold',
   },
   card: {
-    borderTop: `5px solid ${theme.colors.brand}`,
+    borderTop: '5px solid var(--mantine-color-brand-6)',
   },
   select: {
     color: 'green',
   },
-}))
+})

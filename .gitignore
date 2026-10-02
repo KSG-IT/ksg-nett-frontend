@@ -29,3 +29,6 @@ dist
 .idea
 
 .sentryclirc
+
+# AI-generated planning and reference docs
+*.ai.md

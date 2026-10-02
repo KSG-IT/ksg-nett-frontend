@@ -1,4 +1,4 @@
-import { Checkbox } from '@mantine/core'
+import { Checkbox, Table } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { useToggleApplicantWillBeAdmitted } from 'modules/admissions/mutations.hooks'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
@@ -18,7 +18,7 @@ interface ToggleApplicantInlineProps {
   applicant: ApplicantNode
 }
 
-export const ToggleApplicantTableRow: React.VFC<ToggleApplicantInlineProps> = ({
+export const ToggleApplicantTableRow: React.FC<ToggleApplicantInlineProps> = ({
   applicant,
 }) => {
   const [willBeAdmitted, setWillBeAdmitted] = useState(applicant.willBeAdmitted)
@@ -68,20 +68,20 @@ export const ToggleApplicantTableRow: React.VFC<ToggleApplicantInlineProps> = ({
   }
 
   return (
-    <tr key={applicant.id}>
-      <td key={applicant.fullName}>
+    <Table.Tr key={applicant.id}>
+      <Table.Td key={applicant.fullName}>
         <Link to={`/admissions/applicants/${applicant.id}`}>
           {applicant.fullName}
         </Link>
-      </td>
+      </Table.Td>
       {applicant.priorities.map(priority => renderPrioritycell(priority))}
-      <td key="togglecheckbox">
+      <Table.Td key="togglecheckbox">
         <Checkbox
           disabled={!hasPermissions(PERMISSIONS.admissions.change.admission)}
           checked={willBeAdmitted}
           onChange={handleToggleApplicant}
         />
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   )
 }

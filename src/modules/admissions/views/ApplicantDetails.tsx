@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Table, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
@@ -69,7 +69,7 @@ export const ApplicantDetails: React.FC = () => {
           },
         ]}
       />
-      <Group spacing="xl">
+      <Group gap="xl">
         <Title order={2}>{applicant.fullName}</Title>
         <Button onClick={() => setRecommendationModalOpen(true)}>
           Anbefal
@@ -77,20 +77,26 @@ export const ApplicantDetails: React.FC = () => {
       </Group>
       <PersonalDetailsCard applicant={applicant} />
       <CardTable>
-        <thead>
-          <tr>
-            <th>Førstevalg</th>
-            <th>Andrevalg</th>
-            <th>Tredjevalg</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{applicant.priorities[0]?.internalGroupPosition?.name}</td>
-            <td>{applicant.priorities[1]?.internalGroupPosition?.name}</td>
-            <td>{applicant.priorities[2]?.internalGroupPosition?.name}</td>
-          </tr>
-        </tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Førstevalg</Table.Th>
+            <Table.Th>Andrevalg</Table.Th>
+            <Table.Th>Tredjevalg</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          <Table.Tr>
+            <Table.Td>
+              {applicant.priorities[0]?.internalGroupPosition?.name}
+            </Table.Td>
+            <Table.Td>
+              {applicant.priorities[1]?.internalGroupPosition?.name}
+            </Table.Td>
+            <Table.Td>
+              {applicant.priorities[2]?.internalGroupPosition?.name}
+            </Table.Td>
+          </Table.Tr>
+        </Table.Tbody>
       </CardTable>
       <InterviewDetails applicant={applicant} canEdit={!cannotEdit} />
       <ApplicantComments applicant={applicant} />

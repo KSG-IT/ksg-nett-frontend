@@ -1,4 +1,5 @@
-import { ActionIcon, Badge, createStyles, Text } from '@mantine/core'
+import { ActionIcon, Table, Text } from '@mantine/core'
+import { Badge } from 'components/Badge'
 import { showNotification } from '@mantine/notifications'
 import { IconTrash } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
@@ -7,12 +8,13 @@ import { useCurrencyFormatter } from 'util/hooks'
 import { useDepositMutations } from '../mutations.hooks'
 import { MY_BANK_ACCOUNT_QUERY } from '../queries'
 import { DepositNode } from '../types.graphql'
+import { createStyles } from '@mantine/emotion'
 
 interface MyDepositsProps {
   deposits: DepositNode[]
 }
 
-export const MyDeposits: React.VFC<MyDepositsProps> = ({ deposits }) => {
+export const MyDeposits: React.FC<MyDepositsProps> = ({ deposits }) => {
   const { classes } = useMyDepositsStyles()
   const { deleteDeposit } = useDepositMutations()
   const { formatCurrency } = useCurrencyFormatter()
@@ -41,17 +43,21 @@ export const MyDeposits: React.VFC<MyDepositsProps> = ({ deposits }) => {
   }
 
   const rows = deposits.map(deposit => (
-    <tr key={deposit.id}>
-      <td>{format(new Date(deposit.createdAt), 'yy.MM.dd')}</td>
-      <td>
-        <Text color={'red'}>{formatCurrency(deposit.amount)}</Text>
-      </td>
-      <td>
+    <Table.Tr key={deposit.id}>
+      <Table.Td>
+        <Text>{format(new Date(deposit.createdAt), 'yy.MM.dd')}</Text>
+      </Table.Td>
+      <Table.Td>
+        <Text ta="left" c={'red'}>
+          {formatCurrency(deposit.amount)}
+        </Text>
+      </Table.Td>
+      <Table.Td>
         {deposit.resolvedAmount && (
-          <Text color={'green'}>{formatCurrency(deposit.resolvedAmount)}</Text>
+          <Text c={'green'}>{formatCurrency(deposit.resolvedAmount)}</Text>
         )}
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         {deposit.approved ? (
           <Badge color={'green'} variant={'filled'} size="sm">
             Godkjent
@@ -61,42 +67,48 @@ export const MyDeposits: React.VFC<MyDepositsProps> = ({ deposits }) => {
             Venter
           </Badge>
         )}
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <ActionIcon
           disabled={deposit.approved}
           onClick={() => handleDeleteDeposit(deposit)}
         >
           <IconTrash />
         </ActionIcon>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
   return (
     <CardTable className={classes.table}>
-      <thead>
-        <tr>
-          <th>Dato</th>
-          <th>Betalt</th>
-          <th>Inn på konto</th>
-          <th>
-            <Text align={'center'}>Status</Text>
-          </th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>
+            <Text ta="left">Dato</Text>
+          </Table.Th>
+          <Table.Th>
+            <Text ta="left">Betalt</Text>
+          </Table.Th>
+          <Table.Th>
+            <Text ta="left">Inn på konto</Text>
+          </Table.Th>
+          <Table.Th>
+            <Text ta={'center'}>Status</Text>
+          </Table.Th>
+          <Table.Th></Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </CardTable>
   )
 }
 
-const useMyDepositsStyles = createStyles(theme => ({
+const useMyDepositsStyles = createStyles({
   table: {
-    'td:nth-child(2)': {
+    'td:nth-of-type(2)': {
       textAlign: 'right',
     },
-    'th:nth-child(2)': {
+    'th:nth-of-type(2)': {
       textAlign: 'right',
     },
   },
-}))
+})

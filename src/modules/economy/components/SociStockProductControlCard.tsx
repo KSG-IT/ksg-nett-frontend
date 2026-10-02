@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
-import { Badge, Button, Card, Group, Text, Title } from '@mantine/core'
+import { Button, Card, Group, Text, Title } from '@mantine/core'
+import { Badge } from 'components/Badge'
 import { showNotification } from '@mantine/notifications'
 import React from 'react'
 import { CREATE_GHOST_ORDER_MUTATION } from '../mutations'
@@ -52,7 +53,7 @@ const SociStockProductControlCard: React.FC<StockMarketProductProps> = ({
           ? `+${stock.percentageChange}%`
           : `${stock.percentageChange}%`}
       </Badge>
-      <Group position="right">
+      <Group justify="flex-end">
         <Button onClick={handleIncrementGhostOrder}>Kjøp</Button>
       </Group>
     </Card>

@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { Button, Group } from '@mantine/core'
+import { Button, Group, Table } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { ASSIGN_NEW_INTERNAL_GROUP_POSITION_MEMBERSHIP } from 'modules/organization/mutations'
 import { useInternalGroupPositionMembershipMutations } from 'modules/organization/mutations.hooks'
@@ -92,14 +92,14 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
 
   return (
     <>
-      <td>
+      <Table.Td>
         <InternalGroupPositionTypeSelect
           searchable
           placeholder="Velg verv"
           onChange={setSelectedInternalGroupPositionType}
         />
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Group>
           <Button
             color={'samfundet-red'}
@@ -118,7 +118,7 @@ export const UserManagementTableRow: React.FC<UserManagementTableRowProp> = ({
             Ferdig med KSG
           </Button>
         </Group>
-      </td>
+      </Table.Td>
     </>
   )
 }

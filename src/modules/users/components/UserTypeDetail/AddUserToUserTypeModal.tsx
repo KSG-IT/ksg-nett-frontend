@@ -65,7 +65,7 @@ export const AddUserToUserTypeModal: React.FC<AddUserToUserTypeModalProps> = ({
           <b>Obs!</b> Å legge til brukere blir loggført
         </MessageBox>
         <UserSelect setUserCallback={setSelectedUser} />
-        <Group position="right">
+        <Group justify="flex-end">
           <Button color="gray">Avbryt</Button>
           <Button color="samfundet-red" onClick={handleAddUser}>
             Legg til

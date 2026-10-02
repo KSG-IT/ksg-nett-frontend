@@ -32,7 +32,7 @@ export const InternalGroupPositionSelect: React.FC<
       placeholder="Velg verv"
       data={options}
       // ToDo: Have groupings for internal and interest group
-      onChange={setInternalGroupPositionCallback}
+      onChange={val => val && setInternalGroupPositionCallback(val)}
     />
   )
 }

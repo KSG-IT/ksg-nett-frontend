@@ -73,9 +73,9 @@ const DocumentDetail: React.FC<DocumentDetailProps> = ({ editModeInitial }) => {
         />
       ) : (
         <>
-          <Group position={editMode ? 'right' : 'apart'}>
+          <Group justify={editMode ? 'flex-end' : 'space-between'}>
             {editMode ? null : (
-              <Title order={2} color={'dimmed'}>
+              <Title order={2} c={'dimmed'}>
                 {document.name}
               </Title>
             )}

@@ -19,6 +19,7 @@ export function useRegisterInformationAPI({
     const { id } = applicant
     const input = {
       ...data,
+      // yup.date() casts the DateInput string to a Date; the API wants YYYY-MM-DD
       dateOfBirth: format(new Date(data.dateOfBirth ?? ''), 'yyyy-MM-dd'),
       status: ApplicantStatusValues.HAS_REGISTERED_PROFILE,
       lastActivity: new Date(),

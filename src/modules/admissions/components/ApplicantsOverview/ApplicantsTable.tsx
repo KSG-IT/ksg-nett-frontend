@@ -1,4 +1,4 @@
-import { ActionIcon, Menu, Modal } from '@mantine/core'
+import { ActionIcon, Menu, Modal, Table } from '@mantine/core'
 import { IconDots, IconEye, IconTrash } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { PermissionGate } from 'components/PermissionGate'
@@ -56,33 +56,33 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
           applicant.phone.includes(deferredFilterQuery)
       )
       .map(applicant => (
-        <tr key={applicant.id}>
-          <td>
+        <Table.Tr key={applicant.id}>
+          <Table.Td>
             <Link to={`/admissions/applicants/${applicant.id}`}>
               {applicant.fullName}
             </Link>
-          </td>
-          <td>{applicant.email}</td>
-          <td>
+          </Table.Td>
+          <Table.Td>{applicant.email}</Table.Td>
+          <Table.Td>
             <ApplicantStatusBadge applicantStatus={applicant.status} />
-          </td>
-          <td>
+          </Table.Td>
+          <Table.Td>
             {parseApplicantPriorityInternalGroupPosition(
               applicant.priorities[0]
             )}
-          </td>
-          <td>
+          </Table.Td>
+          <Table.Td>
             {parseApplicantPriorityInternalGroupPosition(
               applicant.priorities[1]
             )}
-          </td>
-          <td>
+          </Table.Td>
+          <Table.Td>
             {parseApplicantPriorityInternalGroupPosition(
               applicant.priorities[2]
             )}
-          </td>
+          </Table.Td>
 
-          <td>
+          <Table.Td>
             <Menu position="left-start">
               <Menu.Target>
                 <ActionIcon>
@@ -92,7 +92,7 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
               <Menu.Dropdown>
                 <Menu.Label>Valg</Menu.Label>
                 <Menu.Item
-                  icon={<IconEye />}
+                  leftSection={<IconEye />}
                   onClick={() => handleMoreInfo(applicant.id)}
                 >
                   Mer info
@@ -101,7 +101,7 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
                 <PermissionGate permissions={'admissions.delete_applicant'}>
                   <Menu.Label>Admin</Menu.Label>
                   <Menu.Item
-                    icon={<IconTrash />}
+                    leftSection={<IconTrash />}
                     color="red"
                     onClick={() => {
                       setApplicantToDelete(applicant)
@@ -113,26 +113,26 @@ export const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
                 </PermissionGate>
               </Menu.Dropdown>
             </Menu>
-          </td>
-        </tr>
+          </Table.Td>
+        </Table.Tr>
       ))
   }, [applicants, deferredFilterQuery])
 
   return (
     <>
       <CardTable compact>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th>Epost</th>
-            <th>Status</th>
-            <th>Prio 1</th>
-            <th>Prio 2</th>
-            <th>Prio 3</th>
-            <th>Handlinger</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Navn</Table.Th>
+            <Table.Th>Epost</Table.Th>
+            <Table.Th>Status</Table.Th>
+            <Table.Th>Prio 1</Table.Th>
+            <Table.Th>Prio 2</Table.Th>
+            <Table.Th>Prio 3</Table.Th>
+            <Table.Th>Handlinger</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
       </CardTable>
       <Modal
         opened={deleteModalOpen}

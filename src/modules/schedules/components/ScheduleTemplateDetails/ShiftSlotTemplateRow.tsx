@@ -1,4 +1,4 @@
-import { Button, NumberInput, Text } from '@mantine/core'
+import { Button, NumberInput, Table, Text } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { useShiftSlotTemplateMutations } from 'modules/schedules/mutations.hooks'
 import { SCHEDULE_TEMPLATE_QUERY } from 'modules/schedules/queries'
@@ -71,19 +71,22 @@ export const ShiftSlotTemplateRow: React.FC<ShiftSlotTemplateRowProps> = ({
   }
 
   return (
-    <tr>
-      <td>
+    <Table.Tr>
+      <Table.Td>
         <Text>{parseShiftRole(shiftSlotTemplate.role)}</Text>
-      </td>
-      <td>
-        <NumberInput value={count} onChange={evt => evt && setCount(evt)} />
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
+        <NumberInput
+          value={count}
+          onChange={evt => typeof evt === 'number' && setCount(evt)}
+        />
+      </Table.Td>
+      <Table.Td>
         <Button variant="subtle" onClick={handleSaveCount}>
           Lagre
         </Button>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <Button
           variant="subtle"
           color="red"
@@ -92,7 +95,7 @@ export const ShiftSlotTemplateRow: React.FC<ShiftSlotTemplateRowProps> = ({
         >
           Slett rolle
         </Button>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   )
 }

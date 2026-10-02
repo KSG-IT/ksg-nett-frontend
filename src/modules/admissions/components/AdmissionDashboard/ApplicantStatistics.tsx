@@ -5,7 +5,7 @@ interface ApplicantStatisticsProps {
   admission: AdmissionNode
 }
 
-export const ApplicantStatistics: React.VFC<ApplicantStatisticsProps> = ({
+export const ApplicantStatistics: React.FC<ApplicantStatisticsProps> = ({
   admission,
 }) => {
   return (

@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { NumberInput, Select, UnstyledButton } from '@mantine/core'
+import { NumberInput, Select, Table, UnstyledButton } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconTrash } from '@tabler/icons-react'
 import {
@@ -17,7 +17,7 @@ interface PositionAvailabilityInputProps {
   availablePosition: AdmissionAvailableInternalGroupPositionData
 }
 
-export const PositionAvailabilityInput: React.VFC<
+export const PositionAvailabilityInput: React.FC<
   PositionAvailabilityInputProps
 > = ({ availablePosition }) => {
   const [availabilityNumber, setAvailabilityNumber] = useState(
@@ -35,9 +35,7 @@ export const PositionAvailabilityInput: React.VFC<
     refetchQueries: ['ExternallyAvailableInternalGroupPositionsQuery'],
   })
 
-  function handleMembershipTypeChange(
-    val: 'GANG_MEMBER' | 'FUNCTIONARY' | null
-  ) {
+  function handleMembershipTypeChange(val: string | null) {
     patchInternalGroupAvailability({
       variables: {
         id: availablePosition.id,
@@ -54,7 +52,8 @@ export const PositionAvailabilityInput: React.VFC<
     )
   }
 
-  function handleAvailableNumberChange(val: number) {
+  function handleAvailableNumberChange(val: string | number) {
+    if (typeof val !== 'number') return
     setAvailabilityNumber(val)
     patchInternalGroupAvailability({
       variables: {
@@ -77,29 +76,31 @@ export const PositionAvailabilityInput: React.VFC<
   }
 
   return (
-    <tr>
-      <td>{availablePosition.internalGroupPosition.name}</td>
-      <td>
+    <Table.Tr>
+      <Table.Td>{availablePosition.internalGroupPosition.name}</Table.Td>
+      <Table.Td>
         <Select
           data={[
             { label: 'Funksjonær', value: 'FUNCTIONARY' },
             { label: 'Gjengmedlem', value: 'GANG_MEMBER' },
           ]}
-          onChange={handleMembershipTypeChange}
+          onChange={val => handleMembershipTypeChange(val)}
           defaultValue={availablePosition.membershipType}
         />
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <NumberInput
           value={availabilityNumber}
-          onChange={handleAvailableNumberChange}
+          onChange={val =>
+            typeof val === 'number' && handleAvailableNumberChange(val)
+          }
         />
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <UnstyledButton onClick={handleRemovePosition}>
           <IconTrash />
         </UnstyledButton>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   )
 }

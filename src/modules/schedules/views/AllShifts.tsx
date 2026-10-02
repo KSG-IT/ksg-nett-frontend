@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
-import { createStyles, Title } from '@mantine/core'
+import { Title } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
+import { createStyles } from '@mantine/emotion'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -17,7 +18,7 @@ const breadcrumbsItems = [
 ]
 
 export const AllShifts = () => {
-  const [date, setDate] = useState<Date>(new Date())
+  const [date, setDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
   const { classes } = useAllShiftsStyles()
   const firstRender = useRef(true)
 
@@ -25,7 +26,7 @@ export const AllShifts = () => {
     AllShiftsReturns,
     AllShiftsVariables
   >(ALL_SHIFTS, {
-    variables: { date: format(date, 'yyyy-MM-dd') },
+    variables: { date: date },
     pollInterval: 30_000,
   })
 
@@ -38,15 +39,11 @@ export const AllShifts = () => {
     const dateString = search.date as string
 
     if (dateString) {
-      const date = new Date(dateString)
-      setDate(date)
+      setDate(dateString)
     } else {
-      setDate(new Date())
-      history.pushState(
-        {},
-        '',
-        `${location.pathname}?date=${format(new Date(), 'yyyy-MM-dd')}`
-      )
+      const today = format(new Date(), 'yyyy-MM-dd')
+      setDate(today)
+      history.pushState({}, '', `${location.pathname}?date=${today}`)
     }
   }, [setDate])
 
@@ -56,13 +53,9 @@ export const AllShifts = () => {
 
   const { allShifts } = data
 
-  function handleDateChange(date: Date) {
+  function handleDateChange(date: string) {
     setDate(date)
-    history.pushState(
-      {},
-      '',
-      `/schedules/all-shifts?date=${format(date, 'yyyy-MM-dd')}`
-    )
+    history.pushState({}, '', `/schedules/all-shifts?date=${date}`)
   }
 
   return (
@@ -79,11 +72,11 @@ export const AllShifts = () => {
   )
 }
 
-const useAllShiftsStyles = createStyles(theme => ({
+const useAllShiftsStyles = createStyles({
   wrapper: {
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
-}))
+})

@@ -9,12 +9,9 @@ interface UserQuotesProps {
 export const UserQuotes: React.FC<UserQuotesProps> = ({ quotes }) => {
   return (
     <SimpleGrid
-      cols={2}
       py={'sm'}
-      breakpoints={[
-        { maxWidth: 'md', cols: 2, spacing: 'md' },
-        { maxWidth: 'sm', cols: 1, spacing: 'sm' },
-      ]}
+      cols={{ base: 1, sm: 2 }}
+      spacing={{ base: 'sm', sm: 'md' }}
     >
       {quotes.map(quote => (
         <QuoteCard displaySemester quote={quote} key={quote.id} />

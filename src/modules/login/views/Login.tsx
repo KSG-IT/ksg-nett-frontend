@@ -2,7 +2,6 @@ import { useApolloClient } from '@apollo/client'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
   Button,
-  createStyles,
   Paper,
   PasswordInput,
   Text,
@@ -19,6 +18,7 @@ import { setLoginToken } from 'util/auth'
 import * as yup from 'yup'
 import { useJwtTokenFromQueryString } from '../hooks'
 import { useLoginMutations } from '../mutations.hooks'
+import { createStyles } from '@mantine/emotion'
 
 let schema = yup.object().shape({
   username: yup.string().required('Du må skrive et brukernavn'),
@@ -97,7 +97,7 @@ export const Login: React.FC = () => {
           <Title
             order={2}
             className={classes.title}
-            align="center"
+            ta="center"
             mt="md"
             mb={50}
           >
@@ -131,7 +131,7 @@ export const Login: React.FC = () => {
             </Button>
           </form>
 
-          <Text align="center" mt="md">
+          <Text ta="center" mt="md">
             Glemt passordet ditt?{' '}
             <Link to="/forgot-password" color="samfundet-red">
               Trykk her
@@ -143,7 +143,7 @@ export const Login: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((_theme, _, u) => ({
   wrapper: {
     height: '100vh',
     backgroundSize: 'cover',
@@ -152,25 +152,23 @@ const useStyles = createStyles(theme => ({
   },
 
   form: {
-    borderRight: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
-    }`,
+    borderRight: `1px solid ${'var(--mantine-color-gray-3)'}`,
     height: '100vh',
     maxWidth: 450,
     paddingTop: 80,
 
-    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+    [u.smallerThan('sm')]: {
       maxWidth: '100%',
     },
   },
 
   title: {
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    color: 'black',
+    fontFamily: `Greycliff CF, var(--mantine-font-family)`,
   },
 
   logo: {
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    color: 'black',
     width: 120,
     display: 'block',
     marginLeft: 'auto',

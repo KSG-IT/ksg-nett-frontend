@@ -1,4 +1,4 @@
-import { Badge } from '@mantine/core'
+import { Badge } from 'components/Badge'
 import { InternalGroupPositionPriorityInternalGroupPriorityValues } from 'modules/admissions/consts'
 import { parseInternalGroupPositionPriority } from 'modules/admissions/parsing'
 import { InternalGroupPositionPriorityNode } from 'modules/admissions/types.graphql'
@@ -30,7 +30,7 @@ const resolvePriorityColor = (
   }
 }
 
-export const InternalGroupPositionPriorityBadge: React.VFC<
+export const InternalGroupPositionPriorityBadge: React.FC<
   InternalGroupPositionPriorityBadgeProps
 > = ({ priority }) => {
   const { internalGroupPriority } = priority

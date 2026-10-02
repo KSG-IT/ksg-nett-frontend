@@ -1,3 +1,4 @@
+import { Table } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { InternalGroupNode } from 'modules/organization/types'
@@ -21,19 +22,19 @@ export const DiscussApplicantsTable: React.FC<DiscussApplicantsTableProps> = ({
 
   return (
     <CardTable highlightOnHover>
-      <thead>
-        <tr>
-          <th>Navn</th>
-          <th>Førstevalg</th>
-          <th></th>
-          <th>Andrevalg</th>
-          <th></th>
-          <th>Tredjevalg</th>
-          <th></th>
-          <th>Handlinger</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Navn</Table.Th>
+          <Table.Th>Førstevalg</Table.Th>
+          <Table.Th></Table.Th>
+          <Table.Th>Andrevalg</Table.Th>
+          <Table.Th></Table.Th>
+          <Table.Th>Tredjevalg</Table.Th>
+          <Table.Th></Table.Th>
+          <Table.Th>Handlinger</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </CardTable>
   )
 }

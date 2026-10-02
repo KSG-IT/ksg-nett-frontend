@@ -6,29 +6,33 @@ export interface InterviewLocationInterviewsCardProps {
   interviewlocationGrouping: InterviewLocationDateGrouping
 }
 
-export const InterviewLocationInterviewsCard: React.VFC<
+export const InterviewLocationInterviewsCard: React.FC<
   InterviewLocationInterviewsCardProps
 > = ({ interviewlocationGrouping }) => {
   const { name, interviews } = interviewlocationGrouping
   return (
     <Table style={{ width: 'auto' }}>
-      <thead>
-        <tr>
-          <th colSpan={2}>{name}</th>
-        </tr>
-        <tr>
-          <th>Fra</th>
-          <th>Til</th>
-        </tr>
-      </thead>
-      <tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th colSpan={2}>{name}</Table.Th>
+        </Table.Tr>
+        <Table.Tr>
+          <Table.Th>Fra</Table.Th>
+          <Table.Th>Til</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>
         {interviews.map((interview, index) => (
-          <tr key={index}>
-            <td>{format(new Date(interview.interviewStart), 'HH:mm')}</td>
-            <td>{format(new Date(interview.interviewEnd), 'HH:mm')}</td>
-          </tr>
+          <Table.Tr key={index}>
+            <Table.Td>
+              {format(new Date(interview.interviewStart), 'HH:mm')}
+            </Table.Td>
+            <Table.Td>
+              {format(new Date(interview.interviewEnd), 'HH:mm')}
+            </Table.Td>
+          </Table.Tr>
         ))}
-      </tbody>
+      </Table.Tbody>
     </Table>
   )
 }

@@ -6,7 +6,11 @@ interface RichTextEditorProps {
 }
 export const RichTextEditor: React.FC<RichTextEditorProps> = ({ editor }) => {
   return (
-    <BaseEditor editor={editor} id="description">
+    <BaseEditor
+      editor={editor}
+      id="description"
+      style={{ backgroundColor: 'white' }}
+    >
       <BaseEditor.Toolbar sticky stickyOffset={60}>
         <BaseEditor.ControlsGroup>
           <BaseEditor.Bold />

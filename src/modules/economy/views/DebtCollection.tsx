@@ -26,7 +26,7 @@ export const DebtCollection: React.FC = () => {
       <Title order={3}>Din saldo: {formatCurrency(me.balance)}</Title>
 
       <Text>
-        Du skylder penger.Her har du mulighet til å se vakter, men ikke noe
+        Du skylder penger. Her har du mulighet til å se vakter, men ikke noe
         annet. For å få tilgang til resten av siden må du opprertte et innskudd
         og få det godkjent.
       </Text>

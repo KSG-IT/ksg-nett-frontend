@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core'
+import { Button, Table } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { CardTable } from 'components/CardTable'
 import {
@@ -18,7 +18,7 @@ const parsePositionOffer = (
   return interest.name
 }
 
-export const FreeForAllWithOffersTable: React.VFC<{
+export const FreeForAllWithOffersTable: React.FC<{
   applicantInterests: ApplicantInterestNode[]
 }> = ({ applicantInterests }) => {
   const { hasPermissions } = usePermissions()
@@ -65,23 +65,25 @@ export const FreeForAllWithOffersTable: React.VFC<{
   }
 
   const interestRows = applicantInterests.map(interest => (
-    <tr key={interest.id}>
-      <td key={1}>
+    <Table.Tr key={interest.id}>
+      <Table.Td key={1}>
         <Link to={`/admissions/applicants/${interest.applicant.id}`}>
           {interest.applicant.fullName}
         </Link>
-      </td>
-      <td key={2}>{interest.internalGroup.name}</td>
-      <td key={3}>
+      </Table.Td>
+      <Table.Td key={2}>{interest.internalGroup.name}</Table.Td>
+      <Table.Td key={3}>
         <Button
           disabled={!hasPermissions(PERMISSIONS.admissions.change.admission)}
           onClick={() => handleGiveApplicant(interest.id)}
         >
           Gi til {interest.internalGroup.name}
         </Button>
-      </td>
-      <td key={4}>{parsePositionOffer(interest.positionToBeOffered)}</td>
-      <td key={5}>
+      </Table.Td>
+      <Table.Td key={4}>
+        {parsePositionOffer(interest.positionToBeOffered)}
+      </Table.Td>
+      <Table.Td key={5}>
         <Button
           disabled={!hasPermissions(PERMISSIONS.admissions.change.admission)}
           onClick={() => handleResetApplicantInterest(interest.id)}
@@ -89,22 +91,22 @@ export const FreeForAllWithOffersTable: React.VFC<{
         >
           Nullstill
         </Button>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <CardTable>
-      <thead>
-        <tr>
-          <th key={1}>Navn</th>
-          <th key={2}>Gjeng</th>
-          <th key={3}>Gi kandidat til gjeng</th>
-          <th key={4}>Status</th>
-          <th key={5}>Nullstill</th>
-        </tr>
-      </thead>
-      <tbody>{interestRows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th key={1}>Navn</Table.Th>
+          <Table.Th key={2}>Gjeng</Table.Th>
+          <Table.Th key={3}>Gi kandidat til gjeng</Table.Th>
+          <Table.Th key={4}>Status</Table.Th>
+          <Table.Th key={5}>Nullstill</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{interestRows}</Table.Tbody>
     </CardTable>
   )
 }

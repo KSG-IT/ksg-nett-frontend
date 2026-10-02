@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { Group, Select } from '@mantine/core'
 import { InterviewAdditionalEvaluationAnswerValues } from 'modules/admissions/consts'
+import { enumHandler, parseEnum } from 'util/parsing'
 import { PATCH_INTERVIEW_ADDITIONAL_EVALUATION_ANSWER } from 'modules/admissions/mutations'
 import { additionalEvaluationOptions } from 'modules/admissions/options'
 import {
@@ -13,7 +14,7 @@ import React, { useState } from 'react'
 interface AdditionalEvaluationInlineProps {
   additionalEvaluation: InterviewAdditionalEvaluationAnswerNode
 }
-export const AdditionalEvaluationInline: React.VFC<
+export const AdditionalEvaluationInline: React.FC<
   AdditionalEvaluationInlineProps
 > = ({ additionalEvaluation }) => {
   const [selectedValue, setSelectedValue] = useState<
@@ -25,22 +26,20 @@ export const AdditionalEvaluationInline: React.VFC<
     PatchInterviewAdditionalEvaluationAnswerVariables
   >(PATCH_INTERVIEW_ADDITIONAL_EVALUATION_ANSWER)
 
-  const handleChange = (
-    selected: InterviewAdditionalEvaluationAnswerValues | ''
-  ) => {
+  const handleChange = (selected: string | null) => {
     if (selected === additionalEvaluation.answer) return
 
-    const parsedValue = selected === '' ? null : selected
+    const parsed = selected
+      ? parseEnum(InterviewAdditionalEvaluationAnswerValues, selected)
+      : null
 
     patchAnswer({
       variables: {
         id: additionalEvaluation.id,
-        input: {
-          answer: parsedValue,
-        },
+        input: { answer: parsed },
       },
     })
-    setSelectedValue(selected)
+    setSelectedValue(parsed ?? '')
   }
 
   return (

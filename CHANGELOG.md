@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## [v2026.10.1]
+
+### Changed
+
+- Dependencies
+  - Upgrade Mantine v6 -> v9
+  - Upgrade React v18 -> v19
+  - Upgrade tiptap v2 -> v3
+  - Upgrade Apollo Client, Sentry, Stripe, Tabler icons, react-select, recharts and zustand for React 19 support
+
+### Fixed
+
+- Rich text editor: Underline button now underlines text
+- Schedules: Location column in shift templates is right-aligned
+
 ## [v2026.7.1]
 
 - Navbar: Add support for highlighted handbook documents

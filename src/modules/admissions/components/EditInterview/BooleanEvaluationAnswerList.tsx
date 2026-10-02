@@ -5,7 +5,7 @@ interface BooleanEvaluationAnswerListProps {
   interview: InterviewNode
 }
 
-export const BooleanEvaluationAnswerList: React.VFC<
+export const BooleanEvaluationAnswerList: React.FC<
   BooleanEvaluationAnswerListProps
 > = ({ interview }) => {
   const { booleanEvaluationAnswers } = interview

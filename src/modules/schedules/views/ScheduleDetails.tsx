@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, createStyles, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { IconPlus, IconSettings } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 
@@ -17,6 +17,7 @@ import { CreateShiftDrawer } from '../components/ScheduleDetails/CreateShiftDraw
 
 import { ShiftRenderer } from '../components/ScheduleDetails/ShiftRenderer'
 import { SCHEDULE_QUERY } from '../queries'
+import { createStyles } from '@mantine/emotion'
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
   { label: 'Vaktlister', path: '/schedules' },
@@ -69,8 +70,8 @@ export const ScheduleDetails: React.FC = () => {
   return (
     <Stack>
       <Breadcrumbs items={overloadedBreadcrumbs} />
-      <Group position="apart">
-        <Group position="apart">
+      <Group justify="space-between">
+        <Group justify="space-between">
           <Title>Vaktplan {schedule.name}</Title>
           <WeekController
             week={shiftsFrom}
@@ -80,7 +81,7 @@ export const ScheduleDetails: React.FC = () => {
 
           <Button
             color="samfundet-red"
-            leftIcon={<IconSettings />}
+            leftSection={<IconSettings />}
             onClick={() => setScheduleSettingsModalOpen(true)}
           >
             Innstillinger
@@ -88,7 +89,7 @@ export const ScheduleDetails: React.FC = () => {
         </Group>
         <Group>
           <Button
-            leftIcon={<IconPlus />}
+            leftSection={<IconPlus />}
             onClick={() => setCreateShiftDrawerOpen(true)}
           >
             {' '}
@@ -132,12 +133,12 @@ export const ScheduleDetails: React.FC = () => {
   )
 }
 
-const useScheduleDetailsStyles = createStyles(theme => ({
+const useScheduleDetailsStyles = createStyles({
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
 
-    gap: theme.spacing.md,
+    gap: 'var(--mantine-spacing-md)',
   },
 
   shifts: {
@@ -145,4 +146,4 @@ const useScheduleDetailsStyles = createStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-}))
+})

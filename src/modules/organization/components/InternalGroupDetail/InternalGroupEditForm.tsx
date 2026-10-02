@@ -1,8 +1,5 @@
 import { Button, FileInput, Stack, TextInput } from '@mantine/core'
-import { Link } from '@mantine/tiptap'
 import { IconCheck, IconFileCode } from '@tabler/icons-react'
-import { useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
 import {
   InternalGroupNode,
   PatchInternalGroupInput,
@@ -10,7 +7,7 @@ import {
 import { useState } from 'react'
 
 import { showNotification } from '@mantine/notifications'
-import { RichTextEditor } from 'components/RichTextEditor'
+import { RichTextEditor, useRichTextEditor } from 'components/RichTextEditor'
 import { useInternalGroupMutations } from 'modules/organization/mutations.hooks'
 import { INTERNAL_GROUP_QUERY } from 'modules/organization/queries'
 
@@ -23,10 +20,7 @@ export const InternalGroupEditForm: React.FC<InternalGroupEditFormProps> = ({
 }) => {
   const [name, setName] = useState(internalGroup.name)
   const [image, setImage] = useState<File | null>(null)
-  const editor = useEditor({
-    extensions: [StarterKit, Link],
-    content: internalGroup.description,
-  })
+  const editor = useRichTextEditor(internalGroup.description)
 
   const { patchInternalGroup, patchInternalGroupLoading } =
     useInternalGroupMutations()
@@ -84,7 +78,7 @@ export const InternalGroupEditForm: React.FC<InternalGroupEditFormProps> = ({
         label="Velg bildefil"
         accept="image/png,image/jpeg,image/jpg"
         placeholder="Trykk her"
-        icon={<IconFileCode />}
+        leftSection={<IconFileCode />}
         clearable
       />
 

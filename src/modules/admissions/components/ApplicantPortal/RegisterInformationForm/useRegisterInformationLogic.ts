@@ -14,7 +14,7 @@ export type RegisterInformationFormData = {
   hometown: string
   study: string
   gdprConsent: boolean
-  dateOfBirth: Date | null
+  dateOfBirth: string | null
   phone: string
   phoneRepeated?: string
   wantsDigitalInterview: boolean

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { Badge, createStyles, Stack, Title } from '@mantine/core'
+import { Stack, Table, Title } from '@mantine/core'
+import { Badge } from 'components/Badge'
 import { showNotification } from '@mantine/notifications'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
@@ -11,6 +12,7 @@ import { parseApplicantPriorityInternalGroupPosition } from '../parsing'
 import { FINISHED_INTERVIEWS_QUERY } from '../queries'
 import { FinishedInterviewsReturns, InterviewNode } from '../types.graphql'
 import { Breadcrumbs } from 'components/Breadcrumbs'
+import { createStyles } from '@mantine/emotion'
 
 const breadcrumbsItems = [
   { label: 'Home', path: '/dashboard' },
@@ -62,8 +64,8 @@ export const FinishedInterviews: React.FC = () => {
   }
 
   const rows = finishedInterviews.map(interview => (
-    <tr key={interview.id}>
-      <td>
+    <Table.Tr key={interview.id}>
+      <Table.Td>
         {interview.registeredAtSamfundet ? (
           <Badge
             color="green"
@@ -81,28 +83,30 @@ export const FinishedInterviews: React.FC = () => {
             Ikke registrert
           </Badge>
         )}
-      </td>
-      <td>{interview.location.name}</td>
-      <td>{format(new Date(interview.interviewStart), 'dd.MMM  HH:mm')}</td>
-      <td>{interview.applicant.fullName}</td>
-      <td>{interview.applicant.phone}</td>
-      <td>{interview.applicant.email}</td>
-      <td>
+      </Table.Td>
+      <Table.Td>{interview.location.name}</Table.Td>
+      <Table.Td>
+        {format(new Date(interview.interviewStart), 'dd.MMM  HH:mm')}
+      </Table.Td>
+      <Table.Td>{interview.applicant.fullName}</Table.Td>
+      <Table.Td>{interview.applicant.phone}</Table.Td>
+      <Table.Td>{interview.applicant.email}</Table.Td>
+      <Table.Td>
         {parseApplicantPriorityInternalGroupPosition(
           interview.applicant.priorities[0]
         )}
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         {parseApplicantPriorityInternalGroupPosition(
           interview.applicant.priorities[1]
         )}
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         {parseApplicantPriorityInternalGroupPosition(
           interview.applicant.priorities[2]
         )}
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   const missingInterviews = finishedInterviews.filter(
@@ -130,20 +134,20 @@ export const FinishedInterviews: React.FC = () => {
       )}
 
       <CardTable compact>
-        <thead>
-          <tr>
-            <th>Status</th>
-            <th>Intervjusted</th>
-            <th>Intervjutidspunkt</th>
-            <th>Søker</th>
-            <th>Telefon</th>
-            <th>E-post</th>
-            <th>Førstevalg</th>
-            <th>Andrevalg</th>
-            <th>Tredjevalg</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Status</Table.Th>
+            <Table.Th>Intervjusted</Table.Th>
+            <Table.Th>Intervjutidspunkt</Table.Th>
+            <Table.Th>Søker</Table.Th>
+            <Table.Th>Telefon</Table.Th>
+            <Table.Th>E-post</Table.Th>
+            <Table.Th>Førstevalg</Table.Th>
+            <Table.Th>Andrevalg</Table.Th>
+            <Table.Th>Tredjevalg</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
       </CardTable>
     </Stack>
   )

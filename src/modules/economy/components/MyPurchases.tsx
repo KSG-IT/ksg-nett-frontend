@@ -1,3 +1,4 @@
+import { Table } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { format } from 'util/date-fns'
 import { numberWithSpaces } from 'util/parsing'
@@ -7,26 +8,26 @@ interface MyPurchasesProps {
   activities: BankAccountActivity[]
 }
 
-export const MyPurchases: React.VFC<MyPurchasesProps> = ({ activities }) => {
+export const MyPurchases: React.FC<MyPurchasesProps> = ({ activities }) => {
   const rows = activities.map((activity, index) => (
-    <tr key={index}>
-      <td>{format(new Date(activity.timestamp), 'yy.MM.dd')}</td>
-      <td>{activity.name}</td>
-      <td>{activity.quantity}</td>
-      <td>{numberWithSpaces(activity.amount)},- NOK</td>
-    </tr>
+    <Table.Tr key={index}>
+      <Table.Td>{format(new Date(activity.timestamp), 'yy.MM.dd')}</Table.Td>
+      <Table.Td>{activity.name}</Table.Td>
+      <Table.Td>{activity.quantity}</Table.Td>
+      <Table.Td>{numberWithSpaces(activity.amount)},- NOK</Table.Td>
+    </Table.Tr>
   ))
   return (
     <CardTable>
-      <thead>
-        <tr>
-          <th>Dato</th>
-          <th>Type</th>
-          <th>Kvantitet</th>
-          <th>Kostnad</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Dato</Table.Th>
+          <Table.Th>Type</Table.Th>
+          <Table.Th>Kvantitet</Table.Th>
+          <Table.Th>Kostnad</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </CardTable>
   )
 }

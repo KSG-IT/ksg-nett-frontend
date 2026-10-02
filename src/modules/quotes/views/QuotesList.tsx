@@ -21,12 +21,12 @@ export const QuotesList = () => {
   return (
     <Stack>
       <Breadcrumbs items={breadCrumbItems} />
-      <Group position="apart">
-        <Title order={2} color="dimmed">
+      <Group justify="apart">
+        <Title order={2} c="dimmed">
           Sitater
         </Title>
         <TextInput
-          icon={<IconSearch />}
+          leftSection={<IconSearch />}
           placeholder="Søk etter innhold..."
           value={query}
           onChange={evt => setQuery(evt.target.value)}

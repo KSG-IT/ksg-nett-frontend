@@ -1,17 +1,9 @@
-import {
-  Button,
-  Divider,
-  Group,
-  Modal,
-  Text,
-  Title,
-  createStyles,
-} from '@mantine/core'
+import { Button, Divider, Group, Modal, Text, Title } from '@mantine/core'
 import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '2026-7-24'
+const NOTIFICATION_KEY = '2026-10-2'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -39,8 +31,17 @@ export const WhatsNewNotification: React.FC = () => {
       <Title my={0} order={1}>
         👋 Hva er nytt?
       </Title>
-      <Text size="sm" color="gray" mt={0}>
-        Siste oppdatering: 2026-07-24
+      <Text size="sm" c="gray" mt={0}>
+        Siste oppdatering: 2026-10-02
+      </Text>
+      <Divider mb="md" />
+      <Title order={4}>Oppgradering - 2. Oktober 2026</Title>
+      <Text>
+        KSG-nett har fått en større oppgradering av UI-biblioteket vi bruker.
+        Det meste er under panseret, men noen ting kan ende opp med å se litt
+        rart ut eller slutte å funke. Om du legger merke til noe gjerne, gi
+        beskjed til KSG-IT (ksg-it@samfundet.no). Understreking i
+        tekstredigering fungerer nå.
       </Text>
       <Divider mb="md" />
       <Title order={4}>Fremhevede artikler</Title>
@@ -109,18 +110,9 @@ export const WhatsNewNotification: React.FC = () => {
           </li>
         </ul>
       </ul>
-      <Group position="right">
+      <Group justify="flex-end">
         <Button onClick={handleClose}>Lukk vindu</Button>
       </Group>
     </Modal>
   )
 }
-
-const useStyles = createStyles(() => ({
-  wrapper: {
-    width: 300,
-    fontSize: 14,
-    borderRadius: 10,
-    boxShadow: '1px  black',
-  },
-}))
