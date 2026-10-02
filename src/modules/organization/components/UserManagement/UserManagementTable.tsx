@@ -1,8 +1,6 @@
-import { Anchor, Avatar, Group, Text } from '@mantine/core'
-import { DataTable, DataTableSortStatus } from 'mantine-datatable'
+import { Table, Text, VisuallyHidden } from '@mantine/core'
+import { SortableTh, UserCell, useTableSort } from 'components/Table'
 import { ManageInternalGroupUser } from 'modules/organization/types.graphql'
-import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import {
   MembershipRowMenu,
   MembershipTypeBadge,
@@ -15,19 +13,17 @@ export type ManageMembershipRecord = ManageInternalGroupUser & {
 
 // "V21" -> 42, "H21" -> 43, so semesters sort in time order
 function semesterKey(shorthand: string | null) {
-  if (!shorthand) return Number.MAX_SAFE_INTEGER
+  if (!shorthand) return null
   const year = Number(shorthand.slice(1))
   return year * 2 + (shorthand.startsWith('H') ? 1 : 0)
 }
 
-const SORT_VALUES: Record<
-  string,
-  (record: ManageMembershipRecord) => string | number
-> = {
-  fullName: record => record.fullName,
-  positionName: record => record.positionName,
-  type: record => membershipTypeLabel(record.internalGroupPositionType) ?? '',
-  period: record => semesterKey(record.dateJoinedSemesterShorthand),
+const SORT_GETTERS = {
+  name: (record: ManageMembershipRecord) => record.fullName,
+  type: (record: ManageMembershipRecord) =>
+    membershipTypeLabel(record.internalGroupPositionType),
+  period: (record: ManageMembershipRecord) =>
+    semesterKey(record.dateJoinedSemesterShorthand),
 }
 
 interface UserManagementTableProps {
@@ -39,82 +35,66 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   records,
   onEditHistory,
 }) => {
-  const [sortStatus, setSortStatus] = useState<
-    DataTableSortStatus<ManageMembershipRecord>
-  >({ columnAccessor: 'fullName', direction: 'asc' })
+  const { sorted, headerProps } = useTableSort(records, SORT_GETTERS, {
+    sortBy: 'name',
+    direction: 'asc',
+  })
 
-  const sorted = useMemo(() => {
-    const value = SORT_VALUES[sortStatus.columnAccessor as string]
-    const direction = sortStatus.direction === 'asc' ? 1 : -1
-    return [...records].sort((a, b) => {
-      const [x, y] = [value(a), value(b)]
-      if (typeof x === 'number' && typeof y === 'number')
-        return (x - y) * direction
-      return String(x).localeCompare(String(y), 'nb') * direction
-    })
-  }, [records, sortStatus])
+  const rows = sorted.map(record => (
+    <Table.Tr key={record.internalGroupPositionMembership.id}>
+      <Table.Td>
+        <UserCell
+          userId={record.userId}
+          name={record.fullName}
+          description={record.positionName}
+        />
+      </Table.Td>
+      <Table.Td>
+        <MembershipTypeBadge membership={record} active={record.active} />
+      </Table.Td>
+      <Table.Td>
+        <Text fz="sm" c={record.active ? undefined : 'dimmed'}>
+          {record.dateJoinedSemesterShorthand} –{' '}
+          {record.dateEndedSemesterShorthand ?? 'nå'}
+        </Text>
+      </Table.Td>
+      <Table.Td ta="right">
+        <MembershipRowMenu
+          membership={record}
+          active={record.active}
+          onEditHistory={onEditHistory}
+        />
+      </Table.Td>
+    </Table.Tr>
+  ))
 
   return (
-    <DataTable<ManageMembershipRecord>
-      records={sorted}
-      idAccessor={record => record.internalGroupPositionMembership.id}
-      sortStatus={sortStatus}
-      onSortStatusChange={setSortStatus}
-      withTableBorder
-      borderRadius="md"
-      highlightOnHover
-      verticalSpacing="xs"
-      fz="sm"
-      minHeight={records.length === 0 ? 160 : undefined}
-      noRecordsText="Ingen medlemskap"
-      columns={[
-        {
-          accessor: 'fullName',
-          title: 'Navn',
-          sortable: true,
-          render: record => (
-            <Group gap="sm" wrap="nowrap">
-              <Avatar name={record.fullName} color="initials" size="sm" />
-              <Anchor component={Link} to={`/users/${record.userId}`} size="sm">
-                {record.fullName}
-              </Anchor>
-            </Group>
-          ),
-        },
-        { accessor: 'positionName', title: 'Verv', sortable: true },
-        {
-          accessor: 'type',
-          title: 'Type',
-          sortable: true,
-          render: record => (
-            <MembershipTypeBadge membership={record} active={record.active} />
-          ),
-        },
-        {
-          accessor: 'period',
-          title: 'Periode',
-          sortable: true,
-          render: record => (
-            <Text size="sm" c={record.active ? undefined : 'dimmed'}>
-              {record.dateJoinedSemesterShorthand} –{' '}
-              {record.dateEndedSemesterShorthand ?? 'nå'}
-            </Text>
-          ),
-        },
-        {
-          accessor: 'actions',
-          title: '',
-          textAlign: 'right',
-          width: 56,
-          render: record => (
-            <MembershipRowMenu
-              membership={record}
-              active={record.active}
-              onEditHistory={onEditHistory}
-            />
-          ),
-        },
-      ]}
-    />
+    <Table.ScrollContainer minWidth={560}>
+      <Table verticalSpacing="xs" highlightOnHover stickyHeader withTableBorder>
+        <Table.Thead>
+          <Table.Tr>
+            <SortableTh {...headerProps('name')}>Navn</SortableTh>
+            <SortableTh {...headerProps('type')}>Type</SortableTh>
+            <SortableTh {...headerProps('period')}>Periode</SortableTh>
+            <Table.Th w={48}>
+              <VisuallyHidden>Valg</VisuallyHidden>
+            </Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          {rows.length > 0 ? (
+            rows
+          ) : (
+            <Table.Tr>
+              <Table.Td colSpan={4}>
+                <Text ta="center" c="dimmed" fz="sm" py="lg">
+                  Ingen medlemskap
+                </Text>
+              </Table.Td>
+            </Table.Tr>
+          )}
+        </Table.Tbody>
+      </Table>
+    </Table.ScrollContainer>
   )
 }
