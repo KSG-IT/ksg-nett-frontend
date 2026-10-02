@@ -13,6 +13,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/nb'
 import {
   GRANULARITY_LABELS,
+  periodCount,
   periodRows,
   SalesGranularity,
   salesSummary,
@@ -57,7 +58,7 @@ export const SalesSummaryCards: React.FC<GroupedSalesChartsProps> = ({
     {
       label: labels.average,
       value: kr(summary.averagePerSalesPeriod),
-      hint: `${summary.salesPeriods} ${labels.periods} med salg`,
+      hint: `${periodCount(summary.salesPeriods, granularity)} med salg`,
     },
   ]
 

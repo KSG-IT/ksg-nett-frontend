@@ -6,6 +6,7 @@ import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
 import {
   GRANULARITY_LABELS,
+  periodCount,
   periodRows,
   salesSummary,
   seriesColor,
@@ -42,7 +43,8 @@ export const MySpending: React.FC = () => {
   const products = data?.myPurchasesByPeriod ?? []
   const summary = salesSummary(products)
   const labels = GRANULARITY_LABELS[granularity]
-  const mostBought = [...products].sort((a, b) => b.quantity - a.quantity)[0]
+  // By amount, not by count: X-BELOP stores the amount in kr as its count
+  const topProduct = [...products].sort((a, b) => b.total - a.total)[0]
 
   const chartData = periodRows(products).map(row => ({
     ...row,
@@ -70,16 +72,19 @@ export const MySpending: React.FC = () => {
               {
                 label: 'Brukt',
                 value: kr(summary.total),
-                hint: `${summary.salesPeriods} ${labels.periods} med kjøp`,
+                hint: `${periodCount(
+                  summary.salesPeriods,
+                  granularity
+                )} med kjøp`,
               },
               {
                 label: 'Enheter kjøpt',
                 value: summary.quantity.toLocaleString('nb-NO'),
               },
               {
-                label: 'Mest kjøpt',
-                value: mostBought?.name ?? '–',
-                hint: mostBought ? `${mostBought.quantity} stk` : undefined,
+                label: 'Mest brukt på',
+                value: topProduct?.name ?? '–',
+                hint: topProduct ? kr(topProduct.total) : undefined,
               },
             ].map(stat => (
               <Card key={stat.label} withBorder padding="md">

@@ -166,18 +166,36 @@ export function semesterLabel(day: string) {
 
 export const GRANULARITY_LABELS: Record<
   SalesGranularity,
-  { option: string; average: string; periods: string }
+  { option: string; average: string; one: string; periods: string }
 > = {
-  DAY: { option: 'Dag', average: 'Snitt per salgsdag', periods: 'dager' },
-  WEEK: { option: 'Uke', average: 'Snitt per uke med salg', periods: 'uker' },
+  DAY: {
+    option: 'Dag',
+    average: 'Snitt per salgsdag',
+    one: 'dag',
+    periods: 'dager',
+  },
+  WEEK: {
+    option: 'Uke',
+    average: 'Snitt per uke med salg',
+    one: 'uke',
+    periods: 'uker',
+  },
   MONTH: {
     option: 'Måned',
     average: 'Snitt per måned med salg',
+    one: 'måned',
     periods: 'måneder',
   },
   SEMESTER: {
     option: 'Semester',
     average: 'Snitt per semester med salg',
+    one: 'semester',
     periods: 'semestre',
   },
+}
+
+// "1 måned", "3 måneder"
+export function periodCount(count: number, granularity: SalesGranularity) {
+  const labels = GRANULARITY_LABELS[granularity]
+  return `${count} ${count === 1 ? labels.one : labels.periods}`
 }
