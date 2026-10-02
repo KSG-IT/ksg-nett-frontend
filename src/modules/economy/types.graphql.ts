@@ -416,3 +416,34 @@ export type RankedSeason = {
     placement: number | null
   }
 }
+
+export interface StatisticsProductsReturns {
+  allSociProducts: {
+    id: string
+    name: string
+    price: number
+    icon: string | null
+    isDefault: boolean
+  }[]
+}
+
+export interface ProductSales {
+  productId: string
+  name: string
+  total: number
+  quantity: number
+  average: number
+  data: { day: string; sum: number }[]
+}
+
+export interface SalesStatisticsReturns {
+  productOrdersByItemAndDateList: ProductSales[]
+}
+
+export interface SalesStatisticsVariables {
+  productIds: string[]
+  // null: from the first sale
+  dateFrom: string | null
+  dateTo: string
+  granularity: 'DAY' | 'WEEK' | 'MONTH'
+}

@@ -322,3 +322,41 @@ export const CURRENT_SEASON_QUERY = gql`
     }
   }
 `
+
+export const STATISTICS_PRODUCTS_QUERY = gql`
+  query StatisticsProducts {
+    allSociProducts {
+      id
+      name
+      price
+      icon
+      isDefault
+    }
+  }
+`
+
+export const SALES_STATISTICS_QUERY = gql`
+  query SalesStatistics(
+    $productIds: [ID!]!
+    $dateFrom: Date
+    $dateTo: Date!
+    $granularity: SalesGranularity
+  ) {
+    productOrdersByItemAndDateList(
+      productIds: $productIds
+      dateFrom: $dateFrom
+      dateTo: $dateTo
+      granularity: $granularity
+    ) {
+      productId
+      name
+      total
+      quantity
+      average
+      data {
+        day
+        sum
+      }
+    }
+  }
+`
