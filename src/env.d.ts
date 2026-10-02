@@ -14,3 +14,4 @@ interface ImportMeta {
 }
 
 declare const APP_VERSION: string
+declare const BUILD_ID: string
