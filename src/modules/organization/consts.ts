@@ -1,3 +1,4 @@
+import { PERMISSIONS } from 'util/permissions'
 import {
   InternalGroupPositionType,
   InternalGroupPositionTypeOption,
@@ -42,3 +43,10 @@ export const internalGroupPositionTypeOptions: InternalGroupPositionTypeOption[]
       label: 'Gammel gjengpang',
     },
   ]
+
+// setUserMembershipHistory creates, changes and deletes memberships
+export const MEMBERSHIP_HISTORY_PERMISSIONS = [
+  PERMISSIONS.organization.add.internalGroupPositionMembership,
+  PERMISSIONS.organization.change.internalGroupPositionMembership,
+  PERMISSIONS.organization.delete.internalGroupPositionMembership,
+]

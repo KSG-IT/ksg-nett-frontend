@@ -1,95 +1,100 @@
-import { Table, Text } from '@mantine/core'
-import { Badge } from 'components/Badge'
-import { CardTable } from 'components/CardTable'
+import { Table, Text, VisuallyHidden } from '@mantine/core'
+import { SortableTh, UserCell, useTableSort } from 'components/Table'
 import { ManageInternalGroupUser } from 'modules/organization/types.graphql'
-import { UserManagementTableRow } from './UserManagementTableRow'
-import { createStyles } from '@mantine/emotion'
+import {
+  MembershipRowMenu,
+  MembershipTypeBadge,
+  membershipTypeLabel,
+} from './MembershipActions'
 
-interface UserManagementTableProps {
-  usersData: ManageInternalGroupUser[]
-  activeMemberships?: boolean
+export type ManageMembershipRecord = ManageInternalGroupUser & {
+  active: boolean
 }
 
-const useStyles = createStyles({
-  card: {
-    backgroundColor: 'white',
-    borderTop: '5px solid var(--mantine-color-samfundet-red-7)',
-  },
-  tableHeader: {
-    color: 'var(--mantine-color-gray-7)',
-    textTransform: 'uppercase',
-  },
-  headerRow: {
-    borderRadius: 'var(--mantine-radius-xs)',
-  },
-})
+// "V21" -> 42, "H21" -> 43, so semesters sort in time order
+function semesterKey(shorthand: string | null) {
+  if (!shorthand) return null
+  const year = Number(shorthand.slice(1))
+  return year * 2 + (shorthand.startsWith('H') ? 1 : 0)
+}
+
+const SORT_GETTERS = {
+  name: (record: ManageMembershipRecord) => record.fullName,
+  type: (record: ManageMembershipRecord) =>
+    membershipTypeLabel(record.internalGroupPositionType),
+  period: (record: ManageMembershipRecord) =>
+    semesterKey(record.dateJoinedSemesterShorthand),
+}
+
+interface UserManagementTableProps {
+  records: ManageMembershipRecord[]
+  onEditHistory: (userId: string) => void
+}
 
 export const UserManagementTable: React.FC<UserManagementTableProps> = ({
-  usersData,
-  activeMemberships = false,
+  records,
+  onEditHistory,
 }) => {
-  const { classes } = useStyles()
-  const TableData: React.FC<{
-    children?: React.ReactNode
-    color?: string
-    fw?: number
-  }> = ({ children, color, fw }) => (
-    <Table.Td>
-      <Text c={color} fw={fw} size={'sm'}>
-        {children}
-      </Text>
-    </Table.Td>
-  )
+  const { sorted, headerProps } = useTableSort(records, SORT_GETTERS, {
+    sortBy: 'name',
+    direction: 'asc',
+  })
 
-  const tableRows = usersData.map(membership => (
-    <Table.Tr key={membership.userId}>
-      <TableData>{membership.fullName}</TableData>
-      <Table.Td align="center">
-        <Badge color={'samfundet-red'}>{membership.positionName}</Badge>
+  const rows = sorted.map(record => (
+    <Table.Tr key={record.internalGroupPositionMembership.id}>
+      <Table.Td>
+        <UserCell
+          userId={record.userId}
+          name={record.fullName}
+          description={record.positionName}
+        />
       </Table.Td>
-      <TableData>
-        {membership.internalGroupPositionMembership.getTypeDisplay}
-      </TableData>
-      <TableData>{membership.dateJoinedSemesterShorthand}</TableData>
-      {activeMemberships ? (
-        <UserManagementTableRow userData={membership} />
-      ) : (
-        <Table.Td>{membership.dateEndedSemesterShorthand}</Table.Td>
-      )}
+      <Table.Td>
+        <MembershipTypeBadge membership={record} active={record.active} />
+      </Table.Td>
+      <Table.Td>
+        <Text fz="sm" c={record.active ? undefined : 'dimmed'}>
+          {record.dateJoinedSemesterShorthand} –{' '}
+          {record.dateEndedSemesterShorthand ?? 'nå'}
+        </Text>
+      </Table.Td>
+      <Table.Td ta="right">
+        <MembershipRowMenu
+          membership={record}
+          active={record.active}
+          onEditHistory={onEditHistory}
+        />
+      </Table.Td>
     </Table.Tr>
   ))
-  const Header: React.FC<{
-    children?: React.ReactNode
-    ta?: 'left' | 'center' | 'right'
-  }> = ({ children, ta }) => (
-    <Table.Th>
-      <Text ta={ta} fw={800} size={'sm'} className={classes.tableHeader}>
-        {children}
-      </Text>
-    </Table.Th>
-  )
 
   return (
-    <CardTable>
-      {/* Should parse data in here and show loading state here */}
-      <Table.Thead>
-        <Table.Tr>
-          <Header>Navn</Header>
-          <Header ta="center">Stilling</Header>
-          <Header>Gruppe</Header>
-          <Header>Startet</Header>
-          {activeMemberships ? (
-            <>
-              <Header>Sett verv</Header>
-              <Table.Th></Table.Th>
-              <Table.Th></Table.Th>
-            </>
+    <Table.ScrollContainer minWidth={560}>
+      <Table verticalSpacing="xs" highlightOnHover stickyHeader withTableBorder>
+        <Table.Thead>
+          <Table.Tr>
+            <SortableTh {...headerProps('name')}>Navn</SortableTh>
+            <SortableTh {...headerProps('type')}>Type</SortableTh>
+            <SortableTh {...headerProps('period')}>Periode</SortableTh>
+            <Table.Th w={48}>
+              <VisuallyHidden>Valg</VisuallyHidden>
+            </Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          {rows.length > 0 ? (
+            rows
           ) : (
-            <Header>Sluttet</Header>
+            <Table.Tr>
+              <Table.Td colSpan={4}>
+                <Text ta="center" c="dimmed" fz="sm" py="lg">
+                  Ingen medlemskap
+                </Text>
+              </Table.Td>
+            </Table.Tr>
           )}
-        </Table.Tr>
-      </Table.Thead>
-      <Table.Tbody>{tableRows}</Table.Tbody>
-    </CardTable>
+        </Table.Tbody>
+      </Table>
+    </Table.ScrollContainer>
   )
 }
