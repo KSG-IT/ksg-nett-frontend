@@ -1,19 +1,12 @@
-import {
-  Box,
-  Button,
-  FileInput,
-  Group,
-  Image,
-  Modal,
-  Slider,
-  Stack,
-  Text,
-} from '@mantine/core'
+import { Button, FileInput, Group, Image, Stack } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconCrop, IconPhoto } from '@tabler/icons-react'
-import { useEffect, useMemo, useState } from 'react'
-import Cropper, { Area, Point } from 'react-easy-crop'
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
+import type { Area } from 'react-easy-crop'
 import { cropImage } from './cropImage'
+
+// Loads react-easy-crop only when a user picks an image
+const CropModal = lazy(() => import('./CropModal'))
 
 interface ImageCropInputProps {
   value: File | null
@@ -40,9 +33,6 @@ export const ImageCropInput: React.FC<ImageCropInputProps> = ({
     null
   )
   const [opened, setOpened] = useState(false)
-  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
-  const [zoom, setZoom] = useState(1)
-  const [area, setArea] = useState<Area | null>(null)
   const [cropping, setCropping] = useState(false)
 
   const previewUrl = useMemo(
@@ -67,8 +57,6 @@ export const ImageCropInput: React.FC<ImageCropInputProps> = ({
       return
     }
     setSource({ url: URL.createObjectURL(file), name: file.name })
-    setCrop({ x: 0, y: 0 })
-    setZoom(1)
     setOpened(true)
   }
 
@@ -77,8 +65,8 @@ export const ImageCropInput: React.FC<ImageCropInputProps> = ({
     if (!value) setSource(null)
   }
 
-  async function handleConfirm() {
-    if (!source || !area) return
+  async function handleConfirm(area: Area) {
+    if (!source) return
     setCropping(true)
     try {
       const blob = await cropImage(source.url, area, maxWidth)
@@ -129,45 +117,19 @@ export const ImageCropInput: React.FC<ImageCropInputProps> = ({
         </Group>
       )}
 
-      <Modal
-        opened={opened}
-        onClose={handleCancel}
-        title="Velg utsnitt"
-        size="lg"
-      >
-        <Stack>
-          <Box pos="relative" h={360} bg="dark.7">
-            {source && (
-              <Cropper
-                image={source.url}
-                crop={crop}
-                zoom={zoom}
-                aspect={aspect}
-                onCropChange={setCrop}
-                onZoomChange={setZoom}
-                onCropComplete={(_, pixels) => setArea(pixels)}
-              />
-            )}
-          </Box>
-          <Text size="sm">Zoom</Text>
-          <Slider
-            min={1}
-            max={3}
-            step={0.05}
-            value={zoom}
-            onChange={setZoom}
-            label={null}
+      {source && (
+        <Suspense fallback={null}>
+          <CropModal
+            key={source.url}
+            opened={opened}
+            imageUrl={source.url}
+            aspect={aspect}
+            loading={cropping}
+            onCancel={handleCancel}
+            onConfirm={handleConfirm}
           />
-          <Group justify="flex-end">
-            <Button variant="default" onClick={handleCancel}>
-              Avbryt
-            </Button>
-            <Button loading={cropping} onClick={handleConfirm}>
-              Bruk bilde
-            </Button>
-          </Group>
-        </Stack>
-      </Modal>
+        </Suspense>
+      )}
     </Stack>
   )
 }
