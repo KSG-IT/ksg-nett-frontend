@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Center } from '@mantine/core'
 import * as Sentry from '@sentry/react'
-import { FullPageError } from 'components/FullPageComponents'
+import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import {
   AdmissionDashboard,
@@ -72,10 +72,6 @@ import { PERMISSIONS } from 'util/permissions'
 import PublicRoutes from './PublicRoutes'
 import { RestrictedRoute } from './RestrictedRoute'
 import { KnightHoodDashboard } from 'modules/knighthood/KnightHoodDashBoard'
-
-const FullPage404 = React.lazy(
-  () => import('components/FullPageComponents/FullPage404')
-)
 
 const MainContent = React.lazy(() => import('routes/MainContent'))
 
