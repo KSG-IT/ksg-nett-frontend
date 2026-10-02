@@ -18,17 +18,19 @@ jobs:
         id: yarn-cache
         with:
           path: ./node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-yarn4-${{ hashFiles('yarn.lock') }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Enable corepack
+        run: corepack enable
 
       - name: Install dependencies
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
         run: |
-          yarn install
+          yarn install --immutable
 
       - name: Build
         env:
