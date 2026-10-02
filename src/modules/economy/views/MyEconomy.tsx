@@ -17,7 +17,7 @@ import { FullContentLoader } from 'components/Loading'
 import React from 'react'
 import { useMe } from 'util/hooks'
 import { TransactionCard } from '../../dashboard/components/TransactionCard'
-import { AccountCard, MyDeposits, MyExpenditures } from '../components'
+import { AccountCard, MyDeposits, MySpending } from '../components'
 import { MY_BANK_ACCOUNT_QUERY } from '../queries'
 import { MyBankAccountReturns } from '../types.graphql'
 
@@ -82,16 +82,12 @@ export const MyEconomy: React.FC = () => {
         className={classes.balanceCard}
         account={data.myBankAccount}
       />
-      <SimpleGrid cols={{ base: 1, md: 2 }} spacing={{ base: 'sm', md: 'md' }}>
-        <Stack>
-          <Text c={'dimmed'} fw={700} p={'xs'}>
-            Forbruk
-          </Text>
-          <Card withBorder className={classes.cardWithBorder}>
-            <MyExpenditures moneySpent={data.myBankAccount.user.moneySpent} />
-          </Card>
-        </Stack>
+      <Stack gap="xs">
+        <Title order={2}>Mitt forbruk</Title>
+        <MySpending />
+      </Stack>
 
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing={{ base: 'sm', md: 'md' }}>
         <TransactionCard
           activities={data.myBankAccount.user.lastTransactions}
         />

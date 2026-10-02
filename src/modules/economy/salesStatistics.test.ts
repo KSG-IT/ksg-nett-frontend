@@ -1,5 +1,6 @@
 import {
   allowedGranularities,
+  periodCount,
   defaultGranularity,
   periodRange,
   periodRows,
@@ -150,5 +151,14 @@ describe('granularity', () => {
   it('labels semesters like the backend', () => {
     expect(semesterLabel('2023-08-01')).toEqual('H23')
     expect(semesterLabel('2024-01-01')).toEqual('V24')
+  })
+})
+
+describe('periodCount', () => {
+  it('uses the singular for one', () => {
+    expect(periodCount(1, 'MONTH')).toEqual('1 måned')
+    expect(periodCount(3, 'MONTH')).toEqual('3 måneder')
+    expect(periodCount(1, 'SEMESTER')).toEqual('1 semester')
+    expect(periodCount(2, 'DAY')).toEqual('2 dager')
   })
 })

@@ -1,36 +1,20 @@
 import { useQuery } from '@apollo/client'
-import {
-  Group,
-  Input,
-  MultiSelect,
-  SegmentedControl,
-  Select,
-  Stack,
-  Title,
-} from '@mantine/core'
-import { DatePickerInput } from '@mantine/dates'
+import { Group, MultiSelect, Stack, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import 'dayjs/locale/nb'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import {
   RevenueOverTimeChart,
   RevenuePerProduct,
   SalesSummaryCards,
 } from '../components/SociStatistics/SalesCharts'
-import { SALES_STATISTICS_QUERY, STATISTICS_PRODUCTS_QUERY } from '../queries'
 import {
-  allowedGranularities,
-  defaultGranularity,
-  GRANULARITY_LABELS,
-  isoDate,
-  periodRange,
-  SALES_PERIOD_OPTIONS,
-  SalesGranularity,
-  SalesPeriod,
-} from '../salesStatistics'
+  SalesPeriodControls,
+  useSalesPeriod,
+} from '../components/SociStatistics/SalesPeriodControls'
+import { SALES_STATISTICS_QUERY, STATISTICS_PRODUCTS_QUERY } from '../queries'
 import {
   SalesStatisticsReturns,
   SalesStatisticsVariables,
@@ -44,30 +28,16 @@ const breadcrumbs = [
 ]
 
 export const SociStatistics: React.FC = () => {
-  const today = useMemo(() => new Date(), [])
-  const [period, setPeriod] = useState<SalesPeriod>('this-semester')
-  const [customRange, setCustomRange] = useState<
-    [string | null, string | null]
-  >([null, null])
-  // null: use the default for the length of the period
-  const [pickedGranularity, setPickedGranularity] =
-    useState<SalesGranularity | null>(null)
+  const periodState = useSalesPeriod()
+  const { dateFrom, dateTo, granularity, customIncomplete } = periodState
   // Empty: all products with sales in the period (the backend picks them)
   const [picked, setPicked] = useState<string[]>([])
-
-  const { dateFrom, dateTo } = periodRange(period, today, customRange)
-  const allowed = allowedGranularities(period)
-  const granularity =
-    pickedGranularity && allowed.includes(pickedGranularity)
-      ? pickedGranularity
-      : defaultGranularity(period, dateFrom, dateTo)
 
   const products = useQuery<StatisticsProductsReturns>(
     STATISTICS_PRODUCTS_QUERY
   )
   const allProducts = products.data?.allSociProducts ?? []
 
-  const customIncomplete = period === 'custom' && (!dateFrom || !dateTo)
   const sales = useQuery<SalesStatisticsReturns, SalesStatisticsVariables>(
     SALES_STATISTICS_QUERY,
     {
@@ -95,56 +65,13 @@ export const SociStatistics: React.FC = () => {
     product => product.total !== 0 || product.quantity !== 0
   )
 
-  function handlePeriodChange(value: string | null) {
-    if (!value) return
-    setPeriod(value as SalesPeriod)
-    // A new period gets its own default grouping
-    setPickedGranularity(null)
-  }
-
   return (
     <Stack>
       <Breadcrumbs items={breadcrumbs} />
       <Title>Salgsstatistikk</Title>
 
       <Group align="flex-end" wrap="wrap">
-        <Select
-          label="Periode"
-          data={SALES_PERIOD_OPTIONS}
-          value={period}
-          onChange={handlePeriodChange}
-          allowDeselect={false}
-          w={200}
-        />
-        {period === 'custom' && (
-          <DatePickerInput
-            type="range"
-            label="Fra og til"
-            placeholder="Velg datoer"
-            locale="nb"
-            valueFormat="D. MMM YYYY"
-            value={customRange}
-            onChange={value => {
-              setCustomRange(value as [string | null, string | null])
-              setPickedGranularity(null)
-            }}
-            maxDate={isoDate(today)}
-            allowSingleDateInRange
-            w={280}
-          />
-        )}
-        <Input.Wrapper label="Vis per">
-          <SegmentedControl
-            data={allowed.map(value => ({
-              value,
-              label: GRANULARITY_LABELS[value].option,
-            }))}
-            disabled={allowed.length === 1}
-            value={granularity}
-            onChange={value => setPickedGranularity(value as SalesGranularity)}
-            display="flex"
-          />
-        </Input.Wrapper>
+        <SalesPeriodControls state={periodState} />
       </Group>
       <MultiSelect
         label="Produkter"
