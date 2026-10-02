@@ -2,15 +2,7 @@ import { useQuery } from '@apollo/client'
 import { Group, NumberFormatter, Select, Text } from '@mantine/core'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import {
-  Bar,
-  BarChart,
-  Legend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts'
+import { BarChart } from '@mantine/charts'
 import { format } from 'util/date-fns'
 import { MY_EXPENDITURES } from '../queries'
 import {
@@ -18,7 +10,6 @@ import {
   MyExpendituresReturns,
   MyExpendituresVariables,
 } from '../types.graphql'
-import { createStyles } from '@mantine/emotion'
 
 interface MyExpendituresProps {
   moneySpent: number
@@ -27,7 +18,6 @@ interface MyExpendituresProps {
 export const MyExpenditures: React.FC<MyExpendituresProps> = ({
   moneySpent,
 }) => {
-  const { classes } = useStyles()
   const { loading, error, data } = useQuery<
     MyExpendituresReturns,
     MyExpendituresVariables
@@ -69,20 +59,13 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
         data={dateRangeOptions}
         defaultValue={dateRangeOptions[0].value}
       />
-      <ResponsiveContainer width={'95%'} height={400}>
-        <BarChart
-          data={parsedData}
-          width={300}
-          height={400}
-          className={classes.barChart}
-        >
-          <XAxis dataKey={'date'} />
-          <YAxis />
-          <Tooltip filterNull />
-          <Legend />
-          <Bar dataKey={'sum'} fill={'maroon'} />
-        </BarChart>
-      </ResponsiveContainer>
+      <BarChart
+        h={400}
+        data={parsedData}
+        dataKey="date"
+        series={[{ name: 'sum', label: 'Sum', color: 'samfundet-red.6' }]}
+        valueFormatter={value => `${value} kr`}
+      />
 
       <Group justify="space-between">
         <Text fw={'bold'}>Sum</Text>
@@ -93,13 +76,3 @@ export const MyExpenditures: React.FC<MyExpendituresProps> = ({
     </>
   )
 }
-
-const useStyles = createStyles({
-  totalRow: {
-    maxWidth: '700px',
-  },
-  barChart: {
-    padding: '0px',
-    margin: '0px',
-  },
-})

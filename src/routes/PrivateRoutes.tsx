@@ -96,6 +96,9 @@ const SocinomicsControlPanel = React.lazy(
 )
 
 const SociRanked = React.lazy(() => import('modules/economy/views/SociRanked'))
+const SociStatistics = React.lazy(
+  () => import('modules/economy/views/SociStatistics')
+)
 
 // === Schedules ===
 const ScheduleAllergies = React.lazy(
@@ -475,6 +478,16 @@ export const AppRoutes: React.FC = () => {
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
           <Route path="socinomics" element={<Socinomics />} />
+          <Route
+            path="statistics"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.economy.view.productOrder}
+              >
+                <SociStatistics />
+              </RestrictedRoute>
+            }
+          />
           <Route
             path="socinomics-control"
             element={
