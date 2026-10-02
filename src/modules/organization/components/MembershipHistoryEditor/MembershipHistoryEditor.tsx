@@ -354,7 +354,7 @@ const MembershipHistoryForm: React.FC<MembershipHistoryFormProps> = ({
                 />
               </SimpleGrid>
               {rows?.[index]?.dateJoined && (
-                <Badge variant="light" mt="xs">
+                <Badge variant="light" color="gray" mt="xs">
                   {semesterShorthand(rows[index].dateJoined ?? null)} –{' '}
                   {semesterShorthand(rows[index].dateEnded ?? null) || 'nå'}
                 </Badge>
