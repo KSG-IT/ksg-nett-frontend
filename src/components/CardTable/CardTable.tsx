@@ -13,32 +13,23 @@ export const CardTable: React.FC<CardTableProps> = ({
   compact = false,
   ...rest
 }) => {
-  const { classes } = useCardTableStyles({ compact })
+  const { classes } = useCardTableStyles()
 
   return (
     <Paper className={`${classes.card} ${className}`} p={p}>
-      <Table fz={compact ? 12 : 14} {...rest}>
-        {children}
-      </Table>
+      <Table.ScrollContainer minWidth={0}>
+        <Table fz={compact ? 12 : 14} {...rest}>
+          {children}
+        </Table>
+      </Table.ScrollContainer>
     </Paper>
   )
 }
 
-interface CardTableStyleProps {
-  compact: boolean
-}
-
-const useCardTableStyles = createStyles(
-  (theme, { compact }: CardTableStyleProps) => ({
-    card: {
-      overflowX: 'scroll',
-      overflowY: 'scroll',
-      td: {
-        whiteSpace: 'nowrap',
-        tr: {
-          fontSize: compact ? '12px' : '16px',
-        },
-      },
+const useCardTableStyles = createStyles(() => ({
+  card: {
+    td: {
+      whiteSpace: 'nowrap',
     },
-  })
-)
+  },
+}))
