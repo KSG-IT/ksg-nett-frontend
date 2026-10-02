@@ -1,4 +1,5 @@
-import { createStyles, Popover, Stack } from '@mantine/core'
+import { Popover, Stack } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import {
   addDays,
   endOfMonth,
@@ -117,7 +118,7 @@ const DateShifts = ({
             </div>
           </Popover.Target>
           <Popover.Dropdown className={classes.popoverContainer}>
-            <Stack spacing={0}>
+            <Stack gap={0}>
               <span>{item?.name}</span>
               <span>{item.location}</span>
               <span>{item.timeDisplay}</span>
@@ -132,7 +133,7 @@ const DateShifts = ({
   )
 }
 
-const useShiftSlotStyles = createStyles(theme => ({
+const useShiftSlotStyles = createStyles(() => ({
   container: {
     width: '100%',
     color: 'white',
@@ -144,7 +145,7 @@ const useShiftSlotStyles = createStyles(theme => ({
     backgroundColor: '#E9EEF6',
   },
   shiftAvailable: {
-    backgroundColor: theme.colors.yellow[6],
+    backgroundColor: 'var(--mantine-color-yellow-6)',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -156,7 +157,7 @@ const useShiftSlotStyles = createStyles(theme => ({
     fontWeight: 600,
   },
   shiftWantsToWork: {
-    backgroundColor: theme.colors.green[5],
+    backgroundColor: 'var(--mantine-color-green-5)',
     width: '100%',
     display: 'flex',
     borderRadius: 5,
@@ -168,7 +169,7 @@ const useShiftSlotStyles = createStyles(theme => ({
     fontWeight: 600,
   },
   shiftUnavailable: {
-    backgroundColor: theme.colors.red[6],
+    backgroundColor: 'var(--mantine-color-red-6)',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -274,10 +275,10 @@ function getStatusColor(interestType: InterestChoices) {
   }
 }
 
-const useCalendarStyles = createStyles(theme => ({
+const useCalendarStyles = createStyles(() => ({
   calendarDayMarker: {
     borderRadius: 100,
-    // backgroundColor: theme.colors.red[5],
+    // backgroundColor: 'var(--mantine-color-red-5)',
     fontSize: 12,
     // color: 'white',
     // fontWeight: 600,

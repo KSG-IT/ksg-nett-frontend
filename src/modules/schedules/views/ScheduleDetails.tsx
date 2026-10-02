@@ -6,6 +6,7 @@ import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { add, addDays } from 'date-fns'
+import { format } from 'util/date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {
@@ -36,19 +37,23 @@ const ScheduleAutofillModal = ({
   opened,
   onClose,
 }: ScheduleAutofillModalProps) => {
-  const [fromDate, setFromDate] = useState(new Date())
-  const [toDate, setToDate] = useState(addDays(new Date(), 7))
+  const [fromDate, setFromDate] = useState<string | null>(
+    format(new Date(), 'yyyy-MM-dd')
+  )
+  const [toDate, setToDate] = useState<string | null>(
+    format(addDays(new Date(), 7), 'yyyy-MM-dd')
+  )
 
   async function handleGenerate() {}
   return (
     <Modal onClose={onClose} opened={opened} title="Autofill">
       <Stack>
         <Group>
-          <DateInput value={fromDate} label="Fra" />
-          <DateInput value={toDate} label="Til" />
+          <DateInput value={fromDate} onChange={setFromDate} label="Fra" />
+          <DateInput value={toDate} onChange={setToDate} label="Til" />
         </Group>
 
-        <Group position="right">
+        <Group justify="flex-end">
           <Button>Avbryt</Button>
           <Button>Del ut vakter</Button>
         </Group>
