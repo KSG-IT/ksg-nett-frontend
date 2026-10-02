@@ -52,6 +52,7 @@ export const ApplicantComments: React.FC<ApplicantCommentsProps> = ({
       <Title order={3}>Skriv en kommentar</Title>
 
       <Textarea
+        autosize
         value={comment}
         minRows={4}
         onChange={evt => setComment(evt.target.value)}

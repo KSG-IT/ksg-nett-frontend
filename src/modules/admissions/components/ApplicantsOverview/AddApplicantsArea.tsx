@@ -47,6 +47,7 @@ export const AddApplicantsArea: React.FC = () => {
         Her kan du legge inn søkere sin epost. Hver epost på hver sin linje.
       </MessageBox>
       <Textarea
+        autosize
         minRows={12}
         placeholder="søker1@epost.com&#10;søker2@epost.com&#10;..."
         value={emails}
