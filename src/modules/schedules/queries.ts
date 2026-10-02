@@ -203,17 +203,3 @@ export const ALL_SHIFTS = gql`
     }
   }
 `
-
-export const ALL_USERS_WORKING_TODAY_AND_SOCI_PRODUCTS = gql`
-  query AllUsersWorkingTodayAndSociProducts {
-    allUsersWorkingToday {
-      id
-      initials
-      fullName
-    }
-    defaultSociProducts {
-      id
-      name
-    }
-  }
-`
