@@ -97,6 +97,7 @@ export const SociStockProduct: React.FC<SociStockProductProps> = ({
               {stock.marketHistory?.map((order: StockMarketDataPoints) => {
                 return (
                   <Box
+                    key={order.timestamp}
                     className={classes.stockActivity}
                     style={{
                       height: `${1.5 * order.price}px`,

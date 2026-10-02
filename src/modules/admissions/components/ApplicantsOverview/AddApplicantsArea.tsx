@@ -1,4 +1,4 @@
-import { Button, Group, Stack, Textarea, Title } from '@mantine/core'
+import { Button, Group, Stack, Textarea } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconFileUpload, IconPlane } from '@tabler/icons-react'
 import { MessageBox } from 'components/MessageBox'
@@ -7,7 +7,13 @@ import { CURRENT_APPLICANTS_QUERY } from 'modules/admissions/queries'
 import { useState } from 'react'
 import { UploadAdmissionCSVModal } from './UploadAdmissionCSVModal'
 
-export const AddApplicantsArea: React.FC = () => {
+interface AddApplicantsAreaProps {
+  onAdded?: () => void
+}
+
+export const AddApplicantsArea: React.FC<AddApplicantsAreaProps> = ({
+  onAdded,
+}) => {
   const [emails, setEmails] = useState('')
   const [open, setOpen] = useState(false)
 
@@ -28,6 +34,7 @@ export const AddApplicantsArea: React.FC = () => {
           message: 'Søkere lagt til',
         })
         setEmails('')
+        onAdded?.()
       },
       onError({ message }) {
         showNotification({
@@ -40,15 +47,13 @@ export const AddApplicantsArea: React.FC = () => {
   }
   return (
     <Stack>
-      <Title mt="md" order={2}>
-        Legg til søkere
-      </Title>
       <MessageBox type="info">
         Her kan du legge inn søkere sin epost. Hver epost på hver sin linje.
       </MessageBox>
       <Textarea
         autosize
-        minRows={12}
+        minRows={8}
+        maxRows={16}
         placeholder="søker1@epost.com&#10;søker2@epost.com&#10;..."
         value={emails}
         onChange={e => setEmails(e.target.value)}

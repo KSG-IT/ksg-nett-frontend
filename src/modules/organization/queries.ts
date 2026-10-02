@@ -82,3 +82,38 @@ export const ALL_INTERNAL_GROUPS_BY_TYPE_QUERY = gql`
     }
   }
 `
+
+export const USER_MEMBERSHIP_HISTORY_QUERY = gql`
+  query UserMembershipHistory($id: ID!) {
+    user(id: $id) {
+      id
+      fullName
+      userTypes {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
+      internalGroupPositionMembershipHistory {
+        id
+        type
+        dateJoined
+        dateEnded
+        position {
+          id
+        }
+      }
+    }
+    allInternalGroupPositions {
+      id
+      name
+      internalGroup {
+        id
+        name
+        type
+      }
+    }
+  }
+`

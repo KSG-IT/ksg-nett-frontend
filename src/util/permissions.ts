@@ -31,6 +31,7 @@ export const PERMISSIONS = {
     view: {
       sociSession: 'economy.view_socisession',
       deposit: 'economy.view_deposit',
+      productOrder: 'economy.view_productorder',
     },
     change: {
       sociSession: 'economy.change_socisession',

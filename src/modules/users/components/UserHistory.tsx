@@ -26,7 +26,7 @@ export const UserHistory: React.FC<UserHistoryProps> = ({ memberships }) => {
         <Text c={'dimmed'} size={'sm'}>
           {position.internalGroup.name}
         </Text>
-        <Text size={'sm'} fw={800} c="samfundet-red.0">
+        <Text size={'sm'} fw={800} c="samfundet-red.7">
           {membershipStart} {membershipEnd && ` - ${membershipEnd}`}
         </Text>
       </Timeline.Item>

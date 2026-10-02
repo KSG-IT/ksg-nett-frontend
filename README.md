@@ -22,7 +22,7 @@ In order for this app to function the backend part of the application needs to b
 
 Dependencies are managed with `yarn`. To run the code do the following
 
-1. [install](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) yarn on your computer
+1. Enable yarn with `corepack enable`. The version comes from `packageManager` in `package.json`
 2. Clone and Navigate to this folder
 3. Install the dependencies by running `yarn install`
 4. Run the projects by running `yarn start`

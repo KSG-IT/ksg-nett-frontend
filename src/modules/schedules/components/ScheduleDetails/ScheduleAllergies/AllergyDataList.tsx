@@ -2,7 +2,7 @@ import { ApolloError } from '@apollo/client'
 import { Card, Group, Stack } from '@mantine/core'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { AllergyQueryReturns } from 'modules/schedules/views'
+import type { AllergyQueryReturns } from 'modules/schedules/views/ScheduleAllergies'
 import { format } from 'util/date-fns'
 
 export const AllergyDataList = ({

@@ -85,3 +85,20 @@ export const PATCH_INTERNAL_GROUP_MUTATION = gql`
     }
   }
 `
+
+export const SET_USER_MEMBERSHIP_HISTORY_MUTATION = gql`
+  mutation SetUserMembershipHistory(
+    $userId: ID!
+    $memberships: [MembershipHistoryInput!]!
+  ) {
+    setUserMembershipHistory(userId: $userId, memberships: $memberships) {
+      memberships {
+        id
+      }
+      errors {
+        index
+        message
+      }
+    }
+  }
+`

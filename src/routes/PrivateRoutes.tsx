@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Center } from '@mantine/core'
 import * as Sentry from '@sentry/react'
-import { FullPageError } from 'components/FullPageComponents'
+import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import {
   AdmissionDashboard,
@@ -73,10 +73,6 @@ import PublicRoutes from './PublicRoutes'
 import { RestrictedRoute } from './RestrictedRoute'
 import { KnightHoodDashboard } from 'modules/knighthood/KnightHoodDashBoard'
 
-const FullPage404 = React.lazy(
-  () => import('components/FullPageComponents/FullPage404')
-)
-
 const MainContent = React.lazy(() => import('routes/MainContent'))
 
 // ==== Handbook ====
@@ -100,6 +96,9 @@ const SocinomicsControlPanel = React.lazy(
 )
 
 const SociRanked = React.lazy(() => import('modules/economy/views/SociRanked'))
+const SociStatistics = React.lazy(
+  () => import('modules/economy/views/SociStatistics')
+)
 
 // === Schedules ===
 const ScheduleAllergies = React.lazy(
@@ -479,6 +478,16 @@ export const AppRoutes: React.FC = () => {
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
           <Route path="socinomics" element={<Socinomics />} />
+          <Route
+            path="statistics"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.economy.view.productOrder}
+              >
+                <SociStatistics />
+              </RestrictedRoute>
+            }
+          />
           <Route
             path="socinomics-control"
             element={
