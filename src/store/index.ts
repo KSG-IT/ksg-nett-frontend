@@ -70,7 +70,9 @@ export const useStore = create<Store>(set => ({
     localStorage.setItem(LOGIN_TOKEN_KEY, token)
     set(() => ({ token: token }))
   },
-  sidebarOpen: true,
+  // Only mobile reads this (AppShell collapsed.mobile). On desktop the navbar
+  // is always shown, so start closed and let the burger open it.
+  sidebarOpen: false,
   toggleSidebarOpen: () => {
     set(state => ({ sidebarOpen: !state.sidebarOpen }))
   },
