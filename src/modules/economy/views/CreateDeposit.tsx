@@ -62,7 +62,7 @@ const useStyles = createStyles({
     fontWeight: 'bold',
   },
   card: {
-    borderTop: '5px solid var(--mantine-color-brand-6)',
+    borderTop: '5px solid var(--mantine-color-samfundet-red-7)',
     margin: `var(--mantine-spacing-sm) 0`,
   },
 })

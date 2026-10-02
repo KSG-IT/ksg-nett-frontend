@@ -1,4 +1,4 @@
-import { Button, Table, Text } from '@mantine/core'
+import { Button, NumberFormatter, Table, Text } from '@mantine/core'
 import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { IconDownload, IconFilePlus, IconMailbox } from '@tabler/icons-react'
@@ -6,8 +6,6 @@ import { CardTable } from 'components/CardTable'
 import { useInvoiceMutations } from 'modules/barTab/mutations.hooks'
 import { ACTIVE_BAR_TAB_INVOICES_QUERY } from 'modules/barTab/queries'
 import { BarTabInvoiceNode } from 'modules/barTab/types.graphql'
-
-import { numberWithSpaces } from 'util/parsing'
 
 interface InvoiceTableProps {
   invoices: Pick<
@@ -48,9 +46,15 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
     <Table.Tr key={invoice.id}>
       <Table.Td>{invoice.customer.name}</Table.Td>
       <Table.Td>{invoice.customer.email}</Table.Td>
-      <Table.Td>{numberWithSpaces(invoice.theyOwe)},- NOK</Table.Td>
-      <Table.Td>{numberWithSpaces(invoice.weOwe)},- NOK</Table.Td>
-      <Table.Td>{numberWithSpaces(invoice.amount)},- NOK</Table.Td>
+      <Table.Td>
+        <NumberFormatter value={invoice.theyOwe} suffix=",- NOK" />
+      </Table.Td>
+      <Table.Td>
+        <NumberFormatter value={invoice.weOwe} suffix=",- NOK" />
+      </Table.Td>
+      <Table.Td>
+        <NumberFormatter value={invoice.amount} suffix=",- NOK" />
+      </Table.Td>
       <Table.Td>
         {invoice.pdf ? (
           <a href={invoice.pdf} target="_blank">

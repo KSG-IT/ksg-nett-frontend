@@ -102,6 +102,7 @@ export const ApplicantRecommendationModal: React.FC<
         />
 
         <Textarea
+          autosize
           value={reasoning}
           required
           label="Begrunnelse"

@@ -66,6 +66,7 @@ export const FirstTimeLoginForm: React.FC = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack>
         <Textarea
+          autosize
           label="Hva er din mest kontroversielle mening?"
           minRows={8}
           error={errors?.aboutMe?.message}

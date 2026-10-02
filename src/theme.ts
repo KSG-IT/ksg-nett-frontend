@@ -2,6 +2,7 @@ import {
   ActionIcon,
   createTheme,
   localStorageColorSchemeManager,
+  NumberFormatter,
   Text,
 } from '@mantine/core'
 
@@ -19,29 +20,17 @@ export const theme = createTheme({
       '#fff',
       '#fff',
     ],
-    brand: [
-      '#f5e6e6',
-      '#e8bebe',
-      '#da9595',
-      '#cc6d6d',
-      '#be4445',
-      '#A03033',
-      '#8a282b',
-      '#721f22',
-      '#5a1518',
-      '#430c0e',
-    ],
     'samfundet-red': [
-      '#ffe7ea',
-      '#f2c2c3',
-      '#e49c9e',
-      '#d77578',
-      '#ca4e52',
-      '#b13538',
+      '#ffedee',
+      '#f4dbdb',
+      '#e5b3b5',
+      '#d88a8c',
+      '#cd6769',
+      '#b74c4e',
       '#A03033',
-      '#641b1e',
-      '#3e0f11',
-      '#1d0202',
+      '#892429',
+      '#711b20',
+      '#5a1217',
     ],
   },
   primaryColor: 'samfundet-red',
@@ -50,6 +39,9 @@ export const theme = createTheme({
   // icon buttons on coloured backgrounds, for example the shift slots.
   components: {
     ActionIcon: ActionIcon.extend({ defaultProps: { variant: 'subtle' } }),
+    NumberFormatter: NumberFormatter.extend({
+      defaultProps: { thousandSeparator: ' ' },
+    }),
     // In Mantine 6 Text without size inherited the font size of its parent.
     // Since Mantine 7 it is always md.
     Text: Text.extend({

@@ -8,10 +8,15 @@
   - Upgrade Mantine v6 -> v9
   - Upgrade React v18 -> v19
   - Upgrade tiptap v2 -> v3
-  - Upgrade Apollo Client, Sentry, Stripe, Tabler icons, react-select, recharts and zustand for React 19 support
+  - Upgrade Apollo Client, Sentry, Stripe, Tabler icons, recharts and zustand for React 19 support
+  - Remove react-select
+- Theme: Smoother red color palette, with a lighter hover color on red buttons
+- Header: User search uses the same input style as the rest of the app
+- Tables: Wide card tables scroll horizontally without permanent scroll bars
 
 ### Fixed
 
+- Admissions: The selected interview time stays highlighted while booking
 - Rich text editor: Underline button now underlines text
 - Schedules: Location column in shift templates is right-aligned
 
