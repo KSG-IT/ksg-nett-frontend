@@ -20,10 +20,10 @@ import { useShiftSlotMutations } from 'modules/schedules/mutations.hooks'
 import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
 import { ShiftNode, ShiftSlotNode } from 'modules/schedules/types.graphql'
 import { UserThumbnail } from 'modules/users/components'
-import { ALL_ACTIVE_USERS_LIST_QUERY } from 'modules/users/queries'
+import { SEARCHBAR_USERS_QUERY } from 'modules/users/queries'
 import {
-  AllUsersShallowQueryReturns,
-  AllUsersShallowQueryVariables,
+  SearchbarUsersQueryReturns,
+  SearchbarUsersQueryVariables,
   UserThumbnailProps,
 } from 'modules/users/types'
 import React, { useEffect, useState } from 'react'
@@ -245,9 +245,9 @@ interface ShallowShiftProps {
 
 export const ShiftSlot: React.FC<ShallowShiftProps> = ({ shiftSlot }) => {
   const [getUsers, { loading }] = useLazyQuery<
-    AllUsersShallowQueryReturns,
-    AllUsersShallowQueryVariables
-  >(ALL_ACTIVE_USERS_LIST_QUERY)
+    SearchbarUsersQueryReturns,
+    SearchbarUsersQueryVariables
+  >(SEARCHBAR_USERS_QUERY)
 
   const [users, setUsers] = useState<UserType[]>([])
   const [selectedUser, setSelectedUser] = useState<UserType | null>(
@@ -266,7 +266,7 @@ export const ShiftSlot: React.FC<ShallowShiftProps> = ({ shiftSlot }) => {
     }
     getUsers({
       variables: {
-        q: debouncedQuery,
+        searchString: debouncedQuery,
       },
     }).then(({ data, error }) => {
       if (error) {
@@ -276,7 +276,7 @@ export const ShiftSlot: React.FC<ShallowShiftProps> = ({ shiftSlot }) => {
         })
         return
       }
-      if (data) setUsers(data.allActiveUsersList)
+      if (data) setUsers(data.searchbarUsers)
     })
   }, [debouncedQuery])
 
