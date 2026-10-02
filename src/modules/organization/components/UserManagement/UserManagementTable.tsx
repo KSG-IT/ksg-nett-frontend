@@ -1,13 +1,15 @@
-import { Table, Text } from '@mantine/core'
+import { Anchor, Table, Text } from '@mantine/core'
 import { Badge } from 'components/Badge'
 import { CardTable } from 'components/CardTable'
 import { ManageInternalGroupUser } from 'modules/organization/types.graphql'
 import { UserManagementTableRow } from './UserManagementTableRow'
 import { createStyles } from '@mantine/emotion'
+import { Link } from 'react-router-dom'
 
 interface UserManagementTableProps {
   usersData: ManageInternalGroupUser[]
   activeMemberships?: boolean
+  onEditHistory: (userId: string) => void
 }
 
 const useStyles = createStyles({
@@ -27,6 +29,7 @@ const useStyles = createStyles({
 export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   usersData,
   activeMemberships = false,
+  onEditHistory,
 }) => {
   const { classes } = useStyles()
   const TableData: React.FC<{
@@ -42,8 +45,12 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
   )
 
   const tableRows = usersData.map(membership => (
-    <Table.Tr key={membership.userId}>
-      <TableData>{membership.fullName}</TableData>
+    <Table.Tr key={membership.internalGroupPositionMembership.id}>
+      <Table.Td>
+        <Anchor component={Link} to={`/users/${membership.userId}`} size="sm">
+          {membership.fullName}
+        </Anchor>
+      </Table.Td>
       <Table.Td align="center">
         <Badge color={'samfundet-red'}>{membership.positionName}</Badge>
       </Table.Td>
@@ -51,11 +58,11 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
         {membership.internalGroupPositionMembership.getTypeDisplay}
       </TableData>
       <TableData>{membership.dateJoinedSemesterShorthand}</TableData>
-      {activeMemberships ? (
-        <UserManagementTableRow userData={membership} />
-      ) : (
-        <Table.Td>{membership.dateEndedSemesterShorthand}</Table.Td>
-      )}
+      <UserManagementTableRow
+        userData={membership}
+        active={activeMemberships}
+        onEditHistory={onEditHistory}
+      />
     </Table.Tr>
   ))
   const Header: React.FC<{
@@ -80,12 +87,14 @@ export const UserManagementTable: React.FC<UserManagementTableProps> = ({
           <Header>Startet</Header>
           {activeMemberships ? (
             <>
-              <Header>Sett verv</Header>
-              <Table.Th></Table.Th>
+              <Header>Sett type</Header>
               <Table.Th></Table.Th>
             </>
           ) : (
-            <Header>Sluttet</Header>
+            <>
+              <Header>Sluttet</Header>
+              <Table.Th></Table.Th>
+            </>
           )}
         </Table.Tr>
       </Table.Thead>

@@ -1,7 +1,11 @@
 import { useQuery } from '@apollo/client'
-import { Grid, Modal, Stack, Title } from '@mantine/core'
+import { Button, Drawer, Grid, Group, Modal, Stack, Title } from '@mantine/core'
+import { IconEdit } from '@tabler/icons-react'
+import { PermissionGate } from 'components/PermissionGate'
 import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { MembershipHistoryEditor } from 'modules/organization/components/MembershipHistoryEditor'
+import { MEMBERSHIP_HISTORY_PERMISSIONS } from 'modules/organization/consts'
 import { UserEditForm, UserHistory, UserQuotes } from 'modules/users/components'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -18,6 +22,7 @@ interface UserProfileParams {
 export const UserProfile: React.FC = () => {
   const { classes } = useStyles()
   const [editUserModalOpen, setEditUserModalOpen] = useState(false)
+  const [historyDrawerOpen, setHistoryDrawerOpen] = useState(false)
 
   const { userId } = useParams<keyof UserProfileParams>() as UserProfileParams
   const { data, loading, error, refetch } = useQuery<
@@ -52,9 +57,21 @@ export const UserProfile: React.FC = () => {
         </Grid.Col>
         <Grid.Col span={'auto'}>
           <Stack mt={'md'}>
-            <Title order={3} className={classes.title}>
-              Vervhistorikk
-            </Title>
+            <Group justify="space-between">
+              <Title order={3} className={classes.title}>
+                Vervhistorikk
+              </Title>
+              <PermissionGate permissions={MEMBERSHIP_HISTORY_PERMISSIONS}>
+                <Button
+                  size="xs"
+                  variant="subtle"
+                  leftSection={<IconEdit size={14} />}
+                  onClick={() => setHistoryDrawerOpen(true)}
+                >
+                  Rediger
+                </Button>
+              </PermissionGate>
+            </Group>
             <UserHistory memberships={memberships} />
           </Stack>
         </Grid.Col>
@@ -76,6 +93,18 @@ export const UserProfile: React.FC = () => {
           onCompletedCallback={() => setEditUserModalOpen(false)}
         />
       </Modal>
+      <Drawer
+        opened={historyDrawerOpen}
+        onClose={() => setHistoryDrawerOpen(false)}
+        title="Rediger vervhistorikk"
+        position="right"
+        size="xl"
+      >
+        <MembershipHistoryEditor
+          userId={userId}
+          onClose={() => setHistoryDrawerOpen(false)}
+        />
+      </Drawer>
     </>
   )
 }
