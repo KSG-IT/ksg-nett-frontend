@@ -70,3 +70,17 @@ export const locationOptions = [
   { value: LocationValues.KONTORET, label: 'Kontoret' },
   { value: LocationValues.BRYGGERIET, label: 'Bryggeriet' },
 ]
+
+// v2 of the schedule view sends these to the backend. BARVAKT is not in the
+// backend role enum, and BRYGGERIET is not in Shift.Location
+// (ksg-nett-backend/schedules/models.py), so the v2 forms leave them out.
+export const v2RoleOptions = Object.values(RoleValues)
+  .filter(role => role !== RoleValues.BARVAKT)
+  .map(role => ({
+    value: role,
+    label: role.charAt(0) + role.slice(1).toLowerCase(),
+  }))
+
+export const v2LocationOptions = locationOptions.filter(
+  option => option.value !== LocationValues.BRYGGERIET
+)

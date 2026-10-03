@@ -96,6 +96,7 @@ export const SCHEDULE_V2_QUERY = gql`
       id
       name
       displayMode
+      defaultRole
       recentLocations
       shiftsFromRange(shiftsFrom: $shiftsFrom, numberOfWeeks: $numberOfWeeks) {
         ...DayShiftFields
