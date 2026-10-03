@@ -1,23 +1,13 @@
-import {
-  Avatar,
-  Card,
-  Group,
-  Menu,
-  Stack,
-  Text,
-  UnstyledButton,
-} from '@mantine/core'
-import { Badge } from 'components/Badge'
+import { ActionIcon, Avatar, Button, Card, Menu, Text } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import {
   IconArrowBackUp,
-  IconHash,
+  IconDots,
+  IconQuote,
   IconThumbUp,
   IconTrash,
 } from '@tabler/icons-react'
 import { PermissionGate } from 'components/PermissionGate'
-
-import { createStyles } from '@mantine/emotion'
 import { UserThumbnail } from 'modules/users/components'
 import { ME_QUERY, USER_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
@@ -30,23 +20,45 @@ import {
   POPULAR_QUOTES_QUERY,
 } from '../queries'
 import { QuoteNode } from '../types.graphql'
+import classes from './QuoteCard.module.css'
 
-interface VoteIconProps {
+interface UpvoteButtonProps {
   upvoted: boolean
+  count: number
   onClick: () => void
 }
 
-const UpvoteIcon: React.FC<VoteIconProps> = ({ upvoted, onClick }) => {
-  return (
-    <IconThumbUp
-      color={upvoted ? 'var(--mantine-color-samfundet-red-6)' : 'gray'}
-      size={24}
-      strokeWidth={upvoted ? 2 : 1}
-      style={{ cursor: 'pointer' }}
-      onClick={onClick}
-    />
-  )
+const UpvoteButton: React.FC<UpvoteButtonProps> = ({
+  upvoted,
+  count,
+  onClick,
+}) => (
+  <Button
+    size="compact-sm"
+    variant={upvoted ? 'light' : 'subtle'}
+    color={upvoted ? 'samfundet-red' : 'gray'}
+    leftSection={<IconThumbUp size={16} stroke={upvoted ? 2.2 : 1.6} />}
+    aria-pressed={upvoted}
+    aria-label={
+      upvoted ? `Fjern stemme, ${count} stemmer` : `Stem opp, ${count} stemmer`
+    }
+    onClick={onClick}
+  >
+    {count}
+  </Button>
+)
+
+interface QuoteTaggedProps {
+  users: QuoteCardProps['quote']['tagged']
 }
+
+const QuoteTagged: React.FC<QuoteTaggedProps> = ({ users }) => (
+  <Avatar.Group spacing={6}>
+    {users.map(user => (
+      <UserThumbnail size="sm" key={user.id} user={user} />
+    ))}
+  </Avatar.Group>
+)
 
 interface QuoteCardProps {
   quote: Pick<
@@ -59,7 +71,6 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
   quote,
   displaySemester = false,
 }) => {
-  const { classes } = useStyles()
   const refetchQueries = [
     POPULAR_QUOTES_QUERY,
     APPROVED_QUOTES_QUERY,
@@ -126,83 +137,64 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
   }
 
   return (
-    <Card radius={'md'} className={classes.card} key={quote.id} withBorder>
-      <Stack justify={'space-between'} gap={'xs'} className={classes.card}>
-        <Stack gap={'xs'}>
-          <Text size={'sm'} className={classes.quoteText}>
-            {quote.text}
+    <Card radius="md" withBorder className={classes.card}>
+      <div className={classes.top}>
+        <IconQuote size={22} className={classes.mark} aria-hidden />
+        {displaySemester && (
+          <Text size="xs" c="dimmed" fw={600}>
+            {quote.semester}
           </Text>
-
-          <Text size={'xs'} c={'gray'}>
-            {quote.context}
-          </Text>
-        </Stack>
-        <Group justify="space-between" gap={'xs'}>
-          <Avatar.Group spacing={5}>
-            {quote.tagged.map(user => (
-              <UserThumbnail size={'sm'} key={user.id} user={user} />
-            ))}
-          </Avatar.Group>
-
-          <Group gap={'xs'}>
-            <PermissionGate permissions={PERMISSIONS.quotes.invalidate.quote}>
-              <Menu>
-                <Menu.Target>
-                  <UnstyledButton>
-                    <IconHash size={18} color="lightgray" />
-                  </UnstyledButton>
-                </Menu.Target>
-                <Menu.Dropdown style={{ zIndex: 9000 }}>
-                  <PermissionGate
-                    permissions={PERMISSIONS.quotes.invalidate.quote}
+        )}
+      </div>
+      <Text className={classes.text} size="sm">
+        {quote.text}
+      </Text>
+      {quote.context && (
+        <Text size="xs" c="dimmed" fs="italic">
+          {quote.context}
+        </Text>
+      )}
+      <div className={classes.footer}>
+        <QuoteTagged users={quote.tagged} />
+        <div className={classes.actions}>
+          <PermissionGate permissions={PERMISSIONS.quotes.invalidate.quote}>
+            <Menu position="bottom-end">
+              <Menu.Target>
+                <ActionIcon
+                  variant="subtle"
+                  color="gray"
+                  aria-label="Flere valg for sitatet"
+                >
+                  <IconDots size={16} />
+                </ActionIcon>
+              </Menu.Target>
+              <Menu.Dropdown style={{ zIndex: 9000 }}>
+                <Menu.Item
+                  color="yellow"
+                  leftSection={<IconArrowBackUp />}
+                  onClick={handleInvalidateQuote}
+                >
+                  Underkjenn
+                </Menu.Item>
+                <PermissionGate permissions={PERMISSIONS.quotes.delete.quote}>
+                  <Menu.Item
+                    color="red"
+                    leftSection={<IconTrash />}
+                    onClick={handleDeleteQuote}
                   >
-                    <Menu.Item
-                      color="yellow"
-                      leftSection={<IconArrowBackUp />}
-                      onClick={handleInvalidateQuote}
-                    >
-                      Underkjenn
-                    </Menu.Item>
-                  </PermissionGate>
-                  <PermissionGate permissions={PERMISSIONS.quotes.delete.quote}>
-                    <Menu.Item
-                      color="red"
-                      leftSection={<IconTrash />}
-                      onClick={handleDeleteQuote}
-                    >
-                      Slett
-                    </Menu.Item>
-                  </PermissionGate>
-                </Menu.Dropdown>
-              </Menu>
-            </PermissionGate>
-            {displaySemester && (
-              <Badge variant="outline" color="samfundet-red">
-                {quote.semester}
-              </Badge>
-            )}
-            <Text size={'sm'}>{voteSum}</Text>
-            <UpvoteIcon upvoted={upvoted} onClick={handleUpvote} />
-          </Group>
-        </Group>
-      </Stack>
+                    Slett
+                  </Menu.Item>
+                </PermissionGate>
+              </Menu.Dropdown>
+            </Menu>
+          </PermissionGate>
+          <UpvoteButton
+            upvoted={upvoted}
+            count={voteSum}
+            onClick={handleUpvote}
+          />
+        </div>
+      </div>
     </Card>
   )
 }
-
-const useStyles = createStyles({
-  quoteText: {
-    color: 'var(--mantine-color-gray-7)',
-    fontWeight: 500,
-  },
-  card: {
-    width: 'auto',
-    height: 'auto',
-    overflow: 'visible',
-  },
-  row: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-})
