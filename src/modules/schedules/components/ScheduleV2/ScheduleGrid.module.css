@@ -251,6 +251,15 @@
   border-radius: var(--mantine-radius-sm);
 }
 
+/* A phone: rows high enough for a finger, and no height limit in the sheet */
+.pickerList[data-touch] {
+  max-height: none;
+}
+
+.pickerList[data-touch] .pickerRow {
+  min-height: 44px;
+}
+
 .pickerRow:hover,
 .pickerRow[data-highlighted] {
   background: var(--mantine-color-gray-1);

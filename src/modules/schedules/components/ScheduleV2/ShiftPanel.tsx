@@ -46,6 +46,8 @@ interface ShiftPanelProps {
   defaultRole: RoleValues | null
   // The roles of the schedule, suggested first in the "Ny plass" select.
   rolesInUse: RoleValues[]
+  // Phone: the panel covers the screen
+  fullScreen?: boolean
   onClose: () => void
 }
 
@@ -55,13 +57,14 @@ export const ShiftPanel: React.FC<ShiftPanelProps> = ({
   shift,
   defaultRole,
   rolesInUse,
+  fullScreen = false,
   onClose,
 }) => (
   <Drawer
     opened={shift !== null}
     onClose={onClose}
     position="right"
-    size="md"
+    size={fullScreen ? '100%' : 'md'}
     title={shift ? <PanelTitle shift={shift} /> : null}
   >
     {shift && (

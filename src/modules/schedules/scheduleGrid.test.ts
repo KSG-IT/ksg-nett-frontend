@@ -5,6 +5,7 @@ import {
   compactTime,
   mondayOf,
   nextOpenSlot,
+  phoneDays,
   scheduleGrid,
   shiftCounts,
 } from './scheduleGrid'
@@ -173,5 +174,64 @@ describe('compactTime', () => {
     expect(
       compactTime(shift('x', '2026-10-05T20:30:00', '2026-10-06T02:00:00', []))
     ).toBe('20:30–02')
+  })
+})
+
+describe('phoneDays', () => {
+  it('lists the days of one location with their shifts', () => {
+    const grid = scheduleGrid(shifts, {
+      monday,
+      weeks: 1,
+      mode: 'SINGLE_LOCATION',
+    })
+    const days = phoneDays(grid)
+    expect(days).toHaveLength(7)
+    expect(days[0].groups).toEqual([
+      {
+        key: 'all',
+        location: undefined,
+        shifts: [mondayMorning, mondayEvening],
+      },
+    ])
+    expect(days[1].groups).toEqual([])
+  })
+
+  it('groups the shifts of a day by location, and leaves out empty locations', () => {
+    const grid = scheduleGrid(shifts, {
+      monday,
+      weeks: 1,
+      mode: 'MULTIPLE_LOCATIONS',
+      locations: [LocationValues.LYCHE_BAR, LocationValues.EDGAR],
+    })
+    const friday = phoneDays(grid)[4]
+    expect(friday.groups.map(group => group.location)).toEqual([
+      LocationValues.BODEGAEN,
+    ])
+    expect(phoneDays(grid)[0].groups.map(group => group.location)).toEqual([
+      LocationValues.EDGAR,
+    ])
+  })
+
+  it('has seven empty days for a week with no rows', () => {
+    const grid = scheduleGrid([], {
+      monday,
+      weeks: 1,
+      mode: 'MULTIPLE_LOCATIONS',
+    })
+    const days = phoneDays(grid)
+    expect(days).toHaveLength(7)
+    expect(days[0].date).toEqual(monday)
+    expect(days.every(day => day.groups.length === 0)).toBe(true)
+  })
+
+  it('has the days of all weeks in order', () => {
+    const grid = scheduleGrid(shifts, {
+      monday,
+      weeks: 2,
+      mode: 'SINGLE_LOCATION',
+    })
+    const days = phoneDays(grid)
+    expect(days).toHaveLength(14)
+    expect(days[8].groups[0].shifts.map(s => s.id)).toEqual(['next'])
   })
 })
