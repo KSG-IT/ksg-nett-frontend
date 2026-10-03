@@ -36,7 +36,6 @@ export const Dashboard = () => {
     dashboardData: {
       wantedList,
       lastQuotes,
-      myUpcomingShifts,
       sociOrderSession,
       showNewbies,
       showStockMarketShortcut,
@@ -54,7 +53,7 @@ export const Dashboard = () => {
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
         <Grid.Col span={{ sm: 6, lg: mediaQuery ? 5 : 6 }}>
-          <FutureShifts shifts={myUpcomingShifts} />
+          <FutureShifts />
           <TransactionCard activities={user.lastTransactions} />
         </Grid.Col>
         <Grid.Col span={{ sm: 6, lg: mediaQuery ? 5 : 6 }}>

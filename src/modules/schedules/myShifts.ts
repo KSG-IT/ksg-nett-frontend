@@ -93,3 +93,14 @@ export function groupByMonth(shifts: DayShift[]) {
     }
   )
 }
+
+// The dashboard shows the next shift, a few later ones, and a count of the
+// rest.
+export function previewShifts(shifts: DayShift[], laterCount: number) {
+  const [next, ...rest] = upcomingShifts(shifts)
+  return {
+    next,
+    later: rest.slice(0, laterCount),
+    more: Math.max(rest.length - laterCount, 0),
+  }
+}

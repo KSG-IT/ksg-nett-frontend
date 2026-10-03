@@ -7,6 +7,7 @@ import {
   groupByWeek,
   mySlot,
   pastShifts,
+  previewShifts,
   relativeDay,
   upcomingShifts,
 } from './myShifts'
@@ -124,5 +125,28 @@ describe('groupByMonth', () => {
       ['September 2026', ['old']],
       ['August 2026', ['aug']],
     ])
+  })
+})
+
+describe('previewShifts', () => {
+  const later = [friday, wednesday, nextYear]
+
+  it('gives the next shift, a few later ones and how many are left', () => {
+    const preview = previewShifts([nextYear, wednesday, friday, august], 2)
+    expect(preview.next?.id).toBe('aug')
+    expect(preview.later.map(s => s.id)).toEqual(['fri', 'wed'])
+    expect(preview.more).toBe(1)
+  })
+
+  it('has no next shift when there are no shifts', () => {
+    expect(previewShifts([], 3)).toEqual({
+      next: undefined,
+      later: [],
+      more: 0,
+    })
+  })
+
+  it('has nothing more when all shifts fit', () => {
+    expect(previewShifts(later, 3).more).toBe(0)
   })
 })
