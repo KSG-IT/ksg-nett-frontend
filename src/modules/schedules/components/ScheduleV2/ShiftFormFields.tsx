@@ -8,14 +8,11 @@ import {
   TextInput,
 } from '@mantine/core'
 import { IconMinus, IconPlus } from '@tabler/icons-react'
-import {
-  LocationValues,
-  RoleValues,
-  v2LocationOptions,
-  v2RoleOptions,
-} from '../../consts'
+import { useState } from 'react'
+import { LocationValues, RoleValues, v2LocationOptions } from '../../consts'
 import {
   RoleCount,
+  roleOptionGroups,
   setRoleCount,
   ShiftFormValues,
   ShiftSuggestion,
@@ -121,15 +118,20 @@ export const NameSuggestions: React.FC<NameSuggestionsProps> = ({
 
 interface RoleSteppersProps {
   slots: RoleCount[]
+  // The roles of the schedule, suggested first in the select.
+  rolesInUse: RoleValues[]
   onChange: (slots: RoleCount[]) => void
 }
 
 export const RoleSteppers: React.FC<RoleSteppersProps> = ({
   slots,
+  rolesInUse,
   onChange,
 }) => {
-  const unused = v2RoleOptions.filter(
-    option => !slots.some(slot => slot.role === option.value)
+  const [search, setSearch] = useState('')
+  const options = roleOptionGroups(
+    rolesInUse,
+    slots.map(slot => slot.role)
   )
 
   function handleCount(role: RoleValues, count: number) {
@@ -137,7 +139,9 @@ export const RoleSteppers: React.FC<RoleSteppersProps> = ({
   }
 
   function handleAddRole(role: string | null) {
-    if (role) onChange([...slots, { role: role as RoleValues, count: 1 }])
+    if (!role) return
+    onChange([...slots, { role: role as RoleValues, count: 1 }])
+    setSearch('')
   }
 
   return (
@@ -151,10 +155,12 @@ export const RoleSteppers: React.FC<RoleSteppersProps> = ({
       <Select
         size="xs"
         placeholder={slots.length ? '+ Legg til rolle' : 'Velg en rolle'}
-        data={unused}
+        data={options}
         value={null}
         onChange={handleAddRole}
         searchable
+        searchValue={search}
+        onSearchChange={setSearch}
         comboboxProps={{ withinPortal: false }}
       />
     </Stack>

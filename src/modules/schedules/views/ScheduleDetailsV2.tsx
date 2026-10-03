@@ -28,6 +28,7 @@ import {
   scheduleGrid,
   shiftCounts,
 } from '../scheduleGrid'
+import { rolesInUse } from '../shiftForm'
 import { ScheduleV2Returns, ScheduleV2Variables } from '../types.graphql'
 import classes from './ScheduleDetailsV2.module.css'
 
@@ -197,6 +198,7 @@ export const ScheduleDetailsV2: React.FC = () => {
       <ShiftPanel
         shift={shifts.find(shift => shift.id === openShiftId) ?? null}
         defaultRole={schedule.defaultRole}
+        rolesInUse={rolesInUse(schedule.shiftsFromRange)}
         onClose={() => setOpenShiftId(null)}
       />
     </Stack>

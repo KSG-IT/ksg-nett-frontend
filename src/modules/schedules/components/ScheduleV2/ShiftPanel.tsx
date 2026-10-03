@@ -13,7 +13,7 @@ import { IconTrash, IconUserMinus } from '@tabler/icons-react'
 import { useState } from 'react'
 import { format } from 'util/date-fns'
 import { DayShift, DayShiftSlot, slotCounts } from '../../allShifts'
-import { RoleValues, v2RoleOptions } from '../../consts'
+import { RoleValues } from '../../consts'
 import {
   ADD_SLOTS_TO_SHIFT_MUTATION,
   CLEAR_SLOT_V2_MUTATION,
@@ -25,6 +25,7 @@ import { compactTime } from '../../scheduleGrid'
 import {
   clockTime,
   roleCounts,
+  roleOptionGroups,
   ShiftFormValues,
   toUpdateInput,
 } from '../../shiftForm'
@@ -43,6 +44,8 @@ interface ShiftPanelProps {
   // null closes the panel.
   shift: DayShift | null
   defaultRole: RoleValues | null
+  // The roles of the schedule, suggested first in the "Ny plass" select.
+  rolesInUse: RoleValues[]
   onClose: () => void
 }
 
@@ -51,6 +54,7 @@ interface ShiftPanelProps {
 export const ShiftPanel: React.FC<ShiftPanelProps> = ({
   shift,
   defaultRole,
+  rolesInUse,
   onClose,
 }) => (
   <Drawer
@@ -65,6 +69,7 @@ export const ShiftPanel: React.FC<ShiftPanelProps> = ({
         key={shift.id}
         shift={shift}
         defaultRole={defaultRole}
+        rolesInUse={rolesInUse}
         onDeleted={onClose}
       />
     )}
@@ -96,12 +101,14 @@ const PanelTitle: React.FC<PanelTitleProps> = ({ shift }) => {
 interface PanelBodyProps {
   shift: DayShift
   defaultRole: RoleValues | null
+  rolesInUse: RoleValues[]
   onDeleted: () => void
 }
 
 const PanelBody: React.FC<PanelBodyProps> = ({
   shift,
   defaultRole,
+  rolesInUse,
   onDeleted,
 }) => {
   const [editing, setEditing] = useState(false)
@@ -142,7 +149,7 @@ const PanelBody: React.FC<PanelBodyProps> = ({
         <Select
           size="xs"
           label="Ny plass"
-          data={v2RoleOptions}
+          data={roleOptionGroups(rolesInUse, [])}
           value={newRole}
           onChange={value => value && setNewRole(value as RoleValues)}
           style={{ flex: 1 }}

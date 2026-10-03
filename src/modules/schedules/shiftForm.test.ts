@@ -5,6 +5,8 @@ import {
   emptyShiftForm,
   nameSuggestions,
   roleCounts,
+  roleOptionGroups,
+  rolesInUse,
   setRoleCount,
   toCreateInput,
   toUpdateInput,
@@ -176,5 +178,36 @@ describe('toCreateInput and toUpdateInput', () => {
       startTime: '16:00:00',
       endTime: '23:00:00',
     })
+  })
+})
+
+describe('rolesInUse', () => {
+  it('gives the roles in the shifts, the most used first', () => {
+    expect(rolesInUse([oldEvening, newEvening, morning, bar])).toEqual([
+      BARISTA,
+      KAFEANSVARLIG,
+      BARTENDER,
+    ])
+  })
+})
+
+describe('roleOptionGroups', () => {
+  it('puts the roles in use first, and leaves out the roles in the form', () => {
+    const groups = roleOptionGroups([BARISTA, KAFEANSVARLIG], [BARISTA])
+    expect(groups[0]).toEqual({
+      group: 'Brukt i vaktplanen',
+      items: [{ value: KAFEANSVARLIG, label: 'Kafeansvarlig' }],
+    })
+    expect(groups[1].group).toBe('Alle roller')
+    const others = groups[1].items.map(item => item.value)
+    expect(others).not.toContain(BARISTA)
+    expect(others).not.toContain(KAFEANSVARLIG)
+    expect(others).toContain(BARTENDER)
+  })
+
+  it('has one group when no roles are in use', () => {
+    expect(roleOptionGroups([], []).map(group => group.group)).toEqual([
+      'Alle roller',
+    ])
   })
 })

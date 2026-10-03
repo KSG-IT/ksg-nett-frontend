@@ -10,6 +10,7 @@ import { CREATE_SHIFT_WITH_SLOTS_MUTATION } from '../../mutations'
 import {
   emptyShiftForm,
   nameSuggestions,
+  rolesInUse,
   ShiftFormValues,
   ShiftSuggestion,
   toCreateInput,
@@ -110,6 +111,7 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
             <ShiftDetailsFields values={values} onChange={handleChange} />
             <RoleSteppers
               slots={values.slots}
+              rolesInUse={rolesInUse(shifts)}
               onChange={slots => handleChange({ slots })}
             />
             <Button

@@ -4,7 +4,7 @@
 // does not matter.
 import { format } from 'date-fns'
 import { DayShift, DayShiftSlot, sortShifts } from './allShifts'
-import { LocationValues, RoleValues } from './consts'
+import { LocationValues, RoleValues, v2RoleOptions } from './consts'
 
 export interface RoleCount {
   role: RoleValues
@@ -119,4 +119,29 @@ export function toCreateInput(scheduleId: string, form: ShiftFormValues) {
 
 export function toUpdateInput(shiftId: string, form: ShiftFormValues) {
   return { shiftId, ...details(form) }
+}
+
+// The roles in the shifts, the most used first.
+export function rolesInUse(shifts: DayShift[]): RoleValues[] {
+  return roleCounts(shifts.flatMap(shift => shift.slots))
+    .sort((a, b) => b.count - a.count)
+    .map(count => count.role)
+}
+
+// Options for a role select: the roles of the schedule first, then the rest.
+// Roles already in the form are left out.
+export function roleOptionGroups(inUse: RoleValues[], chosen: RoleValues[]) {
+  const available = v2RoleOptions.filter(
+    option => !chosen.includes(option.value)
+  )
+  const suggested = inUse
+    .map(role => available.find(option => option.value === role))
+    .filter(option => option !== undefined)
+  const others = available.filter(option => !inUse.includes(option.value))
+  return [
+    ...(suggested.length
+      ? [{ group: 'Brukt i vaktplanen', items: suggested }]
+      : []),
+    { group: 'Alle roller', items: others },
+  ]
 }
