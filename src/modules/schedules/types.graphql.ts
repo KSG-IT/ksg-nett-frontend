@@ -1,3 +1,4 @@
+import type { DayShift } from './allShifts'
 import { UserThumbnailProps } from 'modules/users/types'
 import {
   DayValues,
@@ -105,10 +106,7 @@ export interface AllMyShiftsReturns {
 }
 
 export interface AllShiftsReturns {
-  allShifts: Pick<
-    ShiftNode,
-    'id' | 'datetimeStart' | 'name' | 'filledSlots' | 'location' | 'datetimeEnd'
-  >[]
+  allShifts: DayShift[]
 }
 
 export interface AllShiftsVariables {

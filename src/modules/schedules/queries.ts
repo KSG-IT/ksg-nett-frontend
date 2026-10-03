@@ -187,7 +187,9 @@ export const ALL_SHIFTS = gql`
       id
       name
       location
-      filledSlots {
+      datetimeStart
+      datetimeEnd
+      slots {
         id
         role
         user {
@@ -195,11 +197,10 @@ export const ALL_SHIFTS = gql`
           initials
           firstName
           getFullWithNickName
+          getCleanFullName
           profileImage
         }
       }
-      datetimeStart
-      datetimeEnd
     }
   }
 `

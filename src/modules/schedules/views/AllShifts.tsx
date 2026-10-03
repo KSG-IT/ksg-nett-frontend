@@ -1,14 +1,19 @@
 import { useQuery } from '@apollo/client'
-import { Title } from '@mantine/core'
-import { DatePickerInput } from '@mantine/dates'
-import { createStyles } from '@mantine/emotion'
+import { Group, SegmentedControl, Stack, Text } from '@mantine/core'
+import { useLocalStorage, useMediaQuery } from '@mantine/hooks'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { MessageBox } from 'components/MessageBox'
 import { format } from 'date-fns'
-import queryString from 'query-string'
-import { useEffect, useRef, useState } from 'react'
-import { UserShiftCardList } from '../components'
+import { useSearchParams } from 'react-router-dom'
+import { useMe } from 'util/hooks'
+import { DayShift, slotCounts } from '../allShifts'
+import {
+  DayNavigation,
+  ShiftList,
+  ShiftTimeline,
+} from '../components/AllShifts'
 import { ALL_SHIFTS } from '../queries'
 import { AllShiftsReturns, AllShiftsVariables } from '../types.graphql'
 
@@ -17,66 +22,103 @@ const breadcrumbsItems = [
   { label: 'Vakter', path: '/schedules/all-shifts' },
 ]
 
-export const AllShifts = () => {
-  const [date, setDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'))
-  const { classes } = useAllShiftsStyles()
-  const firstRender = useRef(true)
+type View = 'timeline' | 'list'
 
-  const { data, error, loading } = useQuery<
+const viewOptions = [
+  { label: 'Tidslinje', value: 'timeline' },
+  { label: 'Liste', value: 'list' },
+]
+
+// Who works on a day. On a wide screen the timeline is the default, with a
+// switch to the list; on a narrow screen only the list fits.
+export const AllShifts = () => {
+  const me = useMe()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const date = searchParams.get('date') ?? format(new Date(), 'yyyy-MM-dd')
+  const wide = useMediaQuery('(min-width: 62em)')
+  const [preferredView, setPreferredView] = useLocalStorage<View>({
+    key: 'all-shifts-view',
+    defaultValue: 'timeline',
+  })
+
+  const { data, previousData, error, loading } = useQuery<
     AllShiftsReturns,
     AllShiftsVariables
   >(ALL_SHIFTS, {
-    variables: { date: date },
+    variables: { date },
     pollInterval: 30_000,
   })
 
-  useEffect(() => {
-    // Check if there is a date in the query string. If not use today's date and update the query string
-    if (!firstRender.current) return
-    firstRender.current = false
-
-    const search = queryString.parse(location.search)
-    const dateString = search.date as string
-
-    if (dateString) {
-      setDate(dateString)
-    } else {
-      const today = format(new Date(), 'yyyy-MM-dd')
-      setDate(today)
-      history.pushState({}, '', `${location.pathname}?date=${today}`)
-    }
-  }, [setDate])
+  // Keep the last day on screen while the next one loads.
+  const shifts = (data ?? previousData)?.allShifts
 
   if (error) return <FullPageError />
-
-  if (loading || !data) return <FullContentLoader />
-
-  const { allShifts } = data
-
-  function handleDateChange(date: string) {
-    setDate(date)
-    history.pushState({}, '', `/schedules/all-shifts?date=${date}`)
-  }
+  if (!shifts && loading) return <FullContentLoader />
 
   return (
-    <div className={classes.wrapper}>
+    <Stack gap="md">
       <Breadcrumbs items={breadcrumbsItems} />
-      <Title>Hva skjer'a?</Title>
-      <DatePickerInput
-        value={date}
-        onChange={val => val && handleDateChange(val)}
+      <DayNavigation
+        date={date}
+        onChange={newDate => setSearchParams({ date: newDate })}
       />
-
-      <UserShiftCardList shifts={allShifts} />
-    </div>
+      <Group justify="space-between" wrap="wrap" gap="xs">
+        <DaySummary shifts={shifts ?? []} />
+        {wide && (
+          <SegmentedControl
+            size="xs"
+            value={preferredView}
+            onChange={value => setPreferredView(value as View)}
+            data={viewOptions}
+          />
+        )}
+      </Group>
+      <DayShifts
+        key={date}
+        shifts={shifts ?? []}
+        view={wide ? preferredView : 'list'}
+        meId={me?.id}
+      />
+    </Stack>
   )
 }
 
-const useAllShiftsStyles = createStyles({
-  wrapper: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'column',
-    gap: 'var(--mantine-spacing-md)',
-  },
-})
+interface DaySummaryProps {
+  shifts: DayShift[]
+}
+
+// "6 vakter · 21 av 23 plasser fylt · 2 ledige"
+const DaySummary: React.FC<DaySummaryProps> = ({ shifts }) => {
+  const counts = shifts.map(slotCounts)
+  const total = counts.reduce((sum, count) => sum + count.total, 0)
+  const filled = counts.reduce((sum, count) => sum + count.filled, 0)
+  const open = total - filled
+
+  return (
+    <Text size="sm" c="dimmed">
+      {shifts.length} vakter · {filled} av {total} plasser fylt
+      {open > 0 && (
+        <Text span c="orange.7" fw={700}>
+          {' '}
+          · {open} ledige
+        </Text>
+      )}
+    </Text>
+  )
+}
+
+interface DayShiftsProps {
+  shifts: DayShift[]
+  view: View
+  meId?: string
+}
+
+const DayShifts: React.FC<DayShiftsProps> = ({ shifts, view, meId }) => {
+  if (shifts.length === 0) {
+    return <MessageBox type="info">Ingen vakter denne dagen.</MessageBox>
+  }
+  if (view === 'timeline') {
+    return <ShiftTimeline shifts={shifts} meId={meId} />
+  }
+  return <ShiftList shifts={shifts} meId={meId} />
+}

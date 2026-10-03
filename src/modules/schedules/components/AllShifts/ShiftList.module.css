@@ -1,0 +1,102 @@
+.group {
+  padding: 6px var(--mantine-spacing-md);
+  background: var(--mantine-color-gray-0);
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mantine-color-dimmed);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) auto 48px;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  padding: 10px var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-gray-1);
+  cursor: pointer;
+}
+
+.row:hover {
+  background: var(--mantine-color-gray-0);
+}
+
+.row[data-mine] {
+  background: var(--mantine-color-samfundet-red-0);
+  box-shadow: inset 3px 0 0 var(--mantine-color-samfundet-red-6);
+}
+
+.time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  min-width: 0;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.count {
+  font-size: var(--mantine-font-size-xs);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--mantine-color-dimmed);
+}
+
+.count[data-open] {
+  color: var(--mantine-color-orange-7);
+  font-weight: 700;
+}
+
+/* On a wide row the red background marks your shift; the text is for phones. */
+.mineLabel {
+  display: none;
+}
+
+.details {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md)
+    var(--mantine-spacing-sm) calc(96px + 2 * var(--mantine-spacing-md));
+  border-bottom: 1px solid var(--mantine-color-gray-1);
+}
+
+@media (max-width: 48em) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px var(--mantine-spacing-sm);
+    padding: 10px var(--mantine-spacing-sm);
+  }
+  .time {
+    grid-column: 1;
+    font-size: var(--mantine-font-size-xs);
+    color: var(--mantine-color-dimmed);
+  }
+  .name {
+    grid-column: 1;
+  }
+  .avatars {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .count {
+    display: none;
+  }
+  .mineLabel {
+    display: inline;
+  }
+  .details {
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm)
+      var(--mantine-spacing-sm);
+  }
+}
