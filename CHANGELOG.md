@@ -2,6 +2,16 @@
 
 ## [v2026.10.1]
 
+### Added
+
+- Economy
+  - Sales statistics page for Soci: revenue and units per product, by day, week, month or semester, from this semester to all time (`economy.view_productorder`)
+  - Min økonomi: spending per period with the same charts, and a table of what you bought
+- Organization: Edit a user's verv timeline from the profile and from the manage page
+- Admissions: Compact applicants overview with sorting, search and a status filter
+- Schedules: Allergy overview as a table for the week or for one day, with totals (schedule managers only)
+- App: A notification asks you to reload when a new version is deployed
+
 ### Changed
 
 - Dependencies
@@ -9,16 +19,28 @@
   - Upgrade React v18 -> v19
   - Upgrade tiptap v2 -> v3
   - Upgrade Apollo Client, Sentry, Stripe, Tabler icons, recharts and zustand for React 19 support
-  - Remove react-select
+  - Upgrade Vite v3 -> v8 and Yarn v1 -> v4
+  - Replace yup with zod for form validation
+  - Remove react-select and Font Awesome
 - Theme: Smoother red color palette, with a lighter hover color on red buttons
 - Header: User search uses the same input style as the rest of the app
 - Tables: Wide card tables scroll horizontally without permanent scroll bars
+- Admissions: Booking uses Mantine's time grid, and applicant images are cropped before upload
+- Navbar: Closed by default on mobile
+- Deploy: `index.html` is checked against the server on every load, and hashed assets are cached for a year, so browsers and the installed iPhone app pick up new versions
 
 ### Fixed
 
 - Admissions: The selected interview time stays highlighted while booking
 - Rich text editor: Underline button now underlines text
 - Schedules: Location column in shift templates is right-aligned
+- Economy: Socinomics no longer crashes in development builds
+- Economy: The per-product table scrolls horizontally on phones
+- Build: Remove the Vite build warnings
+
+### Removed
+
+- Economy: Unused print page for the krysseliste
 
 ## [v2026.7.1]
 

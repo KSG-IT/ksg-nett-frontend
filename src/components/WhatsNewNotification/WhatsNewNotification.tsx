@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '2026-10-2'
+const NOTIFICATION_KEY = '2026-10-3'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -32,7 +32,38 @@ export const WhatsNewNotification: React.FC = () => {
         👋 Hva er nytt?
       </Title>
       <Text size="sm" c="gray" mt={0}>
-        Siste oppdatering: 2026-10-02
+        Siste oppdatering: 2026-10-03
+      </Text>
+      <Divider mb="md" />
+      <Title order={4}>Nytt i oktober 2026</Title>
+      <Text>
+        <b>Min økonomi:</b> Se hva du har brukt penger på per uke, måned eller
+        semester, med grafer og en oversikt over hva du har kjøpt.
+      </Text>
+      <Text>
+        <b>Salgsstatistikk:</b> Ny side for Soci-salg per produkt, fra dette
+        semesteret til alle tider.
+      </Text>
+      <Text>
+        <b>Vervhistorikk:</b> Vervhistorikken til en bruker kan nå rettes opp
+        fra profilen, uten å gå via admin.
+      </Text>
+      <Text>
+        <b>Søkere:</b> Søkeroversikten er mer kompakt, og kan sorteres og
+        filtreres på status.
+      </Text>
+      <Text>
+        <b>Allergier:</b> Vaktlisteansvarlige ser allergiene til alle på jobb
+        som en tabell for hele uka eller én dag.
+      </Text>
+      <Text>
+        <b>Ny versjon:</b> Når en ny versjon er ute, får du beskjed om å laste
+        inn siden på nytt. Appen på mobilen henter nye versjoner raskere, og
+        menyen er lukket når du åpner den.
+      </Text>
+      <Text>
+        <b>Tider:</b> Vakter og intervjuer får riktige tider rundt midnatt og
+        når sommertiden slutter.
       </Text>
       <Divider mb="md" />
       <Title order={4}>Oppgradering - 2. Oktober 2026</Title>
