@@ -52,23 +52,28 @@ export const AllShifts = () => {
   // Keep the last day on screen while the next one loads.
   const shifts = (data ?? previousData)?.allShifts
 
+  function handleDateChange(newDate: string) {
+    setSearchParams({ date: newDate })
+  }
+
+  function handleViewChange(value: string) {
+    setPreferredView(value as View)
+  }
+
   if (error) return <FullPageError />
   if (!shifts && loading) return <FullContentLoader />
 
   return (
     <Stack gap="md">
       <Breadcrumbs items={breadcrumbsItems} />
-      <DayNavigation
-        date={date}
-        onChange={newDate => setSearchParams({ date: newDate })}
-      />
+      <DayNavigation date={date} onChange={handleDateChange} />
       <Group justify="space-between" wrap="wrap" gap="xs">
         <DaySummary shifts={shifts ?? []} />
         {wide && (
           <SegmentedControl
             size="xs"
             value={preferredView}
-            onChange={value => setPreferredView(value as View)}
+            onChange={handleViewChange}
             data={viewOptions}
           />
         )}
@@ -87,7 +92,6 @@ interface DaySummaryProps {
   shifts: DayShift[]
 }
 
-// "6 vakter · 21 av 23 plasser fylt · 2 ledige"
 const DaySummary: React.FC<DaySummaryProps> = ({ shifts }) => {
   const counts = shifts.map(slotCounts)
   const total = counts.reduce((sum, count) => sum + count.total, 0)

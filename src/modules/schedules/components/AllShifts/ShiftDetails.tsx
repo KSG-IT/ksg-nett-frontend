@@ -8,7 +8,6 @@ interface ShiftDetailsProps {
   shift: DayShift
 }
 
-// Everyone on a shift with their role, and the open slots.
 export const ShiftDetails: React.FC<ShiftDetailsProps> = ({ shift }) => (
   <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="xs" verticalSpacing={6}>
     {shift.slots.map(slot => (

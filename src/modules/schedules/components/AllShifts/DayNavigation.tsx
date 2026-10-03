@@ -11,14 +11,12 @@ import { format } from 'util/date-fns'
 import { capitalizeFirstLetter } from 'util/parsing'
 
 interface DayNavigationProps {
-  // YYYY-MM-DD
   date: string
   onChange: (date: string) => void
 }
 
 const toApiDate = (date: Date) => formatBase(date, 'yyyy-MM-dd')
 
-// "Fredag 9. oktober" with ‹ I dag › and a date picker.
 export const DayNavigation: React.FC<DayNavigationProps> = ({
   date,
   onChange,
@@ -26,6 +24,19 @@ export const DayNavigation: React.FC<DayNavigationProps> = ({
   const [pickerOpen, setPickerOpen] = useState(false)
   const day = parseISO(date)
   const today = toApiDate(new Date())
+
+  function handlePreviousDay() {
+    onChange(toApiDate(addDays(day, -1)))
+  }
+
+  function handleNextDay() {
+    onChange(toApiDate(addDays(day, 1)))
+  }
+
+  function handlePickDate(value: string | null) {
+    if (value) onChange(value)
+    setPickerOpen(false)
+  }
 
   return (
     <Group justify="space-between" wrap="wrap" gap="sm">
@@ -37,7 +48,7 @@ export const DayNavigation: React.FC<DayNavigationProps> = ({
           variant="default"
           size="lg"
           aria-label="Forrige dag"
-          onClick={() => onChange(toApiDate(addDays(day, -1)))}
+          onClick={handlePreviousDay}
         >
           <IconChevronLeft size={18} />
         </ActionIcon>
@@ -52,7 +63,7 @@ export const DayNavigation: React.FC<DayNavigationProps> = ({
           variant="default"
           size="lg"
           aria-label="Neste dag"
-          onClick={() => onChange(toApiDate(addDays(day, 1)))}
+          onClick={handleNextDay}
         >
           <IconChevronRight size={18} />
         </ActionIcon>
@@ -72,13 +83,7 @@ export const DayNavigation: React.FC<DayNavigationProps> = ({
             </ActionIcon>
           </Popover.Target>
           <Popover.Dropdown>
-            <DatePicker
-              value={date}
-              onChange={value => {
-                if (value) onChange(value)
-                setPickerOpen(false)
-              }}
-            />
+            <DatePicker value={date} onChange={handlePickDate} />
           </Popover.Dropdown>
         </Popover>
       </Group>

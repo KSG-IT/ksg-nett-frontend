@@ -1,4 +1,4 @@
-import { Badge, Group, Paper, Stack, Text, Title } from '@mantine/core'
+import { Group, Paper, Stack, Text, Title } from '@mantine/core'
 import { CSSProperties, useState } from 'react'
 import { format } from 'util/date-fns'
 import {
@@ -12,10 +12,11 @@ import {
   timelinePosition,
   timelineRange,
 } from '../../allShifts'
-import { parseLocation } from '../../util'
+import { locationColors, parseLocation } from '../../util'
+import { LocationBadge } from '../LocationBadge'
 import { ShiftAvatars } from './ShiftAvatars'
 import { ShiftDetails } from './ShiftDetails'
-import { locationStyle, shiftLocation, shiftTime } from './shiftDisplay'
+import { shiftTime } from './shiftDisplay'
 import classes from './ShiftTimeline.module.css'
 
 interface ShiftTimelineProps {
@@ -155,12 +156,12 @@ interface LaneNameProps {
 }
 
 const LaneName: React.FC<LaneNameProps> = ({ location }) => {
-  const { name, color } = parseLocation(location)
+  const { name } = parseLocation(location)
   return (
     <>
       <span
         className={classes.dot}
-        style={{ background: `var(--mantine-color-${color}-6)` }}
+        style={{ background: locationColors(location).dot }}
       />
       <Text span inherit truncate>
         {name || 'Uten lokale'}
@@ -195,6 +196,7 @@ const TimelineBar: React.FC<TimelineBarProps> = ({
   const { left, width } = timelinePosition(shift, range)
   const { open } = slotCounts(shift)
   const selected = shift.id === selectedId
+  const colors = locationColors(shift.location)
 
   return (
     <button
@@ -207,7 +209,8 @@ const TimelineBar: React.FC<TimelineBarProps> = ({
       style={{
         left: `${left}%`,
         width: `${width}%`,
-        ...locationStyle(shiftLocation(shift).color),
+        backgroundColor: colors.background,
+        color: colors.text,
       }}
       onClick={() => onSelect(shift.id)}
     >
@@ -231,7 +234,6 @@ interface SelectedShiftProps {
 }
 
 const SelectedShift: React.FC<SelectedShiftProps> = ({ shift }) => {
-  const location = shiftLocation(shift)
   const counts = slotCounts(shift)
 
   return (
@@ -239,13 +241,7 @@ const SelectedShift: React.FC<SelectedShiftProps> = ({ shift }) => {
       <Group justify="space-between" mb="sm" wrap="wrap">
         <Group gap="xs">
           <Title order={4}>{shift.name}</Title>
-          <Badge
-            size="sm"
-            variant="light"
-            style={locationStyle(location.color)}
-          >
-            {location.name}
-          </Badge>
+          <LocationBadge location={shift.location} />
         </Group>
         <Text size="sm" fw={600} style={{ fontVariantNumeric: 'tabular-nums' }}>
           {shiftTime(shift)} · {counts.filled}/{counts.total} fylt

@@ -1,5 +1,5 @@
-import { Badge, Collapse, Paper, Text } from '@mantine/core'
-import { useState } from 'react'
+import { Collapse, Paper, Text } from '@mantine/core'
+import { KeyboardEvent, useState } from 'react'
 import {
   DayPart,
   DayShift,
@@ -9,7 +9,9 @@ import {
 } from '../../allShifts'
 import { ShiftAvatars } from './ShiftAvatars'
 import { ShiftDetails } from './ShiftDetails'
-import { locationStyle, shiftLocation, shiftTime } from './shiftDisplay'
+import { locationColors } from '../../util'
+import { LocationBadge } from '../LocationBadge'
+import { shiftTime } from './shiftDisplay'
 import classes from './ShiftList.module.css'
 
 interface ShiftListProps {
@@ -66,9 +68,18 @@ interface ShiftRowProps {
 const ShiftRow: React.FC<ShiftRowProps> = ({ shift, meId }) => {
   const [expanded, setExpanded] = useState(false)
   const mine = isMine(shift, meId)
-  const location = shiftLocation(shift)
   const counts = slotCounts(shift)
-  const toggle = () => setExpanded(value => !value)
+
+  function toggle() {
+    setExpanded(value => !value)
+  }
+
+  function handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      toggle()
+    }
+  }
 
   return (
     <>
@@ -79,12 +90,7 @@ const ShiftRow: React.FC<ShiftRowProps> = ({ shift, meId }) => {
         tabIndex={0}
         aria-expanded={expanded}
         onClick={toggle}
-        onKeyDown={event => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault()
-            toggle()
-          }
-        }}
+        onKeyDown={handleKeyDown}
       >
         <span className={classes.time}>
           {shiftTime(shift)}
@@ -93,19 +99,12 @@ const ShiftRow: React.FC<ShiftRowProps> = ({ shift, meId }) => {
         <span className={classes.name}>
           <span
             className={classes.dot}
-            style={{ background: `var(--mantine-color-${location.color}-6)` }}
+            style={{ background: locationColors(shift.location).dot }}
           />
           <Text fw={600} size="sm" truncate>
             {shift.name}
           </Text>
-          <Badge
-            visibleFrom="sm"
-            size="sm"
-            variant="light"
-            style={locationStyle(location.color)}
-          >
-            {location.name}
-          </Badge>
+          <LocationBadge location={shift.location} visibleFrom="sm" />
         </span>
         <span
           className={classes.avatars}

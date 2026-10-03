@@ -14,7 +14,6 @@ interface ShiftAvatarsProps {
   linked?: boolean
 }
 
-// Small overlapping avatars. Empty slots are dashed circles at the end.
 export const ShiftAvatars: React.FC<ShiftAvatarsProps> = ({
   shift,
   max = 4,
