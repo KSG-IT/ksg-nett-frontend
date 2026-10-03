@@ -1,4 +1,5 @@
 import { Collapse, Paper, Text } from '@mantine/core'
+import { Badge } from 'components/Badge'
 import {
   DayPart,
   DayShift,
@@ -75,7 +76,6 @@ const ShiftRow: React.FC<ShiftRowProps> = ({ shift, meId }) => {
       <div className={classes.row} data-mine={mine || undefined} {...rowProps}>
         <span className={classes.time}>
           {shiftTime(shift)}
-          {mine && <span className={classes.mineLabel}> · du er på</span>}
           <LocationBadge
             location={shift.location}
             hiddenFrom="sm"
@@ -91,6 +91,11 @@ const ShiftRow: React.FC<ShiftRowProps> = ({ shift, meId }) => {
           <Text fw={600} size="sm" truncate>
             {shift.name}
           </Text>
+          {mine && (
+            <Badge size="sm" variant="filled" color="samfundet-red">
+              Din vakt
+            </Badge>
+          )}
           <LocationBadge location={shift.location} visibleFrom="sm" />
         </span>
         <span

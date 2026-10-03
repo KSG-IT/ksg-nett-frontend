@@ -60,11 +60,6 @@
   font-weight: 700;
 }
 
-/* On a wide row the red background marks your shift; the text is for phones. */
-.mineLabel {
-  display: none;
-}
-
 .details {
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md)
     var(--mantine-spacing-sm) calc(96px + 2 * var(--mantine-spacing-md));
@@ -91,9 +86,6 @@
   }
   .count {
     display: none;
-  }
-  .mineLabel {
-    display: inline;
   }
   .details {
     padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm)
