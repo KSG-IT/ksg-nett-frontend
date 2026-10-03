@@ -104,10 +104,24 @@ describe('isMine', () => {
 })
 
 describe('timelineRange', () => {
-  it('spans whole hours from the first start to the last end, past midnight', () => {
+  it('is the same day every time: 06:00 to 06:00 the next morning', () => {
     const range = timelineRange([evening, bar, morning])!
-    expect(range.start).toEqual(new Date('2026-10-09T08:00:00'))
-    expect(range.end).toEqual(new Date('2026-10-10T03:00:00'))
+    expect(range.start).toEqual(new Date('2026-10-09T06:00:00'))
+    expect(range.end).toEqual(new Date('2026-10-10T06:00:00'))
+  })
+
+  it('starts earlier when a shift starts before 06:00', () => {
+    const early = shift('early', '2026-10-09T04:30:00', '2026-10-09T09:00:00')
+    expect(timelineRange([early, morning])!.start).toEqual(
+      new Date('2026-10-09T04:00:00')
+    )
+  })
+
+  it('ends later when a shift ends after 06:00 the next morning', () => {
+    const long = shift('long', '2026-10-09T22:00:00', '2026-10-10T07:30:00')
+    expect(timelineRange([morning, long])!.end).toEqual(
+      new Date('2026-10-10T08:00:00')
+    )
   })
 
   it('is null without shifts', () => {
@@ -117,11 +131,11 @@ describe('timelineRange', () => {
 
 describe('timelinePosition', () => {
   it('places a shift as a share of the range', () => {
-    const range = timelineRange([morning, bar])! // 08:00 to 03:00, 19 hours
+    const range = timelineRange([morning, bar])! // 06:00 to 06:00, 24 hours
     const position = timelinePosition(morning, range)
-    expect(position.left).toBeCloseTo(0)
-    expect(position.width).toBeCloseTo((8 / 19) * 100)
-    expect(timelinePosition(bar, range).left).toBeCloseTo((12 / 19) * 100)
+    expect(position.left).toBeCloseTo((2 / 24) * 100)
+    expect(position.width).toBeCloseTo((8 / 24) * 100)
+    expect(timelinePosition(bar, range).left).toBeCloseTo((14 / 24) * 100)
   })
 })
 

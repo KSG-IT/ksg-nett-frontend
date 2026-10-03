@@ -72,25 +72,38 @@ export interface TimelineRange {
   end: Date
 }
 
-// From the first start, down to the whole hour, to the last end, up to the
-// whole hour. A shift past midnight makes the range longer than one day.
+// A Samfundet day: 06:00 to 06:00 the next morning, so night shifts fit and
+// the hours are in the same place on every day. The day is the day of the
+// first shift. A shift outside the day makes the range longer, to whole hours.
+export const DAY_START_HOUR = 6
+
 export function timelineRange(shifts: DayShift[]): TimelineRange | null {
   if (shifts.length === 0) return null
   const first = Math.min(...shifts.map(start))
   const last = Math.max(...shifts.map(end))
 
-  const rangeStart = new Date(first)
-  rangeStart.setMinutes(0, 0, 0)
-  const rangeEnd = new Date(last)
+  const dayStart = new Date(first)
+  dayStart.setHours(DAY_START_HOUR, 0, 0, 0)
+  // setDate, not + 24 hours, so a day with a daylight saving change works
+  const dayEnd = new Date(dayStart)
+  dayEnd.setDate(dayEnd.getDate() + 1)
+
+  const firstHour = new Date(first)
+  firstHour.setMinutes(0, 0, 0)
+  const lastHour = new Date(last)
   if (
-    rangeEnd.getMinutes() ||
-    rangeEnd.getSeconds() ||
-    rangeEnd.getMilliseconds()
+    lastHour.getMinutes() ||
+    lastHour.getSeconds() ||
+    lastHour.getMilliseconds()
   ) {
-    rangeEnd.setMinutes(0, 0, 0)
-    rangeEnd.setTime(rangeEnd.getTime() + HOUR_MS)
+    lastHour.setMinutes(0, 0, 0)
+    lastHour.setTime(lastHour.getTime() + HOUR_MS)
   }
-  return { start: rangeStart, end: rangeEnd }
+
+  return {
+    start: new Date(Math.min(dayStart.getTime(), firstHour.getTime())),
+    end: new Date(Math.max(dayEnd.getTime(), lastHour.getTime())),
+  }
 }
 
 // The whole hours in the range, for the time axis.
