@@ -2,7 +2,6 @@ import { gql, useQuery } from '@apollo/client'
 import {
   ActionIcon,
   Anchor,
-  Card,
   Group,
   SimpleGrid,
   Stack,
@@ -91,26 +90,13 @@ export const MyEconomy: React.FC = () => {
         <TransactionCard
           activities={data.myBankAccount.user.lastTransactions}
         />
-        <Stack>
-          <Text c={'dimmed'} fw={700} p={'xs'}>
-            Innskudd
-          </Text>
-          <Card withBorder className={classes.cardWithBorder}>
-            <MyDeposits deposits={data.myBankAccount.lastDeposits} />
-          </Card>
-        </Stack>
+        <MyDeposits deposits={data.myBankAccount.lastDeposits} />
       </SimpleGrid>
     </Stack>
   )
 }
 
 const useStyles = createStyles({
-  cardWithBorder: {
-    borderTop: '5px solid var(--mantine-color-samfundet-red-7)',
-    '@media (max-width: 800px)': {
-      padding: 'var(--mantine-spacing-xs)',
-    },
-  },
   balanceCard: {
     backgroundImage:
       'linear-gradient(45deg, var(--mantine-color-cyan-8), var(--mantine-color-cyan-4))',
