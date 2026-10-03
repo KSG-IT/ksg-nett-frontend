@@ -76,6 +76,12 @@ const ShiftRow: React.FC<ShiftRowProps> = ({ shift, meId }) => {
         <span className={classes.time}>
           {shiftTime(shift)}
           {mine && <span className={classes.mineLabel}> · du er på</span>}
+          <LocationBadge
+            location={shift.location}
+            hiddenFrom="sm"
+            size="xs"
+            ml={6}
+          />
         </span>
         <span className={classes.name}>
           <span

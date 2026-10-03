@@ -71,6 +71,12 @@ const MyShiftRow: React.FC<MyShiftRowProps> = ({ shift, meId }) => {
           <div className={classes.meta}>
             {shiftTime(shift)}
             {slot && ` · ${parseShiftRole(slot.role)}`}
+            <LocationBadge
+              location={shift.location}
+              hiddenFrom="sm"
+              size="xs"
+              ml={6}
+            />
           </div>
         </div>
         <span onClick={event => event.stopPropagation()}>
