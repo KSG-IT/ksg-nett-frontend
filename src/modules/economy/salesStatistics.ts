@@ -199,3 +199,11 @@ export function periodCount(count: number, granularity: SalesGranularity) {
   const labels = GRANULARITY_LABELS[granularity]
   return `${count} ${count === 1 ? labels.one : labels.periods}`
 }
+
+// Chart tooltips list one item per product. periodRows gives 0 for the
+// products with no sales in a period, so drop those.
+export function nonZeroItems<T extends { value?: unknown }>(
+  items: readonly T[] | undefined
+) {
+  return (items ?? []).filter(item => Number(item.value) !== 0)
+}
