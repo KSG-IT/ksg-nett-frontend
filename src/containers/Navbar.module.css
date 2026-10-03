@@ -1,0 +1,87 @@
+.navbar {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+}
+
+/* Me section: a compact card with the avatar, the name and the balance */
+.me {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  width: 100%;
+  padding: var(--mantine-spacing-xs);
+  border: 1px solid var(--mantine-color-gray-2);
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-color-white);
+  text-align: left;
+  transition: background-color 120ms ease;
+}
+
+.me:hover {
+  background: var(--mantine-color-gray-0);
+}
+
+.meText {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.balance {
+  font-variant-numeric: tabular-nums;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.groupTitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mantine-color-gray-6);
+  padding: 0 8px 4px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: var(--mantine-radius-sm);
+  color: var(--mantine-color-gray-7);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 120ms ease;
+}
+
+.item:hover {
+  background: var(--mantine-color-gray-0);
+  color: var(--mantine-color-dark-7);
+}
+
+.icon {
+  flex-shrink: 0;
+  color: var(--mantine-color-gray-6);
+}
+
+/* The same mark as "Din vakt" in the shifts list: a light red row with a
+   red left edge */
+.item[data-active] {
+  background: var(--mantine-color-samfundet-red-0);
+  color: var(--mantine-color-samfundet-red-8);
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--mantine-color-samfundet-red-6);
+}
+
+.item[data-active] .icon {
+  color: var(--mantine-color-samfundet-red-6);
+}

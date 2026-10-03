@@ -1,60 +1,53 @@
 import { AppShell, Text } from '@mantine/core'
-import { createStyles } from '@mantine/emotion'
 import { useLocation } from 'react-router-dom'
 import { useStore } from 'store'
 import { usePermissions } from 'util/hooks/usePermissions'
-import { NavBarMeSection } from './NavBarMeSection'
+import { activeLink } from './activeLink'
+import classes from './Navbar.module.css'
+import { ME_ITEMS, NavBarMeSection } from './NavBarMeSection'
 import { NavItem } from './NavItem'
-import { useRouteGroups } from './useNavbarRoutes'
+import { RouteGroup, useRouteGroups } from './useNavbarRoutes'
 
 interface AppNavbarProps {
   opened: boolean
 }
 
-export const AppNavbar: React.FC<AppNavbarProps> = ({ opened }) => {
+export const AppNavbar: React.FC<AppNavbarProps> = () => {
   const routeGroups = useRouteGroups()
-
   const location = useLocation()
   const isOpen = useStore(state => state.sidebarOpen)
   const { hasPermissions } = usePermissions()
 
-  const { classes } = useNavbarStyles()
+  const links = [...ME_ITEMS, ...routeGroups.flatMap(group => group.items)].map(
+    item => item.link
+  )
+  const active = activeLink(location.pathname, links)
+  const visibleGroups = routeGroups.filter(group =>
+    group.items.some(item => hasPermissions(item.permissions))
+  )
 
   return (
-    <AppShell.Navbar
-      p="md"
-      hidden={!isOpen}
-      style={{ overflowY: 'auto', overscrollBehavior: 'contain' }}
-    >
-      <NavBarMeSection />
-      {routeGroups.map((routeGroup, index) => {
-        const hasAny = routeGroup.items.some(item =>
-          hasPermissions(item.permissions)
-        )
-        if (!hasAny) return null
-        return (
-          <div className={classes.group} key={index}>
-            <Text size="xs" fw={600} mb="xs" id={routeGroup.title}>
-              {routeGroup.title}
-            </Text>
-            {routeGroup.items.map((item, index) => {
-              return (
-                <NavItem
-                  {...item}
-                  active={location.pathname === item.link}
-                  key={index}
-                />
-              )
-            })}
-          </div>
-        )
-      })}
+    <AppShell.Navbar p="md" hidden={!isOpen} className={classes.navbar}>
+      <NavBarMeSection activeLink={active} />
+      {visibleGroups.map(group => (
+        <NavGroup key={group.title} group={group} activeLink={active} />
+      ))}
     </AppShell.Navbar>
   )
 }
 
-const useNavbarStyles = createStyles(t => ({
-  group: {
-    paddingBottom: t.spacing.sm,
-  },
-}))
+interface NavGroupProps {
+  group: RouteGroup
+  activeLink: string | null
+}
+
+const NavGroup: React.FC<NavGroupProps> = ({ group, activeLink }) => (
+  <nav className={classes.group} aria-labelledby={group.title}>
+    <Text className={classes.groupTitle} id={group.title}>
+      {group.title}
+    </Text>
+    {group.items.map(item => (
+      <NavItem key={item.link} {...item} active={item.link === activeLink} />
+    ))}
+  </nav>
+)
