@@ -34,7 +34,7 @@ function useHighlightedHandbookEntries(): RouteItem[] {
         .filter(document => document.highlighted)
         .map(document => ({
           icon: IconBook,
-          link: `handbook/document/${document.id}`,
+          link: `/handbook/document/${document.id}`,
           label: document.name,
           permissions: [],
         })),
@@ -108,7 +108,7 @@ export function useRouteGroups(): RouteGroup[] {
         {
           icon: IconCalendarTime,
           link: '/schedules',
-          label: 'Vaktlister',
+          label: 'Vaktplaner',
           permissions: PERMISSIONS.schedules.view.schedule,
         },
         {
@@ -137,7 +137,7 @@ export function useRouteGroups(): RouteGroup[] {
         },
         {
           icon: IconFlag,
-          link: 'feature-flags',
+          link: '/feature-flags',
           label: 'Feature flags',
           permissions: PERMISSIONS.featureFlags.view.featureFlag,
         },
