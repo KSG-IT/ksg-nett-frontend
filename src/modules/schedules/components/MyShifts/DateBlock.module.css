@@ -1,0 +1,27 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mantine-radius-md);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  background: var(--mantine-color-gray-1);
+  color: var(--mantine-color-text);
+}
+
+.block[data-variant='accent'] {
+  background: var(--mantine-color-samfundet-red-6);
+  color: var(--mantine-color-white);
+}
+
+.weekday,
+.month {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.day {
+  font-weight: 700;
+}

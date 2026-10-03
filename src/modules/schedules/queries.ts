@@ -1,5 +1,28 @@
 import { gql } from '@apollo/client'
 
+// The fields of DayShift (allShifts.ts), for the shifts page and Mine vakter.
+export const DAY_SHIFT_FIELDS = gql`
+  fragment DayShiftFields on ShiftNode {
+    id
+    name
+    location
+    datetimeStart
+    datetimeEnd
+    slots {
+      id
+      role
+      user {
+        id
+        initials
+        firstName
+        getFullWithNickName
+        getCleanFullName
+        profileImage
+      }
+    }
+  }
+`
+
 export const MY_UPCOMING_SHIFTS = gql`
   query MyUpcomingShifts {
     myUpcomingShifts {
@@ -24,26 +47,20 @@ export const MY_UPCOMING_SHIFTS = gql`
   }
 `
 
-export const ALL_MY_SHIFTS = gql`
-  query AllMyShifts {
-    allMyShifts {
-      id
-      location
-      name
-      filledSlots {
-        id
-        role
-        user {
-          id
-          initials
-          firstName
-          getFullWithNickName
-          profileImage
-        }
-      }
+export const MY_SHIFTS_UPCOMING = gql`
+  ${DAY_SHIFT_FIELDS}
+  query MyShiftsUpcoming {
+    myUpcomingShifts {
+      ...DayShiftFields
+    }
+  }
+`
 
-      datetimeStart
-      datetimeEnd
+export const MY_SHIFTS_PAST = gql`
+  ${DAY_SHIFT_FIELDS}
+  query MyShiftsPast {
+    allMyShifts {
+      ...DayShiftFields
     }
   }
 `
@@ -182,25 +199,10 @@ export const NORMALIZED_SHIFTS_FROM_RANGE_QUERY = gql`
 `
 
 export const ALL_SHIFTS = gql`
+  ${DAY_SHIFT_FIELDS}
   query AllShifts($date: Date!) {
     allShifts(date: $date) {
-      id
-      name
-      location
-      datetimeStart
-      datetimeEnd
-      slots {
-        id
-        role
-        user {
-          id
-          initials
-          firstName
-          getFullWithNickName
-          getCleanFullName
-          profileImage
-        }
-      }
+      ...DayShiftFields
     }
   }
 `
