@@ -9,6 +9,7 @@ import {
   semesterStart,
   semesterLabel,
   seriesColor,
+  nonZeroItems,
 } from './salesStatistics'
 
 const products = [
@@ -160,5 +161,23 @@ describe('periodCount', () => {
     expect(periodCount(3, 'MONTH')).toEqual('3 måneder')
     expect(periodCount(1, 'SEMESTER')).toEqual('1 semester')
     expect(periodCount(2, 'DAY')).toEqual('2 dager')
+  })
+})
+
+describe('nonZeroItems', () => {
+  it('drops the products with no sales in the period', () => {
+    const items = [
+      { name: 'beer', value: 96 },
+      { name: 'cider', value: 0 },
+      { name: 'pizza', value: 129 },
+    ]
+    expect(nonZeroItems(items).map(item => item.name)).toEqual([
+      'beer',
+      'pizza',
+    ])
+  })
+
+  it('gives an empty list when nothing is given', () => {
+    expect(nonZeroItems(undefined)).toEqual([])
   })
 })
