@@ -1,1 +1,1 @@
-export * from './SchedulesTable'
+export * from './ScheduleOverviewList'
