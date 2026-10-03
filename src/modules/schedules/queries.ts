@@ -74,6 +74,21 @@ export const ALL_SCHEDULES = gql`
   }
 `
 
+export const SCHEDULES_OVERVIEW_QUERY = gql`
+  query SchedulesOverview {
+    allSchedules {
+      id
+      name
+      plannedUntil
+      upcomingSlots {
+        filled
+        total
+      }
+      recentLocations
+    }
+  }
+`
+
 export const SCHEDULE_QUERY = gql`
   query Schedule($id: ID!) {
     schedule(id: $id) {

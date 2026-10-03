@@ -1,53 +1,46 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { MessageBox } from 'components/MessageBox'
 import { Link } from 'react-router-dom'
-import { SchedulesTable } from '../components/Schedules'
-import { ALL_SCHEDULES } from '../queries'
-import { AllSchedulesReturns } from '../types.graphql'
-import { createStyles } from '@mantine/emotion'
+import { ScheduleOverviewList } from '../components/Schedules'
+import { SCHEDULES_OVERVIEW_QUERY } from '../queries'
+import { SchedulesOverviewReturns } from '../types.graphql'
 
 const breadcrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
-  { label: 'Vaktlister', path: '/schedules' },
+  { label: 'Vaktplaner', path: '/schedules' },
 ]
 
 export const Schedules: React.FC = () => {
-  const { classes } = useSchedulesStyles()
-  const { data, loading, error } = useQuery<AllSchedulesReturns>(ALL_SCHEDULES)
+  const { data, loading, error } = useQuery<SchedulesOverviewReturns>(
+    SCHEDULES_OVERVIEW_QUERY
+  )
 
   if (error) return <FullPageError />
-
   if (loading || !data) return <FullContentLoader />
 
-  const { allSchedules } = data
-
   return (
-    <div className={classes.wrapper}>
+    <Stack gap="md" maw={1100}>
       <Breadcrumbs items={breadcrumbItems} />
       <Group justify="space-between" align="center">
         <Title>Vaktplaner</Title>
-        <Group>
-          <Link to="/schedules/allergies">
-            <Button color="samfundet-red">Allergenoversikt</Button>
-          </Link>
-          <Link to="/schedules/templates">
-            <Button color="samfundet-red">Se vaktplanmaler</Button>
-          </Link>
+        <Group gap="xs">
+          <Button component={Link} to="/schedules/templates" variant="default">
+            Maler
+          </Button>
+          <Button component={Link} to="/schedules/allergies" variant="default">
+            Allergener
+          </Button>
         </Group>
       </Group>
-      <SchedulesTable schedules={allSchedules} />
-    </div>
+      {data.allSchedules.length === 0 ? (
+        <MessageBox type="info">Det finnes ingen vaktplaner.</MessageBox>
+      ) : (
+        <ScheduleOverviewList schedules={data.allSchedules} />
+      )}
+    </Stack>
   )
 }
-
-const useSchedulesStyles = createStyles({
-  wrapper: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'column',
-    gap: 'var(--mantine-spacing-md)',
-  },
-})

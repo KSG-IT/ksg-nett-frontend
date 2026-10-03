@@ -120,6 +120,18 @@ export interface AllSchedulesReturns {
   allSchedules: ScheduleNode[]
 }
 
+export interface ScheduleOverviewNode {
+  id: string
+  name: string
+  plannedUntil: string | null
+  upcomingSlots: { filled: number; total: number }
+  recentLocations: LocationValues[]
+}
+
+export interface SchedulesOverviewReturns {
+  allSchedules: ScheduleOverviewNode[]
+}
+
 export interface AllScheduleTemplatesReturns {
   allScheduleTemplates: ScheduleTemplateNode[]
 }
