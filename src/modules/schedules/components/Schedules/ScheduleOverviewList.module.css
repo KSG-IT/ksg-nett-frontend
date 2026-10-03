@@ -37,6 +37,15 @@
   gap: 4px;
 }
 
+.open {
+  display: flex;
+  gap: var(--mantine-spacing-xs);
+  /* Room for the "Nytt design!" badge on the v2 button */
+  padding: 8px 28px 0 0;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
 .slots {
   display: flex;
   flex-direction: column;

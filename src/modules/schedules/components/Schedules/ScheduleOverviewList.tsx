@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { planStatus, slotStatus } from '../../schedulesOverview'
 import { ScheduleOverviewNode } from '../../types.graphql'
 import { LocationBadge } from '../LocationBadge'
+import { V2Button } from '../ScheduleV2/V2Button'
 import classes from './ScheduleOverviewList.module.css'
 
 interface ScheduleOverviewListProps {
@@ -40,15 +41,12 @@ const ScheduleOverviewRow: React.FC<ScheduleOverviewRowProps> = ({
     </div>
     <PlannedUntil plannedUntil={schedule.plannedUntil} now={now} />
     <UpcomingSlots slots={schedule.upcomingSlots} />
-    <Button
-      component={Link}
-      to={schedule.id}
-      variant="default"
-      size="xs"
-      className={classes.open}
-    >
-      Åpne
-    </Button>
+    <div className={classes.open}>
+      <Button component={Link} to={schedule.id} variant="default" size="xs">
+        Åpne
+      </Button>
+      <V2Button scheduleId={schedule.id} label="Åpne v2" size="xs" />
+    </div>
   </div>
 )
 

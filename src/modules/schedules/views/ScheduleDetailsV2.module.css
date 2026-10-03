@@ -1,0 +1,12 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: var(--mantine-spacing-md);
+  align-items: start;
+}
+
+@media (max-width: 75em) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

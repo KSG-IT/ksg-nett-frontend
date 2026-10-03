@@ -1,0 +1,22 @@
+.wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* Centred on the top right corner, so the label stays readable */
+  transform: translate(45%, -55%) rotate(8deg);
+  padding: 1px 7px;
+  border-radius: var(--mantine-radius-xl);
+  background: var(--mantine-color-yellow-4);
+  color: var(--mantine-color-dark-8);
+  font-size: 9.5px;
+  font-weight: 800;
+  line-height: 16px;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}

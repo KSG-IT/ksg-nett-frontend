@@ -89,6 +89,21 @@ export const SCHEDULES_OVERVIEW_QUERY = gql`
   }
 `
 
+export const SCHEDULE_V2_QUERY = gql`
+  ${DAY_SHIFT_FIELDS}
+  query ScheduleV2($id: ID!, $shiftsFrom: Date!, $numberOfWeeks: Int!) {
+    schedule(id: $id) {
+      id
+      name
+      displayMode
+      recentLocations
+      shiftsFromRange(shiftsFrom: $shiftsFrom, numberOfWeeks: $numberOfWeeks) {
+        ...DayShiftFields
+      }
+    }
+  }
+`
+
 export const SCHEDULE_QUERY = gql`
   query Schedule($id: ID!) {
     schedule(id: $id) {
