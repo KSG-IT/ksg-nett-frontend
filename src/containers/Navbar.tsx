@@ -27,7 +27,7 @@ export const AppNavbar: React.FC<AppNavbarProps> = () => {
   )
 
   return (
-    <AppShell.Navbar p="md" hidden={!isOpen} className={classes.navbar}>
+    <AppShell.Navbar hidden={!isOpen} className={classes.navbar}>
       <NavBarMeSection activeLink={active} />
       {visibleGroups.map(group => (
         <NavGroup key={group.title} group={group} activeLink={active} />

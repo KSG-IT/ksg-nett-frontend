@@ -4,17 +4,27 @@
   display: flex;
   flex-direction: column;
   gap: var(--mantine-spacing-md);
+  /* No side padding: the items go from edge to edge */
+  padding-block: var(--mantine-spacing-md);
+  /* Scrolls, but without a visible scrollbar */
+  scrollbar-width: none;
 }
 
-/* Me section: a compact card with the avatar, the name and the balance */
+.navbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Me section: a full-width row at the top with the avatar, the name and the
+   balance */
 .me {
   display: flex;
   align-items: center;
   gap: var(--mantine-spacing-sm);
   width: 100%;
-  padding: var(--mantine-spacing-xs);
-  border: 1px solid var(--mantine-color-gray-2);
-  border-radius: var(--mantine-radius-md);
+  margin-top: calc(-1 * var(--mantine-spacing-md));
+  margin-bottom: 4px;
+  padding: 10px var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-gray-2);
   background: var(--mantine-color-white);
   text-align: left;
   transition: background-color 120ms ease;
@@ -47,15 +57,14 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--mantine-color-gray-6);
-  padding: 0 8px 4px;
+  padding: 0 var(--mantine-spacing-md) 4px;
 }
 
 .item {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 6px 8px;
-  border-radius: var(--mantine-radius-sm);
+  padding: 7px var(--mantine-spacing-md);
   color: var(--mantine-color-gray-7);
   font-size: var(--mantine-font-size-sm);
   font-weight: 500;
