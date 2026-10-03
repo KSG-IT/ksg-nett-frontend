@@ -53,8 +53,13 @@ export const Dashboard = () => {
       {wantedList.length >= 1 && <WantedList users={wantedList} />}
       <Grid justify={'space-between'}>
         <Grid.Col span={{ sm: 6, lg: mediaQuery ? 5 : 6 }}>
-          <FutureShifts />
-          <TransactionCard activities={user.lastTransactions} />
+          <Stack gap="lg">
+            <FutureShifts />
+            <TransactionCard
+              activities={user.lastTransactions}
+              showEconomyLink
+            />
+          </Stack>
         </Grid.Col>
         <Grid.Col span={{ sm: 6, lg: mediaQuery ? 5 : 6 }}>
           <RecentQuotes quotes={lastQuotes} />

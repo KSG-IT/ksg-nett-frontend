@@ -1,0 +1,25 @@
+.card {
+  overflow: hidden;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  padding: 10px var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-gray-1);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.text {
+  min-width: 0;
+}
+
+.amount {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
