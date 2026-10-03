@@ -12,6 +12,7 @@ import {
 import { ShortcutCard, ShortcutCardGrid } from 'components/ShortcutCard'
 import { useMemo } from 'react'
 import { PERMISSIONS } from 'util/permissions'
+import { FeedbackCard } from './Feedback'
 
 const shortcuts = [
   {
@@ -92,7 +93,9 @@ export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
         />
       )}
 
-      <ShortcutCardGrid shortcuts={memoizedShortcuts} />
+      <ShortcutCardGrid shortcuts={memoizedShortcuts}>
+        <FeedbackCard />
+      </ShortcutCardGrid>
     </Stack>
   )
 }

@@ -4,10 +4,13 @@ import { ShortcutCard, ShortcutProps } from './ShortcutCard'
 interface ShortcutCardGridProps {
   shortcuts: ShortcutProps[]
   cols?: number
+  // Cards that are not links, after the shortcuts.
+  children?: React.ReactNode
 }
 export const ShortcutCardGrid: React.FC<ShortcutCardGridProps> = ({
   shortcuts,
   cols = 5,
+  children,
 }) => {
   return (
     <SimpleGrid
@@ -17,6 +20,7 @@ export const ShortcutCardGrid: React.FC<ShortcutCardGridProps> = ({
       {shortcuts.map((shortcut, index) => (
         <ShortcutCard key={index} {...shortcut} />
       ))}
+      {children}
     </SimpleGrid>
   )
 }
