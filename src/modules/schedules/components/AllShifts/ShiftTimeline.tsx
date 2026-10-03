@@ -1,4 +1,4 @@
-import { Group, Paper, Stack, Text, Title } from '@mantine/core'
+import { Group, Paper, Stack, Text, Title, VisuallyHidden } from '@mantine/core'
 import { CSSProperties, useState } from 'react'
 import { format } from 'util/date-fns'
 import {
@@ -196,16 +196,17 @@ const TimelineBar: React.FC<TimelineBarProps> = ({
   const { left, width } = timelinePosition(shift, range)
   const { open } = slotCounts(shift)
   const selected = shift.id === selectedId
+  const mine = isMine(shift, meId)
   const colors = locationColors(shift.location)
 
   return (
     <button
       type="button"
       className={classes.bar}
-      data-mine={isMine(shift, meId) || undefined}
+      data-mine={mine || undefined}
       data-selected={selected || undefined}
       aria-pressed={selected}
-      title={`${shift.name} ${shiftTime(shift)}`}
+      title={`${shift.name} ${shiftTime(shift)}${mine ? ' · Din vakt' : ''}`}
       style={{
         left: `${left}%`,
         width: `${width}%`,
@@ -217,6 +218,7 @@ const TimelineBar: React.FC<TimelineBarProps> = ({
       <span className={classes.label}>
         {shift.name} {shiftTime(shift)}
         {open > 0 && <span className={classes.open}> · {open} ledig</span>}
+        {mine && <VisuallyHidden> · Din vakt</VisuallyHidden>}
       </span>
       <ShiftAvatars
         shift={shift}
