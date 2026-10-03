@@ -46,10 +46,9 @@ import {
   ReviewQuotes,
 } from 'modules/quotes/views'
 import {
-  AllMyShifts,
   AllShifts,
   MyAvailability,
-  MyUpcomingShifts,
+  MyShifts,
   ScheduleDetails,
   ScheduleTemplateDetails,
   ScheduleTemplates,
@@ -571,8 +570,8 @@ export const AppRoutes: React.FC = () => {
             }
           />
           <Route path="me">
-            <Route index element={<MyUpcomingShifts />} />
-            <Route path="history" element={<AllMyShifts />} />
+            <Route index element={<MyShifts />} />
+            <Route path="history" element={<MyShifts />} />
             <Route path="availability" element={<MyAvailability />} />
           </Route>
           <Route path="all-shifts" element={<AllShifts />} />

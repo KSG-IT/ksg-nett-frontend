@@ -1,5 +1,4 @@
 import { Collapse, Paper, Text } from '@mantine/core'
-import { KeyboardEvent, useState } from 'react'
 import {
   DayPart,
   DayShift,
@@ -11,6 +10,7 @@ import { ShiftAvatars } from './ShiftAvatars'
 import { ShiftDetails } from './ShiftDetails'
 import { locationColors } from '../../util'
 import { LocationBadge } from '../LocationBadge'
+import { useExpandableRow } from '../useExpandableRow'
 import { shiftTime } from './shiftDisplay'
 import classes from './ShiftList.module.css'
 
@@ -66,35 +66,22 @@ interface ShiftRowProps {
 }
 
 const ShiftRow: React.FC<ShiftRowProps> = ({ shift, meId }) => {
-  const [expanded, setExpanded] = useState(false)
+  const { expanded, rowProps } = useExpandableRow()
   const mine = isMine(shift, meId)
   const counts = slotCounts(shift)
 
-  function toggle() {
-    setExpanded(value => !value)
-  }
-
-  function handleKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault()
-      toggle()
-    }
-  }
-
   return (
     <>
-      <div
-        className={classes.row}
-        data-mine={mine || undefined}
-        role="button"
-        tabIndex={0}
-        aria-expanded={expanded}
-        onClick={toggle}
-        onKeyDown={handleKeyDown}
-      >
+      <div className={classes.row} data-mine={mine || undefined} {...rowProps}>
         <span className={classes.time}>
           {shiftTime(shift)}
           {mine && <span className={classes.mineLabel}> · du er på</span>}
+          <LocationBadge
+            location={shift.location}
+            hiddenFrom="sm"
+            size="xs"
+            ml={6}
+          />
         </span>
         <span className={classes.name}>
           <span

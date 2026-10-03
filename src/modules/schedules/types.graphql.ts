@@ -101,8 +101,12 @@ export interface MyUpcomingShiftsReturns {
   myUpcomingShifts: ShiftNode[]
 }
 
-export interface AllMyShiftsReturns {
-  allMyShifts: ShiftNode[]
+export interface MyShiftsUpcomingReturns {
+  myUpcomingShifts: DayShift[]
+}
+
+export interface MyShiftsPastReturns {
+  allMyShifts: DayShift[]
 }
 
 export interface AllShiftsReturns {
