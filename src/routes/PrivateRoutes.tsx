@@ -50,6 +50,7 @@ import {
   MyAvailability,
   MyShifts,
   ScheduleDetails,
+  ScheduleDetailsV2,
   ScheduleTemplateDetails,
   ScheduleTemplates,
   Schedules,
@@ -566,6 +567,16 @@ export const AppRoutes: React.FC = () => {
                 permissions={PERMISSIONS.schedules.change.schedule}
               >
                 <ScheduleDetails />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path=":id/v2"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleDetailsV2 />
               </RestrictedRoute>
             }
           />

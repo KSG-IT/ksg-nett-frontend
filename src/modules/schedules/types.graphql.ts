@@ -128,6 +128,22 @@ export interface ScheduleOverviewNode {
   recentLocations: LocationValues[]
 }
 
+export interface ScheduleV2Returns {
+  schedule: {
+    id: string
+    name: string
+    displayMode: ScheduleDisplayModeValues
+    recentLocations: LocationValues[]
+    shiftsFromRange: DayShift[]
+  } | null
+}
+
+export interface ScheduleV2Variables {
+  id: string
+  shiftsFrom: string
+  numberOfWeeks: number
+}
+
 export interface SchedulesOverviewReturns {
   allSchedules: ScheduleOverviewNode[]
 }

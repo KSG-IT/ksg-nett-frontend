@@ -1,0 +1,229 @@
+/* The grid needs room for seven days; narrow screens scroll sideways. */
+.scroll {
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 72px repeat(7, minmax(110px, 1fr));
+  min-width: 860px;
+  background: var(--mantine-color-white);
+  border: 1px solid var(--mantine-color-gray-3);
+  border-radius: var(--mantine-radius-md);
+  overflow: hidden;
+}
+
+.byLocation {
+  grid-template-columns: 120px repeat(7, minmax(110px, 1fr));
+}
+
+.grid > * {
+  border-right: 1px solid var(--mantine-color-gray-1);
+  border-bottom: 1px solid var(--mantine-color-gray-1);
+}
+
+.corner,
+.dayName {
+  background: var(--mantine-color-gray-0);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+  color: var(--mantine-color-gray-6);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 6px 8px;
+}
+
+.rowLabel {
+  background: var(--mantine-color-gray-0);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dim {
+  font-weight: 500;
+  color: var(--mantine-color-gray-6);
+}
+
+.locationLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cell {
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-height: 84px;
+  position: relative;
+}
+
+.cell[data-empty] {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--mantine-color-gray-0) 0 6px,
+    var(--mantine-color-white) 6px 12px
+  );
+}
+
+.date {
+  font-size: 10px;
+  color: var(--mantine-color-gray-6);
+  font-weight: 600;
+}
+
+.shift {
+  border-radius: var(--mantine-radius-sm);
+  padding: 4px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid transparent;
+  font-size: 11px;
+}
+
+.shift[data-open] {
+  border-color: var(--mantine-color-orange-5);
+}
+
+.shiftTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  min-width: 0;
+}
+
+.time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.chip {
+  height: 22px;
+  min-width: 22px;
+  padding: 0 5px;
+  border-radius: 11px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: inherit;
+  background: var(--mantine-color-white);
+  color: var(--mantine-color-dark-6);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--mantine-color-dark-3);
+}
+
+.chip[data-open] {
+  border: 1.5px dashed var(--mantine-color-orange-6);
+  color: var(--mantine-color-orange-8);
+  background: var(--mantine-color-orange-0);
+}
+
+.chip[data-active] {
+  box-shadow: 0 0 0 2px var(--mantine-color-dark-6);
+}
+
+.chip[data-highlighted] {
+  background: var(--mantine-color-samfundet-red-6);
+  color: var(--mantine-color-white);
+  border-color: var(--mantine-color-samfundet-red-6);
+}
+
+.current {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mantine-spacing-xs);
+  padding: 4px 6px;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--mantine-color-gray-0);
+}
+
+.pickerList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.pickerRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 6px;
+  border-radius: var(--mantine-radius-sm);
+}
+
+.pickerRow:hover,
+.pickerRow[data-highlighted] {
+  background: var(--mantine-color-gray-1);
+}
+
+.pickerRow[data-busy] .pickerName {
+  color: var(--mantine-color-gray-6);
+}
+
+.pickerMeta {
+  white-space: nowrap;
+}
+
+.keys {
+  border-top: 1px solid var(--mantine-color-gray-1);
+  padding-top: 6px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.loadRows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.loadRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 70px 20px;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 4px;
+  border-radius: var(--mantine-radius-sm);
+}
+
+.loadRow:hover {
+  background: var(--mantine-color-gray-0);
+}
+
+.loadRow[data-selected] {
+  background: var(--mantine-color-samfundet-red-0);
+}

@@ -16,6 +16,7 @@ import {
 import { CreateShiftDrawer } from '../components/ScheduleDetails/CreateShiftDrawer'
 
 import { ShiftRenderer } from '../components/ScheduleDetails/ShiftRenderer'
+import { V2Button } from '../components/ScheduleV2/V2Button'
 import { SCHEDULE_QUERY } from '../queries'
 import { createStyles } from '@mantine/emotion'
 const breadcrumbsItems = [
@@ -88,6 +89,7 @@ export const ScheduleDetails: React.FC = () => {
           </Button>
         </Group>
         <Group>
+          <V2Button scheduleId={schedule.id} label="Prøv v2" />
           <Button
             leftSection={<IconPlus />}
             onClick={() => setCreateShiftDrawerOpen(true)}
