@@ -4,6 +4,8 @@ import { DayShift, DayShiftSlot, slotCounts } from '../../allShifts'
 import { compactTime, GridDay, GridRow, GridWeek } from '../../scheduleGrid'
 import { locationColors, parseLocation, parseShiftRole } from '../../util'
 import classes from './ScheduleGrid.module.css'
+import { LocationValues } from '../../consts'
+import { CreateContext, CreateShiftPopover } from './CreateShiftPopover'
 import { SlotPicker, SlotTarget } from './SlotPicker'
 
 const DAY_NAMES = ['Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør', 'Søn']
@@ -16,6 +18,11 @@ export interface SlotSelection {
   onOpen: (target: SlotTarget) => void
   onClose: () => void
   onAssigned: (target: SlotTarget) => void
+  // Create a shift from a cell, and open a shift in the panel
+  create: CreateContext
+  // The location of a new shift when the rows are weeks
+  defaultLocation: LocationValues | null
+  onOpenShift: (shiftId: string) => void
 }
 
 interface ScheduleGridProps extends SlotSelection {
@@ -160,6 +167,9 @@ const GridRowView: React.FC<GridRowViewProps> = ({
         key={day.date.getTime()}
         day={day}
         showDate={showDate}
+        location={
+          row.location !== undefined ? row.location : selection.defaultLocation
+        }
         {...selection}
       />
     ))}
@@ -169,9 +179,15 @@ const GridRowView: React.FC<GridRowViewProps> = ({
 interface DayCellProps extends SlotSelection {
   day: GridDay
   showDate: boolean
+  location: LocationValues | null
 }
 
-const DayCell: React.FC<DayCellProps> = ({ day, showDate, ...selection }) => (
+const DayCell: React.FC<DayCellProps> = ({
+  day,
+  showDate,
+  location,
+  ...selection
+}) => (
   <div
     className={classes.cell}
     data-empty={day.shifts.length === 0 || undefined}
@@ -180,6 +196,11 @@ const DayCell: React.FC<DayCellProps> = ({ day, showDate, ...selection }) => (
     {day.shifts.map(shift => (
       <ShiftBlock key={shift.id} shift={shift} {...selection} />
     ))}
+    <CreateShiftPopover
+      {...selection.create}
+      date={day.date}
+      location={location}
+    />
   </div>
 )
 
@@ -196,12 +217,17 @@ const ShiftBlock: React.FC<ShiftBlockProps> = ({ shift, ...selection }) => {
       data-open={open > 0 || undefined}
       style={{ background: colors.background, color: colors.text }}
     >
-      <div className={classes.shiftTop}>
+      <button
+        type="button"
+        className={classes.shiftTop}
+        aria-label={`Åpne ${shift.name} ${compactTime(shift)}`}
+        onClick={() => selection.onOpenShift(shift.id)}
+      >
         <Text span inherit truncate fw={700}>
           {shift.name}
         </Text>
         <span className={classes.time}>{compactTime(shift)}</span>
-      </div>
+      </button>
       <div className={classes.chips}>
         {shift.slots.map(slot => (
           <SlotChip key={slot.id} shift={shift} slot={slot} {...selection} />

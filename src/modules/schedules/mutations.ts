@@ -220,3 +220,23 @@ export const CLEAR_SLOT_V2_MUTATION = gql`
     }
   }
 `
+
+export const CREATE_SHIFT_WITH_SLOTS_MUTATION = gql`
+  mutation CreateShiftWithSlots($input: CreateShiftWithSlotsInput!) {
+    createShiftWithSlots(input: $input) {
+      shift {
+        id
+      }
+    }
+  }
+`
+
+export const UPDATE_SHIFT_DETAILS_MUTATION = gql`
+  mutation UpdateShiftDetails($input: UpdateShiftDetailsInput!) {
+    updateShiftDetails(input: $input) {
+      shift {
+        id
+      }
+    }
+  }
+`

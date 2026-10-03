@@ -18,6 +18,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { slotCounts } from '../allShifts'
 import { LoadPanel } from '../components/ScheduleV2/LoadPanel'
 import { ScheduleGrid } from '../components/ScheduleV2/ScheduleGrid'
+import { ShiftPanel } from '../components/ScheduleV2/ShiftPanel'
 import { SlotTarget } from '../components/ScheduleV2/SlotPicker'
 import { ScheduleDisplayModeValues } from '../consts'
 import { SCHEDULE_V2_QUERY } from '../queries'
@@ -27,6 +28,7 @@ import {
   scheduleGrid,
   shiftCounts,
 } from '../scheduleGrid'
+import { rolesInUse } from '../shiftForm'
 import { ScheduleV2Returns, ScheduleV2Variables } from '../types.graphql'
 import classes from './ScheduleDetailsV2.module.css'
 
@@ -41,6 +43,7 @@ export const ScheduleDetailsV2: React.FC = () => {
   const [highlightedUserId, setHighlightedUserId] = useState<string | null>(
     null
   )
+  const [openShiftId, setOpenShiftId] = useState<string | null>(null)
 
   const from = searchParams.get('from')
   const monday = mondayOf(from ? parseISO(from) : new Date())
@@ -178,6 +181,12 @@ export const ScheduleDetailsV2: React.FC = () => {
           onOpen={setActive}
           onClose={() => setActive(null)}
           onAssigned={handleAssigned}
+          create={{
+            scheduleId: schedule.id,
+            shifts: schedule.shiftsFromRange,
+          }}
+          defaultLocation={schedule.recentLocations[0] ?? null}
+          onOpenShift={setOpenShiftId}
         />
         <LoadPanel
           counts={shiftCounts(shifts)}
@@ -186,6 +195,12 @@ export const ScheduleDetailsV2: React.FC = () => {
           onHighlight={setHighlightedUserId}
         />
       </div>
+      <ShiftPanel
+        shift={shifts.find(shift => shift.id === openShiftId) ?? null}
+        defaultRole={schedule.defaultRole}
+        rolesInUse={rolesInUse(schedule.shiftsFromRange)}
+        onClose={() => setOpenShiftId(null)}
+      />
     </Stack>
   )
 }

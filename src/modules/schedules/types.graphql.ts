@@ -133,6 +133,7 @@ export interface ScheduleV2Returns {
     id: string
     name: string
     displayMode: ScheduleDisplayModeValues
+    defaultRole: RoleValues | null
     recentLocations: LocationValues[]
     shiftsFromRange: DayShift[]
   } | null
