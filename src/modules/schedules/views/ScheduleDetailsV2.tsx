@@ -2,29 +2,42 @@ import { useQuery } from '@apollo/client'
 import {
   ActionIcon,
   Button,
+  Drawer,
   Group,
   SegmentedControl,
   Stack,
   Text,
   Title,
 } from '@mantine/core'
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconUsers,
+} from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { addDays, format as formatBase, getISOWeek, parseISO } from 'date-fns'
 import { useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { useIsMobile } from 'util/hooks'
 import { slotCounts } from '../allShifts'
+import { CreateShiftSheet } from '../components/ScheduleV2/CreateShiftPopover'
 import { LoadPanel } from '../components/ScheduleV2/LoadPanel'
+import { ScheduleDayList } from '../components/ScheduleV2/ScheduleDayList'
+import { SHEET_PROPS } from '../components/ScheduleV2/sheetProps'
 import { ScheduleGrid } from '../components/ScheduleV2/ScheduleGrid'
 import { ShiftPanel } from '../components/ScheduleV2/ShiftPanel'
-import { SlotTarget } from '../components/ScheduleV2/SlotPicker'
-import { ScheduleDisplayModeValues } from '../consts'
+import {
+  SlotPickerSheet,
+  SlotTarget,
+} from '../components/ScheduleV2/SlotPicker'
+import { LocationValues, ScheduleDisplayModeValues } from '../consts'
 import { SCHEDULE_V2_QUERY } from '../queries'
 import {
   mondayOf,
   nextOpenSlot,
+  phoneDays,
   scheduleGrid,
   shiftCounts,
 } from '../scheduleGrid'
@@ -44,6 +57,13 @@ export const ScheduleDetailsV2: React.FC = () => {
     null
   )
   const [openShiftId, setOpenShiftId] = useState<string | null>(null)
+  // Phone only: the create sheet and the shift count sheet
+  const isMobile = useIsMobile()
+  const [createTarget, setCreateTarget] = useState<{
+    date: Date
+    location: LocationValues | null
+  } | null>(null)
+  const [countsOpen, setCountsOpen] = useState(false)
 
   const from = searchParams.get('from')
   const monday = mondayOf(from ? parseISO(from) : new Date())
@@ -68,7 +88,8 @@ export const ScheduleDetailsV2: React.FC = () => {
   const byLocation =
     schedule.displayMode === ScheduleDisplayModeValues.MULTIPLE_LOCATIONS
   // Edgar fills 2–3 weeks at a time; several locations are planned per week.
-  const weeks = Number(weeksParam ?? (byLocation ? 1 : 3))
+  // A phone is for quick fixes, so it starts with one week.
+  const weeks = Number(weeksParam ?? (byLocation || isMobile ? 1 : 3))
   const lastMonday = addDays(monday, (weeks - 1) * 7)
   const shifts = schedule.shiftsFromRange.filter(
     shift => new Date(shift.datetimeStart) < addDays(lastMonday, 7)
@@ -116,6 +137,34 @@ export const ScheduleDetailsV2: React.FC = () => {
     setActive(nextOpenSlot(shifts, target.slot.id))
   }
 
+  function handleCreate(date: Date, location: LocationValues | null) {
+    setCreateTarget({ date, location })
+  }
+
+  const createContext = {
+    scheduleId: schedule.id,
+    shifts: schedule.shiftsFromRange,
+  }
+  const selection = {
+    shifts,
+    active,
+    highlightedUserId,
+    onOpen: setActive,
+    onClose: () => setActive(null),
+    onAssigned: handleAssigned,
+    create: createContext,
+    defaultLocation: schedule.recentLocations[0] ?? null,
+    onOpenShift: setOpenShiftId,
+  }
+  const loadPanel = (
+    <LoadPanel
+      counts={shiftCounts(shifts)}
+      period={period}
+      highlightedUserId={highlightedUserId}
+      onHighlight={setHighlightedUserId}
+    />
+  )
+
   return (
     <Stack gap="md">
       <Breadcrumbs
@@ -161,44 +210,68 @@ export const ScheduleDetailsV2: React.FC = () => {
           </Button>
         </Group>
       </Group>
-      <Text size="sm" c="dimmed">
-        {period.charAt(0).toUpperCase() + period.slice(1)} · {shifts.length}{' '}
-        vakter · {filled} av {total} plasser fylt
-        {total > filled && (
-          <Text span inherit fw={700} c="orange.8">
-            {' '}
-            · {total - filled} ledige
-          </Text>
+      <Group justify="space-between" gap="xs" wrap="nowrap">
+        <Text size="sm" c="dimmed">
+          {period.charAt(0).toUpperCase() + period.slice(1)} · {shifts.length}{' '}
+          vakter · {filled} av {total} plasser fylt
+          {total > filled && (
+            <Text span inherit fw={700} c="orange.8">
+              {' '}
+              · {total - filled} ledige
+            </Text>
+          )}
+        </Text>
+        {isMobile && (
+          <Button
+            size="compact-sm"
+            variant="default"
+            leftSection={<IconUsers size={14} />}
+            onClick={() => setCountsOpen(true)}
+            style={{ flexShrink: 0 }}
+            aria-label="Vakter per person"
+          >
+            Per person
+          </Button>
         )}
-      </Text>
-      <div className={classes.layout}>
-        <ScheduleGrid
-          weeks={grid}
-          byLocation={byLocation}
-          shifts={shifts}
-          active={active}
-          highlightedUserId={highlightedUserId}
-          onOpen={setActive}
-          onClose={() => setActive(null)}
-          onAssigned={handleAssigned}
-          create={{
-            scheduleId: schedule.id,
-            shifts: schedule.shiftsFromRange,
-          }}
-          defaultLocation={schedule.recentLocations[0] ?? null}
-          onOpenShift={setOpenShiftId}
-        />
-        <LoadPanel
-          counts={shiftCounts(shifts)}
-          period={period}
-          highlightedUserId={highlightedUserId}
-          onHighlight={setHighlightedUserId}
-        />
-      </div>
+      </Group>
+      {isMobile ? (
+        <>
+          <ScheduleDayList
+            days={phoneDays(grid)}
+            onCreate={handleCreate}
+            pickerAsSheet
+            {...selection}
+          />
+          <SlotPickerSheet
+            target={active}
+            shifts={shifts}
+            onClose={() => setActive(null)}
+            onAssigned={handleAssigned}
+          />
+          <CreateShiftSheet
+            target={createTarget}
+            onClose={() => setCreateTarget(null)}
+            {...createContext}
+          />
+          <Drawer
+            opened={countsOpen}
+            onClose={() => setCountsOpen(false)}
+            {...SHEET_PROPS}
+          >
+            {loadPanel}
+          </Drawer>
+        </>
+      ) : (
+        <div className={classes.layout}>
+          <ScheduleGrid weeks={grid} byLocation={byLocation} {...selection} />
+          {loadPanel}
+        </div>
+      )}
       <ShiftPanel
         shift={shifts.find(shift => shift.id === openShiftId) ?? null}
         defaultRole={schedule.defaultRole}
         rolesInUse={rolesInUse(schedule.shiftsFromRange)}
+        fullScreen={isMobile}
         onClose={() => setOpenShiftId(null)}
       />
     </Stack>

@@ -23,6 +23,8 @@ export interface SlotSelection {
   // The location of a new shift when the rows are weeks
   defaultLocation: LocationValues | null
   onOpenShift: (shiftId: string) => void
+  // Phone: the view shows the picker as a sheet, not as a popover on the chip
+  pickerAsSheet?: boolean
 }
 
 interface ScheduleGridProps extends SlotSelection {
@@ -237,12 +239,16 @@ const ShiftBlock: React.FC<ShiftBlockProps> = ({ shift, ...selection }) => {
   )
 }
 
-interface SlotChipProps extends SlotSelection {
+export interface SlotChipProps extends SlotSelection {
   shift: DayShift
   slot: DayShiftSlot
 }
 
-const SlotChip: React.FC<SlotChipProps> = ({ shift, slot, ...selection }) => {
+export const SlotChip: React.FC<SlotChipProps> = ({
+  shift,
+  slot,
+  ...selection
+}) => {
   const { active, highlightedUserId, onOpen } = selection
   const isActive = active?.slot.id === slot.id
   const role = parseShiftRole(slot.role)
@@ -270,6 +276,7 @@ const SlotChip: React.FC<SlotChipProps> = ({ shift, slot, ...selection }) => {
     </button>
   )
 
+  if (selection.pickerAsSheet) return chip
   if (isActive) {
     return (
       <SlotPicker

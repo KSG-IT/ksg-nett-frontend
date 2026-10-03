@@ -1,5 +1,12 @@
 import { useMutation } from '@apollo/client'
-import { Button, Popover, Stack, Text, UnstyledButton } from '@mantine/core'
+import {
+  Button,
+  Drawer,
+  Popover,
+  Stack,
+  Text,
+  UnstyledButton,
+} from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { IconPlus } from '@tabler/icons-react'
 import { useState } from 'react'
@@ -16,6 +23,7 @@ import {
   toCreateInput,
 } from '../../shiftForm'
 import classes from './ScheduleGrid.module.css'
+import { SHEET_PROPS } from './sheetProps'
 import {
   NameSuggestions,
   RoleSteppers,
@@ -28,19 +36,21 @@ export interface CreateContext {
   shifts: DayShift[]
 }
 
-interface CreateShiftPopoverProps extends CreateContext {
+interface CreateShiftFormProps extends CreateContext {
   date: Date
   location: LocationValues | null
+  onDone: () => void
 }
 
-// The + in a day cell: a small form with the date and location from the cell.
-export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
+// The form for one new shift. The date and location come from where the
+// manager clicked.
+const CreateShiftForm: React.FC<CreateShiftFormProps> = ({
   scheduleId,
   shifts,
   date,
   location,
+  onDone,
 }) => {
-  const [opened, setOpened] = useState(false)
   const [values, setValues] = useState<ShiftFormValues>(() =>
     emptyShiftForm(date, location)
   )
@@ -50,11 +60,6 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
   })
   const suggestions = nameSuggestions(shifts, values.location)
   const slotTotal = values.slots.reduce((sum, slot) => sum + slot.count, 0)
-
-  function handleOpen() {
-    setValues(emptyShiftForm(date, location))
-    setOpened(true)
-  }
 
   function handleChange(change: Partial<ShiftFormValues>) {
     setValues(current => ({ ...current, ...change }))
@@ -70,7 +75,7 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
       variables: { input: toCreateInput(scheduleId, values) },
       onCompleted() {
         showNotification({ message: `${values.name.trim()} er opprettet` })
-        setOpened(false)
+        onDone()
       },
       onError({ message }) {
         showNotification({ title: 'Noe gikk galt', message, color: 'red' })
@@ -78,6 +83,45 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
     })
   }
 
+  return (
+    <form onSubmit={handleSubmit}>
+      <Stack gap="xs">
+        <Text size="sm" fw={700}>
+          Ny vakt · {format(date, 'EEEE d. MMM')}
+        </Text>
+        <NameSuggestions
+          suggestions={suggestions}
+          selected={values.name}
+          onPick={handlePick}
+        />
+        <ShiftDetailsFields values={values} onChange={handleChange} />
+        <RoleSteppers
+          slots={values.slots}
+          rolesInUse={rolesInUse(shifts)}
+          onChange={slots => handleChange({ slots })}
+        />
+        <Button
+          type="submit"
+          size="xs"
+          color="samfundet-red"
+          loading={loading}
+          disabled={!values.name.trim() || slotTotal === 0}
+        >
+          Opprett vakt med {slotTotal} {slotTotal === 1 ? 'plass' : 'plasser'}
+        </Button>
+      </Stack>
+    </form>
+  )
+}
+
+interface CreateShiftPopoverProps extends CreateContext {
+  date: Date
+  location: LocationValues | null
+}
+
+// Desktop: the + in a day cell opens the form in a popover.
+export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = props => {
+  const [opened, setOpened] = useState(false)
   return (
     <Popover
       opened={opened}
@@ -91,42 +135,42 @@ export const CreateShiftPopover: React.FC<CreateShiftPopoverProps> = ({
       <Popover.Target>
         <UnstyledButton
           className={classes.addShift}
-          aria-label={`Ny vakt ${format(date, 'EEEE d. MMMM')}`}
-          onClick={handleOpen}
+          aria-label={`Ny vakt ${format(props.date, 'EEEE d. MMMM')}`}
+          onClick={() => setOpened(true)}
         >
           <IconPlus size={12} />
         </UnstyledButton>
       </Popover.Target>
       <Popover.Dropdown p="sm">
-        <form onSubmit={handleSubmit}>
-          <Stack gap="xs">
-            <Text size="sm" fw={700}>
-              Ny vakt · {format(date, 'EEEE d. MMM')}
-            </Text>
-            <NameSuggestions
-              suggestions={suggestions}
-              selected={values.name}
-              onPick={handlePick}
-            />
-            <ShiftDetailsFields values={values} onChange={handleChange} />
-            <RoleSteppers
-              slots={values.slots}
-              rolesInUse={rolesInUse(shifts)}
-              onChange={slots => handleChange({ slots })}
-            />
-            <Button
-              type="submit"
-              size="xs"
-              color="samfundet-red"
-              loading={loading}
-              disabled={!values.name.trim() || slotTotal === 0}
-            >
-              Opprett vakt med {slotTotal}{' '}
-              {slotTotal === 1 ? 'plass' : 'plasser'}
-            </Button>
-          </Stack>
-        </form>
+        {opened && (
+          <CreateShiftForm {...props} onDone={() => setOpened(false)} />
+        )}
       </Popover.Dropdown>
     </Popover>
   )
 }
+
+interface CreateShiftSheetProps extends CreateContext {
+  // null closes the sheet
+  target: { date: Date; location: LocationValues | null } | null
+  onClose: () => void
+}
+
+// Phone: the form in a sheet from the bottom of the screen.
+export const CreateShiftSheet: React.FC<CreateShiftSheetProps> = ({
+  target,
+  onClose,
+  ...context
+}) => (
+  <Drawer opened={target !== null} onClose={onClose} {...SHEET_PROPS}>
+    {target && (
+      <CreateShiftForm
+        key={target.date.getTime()}
+        {...context}
+        date={target.date}
+        location={target.location}
+        onDone={onClose}
+      />
+    )}
+  </Drawer>
+)

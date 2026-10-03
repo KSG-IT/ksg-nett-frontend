@@ -187,3 +187,33 @@ export function compactTime(shift: DayShift) {
     new Date(shift.datetimeEnd)
   )}`
 }
+
+export interface PhoneDayGroup {
+  key: string
+  // Set for several locations only.
+  location?: LocationValues | null
+  shifts: DayShift[]
+}
+
+export interface PhoneDay {
+  date: Date
+  groups: PhoneDayGroup[]
+}
+
+// The grid as a list of days for a phone. With several locations, the shifts
+// of a day are grouped by location, and locations without shifts that day
+// are left out.
+export function phoneDays(weeks: GridWeek[]): PhoneDay[] {
+  return weeks.flatMap(week =>
+    weekDays(week.monday).map((date, index) => ({
+      date,
+      groups: week.rows
+        .map(row => ({
+          key: row.location === undefined ? 'all' : row.location ?? 'none',
+          location: row.location,
+          shifts: row.days[index].shifts,
+        }))
+        .filter(group => group.shifts.length > 0),
+    }))
+  )
+}

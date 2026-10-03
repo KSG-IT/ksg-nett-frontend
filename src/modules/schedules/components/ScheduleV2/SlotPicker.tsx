@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@apollo/client'
 import {
   Avatar,
   Button,
+  Drawer,
   Popover,
   Stack,
   Text,
@@ -21,6 +22,7 @@ import {
 import { busyOnDay, compactTime, shiftCounts } from '../../scheduleGrid'
 import { parseShiftRole } from '../../util'
 import classes from './ScheduleGrid.module.css'
+import { SHEET_PROPS } from './sheetProps'
 
 export interface SlotTarget {
   shift: DayShift
@@ -45,20 +47,63 @@ interface SearchbarUsersReturns {
 
 const SUGGESTION_COUNT = 8
 
-interface SlotPickerProps {
+interface SlotPickerBodyProps {
   target: SlotTarget
   shifts: DayShift[]
   onClose: () => void
   onAssigned: (target: SlotTarget) => void
+  // On a phone there is no keyboard hint
+  touch?: boolean
+}
+
+interface SlotPickerProps extends SlotPickerBodyProps {
   children: React.ReactElement
 }
 
+// Desktop: a popover on the chip.
 export const SlotPicker: React.FC<SlotPickerProps> = ({
+  children,
+  ...body
+}) => (
+  <Popover
+    opened
+    onChange={opened => !opened && body.onClose()}
+    onClose={body.onClose}
+    position="bottom-start"
+    width={290}
+    shadow="md"
+    trapFocus
+    withinPortal
+  >
+    <Popover.Target>{children}</Popover.Target>
+    <Popover.Dropdown p="xs">
+      <SlotPickerBody {...body} />
+    </Popover.Dropdown>
+  </Popover>
+)
+
+interface SlotPickerSheetProps extends Omit<SlotPickerBodyProps, 'target'> {
+  target: SlotTarget | null
+}
+
+// Phone: a sheet from the bottom of the screen.
+export const SlotPickerSheet: React.FC<SlotPickerSheetProps> = ({
+  target,
+  ...body
+}) => (
+  <Drawer opened={target !== null} onClose={body.onClose} {...SHEET_PROPS}>
+    {target && (
+      <SlotPickerBody key={target.slot.id} target={target} touch {...body} />
+    )}
+  </Drawer>
+)
+
+const SlotPickerBody: React.FC<SlotPickerBodyProps> = ({
   target,
   shifts,
   onClose,
   onAssigned,
-  children,
+  touch = false,
 }) => {
   const { shift, slot } = target
   const [search, setSearch] = useState('')
@@ -154,67 +199,57 @@ export const SlotPicker: React.FC<SlotPickerProps> = ({
   }
 
   return (
-    <Popover
-      opened
-      onChange={opened => !opened && onClose()}
-      onClose={onClose}
-      position="bottom-start"
-      width={290}
-      shadow="md"
-      trapFocus
-      withinPortal
-    >
-      <Popover.Target>{children}</Popover.Target>
-      <Popover.Dropdown p="xs">
-        <Stack gap={6}>
-          <Text size="xs" fw={700}>
-            {format(new Date(shift.datetimeStart), 'EEE d. MMM')} · {shift.name}{' '}
-            {compactTime(shift)} · {parseShiftRole(slot.role)}
+    <Stack gap={6}>
+      <Text size="xs" fw={700}>
+        {format(new Date(shift.datetimeStart), 'EEE d. MMM')} · {shift.name}{' '}
+        {compactTime(shift)} · {parseShiftRole(slot.role)}
+      </Text>
+      {slot.user && (
+        <div className={classes.current}>
+          <Text size="sm" truncate>
+            {slot.user.getFullWithNickName}
           </Text>
-          {slot.user && (
-            <div className={classes.current}>
-              <Text size="sm" truncate>
-                {slot.user.getFullWithNickName}
-              </Text>
-              <Button
-                size="compact-xs"
-                variant="subtle"
-                color="red"
-                loading={clearing}
-                onClick={handleClear}
-              >
-                Fjern
-              </Button>
-            </div>
-          )}
-          <TextInput
-            size="xs"
-            placeholder={slot.user ? 'Bytt til …' : 'Søk navn …'}
-            value={search}
-            onChange={handleSearchChange}
-            onKeyDown={handleKeyDown}
-            data-autofocus
-            aria-label="Søk etter person"
-          />
-          <Text size="xs" c="dimmed">
-            {debouncedSearch === ''
-              ? 'På vakt disse ukene, færrest vakter først'
-              : 'Søkeresultat'}
-          </Text>
-          <PickerRows
-            people={people}
-            highlighted={highlighted}
-            disabled={assigning}
-            countOf={countOf}
-            busyOf={userId => busyOnDay(shifts, userId, shift)}
-            onPick={handlePick}
-          />
-          <Text size="xs" c="dimmed" className={classes.keys}>
-            ↑ ↓ og Enter velger · Esc lukker
-          </Text>
-        </Stack>
-      </Popover.Dropdown>
-    </Popover>
+          <Button
+            size="compact-xs"
+            variant="subtle"
+            color="red"
+            loading={clearing}
+            onClick={handleClear}
+          >
+            Fjern
+          </Button>
+        </div>
+      )}
+      <TextInput
+        size={touch ? 'md' : 'xs'}
+        placeholder={slot.user ? 'Bytt til …' : 'Søk navn …'}
+        value={search}
+        onChange={handleSearchChange}
+        onKeyDown={handleKeyDown}
+        // On a phone the keyboard would hide the suggestions
+        data-autofocus={!touch || undefined}
+        aria-label="Søk etter person"
+      />
+      <Text size="xs" c="dimmed">
+        {debouncedSearch === ''
+          ? 'På vakt disse ukene, færrest vakter først'
+          : 'Søkeresultat'}
+      </Text>
+      <PickerRows
+        people={people}
+        highlighted={highlighted}
+        disabled={assigning}
+        touch={touch}
+        countOf={countOf}
+        busyOf={userId => busyOnDay(shifts, userId, shift)}
+        onPick={handlePick}
+      />
+      {!touch && (
+        <Text size="xs" c="dimmed" className={classes.keys}>
+          ↑ ↓ og Enter velger · Esc lukker
+        </Text>
+      )}
+    </Stack>
   )
 }
 
@@ -222,6 +257,7 @@ interface PickerRowsProps {
   people: PickerPerson[]
   highlighted: number
   disabled: boolean
+  touch: boolean
   countOf: (userId: string) => number
   busyOf: (userId: string) => string | null
   onPick: (person: PickerPerson) => void
@@ -236,7 +272,7 @@ const PickerRows: React.FC<PickerRowsProps> = ({ people, ...props }) => {
     )
   }
   return (
-    <div className={classes.pickerList}>
+    <div className={classes.pickerList} data-touch={props.touch || undefined}>
       {people.map((person, index) => (
         <PickerRow
           key={person.id}
