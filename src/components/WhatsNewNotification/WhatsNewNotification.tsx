@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '2026-10-3'
+const NOTIFICATION_KEY = '2026-10-3-2'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -37,8 +37,34 @@ export const WhatsNewNotification: React.FC = () => {
       <Divider mb="md" />
       <Title order={4}>Nytt i oktober 2026</Title>
       <Text>
+        <b>Oppgradering:</b> KSG-nett har fått en større oppgradering, og mange
+        sider har fått nytt utseende. Om noe ser rart ut eller ikke fungerer,
+        trykk på «Gi tilbakemelding» på kontrollpanelet, eller send en e-post
+        til ksg-it@samfundet.no.
+      </Text>
+      <Text>
+        <b>Vakter:</b> Ny side som viser hvem som jobber en dag, som tidslinje
+        på PC og som liste på mobil. Dine egne vakter er merket «Din vakt».
+      </Text>
+      <Text>
+        <b>Mine vakter:</b> Neste vakt øverst, kommende og tidligere vakter på
+        samme side, og en knapp for å legge vaktene inn i kalenderen din.
+      </Text>
+      <Text>
+        <b>Vaktplaner:</b> Vaktplanansvarlige ser hvor langt fram hver vaktplan
+        er satt opp, og hvor mange plasser som er ledige. Prøv det nye designet
+        for vaktplanen («Nytt design!»): sett folk på vakt med noen få
+        tastetrykk, se hvor mange vakter hver person har, og lag nye vakter rett
+        i planen. Det fungerer også på mobil.
+      </Text>
+      <Text>
+        <b>Kontrollpanelet:</b> Neste vakter, siste transaksjoner og sitatene
+        har fått nytt utseende. Du kan sende tilbakemelding til KSG-IT rett fra
+        kontrollpanelet, også anonymt.
+      </Text>
+      <Text>
         <b>Min økonomi:</b> Se hva du har brukt penger på per uke, måned eller
-        semester, med grafer og en oversikt over hva du har kjøpt.
+        semester. Kjøp vises med minus, og innskudd med pluss.
       </Text>
       <Text>
         <b>Salgsstatistikk:</b> Ny side for Soci-salg per produkt, fra dette
@@ -53,8 +79,11 @@ export const WhatsNewNotification: React.FC = () => {
         filtreres på status.
       </Text>
       <Text>
-        <b>Allergier:</b> Vaktlisteansvarlige ser allergiene til alle på jobb
-        som en tabell for hele uka eller én dag.
+        <b>Allergier:</b> Vaktplanansvarlige ser allergiene til alle på jobb som
+        en tabell for hele uka eller én dag.
+      </Text>
+      <Text>
+        <b>Sidemenyen:</b> Nytt utseende, og siden du er på er alltid merket.
       </Text>
       <Text>
         <b>Ny versjon:</b> Når en ny versjon er ute, får du beskjed om å laste
@@ -63,16 +92,7 @@ export const WhatsNewNotification: React.FC = () => {
       </Text>
       <Text>
         <b>Tider:</b> Vakter og intervjuer får riktige tider rundt midnatt og
-        når sommertiden slutter.
-      </Text>
-      <Divider mb="md" />
-      <Title order={4}>Oppgradering - 2. Oktober 2026</Title>
-      <Text>
-        KSG-nett har fått en større oppgradering av UI-biblioteket vi bruker.
-        Det meste er under panseret, men noen ting kan ende opp med å se litt
-        rart ut eller slutte å funke. Om du legger merke til noe gjerne, gi
-        beskjed til KSG-IT (ksg-it@samfundet.no). Understreking i
-        tekstredigering fungerer nå.
+        når sommertiden slutter. Understreking i tekstredigering fungerer nå.
       </Text>
       <Divider mb="md" />
       <Title order={4}>Fremhevede artikler</Title>
