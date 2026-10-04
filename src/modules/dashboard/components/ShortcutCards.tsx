@@ -46,12 +46,14 @@ interface ShortcutCardsProps {
   sociOrderSession: boolean
   showNewbies: boolean
   showStockMarketShortcut: boolean
+  showFeedback: boolean
 }
 
 export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
   sociOrderSession,
   showNewbies,
   showStockMarketShortcut,
+  showFeedback,
 }) => {
   const { classes } = useStyles()
 
@@ -94,7 +96,7 @@ export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
       )}
 
       <ShortcutCardGrid shortcuts={memoizedShortcuts}>
-        <FeedbackCard />
+        {showFeedback && <FeedbackCard />}
       </ShortcutCardGrid>
     </Stack>
   )
