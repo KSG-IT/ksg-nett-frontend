@@ -14,5 +14,6 @@ export interface DashboardDataQueryReturns {
     sociOrderSession: Pick<SociOrderSessionNode, 'id'> | null
     showNewbies: boolean
     showStockMarketShortcut: boolean
+    showFeedback: boolean
   }
 }

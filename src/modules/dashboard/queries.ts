@@ -12,6 +12,7 @@ export const DASHBOARD_DATA_QUERY = gql`
         profileImage
       }
       showStockMarketShortcut
+      showFeedback
       showNewbies
       sociOrderSession {
         id

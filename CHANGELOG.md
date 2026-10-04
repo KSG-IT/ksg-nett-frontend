@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [unreleased]
+
+### Changed
+
+- Dashboard: the feedback card shows only when the `feedback` feature flag is on
+
 ## [v2026.10.1]
 
 ### Added
