@@ -16,7 +16,7 @@ interface ConfigureInterviewScheduleProps {
   setStageCallback: (stage: WizardStage) => void
 }
 
-export const ConfigureInterviewSchedule: React.VFC<
+export const ConfigureInterviewSchedule: React.FC<
   ConfigureInterviewScheduleProps
 > = ({ setStageCallback }) => {
   const { data, loading } = useQuery(INTERVIEW_SCHEDULE_TEMPLATE, {
@@ -44,12 +44,9 @@ export const ConfigureInterviewSchedule: React.VFC<
     defaultInterviewDayStart:
       interviewScheduleTemplate.defaultInterviewDayStart,
     defaultInterviewDayEnd: interviewScheduleTemplate.defaultInterviewDayEnd,
-    interviewPeriodStartDate: new Date(
-      interviewScheduleTemplate.interviewPeriodStartDate
-    ),
-    interviewPeriodEndDate: new Date(
-      interviewScheduleTemplate.interviewPeriodEndDate
-    ),
+    interviewPeriodStartDate:
+      interviewScheduleTemplate.interviewPeriodStartDate,
+    interviewPeriodEndDate: interviewScheduleTemplate.interviewPeriodEndDate,
   }
 
   return (

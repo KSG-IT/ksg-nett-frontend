@@ -1,12 +1,9 @@
+import { Container, Stack, Text, Title } from '@mantine/core'
+import { TimeGrid } from '@mantine/dates'
 import {
-  Button,
-  Container,
-  SimpleGrid,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core'
-import { InterviewsAvailableForBookingReturns } from 'modules/admissions/types.graphql'
+  InterviewSlot,
+  InterviewsAvailableForBookingReturns,
+} from 'modules/admissions/types.graphql'
 
 import { useQuery } from '@apollo/client'
 import { FullPageError } from 'components/FullPageComponents'
@@ -59,39 +56,53 @@ export const InterviewsAvailableForBooking: React.FC<
     <>
       {data.interviewsAvailableForBooking.map(interviewDay => (
         <Stack key={`${interviewDay.date}`}>
-          <Title color={'dimmed'} order={3}>
+          <Title c={'dimmed'} order={3}>
             Tilgjengelige tidspunkter
           </Title>
-          <Title order={5} transform={'uppercase'}>
+          <Title order={5} tt={'uppercase'}>
             {format(new Date(interviewDay.date), 'EEEE dd MMM')}
           </Title>
-          <SimpleGrid
-            cols={2}
-            breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
-          >
-            {interviewDay.interviewSlots.map((slot, i) => {
-              const unavailable = slot.interviewIds.length === 0
-              return (
-                <Button
-                  variant={
-                    currentlySelected === slot.interviewIds
-                      ? 'filled'
-                      : 'outline'
-                  }
-                  radius={'md'}
-                  key={i}
-                  disabled={unavailable}
-                  onClick={() => {
-                    handleCallback(slot.interviewIds)
-                  }}
-                >
-                  {format(new Date(slot.interviewStart), 'HH:mm')}
-                </Button>
-              )
-            })}
-          </SimpleGrid>
+          <InterviewDayTimeGrid
+            slots={interviewDay.interviewSlots}
+            handleCallback={handleCallback}
+            currentlySelected={currentlySelected}
+          />
         </Stack>
       ))}
     </>
+  )
+}
+
+interface InterviewDayTimeGridProps {
+  slots: InterviewSlot[]
+  handleCallback: (value: string[]) => void
+  currentlySelected: string[]
+}
+
+const InterviewDayTimeGrid: React.FC<InterviewDayTimeGridProps> = ({
+  slots,
+  handleCallback,
+  currentlySelected,
+}) => {
+  const slotsByTime = new Map(
+    slots.map(slot => [format(new Date(slot.interviewStart), 'HH:mm'), slot])
+  )
+  const selectedTime =
+    [...slotsByTime].find(([, slot]) =>
+      slot.interviewIds.some(id => currentlySelected.includes(id))
+    )?.[0] ?? null
+
+  return (
+    <TimeGrid
+      data={[...slotsByTime.keys()]}
+      value={selectedTime}
+      onChange={time => {
+        if (time) handleCallback(slotsByTime.get(time)?.interviewIds ?? [])
+      }}
+      allowDeselect={false}
+      disableTime={time => !slotsByTime.get(time)?.interviewIds.length}
+      radius="md"
+      simpleGridProps={{ cols: { base: 1, xs: 2 } }}
+    />
   )
 }

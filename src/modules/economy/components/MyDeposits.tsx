@@ -1,102 +1,148 @@
-import { ActionIcon, Badge, createStyles, Text } from '@mantine/core'
+import {
+  ActionIcon,
+  Anchor,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  ThemeIcon,
+} from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconTrash } from '@tabler/icons-react'
-import { CardTable } from 'components/CardTable'
-import { format } from 'util/date-fns'
-import { useCurrencyFormatter } from 'util/hooks'
+import { IconClock, IconPigMoney, IconTrash } from '@tabler/icons-react'
+import { Badge } from 'components/Badge'
+import { Link } from 'react-router-dom'
 import { useDepositMutations } from '../mutations.hooks'
 import { MY_BANK_ACCOUNT_QUERY } from '../queries'
+import {
+  activityTime,
+  depositAmounts,
+  formatAmount,
+  formatKroner,
+} from '../transactions'
 import { DepositNode } from '../types.graphql'
+import classes from './ActivityList.module.css'
 
 interface MyDepositsProps {
   deposits: DepositNode[]
 }
 
-export const MyDeposits: React.VFC<MyDepositsProps> = ({ deposits }) => {
-  const { classes } = useMyDepositsStyles()
-  const { deleteDeposit } = useDepositMutations()
-  const { formatCurrency } = useCurrencyFormatter()
+export const MyDeposits: React.FC<MyDepositsProps> = ({ deposits }) => (
+  <Stack gap="xs">
+    <Group justify="space-between">
+      <Text c="dimmed" fw={700}>
+        Innskudd
+      </Text>
+      <Anchor component={Link} to="/economy/deposits/create" size="sm">
+        Nytt innskudd
+      </Anchor>
+    </Group>
+    <Paper withBorder radius="md" className={classes.card}>
+      {deposits.length === 0 ? (
+        <Text c="dimmed" size="sm" ta="center" p="md">
+          Du har ingen innskudd ennå.
+        </Text>
+      ) : (
+        <DepositRows deposits={deposits} />
+      )}
+    </Paper>
+  </Stack>
+)
 
-  function handleDeleteDeposit(deposit: DepositNode) {
-    if (confirm('Er du sikker på at du vil slette denne innskuddet?')) {
-      deleteDeposit({
-        variables: {
-          id: deposit.id,
-        },
-        refetchQueries: [MY_BANK_ACCOUNT_QUERY],
-        onCompleted() {
-          showNotification({
-            title: 'Suksess',
-            message: 'Innskuddet ble slettet',
-          })
-        },
-        onError({ message }) {
-          showNotification({
-            title: 'Noe gikk galt',
-            message,
-          })
-        },
-      })
-    }
-  }
+interface DepositRowsProps {
+  deposits: DepositNode[]
+}
 
-  const rows = deposits.map(deposit => (
-    <tr key={deposit.id}>
-      <td>{format(new Date(deposit.createdAt), 'yy.MM.dd')}</td>
-      <td>
-        <Text color={'red'}>{formatCurrency(deposit.amount)}</Text>
-      </td>
-      <td>
-        {deposit.resolvedAmount && (
-          <Text color={'green'}>{formatCurrency(deposit.resolvedAmount)}</Text>
-        )}
-      </td>
-      <td>
-        {deposit.approved ? (
-          <Badge color={'green'} variant={'filled'} size="sm">
-            Godkjent
-          </Badge>
-        ) : (
-          <Badge color={'red'} variant={'filled'} size="sm">
-            Venter
-          </Badge>
-        )}
-      </td>
-      <td>
-        <ActionIcon
-          disabled={deposit.approved}
-          onClick={() => handleDeleteDeposit(deposit)}
-        >
-          <IconTrash />
-        </ActionIcon>
-      </td>
-    </tr>
-  ))
+const DepositRows: React.FC<DepositRowsProps> = ({ deposits }) => {
+  const now = new Date()
   return (
-    <CardTable className={classes.table}>
-      <thead>
-        <tr>
-          <th>Dato</th>
-          <th>Betalt</th>
-          <th>Inn på konto</th>
-          <th>
-            <Text align={'center'}>Status</Text>
-          </th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </CardTable>
+    <>
+      {deposits.map(deposit => (
+        <DepositRow key={deposit.id} deposit={deposit} now={now} />
+      ))}
+    </>
   )
 }
 
-const useMyDepositsStyles = createStyles(theme => ({
-  table: {
-    'td:nth-child(2)': {
-      textAlign: 'right',
-    },
-    'th:nth-child(2)': {
-      textAlign: 'right',
-    },
-  },
-}))
+interface DepositRowProps {
+  deposit: DepositNode
+  now: Date
+}
+
+const DepositRow: React.FC<DepositRowProps> = ({ deposit, now }) => {
+  const { deleteDeposit } = useDepositMutations()
+  const { credited, paid } = depositAmounts(deposit)
+  const time = activityTime(new Date(deposit.createdAt), now)
+
+  function handleDelete() {
+    if (!confirm('Er du sikker på at du vil slette dette innskuddet?')) return
+    deleteDeposit({
+      variables: { id: deposit.id },
+      refetchQueries: [MY_BANK_ACCOUNT_QUERY],
+      onCompleted() {
+        showNotification({
+          title: 'Suksess',
+          message: 'Innskuddet ble slettet',
+        })
+      },
+      onError({ message }) {
+        showNotification({
+          title: 'Noe gikk galt',
+          message,
+        })
+      },
+    })
+  }
+
+  return (
+    <div className={classes.row}>
+      <ThemeIcon
+        variant="light"
+        color={deposit.approved ? 'green' : 'orange'}
+        radius="xl"
+        size={32}
+      >
+        {deposit.approved ? (
+          <IconPigMoney size={16} />
+        ) : (
+          <IconClock size={16} />
+        )}
+      </ThemeIcon>
+      <div className={classes.text}>
+        <Group gap={6} wrap="nowrap">
+          <Text size="sm" fw={600}>
+            Innskudd
+          </Text>
+          {!deposit.approved && (
+            <Badge size="xs" variant="light" color="orange">
+              Venter
+            </Badge>
+          )}
+        </Group>
+        <Text size="xs" c="dimmed">
+          {time}
+          {paid !== null && ` · Betalt ${formatKroner(paid)}`}
+        </Text>
+      </div>
+      <Group gap={4} wrap="nowrap">
+        <Text
+          size="sm"
+          fw={700}
+          className={classes.amount}
+          c={deposit.approved ? 'green.8' : 'dimmed'}
+        >
+          {formatAmount(credited)}
+        </Text>
+        {!deposit.approved && (
+          <ActionIcon
+            variant="subtle"
+            color="gray"
+            aria-label="Slett innskuddet"
+            onClick={handleDelete}
+          >
+            <IconTrash size={16} />
+          </ActionIcon>
+        )}
+      </Group>
+    </div>
+  )
+}

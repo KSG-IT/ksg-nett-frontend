@@ -25,7 +25,7 @@ export const ProductSelect: React.FC<ProductSelectProps> = ({
       value={value}
       placeholder="Velg produkt"
       data={options ?? []}
-      onChange={onChangeCallback}
+      onChange={val => val && onChangeCallback(val)}
       {...rest}
     />
   )

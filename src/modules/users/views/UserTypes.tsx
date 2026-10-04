@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Stack, Title } from '@mantine/core'
+import { Button, Group, Stack, Table, Title } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
@@ -17,16 +17,16 @@ export const UserTypes: React.FC = () => {
   if (loading || !data) return <FullContentLoader />
 
   const rows = data.allUserTypes.map(userType => (
-    <tr id={`${userType.id}`}>
-      <td>{userType.name}</td>
-      <td>
-        <Group position="right">
+    <Table.Tr key={userType.id} id={`${userType.id}`}>
+      <Table.Td>{userType.name}</Table.Td>
+      <Table.Td>
+        <Group justify="flex-end">
           <Link to={`${userType.id}`}>
             <Button color="samfundet-red">Administrer</Button>
           </Link>
         </Group>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
   return (
     <Stack>
@@ -37,13 +37,13 @@ export const UserTypes: React.FC = () => {
       </MessageBox>
 
       <CardTable>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Navn</Table.Th>
+            <Table.Th></Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
       </CardTable>
     </Stack>
   )

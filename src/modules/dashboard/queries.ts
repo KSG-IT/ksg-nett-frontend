@@ -12,6 +12,7 @@ export const DASHBOARD_DATA_QUERY = gql`
         profileImage
       }
       showStockMarketShortcut
+      showFeedback
       showNewbies
       sociOrderSession {
         id
@@ -29,17 +30,6 @@ export const DASHBOARD_DATA_QUERY = gql`
         }
         semester
         sum
-      }
-      myUpcomingShifts {
-        roleDisplay
-        shift {
-          locationDisplay
-          datetimeStart
-          datetimeEnd
-          schedule {
-            name
-          }
-        }
       }
     }
   }

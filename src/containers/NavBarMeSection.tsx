@@ -1,11 +1,9 @@
-import { createStyles, Group, Navbar, Stack, Text } from '@mantine/core'
+import { AppShell, Text, UnstyledButton } from '@mantine/core'
 import * as Sentry from '@sentry/react'
 import {
   IconCashBanknote,
   IconHandRock,
-  IconJumpRope,
   IconLogout,
-  IconPigMoney,
   IconSettings,
 } from '@tabler/icons-react'
 import { UserThumbnail } from 'modules/users/components'
@@ -13,22 +11,45 @@ import { useNavigate } from 'react-router-dom'
 import { useStore } from 'store'
 import { removeLoginToken } from 'util/auth'
 import { useCurrencyFormatter, useSidebar } from 'util/hooks'
-import { NavItem } from './NavItem'
+import classes from './Navbar.module.css'
+import { NavItem, RouteItem } from './NavItem'
 
+// Before: 100–1000 kr was 'white', which was invisible on the white sidebar.
 function liquidityColor(balance: number) {
-  if (balance < 0) {
-    return 'red'
-  } else if (balance < 100) {
-    return 'yellow'
-  } else if (balance < 1000) {
-    return 'white'
-  } else {
-    return 'cyan'
-  }
+  if (balance < 0) return 'red.7'
+  if (balance < 100) return 'orange.7'
+  if (balance < 1000) return 'dimmed'
+  return 'teal.7'
 }
 
-export const NavBarMeSection: React.FC = () => {
-  const { classes } = useStyles()
+export const ME_ITEMS: RouteItem[] = [
+  {
+    label: 'Innstillinger',
+    link: '/users/me',
+    icon: IconSettings,
+    permissions: [],
+  },
+  {
+    label: 'Min økonomi',
+    link: '/economy/me',
+    icon: IconCashBanknote,
+    permissions: [],
+  },
+  {
+    label: 'Mine vakter',
+    link: '/schedules/me',
+    icon: IconHandRock,
+    permissions: [],
+  },
+]
+
+interface NavBarMeSectionProps {
+  activeLink: string | null
+}
+
+export const NavBarMeSection: React.FC<NavBarMeSectionProps> = ({
+  activeLink,
+}) => {
   const me = useStore(store => store.user)
   const { formatCurrency } = useCurrencyFormatter()
   const { toggleSidebar } = useSidebar()
@@ -48,43 +69,24 @@ export const NavBarMeSection: React.FC = () => {
   }
 
   return (
-    <Navbar.Section>
-      <Group className={classes.meGroup} onClick={handleClick}>
-        <UserThumbnail user={me} size="md" />
-
-        <Stack spacing={0}>
-          <Text style={{ textOverflow: 'ellipsis' }} size="xs">
+    <AppShell.Section className={classes.group}>
+      <UnstyledButton className={classes.me} onClick={handleClick}>
+        <UserThumbnail user={me} />
+        <div className={classes.meText}>
+          <Text size="sm" fw={600} truncate>
             {me.getFullWithNickName}
           </Text>
-          <Group spacing={0} align="center">
-            <IconPigMoney size={16} />
-            <Text size={'xs'} weight={500} color={liquidityColor(me.balance)}>
-              {formatCurrency(me.balance)}
-            </Text>
-          </Group>
-        </Stack>
-      </Group>
-      <NavItem
-        label="Innstillinger"
-        link={`/users/me`}
-        icon={IconSettings}
-        active={false}
-        permissions={[]}
-      />
-      <NavItem
-        label="Min Økonomi"
-        link="/economy/me"
-        icon={IconCashBanknote}
-        active={false}
-        permissions={[]}
-      />
-      <NavItem
-        label="Min vaktplan"
-        link="/schedules/me"
-        icon={IconHandRock}
-        active={false}
-        permissions={[]}
-      />
+          <Text
+            size="xs"
+            fw={600}
+            c={liquidityColor(me.balance)}
+            className={classes.balance}
+          >
+            {formatCurrency(me.balance)}
+          </Text>
+        </div>
+      </UnstyledButton>
+      <MeItems activeLink={activeLink} />
       <NavItem
         label="Logg ut"
         link="#"
@@ -93,14 +95,14 @@ export const NavBarMeSection: React.FC = () => {
         permissions={[]}
         onClick={handleLogoutAlert}
       />
-    </Navbar.Section>
+    </AppShell.Section>
   )
 }
 
-const useStyles = createStyles(() => ({
-  meGroup: {
-    ':hover': {
-      cursor: 'pointer',
-    },
-  },
-}))
+const MeItems: React.FC<NavBarMeSectionProps> = ({ activeLink }) => (
+  <>
+    {ME_ITEMS.map(item => (
+      <NavItem key={item.link} {...item} active={item.link === activeLink} />
+    ))}
+  </>
+)

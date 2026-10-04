@@ -68,13 +68,13 @@ export const ApplicantTableRowMenu: React.FC<{
         </ActionIcon>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item onClick={handleMoreInfo} icon={<IconEye />}>
+        <Menu.Item onClick={handleMoreInfo} leftSection={<IconEye />}>
           Mer info
         </Menu.Item>
         <Menu.Item
           onClick={handleAttendInterview}
           color={attendingInterviewColor}
-          icon={atttendInterviewIcon}
+          leftSection={atttendInterviewIcon}
         >
           {attendInterviewText}
         </Menu.Item>

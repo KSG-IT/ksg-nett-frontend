@@ -3,20 +3,15 @@ import { DateInput, TimeInput } from '@mantine/dates'
 import { Controller } from 'react-hook-form'
 import { useIsMobile } from 'util/hooks'
 import { useInterviewScheduleAPI } from './useInterviewScheduleAPI'
-import { useInterviewScheduleLogic } from './useInterviewScheduleLogic'
+import {
+  InterviewScheduleFormValues,
+  useInterviewScheduleLogic,
+} from './useInterviewScheduleLogic'
 
 interface InterviewScheduleFormProps {
   nextStageCallback: () => void
   interviewScheduleId: string
-  defaultValues: {
-    defaultInterviewDuration: string
-    defaultPauseDuration: string
-    defaultBlockSize: number
-    defaultInterviewDayStart: string
-    defaultInterviewDayEnd: string
-    interviewPeriodStartDate: Date
-    interviewPeriodEndDate: Date
-  }
+  defaultValues: InterviewScheduleFormValues
 }
 
 export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
@@ -64,7 +59,9 @@ export const InterviewScheduleForm: React.FC<InterviewScheduleFormProps> = ({
           label="Antall intervjuer på rad"
           description="Hvor mange intervjuer på rad før man har en pause"
           error={errors?.defaultBlockSize?.message}
-          onChange={num => num && setValue('defaultBlockSize', num)}
+          onChange={num =>
+            typeof num === 'number' && setValue('defaultBlockSize', num)
+          }
         />
         <div></div>
         <TimeInput

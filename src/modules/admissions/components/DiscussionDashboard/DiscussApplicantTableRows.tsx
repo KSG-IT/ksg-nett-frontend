@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { ActionIcon, Menu, Text } from '@mantine/core'
+import { ActionIcon, Menu, Table, Text } from '@mantine/core'
 import {
   IconBackpack,
   IconCheck,
@@ -32,8 +32,8 @@ const renderPrioritycell = (
   if (priority === null)
     return (
       <>
-        <td></td>
-        <td></td>
+        <Table.Td></Table.Td>
+        <Table.Td></Table.Td>
       </>
     )
 
@@ -42,16 +42,16 @@ const renderPrioritycell = (
 
   return (
     <>
-      <td
+      <Table.Td
         style={{
           fontWeight: bold ? 'bold' : 'normal',
         }}
       >
         {priority.internalGroupPosition.name}
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <InternalGroupPositionPriorityBadge priority={priority} />
-      </td>
+      </Table.Td>
     </>
   )
 }
@@ -113,10 +113,10 @@ export const DiscussApplicantTableRows: React.FC<
     renderPrioritycell(priority, internalGroupId, index)
   )
   return (
-    <tr>
-      <td>{applicant.fullName}</td>
+    <Table.Tr>
+      <Table.Td>{applicant.fullName}</Table.Td>
       {priorityCells}
-      <td>
+      <Table.Td>
         <Menu position="left-start">
           <Menu.Target>
             <ActionIcon loading={loading}>
@@ -124,11 +124,11 @@ export const DiscussApplicantTableRows: React.FC<
             </ActionIcon>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Item icon={<IconEye />}>
+            <Menu.Item leftSection={<IconEye />}>
               <Text onClick={() => handleMoreInfo(applicant)}>Mer info</Text>
             </Menu.Item>
             <Menu.Label>Handlinger</Menu.Label>
-            <Menu.Item icon={<IconPlayerPlay />} color="blue">
+            <Menu.Item leftSection={<IconPlayerPlay />} color="blue">
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -139,7 +139,7 @@ export const DiscussApplicantTableRows: React.FC<
                 Diskuteres
               </Text>
             </Menu.Item>
-            <Menu.Item color="green" icon={<IconCheck />}>
+            <Menu.Item color="green" leftSection={<IconCheck />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -150,7 +150,7 @@ export const DiscussApplicantTableRows: React.FC<
                 Vil ha
               </Text>
             </Menu.Item>
-            <Menu.Item color="orange" icon={<IconQuestionMark />}>
+            <Menu.Item color="orange" leftSection={<IconQuestionMark />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -161,7 +161,7 @@ export const DiscussApplicantTableRows: React.FC<
                 Vil sannsynligvis ha
               </Text>
             </Menu.Item>
-            <Menu.Item color="grape" icon={<IconBackpack />}>
+            <Menu.Item color="grape" leftSection={<IconBackpack />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -173,7 +173,7 @@ export const DiscussApplicantTableRows: React.FC<
               </Text>
             </Menu.Item>
 
-            <Menu.Item color="yellow" icon={<IconWheelchair />}>
+            <Menu.Item color="yellow" leftSection={<IconWheelchair />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -184,7 +184,7 @@ export const DiscussApplicantTableRows: React.FC<
                 Reserve
               </Text>
             </Menu.Item>
-            <Menu.Item color="pink" icon={<IconHourglass />}>
+            <Menu.Item color="pink" leftSection={<IconHourglass />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -195,7 +195,7 @@ export const DiscussApplicantTableRows: React.FC<
                 Send på runde
               </Text>
             </Menu.Item>
-            <Menu.Item color="red" icon={<IconCreativeCommonsSa />}>
+            <Menu.Item color="red" leftSection={<IconCreativeCommonsSa />}>
               <Text
                 onClick={() =>
                   handleSetApplicantStatus(
@@ -208,7 +208,7 @@ export const DiscussApplicantTableRows: React.FC<
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   )
 }

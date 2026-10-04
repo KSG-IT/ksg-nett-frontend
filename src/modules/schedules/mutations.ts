@@ -188,3 +188,55 @@ export const PATCH_SHIFT_MUTATION = gql`
     }
   }
 `
+
+// v2 of the schedule view: the mutations return the slot with its user, so
+// the Apollo cache updates the chip without a refetch.
+const SLOT_WITH_USER = `
+  shiftSlot {
+    id
+    user {
+      id
+      initials
+      firstName
+      getFullWithNickName
+      getCleanFullName
+      profileImage
+    }
+  }
+`
+
+export const ASSIGN_SLOT_V2_MUTATION = gql`
+  mutation AssignSlotV2($shiftSlotId: ID!, $userId: ID!) {
+    addUserToShiftSlot(shiftSlotId: $shiftSlotId, userId: $userId) {
+      ${SLOT_WITH_USER}
+    }
+  }
+`
+
+export const CLEAR_SLOT_V2_MUTATION = gql`
+  mutation ClearSlotV2($shiftSlotId: ID!) {
+    removeUserFromShiftSlot(shiftSlotId: $shiftSlotId) {
+      ${SLOT_WITH_USER}
+    }
+  }
+`
+
+export const CREATE_SHIFT_WITH_SLOTS_MUTATION = gql`
+  mutation CreateShiftWithSlots($input: CreateShiftWithSlotsInput!) {
+    createShiftWithSlots(input: $input) {
+      shift {
+        id
+      }
+    }
+  }
+`
+
+export const UPDATE_SHIFT_DETAILS_MUTATION = gql`
+  mutation UpdateShiftDetails($input: UpdateShiftDetailsInput!) {
+    updateShiftDetails(input: $input) {
+      shift {
+        id
+      }
+    }
+  }
+`

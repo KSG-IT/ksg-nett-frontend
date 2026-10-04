@@ -1,0 +1,79 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+}
+
+.posters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-md);
+  padding: 4px 2px;
+}
+
+/* An old paper poster, slightly tilted, every second one the other way */
+.poster {
+  width: 132px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 8px 7px;
+  background: radial-gradient(
+      circle at 20% 15%,
+      rgba(255, 255, 255, 0.35),
+      transparent 60%
+    ),
+    #f1e2bf;
+  border: 1px solid #c9a96e;
+  outline: 2px solid #f1e2bf;
+  outline-offset: -5px;
+  box-shadow: 0 2px 4px rgba(80, 50, 10, 0.25);
+  color: #4a3215;
+  text-decoration: none;
+  transform: rotate(-1.5deg);
+  transition: transform 150ms ease;
+}
+
+.poster:nth-child(even) {
+  transform: rotate(1.5deg);
+}
+
+.poster:hover {
+  transform: rotate(0) scale(1.04);
+}
+
+.wanted {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.photo {
+  filter: sepia(0.7) contrast(1.05);
+  border: 2px solid #4a3215;
+  background: #e6d3a7;
+  color: #4a3215;
+}
+
+.name {
+  max-width: 100%;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  color: inherit;
+}
+
+.reward {
+  font-size: 11px;
+  font-weight: 800;
+  color: #9c2a20;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}

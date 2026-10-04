@@ -1,0 +1,53 @@
+.group {
+  padding: 6px var(--mantine-spacing-md);
+  background: var(--mantine-color-gray-0);
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mantine-color-dimmed);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  padding: 10px var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-gray-1);
+  cursor: pointer;
+}
+
+.row:hover {
+  background: var(--mantine-color-gray-0);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  min-width: 0;
+}
+
+.meta {
+  font-size: var(--mantine-font-size-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-dimmed);
+}
+
+.details {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md)
+    var(--mantine-spacing-sm) calc(44px + 2 * var(--mantine-spacing-md));
+  border-bottom: 1px solid var(--mantine-color-gray-1);
+}
+
+@media (max-width: 48em) {
+  .row {
+    padding: 10px var(--mantine-spacing-sm);
+  }
+  .details {
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm)
+      var(--mantine-spacing-sm);
+  }
+}

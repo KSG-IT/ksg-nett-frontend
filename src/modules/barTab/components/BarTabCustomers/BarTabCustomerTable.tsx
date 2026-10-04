@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core'
+import { Table } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { BarTabCustomerNode } from 'modules/barTab/types.graphql'
 
@@ -9,31 +9,24 @@ interface BarTabCustomerTableProps {
 export const BarTabCustomerTable: React.FC<BarTabCustomerTableProps> = ({
   barTabCustomers,
 }) => {
-  const { classes } = useBarTabCustomerTableStyles()
   const customerRows = barTabCustomers.map(customer => (
-    <tr key={customer.id}>
-      <td>{customer.name}</td>
-      <td>{customer.shortName}</td>
-      <td>{customer.email}</td>
-    </tr>
+    <Table.Tr key={customer.id}>
+      <Table.Td>{customer.name}</Table.Td>
+      <Table.Td>{customer.shortName}</Table.Td>
+      <Table.Td>{customer.email}</Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <CardTable>
-      <thead>
-        <tr>
-          <th>Gjeng</th>
-          <th>Kortnavn</th>
-          <th>Epost for BSF kvittering</th>
-        </tr>
-      </thead>
-      <tbody>{customerRows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Gjeng</Table.Th>
+          <Table.Th>Kortnavn</Table.Th>
+          <Table.Th>Epost for BSF kvittering</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{customerRows}</Table.Tbody>
     </CardTable>
   )
 }
-
-const useBarTabCustomerTableStyles = createStyles(theme => ({
-  card: {
-    overflowX: 'scroll',
-  },
-}))

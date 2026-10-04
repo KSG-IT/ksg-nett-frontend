@@ -5,7 +5,7 @@ interface AdditionalEvaluationListProps {
   interview: InterviewNode
 }
 
-export const AdditionalEvaluationAnswerList: React.VFC<
+export const AdditionalEvaluationAnswerList: React.FC<
   AdditionalEvaluationListProps
 > = ({ interview }) => {
   const { additionalEvaluationAnswers } = interview

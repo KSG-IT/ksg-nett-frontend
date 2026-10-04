@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
-import { Button, Stack, Title } from '@mantine/core'
+import { Button, Stack, Table, Title } from '@mantine/core'
 import { CardTable } from 'components/CardTable'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -31,7 +31,7 @@ export const MY_UPCOMING_INTERVIEWS_QUERY = gql`
   }
 `
 
-export const MyUpcomingInterviews: React.VFC = () => {
+export const MyUpcomingInterviews: React.FC = () => {
   const { loading, error, data } = useQuery<MyInterviewsReturns>(
     MY_UPCOMING_INTERVIEWS_QUERY
   )
@@ -52,11 +52,13 @@ export const MyUpcomingInterviews: React.VFC = () => {
   const { myUpcomingInterviews } = data
 
   const rows = myUpcomingInterviews.map(interview => (
-    <tr key={interview.id}>
-      <td>{interview.applicant.fullName}</td>
-      <td>{format(new Date(interview.interviewStart), 'iii d MMM HH:mm')}</td>
-      <td>{interview.location.name}</td>
-      <td>
+    <Table.Tr key={interview.id}>
+      <Table.Td>{interview.applicant.fullName}</Table.Td>
+      <Table.Td>
+        {format(new Date(interview.interviewStart), 'iii d MMM HH:mm')}
+      </Table.Td>
+      <Table.Td>{interview.location.name}</Table.Td>
+      <Table.Td>
         <Button
           color="samfundet-red"
           onClick={() => {
@@ -65,24 +67,24 @@ export const MyUpcomingInterviews: React.VFC = () => {
         >
           Detaljer
         </Button>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <Stack>
       <Title order={2}>Mine kommende intervjuer</Title>
       <CardTable>
-        <thead>
-          <tr>
-            <th>Søker</th>
-            <th>Tidspunkt</th>
-            <th>Lokale</th>
-            <th>Intervjuere</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Søker</Table.Th>
+            <Table.Th>Tidspunkt</Table.Th>
+            <Table.Th>Lokale</Table.Th>
+            <Table.Th>Intervjuere</Table.Th>
+            <Table.Th></Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
       </CardTable>
     </Stack>
   )

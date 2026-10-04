@@ -3,12 +3,13 @@ import {
   Card,
   Center,
   Container,
-  createStyles,
   SimpleGrid,
   Stack,
+  Table,
   Text,
   Title,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
@@ -75,35 +76,39 @@ const AdmissionStatistics: React.FC = () => {
       </SimpleGrid>
       <Title order={2}>MVP's</Title>
       <CardTable highlightOnHover>
-        <thead>
-          <tr>
-            <th>Plass</th>
-            <th>Navn</th>
-            <th style={{ textAlign: 'right' }}>Antall intervjuer</th>
-          </tr>
-        </thead>
-        <tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Plass</Table.Th>
+            <Table.Th>Navn</Table.Th>
+            <Table.Th style={{ textAlign: 'right' }}>
+              Antall intervjuer
+            </Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
           {userInterviewCounts.map(({ user, interviewCount }, index) => (
-            <tr key={user.id}>
-              <td>{index + 1}</td>
-              <td>
+            <Table.Tr key={user.id}>
+              <Table.Td>{index + 1}</Table.Td>
+              <Table.Td>
                 <Link to={`/users/${user.id}`}>{user.getFullWithNickName}</Link>
-              </td>
-              <td style={{ textAlign: 'right' }}>{interviewCount}</td>
-            </tr>
+              </Table.Td>
+              <Table.Td style={{ textAlign: 'right' }}>
+                {interviewCount}
+              </Table.Td>
+            </Table.Tr>
           ))}
-        </tbody>
+        </Table.Tbody>
       </CardTable>
     </Stack>
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   statisticNumber: {
     fontSize: '32px',
     fontWeight: 700,
     color: 'hotpink',
   },
-}))
+})
 
 export default AdmissionStatistics

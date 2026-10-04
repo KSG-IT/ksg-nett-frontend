@@ -182,9 +182,9 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
           ikke opp her.
         </MessageBox>
 
-        <Stack spacing="xs">
-          <Group position="apart">
-            <Text size="lg" weight={500}>
+        <Stack gap="xs">
+          <Group justify="space-between">
+            <Text size="lg" fw={500}>
               Intervjudetaljer
             </Text>
             <PermissionGate
@@ -215,7 +215,7 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
               </Link>
             </MessageBox>
             <Button
-              leftIcon={<IconAlertTriangle />}
+              leftSection={<IconAlertTriangle />}
               color="red"
               loading={removeApplicantFromInterviewLoading}
               onClick={handleRemoveApplicantFromInterview}
@@ -224,7 +224,7 @@ export const AssignInterviewModal: React.FC<AssignInterviewModalProps> = ({
             </Button>
           </>
         )}
-        <Group position="right">
+        <Group justify="flex-end">
           <Button color="gray" onClick={handleClose}>
             Avbryt
           </Button>

@@ -1,0 +1,54 @@
+.card {
+  position: relative;
+  width: 100%;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mantine-spacing-md);
+  text-align: center;
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid var(--mantine-color-samfundet-red-2);
+  background: linear-gradient(
+    135deg,
+    var(--mantine-color-samfundet-red-0),
+    var(--mantine-color-yellow-0)
+  );
+  transition: transform 100ms ease, box-shadow 150ms ease;
+}
+
+.card:hover {
+  box-shadow: var(--mantine-shadow-sm);
+}
+
+.icon {
+  color: var(--mantine-color-samfundet-red-6);
+  transition: transform 150ms ease;
+}
+
+.card:hover .icon {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.title {
+  color: var(--mantine-color-samfundet-red-8);
+}
+
+/* Same slanted badge as "Nytt design!" in the schedules */
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(25%, -45%) rotate(8deg);
+  padding: 1px 7px;
+  border-radius: var(--mantine-radius-xl);
+  background: var(--mantine-color-yellow-4);
+  color: var(--mantine-color-dark-8);
+  font-size: 9.5px;
+  font-weight: 800;
+  line-height: 16px;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}

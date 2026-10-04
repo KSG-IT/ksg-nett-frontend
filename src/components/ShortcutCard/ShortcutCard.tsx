@@ -1,4 +1,5 @@
-import { createStyles, Text, UnstyledButton } from '@mantine/core'
+import { Text, UnstyledButton } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { Icon } from '@tabler/icons-react'
 import { PermissionGate } from 'components/PermissionGate'
 import { Link } from 'react-router-dom'
@@ -17,7 +18,7 @@ export const ShortcutCard: React.FC<ShortcutProps> = ({
   link,
   permissions,
 }) => {
-  const { classes, theme } = useStyles()
+  const { classes } = useStyles()
 
   return (
     <PermissionGate permissions={permissions ?? []}>
@@ -28,13 +29,8 @@ export const ShortcutCard: React.FC<ShortcutProps> = ({
         key={title}
         className={classes.item}
       >
-        {Icon && <Icon color={theme.colors[color][6]} size={32} />}
-        <Text
-          size={'md'}
-          color={'dimmed'}
-          weight={800}
-          className={classes.text}
-        >
+        {Icon && <Icon color={`var(--mantine-color-${color}-6)`} size={32} />}
+        <Text size={'md'} c={'dimmed'} fw={800} className={classes.text}>
           {title}
         </Text>
       </UnstyledButton>
@@ -42,29 +38,23 @@ export const ShortcutCard: React.FC<ShortcutProps> = ({
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((_theme, _, u) => ({
   item: {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    border: `1px solid ${theme.colors.gray[2]}`,
+    border: '1px solid var(--mantine-color-gray-2)',
     textAlign: 'center',
-    borderRadius: theme.radius.md,
+    borderRadius: 'var(--mantine-radius-md)',
     height: 90,
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.white,
+    backgroundColor: 'white',
     transition: 'box-shadow 150ms ease, transform 100ms ease',
-
-    '&:hover': {
-      boxShadow: `${theme.shadows.sm} !important`,
-      transform: 'scale(1.05)',
-    },
   },
   text: {
-    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
-      fontSize: theme.fontSizes.md,
+    [u.smallerThan('xs')]: {
+      fontSize: 'var(--mantine-font-size-md)',
     },
   },
 }))

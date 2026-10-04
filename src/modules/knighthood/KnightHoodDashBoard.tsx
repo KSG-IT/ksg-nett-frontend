@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Card,
-  createStyles,
   Group,
   Image,
   MantineProvider,
@@ -12,6 +11,7 @@ import {
   Text,
   Title,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { IconPlus } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
@@ -37,14 +37,14 @@ export const KnightHoodDashboard: React.FC = () => {
     return (
       <>
         {members.map(member => (
-          <tr
+          <Table.Tr
             onClick={() => navigate(`/users/${member.user.id}`)}
             key={member.id}
             className={classes.tableRow}
           >
-            <td>{member.user.getCleanFullName}</td>
-            <td>{new Date(member.knightedDate).getFullYear()}</td>
-          </tr>
+            <Table.Td>{member.user.getCleanFullName}</Table.Td>
+            <Table.Td>{new Date(member.knightedDate).getFullYear()}</Table.Td>
+          </Table.Tr>
         ))}
       </>
     )
@@ -71,10 +71,9 @@ export const KnightHoodDashboard: React.FC = () => {
           Table: { styles: { root: { fontFamily: 'inherit' } } },
         },
       }}
-      inherit
     >
       <Stack>
-        <Group position="apart">
+        <Group justify="space-between">
           <Breadcrumbs
             items={[
               { label: 'Hjem', path: '/dashboard' },
@@ -83,7 +82,7 @@ export const KnightHoodDashboard: React.FC = () => {
           />
           <PermissionGate permissions={PERMISSIONS.users.add.knightHood}>
             <Button
-              leftIcon={<IconPlus />}
+              leftSection={<IconPlus />}
               onClick={() => {
                 setOpen(true)
               }}
@@ -102,62 +101,67 @@ export const KnightHoodDashboard: React.FC = () => {
               height={250}
               width={250}
             />
-            <Text>
-              <Title
-                ff={'Baskerville'}
-                transform="uppercase"
-                fw={500}
-                className={classes.title}
-                order={1}
-              >
-                Det Gyldne Tappetaarn
-              </Title>
-            </Text>
+            <Title
+              ff={'Baskerville'}
+              tt="uppercase"
+              fw={500}
+              className={classes.title}
+              order={1}
+            >
+              Det Gyldne Tappetaarn
+            </Title>
           </Stack>
           <Stack ml={'15%'} w={'70%'} my={'xl'}>
-            <Text className={classes.text}>
-              <Title className={classes.subtitle} align="center" order={3}>
+            <section>
+              <Title className={classes.subtitle} ta="center" order={3}>
                 Om ordenen
               </Title>
-              Riddere av Det Gyldne Tappetaarn er personer som har blitt erkjent
-              for sine utmerkede bidrag til KSG (KISS og SG). Ordenen ble
-              opprettet i 2024 for å hedre de som har gjort en ekstraordinær
-              innsats for å forme KSG.
-            </Text>
-            <Text className={classes.text}>
+              <Text className={classes.text}>
+                Riddere av Det Gyldne Tappetaarn er personer som har blitt
+                erkjent for sine utmerkede bidrag til KSG (KISS og SG). Ordenen
+                ble opprettet i 2024 for å hedre de som har gjort en
+                ekstraordinær innsats for å forme KSG.
+              </Text>
+            </section>
+            <section>
               <Title className={classes.subtitle} order={3}>
                 Nominering
               </Title>
-              Det åpnes årlig for nominasjon av nye riddere. Nominasjonsteksten
-              bør inneholde hva den nominerte har bidratt til og hvorfor
-              vedkommende har gjort en innsats utover det forventede av vervet
-              sitt. Det kan f.eks. være en person som har tatt på seg et
-              prosjekt utenfor sitt eget ansvarsområde, eller som har bidratt
-              til å løse en vanskelig utfordring i organisasjonen. Nominasjonen
-              sendes til gjengsjef, som sammen med de andre ridderne vurderer om
-              den nominerte er verdig en plass i ordenen.
-            </Text>
-            <Text className={classes.text}>
+              <Text className={classes.text}>
+                Det åpnes årlig for nominasjon av nye riddere.
+                Nominasjonsteksten bør inneholde hva den nominerte har bidratt
+                til og hvorfor vedkommende har gjort en innsats utover det
+                forventede av vervet sitt. Det kan f.eks. være en person som har
+                tatt på seg et prosjekt utenfor sitt eget ansvarsområde, eller
+                som har bidratt til å løse en vanskelig utfordring i
+                organisasjonen. Nominasjonen sendes til gjengsjef, som sammen
+                med de andre ridderne vurderer om den nominerte er verdig en
+                plass i ordenen.
+              </Text>
+            </section>
+            <section>
               <Title className={classes.subtitle} order={3}>
                 Medlemmer
               </Title>
-              Det er for tiden {allKnighthoods.length} medlemmer av Det Gyldne
-              Tappetaarn. Under kan du se en oversikt over de som har blitt
-              slått til ridder. Ved innmelding i orden utmerkes medlemmet med en
-              ridderdalje.
-            </Text>
+              <Text className={classes.text}>
+                Det er for tiden {allKnighthoods.length} medlemmer av Det Gyldne
+                Tappetaarn. Under kan du se en oversikt over de som har blitt
+                slått til ridder. Ved innmelding i orden utmerkes medlemmet med
+                en ridderdalje.
+              </Text>
+            </section>
           </Stack>
 
           <Box p="xl"></Box>
           <Stack justify="center" align="center">
-            <Table className={classes.table} fontSize={'lg'}>
-              <thead>
-                <tr>
-                  <th>Navn</th>
-                  <th>Ble slått til ridder</th>
-                </tr>
-              </thead>
-              <tbody>{rows(allKnighthoods)}</tbody>
+            <Table className={classes.table}>
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Navn</Table.Th>
+                  <Table.Th>Ble slått til ridder</Table.Th>
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>{rows(allKnighthoods)}</Table.Tbody>
             </Table>
           </Stack>
         </Card>

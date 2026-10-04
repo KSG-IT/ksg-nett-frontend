@@ -1,17 +1,9 @@
-import {
-  Button,
-  Divider,
-  Group,
-  Modal,
-  Text,
-  Title,
-  createStyles,
-} from '@mantine/core'
+import { Button, Divider, Group, Modal, Text, Title } from '@mantine/core'
 import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '2026-7-24'
+const NOTIFICATION_KEY = '2026-10-3-2'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -39,8 +31,68 @@ export const WhatsNewNotification: React.FC = () => {
       <Title my={0} order={1}>
         👋 Hva er nytt?
       </Title>
-      <Text size="sm" color="gray" mt={0}>
-        Siste oppdatering: 2026-07-24
+      <Text size="sm" c="gray" mt={0}>
+        Siste oppdatering: 2026-10-03
+      </Text>
+      <Divider mb="md" />
+      <Title order={4}>Nytt i oktober 2026</Title>
+      <Text>
+        <b>Oppgradering:</b> KSG-nett har fått en større oppgradering, og mange
+        sider har fått nytt utseende. Om noe ser rart ut eller ikke fungerer,
+        trykk på «Gi tilbakemelding» på kontrollpanelet, eller send en e-post
+        til ksg-it@samfundet.no.
+      </Text>
+      <Text>
+        <b>Vakter:</b> Ny side som viser hvem som jobber en dag, som tidslinje
+        på PC og som liste på mobil. Dine egne vakter er merket «Din vakt».
+      </Text>
+      <Text>
+        <b>Mine vakter:</b> Neste vakt øverst, kommende og tidligere vakter på
+        samme side, og en knapp for å legge vaktene inn i kalenderen din.
+      </Text>
+      <Text>
+        <b>Vaktplaner:</b> Vaktplanansvarlige ser hvor langt fram hver vaktplan
+        er satt opp, og hvor mange plasser som er ledige. Prøv det nye designet
+        for vaktplanen («Nytt design!»): sett folk på vakt med noen få
+        tastetrykk, se hvor mange vakter hver person har, og lag nye vakter rett
+        i planen. Det fungerer også på mobil.
+      </Text>
+      <Text>
+        <b>Kontrollpanelet:</b> Neste vakter, siste transaksjoner og sitatene
+        har fått nytt utseende. Du kan sende tilbakemelding til KSG-IT rett fra
+        kontrollpanelet, også anonymt.
+      </Text>
+      <Text>
+        <b>Min økonomi:</b> Se hva du har brukt penger på per uke, måned eller
+        semester. Kjøp vises med minus, og innskudd med pluss.
+      </Text>
+      <Text>
+        <b>Salgsstatistikk:</b> Ny side for Soci-salg per produkt, fra dette
+        semesteret til alle tider.
+      </Text>
+      <Text>
+        <b>Vervhistorikk:</b> Vervhistorikken til en bruker kan nå rettes opp
+        fra profilen, uten å gå via admin.
+      </Text>
+      <Text>
+        <b>Søkere:</b> Søkeroversikten er mer kompakt, og kan sorteres og
+        filtreres på status.
+      </Text>
+      <Text>
+        <b>Allergier:</b> Vaktplanansvarlige ser allergiene til alle på jobb som
+        en tabell for hele uka eller én dag.
+      </Text>
+      <Text>
+        <b>Sidemenyen:</b> Nytt utseende, og siden du er på er alltid merket.
+      </Text>
+      <Text>
+        <b>Ny versjon:</b> Når en ny versjon er ute, får du beskjed om å laste
+        inn siden på nytt. Appen på mobilen henter nye versjoner raskere, og
+        menyen er lukket når du åpner den.
+      </Text>
+      <Text>
+        <b>Tider:</b> Vakter og intervjuer får riktige tider rundt midnatt og
+        når sommertiden slutter. Understreking i tekstredigering fungerer nå.
       </Text>
       <Divider mb="md" />
       <Title order={4}>Fremhevede artikler</Title>
@@ -109,18 +161,9 @@ export const WhatsNewNotification: React.FC = () => {
           </li>
         </ul>
       </ul>
-      <Group position="right">
+      <Group justify="flex-end">
         <Button onClick={handleClose}>Lukk vindu</Button>
       </Group>
     </Modal>
   )
 }
-
-const useStyles = createStyles(() => ({
-  wrapper: {
-    width: 300,
-    fontSize: 14,
-    borderRadius: 10,
-    boxShadow: '1px  black',
-  },
-}))

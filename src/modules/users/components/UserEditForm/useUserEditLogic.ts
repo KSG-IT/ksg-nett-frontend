@@ -1,72 +1,42 @@
-import { yupResolver } from '@hookform/resolvers/yup'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { PatchUserReturns } from 'modules/users/types'
 import { useForm } from 'react-hook-form'
 import { OnFormSubmit } from 'types/forms'
-import { FILE_SIZE } from 'util/consts'
-import { format } from 'util/date-fns'
-import * as yup from 'yup'
+import { maxFileSize, requiredIsoDate, requiredString } from 'util/validation'
+import { z } from 'zod'
 
-export type UserProfileFormData = {
-  firstName: string
-  lastName: string
-  nickname: string
-  studyAddress: string
-  homeTown: string
-  study: string
-  dateOfBirth: Date
-  phone: string
-  email: string
-  profileImage?: File | null
-}
-
-export type UserProfileCleanedData = Omit<
-  UserProfileFormData,
-  'dateOfBirth'
-> & {
-  dateOfBirth: string
-}
-
-const UserEditSchema = yup.object().shape({
-  firstName: yup.string().required('Fornavn må fylles ut'),
-  lastName: yup.string().required('Etternavn må fylles ut'),
-  nickname: yup.string().nullable().notRequired(),
-  studyAddress: yup.string().required('Adresse må fylles ut'),
-  homeTown: yup.string().required('Hjemby må fylles ut'),
-  study: yup.string().required('Studie må fylles ut'),
-  dateOfBirth: yup.date().required('Fødselsdato må fylles ut'),
-  phone: yup.string().required('Telefonnummer må fylles ut'),
-  email: yup.string().required('E-post må fylles ut'),
-  profileImage: yup
-    .mixed()
-    .nullable()
-    .notRequired()
-    .test(
-      'FILE_SIZE',
-      'Filstørrelse for stor, 1 MB maks.',
-      value => !value || (value && value.size <= FILE_SIZE)
-    ),
+const UserEditSchema = z.object({
+  firstName: requiredString('Fornavn må fylles ut'),
+  lastName: requiredString('Etternavn må fylles ut'),
+  nickname: z.string(),
+  studyAddress: requiredString('Adresse må fylles ut'),
+  homeTown: requiredString('Hjemby må fylles ut'),
+  study: requiredString('Studie må fylles ut'),
+  dateOfBirth: requiredIsoDate('Fødselsdato må fylles ut'),
+  phone: requiredString('Telefonnummer må fylles ut'),
+  email: requiredString('E-post må fylles ut'),
+  profileImage: maxFileSize(),
 })
 
+export type UserProfileFormValues = z.input<typeof UserEditSchema>
+export type UserProfileCleanedData = z.output<typeof UserEditSchema>
+
 interface UseEditLogicInput {
-  defaultValues: UserProfileFormData
+  defaultValues: UserProfileFormValues
   onSubmit: OnFormSubmit<UserProfileCleanedData, PatchUserReturns>
   onCompletedCallback: () => void
 }
 
 export function useEditProfileLogic(input: UseEditLogicInput) {
   const { defaultValues, onSubmit, onCompletedCallback } = input
-  const form = useForm<UserProfileFormData>({
+  const form = useForm<UserProfileFormValues, unknown, UserProfileCleanedData>({
     mode: 'onSubmit',
     defaultValues,
-    resolver: yupResolver(UserEditSchema),
+    resolver: zodResolver(UserEditSchema),
   })
 
-  const handleSubmit = async (data: UserProfileFormData) => {
-    const cleanedData = {
-      ...data,
-      dateOfBirth: format(new Date(data.dateOfBirth), 'yyyy-MM-dd'),
-    }
-    await onSubmit(cleanedData)
+  const handleSubmit = async (data: UserProfileCleanedData) => {
+    await onSubmit(data)
   }
 
   return {

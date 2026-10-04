@@ -37,6 +37,8 @@ export function parseLocation(location: LocationValues | null) {
       return { name: 'Servering D', color: 'gray' }
     case LocationValues.SERVERING_K:
       return { name: 'Servering K', color: 'gray' }
+    case LocationValues.BRYGGERIET:
+      return { name: 'Bryggeriet', color: 'teal' }
     default:
       return { name: '', color: 'gray' }
   }
@@ -60,5 +62,16 @@ export function parseDay(day: DayValues) {
       return 'Søndag'
     default:
       return ''
+  }
+}
+
+// One place for location colours: the dot, and the light background and text
+// of badges and timeline bars. From Mantine's variables for parseLocation's colour.
+export function locationColors(location: LocationValues | null) {
+  const { color } = parseLocation(location)
+  return {
+    dot: `var(--mantine-color-${color}-6)`,
+    background: `var(--mantine-color-${color}-light)`,
+    text: `var(--mantine-color-${color}-light-color)`,
   }
 }

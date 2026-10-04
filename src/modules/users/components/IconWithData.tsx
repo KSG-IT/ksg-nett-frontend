@@ -15,19 +15,19 @@ export const IconWithData: React.FC<IconWithDataProps> = ({
   function renderValueField() {
     if (type === 'email') {
       return (
-        <Anchor size="sm" color="dimmed" href={`mailto:${userData}`}>
+        <Anchor size="sm" c="dimmed" href={`mailto:${userData}`}>
           {userData}
         </Anchor>
       )
     } else if (type === 'tel') {
       return (
-        <Anchor size="sm" color="dimmed" href={`tel:${userData}`}>
+        <Anchor size="sm" c="dimmed" href={`tel:${userData}`}>
           {userData}
         </Anchor>
       )
     } else {
       return (
-        <Text size="sm" color={'dimmed'}>
+        <Text size="sm" c={'dimmed'}>
           {userData}
         </Text>
       )

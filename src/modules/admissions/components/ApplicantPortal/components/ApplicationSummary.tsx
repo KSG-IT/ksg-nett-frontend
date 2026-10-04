@@ -72,7 +72,7 @@ export const ApplicantSummary: React.FC<ApplicantSummaryProps> = ({
     const moveDown = index < values.length - 1
 
     return (
-      <Stack spacing={0}>
+      <Stack gap={0}>
         <ActionIcon
           disabled={!moveUp}
           onClick={() => handlePriorityChange(index, -1)}
@@ -93,17 +93,17 @@ export const ApplicantSummary: React.FC<ApplicantSummaryProps> = ({
   return (
     <Stack>
       <Text size="md">Takk for at du har søkt KSG!</Text>
-      <Title color={'dimmed'} order={3}>
+      <Title c={'dimmed'} order={3}>
         Intervjuinformasjon
       </Title>
       <Group>
         <Title order={4}>Intervjulokale:</Title>
         {applicant.wantsDigitalInterview ? (
-          <Text transform={'uppercase'} color={'samfundet-red'} weight={'bold'}>
+          <Text tt={'uppercase'} c={'samfundet-red'} fw={'bold'}>
             DIGITALT
           </Text>
         ) : (
-          <Text transform={'uppercase'} color={'samfundet-red'} weight={'bold'}>
+          <Text tt={'uppercase'} c={'samfundet-red'} fw={'bold'}>
             {applicant.interview?.location.name}
           </Text>
         )}
@@ -136,16 +136,27 @@ export const ApplicantSummary: React.FC<ApplicantSummaryProps> = ({
         Du har mulighet til å omprioritere fram til intervjuperioden er over
       </MessageBox>
 
-      <Stack ref={animationParent}>
+      <Stack
+        component="ol"
+        ref={animationParent}
+        m={0}
+        p={0}
+        style={{ listStyle: 'none' }}
+      >
         {values.map((priority, index) => (
-          <Group grow key={priority!.id} position={'apart'}>
-            <Text>
-              <ThemeIcon mr={'sm'} radius={'md'}>
+          <Group
+            component="li"
+            grow
+            key={priority!.id}
+            justify={'space-between'}
+          >
+            <Group gap="sm" wrap="nowrap">
+              <ThemeIcon radius={'md'} aria-hidden>
                 {index + 1}
-              </ThemeIcon>{' '}
-              {priority?.internalGroupPosition.name}
-            </Text>
-            <Group position={'right'}>
+              </ThemeIcon>
+              <Text>{priority?.internalGroupPosition.name}</Text>
+            </Group>
+            <Group justify={'flex-end'}>
               {renderChangePriorityButtons(index)}
             </Group>
           </Group>

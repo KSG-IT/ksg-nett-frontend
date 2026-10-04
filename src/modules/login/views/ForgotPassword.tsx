@@ -1,26 +1,17 @@
-import { useApolloClient } from '@apollo/client'
-import { yupResolver } from '@hookform/resolvers/yup'
-import {
-  Anchor,
-  Button,
-  createStyles,
-  Paper,
-  Text,
-  TextInput,
-  Title,
-} from '@mantine/core'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Button, Paper, Text, TextInput, Title } from '@mantine/core'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import * as yup from 'yup'
+import { requiredString } from 'util/validation'
+import { z } from 'zod'
 import { useLoginMutations } from '../mutations.hooks'
+import { createStyles } from '@mantine/emotion'
 
-let schema = yup.object().shape({
-  username: yup.string().required('Du må skrive inn en epost'),
+const schema = z.object({
+  username: requiredString('Du må skrive inn en epost'),
 })
 
-type ResetMyPasswordInput = {
-  username: string
-}
+type ResetMyPasswordInput = z.infer<typeof schema>
 
 export const ForgotPassword: React.FC = () => {
   const { classes } = useStyles()
@@ -30,7 +21,7 @@ export const ForgotPassword: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ResetMyPasswordInput>({ resolver: yupResolver(schema) })
+  } = useForm<ResetMyPasswordInput>({ resolver: zodResolver(schema) })
 
   const { resetPassword, resetPasswordLoading } = useLoginMutations()
 
@@ -67,13 +58,7 @@ export const ForgotPassword: React.FC = () => {
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
-        <Title
-          order={2}
-          className={classes.title}
-          align="center"
-          mt="md"
-          mb={50}
-        >
+        <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
           Glemt passord
         </Title>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -99,7 +84,7 @@ export const ForgotPassword: React.FC = () => {
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((_theme, _, u) => ({
   wrapper: {
     height: '100vh',
     backgroundSize: 'cover',
@@ -108,25 +93,23 @@ const useStyles = createStyles(theme => ({
   },
 
   form: {
-    borderRight: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
-    }`,
+    borderRight: `1px solid ${'var(--mantine-color-gray-3)'}`,
     height: '100vh',
     maxWidth: 450,
     paddingTop: 80,
 
-    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+    [u.smallerThan('sm')]: {
       maxWidth: '100%',
     },
   },
 
   title: {
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    color: 'black',
+    fontFamily: `Greycliff CF, var(--mantine-font-family)`,
   },
 
   logo: {
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    color: 'black',
     width: 120,
     display: 'block',
     marginLeft: 'auto',

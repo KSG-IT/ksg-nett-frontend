@@ -1,5 +1,5 @@
-import { SociProductNode } from 'modules/economy/types.graphql'
-import { UserNode, UserThumbnailProps } from 'modules/users/types'
+import type { DayShift } from './allShifts'
+import { UserThumbnailProps } from 'modules/users/types'
 import {
   DayValues,
   LocationValues,
@@ -101,15 +101,16 @@ export interface MyUpcomingShiftsReturns {
   myUpcomingShifts: ShiftNode[]
 }
 
-export interface AllMyShiftsReturns {
-  allMyShifts: ShiftNode[]
+export interface MyShiftsUpcomingReturns {
+  myUpcomingShifts: DayShift[]
+}
+
+export interface MyShiftsPastReturns {
+  allMyShifts: DayShift[]
 }
 
 export interface AllShiftsReturns {
-  allShifts: Pick<
-    ShiftNode,
-    'id' | 'datetimeStart' | 'name' | 'filledSlots' | 'location' | 'datetimeEnd'
-  >[]
+  allShifts: DayShift[]
 }
 
 export interface AllShiftsVariables {
@@ -117,6 +118,35 @@ export interface AllShiftsVariables {
 }
 export interface AllSchedulesReturns {
   allSchedules: ScheduleNode[]
+}
+
+export interface ScheduleOverviewNode {
+  id: string
+  name: string
+  plannedUntil: string | null
+  upcomingSlots: { filled: number; total: number }
+  recentLocations: LocationValues[]
+}
+
+export interface ScheduleV2Returns {
+  schedule: {
+    id: string
+    name: string
+    displayMode: ScheduleDisplayModeValues
+    defaultRole: RoleValues | null
+    recentLocations: LocationValues[]
+    shiftsFromRange: DayShift[]
+  } | null
+}
+
+export interface ScheduleV2Variables {
+  id: string
+  shiftsFrom: string
+  numberOfWeeks: number
+}
+
+export interface SchedulesOverviewReturns {
+  allSchedules: ScheduleOverviewNode[]
 }
 
 export interface AllScheduleTemplatesReturns {
@@ -128,11 +158,6 @@ export interface ScheduleTemplateQueryVariables {
 }
 export interface ScheduleTemplateQueryReturns {
   scheduleTemplate: ScheduleTemplateNode | null
-}
-
-export interface AllUsersWorkingTodayReturns {
-  allUsersWorkingToday: Pick<UserNode, 'id' | 'fullName' | 'initials'>[]
-  defaultSociProducts: Pick<SociProductNode, 'id' | 'name'>[]
 }
 
 // === MUTATIONS ===

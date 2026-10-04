@@ -6,17 +6,23 @@ import client from 'apollo-setup'
 import { BrowserRouter } from 'react-router-dom'
 import { AppRoutes } from 'routes'
 import { theme } from 'theme'
+import { useNewVersionCheck } from 'util/hooks'
+import { emotionTransform, MantineEmotionProvider } from '@mantine/emotion'
 
 function Root() {
+  useNewVersionCheck()
+
   return (
     <ApolloProvider client={client}>
-      <MantineProvider theme={theme}>
-        <ModalsProvider>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
-        </ModalsProvider>
-        <Notifications />
+      <MantineProvider theme={theme} stylesTransform={emotionTransform}>
+        <MantineEmotionProvider>
+          <ModalsProvider>
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
+          </ModalsProvider>
+          <Notifications />
+        </MantineEmotionProvider>
       </MantineProvider>
     </ApolloProvider>
   )

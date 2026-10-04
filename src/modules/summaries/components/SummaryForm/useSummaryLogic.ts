@@ -1,37 +1,26 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { format } from 'date-fns'
+import { useRichTextEditor } from 'components/RichTextEditor'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   CreateSummaryMutationReturns,
   PatchSummaryMutationReturns,
 } from 'modules/summaries/types'
 import { useForm } from 'react-hook-form'
 import { OnFormSubmit } from 'types/forms'
-import * as yup from 'yup'
-import { RichTextEditor, Link } from '@mantine/tiptap'
-import { useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
+import { requiredIsoDate, requiredString } from 'util/validation'
+import { z } from 'zod'
 import { showNotification } from '@mantine/notifications'
 
-export type SummaryFormData = {
-  contents: string
-  internalGroup: string | null
-  participants: string[]
-  reporter: string
-  title?: string
-  date: Date
-}
-
-export type SummaryCleanedData = Omit<SummaryFormData, 'date'> & {
-  date: string
-}
-
-const SummarySchema = yup.object().shape({
-  internalGroup: yup.string(),
-  title: yup.string(),
-  participants: yup.array().of(yup.string()).required('Deltakere er påkrevd'),
-  reporter: yup.string().required('Referent er påkrevd'),
-  date: yup.date().required('Dato er påkrevd'),
+const SummarySchema = z.object({
+  contents: z.string(),
+  internalGroup: z.string().nullable(),
+  title: z.string().optional(),
+  participants: z.array(z.string(), { error: 'Deltakere er påkrevd' }),
+  reporter: requiredString('Referent er påkrevd'),
+  date: requiredIsoDate('Dato er påkrevd'),
 })
+
+export type SummaryFormData = z.input<typeof SummarySchema>
+export type SummaryCleanedData = z.output<typeof SummarySchema>
 
 interface SummaryLogicInput {
   defaultValues: SummaryFormData
@@ -44,18 +33,15 @@ interface SummaryLogicInput {
 export function useSummaryLogic(input: SummaryLogicInput) {
   const { defaultValues, onSubmit } = input
 
-  const editor = useEditor({
-    extensions: [StarterKit, Link],
-    content: defaultValues.contents,
-  })
+  const editor = useRichTextEditor(defaultValues.contents)
 
-  const form = useForm<SummaryFormData>({
+  const form = useForm<SummaryFormData, unknown, SummaryCleanedData>({
     mode: 'onSubmit',
     defaultValues,
-    resolver: yupResolver(SummarySchema),
+    resolver: zodResolver(SummarySchema),
   })
 
-  const handleSubmit = async (data: SummaryFormData) => {
+  const handleSubmit = async (data: SummaryCleanedData) => {
     if (!editor) return
 
     if (editor.getHTML() === '<p><br></p>') {
@@ -68,7 +54,6 @@ export function useSummaryLogic(input: SummaryLogicInput) {
 
     const cleanedData: SummaryCleanedData = {
       ...data,
-      date: format(new Date(data.date), 'yyyy-MM-dd'),
       contents: editor.getHTML(),
     }
 

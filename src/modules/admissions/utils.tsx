@@ -1,3 +1,4 @@
+import { Table } from '@mantine/core'
 import React from 'react'
 import { InternalGroupPositionPriorityBadge } from './components/InternalGroupPositionPriorityBadge'
 import { InternalGroupPositionPriority } from './types.graphql'
@@ -7,7 +8,7 @@ import { InternalGroupPositionPriority } from './types.graphql'
  *
  * Probably means this should be re-written to a component
  * @param priority An applicant prioirity object we want to render in a table
- * @returns A fraagment of two table-data <td /> elements
+ * @returns A fraagment of two table-data <Table.Td /> elements
  */
 
 export const renderPrioritycell = (
@@ -20,17 +21,17 @@ export const renderPrioritycell = (
       // Prpbably need to pass the index as an argument here instead
       <React.Fragment key={'Nullvalue'}>
         {/* Needs some unique shit */}
-        <td></td>
-        <td></td>
+        <Table.Td></Table.Td>
+        <Table.Td></Table.Td>
       </React.Fragment>
     )
 
   return (
     <React.Fragment key={`${priority.id}-${priority.applicantPriority}`}>
-      <td>{priority.internalGroupPosition.internalGroup.name}</td>
-      <td>
+      <Table.Td>{priority.internalGroupPosition.internalGroup.name}</Table.Td>
+      <Table.Td>
         <InternalGroupPositionPriorityBadge priority={priority} />
-      </td>
+      </Table.Td>
     </React.Fragment>
   )
 }

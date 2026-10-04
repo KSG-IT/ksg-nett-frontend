@@ -54,24 +54,26 @@ export const ResultPreview: React.FC = () => {
   const { admissionApplicantsPreview } = data
 
   const applicantPreviewRows = admissionApplicantsPreview.map(preview => (
-    <tr key={preview.id}>
-      <td key="fullname">{preview.fullName}</td>
-      <td key="position-offered">{preview.offeredInternalGroupPositionName}</td>
+    <Table.Tr key={preview.id}>
+      <Table.Td key="fullname">{preview.fullName}</Table.Td>
+      <Table.Td key="position-offered">
+        {preview.offeredInternalGroupPositionName}
+      </Table.Td>
 
       {/* This field bugs probably because we need to pass an Enum value from the backend instead of string */}
-      <td key="applicant-priority">
+      <Table.Td key="applicant-priority">
         {parseApplicantPriority(preview.applicantPriority)}
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   const summaryRow = (
-    <tr key="summary-row">
-      <td key="total">
+    <Table.Tr key="summary-row">
+      <Table.Td key="total">
         <b>Totalt</b>
-      </td>
-      <td key="total-value">{admissionApplicantsPreview.length}</td>
-    </tr>
+      </Table.Td>
+      <Table.Td key="total-value">{admissionApplicantsPreview.length}</Table.Td>
+    </Table.Tr>
   )
 
   return (
@@ -81,17 +83,17 @@ export const ResultPreview: React.FC = () => {
         avslutter det.
       </MessageBox>
       <CardTable>
-        <thead>
-          <tr>
-            <th key="name">Navn</th>
-            <th key="position-offered">Stilling tilbudt</th>
-            <th key="applicant-priority">Søker prioritet</th>
-          </tr>
-        </thead>
-        <tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th key="name">Navn</Table.Th>
+            <Table.Th key="position-offered">Stilling tilbudt</Table.Th>
+            <Table.Th key="applicant-priority">Søker prioritet</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
           {applicantPreviewRows}
           {summaryRow}
-        </tbody>
+        </Table.Tbody>
       </CardTable>
     </Stack>
   )

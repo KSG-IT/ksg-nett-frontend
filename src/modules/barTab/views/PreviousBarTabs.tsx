@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Button, Stack, Title } from '@mantine/core'
+import { Button, Stack, Table, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { CardTable } from 'components/CardTable'
 import { FullPageError } from 'components/FullPageComponents'
@@ -33,12 +33,12 @@ export const PreviousBarTabs: React.FC = () => {
   const hasNextPage = data?.previousBarTabs.pageInfo.hasNextPage ?? false
 
   const rows = barTabs.map((barTab: BarTabNode) => (
-    <tr key={barTab.id}>
-      <td>{barTab.id}</td>
-      <td>{barTab.datetimeOpened}</td>
-      <td>{barTab.datetimeReviewed}</td>
-      <td>{<UserThumbnail user={barTab.reviewedBy} />}</td>
-    </tr>
+    <Table.Tr key={barTab.id}>
+      <Table.Td>{barTab.id}</Table.Td>
+      <Table.Td>{barTab.datetimeOpened}</Table.Td>
+      <Table.Td>{barTab.datetimeReviewed}</Table.Td>
+      <Table.Td>{<UserThumbnail user={barTab.reviewedBy} />}</Table.Td>
+    </Table.Tr>
   ))
 
   const handleFetchMore = async () => {
@@ -78,15 +78,15 @@ export const PreviousBarTabs: React.FC = () => {
       <Breadcrumbs items={breadcrumbsItems} />
       <Title>Tidligere BSF'er</Title>
       <CardTable>
-        <thead>
-          <tr>
-            <th>BSF ID</th>
-            <th>Startet</th>
-            <th>Sluttet</th>
-            <th>Opprettet av</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>BSF ID</Table.Th>
+            <Table.Th>Startet</Table.Th>
+            <Table.Th>Sluttet</Table.Th>
+            <Table.Th>Opprettet av</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
       </CardTable>
 
       {hasNextPage && (

@@ -10,7 +10,7 @@ import { usePermissions } from 'util/hooks/usePermissions'
 import { PERMISSIONS } from 'util/permissions'
 import { ResultPreview } from './ResultPreview'
 
-export const FinalOverlookModal: React.VFC<{
+export const FinalOverlookModal: React.FC<{
   opened: boolean
   onClose: () => void
 }> = ({ opened, onClose }) => {

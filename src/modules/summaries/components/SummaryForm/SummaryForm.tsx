@@ -6,7 +6,7 @@ import {
   TextInput,
   Title,
 } from '@mantine/core'
-import { DateInput, DatePicker } from '@mantine/dates'
+import { DateInput } from '@mantine/dates'
 import { IconCalendar } from '@tabler/icons-react'
 import { RichTextEditor } from 'components/RichTextEditor'
 import {
@@ -56,17 +56,10 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack>
         <Card withBorder style={{ overflow: 'visible' }}>
-          <SimpleGrid
-            cols={2}
-            breakpoints={[
-              { maxWidth: 755, cols: 1, spacing: 'sm' },
-              { maxWidth: 600, cols: 1, spacing: 'sm' },
-            ]}
-          >
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <Stack>
               <CustomInputLabel label={'Referent'}>
                 <UserSelect
-                  withinPortal
                   userId={reporter}
                   setUserCallback={value => {
                     setReporter(value)
@@ -76,7 +69,6 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
               </CustomInputLabel>
               <CustomInputLabel label={'Interngjeng'}>
                 <InternalGroupSelect
-                  withinPortal
                   withOtherOption
                   internalGroupId={internalGroup}
                   setInternalGroupCallback={handleInternalGroupCallback}
@@ -94,16 +86,16 @@ export const SummaryForm: React.FC<SummaryFormProps> = ({
               <CustomInputLabel label={'Dato'}>
                 <DateInput
                   placeholder="Velg en dato"
-                  icon={<IconCalendar size={14} />}
+                  leftSection={<IconCalendar size={14} />}
                   error={errors?.date?.message}
-                  defaultValue={getValues('date')}
-                  onChange={date => date && setValue('date', new Date(date))}
+                  defaultValue={getValues('date') ?? undefined}
+                  onChange={date => setValue('date', date)}
                 />
               </CustomInputLabel>
             </Stack>
             <UserMultiSelect
               label={
-                <Title mb={'xs'} order={5} color={'dimmed'}>
+                <Title mb={'xs'} order={5} c={'dimmed'}>
                   Deltakere
                 </Title>
               }

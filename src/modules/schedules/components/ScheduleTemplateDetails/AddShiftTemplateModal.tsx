@@ -103,7 +103,7 @@ export const AddShiftTemplateModal: React.FC<AddShiftTemplateModalProps> = ({
         onChange={evt => setLocation(evt as LocationValues)}
       />
 
-      <Group position="right" my="md">
+      <Group justify="flex-end" my="md">
         <Button color="gray" onClick={onCloseCallback}>
           Avbryt
         </Button>

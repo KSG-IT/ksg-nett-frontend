@@ -1,12 +1,14 @@
-import { Avatar, Badge, Table, createStyles } from '@mantine/core'
+import { Avatar, Table } from '@mantine/core'
+import { Badge } from 'components/Badge'
+import { createStyles } from '@mantine/emotion'
 import { IconCheck, IconX } from '@tabler/icons-react'
-import { format } from 'util/date-fns'
+import { CardTable } from 'components/CardTable'
 import { CoreApplicantNode } from 'modules/admissions/types.graphql'
 import { UserThumbnail } from 'modules/users/components'
+import { useNavigate } from 'react-router-dom'
+import { format } from 'util/date-fns'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 import { ApplicantTableRowMenu } from './ApplicantTableRowMenu'
-import { CardTable } from 'components/CardTable'
-import { useNavigate } from 'react-router-dom'
 
 function safeParseApplicantName(applicant: CoreApplicantNode) {
   if (applicant.fullName === ' ') return ''
@@ -39,67 +41,66 @@ export const ApplicantsTable: React.FC<{
   }
 
   const rows = applicants.map(applicant => (
-    <tr key={applicant.id}>
-      <td
+    <Table.Tr key={applicant.id}>
+      <Table.Td
         className={classes.interactiveTd}
-        placeholder=""
         onClick={() => handleApplicantRedirect(applicant.id)}
       >
         {safeParseApplicantName(applicant)}
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <ApplicantStatusBadge applicantStatus={applicant.status} />
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         {applicant.wantsDigitalInterview ? (
           <Badge color="orange">Digitalt</Badge>
         ) : (
           <Badge color="grape">Fysisk</Badge>
         )}
-      </td>
-      <td>{applicant.phone}</td>
-      <td>{getInterviewTime(applicant)}</td>
-      <td>
+      </Table.Td>
+      <Table.Td>{applicant.phone}</Table.Td>
+      <Table.Td>{getInterviewTime(applicant)}</Table.Td>
+      <Table.Td>
         <Avatar.Group>
           {applicant.interview?.interviewers.map(interviewer => (
             <UserThumbnail key={interviewer.id} user={interviewer} />
           ))}
         </Avatar.Group>
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <InterviewCoveredBadge covered={applicant.interviewIsCovered} />
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         <ApplicantTableRowMenu applicant={applicant} />
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <CardTable highlightOnHover compact>
-      <thead>
-        <tr>
-          <td>Navn</td>
-          <td>Status</td>
-          <td>Intervjutype</td>
-          <td>Telefon</td>
-          <td>Intervjutid</td>
-          <td>Intevjuere</td>
-          <td>Dekket?</td>
-          <td></td>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Td>Navn</Table.Td>
+          <Table.Td>Status</Table.Td>
+          <Table.Td>Intervjutype</Table.Td>
+          <Table.Td>Telefon</Table.Td>
+          <Table.Td>Intervjutid</Table.Td>
+          <Table.Td>Intevjuere</Table.Td>
+          <Table.Td>Dekket?</Table.Td>
+          <Table.Td></Table.Td>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </CardTable>
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   interactiveTd: {
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: 'var(--mantine-color-gray-0)',
       textDecoration: 'underline',
     },
   },
-}))
+})

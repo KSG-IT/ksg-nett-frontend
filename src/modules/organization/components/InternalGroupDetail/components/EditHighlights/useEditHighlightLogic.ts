@@ -1,35 +1,20 @@
-import * as yup from 'yup'
-import { FILE_SIZE } from 'util/consts'
+import { maxFileSize, requiredString } from 'util/validation'
+import { z } from 'zod'
 import { PatchInternalGroupUserHighlightReturns } from 'modules/organization/types.graphql'
 import { OnFormSubmit } from 'types/forms'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-export type HighlightFormData = {
-  user: string
-  internalGroup: string
-  occupation: string
-  description: string
-  archived: boolean
-  image?: File | null
-}
-
-const HighlightSchema = yup.object().shape({
-  user: yup.string().required(),
-  internalGroup: yup.string().required(),
-  occupation: yup.string().required(),
-  description: yup.string().required(),
-  archived: yup.boolean().required(),
-  image: yup
-    .mixed()
-    .nullable()
-    .notRequired()
-    .test(
-      'FILE_SIZE',
-      `Filstørrelse for stor, 1 MB maks.`,
-      value => !value || (value && value.size <= FILE_SIZE)
-    ),
+const HighlightSchema = z.object({
+  user: requiredString('Påkrevd'),
+  internalGroup: requiredString('Påkrevd'),
+  occupation: requiredString('Påkrevd'),
+  description: requiredString('Påkrevd'),
+  archived: z.boolean(),
+  image: maxFileSize(),
 })
+
+export type HighlightFormData = z.infer<typeof HighlightSchema>
 
 interface UseEditHighlightLogicInput {
   defaultValues: HighlightFormData
@@ -44,7 +29,7 @@ export function useEditHighlightLogic(input: UseEditHighlightLogicInput) {
   const form = useForm<HighlightFormData>({
     mode: 'onSubmit',
     defaultValues,
-    resolver: yupResolver(HighlightSchema),
+    resolver: zodResolver(HighlightSchema),
   })
 
   const handleSubmit = async (data: HighlightFormData) => {

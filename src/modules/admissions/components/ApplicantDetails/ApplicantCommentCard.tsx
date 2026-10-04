@@ -7,7 +7,7 @@ interface ApplicantCommentCardProps {
   comment: ApplicantCommentNode
 }
 
-export const ApplicantCommentCard: React.VFC<ApplicantCommentCardProps> = ({
+export const ApplicantCommentCard: React.FC<ApplicantCommentCardProps> = ({
   comment,
 }) => {
   const { user, text, createdAt } = comment
@@ -16,9 +16,9 @@ export const ApplicantCommentCard: React.VFC<ApplicantCommentCardProps> = ({
       <Card my="md">
         <Group align={'flex-start'}>
           <UserThumbnail user={user} />
-          <Stack spacing={'xs'}>
+          <Stack gap={'xs'}>
             <Text>{user.getFullWithNickName}</Text>
-            <Text size="sm" color="gray">
+            <Text size="sm" c="gray">
               Skrevet {format(new Date(createdAt), 'dd. MMM yyyy HH:mm')}
             </Text>
           </Stack>

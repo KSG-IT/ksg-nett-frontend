@@ -25,7 +25,7 @@ interface SummaryGroupingSelectProps {
   setGroupCallback: (group: string) => void
 }
 
-export const SummaryGroupingSelect: React.VFC<SummaryGroupingSelectProps> = ({
+export const SummaryGroupingSelect: React.FC<SummaryGroupingSelectProps> = ({
   setGroupCallback,
 }) => {
   const [summaryGroupings, setSummaryGroupings] = useState<
@@ -47,7 +47,9 @@ export const SummaryGroupingSelect: React.VFC<SummaryGroupingSelectProps> = ({
   return (
     <select value={group} onChange={evt => setGroup(evt.target.value)}>
       {summaryGroupings.map(grouping => (
-        <option value={grouping.id}>{grouping.name}</option>
+        <option key={grouping.id} value={grouping.id}>
+          {grouping.name}
+        </option>
       ))}
     </select>
   )

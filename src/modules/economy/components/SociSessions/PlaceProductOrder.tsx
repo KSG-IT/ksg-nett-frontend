@@ -52,7 +52,7 @@ export const PlaceProductOrder: React.FC<PlaceProductOrderProps> = ({
   }
   return (
     <Paper p="md">
-      <Group spacing="lg">
+      <Group gap="lg">
         <UserSelect setUserCallback={setUserId} />
         <PermissionGate permissions={PERMISSIONS.economy.canOvercharge}>
           <Checkbox
@@ -65,7 +65,7 @@ export const PlaceProductOrder: React.FC<PlaceProductOrderProps> = ({
         <NumberInput
           placeholder="Antall"
           value={orderSize}
-          onChange={val => val && setOrderSize(val)}
+          onChange={val => typeof val === 'number' && setOrderSize(val)}
         />
         <Button color="samfundet-red" onClick={handlePlaceProductOrder}>
           Legg til

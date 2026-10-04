@@ -1,10 +1,5 @@
-import {
-  Container,
-  createStyles,
-  Group,
-  Text,
-  UnstyledButton,
-} from '@mantine/core'
+import { Container, Group, Text, UnstyledButton } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
 import { format } from 'util/date-fns'
 
@@ -21,7 +16,7 @@ export const WeekController: React.FC<WeekController> = ({
 }) => {
   const { classes } = useWeekControllerStyles()
   return (
-    <Group className={classes.weekController} spacing={0} align={'center'}>
+    <Group className={classes.weekController} gap={0} align={'center'}>
       <UnstyledButton
         className={classes.weekControllerButton}
         onClick={previousWeekCallback}
@@ -41,7 +36,7 @@ export const WeekController: React.FC<WeekController> = ({
   )
 }
 
-const useWeekControllerStyles = createStyles(theme => ({
+const useWeekControllerStyles = createStyles({
   weekController: {
     backgroundColor: 'white',
     border: '1px solid gray',
@@ -58,4 +53,4 @@ const useWeekControllerStyles = createStyles(theme => ({
       cursor: 'pointer',
     },
   },
-}))
+})

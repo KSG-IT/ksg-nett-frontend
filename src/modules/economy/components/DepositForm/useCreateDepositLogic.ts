@@ -1,4 +1,4 @@
-import { yupResolver } from '@hookform/resolvers/yup'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { DepositMethodValues } from 'modules/economy/enums'
 import {
   CreateDepositMutationReturns,
@@ -7,21 +7,18 @@ import {
 import { useForm } from 'react-hook-form'
 import { OnFormSubmit } from 'types/forms'
 import { format } from 'util/date-fns'
-import * as yup from 'yup'
+import { z } from 'zod'
 
-export type CreateDepositFormData = {
-  amount: number
-  dateOfTransfer: Date
-  depositMethod: DepositMethodValues
-}
-
-const DepositCreateSchema = yup.object().shape({
-  amount: yup
-    .number()
-    .required('Må sette sum')
+const DepositCreateSchema = z.object({
+  amount: z
+    .number({ error: 'Må sette sum' })
     .max(30_000, 'Kan ikke være høyere enn 30 000')
     .min(1, 'Må minst være 1'),
+  dateOfTransfer: z.string(),
+  depositMethod: z.enum(DepositMethodValues),
 })
+
+export type CreateDepositFormData = z.infer<typeof DepositCreateSchema>
 
 interface UseCreateDepositLogicInput {
   defaultValues: CreateDepositFormData
@@ -36,14 +33,14 @@ export function useCreateDepositLogic(input: UseCreateDepositLogicInput) {
   const form = useForm<CreateDepositFormData>({
     mode: 'onChange',
     defaultValues,
-    resolver: yupResolver(DepositCreateSchema),
+    resolver: zodResolver(DepositCreateSchema),
   })
 
   async function handleSubmit(data: CreateDepositFormData) {
     let description = ''
     if (data.depositMethod === DepositMethodValues.BANK_TRANSFER) {
       // Write out date in YYYY-MM-DD format
-      description = format(data.dateOfTransfer, 'd. MMMM')
+      description = format(new Date(data.dateOfTransfer), 'd. MMMM')
     }
 
     const parsedData = {

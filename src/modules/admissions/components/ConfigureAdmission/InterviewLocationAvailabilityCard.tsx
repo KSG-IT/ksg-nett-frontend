@@ -28,12 +28,12 @@ interface InterviewLocationAvailabilityProps {
   interviewLocation: InterviewLocationNode
 }
 
-export const InterviewLocationAvailabilityCard: React.VFC<
+export const InterviewLocationAvailabilityCard: React.FC<
   InterviewLocationAvailabilityProps
 > = ({ interviewLocation }) => {
   const [timeFrom, setTimeFrom] = useState('12:00')
   const [timeTo, setTimeTo] = useState('20:00')
-  const [date, setDate] = useState<Date | null>(new Date())
+  const [date, setDate] = useState<string | null>(null)
 
   const [createInterviewLocationAvailability] = useMutation<
     CreateInterviewLocationAvailabilityReturns,
@@ -115,32 +115,36 @@ export const InterviewLocationAvailabilityCard: React.VFC<
   return (
     <Paper p="sm">
       <Stack>
-        <Group position="apart">
+        <Group justify="space-between">
           <Title order={3}>{interviewLocation.name}</Title>
           <UnstyledButton onClick={handleDeleteInterviewLocation}>
             <IconX />
           </UnstyledButton>
         </Group>
         <Table>
-          <thead>
-            <tr>
-              <th>Dato</th>
-              <th>Fra</th>
-              <th>Til</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Dato</Table.Th>
+              <Table.Th>Fra</Table.Th>
+              <Table.Th>Til</Table.Th>
+              <Table.Th></Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
             {interviewLocation.availability.map(availability => (
               <InterviewLocationAvailabilityInline
                 availability={availability}
                 key={availability.id}
               />
             ))}
-          </tbody>
+          </Table.Tbody>
         </Table>
         <Group>
-          <DatePickerInput value={date} label="Dag" onChange={setDate} />
+          <DatePickerInput
+            value={date}
+            label="Dag"
+            onChange={val => setDate(val)}
+          />
           <Group>
             <TimeInput
               value={timeFrom}

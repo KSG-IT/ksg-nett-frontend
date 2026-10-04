@@ -1,17 +1,16 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Container, SimpleGrid, Stack, Text } from '@mantine/core'
+import { Button, Container, SimpleGrid, Stack } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
-import { isAfter } from 'date-fns'
+import { format, isAfter } from 'date-fns'
 import 'dayjs/locale/nb'
 import { BOOK_INTERRVIEW_MUTATION } from 'modules/admissions/mutations'
 import { INTERVIEW_PERIOD_DATES_QUERY } from 'modules/admissions/queries'
 import { InterviewPeriodDatesReturns } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
-import { format } from 'util/date-fns'
 import { InterviewsAvailableForBooking } from './components/InterviewsAvailableForBooking'
 
 interface InterviewBookingProps {
@@ -22,8 +21,8 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
   applicantToken,
 }) => {
   const [selectedInterviews, setSelectedInterviews] = useState<string[]>([])
-  const [day, setDay] = useState(new Date())
-  const handleDayChange = (newDay: Date) => {
+  const [day, setDay] = useState(format(new Date(), 'yyyy-MM-dd'))
+  const handleDayChange = (newDay: string) => {
     setDay(newDay)
     setSelectedInterviews([])
   }
@@ -78,21 +77,15 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
   return (
     <Stack style={{ maxWidth: 900 }}>
       <MessageBox type="info">
-        <Text>
-          Det kan hende at flere prøver å booke intervjutid samtidig. Dette kan
-          medføre at tidspunkter forsvinner om du ikke velger et tidspunkt raskt
-          nok. Helst book et intevju så tidlig som mulig.
-        </Text>
+        Det kan hende at flere prøver å booke intervjutid samtidig. Dette kan
+        medføre at tidspunkter forsvinner om du ikke velger et tidspunkt raskt
+        nok. Helst book et intevju så tidlig som mulig.
       </MessageBox>
-      <SimpleGrid
-        cols={2}
-        breakpoints={[{ maxWidth: 600, cols: 1, spacing: 'sm' }]}
-      >
+      <SimpleGrid cols={{ base: 1, xs: 2 }}>
         <Container>
           <DatePicker
             size={'md'}
             locale={'nb'}
-            placeholder={'Klikk her for å velge dato'}
             minDate={
               isAfter(new Date(startDate), new Date())
                 ? new Date(startDate)
@@ -108,7 +101,7 @@ export const InterviewBooking: React.FC<InterviewBookingProps> = ({
 
         <Stack>
           <InterviewsAvailableForBooking
-            dateSelected={format(day, 'yyyy-MM-dd')}
+            dateSelected={day}
             handleCallback={setSelectedInterviews}
             currentlySelected={selectedInterviews}
           />

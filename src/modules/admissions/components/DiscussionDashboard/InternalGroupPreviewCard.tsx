@@ -1,4 +1,5 @@
-import { Group, Paper, Text, Title, createStyles } from '@mantine/core'
+import { Group, Paper, Text, Title } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { IconArrowRight } from '@tabler/icons-react'
 import { InternalGroupApplicantData } from 'modules/admissions/types.graphql'
 import { useNavigate } from 'react-router-dom'
@@ -31,12 +32,12 @@ export const InternalGroupPreviewCard: React.FC<{
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   card: {
     '&:hover': {
       cursor: 'pointer',
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: 'var(--mantine-color-gray-0)',
       textDecoration: 'underline',
     },
   },
-}))
+})

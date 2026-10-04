@@ -1,5 +1,71 @@
 # CHANGELOG
 
+## [unreleased]
+
+### Changed
+
+- Dashboard: the feedback card shows only when the `feedback` feature flag is on
+
+## [v2026.10.1]
+
+### Added
+
+- Economy
+  - Sales statistics page for Soci: revenue and units per product, by day, week, month or semester, from this semester to all time (`economy.view_productorder`)
+  - Min økonomi: spending per period with the same charts, and a table of what you bought
+- Organization: Edit a user's verv timeline from the profile and from the manage page
+- Admissions: Compact applicants overview with sorting, search and a status filter
+- Schedules
+  - Allergy overview as a table for the week or for one day, with totals (schedule managers only)
+  - Vakter: who works on a day, as a timeline (06:00–06:00) on wide screens and a compact list on phones
+  - Mine vakter: the next shift on top, upcoming and past shifts in one page, and a button to subscribe to the iCal feed
+  - "Din vakt" badge on your own shifts
+  - Overview of all schedules with how far ahead each is planned and the open slots in the next 14 days
+  - Schedule view v2 (`/schedules/:id/v2`), next to the old view: a grid by week or by location, a slot picker with shift counts and keyboard support, shifts per person, create and change shifts, and a phone layout with sheets
+- Dashboard
+  - Feedback card and form that sends an email to KSG-IT, optionally anonymous
+  - "Neste vakter" shows the next shift with coworkers and the following shifts
+  - Wanted posters for members on the wanted list
+- App: A notification asks you to reload when a new version is deployed
+- App: Queries are sent again after a network error, and the error page has a "Prøv igjen" button
+
+### Changed
+
+- Dependencies
+  - Upgrade Mantine v6 -> v9
+  - Upgrade React v18 -> v19
+  - Upgrade tiptap v2 -> v3
+  - Upgrade Apollo Client, Sentry, Stripe, Tabler icons, recharts and zustand for React 19 support
+  - Upgrade Vite v3 -> v8 and Yarn v1 -> v4
+  - Replace yup with zod for form validation
+  - Remove react-select and Font Awesome
+- Theme: Smoother red color palette, with a lighter hover color on red buttons
+- Header: User search uses the same input style as the rest of the app
+- Tables: Wide card tables scroll horizontally without permanent scroll bars
+- Admissions: Booking uses Mantine's time grid, and applicant images are cropped before upload
+- Navbar: Closed by default on mobile
+- Sidebar: New look, the active item is marked also on sub-pages, and the names match the page titles ("Vaktplaner", "Mine vakter")
+- Economy: Transactions and deposits are lists with signed amounts (purchases negative, money in positive), and deposits show the credited amount
+- Quotes: Cards keep line breaks, show the semester in the corner, and have a keyboard-friendly like button
+- Deploy: `index.html` is checked against the server on every load, and hashed assets are cached for a year, so browsers and the installed iPhone app pick up new versions
+
+### Fixed
+
+- Admissions: The selected interview time stays highlighted while booking
+- Rich text editor: Underline button now underlines text
+- Schedules: Location column in shift templates is right-aligned
+- Economy: Socinomics no longer crashes in development builds
+- Economy: The per-product table scrolls horizontally on phones
+- Build: Remove the Vite build warnings
+- Sidebar: The balance was invisible between 100 and 1000 kr
+- Dashboard: Names were missing in the wanted list
+- Economy: The spending chart tooltip lists only products with purchases, and is no longer cut off by the card
+- Schedules: Shift and slot values the backend does not accept (`BARVAKT`, `BRYGGERIET`) are not offered in the new forms
+
+### Removed
+
+- Economy: Unused print page for the krysseliste
+
 ## [v2026.7.1]
 
 - Navbar: Add support for highlighted handbook documents

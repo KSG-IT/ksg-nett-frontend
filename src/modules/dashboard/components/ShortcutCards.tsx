@@ -1,10 +1,10 @@
-import { createStyles, Stack, Text } from '@mantine/core'
+import { Stack, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import {
   IconBabyCarriage,
   IconCreditCard,
   IconEdit,
   IconMeat,
-  IconMoneybag,
   IconMoodKid,
   IconQuote,
   IconReportMoney,
@@ -12,6 +12,7 @@ import {
 import { ShortcutCard, ShortcutCardGrid } from 'components/ShortcutCard'
 import { useMemo } from 'react'
 import { PERMISSIONS } from 'util/permissions'
+import { FeedbackCard } from './Feedback'
 
 const shortcuts = [
   {
@@ -45,12 +46,14 @@ interface ShortcutCardsProps {
   sociOrderSession: boolean
   showNewbies: boolean
   showStockMarketShortcut: boolean
+  showFeedback: boolean
 }
 
 export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
   sociOrderSession,
   showNewbies,
   showStockMarketShortcut,
+  showFeedback,
 }) => {
   const { classes } = useStyles()
 
@@ -72,9 +75,7 @@ export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
 
   return (
     <Stack>
-      <Text color="dimmed" className={classes.title}>
-        Snarveier
-      </Text>
+      <Text className={classes.title}>Snarveier</Text>
 
       {showStockMarketShortcut && (
         <ShortcutCard
@@ -94,14 +95,16 @@ export const ShortcutCards: React.FC<ShortcutCardsProps> = ({
         />
       )}
 
-      <ShortcutCardGrid shortcuts={memoizedShortcuts} />
+      <ShortcutCardGrid shortcuts={memoizedShortcuts}>
+        {showFeedback && <FeedbackCard />}
+      </ShortcutCardGrid>
     </Stack>
   )
 }
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles({
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: `Greycliff CF, var(--mantine-font-family)`,
     fontWeight: 700,
   },
-}))
+})

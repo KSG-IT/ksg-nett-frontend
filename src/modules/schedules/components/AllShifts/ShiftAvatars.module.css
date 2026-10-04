@@ -1,0 +1,9 @@
+.empty {
+  border: 1.5px dashed var(--mantine-color-gray-5);
+  background: transparent;
+  color: var(--mantine-color-gray-5);
+}
+
+.mine {
+  box-shadow: 0 0 0 2px var(--mantine-color-samfundet-red-6);
+}

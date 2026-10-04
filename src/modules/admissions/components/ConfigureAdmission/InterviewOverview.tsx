@@ -39,7 +39,7 @@ interface GenerateInterviewsReturns {
   interviewsGenerated: number
 }
 
-export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
+export const InterviewOverview: React.FC<InterviewOverviewProps> = ({
   setStageCallback,
 }) => {
   const navigate = useNavigate()
@@ -141,7 +141,7 @@ export const InterviewOverview: React.VFC<InterviewOverviewProps> = ({
       <Group>
         <Title my="md">Genererte intervjuer</Title>
         <Button
-          leftIcon={<IconTrash />}
+          leftSection={<IconTrash />}
           color="red"
           onClick={() => deleteAllInterviews()}
         >

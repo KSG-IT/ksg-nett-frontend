@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Center } from '@mantine/core'
 import * as Sentry from '@sentry/react'
-import { FullPageError } from 'components/FullPageComponents'
+import { FullPage404, FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import {
   AdmissionDashboard,
@@ -46,11 +46,11 @@ import {
   ReviewQuotes,
 } from 'modules/quotes/views'
 import {
-  AllMyShifts,
   AllShifts,
   MyAvailability,
-  MyUpcomingShifts,
+  MyShifts,
   ScheduleDetails,
+  ScheduleDetailsV2,
   ScheduleTemplateDetails,
   ScheduleTemplates,
   Schedules,
@@ -72,10 +72,6 @@ import { PERMISSIONS } from 'util/permissions'
 import PublicRoutes from './PublicRoutes'
 import { RestrictedRoute } from './RestrictedRoute'
 import { KnightHoodDashboard } from 'modules/knighthood/KnightHoodDashBoard'
-
-const FullPage404 = React.lazy(
-  () => import('components/FullPageComponents/FullPage404')
-)
 
 const MainContent = React.lazy(() => import('routes/MainContent'))
 
@@ -100,6 +96,9 @@ const SocinomicsControlPanel = React.lazy(
 )
 
 const SociRanked = React.lazy(() => import('modules/economy/views/SociRanked'))
+const SociStatistics = React.lazy(
+  () => import('modules/economy/views/SociStatistics')
+)
 
 // === Schedules ===
 const ScheduleAllergies = React.lazy(
@@ -480,6 +479,16 @@ export const AppRoutes: React.FC = () => {
           <Route path="soci-products" element={<h2>Suh duh</h2>} />
           <Route path="socinomics" element={<Socinomics />} />
           <Route
+            path="statistics"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.economy.view.productOrder}
+              >
+                <SociStatistics />
+              </RestrictedRoute>
+            }
+          />
+          <Route
             path="socinomics-control"
             element={
               <RestrictedRoute
@@ -561,13 +570,32 @@ export const AppRoutes: React.FC = () => {
               </RestrictedRoute>
             }
           />
+          <Route
+            path=":id/v2"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleDetailsV2 />
+              </RestrictedRoute>
+            }
+          />
           <Route path="me">
-            <Route index element={<MyUpcomingShifts />} />
-            <Route path="history" element={<AllMyShifts />} />
+            <Route index element={<MyShifts />} />
+            <Route path="history" element={<MyShifts />} />
             <Route path="availability" element={<MyAvailability />} />
           </Route>
           <Route path="all-shifts" element={<AllShifts />} />
-          <Route path="allergies" element={<ScheduleAllergies />} />
+          <Route
+            path="allergies"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleAllergies />
+              </RestrictedRoute>
+            }
+          />
 
           <Route path="templates">
             <Route

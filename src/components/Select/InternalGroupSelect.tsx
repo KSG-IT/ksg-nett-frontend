@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Box, createStyles, Select, SelectProps } from '@mantine/core'
+import { Select, SelectProps } from '@mantine/core'
 import { ALL_INTERNAL_GROUPS_QUERY } from 'modules/organization/queries'
 import { AllInternalGroupsReturns } from 'modules/organization/types'
 import { internalGroupToSelectOptions } from 'util/organization'
@@ -35,7 +35,9 @@ export const InternalGroupSelect: React.FC<InternalGroupSelectProps> = ({
       defaultValue={initialValue?.value}
       data={options}
       // ToDo: Have groupings for internal and interest group
-      onChange={setInternalGroupCallback}
+      onChange={value => {
+        if (value) setInternalGroupCallback(value)
+      }}
       {...rest}
     />
   )

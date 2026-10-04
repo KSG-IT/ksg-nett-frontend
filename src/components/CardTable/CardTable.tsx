@@ -1,10 +1,5 @@
-import {
-  createStyles,
-  Paper,
-  ScrollArea,
-  Table,
-  TableProps,
-} from '@mantine/core'
+import { Paper, Table, TableProps } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 
 interface CardTableProps extends TableProps {
   p?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | string
@@ -18,32 +13,23 @@ export const CardTable: React.FC<CardTableProps> = ({
   compact = false,
   ...rest
 }) => {
-  const { classes } = useCardTableStyles({ compact })
+  const { classes } = useCardTableStyles()
 
   return (
     <Paper className={`${classes.card} ${className}`} p={p}>
-      <Table fontSize={compact ? 12 : 14} {...rest}>
-        {children}
-      </Table>
+      <Table.ScrollContainer minWidth={0}>
+        <Table fz={compact ? 12 : 14} {...rest}>
+          {children}
+        </Table>
+      </Table.ScrollContainer>
     </Paper>
   )
 }
 
-interface CardTableStyleProps {
-  compact: boolean
-}
-
-const useCardTableStyles = createStyles(
-  (theme, { compact }: CardTableStyleProps) => ({
-    card: {
-      overflowX: 'scroll',
-      overflowY: 'scroll',
-      td: {
-        whiteSpace: 'nowrap',
-        tr: {
-          fontSize: compact ? '12px' : '16px',
-        },
-      },
+const useCardTableStyles = createStyles(() => ({
+  card: {
+    td: {
+      whiteSpace: 'nowrap',
     },
-  })
-)
+  },
+}))

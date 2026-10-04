@@ -1,12 +1,11 @@
-import { Button, createStyles, Text } from '@mantine/core'
+import { Button, NumberFormatter, Table, Text } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { showNotification } from '@mantine/notifications'
 import { IconDownload, IconFilePlus, IconMailbox } from '@tabler/icons-react'
 import { CardTable } from 'components/CardTable'
 import { useInvoiceMutations } from 'modules/barTab/mutations.hooks'
 import { ACTIVE_BAR_TAB_INVOICES_QUERY } from 'modules/barTab/queries'
 import { BarTabInvoiceNode } from 'modules/barTab/types.graphql'
-
-import { numberWithSpaces } from 'util/parsing'
 
 interface InvoiceTableProps {
   invoices: Pick<
@@ -44,18 +43,24 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
   }
 
   const invoiceRows = invoices.map(invoice => (
-    <tr key={invoice.id}>
-      <td>{invoice.customer.name}</td>
-      <td>{invoice.customer.email}</td>
-      <td>{numberWithSpaces(invoice.theyOwe)},- NOK</td>
-      <td>{numberWithSpaces(invoice.weOwe)},- NOK</td>
-      <td>{numberWithSpaces(invoice.amount)},- NOK</td>
-      <td>
+    <Table.Tr key={invoice.id}>
+      <Table.Td>{invoice.customer.name}</Table.Td>
+      <Table.Td>{invoice.customer.email}</Table.Td>
+      <Table.Td>
+        <NumberFormatter value={invoice.theyOwe} suffix=",- NOK" />
+      </Table.Td>
+      <Table.Td>
+        <NumberFormatter value={invoice.weOwe} suffix=",- NOK" />
+      </Table.Td>
+      <Table.Td>
+        <NumberFormatter value={invoice.amount} suffix=",- NOK" />
+      </Table.Td>
+      <Table.Td>
         {invoice.pdf ? (
           <a href={invoice.pdf} target="_blank">
             <Button
               color="samfundet-red"
-              leftIcon={<IconDownload />}
+              leftSection={<IconDownload />}
               variant="subtle"
             >
               Last ned
@@ -64,20 +69,20 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
         ) : (
           <Button
             disabled
-            leftIcon={<IconFilePlus />}
+            leftSection={<IconFilePlus />}
             color="samfundet-red"
             variant="subtle"
           >
             Opprett
           </Button>
         )}
-      </td>
-      <td>
+      </Table.Td>
+      <Table.Td>
         {invoice.emailSent ? (
           <Text>Sent</Text>
         ) : (
           <Button
-            leftIcon={<IconMailbox />}
+            leftSection={<IconMailbox />}
             color="samfundet-red"
             variant="subtle"
             disabled={!invoice.pdf}
@@ -86,24 +91,24 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({ invoices }) => {
             Send faktura på epost
           </Button>
         )}
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ))
 
   return (
     <CardTable>
-      <thead>
-        <tr>
-          <th>Navn</th>
-          <th>Epost</th>
-          <th>Hjemme</th>
-          <th>Borte</th>
-          <th>Differanse</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>{invoiceRows}</tbody>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Navn</Table.Th>
+          <Table.Th>Epost</Table.Th>
+          <Table.Th>Hjemme</Table.Th>
+          <Table.Th>Borte</Table.Th>
+          <Table.Th>Differanse</Table.Th>
+          <Table.Th></Table.Th>
+          <Table.Th></Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{invoiceRows}</Table.Tbody>
     </CardTable>
   )
 }

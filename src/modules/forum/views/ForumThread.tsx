@@ -1,17 +1,12 @@
 import { Button, Card, Stack, Text, Title } from '@mantine/core'
-import { Link } from '@mantine/tiptap'
-import { useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
 import { Breadcrumbs } from 'components/Breadcrumbs'
-import { RichTextEditor } from 'components/RichTextEditor'
+import { RichTextEditor, useRichTextEditor } from 'components/RichTextEditor'
 import { formatDistanceToNow } from 'util/date-fns'
 
 const ForumThread: React.FC = () => {
-  const editor = useEditor({
-    extensions: [StarterKit, Link],
-  })
+  const editor = useRichTextEditor()
   return (
-    <Stack spacing="xs">
+    <Stack gap="xs">
       <Breadcrumbs
         items={[
           { label: 'Hjem', path: '/dashboard' },

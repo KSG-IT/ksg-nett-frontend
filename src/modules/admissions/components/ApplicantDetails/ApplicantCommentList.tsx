@@ -6,7 +6,7 @@ interface ApplicantCommentList {
   comments: ApplicantCommentNode[]
 }
 
-export const ApplicantCommentList: React.VFC<ApplicantCommentList> = ({
+export const ApplicantCommentList: React.FC<ApplicantCommentList> = ({
   comments,
 }) => {
   if (comments.length === 0) {

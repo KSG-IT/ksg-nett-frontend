@@ -2,10 +2,7 @@ import { useQuery } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import { Button, Stack } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { Link } from '@mantine/tiptap'
-import { useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import { RichTextEditor } from 'components/RichTextEditor'
+import { RichTextEditor, useRichTextEditor } from 'components/RichTextEditor'
 import { useInterviewScheduleMutations } from 'modules/admissions/mutations.hooks'
 import {
   INTERVIEW_SCHEDULE_TEMPLATE,
@@ -34,10 +31,7 @@ export const DefaultInterviewNotesEditor: React.FC<
     },
   })
 
-  const editor = useEditor({
-    extensions: [StarterKit, Link],
-    content: initialNotes,
-  })
+  const editor = useRichTextEditor(initialNotes)
 
   const { patchInterviewSchedule, patchInterviewScheduleLoading } =
     useInterviewScheduleMutations()

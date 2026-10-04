@@ -2,14 +2,13 @@ import { gql, useQuery } from '@apollo/client'
 import {
   ActionIcon,
   Anchor,
-  Card,
-  createStyles,
   Group,
   SimpleGrid,
   Stack,
   Text,
   Title,
 } from '@mantine/core'
+import { createStyles } from '@mantine/emotion'
 import { IconExternalLink, IconRefresh } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
@@ -17,7 +16,7 @@ import { FullContentLoader } from 'components/Loading'
 import React from 'react'
 import { useMe } from 'util/hooks'
 import { TransactionCard } from '../../dashboard/components/TransactionCard'
-import { AccountCard, MyDeposits, MyExpenditures } from '../components'
+import { AccountCard, MyDeposits, MySpending } from '../components'
 import { MY_BANK_ACCOUNT_QUERY } from '../queries'
 import { MyBankAccountReturns } from '../types.graphql'
 
@@ -47,7 +46,7 @@ const DigiBong: React.FC = () => {
   return (
     <Group>
       <Anchor href={myExternalChargeQrCodeUrl} target="_blank">
-        <Group spacing={0}>
+        <Group gap={0}>
           <Text>Digibong QR kode</Text>
           <IconExternalLink stroke={1.5} size={18} />
         </Group>
@@ -82,50 +81,28 @@ export const MyEconomy: React.FC = () => {
         className={classes.balanceCard}
         account={data.myBankAccount}
       />
-      <SimpleGrid
-        cols={2}
-        breakpoints={[
-          { maxWidth: 'md', cols: 1, spacing: 'md' },
-          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
-        ]}
-      >
-        <Stack>
-          <Text color={'dimmed'} weight={700} p={'xs'}>
-            Forbruk
-          </Text>
-          <Card withBorder className={classes.cardWithBorder}>
-            <MyExpenditures moneySpent={data.myBankAccount.user.moneySpent} />
-          </Card>
-        </Stack>
+      <Stack gap="xs">
+        <Title order={2}>Mitt forbruk</Title>
+        <MySpending />
+      </Stack>
 
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing={{ base: 'sm', md: 'md' }}>
         <TransactionCard
           activities={data.myBankAccount.user.lastTransactions}
         />
-        <Stack>
-          <Text color={'dimmed'} weight={700} p={'xs'}>
-            Innskudd
-          </Text>
-          <Card withBorder className={classes.cardWithBorder}>
-            <MyDeposits deposits={data.myBankAccount.lastDeposits} />
-          </Card>
-        </Stack>
+        <MyDeposits deposits={data.myBankAccount.lastDeposits} />
       </SimpleGrid>
     </Stack>
   )
 }
 
-const useStyles = createStyles(theme => ({
-  cardWithBorder: {
-    borderTop: `5px solid ${theme.colors.brand}`,
-    '@media (max-width: 800px)': {
-      padding: theme.spacing.xs,
-    },
-  },
+const useStyles = createStyles({
   balanceCard: {
-    backgroundImage: theme.fn.gradient({ from: 'cyan.8', to: 'cyan.4' }),
-    color: theme.white,
+    backgroundImage:
+      'linear-gradient(45deg, var(--mantine-color-cyan-8), var(--mantine-color-cyan-4))',
+    color: 'white',
     maxWidth: 450,
     maxHeight: 300,
-    borderRadius: theme.radius.lg,
+    borderRadius: 'var(--mantine-radius-lg)',
   },
-}))
+})

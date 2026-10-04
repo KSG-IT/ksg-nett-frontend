@@ -1,5 +1,5 @@
 import { UserNode } from 'modules/users/types'
-import create from 'zustand'
+import { create } from 'zustand'
 export const LOGIN_TOKEN_KEY = 'login-token'
 
 export const UserPlaceholder: UserNode = {
@@ -70,6 +70,8 @@ export const useStore = create<Store>(set => ({
     localStorage.setItem(LOGIN_TOKEN_KEY, token)
     set(() => ({ token: token }))
   },
+  // Only mobile reads this (AppShell collapsed.mobile). On desktop the navbar
+  // is always shown, so start closed and let the burger open it.
   sidebarOpen: false,
   toggleSidebarOpen: () => {
     set(state => ({ sidebarOpen: !state.sidebarOpen }))

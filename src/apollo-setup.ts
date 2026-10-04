@@ -4,6 +4,7 @@ import { onError } from '@apollo/client/link/error'
 import { createUploadLink } from 'apollo-upload-client'
 import { getLoginToken } from 'util/auth'
 import { API_URL } from 'util/env'
+import { createQueryRetryLink } from 'util/retryLink'
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -38,6 +39,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
+const retryLink = createQueryRetryLink()
+
 const uploadLink = createUploadLink({
   uri: API_URL + '/graphql/',
 })
@@ -47,6 +50,7 @@ const client = new ApolloClient({
     authLink,
     errorLink,
     languageLink,
+    retryLink,
     //@ts-ignore
     uploadLink,
   ]),

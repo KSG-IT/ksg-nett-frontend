@@ -1,19 +1,35 @@
-import { Grid, Group, Image, Paper, Stack, Text, Title } from '@mantine/core'
+import {
+  Anchor,
+  Center,
+  Flex,
+  Image,
+  Paper,
+  SimpleGrid,
+  Stack,
+  Text,
+} from '@mantine/core'
+import { IconUser } from '@tabler/icons-react'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
 import { format } from 'util/date-fns'
 import { ApplicantStatusBadge } from '../ApplicantStatusBadge'
 
-interface LabelProps {
+const IMAGE_SIZE = 220
+
+interface FieldProps {
+  label: string
   children: React.ReactNode
 }
 
-const Label: React.FC<LabelProps> = ({ children }) => {
-  return (
-    <Text weight="bold" size="xs" color="gray.500">
-      {children}
+const Field: React.FC<FieldProps> = ({ label, children }) => (
+  <Stack gap={4}>
+    <Text fw="bold" size="xs" c="dimmed">
+      {label}
     </Text>
-  )
-}
+    <Text size="sm" style={{ overflowWrap: 'anywhere' }}>
+      {children || '–'}
+    </Text>
+  </Stack>
+)
 
 interface PersonalDetailsCardProps {
   applicant: ApplicantNode
@@ -22,50 +38,69 @@ interface PersonalDetailsCardProps {
 export const PersonalDetailsCard: React.FC<PersonalDetailsCardProps> = ({
   applicant,
 }) => {
+  const fullName = `${applicant.firstName} ${applicant.lastName}`
   return (
-    <Paper p="md" style={{ maxWidth: 800 }}>
-      <Grid grow gutter="lg">
-        {applicant.image && (
-          <Image height={250} width={250} src={applicant.image} />
+    <Paper p="md" maw={900}>
+      <Flex direction={{ base: 'column', sm: 'row' }} gap="lg">
+        {applicant.image ? (
+          <Anchor
+            href={applicant.image}
+            target="_blank"
+            rel="noreferrer"
+            style={{ flexShrink: 0, alignSelf: 'center' }}
+          >
+            <Image
+              src={applicant.image}
+              alt={`Bilde av ${fullName}`}
+              w={IMAGE_SIZE}
+              h={IMAGE_SIZE}
+              fit="cover"
+              radius="md"
+            />
+          </Anchor>
+        ) : (
+          <Center
+            w={IMAGE_SIZE}
+            h={IMAGE_SIZE}
+            bg="gray.1"
+            c="gray.5"
+            style={{
+              flexShrink: 0,
+              alignSelf: 'center',
+              borderRadius: 'var(--mantine-radius-md)',
+            }}
+          >
+            <Stack align="center" gap={4}>
+              <IconUser size={48} />
+              <Text size="xs">Ingen bilde</Text>
+            </Stack>
+          </Center>
         )}
-        <Stack>
-          <Group align="flex-start" spacing={'xs'} p="xl">
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
-              <Label>Epost</Label>
-              <Text m="0"> {applicant.email}</Text>
-            </Stack>
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
-              <Label>Hjemby</Label>
-              <Text>{applicant.hometown}</Text>
-            </Stack>
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
-              <Label>Studie</Label>
-              <Text>{applicant.study}</Text>
-            </Stack>
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
-              <Label>Telefon</Label>
-              <Text>{applicant.phone}</Text>
-            </Stack>
-          </Group>
-
-          <Group align="flex-start" spacing={'xs'} p="xl">
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
-              <Label>Fødselsdato</Label>
-              <Text>
-                {format(new Date(applicant.dateOfBirth), 'dd.MM.yyyy')}
-              </Text>
-            </Stack>
-            <Stack justify={'flex-start'} align="flex-start" spacing="xs">
-              <Label>Adresse</Label>
-              <Text>{applicant.address}</Text>
-            </Stack>
-            <Stack>
-              <Label>Status</Label>
+        <SimpleGrid
+          cols={{ base: 1, xs: 2, md: 3 }}
+          spacing="lg"
+          verticalSpacing="md"
+          style={{ flex: 1, alignContent: 'start' }}
+        >
+          <Field label="Epost">{applicant.email}</Field>
+          <Field label="Telefon">{applicant.phone}</Field>
+          <Field label="Fødselsdato">
+            {applicant.dateOfBirth &&
+              format(new Date(applicant.dateOfBirth), 'dd.MM.yyyy')}
+          </Field>
+          <Field label="Studie">{applicant.study}</Field>
+          <Field label="Hjemby">{applicant.hometown}</Field>
+          <Field label="Adresse">{applicant.address}</Field>
+          <Stack gap={4}>
+            <Text fw="bold" size="xs" c="dimmed">
+              Status
+            </Text>
+            <div>
               <ApplicantStatusBadge applicantStatus={applicant.status} />
-            </Stack>
-          </Group>
-        </Stack>
-      </Grid>
+            </div>
+          </Stack>
+        </SimpleGrid>
+      </Flex>
     </Paper>
   )
 }

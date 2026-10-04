@@ -46,7 +46,7 @@ export const UpdateCustomerModal: React.FC<UpdateCustomerModalProps> = ({
           value={email}
           onChange={evt => setEmail(evt.target.value)}
         />
-        <Group position="right">
+        <Group justify="flex-end">
           <Button color="gray" onClick={onCloseCallback}>
             Avbryt
           </Button>

@@ -1,90 +1,116 @@
+import { Anchor, Group, Paper, Stack, Text, ThemeIcon } from '@mantine/core'
 import {
-  Badge,
-  Card,
-  createStyles,
-  Stack,
-  Table,
-  Text,
-  TextProps,
-} from '@mantine/core'
-import { CardTable } from 'components/CardTable'
-import { format } from 'util/date-fns'
-import { UserNode } from 'modules/users/types'
-import React from 'react'
+  IconArrowsLeftRight,
+  IconPigMoney,
+  IconShoppingCart,
+} from '@tabler/icons-react'
+import {
+  ActivityKind,
+  activityKind,
+  activityTime,
+  formatAmount,
+  signedAmount,
+} from 'modules/economy/transactions'
+import { Link } from 'react-router-dom'
 import { BankAccountActivity } from '../../economy/types.graphql'
+import classes from 'modules/economy/components/ActivityList.module.css'
 
 interface TransactionCardProps {
   activities: BankAccountActivity[]
+  showEconomyLink?: boolean
 }
 
 export const TransactionCard: React.FC<TransactionCardProps> = ({
   activities,
-}) => {
-  const { classes } = useStyles()
-
-  const rows = activities.map((transaction, index) => (
-    <tr key={index}>
-      <td>
-        <Badge variant="outline" color={'green'}>
-          {transaction.name}
-        </Badge>
-      </td>
-      <td>
-        <Text align="center">{transaction.quantity}</Text>
-      </td>
-      <td>
-        <Text align="right" color={'samfundet-red.7'}>
-          {transaction.amount} kr
-        </Text>
-      </td>
-
-      <td>
-        <Text align="right" color={'dimmed'}>
-          {format(new Date(transaction.timestamp), 'd.MM.yy HH:mm')}
-        </Text>
-      </td>
-    </tr>
-  ))
-
-  const Header: React.FC<TextProps> = ({ children, ...rest }) => (
-    <th>
-      <Text weight={800} size={'sm'} className={classes.tableHeader} {...rest}>
-        {children}
-      </Text>
-    </th>
-  )
-
-  return (
-    <Stack>
-      <Text color={'dimmed'} weight={700} p={'xs'}>
+  showEconomyLink = false,
+}) => (
+  <Stack gap="xs">
+    <Group justify="space-between">
+      <Text c="dimmed" fw={700}>
         Siste transaksjoner
       </Text>
-      <CardTable className={classes.card}>
-        <thead>
-          <tr className={classes.headerRow}>
-            <Header>Type</Header>
-            <Header align="left">Antall</Header>
-            <Header align="right">Pris</Header>
-            <Header align="right">Tidspunkt</Header>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </CardTable>
-    </Stack>
+      {showEconomyLink && (
+        <Anchor component={Link} to="/economy/me" size="sm">
+          Min økonomi
+        </Anchor>
+      )}
+    </Group>
+    <Paper withBorder radius="md" className={classes.card}>
+      {activities.length === 0 ? (
+        <Text c="dimmed" size="sm" ta="center" p="md">
+          Du har ingen transaksjoner ennå.
+        </Text>
+      ) : (
+        <TransactionRows activities={activities} />
+      )}
+    </Paper>
+  </Stack>
+)
+
+interface TransactionRowsProps {
+  activities: BankAccountActivity[]
+}
+
+const TransactionRows: React.FC<TransactionRowsProps> = ({ activities }) => {
+  const now = new Date()
+  return (
+    <>
+      {activities.map((activity, index) => (
+        <TransactionRow
+          key={`${activity.timestamp}-${index}`}
+          activity={activity}
+          now={now}
+        />
+      ))}
+    </>
   )
 }
 
-const useStyles = createStyles(theme => ({
-  card: {
-    backgroundColor: theme.colors.white,
-    border: `1px solid ${theme.colors.gray[3]}`,
-    borderTop: `5px solid ${theme.colors.brand}`,
-  },
-  tableHeader: {
-    color: theme.colors.gray[7],
-    textTransform: 'uppercase',
-  },
-  headerRow: {
-    borderRadius: theme.radius.xs,
-  },
-}))
+const KIND_ICON: Record<
+  ActivityKind,
+  { icon: React.ReactNode; color: string }
+> = {
+  purchase: { icon: <IconShoppingCart size={16} />, color: 'gray' },
+  deposit: { icon: <IconPigMoney size={16} />, color: 'green' },
+  transfer: { icon: <IconArrowsLeftRight size={16} />, color: 'blue' },
+}
+
+interface TransactionRowProps {
+  activity: BankAccountActivity
+  now: Date
+}
+
+const TransactionRow: React.FC<TransactionRowProps> = ({ activity, now }) => {
+  const { icon, color } = KIND_ICON[activityKind(activity)]
+  const amount = signedAmount(activity)
+  const quantity = activity.quantity > 1 ? ` · ${activity.quantity} stk` : ''
+
+  return (
+    <div className={classes.row}>
+      <ThemeIcon variant="light" color={color} radius="xl" size={32}>
+        {icon}
+      </ThemeIcon>
+      <div className={classes.text}>
+        <Text size="sm" fw={600} truncate>
+          {activity.name}
+          {quantity && (
+            <Text span size="sm" c="dimmed" fw={400}>
+              {quantity}
+            </Text>
+          )}
+        </Text>
+        <Text size="xs" c="dimmed">
+          {activityTime(new Date(activity.timestamp), now)}
+        </Text>
+      </div>
+      <Text
+        size="sm"
+        fw={700}
+        className={classes.amount}
+        c={amount > 0 ? 'green.8' : undefined}
+      >
+        {formatAmount(amount)}
+      </Text>
+    </div>
+  )
+}

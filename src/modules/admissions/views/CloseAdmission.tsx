@@ -60,7 +60,7 @@ export const CloseAdmission: React.FC = () => {
       <TextInput
         value={nameFilter}
         placeholder="Søk på navn"
-        icon={<IconSearch />}
+        leftSection={<IconSearch />}
         onChange={e => setNameFilter(e.currentTarget.value)}
       />
       <CloseAdmissionTable
@@ -83,7 +83,7 @@ export const CloseAdmission: React.FC = () => {
         </Button>
         <PermissionGate permissions={PERMISSIONS.admissions.change.admission}>
           <a href={`${API_URL}/admissions/callsheet`} target="_blank">
-            <Button leftIcon={<IconFileAnalytics />} color="samfundet-red">
+            <Button leftSection={<IconFileAnalytics />} color="samfundet-red">
               Last ned ringeliste
             </Button>
           </a>

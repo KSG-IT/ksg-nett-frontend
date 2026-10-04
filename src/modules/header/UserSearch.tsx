@@ -1,5 +1,5 @@
-import { useLazyQuery } from '@apollo/client'
-import { createStyles, Group } from '@mantine/core'
+import { useQuery } from '@apollo/client'
+import { Group, Loader, Select, Text } from '@mantine/core'
 import { IconSearch } from '@tabler/icons-react'
 import { UserThumbnail } from 'modules/users/components'
 import { SEARCHBAR_USERS_QUERY } from 'modules/users/queries'
@@ -8,102 +8,55 @@ import {
   SearchbarUsersQueryVariables,
   UserNode,
 } from 'modules/users/types'
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Select, { components, DropdownIndicatorProps } from 'react-select'
 import { useDebounce } from 'util/hooks'
 
-const DropdownIndicator = (
-  props: DropdownIndicatorProps<UserSearchOption, false>
-) => {
-  return (
-    <components.DropdownIndicator {...props}>
-      <IconSearch />
-    </components.DropdownIndicator>
-  )
-}
-
-interface UserSearchOption {
-  label: string
-  value: string
-  user: UserNode
-}
-
-const Option = (props: UserSearchOption) => (
-  <Group position="apart">
-    {props.label}
-    <UserThumbnail user={props.user} size="sm" />
-  </Group>
-)
-
-export const UserSearch: React.VFC = () => {
-  const { classes } = useStyles()
+export const UserSearch: React.FC = () => {
   const [userQuery, setUserQuery] = useState('')
   const debounceQuery = useDebounce(userQuery)
-  const [selected, setSelected] = useState<UserSearchOption | null>(null)
   const navigate = useNavigate()
 
-  const [execute, { loading, data }] = useLazyQuery<
+  const { data, previousData, loading } = useQuery<
     SearchbarUsersQueryReturns,
     SearchbarUsersQueryVariables
-  >(SEARCHBAR_USERS_QUERY)
+  >(SEARCHBAR_USERS_QUERY, {
+    variables: { searchString: debounceQuery },
+    skip: !debounceQuery,
+  })
 
-  useEffect(() => {
-    execute({
-      variables: { searchString: debounceQuery },
-    })
-  }, [debounceQuery])
-
-  const handleSelectUser = useCallback(
-    (userId: string) => {
-      if (userId) {
-        setUserQuery('')
-        setSelected(null)
-        navigate(`/users/${userId}`)
-      }
-    },
-    [setUserQuery, history]
-  )
-  const options: UserSearchOption[] =
-    data?.searchbarUsers.map(user => ({
-      value: user.id,
-      label: user.getCleanFullName,
-      user: user as UserNode,
-    })) || []
+  const users = (data ?? previousData)?.searchbarUsers ?? []
+  const usersById = new Map(users.map(user => [user.id, user as UserNode]))
 
   return (
-    <div className={classes.wrapper}>
-      <Select
-        isLoading={loading}
-        onInputChange={val => setUserQuery(val)}
-        onChange={val => val && handleSelectUser(val.value)}
-        options={options}
-        value={selected}
-        styles={{
-          container: () => ({ width: '100%' }),
-        }}
-        placeholder="Search..."
-        components={{ DropdownIndicator }}
-        formatOptionLabel={data => <Option {...data} />}
-      />
-    </div>
+    <Select
+      w={{ base: '100%', xs: 300 }}
+      placeholder="Search..."
+      searchable
+      value={null}
+      searchValue={userQuery}
+      onSearchChange={setUserQuery}
+      data={users.map(user => ({
+        value: user.id,
+        label: user.getCleanFullName,
+      }))}
+      filter={({ options }) => options}
+      onOptionSubmit={userId => {
+        setUserQuery('')
+        navigate(`/users/${userId}`)
+      }}
+      nothingFoundMessage={debounceQuery && !loading ? 'Ingen treff' : null}
+      rightSection={loading ? <Loader size="xs" /> : <IconSearch size={16} />}
+      rightSectionPointerEvents="none"
+      renderOption={({ option }) => {
+        const user = usersById.get(option.value)
+        return (
+          <Group justify="space-between" wrap="nowrap" w="100%">
+            <Text size="sm">{option.label}</Text>
+            {user && <UserThumbnail user={user} size="sm" />}
+          </Group>
+        )
+      }}
+    />
   )
 }
-
-const useStyles = createStyles(theme => ({
-  wrapper: {
-    height: 35,
-    width: 300,
-    display: 'flex',
-    flexDirection: 'row',
-    borderRadius: 10,
-    position: 'relative',
-    alignItems: 'center',
-    padding: 5,
-
-    [theme.breakpoints.xs]: {
-      width: '100%',
-      padding: 0,
-    },
-  },
-}))

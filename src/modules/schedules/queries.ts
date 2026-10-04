@@ -1,5 +1,28 @@
 import { gql } from '@apollo/client'
 
+// The fields of DayShift (allShifts.ts), for the shifts page and Mine vakter.
+export const DAY_SHIFT_FIELDS = gql`
+  fragment DayShiftFields on ShiftNode {
+    id
+    name
+    location
+    datetimeStart
+    datetimeEnd
+    slots {
+      id
+      role
+      user {
+        id
+        initials
+        firstName
+        getFullWithNickName
+        getCleanFullName
+        profileImage
+      }
+    }
+  }
+`
+
 export const MY_UPCOMING_SHIFTS = gql`
   query MyUpcomingShifts {
     myUpcomingShifts {
@@ -24,26 +47,20 @@ export const MY_UPCOMING_SHIFTS = gql`
   }
 `
 
-export const ALL_MY_SHIFTS = gql`
-  query AllMyShifts {
-    allMyShifts {
-      id
-      location
-      name
-      filledSlots {
-        id
-        role
-        user {
-          id
-          initials
-          firstName
-          getFullWithNickName
-          profileImage
-        }
-      }
+export const MY_SHIFTS_UPCOMING = gql`
+  ${DAY_SHIFT_FIELDS}
+  query MyShiftsUpcoming {
+    myUpcomingShifts {
+      ...DayShiftFields
+    }
+  }
+`
 
-      datetimeStart
-      datetimeEnd
+export const MY_SHIFTS_PAST = gql`
+  ${DAY_SHIFT_FIELDS}
+  query MyShiftsPast {
+    allMyShifts {
+      ...DayShiftFields
     }
   }
 `
@@ -53,6 +70,37 @@ export const ALL_SCHEDULES = gql`
     allSchedules {
       id
       name
+    }
+  }
+`
+
+export const SCHEDULES_OVERVIEW_QUERY = gql`
+  query SchedulesOverview {
+    allSchedules {
+      id
+      name
+      plannedUntil
+      upcomingSlots {
+        filled
+        total
+      }
+      recentLocations
+    }
+  }
+`
+
+export const SCHEDULE_V2_QUERY = gql`
+  ${DAY_SHIFT_FIELDS}
+  query ScheduleV2($id: ID!, $shiftsFrom: Date!, $numberOfWeeks: Int!) {
+    schedule(id: $id) {
+      id
+      name
+      displayMode
+      defaultRole
+      recentLocations
+      shiftsFromRange(shiftsFrom: $shiftsFrom, numberOfWeeks: $numberOfWeeks) {
+        ...DayShiftFields
+      }
     }
   }
 `
@@ -182,38 +230,10 @@ export const NORMALIZED_SHIFTS_FROM_RANGE_QUERY = gql`
 `
 
 export const ALL_SHIFTS = gql`
+  ${DAY_SHIFT_FIELDS}
   query AllShifts($date: Date!) {
     allShifts(date: $date) {
-      id
-      name
-      location
-      filledSlots {
-        id
-        role
-        user {
-          id
-          initials
-          firstName
-          getFullWithNickName
-          profileImage
-        }
-      }
-      datetimeStart
-      datetimeEnd
-    }
-  }
-`
-
-export const ALL_USERS_WORKING_TODAY_AND_SOCI_PRODUCTS = gql`
-  query AllUsersWorkingTodayAndSociProducts {
-    allUsersWorkingToday {
-      id
-      initials
-      fullName
-    }
-    defaultSociProducts {
-      id
-      name
+      ...DayShiftFields
     }
   }
 `

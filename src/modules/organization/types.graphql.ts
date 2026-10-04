@@ -108,7 +108,6 @@ export interface ManageUsersDataReturns {
 
 export interface ManageUsersDataVariables {
   internalGroupId: string
-  activeOnly: boolean
 }
 
 // === Mutation typing ===
@@ -126,4 +125,52 @@ export interface AssignNewInternalGroupPositionMembershipVariables {
 export interface InternalGroupPositionTypeOption {
   value: InternalGroupPositionType
   label: string
+}
+
+export interface UserMembershipHistoryReturns {
+  user: {
+    id: string
+    fullName: string
+    userTypes: { edges: { node: { id: string; name: string } }[] }
+    internalGroupPositionMembershipHistory: {
+      id: string
+      type: InternalGroupPositionType
+      dateJoined: string
+      dateEnded: string | null
+      position: { id: string }
+    }[]
+  } | null
+  allInternalGroupPositions: {
+    id: string
+    name: string
+    internalGroup: {
+      id: string
+      name: string
+      type: 'INTERNAL_GROUP' | 'INTEREST_GROUP'
+    }
+  }[]
+}
+
+export interface UserMembershipHistoryVariables {
+  id: string
+}
+
+export interface MembershipHistoryInput {
+  id?: string
+  positionId: string
+  type: InternalGroupPositionType
+  dateJoined: string
+  dateEnded: string | null
+}
+
+export interface SetUserMembershipHistoryReturns {
+  setUserMembershipHistory: {
+    memberships: { id: string }[] | null
+    errors: { index: number; message: string }[]
+  }
+}
+
+export interface SetUserMembershipHistoryVariables {
+  userId: string
+  memberships: MembershipHistoryInput[]
 }

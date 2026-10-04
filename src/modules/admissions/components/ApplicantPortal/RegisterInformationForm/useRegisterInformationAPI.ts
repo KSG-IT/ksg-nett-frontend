@@ -3,8 +3,10 @@ import { ApplicantStatusValues } from 'modules/admissions/consts'
 import { useApplicantMutations } from 'modules/admissions/mutations.hooks'
 import { GET_APPLICATION_FROM_TOKEN } from 'modules/admissions/queries'
 import { ApplicantNode } from 'modules/admissions/types.graphql'
-import { format } from 'util/date-fns'
-import { RegisterInformationFormData } from './useRegisterInformationLogic'
+import {
+  RegisterInformationFormValues,
+  RegisterInformationSubmitData,
+} from './useRegisterInformationLogic'
 
 interface UseRegisterInformationAPIInput {
   applicant: ApplicantNode
@@ -15,11 +17,10 @@ export function useRegisterInformationAPI({
 }: UseRegisterInformationAPIInput) {
   const { patchApplicant } = useApplicantMutations()
 
-  async function handleSubmit(data: RegisterInformationFormData) {
+  async function handleSubmit(data: RegisterInformationSubmitData) {
     const { id } = applicant
     const input = {
       ...data,
-      dateOfBirth: format(new Date(data.dateOfBirth ?? ''), 'yyyy-MM-dd'),
       status: ApplicantStatusValues.HAS_REGISTERED_PROFILE,
       lastActivity: new Date(),
     }
@@ -40,7 +41,7 @@ export function useRegisterInformationAPI({
     })
   }
 
-  const defaultValues = {
+  const defaultValues: RegisterInformationFormValues = {
     firstName: applicant?.firstName ?? '',
     lastName: applicant?.lastName ?? '',
     address: applicant?.address ?? '',

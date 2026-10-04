@@ -4,6 +4,7 @@ import { useInterviewMutations } from 'modules/admissions/mutations.hooks'
 import { INTERVIEW_DETAIL_QUERY } from 'modules/admissions/queries'
 import { InterviewNode } from 'modules/admissions/types.graphql'
 import { useState } from 'react'
+import { enumHandler } from 'util/parsing'
 
 const totalEvaluationOptions = [
   {
@@ -32,20 +33,18 @@ interface TotalEvaluationSelectProps {
   interview: Pick<InterviewNode, 'totalEvaluation' | 'id'>
 }
 
-export const TotalEvaluationSelect: React.VFC<TotalEvaluationSelectProps> = ({
+export const TotalEvaluationSelect: React.FC<TotalEvaluationSelectProps> = ({
   interview,
 }) => {
   const [selectedValue, setSelectedValue] = useState(interview.totalEvaluation)
   const { patchInterview } = useInterviewMutations()
 
-  const handleChange = (value: InterviewTotalEvaluationValues) => {
-    setSelectedValue(value)
+  const handleChange = (parsed: InterviewTotalEvaluationValues) => {
+    setSelectedValue(parsed)
     patchInterview({
       variables: {
         id: interview.id,
-        input: {
-          totalEvaluation: value,
-        },
+        input: { totalEvaluation: parsed },
       },
       refetchQueries: [INTERVIEW_DETAIL_QUERY],
     })
@@ -58,7 +57,7 @@ export const TotalEvaluationSelect: React.VFC<TotalEvaluationSelectProps> = ({
       placeholder="Velg verdi"
       value={selectedValue}
       data={totalEvaluationOptions}
-      onChange={handleChange}
+      onChange={enumHandler(InterviewTotalEvaluationValues, handleChange)}
     />
   )
 }

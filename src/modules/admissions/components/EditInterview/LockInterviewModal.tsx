@@ -15,13 +15,13 @@ export const LockInterviewModal: React.FC<LockInterviewModalProps> = ({
     <Modal
       opened={opened}
       onClose={onClose}
-      title={<Text weight="bold">Lås intervju</Text>}
+      title={<Text fw="bold">Lås intervju</Text>}
     >
       <Text>
         Er du sikker på at du har notert ferdig? Det er ikke mulig å redigere
         intervjuet etter denne handlingen!
       </Text>
-      <Group position="right">
+      <Group justify="flex-end">
         <Button onClick={onClose}>Avbryt</Button>
         <Button color="red" onClick={lockInterviewCallback}>
           Lås notater

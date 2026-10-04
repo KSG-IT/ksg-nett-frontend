@@ -10,7 +10,7 @@ const breadcrumbItems = [
 
 export const CreateDocument: React.FC = () => {
   return (
-    <Stack spacing="sm">
+    <Stack gap="sm">
       <Breadcrumbs items={breadcrumbItems} />
       <Title order={2}>Opprett nytt dokument</Title>
       <DocumentForm onCompletedCallback={() => null} />
