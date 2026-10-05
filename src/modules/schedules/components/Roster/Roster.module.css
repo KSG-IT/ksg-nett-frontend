@@ -1,0 +1,129 @@
+.list {
+  overflow: hidden;
+}
+
+.row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)
+    minmax(0, 1.4fr) 5rem 5.5rem auto;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.header {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+  color: var(--mantine-color-dimmed);
+  text-transform: uppercase;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  min-width: 0;
+}
+
+.nameText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* The column name next to a value, on a phone only */
+.label {
+  display: none;
+  color: var(--mantine-color-dimmed);
+}
+
+.actions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.count {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.count[data-flag='over'] .countText {
+  color: var(--mantine-color-orange-8);
+  font-weight: 700;
+}
+
+.count[data-flag='under'] .countText {
+  color: var(--mantine-color-blue-8);
+  font-weight: 700;
+}
+
+.bar {
+  position: relative;
+  display: flex;
+  height: 6px;
+  border-radius: var(--mantine-radius-xl);
+  background: var(--mantine-color-gray-2);
+}
+
+.done {
+  background: var(--mantine-color-samfundet-red-6);
+  border-radius: var(--mantine-radius-xl) 0 0 var(--mantine-radius-xl);
+}
+
+.planned {
+  background: var(--mantine-color-samfundet-red-2);
+}
+
+/* The average of the available rows */
+.marker {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--mantine-color-dark-4);
+}
+
+.cap[data-reached] {
+  color: var(--mantine-color-red-7);
+  font-weight: 700;
+}
+
+@media (max-width: 48em) {
+  .header {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 4px var(--mantine-spacing-sm);
+    padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+  }
+
+  .name {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .actions {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .count {
+    grid-column: 1 / -1;
+  }
+
+  .label {
+    display: inline;
+  }
+}

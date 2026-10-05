@@ -105,6 +105,12 @@ const SociStatistics = React.lazy(
 const ScheduleAllergies = React.lazy(
   () => import('modules/schedules/views/ScheduleAllergies')
 )
+const ScheduleRoster = React.lazy(
+  () => import('modules/schedules/views/ScheduleRoster')
+)
+const ScheduleRosterRules = React.lazy(
+  () => import('modules/schedules/views/ScheduleRosterRules')
+)
 
 // ==== Feature flags ====
 const FeatureFlags = React.lazy(
@@ -578,6 +584,26 @@ export const AppRoutes: React.FC = () => {
                 permissions={PERMISSIONS.schedules.change.schedule}
               >
                 <ScheduleDetailsV2 />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path=":id/roster"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleRoster />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path=":id/rules"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleRosterRules />
               </RestrictedRoute>
             }
           />

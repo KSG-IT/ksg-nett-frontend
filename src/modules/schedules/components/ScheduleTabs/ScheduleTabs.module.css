@@ -1,0 +1,10 @@
+/* On a phone the tabs scroll sideways instead of wrapping */
+.list {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tab {
+  flex-shrink: 0;
+}

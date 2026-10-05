@@ -23,6 +23,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { useIsMobile } from 'util/hooks'
 import { slotCounts } from '../allShifts'
 import { CreateShiftSheet } from '../components/ScheduleV2/CreateShiftPopover'
+import { ScheduleTabs } from '../components/ScheduleTabs'
 import { LoadPanel } from '../components/ScheduleV2/LoadPanel'
 import { ScheduleDayList } from '../components/ScheduleV2/ScheduleDayList'
 import { SHEET_PROPS } from '../components/ScheduleV2/sheetProps'
@@ -210,6 +211,7 @@ export const ScheduleDetailsV2: React.FC = () => {
           </Button>
         </Group>
       </Group>
+      <ScheduleTabs scheduleId={schedule.id} canManage={schedule.canManage} />
       <Group justify="space-between" gap="xs" wrap="nowrap">
         <Text size="sm" c="dimmed">
           {period.charAt(0).toUpperCase() + period.slice(1)} · {shifts.length}{' '}
