@@ -29,3 +29,14 @@ export function slotStatus({
     percent: total ? Math.round((filled / total) * 100) : 0,
   }
 }
+
+// The schedules the user manages (ScheduleNode.canManage) come first. The
+// backend gives no numbers for the others.
+export function splitByManagement<T extends { canManage: boolean }>(
+  schedules: T[]
+) {
+  return {
+    managed: schedules.filter(schedule => schedule.canManage),
+    others: schedules.filter(schedule => !schedule.canManage),
+  }
+}

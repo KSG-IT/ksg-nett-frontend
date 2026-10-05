@@ -83,6 +83,11 @@ export const SCHEDULES_OVERVIEW_QUERY = gql`
     allSchedules {
       id
       name
+      canManage
+      internalGroup {
+        id
+        name
+      }
       plannedUntil
       upcomingSlots {
         filled
