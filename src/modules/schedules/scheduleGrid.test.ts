@@ -36,6 +36,7 @@ function shift(
     location,
     datetimeStart: start,
     datetimeEnd: end,
+    schedule: { id: 'bar', name: 'Bargjengen' },
     slots: users.map((user, index) => ({
       id: `${id}-${index}`,
       role: RoleValues.BARISTA,

@@ -2,6 +2,10 @@
 
 ## [unreleased]
 
+### Added
+
+- Vakter: filter by gjeng, by Dag/Kveld/Natt, and "Jobber samtidig som meg" for the shifts at the same time as yours
+
 ### Changed
 
 - Dashboard: the feedback card shows only when the `feedback` feature flag is on

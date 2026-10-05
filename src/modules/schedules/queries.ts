@@ -8,6 +8,10 @@ export const DAY_SHIFT_FIELDS = gql`
     location
     datetimeStart
     datetimeEnd
+    schedule {
+      id
+      name
+    }
     slots {
       id
       role
