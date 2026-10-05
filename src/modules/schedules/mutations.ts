@@ -122,11 +122,13 @@ export const GENERATE_SHIFTS_FROM_TEMPLATE_MUTATION = gql`
     $scheduleTemplateId: ID!
     $startDate: Date!
     $numberOfWeeks: Int!
+    $confirmDelete: Boolean
   ) {
     generateShiftsFromTemplate(
       scheduleTemplateId: $scheduleTemplateId
       startDate: $startDate
       numberOfWeeks: $numberOfWeeks
+      confirmDelete: $confirmDelete
     ) {
       shiftsCreated
     }

@@ -1,25 +1,27 @@
-import { Button, Group, Modal, NumberInput, Text } from '@mantine/core'
+import { useQuery } from '@apollo/client'
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Group,
+  List,
+  Modal,
+  NumberInput,
+  Stack,
+  Text,
+} from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import { showNotification } from '@mantine/notifications'
-import { add } from 'date-fns'
 import { useShiftMutations } from 'modules/schedules/mutations.hooks'
-import { NORMALIZED_SHIFTS_FROM_RANGE_QUERY } from 'modules/schedules/queries'
-import { useState } from 'react'
+import {
+  NORMALIZED_SHIFTS_FROM_RANGE_QUERY,
+  TEMPLATE_GENERATION_PREVIEW_QUERY,
+} from 'modules/schedules/queries'
+import { generationSummary } from 'modules/schedules/templateGeneration'
+import { TemplateGenerationPreviewReturns } from 'modules/schedules/types.graphql'
+import { useEffect, useState } from 'react'
 import { format } from 'util/date-fns'
 import { ScheduleTemplateSelect } from '../ScheduleTemplateSelect'
-
-function getMondayOfWeekFromDate(date: Date) {
-  date = new Date(date)
-  const first = date.getDate() - date.getDay() + 1
-  return new Date(date.setDate(first))
-}
-
-function getSundayOfWeekFromDate(date: Date) {
-  date = new Date(date)
-  const first = date.getDate() - date.getDay() + 1
-  const last = first + 6
-  return new Date(date.setDate(last))
-}
 
 interface ApplyScheduleTemplateModalProps {
   isOpen: boolean
@@ -36,6 +38,25 @@ export const ApplyScheduleTemplateModal: React.FC<
   const [shiftsFrom, setShiftsFrom] = useState<string | null>(
     format(new Date(), 'yyyy-MM-dd')
   )
+  const [confirmed, setConfirmed] = useState(false)
+
+  const ready = Boolean(scheduleTemplateId && shiftsFrom)
+  const { data: previewData } = useQuery<TemplateGenerationPreviewReturns>(
+    TEMPLATE_GENERATION_PREVIEW_QUERY,
+    {
+      variables: { scheduleTemplateId, startDate: shiftsFrom, numberOfWeeks },
+      skip: !isOpen || !ready,
+      fetchPolicy: 'network-only',
+    }
+  )
+  const preview = ready ? previewData?.templateGenerationPreview : undefined
+  const summary = preview && generationSummary(preview)
+  const blocked = Boolean(preview?.needsConfirmation && !confirmed)
+
+  // A new choice needs a new confirmation
+  useEffect(() => {
+    setConfirmed(false)
+  }, [scheduleTemplateId, shiftsFrom, numberOfWeeks])
 
   function handleGenerate() {
     if (!shiftsFrom) return
@@ -44,6 +65,7 @@ export const ApplyScheduleTemplateModal: React.FC<
         scheduleTemplateId: scheduleTemplateId,
         startDate: shiftsFrom,
         numberOfWeeks: numberOfWeeks,
+        confirmDelete: confirmed,
       },
       refetchQueries: [NORMALIZED_SHIFTS_FROM_RANGE_QUERY],
       onCompleted: () => {
@@ -86,28 +108,38 @@ export const ApplyScheduleTemplateModal: React.FC<
         onChange={val => typeof val === 'number' && setNumberOfWeeks(val)}
       />
 
-      <Text>
-        Første vakt genererert fra{' '}
-        {shiftsFrom &&
-          format(getMondayOfWeekFromDate(new Date(shiftsFrom)), 'EEEE dd.MMM')}
-      </Text>
-      <Text>
-        Siste vakt generert til{' '}
-        {shiftsFrom &&
-          format(
-            getSundayOfWeekFromDate(
-              add(new Date(shiftsFrom), { weeks: numberOfWeeks - 1 })
-            ),
-            'EEE dd.MMM'
+      {summary && (
+        <Stack gap="xs" mt="md">
+          <Text size="sm">{summary.create}</Text>
+          {summary.replace && (
+            <Text size="sm" c="dimmed">
+              {summary.replace}
+            </Text>
           )}
-      </Text>
+          {summary.losses.length > 0 && (
+            <Alert color="orange" title="Dette blir slettet">
+              <List size="sm">
+                {summary.losses.map(loss => (
+                  <List.Item key={loss}>{loss}</List.Item>
+                ))}
+              </List>
+              <Checkbox
+                mt="sm"
+                label="Jeg forstår at dette slettes"
+                checked={confirmed}
+                onChange={event => setConfirmed(event.currentTarget.checked)}
+              />
+            </Alert>
+          )}
+        </Stack>
+      )}
       <Group my="md" justify="flex-end">
         <Button color={'gray'} onClick={onCloseCallback}>
           Avbryt
         </Button>
         <Button
           color="samfundet-red"
-          disabled={generateShiftsFromTemplateLoading}
+          disabled={!ready || blocked || generateShiftsFromTemplateLoading}
           loading={generateShiftsFromTemplateLoading}
           onClick={handleGenerate}
         >
