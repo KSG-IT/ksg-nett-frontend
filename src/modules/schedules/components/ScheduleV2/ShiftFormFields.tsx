@@ -18,6 +18,7 @@ import {
   ShiftSuggestion,
 } from '../../shiftForm'
 import { parseShiftRole } from '../../util'
+import { RoleLabel } from './RoleLabel'
 import classes from './ScheduleGrid.module.css'
 
 type Change = (values: Partial<ShiftFormValues>) => void
@@ -174,7 +175,7 @@ interface RoleStepperProps {
 
 const RoleStepper: React.FC<RoleStepperProps> = ({ slot, onCount }) => (
   <div className={classes.stepper}>
-    <Text size="sm">{parseShiftRole(slot.role)}</Text>
+    <RoleLabel role={slot.role} size="sm" />
     <Group gap={6} wrap="nowrap">
       <ActionIcon
         size="sm"
