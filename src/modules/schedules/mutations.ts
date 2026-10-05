@@ -242,3 +242,96 @@ export const UPDATE_SHIFT_DETAILS_MUTATION = gql`
     }
   }
 `
+
+// === ROSTER ===
+
+const GROUPING_FIELDS = `
+  id
+  internalGroupPosition {
+    id
+    name
+  }
+  positionType
+  role
+  defaultAvailability
+  shiftCap
+`
+
+export const CREATE_SCHEDULE_ROSTER_GROUPING_MUTATION = gql`
+  mutation CreateScheduleRosterGrouping(
+    $input: CreateScheduleRosterGroupingInput!
+  ) {
+    createScheduleRosterGrouping(input: $input) {
+      grouping {
+        id
+      }
+    }
+  }
+`
+
+export const PATCH_SCHEDULE_ROSTER_GROUPING_MUTATION = gql`
+  mutation PatchScheduleRosterGrouping(
+    $id: ID!
+    $input: PatchScheduleRosterGroupingInput!
+  ) {
+    patchScheduleRosterGrouping(id: $id, input: $input) {
+      grouping {
+        ${GROUPING_FIELDS}
+      }
+    }
+  }
+`
+
+export const DELETE_SCHEDULE_ROSTER_GROUPING_MUTATION = gql`
+  mutation DeleteScheduleRosterGrouping($id: ID!) {
+    deleteScheduleRosterGrouping(id: $id) {
+      found
+    }
+  }
+`
+
+export const SYNC_SCHEDULE_ROSTER_MUTATION = gql`
+  mutation SyncScheduleRoster($scheduleId: ID!) {
+    syncScheduleRoster(scheduleId: $scheduleId) {
+      changes {
+        kind
+      }
+    }
+  }
+`
+
+export const ADD_SCHEDULE_ROSTER_ENTRY_MUTATION = gql`
+  mutation AddScheduleRosterEntry($input: AddScheduleRosterEntryInput!) {
+    addScheduleRosterEntry(input: $input) {
+      entry {
+        id
+      }
+    }
+  }
+`
+
+// Returns the changed values, so the Apollo cache updates the row
+export const UPDATE_SCHEDULE_ROSTER_ENTRY_MUTATION = gql`
+  mutation UpdateScheduleRosterEntry(
+    $id: ID!
+    $input: UpdateScheduleRosterEntryInput!
+  ) {
+    updateScheduleRosterEntry(id: $id, input: $input) {
+      entry {
+        id
+        autofillAs
+        defaultAvailability
+        shiftCap
+        manuallyEdited
+      }
+    }
+  }
+`
+
+export const REMOVE_SCHEDULE_ROSTER_ENTRY_MUTATION = gql`
+  mutation RemoveScheduleRosterEntry($id: ID!) {
+    removeScheduleRosterEntry(id: $id) {
+      found
+    }
+  }
+`

@@ -1,10 +1,13 @@
 import { TemplateGenerationPreview } from './templateGeneration'
 import type { DayShift } from './allShifts'
 import { UserThumbnailProps } from 'modules/users/types'
+import type { InternalGroupPositionType } from 'modules/organization/types.graphql'
 import {
   DayValues,
+  DefaultAvailabilityValues,
   LocationValues,
   RoleValues,
+  RosterChangeKindValues,
   ScheduleDisplayModeValues,
 } from './consts'
 
@@ -136,6 +139,7 @@ export interface ScheduleV2Returns {
   schedule: {
     id: string
     name: string
+    canManage: boolean
     displayMode: ScheduleDisplayModeValues
     defaultRole: RoleValues | null
     recentLocations: LocationValues[]
@@ -162,6 +166,157 @@ export interface ScheduleTemplateQueryVariables {
 }
 export interface ScheduleTemplateQueryReturns {
   scheduleTemplate: ScheduleTemplateNode | null
+}
+
+// === ROSTER ===
+
+// The membership type of a rule, as the enum name ("HANGAROUND")
+export type MembershipTypeName = `${InternalGroupPositionType}`
+
+// The values a roster row and a roster rule share
+export interface RosterValues {
+  role: RoleValues
+  defaultAvailability: DefaultAvailabilityValues
+  shiftCap: number | null
+}
+
+export interface ScheduleRosterNode {
+  id: string
+  user: {
+    id: string
+    fullName: string
+    initials: string
+    profileImage: string | null
+  }
+  autofillAs: RoleValues
+  defaultAvailability: DefaultAvailabilityValues
+  shiftCap: number | null
+  manuallyEdited: boolean
+  addedManually: boolean
+  countFrom: string | null
+  // The raw type of the active membership, for example "hangaround"
+  membershipType: string | null
+  shiftsDone: number
+  shiftsPlanned: number
+  lastShift: string | null
+}
+
+export interface ScheduleRosterGroupingNode extends RosterValues {
+  id: string
+  internalGroupPosition: { id: string; name: string }
+  positionType: MembershipTypeName
+}
+
+export interface RosterChangeNode {
+  kind: RosterChangeKindValues
+  user: { id: string; fullName: string }
+  autofillAs: RoleValues | null
+  defaultAvailability: DefaultAvailabilityValues | null
+  shiftCap: number | null
+  message: string | null
+}
+
+export interface ScheduleIdVariables {
+  id: string
+}
+
+export interface ScheduleRosterReturns {
+  schedule: {
+    id: string
+    name: string
+    canManage: boolean
+    roster: ScheduleRosterNode[]
+  } | null
+}
+
+export interface ScheduleRosterRulesReturns {
+  schedule: {
+    id: string
+    name: string
+    canManage: boolean
+    internalGroup: {
+      id: string
+      name: string
+      positions: { edges: { node: { id: string; name: string } }[] }
+    } | null
+    rosterGroupings: ScheduleRosterGroupingNode[]
+  } | null
+}
+
+export interface RosterSyncPreviewReturns {
+  schedule: { id: string; rosterSyncPreview: RosterChangeNode[] } | null
+}
+
+export interface CreateScheduleRosterGroupingVariables {
+  input: {
+    scheduleId: string
+    internalGroupPositionId: string
+    positionType: MembershipTypeName
+    role: RoleValues
+    defaultAvailability: DefaultAvailabilityValues
+    shiftCap: number | null
+  }
+}
+
+export interface CreateScheduleRosterGroupingReturns {
+  createScheduleRosterGrouping: { grouping: { id: string } }
+}
+
+export interface PatchScheduleRosterGroupingVariables {
+  id: string
+  input: RosterValues
+}
+
+export interface PatchScheduleRosterGroupingReturns {
+  patchScheduleRosterGrouping: { grouping: ScheduleRosterGroupingNode }
+}
+
+export interface DeleteScheduleRosterGroupingReturns {
+  deleteScheduleRosterGrouping: { found: boolean }
+}
+
+export interface SyncScheduleRosterVariables {
+  scheduleId: string
+}
+
+export interface SyncScheduleRosterReturns {
+  syncScheduleRoster: { changes: { kind: RosterChangeKindValues }[] }
+}
+
+export interface RosterEntryInput {
+  autofillAs: RoleValues
+  defaultAvailability: DefaultAvailabilityValues
+  shiftCap: number | null
+}
+
+export interface AddScheduleRosterEntryVariables {
+  input: RosterEntryInput & { scheduleId: string; userId: string }
+}
+
+export interface AddScheduleRosterEntryReturns {
+  addScheduleRosterEntry: { entry: { id: string } }
+}
+
+export interface UpdateScheduleRosterEntryVariables {
+  id: string
+  input: RosterEntryInput
+}
+
+export interface UpdateScheduleRosterEntryReturns {
+  updateScheduleRosterEntry: {
+    entry: Pick<
+      ScheduleRosterNode,
+      | 'id'
+      | 'autofillAs'
+      | 'defaultAvailability'
+      | 'shiftCap'
+      | 'manuallyEdited'
+    >
+  }
+}
+
+export interface RemoveScheduleRosterEntryReturns {
+  removeScheduleRosterEntry: { found: boolean }
 }
 
 // === MUTATIONS ===

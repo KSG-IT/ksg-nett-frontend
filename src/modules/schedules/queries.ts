@@ -104,6 +104,7 @@ export const SCHEDULE_V2_QUERY = gql`
     schedule(id: $id) {
       id
       name
+      canManage
       displayMode
       defaultRole
       recentLocations
@@ -266,6 +267,90 @@ export const TEMPLATE_GENERATION_PREVIEW_QUERY = gql`
       answersToDelete
       draftsToDelete
       needsConfirmation
+    }
+  }
+`
+
+// === ROSTER ===
+
+export const SCHEDULE_ROSTER_QUERY = gql`
+  query ScheduleRoster($id: ID!) {
+    schedule(id: $id) {
+      id
+      name
+      canManage
+      roster {
+        id
+        user {
+          id
+          fullName
+          initials
+          profileImage
+        }
+        autofillAs
+        defaultAvailability
+        shiftCap
+        manuallyEdited
+        addedManually
+        countFrom
+        membershipType
+        shiftsDone
+        shiftsPlanned
+        lastShift
+      }
+    }
+  }
+`
+
+export const SCHEDULE_ROSTER_RULES_QUERY = gql`
+  query ScheduleRosterRules($id: ID!) {
+    schedule(id: $id) {
+      id
+      name
+      canManage
+      internalGroup {
+        id
+        name
+        positions {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
+      }
+      rosterGroupings {
+        id
+        internalGroupPosition {
+          id
+          name
+        }
+        positionType
+        role
+        defaultAvailability
+        shiftCap
+      }
+    }
+  }
+`
+
+// Only for managers: the backend refuses rosterSyncPreview for other users
+export const ROSTER_SYNC_PREVIEW_QUERY = gql`
+  query RosterSyncPreview($id: ID!) {
+    schedule(id: $id) {
+      id
+      rosterSyncPreview {
+        kind
+        user {
+          id
+          fullName
+        }
+        autofillAs
+        defaultAvailability
+        shiftCap
+        message
+      }
     }
   }
 `

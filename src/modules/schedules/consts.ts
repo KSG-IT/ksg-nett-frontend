@@ -84,3 +84,20 @@ export const v2RoleOptions = Object.values(RoleValues)
 export const v2LocationOptions = locationOptions.filter(
   option => option.value !== LocationValues.BRYGGERIET
 )
+
+// What no answer for a shift means for a roster row
+// (ksg-nett-backend/schedules/models.py, DefaultAvailability)
+export enum DefaultAvailabilityValues {
+  AVAILABLE = 'AVAILABLE',
+  OPT_IN = 'OPT_IN',
+}
+
+// What the roster sync does with a row
+// (ksg-nett-backend/schedules/utils/roster.py, RosterChangeKind)
+export enum RosterChangeKindValues {
+  ADD = 'ADD',
+  CHANGE = 'CHANGE',
+  REMOVE = 'REMOVE',
+  KEEP = 'KEEP',
+  CONFLICT = 'CONFLICT',
+}
