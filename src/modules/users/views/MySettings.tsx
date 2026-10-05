@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Stack, Title } from '@mantine/core'
+import { SimpleGrid, Stack, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 
 import { FullPageError } from 'components/FullPageComponents'
@@ -8,6 +8,7 @@ import {
   AllergyTransferList,
   EditAboutMe,
   MyEmailSettings,
+  SettingsSection,
 } from '../components'
 import { MY_SETTINGS_QUERY } from '../queries'
 import { MySettingsQueryReturns } from '../types'
@@ -24,21 +25,45 @@ const MySettings: React.FC = () => {
   const { me, allAllergies } = data
 
   return (
-    <Stack>
+    <Stack maw={960}>
       <Breadcrumbs
         items={[
           { label: 'Hjem', path: '/dashboard' },
           { label: 'Mine innstillinger', path: '/my-settings' },
         ]}
       />
-      <Title>Min profil</Title>
-      <MyAddressSettings user={me} />
-      <MyEmailSettings user={me} />
-      <AllergyTransferList
-        userAllergies={me.allergies}
-        allAllergies={allAllergies}
-      />
-      {me.canRewriteAboutMe && <EditAboutMe aboutMe={me.aboutMe} />}
+      <Title>Mine innstillinger</Title>
+      <SimpleGrid cols={{ base: 1, md: 2 }}>
+        <SettingsSection
+          title="Studieadresse"
+          description="Adressen der du bor mens du studerer."
+        >
+          <MyAddressSettings user={me} />
+        </SettingsSection>
+        <SettingsSection
+          title="Varsler på e-post"
+          description="Velg hva vi sender deg e-post om."
+        >
+          <MyEmailSettings user={me} />
+        </SettingsSection>
+      </SimpleGrid>
+      <SettingsSection
+        title="Allergier"
+        description="Marker allergiene som gjelder deg og flytt dem over. De som setter opp vaktlister ser allergiene dine."
+      >
+        <AllergyTransferList
+          userAllergies={me.allergies}
+          allAllergies={allAllergies}
+        />
+      </SettingsSection>
+      {me.canRewriteAboutMe && (
+        <SettingsSection
+          title="Om meg"
+          description="Teksten vises på profilen din. Du kan endre den én gang."
+        >
+          <EditAboutMe aboutMe={me.aboutMe} />
+        </SettingsSection>
+      )}
     </Stack>
   )
 }
