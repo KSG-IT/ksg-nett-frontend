@@ -19,7 +19,7 @@ import {
 } from 'modules/schedules/queries'
 import { generationSummary } from 'modules/schedules/templateGeneration'
 import { TemplateGenerationPreviewReturns } from 'modules/schedules/types.graphql'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { format } from 'util/date-fns'
 import { ScheduleTemplateSelect } from '../ScheduleTemplateSelect'
 
@@ -54,9 +54,20 @@ export const ApplyScheduleTemplateModal: React.FC<
   const blocked = Boolean(preview?.needsConfirmation && !confirmed)
 
   // A new choice needs a new confirmation
-  useEffect(() => {
+  function chooseTemplate(id: string) {
+    setScheduleTemplateId(id)
     setConfirmed(false)
-  }, [scheduleTemplateId, shiftsFrom, numberOfWeeks])
+  }
+
+  function chooseStart(date: string | null) {
+    setShiftsFrom(date)
+    setConfirmed(false)
+  }
+
+  function chooseWeeks(weeks: number) {
+    setNumberOfWeeks(weeks)
+    setConfirmed(false)
+  }
 
   function handleGenerate() {
     if (!shiftsFrom) return
@@ -93,19 +104,19 @@ export const ApplyScheduleTemplateModal: React.FC<
     >
       <ScheduleTemplateSelect
         value={scheduleTemplateId}
-        onChange={setScheduleTemplateId}
+        onChange={chooseTemplate}
       />
       <DatePickerInput
         label="Startdato"
         value={shiftsFrom}
-        onChange={val => setShiftsFrom(val)}
+        onChange={chooseStart}
       />
       <NumberInput
         label="Antall uker"
         value={numberOfWeeks}
         min={1}
         max={20}
-        onChange={val => typeof val === 'number' && setNumberOfWeeks(val)}
+        onChange={val => typeof val === 'number' && chooseWeeks(val)}
       />
 
       {summary && (
