@@ -8,6 +8,7 @@ import {
   LocationValues,
   RoleValues,
   RosterChangeKindValues,
+  PlanningPeriodStatusValues,
   ScheduleDisplayModeValues,
 } from './consts'
 
@@ -155,6 +156,89 @@ export interface ScheduleV2Variables {
 
 export interface SchedulesOverviewReturns {
   allSchedules: ScheduleOverviewNode[]
+}
+
+// === PLANNING ===
+
+export interface PlanningResponseStats {
+  rosterCount: number
+  optInCount: number
+  usersWithAnswers: number
+  optInWithInterest: number
+  interested: number
+  available: number
+  unavailable: number
+  unavailablePrefilled: number
+  withNote: number
+}
+
+export interface SlotCoverageNode {
+  shift: Pick<ShiftNode, 'id' | 'name' | 'datetimeStart'>
+  role: RoleValues
+  slotCount: number
+  openSlotCount: number
+  candidateCount: number
+  interestedCount: number
+  unavailableCount: number
+  unavailableWithNoteCount: number
+}
+
+export interface PlanningPeriodNode {
+  id: string
+  dateFrom: string
+  dateTo: string
+  deadline: string
+  status: PlanningPeriodStatusValues
+  reminderSentAt: string | null
+  responseStats: PlanningResponseStats | null
+  slotCoverage: SlotCoverageNode[]
+}
+
+export interface SchedulePlanningReturns {
+  schedule: {
+    id: string
+    name: string
+    canManage: boolean
+    planningPeriods: PlanningPeriodNode[]
+  } | null
+}
+
+export interface PlanningPeriodInput {
+  dateFrom: string
+  dateTo: string
+  deadline: string
+}
+
+export interface CreatePlanningPeriodVariables {
+  input: PlanningPeriodInput & { scheduleId: string }
+}
+
+export interface CreatePlanningPeriodReturns {
+  createPlanningPeriod: { planningPeriod: Pick<PlanningPeriodNode, 'id'> }
+}
+
+export interface UpdatePlanningPeriodVariables {
+  id: string
+  input: PlanningPeriodInput
+}
+
+export interface UpdatePlanningPeriodReturns {
+  updatePlanningPeriod: { planningPeriod: Pick<PlanningPeriodNode, 'id'> }
+}
+
+export interface DeletePlanningPeriodReturns {
+  deletePlanningPeriod: { found: boolean }
+}
+
+export interface SendPlanningPeriodReminderVariables {
+  planningPeriodId: string
+}
+
+export interface SendPlanningPeriodReminderReturns {
+  sendPlanningPeriodReminder: {
+    recipients: number
+    planningPeriod: Pick<PlanningPeriodNode, 'id' | 'reminderSentAt'>
+  }
 }
 
 export interface AllScheduleTemplatesReturns {
