@@ -246,3 +246,26 @@ export const ALL_SHIFTS = gql`
     }
   }
 `
+
+export const TEMPLATE_GENERATION_PREVIEW_QUERY = gql`
+  query TemplateGenerationPreview(
+    $scheduleTemplateId: ID!
+    $startDate: Date!
+    $numberOfWeeks: Int!
+  ) {
+    templateGenerationPreview(
+      scheduleTemplateId: $scheduleTemplateId
+      startDate: $startDate
+      numberOfWeeks: $numberOfWeeks
+    ) {
+      firstDay
+      lastDay
+      shiftsToCreate
+      shiftsToDelete
+      filledSlotsToDelete
+      answersToDelete
+      draftsToDelete
+      needsConfirmation
+    }
+  }
+`

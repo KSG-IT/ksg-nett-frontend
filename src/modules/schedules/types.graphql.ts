@@ -1,3 +1,4 @@
+import { TemplateGenerationPreview } from './templateGeneration'
 import type { DayShift } from './allShifts'
 import { UserThumbnailProps } from 'modules/users/types'
 import {
@@ -267,6 +268,12 @@ export interface GenerateShiftsFromTemplateVariables {
   scheduleTemplateId: string
   startDate: string
   numberOfWeeks: number
+  // Needed when the generation deletes people, answers or drafts
+  confirmDelete?: boolean
+}
+
+export interface TemplateGenerationPreviewReturns {
+  templateGenerationPreview: TemplateGenerationPreview
 }
 
 export interface CreateShiftMutationReturns {
