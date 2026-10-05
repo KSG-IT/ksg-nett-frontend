@@ -1,4 +1,3 @@
-import { sentryVitePlugin } from '@sentry/vite-plugin'
 import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
 import { defineConfig, Plugin } from 'vite'
@@ -22,21 +21,9 @@ function versionFile(): Plugin {
   }
 }
 
-// Uploads source maps for this release to Sentry and removes them from dist,
-// so they are not published. Without SENTRY_AUTH_TOKEN (local builds) it does nothing.
-const sentry = sentryVitePlugin({
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
-  authToken: process.env.SENTRY_AUTH_TOKEN,
-  disable: !process.env.SENTRY_AUTH_TOKEN,
-  release: { name: BUILD_ID },
-  sourcemaps: { filesToDeleteAfterUpload: ['./dist/**/*.map'] },
-  telemetry: false,
-})
-
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), versionFile(), sentry],
+  plugins: [react(), versionFile()],
   resolve: {
     tsconfigPaths: true,
   },
