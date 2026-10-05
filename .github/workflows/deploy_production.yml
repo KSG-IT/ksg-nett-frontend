@@ -39,4 +39,7 @@ jobs:
       - name: Deploy production
         env:
           NODE_OPTIONS: "--max_old_space_size=4096"
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
         run: yarn deploy:production

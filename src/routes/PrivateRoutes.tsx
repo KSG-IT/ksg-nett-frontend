@@ -66,7 +66,8 @@ import {
 } from 'modules/users/views'
 import { FirstTimeLogin } from 'modules/users/views/FirstTImeLogin'
 import React from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route } from 'react-router-dom'
+import { SentryRoutes } from './SentryRoutes'
 import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
 import PublicRoutes from './PublicRoutes'
@@ -145,33 +146,33 @@ export const AppRoutes: React.FC = () => {
   if (me.owesMoney) {
     // Prioritize this first, if we send a debt collection email we want to make it as easy as possible to pay
     return (
-      <Routes>
+      <SentryRoutes>
         <Route path="torpedo" element={<DebtCollection />} />
         <Route path="*" element={<Navigate to="/torpedo" />} />
-      </Routes>
+      </SentryRoutes>
     )
   }
 
   if (me.requiresMigrationWizard) {
     return (
-      <Routes>
+      <SentryRoutes>
         <Route path="migration-wizard" element={<MigrationWizard />} />
         <Route path="*" element={<Navigate to="/migration-wizard" />} />
-      </Routes>
+      </SentryRoutes>
     )
   }
 
   if (me.firstTimeLogin) {
     return (
-      <Routes>
+      <SentryRoutes>
         <Route path="registration" element={<FirstTimeLogin />} />
         <Route path="*" element={<Navigate to="/registration" />} />
-      </Routes>
+      </SentryRoutes>
     )
   }
 
   return (
-    <Routes>
+    <SentryRoutes>
       <Route path="/" element={<MainContent />}>
         <Route index element={<Navigate to="/dashboard" replace />} />
 
@@ -624,6 +625,6 @@ export const AppRoutes: React.FC = () => {
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" />} />
-    </Routes>
+    </SentryRoutes>
   )
 }
