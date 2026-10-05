@@ -34,6 +34,7 @@ function shift(id: string, start: string, end: string): DayShift {
     location: LocationValues.EDGAR,
     datetimeStart: start,
     datetimeEnd: end,
+    schedule: { id: 'bar', name: 'Bargjengen' },
     slots: [
       { id: `${id}-me`, role: RoleValues.BARISTA, user: person(ME) },
       { id: `${id}-other`, role: RoleValues.BARISTA, user: person('ingrid') },

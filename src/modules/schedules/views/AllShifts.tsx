@@ -8,9 +8,17 @@ import { MessageBox } from 'components/MessageBox'
 import { format } from 'date-fns'
 import { useSearchParams } from 'react-router-dom'
 import { useMe } from 'util/hooks'
-import { DayShift, slotCounts } from '../allShifts'
+import {
+  DayShift,
+  filterShifts,
+  isMine,
+  parseDayPart,
+  ShiftFilter,
+  slotCounts,
+} from '../allShifts'
 import {
   DayNavigation,
+  ShiftFilters,
   ShiftList,
   ShiftTimeline,
 } from '../components/AllShifts'
@@ -29,8 +37,17 @@ const viewOptions = [
   { label: 'Liste', value: 'list' },
 ]
 
+// Sets or removes one search param and keeps the others.
+function withParam(params: URLSearchParams, key: string, value: string | null) {
+  const next = new URLSearchParams(params)
+  if (value === null) next.delete(key)
+  else next.set(key, value)
+  return next
+}
+
 // Who works on a day. On a wide screen the timeline is the default, with a
-// switch to the list; on a narrow screen only the list fits.
+// switch to the list; on a narrow screen only the list fits. The filters are
+// in the URL. The chosen schedule is also saved, so your gjeng stays chosen.
 export const AllShifts = () => {
   const me = useMe()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -40,6 +57,15 @@ export const AllShifts = () => {
     key: 'all-shifts-view',
     defaultValue: 'timeline',
   })
+  const [savedScheduleId, setSavedScheduleId] = useLocalStorage<string | null>({
+    key: 'all-shifts-schedule',
+    defaultValue: null,
+  })
+  const filter: ShiftFilter = {
+    scheduleId: searchParams.get('schedule') ?? savedScheduleId,
+    part: parseDayPart(searchParams.get('part')),
+    withMe: searchParams.get('withMe') === '1',
+  }
 
   const { data, previousData, error, loading } = useQuery<
     AllShiftsReturns,
@@ -53,7 +79,15 @@ export const AllShifts = () => {
   const shifts = (data ?? previousData)?.allShifts
 
   function handleDateChange(newDate: string) {
-    setSearchParams({ date: newDate })
+    setSearchParams(withParam(searchParams, 'date', newDate))
+  }
+
+  function handleFilterChange(next: ShiftFilter) {
+    setSavedScheduleId(next.scheduleId)
+    let params = withParam(searchParams, 'schedule', next.scheduleId)
+    params = withParam(params, 'part', next.part)
+    params = withParam(params, 'withMe', next.withMe ? '1' : null)
+    setSearchParams(params)
   }
 
   function handleViewChange(value: string) {
@@ -63,12 +97,20 @@ export const AllShifts = () => {
   if (error) return <FullPageError />
   if (!shifts && loading) return <FullContentLoader />
 
+  const dayShifts = shifts ?? []
+  const filtered = filterShifts(dayShifts, filter, me?.id)
+
   return (
     <Stack gap="md">
       <Breadcrumbs items={breadcrumbsItems} />
       <DayNavigation date={date} onChange={handleDateChange} />
+      <ShiftFilters
+        filter={filter}
+        canFilterWithMe={dayShifts.some(shift => isMine(shift, me?.id))}
+        onChange={handleFilterChange}
+      />
       <Group justify="space-between" wrap="wrap" gap="xs">
-        <DaySummary shifts={shifts ?? []} />
+        <DaySummary shifts={filtered} />
         {wide && (
           <SegmentedControl
             size="xs"
@@ -80,7 +122,8 @@ export const AllShifts = () => {
       </Group>
       <DayShifts
         key={date}
-        shifts={shifts ?? []}
+        shifts={dayShifts}
+        filtered={filtered}
         view={wide ? preferredView : 'list'}
         meId={me?.id}
       />
@@ -113,16 +156,26 @@ const DaySummary: React.FC<DaySummaryProps> = ({ shifts }) => {
 
 interface DayShiftsProps {
   shifts: DayShift[]
+  // The shifts that the filters keep.
+  filtered: DayShift[]
   view: View
   meId?: string
 }
 
-const DayShifts: React.FC<DayShiftsProps> = ({ shifts, view, meId }) => {
+const DayShifts: React.FC<DayShiftsProps> = ({
+  shifts,
+  filtered,
+  view,
+  meId,
+}) => {
   if (shifts.length === 0) {
     return <MessageBox type="info">Ingen vakter denne dagen.</MessageBox>
   }
-  if (view === 'timeline') {
-    return <ShiftTimeline shifts={shifts} meId={meId} />
+  if (filtered.length === 0) {
+    return <MessageBox type="info">Ingen vakter passer filtrene.</MessageBox>
   }
-  return <ShiftList shifts={shifts} meId={meId} />
+  if (view === 'timeline') {
+    return <ShiftTimeline shifts={filtered} meId={meId} />
+  }
+  return <ShiftList shifts={filtered} meId={meId} />
 }
