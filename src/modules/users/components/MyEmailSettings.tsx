@@ -1,34 +1,48 @@
-import { Button, Checkbox, Group, Stack } from '@mantine/core'
+import { Button, Group, Stack, Switch } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { useState } from 'react'
 import { useUserMutations } from '../mutations.hooks'
+import { MY_SETTINGS_QUERY } from '../queries'
 import { UserNode } from '../types'
 
+type NotificationKey = 'notifyOnDeposit' | 'notifyOnQuote' | 'notifyOnShift'
+
+const notificationOptions: { key: NotificationKey; label: string }[] = [
+  {
+    key: 'notifyOnDeposit',
+    label: 'Når et innskudd blir godkjent eller avvist',
+  },
+  { key: 'notifyOnQuote', label: 'Når jeg blir tagget i et sitat' },
+  { key: 'notifyOnShift', label: 'Når jeg blir satt opp på vakt' },
+]
+
 export interface MyEmailSettingsProps {
-  user: Pick<UserNode, 'notifyOnDeposit' | 'notifyOnQuote' | 'notifyOnShift'>
+  user: Pick<UserNode, NotificationKey>
 }
 
 export const MyEmailSettings: React.FC<MyEmailSettingsProps> = ({ user }) => {
   const { notifyOnDeposit, notifyOnQuote, notifyOnShift } = user
-  const [notifyOnDepositState, setNotifyOnDepositState] =
-    useState(notifyOnDeposit)
-  const [notifyOnQuoteState, setNotifyOnQuoteState] = useState(notifyOnQuote)
-  const [notifyOnShiftState, setNotifyOnShiftState] = useState(notifyOnShift)
+  const [settings, setSettings] = useState({
+    notifyOnDeposit,
+    notifyOnQuote,
+    notifyOnShift,
+  })
 
   const { updateMyEmailNotifications, updateMyEmailNotificationsLoading } =
     useUserMutations()
 
+  const isDirty = notificationOptions.some(
+    ({ key }) => settings[key] !== user[key]
+  )
+
   function handleSave() {
     updateMyEmailNotifications({
-      variables: {
-        notifyOnDeposit: notifyOnDepositState,
-        notifyOnQuote: notifyOnQuoteState,
-        notifyOnShift: notifyOnShiftState,
-      },
+      variables: settings,
+      refetchQueries: [MY_SETTINGS_QUERY],
       onCompleted() {
         showNotification({
           title: 'Suksess',
-          message: 'E-postinnstillinger oppdatert',
+          message: 'E-postvarsler oppdatert',
         })
       },
       onError({ message }) {
@@ -42,27 +56,23 @@ export const MyEmailSettings: React.FC<MyEmailSettingsProps> = ({ user }) => {
 
   return (
     <Stack>
-      <Checkbox
-        label="Epost ved godkjent/underkjent innskudd"
-        checked={notifyOnDepositState}
-        onChange={val => val && setNotifyOnDepositState(val.target.checked)}
-      />
-      <Checkbox
-        label="Epost når jeg blir tagget i sitat"
-        checked={notifyOnQuoteState}
-        onChange={val => val && setNotifyOnQuoteState(val.target.checked)}
-      />
-      <Checkbox
-        label="Epost når jeg blir satt opp på vakt"
-        checked={notifyOnShiftState}
-        onChange={val => val && setNotifyOnShiftState(val.target.checked)}
-      />
-      <Group>
+      {notificationOptions.map(({ key, label }) => (
+        <Switch
+          key={key}
+          label={label}
+          checked={settings[key]}
+          onChange={event =>
+            setSettings({ ...settings, [key]: event.currentTarget.checked })
+          }
+        />
+      ))}
+      <Group justify="flex-end">
         <Button
+          disabled={!isDirty}
           loading={updateMyEmailNotificationsLoading}
           onClick={handleSave}
         >
-          Lagre epost innstillinger
+          Lagre
         </Button>
       </Group>
     </Stack>

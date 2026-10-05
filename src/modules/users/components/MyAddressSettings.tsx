@@ -1,8 +1,8 @@
 import { Button, Group, TextInput } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useUserMutations } from '../mutations.hooks'
-import { ME_QUERY } from '../queries'
+import { MY_SETTINGS_QUERY } from '../queries'
 import { UserNode } from '../types'
 
 interface MyAddressSettingsProps {
@@ -13,25 +13,21 @@ export const MyAddressSettings: React.FC<MyAddressSettingsProps> = ({
   user,
 }) => {
   const [address, setAddress] = useState(user.studyAddress)
-  const [initialValue, setInitialValue] = useState(user.studyAddress)
   const { updateMyAddressLoading, updateMyAddress } = useUserMutations()
 
-  const isDirty = useMemo(() => {
-    return address !== initialValue
-  }, [address, initialValue])
+  const isDirty = address !== user.studyAddress
 
-  async function handleUpdate() {
-    await updateMyAddress({
+  function handleUpdate() {
+    updateMyAddress({
       variables: {
         studyAddress: address,
       },
-      refetchQueries: [ME_QUERY],
+      refetchQueries: [MY_SETTINGS_QUERY],
       onCompleted() {
         showNotification({
           title: 'Suksess',
           message: 'Adressen din er oppdatert',
         })
-        setInitialValue(address)
       },
       onError({ message }) {
         showNotification({
@@ -41,9 +37,11 @@ export const MyAddressSettings: React.FC<MyAddressSettingsProps> = ({
       },
     })
   }
+
   return (
     <Group align="end">
       <TextInput
+        flex={1}
         label="Studieadresse"
         value={address}
         onChange={event => setAddress(event.currentTarget.value)}
@@ -53,7 +51,7 @@ export const MyAddressSettings: React.FC<MyAddressSettingsProps> = ({
         onClick={handleUpdate}
         disabled={!isDirty}
       >
-        Oppdater
+        Lagre
       </Button>
     </Group>
   )
