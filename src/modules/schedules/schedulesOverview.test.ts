@@ -1,4 +1,4 @@
-import { planStatus, slotStatus } from './schedulesOverview'
+import { planStatus, slotStatus, splitByManagement } from './schedulesOverview'
 
 describe('planStatus', () => {
   const now = new Date('2026-10-03T12:00:00')
@@ -30,5 +30,23 @@ describe('slotStatus', () => {
 
   it('is 0 % without slots', () => {
     expect(slotStatus({ filled: 0, total: 0 })).toEqual({ open: 0, percent: 0 })
+  })
+})
+
+describe('splitByManagement', () => {
+  const schedule = (name: string, canManage: boolean) => ({ name, canManage })
+
+  it('puts the schedules the user manages first and keeps the order', () => {
+    const edgar = schedule('Edgar', true)
+    const lyche = schedule('Lyche', false)
+    const baerevakt = schedule('Bærevakt', true)
+    expect(splitByManagement([edgar, lyche, baerevakt])).toEqual({
+      managed: [edgar, baerevakt],
+      others: [lyche],
+    })
+  })
+
+  it('gives empty lists for no schedules', () => {
+    expect(splitByManagement([])).toEqual({ managed: [], others: [] })
   })
 })

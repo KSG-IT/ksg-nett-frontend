@@ -23,6 +23,43 @@ export const ScheduleOverviewList: React.FC<ScheduleOverviewListProps> = ({
   )
 }
 
+interface OtherScheduleListProps {
+  schedules: ScheduleOverviewNode[]
+}
+
+// Schedules the user does not manage: no numbers, only a way in
+export const OtherScheduleList: React.FC<OtherScheduleListProps> = ({
+  schedules,
+}) => (
+  <Paper withBorder radius="md" className={classes.list}>
+    {schedules.map(schedule => (
+      <div key={schedule.id} className={classes.otherRow}>
+        <div className={classes.name}>
+          <Text
+            fw={600}
+            component={Link}
+            to={schedule.id}
+            className={classes.link}
+          >
+            {schedule.name}
+          </Text>
+          {schedule.internalGroup && (
+            <Text size="xs" c="dimmed">
+              Administreres av {schedule.internalGroup.name}
+            </Text>
+          )}
+        </div>
+        <div className={classes.open}>
+          <Button component={Link} to={schedule.id} variant="default" size="xs">
+            Åpne
+          </Button>
+          <V2Button scheduleId={schedule.id} label="Åpne v2" size="xs" />
+        </div>
+      </div>
+    ))}
+  </Paper>
+)
+
 interface ScheduleOverviewRowProps {
   schedule: ScheduleOverviewNode
   now: Date
@@ -98,6 +135,7 @@ interface UpcomingSlotsProps {
 }
 
 const UpcomingSlots: React.FC<UpcomingSlotsProps> = ({ slots }) => {
+  if (!slots) return null
   const { open, percent } = slotStatus(slots)
   if (slots.total === 0) {
     return (

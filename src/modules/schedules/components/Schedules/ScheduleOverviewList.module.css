@@ -11,8 +11,19 @@
   border-bottom: 1px solid var(--mantine-color-gray-2);
 }
 
-.row:last-child {
+.row:last-child,
+.otherRow:last-child {
   border-bottom: 0;
+}
+
+.otherRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-gray-2);
 }
 
 .name {

@@ -123,8 +123,11 @@ export interface AllSchedulesReturns {
 export interface ScheduleOverviewNode {
   id: string
   name: string
+  // Only schedules the user manages have the numbers below
+  canManage: boolean
+  internalGroup: { id: string; name: string } | null
   plannedUntil: string | null
-  upcomingSlots: { filled: number; total: number }
+  upcomingSlots: { filled: number; total: number } | null
   recentLocations: LocationValues[]
 }
 
