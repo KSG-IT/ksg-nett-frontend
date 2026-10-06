@@ -313,6 +313,46 @@ export const SEND_PLANNING_PERIOD_REMINDER_MUTATION = gql`
   }
 `
 
+// === AUTOFILL AND PUBLISH ===
+
+export const RUN_AUTOFILL_MUTATION = gql`
+  mutation RunAutofill($planningPeriodId: ID!) {
+    runAutofill(planningPeriodId: $planningPeriodId) {
+      autofillRun {
+        id
+        draftCount
+        unfilled {
+          reason
+        }
+      }
+    }
+  }
+`
+
+export const REVERT_AUTOFILL_RUN_MUTATION = gql`
+  mutation RevertAutofillRun($id: ID!) {
+    revertAutofillRun(id: $id) {
+      removedDrafts
+    }
+  }
+`
+
+// Locks the drafts in the period's dates. Members with notify_on_shift get
+// one email each.
+export const PUBLISH_PLANNING_PERIOD_MUTATION = gql`
+  mutation PublishPlanningPeriod($id: ID!) {
+    publishPlanningPeriod(id: $id) {
+      changedSlots
+      notifiedUsers
+      planningPeriod {
+        id
+        status
+        publishedAt
+      }
+    }
+  }
+`
+
 export const SET_SHIFT_INTEREST_MUTATION = gql`
   mutation SetShiftInterest(
     $shiftId: ID!

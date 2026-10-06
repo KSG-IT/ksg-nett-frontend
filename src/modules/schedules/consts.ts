@@ -126,3 +126,13 @@ export enum PlanningPeriodStatusValues {
   CLOSED = 'CLOSED',
   PUBLISHED = 'PUBLISHED',
 }
+
+// Why autofill left a slot empty (ksg-nett-backend/schedules/utils/autofill.py,
+// UnfilledReason)
+export enum UnfilledReasonValues {
+  NO_ROLE_ON_ROSTER = 'NO_ROLE_ON_ROSTER',
+  NO_CANDIDATES = 'NO_CANDIDATES',
+  BUSY_SAME_DAY = 'BUSY_SAME_DAY',
+  WEEKLY_LIMIT = 'WEEKLY_LIMIT',
+  SHIFT_CAP = 'SHIFT_CAP',
+}
