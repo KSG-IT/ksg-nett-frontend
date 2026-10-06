@@ -38,18 +38,20 @@ export const Disclaimer: React.FC<DisclaimerProps> = ({ onStart, onBack }) => {
         </h2>
         <ul className={classes.points}>
           <li>
-            Kortene ble skrevet i 2020. Noe av innholdet kan være utdatert.
+            Kortene ble skrevet i 2020 av to unge alkoholikere tidlig i sin KSG
+            karriere. Noe av innholdet kan være utdatert, støtende og/eller bare
+            veldig kleine. Vi beklager på forhånd.
           </li>
           <li>
-            Krydringsnivået (Mild, Krydret, Drøy) er satt av KI og kan være
-            feil.
+            Spice-level (Mild, Krydret, Drøy) er satt av KI og kan være feil.
           </li>
           <li>
-            Er det et kort dere ikke liker, eller noe som bør endres?{' '}
+            Er det noe dere føler som må fjernes, eller noe som bør endres?{' '}
             {canSendFeedback
               ? 'Send en tilbakemelding til KSG-IT.'
               : 'Si ifra til KSG-IT.'}{' '}
-            Dere kan også fjerne kort selv under «Se og endre kortene».
+            Dere kan også fjerne kort, eller legge til nye selv under «Se og
+            endre kortene».
           </li>
         </ul>
         <div className={classes.actions}>
