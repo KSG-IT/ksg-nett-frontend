@@ -111,6 +111,9 @@ const ScheduleRoster = React.lazy(
 const ScheduleRosterRules = React.lazy(
   () => import('modules/schedules/views/ScheduleRosterRules')
 )
+const SchedulePlanning = React.lazy(
+  () => import('modules/schedules/views/SchedulePlanning')
+)
 
 // ==== Feature flags ====
 const FeatureFlags = React.lazy(
@@ -594,6 +597,16 @@ export const AppRoutes: React.FC = () => {
                 permissions={PERMISSIONS.schedules.change.schedule}
               >
                 <ScheduleRoster />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path=":id/planning"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <SchedulePlanning />
               </RestrictedRoute>
             }
           />

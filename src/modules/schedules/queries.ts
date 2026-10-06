@@ -271,6 +271,51 @@ export const TEMPLATE_GENERATION_PREVIEW_QUERY = gql`
   }
 `
 
+// === PLANNING ===
+
+export const SCHEDULE_PLANNING_QUERY = gql`
+  query SchedulePlanning($id: ID!) {
+    schedule(id: $id) {
+      id
+      name
+      canManage
+      planningPeriods {
+        id
+        dateFrom
+        dateTo
+        deadline
+        status
+        reminderSentAt
+        responseStats {
+          rosterCount
+          optInCount
+          usersWithAnswers
+          optInWithInterest
+          interested
+          available
+          unavailable
+          unavailablePrefilled
+          withNote
+        }
+        slotCoverage {
+          shift {
+            id
+            name
+            datetimeStart
+          }
+          role
+          slotCount
+          openSlotCount
+          candidateCount
+          interestedCount
+          unavailableCount
+          unavailableWithNoteCount
+        }
+      }
+    }
+  }
+`
+
 // === ROSTER ===
 
 export const SCHEDULE_ROSTER_QUERY = gql`

@@ -223,6 +223,48 @@ export const CLEAR_SLOT_V2_MUTATION = gql`
   }
 `
 
+// === PLANNING ===
+
+export const CREATE_PLANNING_PERIOD_MUTATION = gql`
+  mutation CreatePlanningPeriod($input: CreatePlanningPeriodInput!) {
+    createPlanningPeriod(input: $input) {
+      planningPeriod {
+        id
+      }
+    }
+  }
+`
+
+export const UPDATE_PLANNING_PERIOD_MUTATION = gql`
+  mutation UpdatePlanningPeriod($id: ID!, $input: UpdatePlanningPeriodInput!) {
+    updatePlanningPeriod(id: $id, input: $input) {
+      planningPeriod {
+        id
+      }
+    }
+  }
+`
+
+export const DELETE_PLANNING_PERIOD_MUTATION = gql`
+  mutation DeletePlanningPeriod($id: ID!) {
+    deletePlanningPeriod(id: $id) {
+      found
+    }
+  }
+`
+
+export const SEND_PLANNING_PERIOD_REMINDER_MUTATION = gql`
+  mutation SendPlanningPeriodReminder($planningPeriodId: ID!) {
+    sendPlanningPeriodReminder(planningPeriodId: $planningPeriodId) {
+      recipients
+      planningPeriod {
+        id
+        reminderSentAt
+      }
+    }
+  }
+`
+
 export const CREATE_SHIFT_WITH_SLOTS_MUTATION = gql`
   mutation CreateShiftWithSlots($input: CreateShiftWithSlotsInput!) {
     createShiftWithSlots(input: $input) {

@@ -8,9 +8,9 @@ interface ScheduleTab {
   managersOnly: boolean
 }
 
-// Planlegging comes between Vaktplan and Roster in a later step
 const TABS: ScheduleTab[] = [
   { path: 'v2', label: 'Vaktplan', managersOnly: false },
+  { path: 'planning', label: 'Planlegging', managersOnly: true },
   { path: 'roster', label: 'Roster', managersOnly: true },
   { path: 'rules', label: 'Regler', managersOnly: true },
 ]

@@ -101,3 +101,9 @@ export enum RosterChangeKindValues {
   KEEP = 'KEEP',
   CONFLICT = 'CONFLICT',
 }
+
+export enum PlanningPeriodStatusValues {
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+  PUBLISHED = 'PUBLISHED',
+}
