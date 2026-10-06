@@ -99,7 +99,7 @@ export const SCHEDULES_OVERVIEW_QUERY = gql`
 `
 
 // Managers get the draft of a slot. For other users it is null.
-const SLOT_DRAFT_FIELDS = gql`
+export const SLOT_DRAFT_FIELDS = gql`
   fragment SlotDraftFields on ShiftSlotNode {
     draft {
       id
@@ -131,6 +131,8 @@ export const SCHEDULE_V2_QUERY = gql`
       displayMode
       defaultRole
       recentLocations
+      # Null for a user who does not manage the schedule
+      draftCount
       shiftsFromRange(shiftsFrom: $shiftsFrom, numberOfWeeks: $numberOfWeeks) {
         ...DayShiftFields
         slots {
