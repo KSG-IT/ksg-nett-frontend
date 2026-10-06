@@ -182,12 +182,19 @@ export interface PlanningResponseStats {
 export interface SlotCoverageNode {
   shift: Pick<ShiftNode, 'id' | 'name' | 'datetimeStart'>
   role: RoleValues
+  candidateBreakdown: SlotCoverageCandidateBreakdownNode[]
   slotCount: number
   openSlotCount: number
   candidateCount: number
   interestedCount: number
   unavailableCount: number
   unavailableWithNoteCount: number
+}
+
+export interface SlotCoverageCandidateBreakdownNode {
+  membershipType: string | null
+  candidateCount: number
+  interestedCount: number
 }
 
 export interface PlanningPeriodNode {

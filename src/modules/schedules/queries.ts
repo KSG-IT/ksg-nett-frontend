@@ -356,6 +356,11 @@ export const SCHEDULE_PLANNING_QUERY = gql`
             datetimeStart
           }
           role
+          candidateBreakdown {
+            membershipType
+            candidateCount
+            interestedCount
+          }
           slotCount
           openSlotCount
           candidateCount

@@ -33,6 +33,7 @@ import { useParams } from 'react-router-dom'
 import { format } from 'util/date-fns'
 import { ManagersOnly, SchedulePageHeader } from '../components/ScheduleTabs'
 import { PlanningPeriodStatusValues } from '../consts'
+import { membershipTypeLabel } from '../roster'
 import {
   CREATE_PLANNING_PERIOD_MUTATION,
   DELETE_PLANNING_PERIOD_MUTATION,
@@ -330,25 +331,56 @@ const CoverageTable: React.FC<{ rows: PlanningPeriodNode['slotCoverage'] }> = ({
     <Table.Thead>
       <Table.Tr>
         <Table.Th>Vakt</Table.Th>
-        <Table.Th>Rolle</Table.Th>
+        <Table.Th>Rolle / type</Table.Th>
         <Table.Th>Ledig / kandidater</Table.Th>
         <Table.Th>Interesserte</Table.Th>
       </Table.Tr>
     </Table.Thead>
     <Table.Tbody>
-      {rows.slice(0, 5).map(row => (
-        <Table.Tr key={`${row.shift.id}-${row.role}`}>
-          <Table.Td>
-            {row.shift.name} ·{' '}
-            {format(parseISO(row.shift.datetimeStart), 'EEE d. MMM, HH:mm')}
-          </Table.Td>
-          <Table.Td>{parseShiftRole(row.role)}</Table.Td>
-          <Table.Td c={spareCandidates(row) < 0 ? 'red' : undefined}>
-            {row.openSlotCount} / {row.candidateCount}
-          </Table.Td>
-          <Table.Td>{row.interestedCount}</Table.Td>
-        </Table.Tr>
-      ))}
+      {rows.slice(0, 5).flatMap(row => {
+        const breakdown = row.candidateBreakdown
+        const groupKey = `${row.shift.id}-${row.role}`
+        const typeRows = breakdown.length > 0 ? [null, ...breakdown] : [null]
+        return typeRows.map((typeRow, index) => (
+          <Table.Tr
+            key={`${groupKey}-${index}-${typeRow?.membershipType ?? 'summary'}`}
+          >
+            <Table.Td>
+              {index === 0 && (
+                <>
+                  {row.shift.name} ·{' '}
+                  {format(
+                    parseISO(row.shift.datetimeStart),
+                    'EEE d. MMM, HH:mm'
+                  )}
+                </>
+              )}
+            </Table.Td>
+            <Table.Td>
+              {index === 0 && <Text>{parseShiftRole(row.role)}</Text>}
+              <Text size="xs" c="dimmed">
+                {index === 0
+                  ? breakdown.length > 0
+                    ? 'Alle typer'
+                    : 'Ingen kandidater'
+                  : typeRow
+                  ? membershipTypeLabel(typeRow.membershipType)
+                  : null}
+              </Text>
+            </Table.Td>
+            <Table.Td c={spareCandidates(row) < 0 ? 'red' : undefined}>
+              {index === 0
+                ? `${row.openSlotCount} / ${row.candidateCount}`
+                : `– / ${typeRow?.candidateCount ?? 0}`}
+            </Table.Td>
+            <Table.Td>
+              {index === 0
+                ? row.interestedCount
+                : typeRow?.interestedCount ?? 0}
+            </Table.Td>
+          </Table.Tr>
+        ))
+      })}
     </Table.Tbody>
   </Table>
 )
