@@ -22,6 +22,7 @@ import {
   ShiftList,
   ShiftTimeline,
 } from '../components/AllShifts'
+import { PlanningAvailabilityBanner } from '../components/PlanningAvailabilityBanner'
 import { ALL_SHIFTS } from '../queries'
 import { AllShiftsReturns, AllShiftsVariables } from '../types.graphql'
 
@@ -103,6 +104,7 @@ export const AllShifts = () => {
   return (
     <Stack gap="md">
       <Breadcrumbs items={breadcrumbsItems} />
+      <PlanningAvailabilityBanner />
       <DayNavigation date={date} onChange={handleDateChange} />
       <ShiftFilters
         filter={filter}

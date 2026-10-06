@@ -114,6 +114,13 @@ export enum RosterChangeKindValues {
   CONFLICT = 'CONFLICT',
 }
 
+// Where a shift answer comes from (ksg-nett-backend/schedules/models.py,
+// ShiftInterest.Source)
+export enum InterestSourceValues {
+  MANUAL = 'MANUAL',
+  UNAVAILABILITY = 'UNAVAILABILITY',
+}
+
 export enum PlanningPeriodStatusValues {
   OPEN = 'OPEN',
   CLOSED = 'CLOSED',

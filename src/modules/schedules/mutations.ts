@@ -265,6 +265,34 @@ export const SEND_PLANNING_PERIOD_REMINDER_MUTATION = gql`
   }
 `
 
+export const SET_SHIFT_INTEREST_MUTATION = gql`
+  mutation SetShiftInterest(
+    $shiftId: ID!
+    $interestType: ShiftInterestTypeEnum
+    $note: String
+  ) {
+    setShiftInterest(
+      shiftId: $shiftId
+      interestType: $interestType
+      note: $note
+    ) {
+      shift {
+        id
+        myInterest {
+          interestType
+          note
+          source
+        }
+      }
+      shiftInterest {
+        interestType
+        note
+        source
+      }
+    }
+  }
+`
+
 export const CREATE_SHIFT_WITH_SLOTS_MUTATION = gql`
   mutation CreateShiftWithSlots($input: CreateShiftWithSlotsInput!) {
     createShiftWithSlots(input: $input) {

@@ -13,6 +13,7 @@ import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
 import { DashboardDataQueryReturns } from './types.graphql'
 import { createStyles } from '@mantine/emotion'
+import { PlanningAvailabilityBanner } from 'modules/schedules/components/PlanningAvailabilityBanner'
 
 const breadCrumbItems = [{ label: 'Hjem', path: '/dashboard' }]
 
@@ -42,10 +43,10 @@ export const Dashboard = () => {
       showFeedback,
     },
   } = data
-
   return (
     <Stack gap="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
+      <PlanningAvailabilityBanner />
       <ShortcutCards
         sociOrderSession={!!sociOrderSession}
         showNewbies={showNewbies}

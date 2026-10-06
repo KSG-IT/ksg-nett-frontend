@@ -38,6 +38,13 @@ export type ShiftNode = {
   datetimeStart: string
   datetimeEnd: string
   location: LocationValues | null
+  myInterest: ShiftInterestNode | null
+}
+
+export type ShiftInterestNode = {
+  interestType: 'INTERESTED' | 'AVAILABLE' | 'UNAVAILABLE'
+  note: string
+  source: string
 }
 
 export type ScheduleNode = {
@@ -175,12 +182,19 @@ export interface PlanningResponseStats {
 export interface SlotCoverageNode {
   shift: Pick<ShiftNode, 'id' | 'name' | 'datetimeStart'>
   role: RoleValues
+  candidateBreakdown: SlotCoverageCandidateBreakdownNode[]
   slotCount: number
   openSlotCount: number
   candidateCount: number
   interestedCount: number
   unavailableCount: number
   unavailableWithNoteCount: number
+}
+
+export interface SlotCoverageCandidateBreakdownNode {
+  membershipType: string | null
+  candidateCount: number
+  interestedCount: number
 }
 
 export interface PlanningPeriodNode {
@@ -192,6 +206,29 @@ export interface PlanningPeriodNode {
   reminderSentAt: string | null
   responseStats: PlanningResponseStats | null
   slotCoverage: SlotCoverageNode[]
+  myDefaultAvailability: DefaultAvailabilityValues | null
+  schedule: {
+    id: string
+    name: string
+  }
+  shifts: ShiftNode[]
+}
+
+export interface MyOpenPlanningPeriodsReturns {
+  myOpenPlanningPeriods: PlanningPeriodNode[]
+}
+
+export interface MyOpenPlanningPeriodsSummaryReturns {
+  myOpenPlanningPeriods: {
+    id: string
+    dateFrom: string
+    dateTo: string
+    deadline: string
+    status: PlanningPeriodStatusValues
+    myDefaultAvailability: DefaultAvailabilityValues | null
+    schedule: { id: string; name: string }
+    shifts: { id: string; myInterest: { source: string } | null }[]
+  }[]
 }
 
 export interface SchedulePlanningReturns {
