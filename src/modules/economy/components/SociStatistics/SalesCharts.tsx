@@ -50,7 +50,14 @@ export const SalesSummaryCards: React.FC<GroupedSalesChartsProps> = ({
   const summary = salesSummary(products)
   const labels = GRANULARITY_LABELS[granularity]
   const stats = [
-    { label: 'Omsetning', value: kr(summary.total) },
+    {
+      label: 'Omsetning',
+      value: kr(summary.revenue),
+      hint:
+        summary.total !== summary.revenue
+          ? `${kr(summary.total)} solgt totalt, med bong`
+          : undefined,
+    },
     {
       label: 'Solgte enheter',
       value: summary.quantity.toLocaleString('nb-NO'),

@@ -340,6 +340,7 @@ export const SALES_STATISTICS_QUERY = gql`
       total
       quantity
       average
+      isVoucher
       data {
         day
         sum

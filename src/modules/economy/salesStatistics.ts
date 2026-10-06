@@ -11,10 +11,16 @@ export interface ProductSalesInput {
   total: number
   quantity: number
   data: { day: string; sum: number }[]
+  // A voucher like bong. Only the statistics query selects it.
+  isVoucher?: boolean
 }
 
 export interface SalesSummary {
+  // All sales, vouchers too
   total: number
+  // The sales without vouchers. A voucher is sold at face value and paid
+  // back in goods later, so its sale is not revenue (omsetning).
+  revenue: number
   quantity: number
   salesPeriods: number
   averagePerSalesPeriod: number
@@ -35,6 +41,9 @@ export function periodRows(products: ProductSalesInput[]) {
 // A sales period is a day, week or month where at least one product sold
 export function salesSummary(products: ProductSalesInput[]): SalesSummary {
   const total = products.reduce((sum, product) => sum + product.total, 0)
+  const revenue = products
+    .filter(product => !product.isVoucher)
+    .reduce((sum, product) => sum + product.total, 0)
   const quantity = products.reduce((sum, product) => sum + product.quantity, 0)
   const salesPeriods = periodRows(products).filter(row =>
     products.some(product => Number(row[product.productId]) !== 0)
@@ -42,9 +51,12 @@ export function salesSummary(products: ProductSalesInput[]): SalesSummary {
 
   return {
     total,
+    revenue,
     quantity,
     salesPeriods,
-    averagePerSalesPeriod: salesPeriods ? Math.round(total / salesPeriods) : 0,
+    averagePerSalesPeriod: salesPeriods
+      ? Math.round(revenue / salesPeriods)
+      : 0,
   }
 }
 
