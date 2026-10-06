@@ -69,7 +69,11 @@ const SchedulePlanning: React.FC = () => {
   const { data, loading, error } = useQuery<
     SchedulePlanningReturns,
     ScheduleIdVariables
-  >(SCHEDULE_PLANNING_QUERY, { variables: { id } })
+  >(SCHEDULE_PLANNING_QUERY, {
+    variables: { id },
+    // Roster changes can affect stats and coverage while this page is unmounted.
+    fetchPolicy: 'cache-and-network',
+  })
   const [remove] = useMutation<DeletePlanningPeriodReturns, { id: string }>(
     DELETE_PLANNING_PERIOD_MUTATION,
     { refetchQueries: [SCHEDULE_PLANNING_QUERY] }
@@ -269,15 +273,24 @@ const PlanningPeriodCard: React.FC<{
 const ResponseStats: React.FC<{
   stats: NonNullable<PlanningPeriodNode['responseStats']>
 }> = ({ stats }) => (
-  <SimpleGrid cols={{ base: 2, sm: 4 }} spacing="xs">
-    <Stat label="På rosteren" value={stats.rosterCount} />
-    <Stat label="Har svart" value={stats.usersWithAnswers} />
-    <Stat
-      label="Påmelding"
-      value={`${stats.optInWithInterest} / ${stats.optInCount}`}
-    />
-    <Stat label="Kan jobbe" value={stats.interested + stats.available} />
-  </SimpleGrid>
+  <Stack gap="xs">
+    <SimpleGrid cols={{ base: 2, sm: 4 }} spacing="xs">
+      <Stat label="På rosteren" value={stats.rosterCount} />
+      <Stat label="Har svart" value={stats.usersWithAnswers} />
+      <Stat
+        label="Påmelding"
+        value={`${stats.optInWithInterest} / ${stats.optInCount}`}
+      />
+    </SimpleGrid>
+    <Text fw={600} size="sm">
+      Svar på vakter
+    </Text>
+    <SimpleGrid cols={{ base: 2, sm: 3 }} spacing="xs">
+      <Stat label="Kan jobbe" value={stats.available} />
+      <Stat label="Ønsker å jobbe" value={stats.interested} />
+      <Stat label="Kan ikke jobbe" value={stats.unavailable} />
+    </SimpleGrid>
+  </Stack>
 )
 
 const Stat: React.FC<{ label: string; value: string | number }> = ({
