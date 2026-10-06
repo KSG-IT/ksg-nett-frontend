@@ -2,14 +2,31 @@
 
 ## [unreleased]
 
+## [v2026.10.2]
+
 ### Added
 
+- Schedules: planning of shifts, open for beta testing
+  - Roster and Regler pages for schedule managers: who works on a schedule, with which role and how many shifts at most, and a preview before the roster is synced from the memberships
+  - Planlegging page: open a planning period with a deadline, send a reminder, see who has answered and which slots have too few candidates, and run autofill to make a draft plan
+  - Min tilgjengelighet (`/schedules/me/availability`): answer for each shift in an open period (vil gjerne, kan, kan ikke) with an optional note. Answers are saved at once, and the page locks when the deadline passes
+  - A banner on the dashboard, Mine vakter and Vakter tells you when you have shifts to answer for
+  - Schedule view v2: changes in the plan are drafts until a manager locks them in. A draft has a dashed chip, and the header shows the number of drafts. Lock in or discard the visible weeks, or all drafts of the schedule. A lock sends one email to each member with notifications on
+  - Publish a period from the Planlegging page, and undo an autofill run
+  - The template dialog shows what a generation makes and deletes, and asks before it deletes filled slots, answers or drafts
+  - The overview shows the schedules you manage first
+- Schedules: allergy overview with a "suppetime" toggle for shifts that overlap 14:00-16:00
 - Vakter: filter by gjeng, by Dag/Kveld/Natt, and "Jobber samtidig som meg" for the shifts at the same time as yours
+- Economy: the sales statistics show revenue without vouchers (bong) and the total sold with them
+- Settings: Mine innstillinger has a new layout, and the allergies are a transfer list with search
 - Truth or Drink: a hidden party game at `/tod`, for a laptop on a TV or a phone in landscape. A search for "tod" in the header shows it. Needs the `truth_or_drink` feature flag. The game state stays in the browser
 
 ### Changed
 
+- Schedules: the servering locations are called Siri, Vollan and Skala, and shift leaders are marked with a crown and listed first in the v2 view
 - Dashboard: the feedback card shows only when the `feedback` feature flag is on
+- Dependencies: Mantine v9.7
+- Monitoring: Sentry names transactions by route and links them to the backend traces
 
 ## [v2026.10.1]
 

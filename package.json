@@ -1,6 +1,6 @@
 {
   "name": "ksg-nett-frontend",
-  "version": "2026.10.1",
+  "version": "2026.10.2",
   "private": true,
   "packageManager": "yarn@4.18.1",
   "dependencies": {
