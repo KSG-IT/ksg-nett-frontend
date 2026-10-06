@@ -10,6 +10,7 @@ import {
   RosterChangeKindValues,
   PlanningPeriodStatusValues,
   ScheduleDisplayModeValues,
+  UnfilledReasonValues,
 } from './consts'
 
 // === NODES ===
@@ -213,6 +214,30 @@ export interface SlotCoverageCandidateBreakdownNode {
   interestedCount: number
 }
 
+// A slot that an autofill run left empty, and why
+export interface UnfilledSlotNode {
+  // Null when the slot was deleted after the run
+  shiftSlot: {
+    id: string
+    role: RoleValues
+    // The slot now, so the page can skip slots that are filled after the run
+    user: { id: string } | null
+    draft: { id: string } | null
+    shift: Pick<ShiftNode, 'id' | 'name' | 'datetimeStart'>
+  } | null
+  reason: UnfilledReasonValues
+  candidateCount: number
+}
+
+export interface AutofillRunNode {
+  id: string
+  createdAt: string
+  createdBy: { id: string; getCleanFullName: string } | null
+  // The drafts of the run that are not locked, changed or replaced
+  draftCount: number
+  unfilled: UnfilledSlotNode[]
+}
+
 // The fields SCHEDULE_PLANNING_QUERY fetches for a manager
 export interface PlanningPeriodNode {
   id: string
@@ -220,9 +245,12 @@ export interface PlanningPeriodNode {
   dateTo: string
   deadline: string
   status: PlanningPeriodStatusValues
+  publishedAt: string | null
   reminderSentAt: string | null
   responseStats: PlanningResponseStats | null
   slotCoverage: SlotCoverageNode[]
+  // Newest first
+  autofillRuns: AutofillRunNode[]
 }
 
 // The fields MY_OPEN_PLANNING_PERIODS_QUERY fetches for the member
@@ -311,6 +339,30 @@ export interface SendPlanningPeriodReminderReturns {
   sendPlanningPeriodReminder: {
     recipients: number
     planningPeriod: Pick<PlanningPeriodNode, 'id' | 'reminderSentAt'>
+  }
+}
+
+export interface RunAutofillVariables {
+  planningPeriodId: string
+}
+
+export interface RunAutofillReturns {
+  runAutofill: {
+    autofillRun: Pick<AutofillRunNode, 'id' | 'draftCount'> & {
+      unfilled: Pick<UnfilledSlotNode, 'reason'>[]
+    }
+  }
+}
+
+export interface RevertAutofillRunReturns {
+  revertAutofillRun: { removedDrafts: number }
+}
+
+export interface PublishPlanningPeriodReturns {
+  publishPlanningPeriod: {
+    changedSlots: number
+    notifiedUsers: number
+    planningPeriod: Pick<PlanningPeriodNode, 'id' | 'status' | 'publishedAt'>
   }
 }
 

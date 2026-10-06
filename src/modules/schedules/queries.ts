@@ -116,6 +116,10 @@ export const SLOT_DRAFT_FIELDS = gql`
         id
         getCleanFullName
       }
+      # Null for a manual draft
+      autofillRun {
+        id
+      }
     }
   }
 `
@@ -367,6 +371,7 @@ export const SCHEDULE_PLANNING_QUERY = gql`
         dateTo
         deadline
         status
+        publishedAt
         reminderSentAt
         responseStats {
           rosterCount
@@ -397,6 +402,35 @@ export const SCHEDULE_PLANNING_QUERY = gql`
           interestedCount
           unavailableCount
           unavailableWithNoteCount
+        }
+        # Newest first. A new run replaces the drafts of the earlier runs.
+        autofillRuns {
+          id
+          createdAt
+          createdBy {
+            id
+            getCleanFullName
+          }
+          draftCount
+          unfilled {
+            reason
+            candidateCount
+            shiftSlot {
+              id
+              role
+              user {
+                id
+              }
+              draft {
+                id
+              }
+              shift {
+                id
+                name
+                datetimeStart
+              }
+            }
+          }
         }
       }
     }

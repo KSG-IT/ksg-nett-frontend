@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client'
+import { ApolloCache, useMutation } from '@apollo/client'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import {
   ADD_SLOTS_TO_SHIFT_MUTATION,
@@ -26,13 +26,21 @@ import {
   REMOVE_SCHEDULE_ROSTER_ENTRY_MUTATION,
   SYNC_SCHEDULE_ROSTER_MUTATION,
   UPDATE_SCHEDULE_ROSTER_ENTRY_MUTATION,
+  PUBLISH_PLANNING_PERIOD_MUTATION,
+  REVERT_AUTOFILL_RUN_MUTATION,
+  RUN_AUTOFILL_MUTATION,
 } from './mutations'
 import {
+  SCHEDULE_PLANNING_QUERY,
   ROSTER_SYNC_PREVIEW_QUERY,
   SCHEDULE_ROSTER_QUERY,
   SCHEDULE_ROSTER_RULES_QUERY,
 } from './queries'
 import {
+  PublishPlanningPeriodReturns,
+  RevertAutofillRunReturns,
+  RunAutofillReturns,
+  RunAutofillVariables,
   AddSlotsToShiftReturns,
   AddSlotsToShiftVariables,
   AddUserToShiftSlotReturns,
@@ -303,5 +311,47 @@ export function useScheduleRosterMutations() {
     updateEntryLoading,
     removeEntry,
     removeEntryLoading,
+  }
+}
+
+// The v2 grid keeps the slots and drafts of a schedule in the cache. Autofill,
+// revert and publish change them on the server, so the grid loads them again.
+function evictSchedulePlan(cache: ApolloCache<unknown>, scheduleId: string) {
+  const id = cache.identify({ __typename: 'ScheduleNode', id: scheduleId })
+  cache.evict({ id, fieldName: 'shiftsFromRange' })
+  cache.evict({ id, fieldName: 'draftCount' })
+  cache.gc()
+}
+
+export function usePlanningPeriodPlanMutations(scheduleId: string) {
+  const options = {
+    refetchQueries: [SCHEDULE_PLANNING_QUERY],
+    update: (cache: ApolloCache<unknown>) =>
+      evictSchedulePlan(cache, scheduleId),
+  }
+
+  const [runAutofill, { loading: runAutofillLoading }] = useMutation<
+    RunAutofillReturns,
+    RunAutofillVariables
+  >(RUN_AUTOFILL_MUTATION, options)
+
+  const [revertAutofillRun, { loading: revertAutofillRunLoading }] =
+    useMutation<RevertAutofillRunReturns, { id: string }>(
+      REVERT_AUTOFILL_RUN_MUTATION,
+      options
+    )
+
+  const [publishPeriod, { loading: publishPeriodLoading }] = useMutation<
+    PublishPlanningPeriodReturns,
+    { id: string }
+  >(PUBLISH_PLANNING_PERIOD_MUTATION, options)
+
+  return {
+    runAutofill,
+    runAutofillLoading,
+    revertAutofillRun,
+    revertAutofillRunLoading,
+    publishPeriod,
+    publishPeriodLoading,
   }
 }

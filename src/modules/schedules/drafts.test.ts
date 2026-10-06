@@ -31,6 +31,7 @@ function draft(
     user: userId ? user(userId) : null,
     changedBy: { getCleanFullName: 'Kari' },
     changedAt: '2026-10-06T12:00:00',
+    autofillRun: null,
     ...extra,
   }
 }
@@ -146,6 +147,19 @@ describe('draftLabel', () => {
       'Utkast: fjern Bruker 1 (endret av Kari)',
       'Utkast: Bruker 3',
       null,
+    ])
+  })
+
+  it('says autofyll for a draft that autofill wrote', () => {
+    const [shift] = applyDrafts([
+      shiftWith([
+        slot('a', null, draft('2', { autofillRun: { id: 'r1' } })),
+        slot('b', '1', draft('3', { autofillRun: { id: 'r1' } })),
+      ]),
+    ])
+    expect(shift.slots.map(draftLabel)).toEqual([
+      'Utkast: Bruker 2 (autofyll)',
+      'Utkast: Bruker 3 (autofyll)',
     ])
   })
 })

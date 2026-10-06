@@ -1,0 +1,10 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  padding-block: var(--mantine-spacing-xs);
+  border-top: 1px solid var(--mantine-color-default-border);
+}
