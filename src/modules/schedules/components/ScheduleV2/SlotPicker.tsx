@@ -287,6 +287,8 @@ const CurrentPerson: React.FC<CurrentPersonProps> = ({
     )
   }
   if (!slot.user) return null
+  // "Forkast utkast" only differs from "Fjern" when a person is locked in:
+  // it keeps that person. On a fill draft both do the same.
   return (
     <div className={classes.current}>
       <Text size="sm" truncate>
@@ -302,7 +304,7 @@ const CurrentPerson: React.FC<CurrentPersonProps> = ({
       >
         Fjern
       </Button>
-      {kind && (
+      {kind === 'replace' && (
         <Button
           size="compact-xs"
           variant="subtle"
