@@ -131,6 +131,8 @@ export const SCHEDULE_V2_QUERY = gql`
       displayMode
       defaultRole
       recentLocations
+      # Null for a user who does not manage the schedule
+      draftCount
       shiftsFromRange(shiftsFrom: $shiftsFrom, numberOfWeeks: $numberOfWeeks) {
         ...DayShiftFields
         slots {

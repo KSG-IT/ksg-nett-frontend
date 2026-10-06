@@ -231,6 +231,29 @@ export const DRAFT_SLOT_V2_MUTATION = gql`
   }
 `
 
+// The dates are optional. Without them, the mutation takes every draft of the
+// schedule. A lock sends one email per member with the notification setting.
+export const LOCK_DRAFT_MUTATION = gql`
+  mutation LockDraft($scheduleId: ID!, $dateFrom: Date, $dateTo: Date) {
+    lockDraft(scheduleId: $scheduleId, dateFrom: $dateFrom, dateTo: $dateTo) {
+      changedSlots
+      notifiedUsers
+    }
+  }
+`
+
+export const DISCARD_DRAFT_MUTATION = gql`
+  mutation DiscardDraft($scheduleId: ID!, $dateFrom: Date, $dateTo: Date) {
+    discardDraft(
+      scheduleId: $scheduleId
+      dateFrom: $dateFrom
+      dateTo: $dateTo
+    ) {
+      discarded
+    }
+  }
+`
+
 export const CLEAR_SLOT_V2_MUTATION = gql`
   mutation ClearSlotV2($shiftSlotId: ID!) {
     removeUserFromShiftSlot(shiftSlotId: $shiftSlotId) {

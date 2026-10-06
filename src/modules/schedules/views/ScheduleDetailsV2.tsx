@@ -25,6 +25,7 @@ import { slotCounts } from '../allShifts'
 import { CreateShiftSheet } from '../components/ScheduleV2/CreateShiftPopover'
 import { ScheduleTabs } from '../components/ScheduleTabs'
 import { LoadPanel } from '../components/ScheduleV2/LoadPanel'
+import { DraftActions } from '../components/ScheduleV2/DraftActions'
 import { ScheduleDayList } from '../components/ScheduleV2/ScheduleDayList'
 import { SHEET_PROPS } from '../components/ScheduleV2/sheetProps'
 import { ScheduleGrid } from '../components/ScheduleV2/ScheduleGrid'
@@ -34,7 +35,7 @@ import {
   SlotTarget,
 } from '../components/ScheduleV2/SlotPicker'
 import { LocationValues, ScheduleDisplayModeValues } from '../consts'
-import { applyDrafts, draftCount } from '../drafts'
+import { applyDrafts, draftCount, draftRange } from '../drafts'
 import { SCHEDULE_V2_QUERY } from '../queries'
 import {
   mondayOf,
@@ -247,6 +248,15 @@ export const ScheduleDetailsV2: React.FC = () => {
           </Button>
         )}
       </Group>
+      {(schedule.draftCount ?? 0) > 0 && (
+        <DraftActions
+          scheduleId={schedule.id}
+          range={draftRange(monday, weeks)}
+          period={period}
+          visible={drafts}
+          total={schedule.draftCount ?? 0}
+        />
+      )}
       {isMobile ? (
         <>
           <ScheduleDayList
