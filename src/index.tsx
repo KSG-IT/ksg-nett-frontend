@@ -1,10 +1,17 @@
 import * as Sentry from '@sentry/react'
 import 'fontsource-roboto'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
+import {
+  createRoutesFromChildren,
+  matchRoutes,
+  useLocation,
+  useNavigationType,
+} from 'react-router-dom'
 import Root from './containers/Root'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
+import { API_URL } from './util/env'
 import '@mantine/core/styles.css'
 import '@mantine/tiptap/styles.css'
 import '@mantine/dates/styles.css'
@@ -13,7 +20,18 @@ import '@mantine/charts/styles.css'
 
 Sentry.init({
   dsn: 'https://30278c22042e4403a9fbbe081d5fe999@o487192.ingest.sentry.io/6110504',
-  integrations: [Sentry.browserTracingIntegration()],
+  release: BUILD_ID,
+  integrations: [
+    Sentry.reactRouterV6BrowserTracingIntegration({
+      useEffect,
+      useLocation,
+      useNavigationType,
+      createRoutesFromChildren,
+      matchRoutes,
+    }),
+  ],
+  // Send trace headers to the backend so frontend and backend spans join in one trace.
+  tracePropagationTargets: [API_URL],
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.

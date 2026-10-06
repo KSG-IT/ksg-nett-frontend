@@ -3,6 +3,8 @@ import { LocationValues, RoleValues } from './consts'
 import {
   busyOnDay,
   compactTime,
+  isShiftLeader,
+  leadersFirst,
   mondayOf,
   nextOpenSlot,
   phoneDays,
@@ -36,6 +38,7 @@ function shift(
     location,
     datetimeStart: start,
     datetimeEnd: end,
+    schedule: { id: 'bar', name: 'Bargjengen' },
     slots: users.map((user, index) => ({
       id: `${id}-${index}`,
       role: RoleValues.BARISTA,
@@ -233,5 +236,42 @@ describe('phoneDays', () => {
     const days = phoneDays(grid)
     expect(days).toHaveLength(14)
     expect(days[8].groups[0].shifts.map(s => s.id)).toEqual(['next'])
+  })
+})
+
+describe('isShiftLeader', () => {
+  it('is true for a leader role', () => {
+    expect(isShiftLeader(RoleValues.BARSJEF)).toBe(true)
+  })
+
+  it('is false for a worker role', () => {
+    expect(isShiftLeader(RoleValues.BARTENDER)).toBe(false)
+  })
+})
+
+describe('leadersFirst', () => {
+  const slots = [
+    { id: '1', role: RoleValues.BARTENDER },
+    { id: '2', role: RoleValues.BARSJEF },
+    { id: '3', role: RoleValues.BARSERVITOR },
+    { id: '4', role: RoleValues.HOVMESTER },
+  ]
+
+  it('puts the leaders first and keeps the order in each group', () => {
+    expect(leadersFirst(slots).map(slot => slot.id)).toEqual([
+      '2',
+      '4',
+      '1',
+      '3',
+    ])
+  })
+
+  it('does not change the input', () => {
+    leadersFirst(slots)
+    expect(slots[0].id).toBe('1')
+  })
+
+  it('is empty without slots', () => {
+    expect(leadersFirst([])).toEqual([])
   })
 })

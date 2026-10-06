@@ -20,22 +20,30 @@ export const FEEDBACK_EMAIL = 'ksg-it@samfundet.no'
 interface FeedbackModalProps {
   opened: boolean
   onClose: () => void
+  // Where the feedback comes from, for example "Truth or Drink". It goes
+  // first in the message, so KSG-IT knows what it is about.
+  context?: string
+  intro?: React.ReactNode
 }
 
 export const FeedbackModal: React.FC<FeedbackModalProps> = ({
   opened,
   onClose,
+  context,
+  intro,
 }) => {
   const me = useMe()
   const [message, setMessage] = useState('')
   const [anonymous, setAnonymous] = useState(false)
   const [send, { loading }] = useMutation(SEND_FEEDBACK_MUTATION)
   const empty = message.trim() === ''
+  const prefix = context ? `Sendt fra ${context}.\n\n` : ''
+  const maxLength = FEEDBACK_MAX_LENGTH - prefix.length
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
     send({
-      variables: { message: message.trim(), anonymous },
+      variables: { message: prefix + message.trim(), anonymous },
       onCompleted() {
         showNotification({
           title: 'Takk!',
@@ -56,19 +64,20 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
       <form onSubmit={handleSubmit}>
         <Stack gap="sm">
           <Text size="sm">
-            Ris, ros eller en idé til KSG-nett? Tilbakemeldingen sendes som
-            e-post til <b>{FEEDBACK_EMAIL}</b>.
+            {intro ?? 'Ris, ros eller en idé til KSG-nett?'} Tilbakemeldingen
+            sendes som e-post til <b>{FEEDBACK_EMAIL}</b>
+            {context && <> og merkes med «Sendt fra {context}»</>}.
           </Text>
           <Textarea
             label="Tilbakemelding"
             value={message}
             onChange={event => setMessage(event.currentTarget.value)}
-            maxLength={FEEDBACK_MAX_LENGTH}
+            maxLength={maxLength}
             autosize
             minRows={4}
             maxRows={10}
             data-autofocus
-            description={`${message.length}/${FEEDBACK_MAX_LENGTH} tegn`}
+            description={`${message.length}/${maxLength} tegn`}
             inputWrapperOrder={['label', 'input', 'description']}
           />
           <Checkbox

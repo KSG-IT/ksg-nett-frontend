@@ -99,3 +99,7 @@
   border-radius: 16px;
   font-size: 12px;
 }
+
+.chips button[data-leader] {
+  border-radius: 6px;
+}

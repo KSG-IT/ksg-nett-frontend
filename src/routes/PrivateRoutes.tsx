@@ -66,12 +66,14 @@ import {
 } from 'modules/users/views'
 import { FirstTimeLogin } from 'modules/users/views/FirstTImeLogin'
 import React from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route } from 'react-router-dom'
+import { SentryRoutes } from './SentryRoutes'
 import { useStore } from 'store'
 import { PERMISSIONS } from 'util/permissions'
 import PublicRoutes from './PublicRoutes'
 import { RestrictedRoute } from './RestrictedRoute'
 import { KnightHoodDashboard } from 'modules/knighthood/KnightHoodDashBoard'
+import { TruthOrDrinkRoute } from 'modules/tod/views'
 
 const MainContent = React.lazy(() => import('routes/MainContent'))
 
@@ -103,6 +105,15 @@ const SociStatistics = React.lazy(
 // === Schedules ===
 const ScheduleAllergies = React.lazy(
   () => import('modules/schedules/views/ScheduleAllergies')
+)
+const ScheduleRoster = React.lazy(
+  () => import('modules/schedules/views/ScheduleRoster')
+)
+const ScheduleRosterRules = React.lazy(
+  () => import('modules/schedules/views/ScheduleRosterRules')
+)
+const SchedulePlanning = React.lazy(
+  () => import('modules/schedules/views/SchedulePlanning')
 )
 
 // ==== Feature flags ====
@@ -145,33 +156,36 @@ export const AppRoutes: React.FC = () => {
   if (me.owesMoney) {
     // Prioritize this first, if we send a debt collection email we want to make it as easy as possible to pay
     return (
-      <Routes>
+      <SentryRoutes>
         <Route path="torpedo" element={<DebtCollection />} />
         <Route path="*" element={<Navigate to="/torpedo" />} />
-      </Routes>
+      </SentryRoutes>
     )
   }
 
   if (me.requiresMigrationWizard) {
     return (
-      <Routes>
+      <SentryRoutes>
         <Route path="migration-wizard" element={<MigrationWizard />} />
         <Route path="*" element={<Navigate to="/migration-wizard" />} />
-      </Routes>
+      </SentryRoutes>
     )
   }
 
   if (me.firstTimeLogin) {
     return (
-      <Routes>
+      <SentryRoutes>
         <Route path="registration" element={<FirstTimeLogin />} />
         <Route path="*" element={<Navigate to="/registration" />} />
-      </Routes>
+      </SentryRoutes>
     )
   }
 
   return (
-    <Routes>
+    <SentryRoutes>
+      {/* ==== TRUTH OR DRINK: full screen, outside the main layout ==== */}
+      <Route path="tod" element={<TruthOrDrinkRoute />} />
+
       <Route path="/" element={<MainContent />}>
         <Route index element={<Navigate to="/dashboard" replace />} />
 
@@ -580,6 +594,36 @@ export const AppRoutes: React.FC = () => {
               </RestrictedRoute>
             }
           />
+          <Route
+            path=":id/roster"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleRoster />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path=":id/planning"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <SchedulePlanning />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path=":id/rules"
+            element={
+              <RestrictedRoute
+                permissions={PERMISSIONS.schedules.change.schedule}
+              >
+                <ScheduleRosterRules />
+              </RestrictedRoute>
+            }
+          />
           <Route path="me">
             <Route index element={<MyShifts />} />
             <Route path="history" element={<MyShifts />} />
@@ -624,6 +668,6 @@ export const AppRoutes: React.FC = () => {
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" />} />
-    </Routes>
+    </SentryRoutes>
   )
 }

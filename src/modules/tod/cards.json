@@ -1,0 +1,1626 @@
+[
+  {
+    "id": "c001",
+    "kind": "truth",
+    "text": "Hvem i rommet ville du hatt med på en øde øy og hvorfor?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c002",
+    "kind": "truth",
+    "text": "Har du hatt en kjønnssykdom? Utdyp.",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c003",
+    "kind": "truth",
+    "text": "Hvem i rommet kunne du ligget med?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c004",
+    "kind": "truth",
+    "text": "Hvem i gruppen er minst intelligent?",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c005",
+    "kind": "truth",
+    "text": "Hvem angrer du mest på å ha ligget med?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c006",
+    "kind": "truth",
+    "text": "I hvilken rekkefølge ville du reddet gruppen fra en brann?",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c007",
+    "kind": "truth",
+    "text": "Hvem er siste personen du stalket på Face?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c008",
+    "kind": "truth",
+    "text": "Hva er det nærmeste du har kommet å være utro?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c009",
+    "kind": "dare",
+    "text": "Nevn en dårlig egenskap til hver person i gruppen",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c011",
+    "kind": "truth",
+    "text": "Har du noen fetisher?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c012",
+    "kind": "dare",
+    "text": "Facetime moren din i 2 minutter",
+    "spice": 1,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c013",
+    "kind": "truth",
+    "text": "Hvem er den mest attraktive personen i rommet?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c014",
+    "kind": "truth",
+    "text": "Hvem er den minst attraktive personen i rommet?",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c015",
+    "kind": "truth",
+    "text": "Har du sagt ‘Jeg elsker deg’ for å få et ligg?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c016",
+    "kind": "truth",
+    "text": "Hva er det dummeste du har sagt under sex?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c017",
+    "kind": "truth",
+    "text": "Hvem i gruppen har lavest standard?",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c018",
+    "kind": "dare",
+    "text": "{player1} får skrive en valgfri melding til nr 5 fra toppen på Messenger. Du får ikke reagere før det er din tur igjen.",
+    "spice": 2,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c019",
+    "kind": "truth",
+    "text": "Hva er ditt go-to move for oppmerksomhet fra det motsatte kjønn?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c020",
+    "kind": "dare",
+    "text": "{player1} får sende en snap fra din tlf til nummer 7 fra toppen på Snapchat. Du får ikke reagere før det er din tur igjen.",
+    "spice": 2,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c021",
+    "kind": "truth",
+    "text": "Har du vært eller gjort noen gravid?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c022",
+    "kind": "truth",
+    "text": "Hva er det sykeste du har gjort i senga?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c023",
+    "kind": "truth",
+    "text": "Har du noen gang bustet noen i familien din? Utdyp.",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c024",
+    "kind": "truth",
+    "text": "Fortell om det flaueste du har opplevd.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c025",
+    "kind": "truth",
+    "text": "Hva er det verste du har gjort for å få deg noe?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c026",
+    "kind": "truth",
+    "text": "Hva er din dårligste vane?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c027",
+    "kind": "truth",
+    "text": "Hvem i gruppen har du en greie for?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c028",
+    "kind": "truth",
+    "text": "Hvem kommer til å gifte seg først?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c029",
+    "kind": "truth",
+    "text": "Hvem tror du har hatt sex med flest?",
+    "spice": 3,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c030",
+    "kind": "dare",
+    "text": "Fake en orgasme i 10 sekunder",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c031",
+    "kind": "dare",
+    "text": "Gi et strippeshow",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c033",
+    "kind": "truth",
+    "text": "Hvor gammel var den eldste personen du har hatt sex med?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c035",
+    "kind": "truth",
+    "text": "Har du hatt trekant?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c036",
+    "kind": "truth",
+    "text": "Hvor mange nasjonaliteter har du hatt sex med? Nevn disse.",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c037",
+    "kind": "truth",
+    "text": "Har du blitt tatt med buksa nede?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c038",
+    "kind": "truth",
+    "text": "Har du ferska noen med buksa nede? Fortell.",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c040",
+    "kind": "truth",
+    "text": "Hva er det mest spennende du vil at noen skal gjøre med deg?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c041",
+    "kind": "truth",
+    "text": "Hvem i rommet av det motsatte kjønn hadde du hatt dårligst sex med?",
+    "spice": 3,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c042",
+    "kind": "truth",
+    "text": "Hva er din go-to pornosjanger?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c043",
+    "kind": "truth",
+    "text": "Når var sist gang du ga deg selv eller noen andre en håndjager?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c044",
+    "kind": "truth",
+    "text": "Hva er {player1} sin dårligste fysiske kvalitet?",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c045",
+    "kind": "truth",
+    "text": "Hva er din dårligste sexposisjon?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c046",
+    "kind": "truth",
+    "text": "Hvilken deltaker ville du vært mest komfortabel med naken?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c047",
+    "kind": "truth",
+    "text": "Hvem har dårligst outfit?",
+    "spice": 1,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c048",
+    "kind": "truth",
+    "text": "Hvem i gruppen kunne kommet unna med drap?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c049",
+    "kind": "truth",
+    "text": "Hva er den minste tiden du har kjent noen før du har ligget med dem?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c050",
+    "kind": "truth",
+    "text": "Hvem i dette rommet har du mest lyst til å kline med?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c051",
+    "kind": "truth",
+    "text": "Hvem i dette rommet har du mest lyst til å ha trekant med?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c052",
+    "kind": "truth",
+    "text": "Dominerer du eller liker du å bli dominert i senga?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c053",
+    "kind": "truth",
+    "text": "Hva er den viktigste fysiske egenskapen til en partner?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c054",
+    "kind": "truth",
+    "text": "Hvem i rommet ville du minst likt å ligge med?",
+    "spice": 3,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c055",
+    "kind": "truth",
+    "text": "Hva ville det tatt for å ha sex med {player1}?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c056",
+    "kind": "truth",
+    "text": "Hva er din sykeste sex-fantasi?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c057",
+    "kind": "truth",
+    "text": "Hvem i dette rommet ville du hatt best sex med?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c058",
+    "kind": "truth",
+    "text": "Hvem av de andre spillerne har den beste kroppen?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c059",
+    "kind": "truth",
+    "text": "Om du måtte gifte deg med en i gruppen, hvem ville det vært?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c060",
+    "kind": "truth",
+    "text": "Hva er din beste sexposisjon?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c061",
+    "kind": "truth",
+    "text": "Hvem i rommet er du mest sjalu på?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c062",
+    "kind": "truth",
+    "text": "Har du fylleringt/textet en ex?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c063",
+    "kind": "truth",
+    "text": "Savner du eksen din?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c064",
+    "kind": "truth",
+    "text": "Hva er din beste pick-up line?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c065",
+    "kind": "truth",
+    "text": "Hvem i rommet ville du byttet liv med?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c066",
+    "kind": "truth",
+    "text": "Ville du vært villig til å være med på porno for veldig mye penger?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c067",
+    "kind": "truth",
+    "text": "Hva er ditt livsmotto?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c068",
+    "kind": "dare",
+    "text": "Si én hyggelig ting om hver deltaker",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c069",
+    "kind": "truth",
+    "text": "Hvem her har du mest lyst til å se på ha sex? (Være ugla)",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c070",
+    "kind": "dare",
+    "text": "Lik de 10 øverste innleggene på facebookfeeden din.",
+    "spice": 1,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c071",
+    "kind": "dare",
+    "text": "La {player1} sende en DM til den de ønsker på Instagram.",
+    "spice": 2,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c073",
+    "kind": "dare",
+    "text": "Send en melding til siste personen du hooket opp med",
+    "spice": 2,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c074",
+    "kind": "dare",
+    "text": "La {player1} gå igjennom recently deleted albumet ditt",
+    "spice": 2,
+    "tags": ["phone"]
+  },
+  {
+    "id": "c075",
+    "kind": "dare",
+    "text": "Syng refrenget til den siste sangen du hørte på",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c076",
+    "kind": "truth",
+    "text": "Hvis du måtte drepe en i rommet, hvem skulle det vært?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c077",
+    "kind": "truth",
+    "text": "Hva er ditt flaueste øyeblikk? Fortell utdypende, i skikkelig detalj.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c078",
+    "kind": "dare",
+    "text": "La {player1} sende en DM til en kjendis e.l. fra din Instagramkonto.",
+    "spice": 2,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c079",
+    "kind": "truth",
+    "text": "Hva er det beste rådet du noen gang har fått?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c080",
+    "kind": "dare",
+    "text": "La {player1} gå igjennom bildene dine",
+    "spice": 2,
+    "tags": ["phone"]
+  },
+  {
+    "id": "c081",
+    "kind": "truth",
+    "text": "Når var sist du så på porno?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c082",
+    "kind": "truth",
+    "text": "Har du fått bot av politiet?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c083",
+    "kind": "truth",
+    "text": "Har du prikk på rullebladet?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c084",
+    "kind": "truth",
+    "text": "Har du vært i fyllearresten?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c085",
+    "kind": "dare",
+    "text": "Gjør neste deltaker sin nødt eller sannhet",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c086",
+    "kind": "truth",
+    "text": "Hva var det siste du sølte på mobilen?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c088",
+    "kind": "truth",
+    "text": "Hvordan vil du rangere ditt eget utseende på en skala fra en til ti?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c089",
+    "kind": "truth",
+    "text": "Hvis det begynte å brenne i dette bygget og du måtte forlate en person i dette rommet. Hvem skulle dette vært?",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c090",
+    "kind": "truth",
+    "text": "Ville du brukt mange timer på å lage en egen nettside for din egen drikkelek istedet for å lese til eksamen?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c091",
+    "kind": "truth",
+    "text": "Hvem i dette rommet ville vært den verste personen å date?",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c092",
+    "kind": "truth",
+    "text": "Hvor mange har du hatt sex med?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c093",
+    "kind": "truth",
+    "text": "Hvor mange skulle du ønske du hadde hatt deg med?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c094",
+    "kind": "truth",
+    "text": "Har du ligget med en venn av din bror eller søster? Hvis du har: vet de om det? (Altså broren eller søsteren din)",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c095",
+    "kind": "truth",
+    "text": "Har du klint med en venn av din bror eller søster? Hvis du har: vet de om det? (Altså broren eller søsteren din)",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c096",
+    "kind": "truth",
+    "text": "Har du ligget med søsteren eller broren til en venn av deg? Hvis du har: vet de om det? (Altså vennen din)",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c097",
+    "kind": "truth",
+    "text": "Har du klint med søsteren eller broren til en venn av deg? Hvis du har: vet de om det? (Altså vennen din)",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c098",
+    "kind": "truth",
+    "text": "Hvem liker du best i rommet?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c099",
+    "kind": "truth",
+    "text": "Hva er favorittmaten din?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c100",
+    "kind": "truth",
+    "text": "Hvordan vil du dø?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c101",
+    "kind": "truth",
+    "text": "Hvem i rommet kommer til å ende opp som narkoman?",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c102",
+    "kind": "truth",
+    "text": "Hvem i rommet ville kommet lengst på paradise hotel?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c103",
+    "kind": "truth",
+    "text": "Hvem i rommet er minst glad i klemmer?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c104",
+    "kind": "truth",
+    "text": "Hvem har du hatt sexfantasier om?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c105",
+    "kind": "truth",
+    "text": "Hva vil du bli når du blir stor?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c106",
+    "kind": "truth",
+    "text": "Hva er det rareste du har glemt igjen hos et ONS?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c107",
+    "kind": "dare",
+    "text": "Send en melding til den femte fra toppen av messenger. Du må skrive: «Du, beklager om det har være kleint mellom oss i det siste.» Du kan ikke reagere før det er din tur igjen.",
+    "spice": 2,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c108",
+    "kind": "dare",
+    "text": "Slikk noen sin tattovering",
+    "spice": 2,
+    "tags": ["physical"]
+  },
+  {
+    "id": "c109",
+    "kind": "dare",
+    "text": "{player1} kan legge til en person på sosiale medier fra din telefon",
+    "spice": 2,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c110",
+    "kind": "dare",
+    "text": "Tegn monobryn i ansiktet ditt",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c111",
+    "kind": "truth",
+    "text": "Fuck, marry, kill; {player1}, {player2} og {player3}!",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c112",
+    "kind": "dare",
+    "text": "Lik den nyeste bursdagshilsenen til den første vennen som dukker opp i facebooksiden din.",
+    "spice": 1,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c113",
+    "kind": "truth",
+    "text": "Har du ligget med noen i dette rommet, i så fall hvem?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c114",
+    "kind": "truth",
+    "text": "Har du stjålet noe i fylla, i så fall hva?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c115",
+    "kind": "truth",
+    "text": "Har du noen gang blitt catcha i å onanere, i så fall av hvem?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c116",
+    "kind": "truth",
+    "text": "Har du noen sinne onanert på et offentlig transportmiddel?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c117",
+    "kind": "truth",
+    "text": "Hva er det kleineste noen har sagt til deg/kalt deg under sex?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c118",
+    "kind": "truth",
+    "text": "Hva er favorittdyret ditt?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c119",
+    "kind": "truth",
+    "text": "Hva er den beste egenskapen til den som sitter til høyre for {player1}?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c120",
+    "kind": "truth",
+    "text": "Hva er ditt favoritmeme?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c121",
+    "kind": "truth",
+    "text": "Hva er største antallet ganger du har onanert på en dag?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c122",
+    "kind": "truth",
+    "text": "Hvem er mest snobbete?",
+    "spice": 1,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c123",
+    "kind": "truth",
+    "text": "Hva var det siste du googlet?",
+    "spice": 1,
+    "tags": ["phone"]
+  },
+  {
+    "id": "c124",
+    "kind": "dare",
+    "text": "Vis søkerloggen din fra facebook",
+    "spice": 2,
+    "tags": ["phone"]
+  },
+  {
+    "id": "c125",
+    "kind": "truth",
+    "text": "Har du noen gang gått kommando på fest?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c127",
+    "kind": "truth",
+    "text": "Hvem i rommet ville du helst spydd på i fylla?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c128",
+    "kind": "dare",
+    "text": "Send melding til den siste personen du teksta og skriv ‘Hva er 69?’",
+    "spice": 2,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c129",
+    "kind": "dare",
+    "text": "Kyss {player1}",
+    "spice": 2,
+    "tags": ["physical"]
+  },
+  {
+    "id": "c130",
+    "kind": "dare",
+    "text": "Ring pizzabakeren og kjeft på dem for å ha en pizza med ananas på",
+    "spice": 1,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c131",
+    "kind": "dare",
+    "text": "Ring pizzabakeren og lat som du er pizzabakeren og skal ta en bestilling fra de.",
+    "spice": 1,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c132",
+    "kind": "dare",
+    "text": "Gi en lidenskapelig lap dance til {player1}",
+    "spice": 3,
+    "tags": ["physical"]
+  },
+  {
+    "id": "c133",
+    "kind": "dare",
+    "text": "Du må bytte klær med {player1}",
+    "spice": 2,
+    "tags": ["physical"]
+  },
+  {
+    "id": "c134",
+    "kind": "truth",
+    "text": "Hvem i rommet er mest irriterende i fylla?",
+    "spice": 1,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c135",
+    "kind": "truth",
+    "text": "Hvem av de med kjæreste kunne gjort bedre?",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c136",
+    "kind": "truth",
+    "text": "Hva er den største aldersforskjellen mellom deg og en du har ligget med?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c137",
+    "kind": "dare",
+    "text": "Les opp den siste meldingen du sendte/mottok fra en i rommet som ligger øverst på messenger.",
+    "spice": 2,
+    "tags": ["phone"]
+  },
+  {
+    "id": "c138",
+    "kind": "truth",
+    "text": "Hvem med kjæreste kunne IKKE gjort bedre?",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c139",
+    "kind": "truth",
+    "text": "Hvem kommer til å ende opp alene?",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c140",
+    "kind": "dare",
+    "text": "Vis det styggeste bildet du har av deg selv",
+    "spice": 1,
+    "tags": ["phone"]
+  },
+  {
+    "id": "c141",
+    "kind": "truth",
+    "text": "Fortell om ditt første kyss",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c142",
+    "kind": "truth",
+    "text": "Hva er det kleineste du har postet på sosiale medier?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c143",
+    "kind": "truth",
+    "text": "Ville du helst sittet på kuk og spist kake, eller sittet på kake og spist kuk?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c144",
+    "kind": "truth",
+    "text": "Hva er det ekleste du har hatt i munnen?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c145",
+    "kind": "truth",
+    "text": "Fortell om sist gang du hadde sex",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c146",
+    "kind": "truth",
+    "text": "Har du noen gang sendt naken/intimbilde?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c147",
+    "kind": "truth",
+    "text": "Hva har du gjort som flest her ville dømt deg for?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c148",
+    "kind": "dare",
+    "text": "Pole dance i et minutt på en imaginære stang",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c149",
+    "kind": "dare",
+    "text": "Fortell din beste vits",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c150",
+    "kind": "truth",
+    "text": "Hva får deg til å himle med øynene hver gang du ser/hører det?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c151",
+    "kind": "truth",
+    "text": "Hva er ditt beste tips til å skjule sugemerker?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c152",
+    "kind": "truth",
+    "text": "Hva er ditt kleineste øyeblikk med foreldre",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c153",
+    "kind": "truth",
+    "text": "Hva er det morsomste person-navnet du noen gang har hørt?",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c154",
+    "kind": "truth",
+    "text": "Hva forvirrer deg mest med det motsatte kjønn?",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c155",
+    "kind": "truth",
+    "text": "Hva skal til for at du hadde gitt ut et sympatiligg?",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c156",
+    "kind": "truth",
+    "text": "Ranger {player1}, {player2} og {player3} etter utseende",
+    "spice": 2,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c157",
+    "kind": "truth",
+    "text": "Hvem har mest resting bitch face?",
+    "spice": 1,
+    "tags": ["roast"]
+  },
+  {
+    "id": "c158",
+    "kind": "truth",
+    "text": "Grilling! Alle stiller et spørsmål, straffeslurk for hver gang du ikke svarer",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c160",
+    "kind": "dare",
+    "text": "Lik eksen din sine siste 25 bilder på instagram",
+    "spice": 2,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c162",
+    "kind": "truth",
+    "text": "Hvem i rommet synes du er dårlig til vervet sitt i KSG?",
+    "spice": 2,
+    "tags": ["ksg", "roast"]
+  },
+  {
+    "id": "c163",
+    "kind": "truth",
+    "text": "Har du noen gang onanert på Samfundet?",
+    "spice": 3,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c164",
+    "kind": "truth",
+    "text": "Hva er din kleineste opplevelse i KSG?",
+    "spice": 1,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c165",
+    "kind": "truth",
+    "text": "Sex i bodegaen eller sex på soci?",
+    "spice": 3,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c166",
+    "kind": "truth",
+    "text": "Hva er ditt favorittminne i KSG?",
+    "spice": 1,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c167",
+    "kind": "truth",
+    "text": "Har du hatt sex på samfundet?",
+    "spice": 3,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c168",
+    "kind": "truth",
+    "text": "Har du spydd på samf?",
+    "spice": 2,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c169",
+    "kind": "truth",
+    "text": "Har du vært kliss naken på soci?",
+    "spice": 2,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c170",
+    "kind": "truth",
+    "text": "Hvor mange har du ligget med i KSG?",
+    "spice": 3,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c171",
+    "kind": "truth",
+    "text": "Hvor mange har du klint med i KSG?",
+    "spice": 2,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c172",
+    "kind": "truth",
+    "text": "Hvem har du ligget med i KSG?",
+    "spice": 3,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c173",
+    "kind": "truth",
+    "text": "Hvem er din favorittperson i KSG?",
+    "spice": 1,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c174",
+    "kind": "truth",
+    "text": "Hvem i KSG hadde du tatt med på ‘eventyr’ til Trolldoen?",
+    "spice": 2,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c175",
+    "kind": "truth",
+    "text": "Har du crushet på noen i KSG?",
+    "spice": 2,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c176",
+    "kind": "truth",
+    "text": "Crusher du på noen i KSG?",
+    "spice": 2,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c177",
+    "kind": "truth",
+    "text": "Hvem i KSG liker du minst?",
+    "spice": 2,
+    "tags": ["ksg", "roast"]
+  },
+  {
+    "id": "c178",
+    "kind": "truth",
+    "text": "Hvem i bar liker du minst?",
+    "spice": 2,
+    "tags": ["ksg", "roast"]
+  },
+  {
+    "id": "c179",
+    "kind": "truth",
+    "text": "Hvilken funk liker du minst?",
+    "spice": 2,
+    "tags": ["ksg", "roast"]
+  },
+  {
+    "id": "c180",
+    "kind": "virus",
+    "text": "avslutt hver setning du sier med {player1}",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c181",
+    "kind": "virus",
+    "text": "le overdrevent hver gang noen snakker",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c182",
+    "kind": "virus",
+    "text": "bytt ut genseren din med noe i rommet som ikke er et klesplagg",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c183",
+    "kind": "virus",
+    "text": "fra nå av må du si penis i stedet for ja, og vagina i stedet for nei",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c184",
+    "kind": "virus",
+    "text": "legg ut en video på snapstory der du filmer vorset og skriver ‘Ute med girlsa #fylla’. Du må ha den oppe helt til neste virus kommer!",
+    "spice": 2,
+    "tags": ["phone", "outsider"]
+  },
+  {
+    "id": "c185",
+    "kind": "virus",
+    "text": "dab hver gang noen tar en shot",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c186",
+    "kind": "virus",
+    "text": "du og {player1}, dere må holde hender inntil videre",
+    "spice": 1,
+    "tags": ["physical"]
+  },
+  {
+    "id": "c187",
+    "kind": "virus",
+    "text": "snakk med en annen dialekt enn din egen",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c188",
+    "kind": "virus",
+    "text": "du har ikke lov til å vise tenner",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c189",
+    "kind": "virus",
+    "text": "du har ikke lov til å si navn",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c190",
+    "kind": "virus",
+    "text": "du har ikke lov til å si ja eller nei",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c191",
+    "kind": "virus",
+    "text": "du har ikke lov til å peke",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c192",
+    "kind": "virus",
+    "text": "du må krabbe om du skal gå noen steder",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c193",
+    "kind": "virus",
+    "text": "du må snakke om deg selv i tredje person",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c194",
+    "kind": "virus",
+    "text": "hvis noen ser deg inn i øynene må personen drikke",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c195",
+    "kind": "virus",
+    "text": "du har ikke lov til å røre telefonen din",
+    "spice": 1,
+    "tags": ["phone"]
+  },
+  {
+    "id": "c196",
+    "kind": "virus",
+    "text": "du må snakke som Yoda",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c197",
+    "kind": "virus",
+    "text": "du er nå en bergenser",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c198",
+    "kind": "virus",
+    "text": "om du har lange ermer må du knyte de sammen",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c199",
+    "kind": "virus",
+    "text": "hver gang noen shotter må du ta en slurk",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c200",
+    "kind": "virus",
+    "text": "snakk uten å lukke munnen",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c201",
+    "kind": "virus",
+    "text": "lukk øynene til neste runde",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c202",
+    "kind": "virus",
+    "text": "snakk med babyspråk",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c203",
+    "kind": "virus",
+    "text": "før du skal endre posisjonen til noe, flaske/boks/dør, må du prøve å bruke ‘The Force’ minst én gang først!",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c204",
+    "kind": "virus",
+    "text": "hver eneste setning må ha to forskjellige språk i seg.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c205",
+    "kind": "virus",
+    "text": "alle setningene dine skal avsluttes med: «Over!».",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c206",
+    "kind": "virus",
+    "text": "du kan ikke vise håret ditt.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c207",
+    "kind": "rule",
+    "title": "Hiroshima",
+    "text": "hver gang noen fullfører en enhet må alle andre ta en slurk",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c208",
+    "kind": "rule",
+    "title": "Dyskalkuli",
+    "text": "det er ikke lov å si tall.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c209",
+    "kind": "rule",
+    "title": "Drikkepress",
+    "text": "det er ikke lov å si drikk.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c210",
+    "kind": "rule",
+    "title": "Do-Dab",
+    "text": "hver gang du nevner ordet «do» må du dabbe.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c211",
+    "kind": "rule",
+    "title": "Schikkelakke",
+    "text": "alle ord som slutter på «-a» skal nå slutte på «-en».",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c212",
+    "kind": "rule",
+    "title": "Globetrotter",
+    "text": "når man reiser seg fra plassen sin kan man ikke sette seg ned der igjen. Man er da nødt til å finne en ny.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c213",
+    "kind": "rule",
+    "title": "Glassmagnet",
+    "text": "alle straffeslurker må skåles. Hver eneste én.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c214",
+    "kind": "rule",
+    "title": "Klestwister",
+    "text": "alle må vrenge genseren.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c215",
+    "kind": "rule",
+    "title": "Pinocchio",
+    "text": "man må ta seg på nese hver gang man skal drikke.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c216",
+    "kind": "rule",
+    "title": "Lavamonster",
+    "text": "gulvet er nå lava. Ingen ben i bakken!",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c217",
+    "kind": "rule",
+    "title": "Gira",
+    "text": "man må si ‘Det drikkes!’ hver gang man tar en straffeslurk.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c218",
+    "kind": "rule",
+    "title": "Feilhendt",
+    "text": "det drikkes med feil hånd.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c219",
+    "kind": "rule",
+    "title": "Elektromagnetisk hypersensitivitet",
+    "text": "ingen rører telefonen.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c220",
+    "kind": "rule",
+    "title": "Møte",
+    "text": "telefoner på bordet, ingen kan motta eller sende meldinger.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c221",
+    "kind": "rule",
+    "title": "Global food shortage",
+    "text": "ingen kan spise.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c223",
+    "kind": "rule",
+    "title": "Ambidekstri",
+    "text": "alle må bruke begge hendene for alt.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c224",
+    "kind": "rule",
+    "title": "Tindarella",
+    "text": "om noen reiser seg må de fortelle om siste ligg, ved gjentatte brudd går man tilbake ett ligg",
+    "spice": 3,
+    "tags": []
+  },
+  {
+    "id": "c225",
+    "kind": "mission",
+    "text": "Du må stjele en deltakers telefon uten at de merker det",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c226",
+    "kind": "mission",
+    "text": "Smak på drikken til de tre personene som er nærmest deg",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c227",
+    "kind": "mission",
+    "text": "Hold uanmeldt tale om siste familieferien din",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c228",
+    "kind": "mission",
+    "text": "Hent melk i kjøleskapet og hell det i et glass. Du må ta det tilbake til der du satt og drikke det",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c229",
+    "kind": "mission",
+    "text": "Flett håret til nærmeste personen med flettbart hår",
+    "spice": 1,
+    "tags": ["physical"]
+  },
+  {
+    "id": "c230",
+    "kind": "mission",
+    "title": "Michael Scott",
+    "text": "si ‘Sa brura!’ eller ‘Thats what she said!’ etter at noen sier noe som kan tolkes annerledes. Dette må gjøres minst 10 ganger.",
+    "spice": 2,
+    "tags": []
+  },
+  {
+    "id": "c231",
+    "kind": "mission",
+    "title": "Ivrig",
+    "text": "tell ned, ‘3-2-1-KJØRR’, før hver straffeslurk. Må gjøres minst 10 ganger.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c232",
+    "kind": "mission",
+    "title": "Hæh",
+    "text": "hold en dyp samtale om polygami(flerkoneri) i minst 2 min.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c233",
+    "kind": "mission",
+    "title": "Irritert jævel",
+    "text": "start en samtale med ‘Fyfaen, evolusjon er no jævla tull, Gud skapte oss slik vi er!’ og beskytt påstanden i minst 3 min.",
+    "spice": 1,
+    "tags": []
+  },
+  {
+    "id": "c234",
+    "kind": "truth",
+    "text": "Hvem i {group} hadde overlevd lengst uten Soci?",
+    "spice": 1,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c235",
+    "kind": "truth",
+    "text": "Hvilken gjeng ville du byttet til for én kveld, og hvorfor?",
+    "spice": 1,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c236",
+    "kind": "truth",
+    "text": "Hva er det dummeste du har gjort på vakt?",
+    "spice": 2,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c237",
+    "kind": "truth",
+    "text": "Hvem i {otherGroup} er mest overvurdert?",
+    "spice": 2,
+    "tags": ["ksg", "roast"]
+  },
+  {
+    "id": "c238",
+    "kind": "dare",
+    "text": "Gjør din beste imitasjon av en i {group}. De andre gjetter hvem.",
+    "spice": 1,
+    "tags": ["ksg"]
+  },
+  {
+    "id": "c239",
+    "kind": "truth",
+    "text": "Hvem i KSG ville du minst ha jobbet en lang vakt med?",
+    "spice": 2,
+    "tags": ["ksg", "roast"]
+  }
+]

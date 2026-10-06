@@ -421,6 +421,8 @@ export interface ProductSales {
   quantity: number
   average: number
   data: { day: string; sum: number }[]
+  // Only in productOrdersByItemAndDateList
+  isVoucher?: boolean
 }
 
 export interface SalesStatisticsReturns {

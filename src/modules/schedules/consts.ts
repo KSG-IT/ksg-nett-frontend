@@ -38,6 +38,18 @@ export enum RoleValues {
   SOCIVAKT = 'SOCIVAKT',
 }
 
+// Most shifts have one shift leader and 3 to 4 workers. The schedule view
+// marks the leader roles, so a manager sees them at once.
+export const shiftLeaderRoles = [
+  RoleValues.BARSJEF,
+  RoleValues.SPRITBARSJEF,
+  RoleValues.HOVMESTER,
+  RoleValues.SOUSCHEF,
+  RoleValues.KAFEANSVARLIG,
+  RoleValues.ARRANGEMENTANSVARLIG,
+  RoleValues.UGLE,
+]
+
 export enum DayValues {
   MONDAY = 'MONDAY',
   TUESDAY = 'TUESDAY',
@@ -61,9 +73,9 @@ export const locationOptions = [
   { value: LocationValues.LYCHE_KJOKKEN, label: 'Lyche kjøkken' },
   { value: LocationValues.STROSSA, label: 'Strossa' },
   { value: LocationValues.SELSKAPSSIDEN, label: 'Selskapssiden' },
-  { value: LocationValues.SERVERING_C, label: 'Servering C' },
-  { value: LocationValues.SERVERING_D, label: 'Servering D' },
-  { value: LocationValues.SERVERING_K, label: 'Servering K' },
+  { value: LocationValues.SERVERING_C, label: 'Siri' },
+  { value: LocationValues.SERVERING_D, label: 'Vollan' },
+  { value: LocationValues.SERVERING_K, label: 'Skala' },
   { value: LocationValues.STORSALEN, label: 'Storsalen' },
   { value: LocationValues.KLUBBEN, label: 'Klubben' },
   { value: LocationValues.RUNDHALLEN, label: 'Rundhallen' },
@@ -84,3 +96,43 @@ export const v2RoleOptions = Object.values(RoleValues)
 export const v2LocationOptions = locationOptions.filter(
   option => option.value !== LocationValues.BRYGGERIET
 )
+
+// What no answer for a shift means for a roster row
+// (ksg-nett-backend/schedules/models.py, DefaultAvailability)
+export enum DefaultAvailabilityValues {
+  AVAILABLE = 'AVAILABLE',
+  OPT_IN = 'OPT_IN',
+}
+
+// What the roster sync does with a row
+// (ksg-nett-backend/schedules/utils/roster.py, RosterChangeKind)
+export enum RosterChangeKindValues {
+  ADD = 'ADD',
+  CHANGE = 'CHANGE',
+  REMOVE = 'REMOVE',
+  KEEP = 'KEEP',
+  CONFLICT = 'CONFLICT',
+}
+
+// Where a shift answer comes from (ksg-nett-backend/schedules/models.py,
+// ShiftInterest.Source)
+export enum InterestSourceValues {
+  MANUAL = 'MANUAL',
+  UNAVAILABILITY = 'UNAVAILABILITY',
+}
+
+export enum PlanningPeriodStatusValues {
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+  PUBLISHED = 'PUBLISHED',
+}
+
+// Why autofill left a slot empty (ksg-nett-backend/schedules/utils/autofill.py,
+// UnfilledReason)
+export enum UnfilledReasonValues {
+  NO_ROLE_ON_ROSTER = 'NO_ROLE_ON_ROSTER',
+  NO_CANDIDATES = 'NO_CANDIDATES',
+  BUSY_SAME_DAY = 'BUSY_SAME_DAY',
+  WEEKLY_LIMIT = 'WEEKLY_LIMIT',
+  SHIFT_CAP = 'SHIFT_CAP',
+}

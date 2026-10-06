@@ -3,11 +3,16 @@
 // everywhere else in the SPA.
 import type { UserThumbnailProps } from 'modules/users/types'
 import { LocationValues, RoleValues } from './consts'
+import type { SlotDraft } from './drafts'
 
 export interface DayShiftSlot {
   id: string
   role: RoleValues
   user: UserThumbnailProps['user'] | null
+  // Managers only, see drafts.ts. `user` is the person after the draft when
+  // applyDrafts has run, and `lockedUser` the person before it.
+  draft?: SlotDraft | null
+  lockedUser?: UserThumbnailProps['user'] | null
 }
 
 export interface DayShift {
@@ -16,6 +21,7 @@ export interface DayShift {
   location: LocationValues | null
   datetimeStart: string
   datetimeEnd: string
+  schedule: { id: string; name: string }
   slots: DayShiftSlot[]
 }
 
@@ -33,6 +39,12 @@ export function sortShifts<T extends DayShift>(shifts: T[]): T[] {
 
 export type DayPart = 'Dag' | 'Kveld' | 'Natt'
 
+export const DAY_PARTS: DayPart[] = ['Dag', 'Kveld', 'Natt']
+
+export function parseDayPart(value: string | null): DayPart | null {
+  return DAY_PARTS.find(part => part === value) ?? null
+}
+
 // By start hour: Dag 05–14, Kveld 15–18, Natt 19–04.
 export function dayPart(shift: DayShift): DayPart {
   const hour = new Date(shift.datetimeStart).getHours()
@@ -42,14 +54,11 @@ export function dayPart(shift: DayShift): DayPart {
 }
 
 export function groupByDayPart<T extends DayShift>(shifts: T[]) {
-  const parts: DayPart[] = ['Dag', 'Kveld', 'Natt']
   const sorted = sortShifts(shifts)
-  return parts
-    .map(part => ({
-      part,
-      shifts: sorted.filter(shift => dayPart(shift) === part),
-    }))
-    .filter(group => group.shifts.length > 0)
+  return DAY_PARTS.map(part => ({
+    part,
+    shifts: sorted.filter(shift => dayPart(shift) === part),
+  })).filter(group => group.shifts.length > 0)
 }
 
 export function slotCounts(shift: DayShift) {
@@ -64,6 +73,36 @@ export function slotCounts(shift: DayShift) {
 export function isMine(shift: DayShift, userId: string | undefined) {
   return (
     userId !== undefined && shift.slots.some(slot => slot.user?.id === userId)
+  )
+}
+
+// A shift that ends when the other starts does not overlap it.
+export function overlaps(a: DayShift, b: DayShift) {
+  return start(a) < end(b) && start(b) < end(a)
+}
+
+export interface ShiftFilter {
+  scheduleId: string | null
+  part: DayPart | null
+  // "Jobber samtidig som meg": only the shifts that overlap one of your
+  // shifts, your own shifts included. Without a shift of your own on the day,
+  // this filter does nothing.
+  withMe: boolean
+}
+
+export function filterShifts<T extends DayShift>(
+  shifts: T[],
+  filter: ShiftFilter,
+  userId: string | undefined
+): T[] {
+  const mine = shifts.filter(shift => isMine(shift, userId))
+  return shifts.filter(
+    shift =>
+      (filter.scheduleId === null || shift.schedule.id === filter.scheduleId) &&
+      (filter.part === null || dayPart(shift) === filter.part) &&
+      (!filter.withMe ||
+        mine.length === 0 ||
+        mine.some(myShift => overlaps(shift, myShift)))
   )
 }
 

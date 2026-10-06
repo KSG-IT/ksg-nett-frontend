@@ -55,7 +55,30 @@ describe('salesSummary', () => {
   it('sums all products and averages over periods with sales', () => {
     expect(salesSummary(products)).toEqual({
       total: 180,
+      revenue: 180,
       quantity: 5,
+      salesPeriods: 2,
+      averagePerSalesPeriod: 90,
+    })
+  })
+
+  it('leaves vouchers out of the revenue and the average', () => {
+    const bong = {
+      productId: 'bong',
+      name: 'Bong',
+      total: 100,
+      quantity: 1,
+      isVoucher: true,
+      data: [
+        { day: '2026-09-01', sum: 100 },
+        { day: '2026-09-02', sum: 0 },
+        { day: '2026-09-03', sum: 0 },
+      ],
+    }
+    expect(salesSummary([...products, bong])).toEqual({
+      total: 280,
+      revenue: 180,
+      quantity: 6,
       salesPeriods: 2,
       averagePerSalesPeriod: 90,
     })
@@ -71,6 +94,7 @@ describe('salesSummary', () => {
   it('gives 0 without sales', () => {
     expect(salesSummary([])).toEqual({
       total: 0,
+      revenue: 0,
       quantity: 0,
       salesPeriods: 0,
       averagePerSalesPeriod: 0,

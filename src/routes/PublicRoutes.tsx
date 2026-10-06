@@ -5,11 +5,12 @@ import {
   ForgotPassword,
   Login,
 } from 'modules/login/views'
-import { Route, Routes } from 'react-router-dom'
+import { Route } from 'react-router-dom'
+import { SentryRoutes } from './SentryRoutes'
 
 const PublicRoutes: React.FC = () => {
   return (
-    <Routes>
+    <SentryRoutes>
       <Route path="applicant-portal">
         <Route index element={<ReSendApplicantTokenForm />} />
         <Route path=":applicantToken" element={<ApplicantPortal />} />
@@ -18,7 +19,7 @@ const PublicRoutes: React.FC = () => {
       <Route path="reset-password" element={<ChangePasswordWithToken />} />
       <Route path="login" element={<Login />} />
       <Route path="*" element={<Login />} />
-    </Routes>
+    </SentryRoutes>
   )
 }
 

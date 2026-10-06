@@ -1,7 +1,15 @@
 import { Text, Tooltip } from '@mantine/core'
 import { format } from 'util/date-fns'
 import { DayShift, DayShiftSlot, slotCounts } from '../../allShifts'
-import { compactTime, GridDay, GridRow, GridWeek } from '../../scheduleGrid'
+import {
+  compactTime,
+  GridDay,
+  GridRow,
+  GridWeek,
+  isShiftLeader,
+  leadersFirst,
+} from '../../scheduleGrid'
+import { draftKind, draftLabel } from '../../drafts'
 import { locationColors, parseLocation, parseShiftRole } from '../../util'
 import classes from './ScheduleGrid.module.css'
 import { LocationValues } from '../../consts'
@@ -231,7 +239,7 @@ const ShiftBlock: React.FC<ShiftBlockProps> = ({ shift, ...selection }) => {
         <span className={classes.time}>{compactTime(shift)}</span>
       </button>
       <div className={classes.chips}>
-        {shift.slots.map(slot => (
+        {leadersFirst(shift.slots).map(slot => (
           <SlotChip key={slot.id} shift={shift} slot={slot} {...selection} />
         ))}
       </div>
@@ -252,9 +260,16 @@ export const SlotChip: React.FC<SlotChipProps> = ({
   const { active, highlightedUserId, onOpen } = selection
   const isActive = active?.slot.id === slot.id
   const role = parseShiftRole(slot.role)
-  const label = slot.user
-    ? `${slot.user.getFullWithNickName}, ${role}`
-    : `Ledig: ${role}`
+  const kind = draftKind(slot)
+  // A removal draft leaves the slot open in the plan, but the chip still
+  // shows the person who is locked in until the manager locks the draft.
+  const shown = kind === 'remove' ? slot.lockedUser : slot.user
+  const label = [
+    shown ? `${shown.getFullWithNickName}, ${role}` : `Ledig: ${role}`,
+    draftLabel(slot),
+  ]
+    .filter(Boolean)
+    .join('. ')
 
   function handleOpen() {
     onOpen({ shift, slot })
@@ -264,15 +279,20 @@ export const SlotChip: React.FC<SlotChipProps> = ({
     <button
       type="button"
       className={classes.chip}
-      data-open={!slot.user || undefined}
+      data-open={(!slot.user && !kind) || undefined}
+      data-draft={kind ?? undefined}
+      data-leader={isShiftLeader(slot.role) || undefined}
       data-active={isActive || undefined}
       data-highlighted={
         (slot.user && slot.user.id === highlightedUserId) || undefined
       }
+      style={
+        kind ? { borderColor: locationColors(shift.location).dot } : undefined
+      }
       aria-label={label}
       onClick={handleOpen}
     >
-      {slot.user ? slot.user.initials : '+'}
+      {shown ? shown.initials : '+'}
     </button>
   )
 

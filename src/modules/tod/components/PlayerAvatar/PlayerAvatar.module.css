@@ -1,0 +1,54 @@
+.avatar {
+  --size: 2.4em;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size);
+  height: var(--size);
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--player-color);
+  color: var(--tod-bg);
+  font-size: calc(var(--size) * 0.36);
+  font-weight: 800;
+}
+
+.avatar[data-size='sm'] {
+  --size: 1.8em;
+}
+
+.avatar[data-size='lg'] {
+  --size: 3.4em;
+}
+
+.avatar[data-size='xl'] {
+  --size: 4.4em;
+  box-shadow: 0 0 0 0.25em var(--tod-bg), 0 0 0 0.45em var(--player-color);
+}
+
+.avatar[data-color='0'] {
+  --player-color: var(--tod-truth);
+}
+
+.avatar[data-color='1'] {
+  --player-color: var(--tod-dare);
+}
+
+.avatar[data-color='2'] {
+  --player-color: var(--tod-virus);
+}
+
+.avatar[data-color='3'] {
+  --player-color: var(--tod-rule);
+}
+
+.avatar[data-color='4'] {
+  --player-color: var(--tod-mission);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

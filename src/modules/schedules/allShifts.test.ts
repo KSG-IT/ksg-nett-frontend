@@ -1,7 +1,11 @@
 import {
   DayShift,
+  filterShifts,
   groupByDayPart,
   isMine,
+  overlaps,
+  parseDayPart,
+  ShiftFilter,
   laneLayout,
   slotCounts,
   sortShifts,
@@ -25,6 +29,7 @@ function shift(
     location,
     datetimeStart: start,
     datetimeEnd: end,
+    schedule: { id: 'bar', name: 'Bargjengen' },
     slots: userIds.map((userId, index) => ({
       id: `${id}-${index}`,
       role: RoleValues.BARISTA,
@@ -100,6 +105,74 @@ describe('isMine', () => {
   it('is true when the user has a slot on the shift', () => {
     expect(isMine(shift('x', '', '', null, ['1', '7']), '7')).toBe(true)
     expect(isMine(shift('x', '', '', null, ['1', null]), '7')).toBe(false)
+  })
+})
+
+describe('parseDayPart', () => {
+  it('reads a day part from the URL and ignores other values', () => {
+    expect(parseDayPart('Kveld')).toBe('Kveld')
+    expect(parseDayPart('kveld')).toBeNull()
+    expect(parseDayPart(null)).toBeNull()
+  })
+})
+
+describe('overlaps', () => {
+  it('is true when the shifts share time', () => {
+    expect(overlaps(morning, kitchen)).toBe(true)
+    expect(overlaps(bar, evening)).toBe(true)
+  })
+
+  it('is false when one shift ends as the other starts', () => {
+    expect(overlaps(morning, evening)).toBe(false)
+    expect(overlaps(evening, morning)).toBe(false)
+  })
+})
+
+describe('filterShifts', () => {
+  const noFilter: ShiftFilter = { scheduleId: null, part: null, withMe: false }
+  const lyche = { ...kitchen, schedule: { id: 'lyche', name: 'Lyche' } }
+  const myEvening = shift(
+    'e',
+    '2026-10-09T17:00:00',
+    '2026-10-09T22:00:00',
+    LocationValues.EDGAR,
+    ['7']
+  )
+  const day = [morning, lyche, evening, bar, myEvening]
+
+  it('keeps all shifts without a filter', () => {
+    expect(filterShifts(day, noFilter, '7')).toEqual(day)
+  })
+
+  it('keeps the shifts of one schedule', () => {
+    const filter = { ...noFilter, scheduleId: 'lyche' }
+    expect(filterShifts(day, filter, '7')).toEqual([lyche])
+  })
+
+  it('keeps the shifts of one day part', () => {
+    const filter: ShiftFilter = { ...noFilter, part: 'Dag' }
+    expect(filterShifts(day, filter, '7')).toEqual([morning])
+  })
+
+  it('keeps your shifts and the shifts that overlap them', () => {
+    const filter = { ...noFilter, withMe: true }
+    expect(filterShifts(day, filter, '7')).toEqual([
+      lyche,
+      evening,
+      bar,
+      myEvening,
+    ])
+  })
+
+  it('ignores "samtidig som meg" when you have no shift on the day', () => {
+    const filter = { ...noFilter, withMe: true }
+    expect(filterShifts(day, filter, '8')).toEqual(day)
+    expect(filterShifts(day, filter, undefined)).toEqual(day)
+  })
+
+  it('combines the filters', () => {
+    const filter = { scheduleId: 'bar', part: null, withMe: true }
+    expect(filterShifts(day, filter, '7')).toEqual([evening, bar, myEvening])
   })
 })
 

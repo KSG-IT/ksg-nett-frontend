@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '2026-10-3-2'
+const NOTIFICATION_KEY = '2026-10-6-1'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -32,10 +32,50 @@ export const WhatsNewNotification: React.FC = () => {
         👋 Hva er nytt?
       </Title>
       <Text size="sm" c="gray" mt={0}>
-        Siste oppdatering: 2026-10-03
+        Siste oppdatering: 2026-10-06
       </Text>
       <Divider mb="md" />
-      <Title order={4}>Nytt i oktober 2026</Title>
+      <Title order={4}>Nytt 6. oktober 2026</Title>
+      <Text>
+        <b>Vaktplanlegging (beta):</b> Roster og autofyll er åpnet for
+        betatesting, og hjelper til med å planlegge vaktene. Vaktplanansvarlige
+        setter opp rosteren, åpner en planleggingsperiode med frist og lar
+        autofyll lage et utkast som kan justeres før det publiseres. Si fra via
+        «Gi tilbakemelding» på kontrollpanelet, eller send en e-post til
+        ksg-it@samfundet.no, om noe ikke fungerer eller bør bli bedre.
+      </Text>
+      <Text>
+        <b>Min tilgjengelighet:</b> Er du på rosteren til en vaktplan, svarer du
+        for hver vakt i perioden (vil gjerne, kan eller kan ikke), med et
+        valgfritt notat. Svarene lagres av seg selv frem til fristen. Du får en
+        melding når det er noe å svare på.
+      </Text>
+      <Text>
+        <b>Utkast i vaktplanen:</b> Endringer i den nye vaktplanen lagres som
+        utkast. De blir først synlige for medlemmene når en vaktplanansvarlig
+        låser dem inn. Medlemmer med varsling på får én e-post med de nye
+        vaktene.
+      </Text>
+      <Text>
+        <b>Vakter:</b> Filtrer på gjeng og på dag, kveld eller natt, og se hvem
+        som jobber samtidig som deg. Servering C, D og K heter nå Siri, Vollan
+        og Skala.
+      </Text>
+      <Text>
+        <b>Allergier:</b> Allergioversikten kan vise bare de som jobber i
+        suppetiden (14–16).
+      </Text>
+      <Text>
+        <b>Salgsstatistikk:</b> Viser omsetning uten bong, og totalt solgt med
+        bong.
+      </Text>
+      <Text>
+        <b>Mine innstillinger:</b> Nytt utseende, og allergiene velges i en
+        liste med søk.
+      </Text>
+      <Text>En drikkelek har funnet veien inn på KSG-nett.</Text>
+      <Divider mb="md" />
+      <Title order={4}>Nytt tidligere i oktober 2026</Title>
       <Text>
         <b>Oppgradering:</b> KSG-nett har fått en større oppgradering, og mange
         sider har fått nytt utseende. Om noe ser rart ut eller ikke fungerer,

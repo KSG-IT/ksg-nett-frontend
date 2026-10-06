@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client'
+import { ApolloCache, useMutation } from '@apollo/client'
 import { DeleteMutationReturns, DeleteMutationVariables } from 'types/graphql'
 import {
   ADD_SLOTS_TO_SHIFT_MUTATION,
@@ -19,8 +19,28 @@ import {
   PATCH_SHIFT_MUTATION,
   PATCH_SHIFT_SLOT_TEMPLATE_MUTATION,
   REMOVE_USER_FROM_SHIFT_SLOT_MUTATION,
+  ADD_SCHEDULE_ROSTER_ENTRY_MUTATION,
+  CREATE_SCHEDULE_ROSTER_GROUPING_MUTATION,
+  DELETE_SCHEDULE_ROSTER_GROUPING_MUTATION,
+  PATCH_SCHEDULE_ROSTER_GROUPING_MUTATION,
+  REMOVE_SCHEDULE_ROSTER_ENTRY_MUTATION,
+  SYNC_SCHEDULE_ROSTER_MUTATION,
+  UPDATE_SCHEDULE_ROSTER_ENTRY_MUTATION,
+  PUBLISH_PLANNING_PERIOD_MUTATION,
+  REVERT_AUTOFILL_RUN_MUTATION,
+  RUN_AUTOFILL_MUTATION,
 } from './mutations'
 import {
+  SCHEDULE_PLANNING_QUERY,
+  ROSTER_SYNC_PREVIEW_QUERY,
+  SCHEDULE_ROSTER_QUERY,
+  SCHEDULE_ROSTER_RULES_QUERY,
+} from './queries'
+import {
+  PublishPlanningPeriodReturns,
+  RevertAutofillRunReturns,
+  RunAutofillReturns,
+  RunAutofillVariables,
   AddSlotsToShiftReturns,
   AddSlotsToShiftVariables,
   AddUserToShiftSlotReturns,
@@ -47,6 +67,18 @@ import {
   PatchShiftVariables,
   RemoveUserFromShiftSlotReturns,
   RemoveUserFromShiftSlotVariables,
+  AddScheduleRosterEntryReturns,
+  AddScheduleRosterEntryVariables,
+  CreateScheduleRosterGroupingReturns,
+  CreateScheduleRosterGroupingVariables,
+  DeleteScheduleRosterGroupingReturns,
+  PatchScheduleRosterGroupingReturns,
+  PatchScheduleRosterGroupingVariables,
+  RemoveScheduleRosterEntryReturns,
+  SyncScheduleRosterReturns,
+  SyncScheduleRosterVariables,
+  UpdateScheduleRosterEntryReturns,
+  UpdateScheduleRosterEntryVariables,
 } from './types.graphql'
 
 export function useScheduleTemplateMutations() {
@@ -207,5 +239,119 @@ export function useShiftMutations() {
     generateShiftsFromTemplateLoading,
     addSlotsToShift,
     addSlotsToShiftLoading,
+  }
+}
+
+// A change to a rule or a row changes the sync preview. Apollo refetches only
+// the queries on screen; the roster pages load with cache-and-network.
+const ROSTER_RULE_REFETCH = [
+  SCHEDULE_ROSTER_RULES_QUERY,
+  ROSTER_SYNC_PREVIEW_QUERY,
+]
+const ROSTER_ROW_REFETCH = [SCHEDULE_ROSTER_QUERY, ROSTER_SYNC_PREVIEW_QUERY]
+
+export function useScheduleRosterMutations() {
+  const [createGrouping, { loading: createGroupingLoading }] = useMutation<
+    CreateScheduleRosterGroupingReturns,
+    CreateScheduleRosterGroupingVariables
+  >(CREATE_SCHEDULE_ROSTER_GROUPING_MUTATION, {
+    refetchQueries: ROSTER_RULE_REFETCH,
+  })
+
+  const [patchGrouping, { loading: patchGroupingLoading }] = useMutation<
+    PatchScheduleRosterGroupingReturns,
+    PatchScheduleRosterGroupingVariables
+  >(PATCH_SCHEDULE_ROSTER_GROUPING_MUTATION, {
+    refetchQueries: [ROSTER_SYNC_PREVIEW_QUERY],
+  })
+
+  const [deleteGrouping, { loading: deleteGroupingLoading }] = useMutation<
+    DeleteScheduleRosterGroupingReturns,
+    DeleteMutationVariables
+  >(DELETE_SCHEDULE_ROSTER_GROUPING_MUTATION, {
+    refetchQueries: ROSTER_RULE_REFETCH,
+  })
+
+  const [syncRoster, { loading: syncRosterLoading }] = useMutation<
+    SyncScheduleRosterReturns,
+    SyncScheduleRosterVariables
+  >(SYNC_SCHEDULE_ROSTER_MUTATION, { refetchQueries: ROSTER_ROW_REFETCH })
+
+  const [addEntry, { loading: addEntryLoading }] = useMutation<
+    AddScheduleRosterEntryReturns,
+    AddScheduleRosterEntryVariables
+  >(ADD_SCHEDULE_ROSTER_ENTRY_MUTATION, { refetchQueries: ROSTER_ROW_REFETCH })
+
+  const [updateEntry, { loading: updateEntryLoading }] = useMutation<
+    UpdateScheduleRosterEntryReturns,
+    UpdateScheduleRosterEntryVariables
+  >(UPDATE_SCHEDULE_ROSTER_ENTRY_MUTATION, {
+    refetchQueries: [ROSTER_SYNC_PREVIEW_QUERY],
+  })
+
+  const [removeEntry, { loading: removeEntryLoading }] = useMutation<
+    RemoveScheduleRosterEntryReturns,
+    DeleteMutationVariables
+  >(REMOVE_SCHEDULE_ROSTER_ENTRY_MUTATION, {
+    refetchQueries: ROSTER_ROW_REFETCH,
+  })
+
+  return {
+    createGrouping,
+    createGroupingLoading,
+    patchGrouping,
+    patchGroupingLoading,
+    deleteGrouping,
+    deleteGroupingLoading,
+    syncRoster,
+    syncRosterLoading,
+    addEntry,
+    addEntryLoading,
+    updateEntry,
+    updateEntryLoading,
+    removeEntry,
+    removeEntryLoading,
+  }
+}
+
+// The v2 grid keeps the slots and drafts of a schedule in the cache. Autofill,
+// revert and publish change them on the server, so the grid loads them again.
+function evictSchedulePlan(cache: ApolloCache<unknown>, scheduleId: string) {
+  const id = cache.identify({ __typename: 'ScheduleNode', id: scheduleId })
+  cache.evict({ id, fieldName: 'shiftsFromRange' })
+  cache.evict({ id, fieldName: 'draftCount' })
+  cache.gc()
+}
+
+export function usePlanningPeriodPlanMutations(scheduleId: string) {
+  const options = {
+    refetchQueries: [SCHEDULE_PLANNING_QUERY],
+    update: (cache: ApolloCache<unknown>) =>
+      evictSchedulePlan(cache, scheduleId),
+  }
+
+  const [runAutofill, { loading: runAutofillLoading }] = useMutation<
+    RunAutofillReturns,
+    RunAutofillVariables
+  >(RUN_AUTOFILL_MUTATION, options)
+
+  const [revertAutofillRun, { loading: revertAutofillRunLoading }] =
+    useMutation<RevertAutofillRunReturns, { id: string }>(
+      REVERT_AUTOFILL_RUN_MUTATION,
+      options
+    )
+
+  const [publishPeriod, { loading: publishPeriodLoading }] = useMutation<
+    PublishPlanningPeriodReturns,
+    { id: string }
+  >(PUBLISH_PLANNING_PERIOD_MUTATION, options)
+
+  return {
+    runAutofill,
+    runAutofillLoading,
+    revertAutofillRun,
+    revertAutofillRunLoading,
+    publishPeriod,
+    publishPeriodLoading,
   }
 }

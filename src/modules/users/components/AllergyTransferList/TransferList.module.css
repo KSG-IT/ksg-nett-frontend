@@ -1,0 +1,39 @@
+.box {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--mantine-color-gray-3);
+  border-radius: var(--mantine-radius-sm);
+  overflow: hidden;
+}
+
+.header {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  background: var(--mantine-color-gray-0);
+  border-bottom: 1px solid var(--mantine-color-gray-3);
+}
+
+.search {
+  padding: 0 var(--mantine-spacing-xs);
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+}
+
+/* .box raises the specificity above the padding: 0 of UnstyledButton. */
+.box .row {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  width: 100%;
+  padding: 6px var(--mantine-spacing-md);
+}
+
+.box .row:hover {
+  background: var(--mantine-color-gray-0);
+}
+
+.box .row[data-marked] {
+  background: var(--mantine-color-samfundet-red-0);
+}
+
+.box .row :global(.mantine-Checkbox-input) {
+  cursor: pointer;
+}

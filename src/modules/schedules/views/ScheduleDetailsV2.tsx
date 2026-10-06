@@ -23,7 +23,9 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { useIsMobile } from 'util/hooks'
 import { slotCounts } from '../allShifts'
 import { CreateShiftSheet } from '../components/ScheduleV2/CreateShiftPopover'
+import { ScheduleTabs } from '../components/ScheduleTabs'
 import { LoadPanel } from '../components/ScheduleV2/LoadPanel'
+import { DraftActions } from '../components/ScheduleV2/DraftActions'
 import { ScheduleDayList } from '../components/ScheduleV2/ScheduleDayList'
 import { SHEET_PROPS } from '../components/ScheduleV2/sheetProps'
 import { ScheduleGrid } from '../components/ScheduleV2/ScheduleGrid'
@@ -33,6 +35,7 @@ import {
   SlotTarget,
 } from '../components/ScheduleV2/SlotPicker'
 import { LocationValues, ScheduleDisplayModeValues } from '../consts'
+import { applyDrafts, draftCount, draftRange } from '../drafts'
 import { SCHEDULE_V2_QUERY } from '../queries'
 import {
   mondayOf,
@@ -91,9 +94,13 @@ export const ScheduleDetailsV2: React.FC = () => {
   // A phone is for quick fixes, so it starts with one week.
   const weeks = Number(weeksParam ?? (byLocation || isMobile ? 1 : 3))
   const lastMonday = addDays(monday, (weeks - 1) * 7)
-  const shifts = schedule.shiftsFromRange.filter(
-    shift => new Date(shift.datetimeStart) < addDays(lastMonday, 7)
+  // The plan as it looks after a lock. The grid and the counts follow it.
+  const shifts = applyDrafts(
+    schedule.shiftsFromRange.filter(
+      shift => new Date(shift.datetimeStart) < addDays(lastMonday, 7)
+    )
   )
+  const drafts = draftCount(shifts)
   const grid = scheduleGrid(shifts, {
     monday,
     weeks,
@@ -210,6 +217,7 @@ export const ScheduleDetailsV2: React.FC = () => {
           </Button>
         </Group>
       </Group>
+      <ScheduleTabs scheduleId={schedule.id} canManage={schedule.canManage} />
       <Group justify="space-between" gap="xs" wrap="nowrap">
         <Text size="sm" c="dimmed">
           {period.charAt(0).toUpperCase() + period.slice(1)} · {shifts.length}{' '}
@@ -218,6 +226,12 @@ export const ScheduleDetailsV2: React.FC = () => {
             <Text span inherit fw={700} c="orange.8">
               {' '}
               · {total - filled} ledige
+            </Text>
+          )}
+          {drafts > 0 && (
+            <Text span inherit fw={700} c="blue.8">
+              {' '}
+              · {drafts} {drafts === 1 ? 'endring' : 'endringer'} i utkast
             </Text>
           )}
         </Text>
@@ -234,6 +248,15 @@ export const ScheduleDetailsV2: React.FC = () => {
           </Button>
         )}
       </Group>
+      {(schedule.draftCount ?? 0) > 0 && (
+        <DraftActions
+          scheduleId={schedule.id}
+          range={draftRange(monday, weeks)}
+          period={period}
+          visible={drafts}
+          total={schedule.draftCount ?? 0}
+        />
+      )}
       {isMobile ? (
         <>
           <ScheduleDayList
@@ -268,7 +291,10 @@ export const ScheduleDetailsV2: React.FC = () => {
         </div>
       )}
       <ShiftPanel
-        shift={shifts.find(shift => shift.id === openShiftId) ?? null}
+        shift={
+          schedule.shiftsFromRange.find(shift => shift.id === openShiftId) ??
+          null
+        }
         defaultRole={schedule.defaultRole}
         rolesInUse={rolesInUse(schedule.shiftsFromRange)}
         fullScreen={isMobile}

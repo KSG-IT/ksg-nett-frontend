@@ -8,6 +8,10 @@ export const DAY_SHIFT_FIELDS = gql`
     location
     datetimeStart
     datetimeEnd
+    schedule {
+      id
+      name
+    }
     slots {
       id
       role
@@ -79,6 +83,11 @@ export const SCHEDULES_OVERVIEW_QUERY = gql`
     allSchedules {
       id
       name
+      canManage
+      internalGroup {
+        id
+        name
+      }
       plannedUntil
       upcomingSlots {
         filled
@@ -89,17 +98,51 @@ export const SCHEDULES_OVERVIEW_QUERY = gql`
   }
 `
 
+// Managers get the draft of a slot. For other users it is null.
+export const SLOT_DRAFT_FIELDS = gql`
+  fragment SlotDraftFields on ShiftSlotNode {
+    draft {
+      id
+      changedAt
+      user {
+        id
+        initials
+        firstName
+        getFullWithNickName
+        getCleanFullName
+        profileImage
+      }
+      changedBy {
+        id
+        getCleanFullName
+      }
+      # Null for a manual draft
+      autofillRun {
+        id
+      }
+    }
+  }
+`
+
 export const SCHEDULE_V2_QUERY = gql`
   ${DAY_SHIFT_FIELDS}
+  ${SLOT_DRAFT_FIELDS}
   query ScheduleV2($id: ID!, $shiftsFrom: Date!, $numberOfWeeks: Int!) {
     schedule(id: $id) {
       id
       name
+      canManage
       displayMode
       defaultRole
       recentLocations
+      # Null for a user who does not manage the schedule
+      draftCount
       shiftsFromRange(shiftsFrom: $shiftsFrom, numberOfWeeks: $numberOfWeeks) {
         ...DayShiftFields
+        slots {
+          id
+          ...SlotDraftFields
+        }
       }
     }
   }
@@ -111,6 +154,59 @@ export const SCHEDULE_QUERY = gql`
       id
       name
       displayMode
+    }
+  }
+`
+
+export const MY_OPEN_PLANNING_PERIODS_QUERY = gql`
+  query MyOpenPlanningPeriods {
+    myOpenPlanningPeriods {
+      id
+      dateFrom
+      dateTo
+      deadline
+      status
+      myDefaultAvailability
+      schedule {
+        id
+        name
+      }
+      shifts {
+        id
+        name
+        location
+        datetimeStart
+        datetimeEnd
+        myInterest {
+          interestType
+          note
+          source
+        }
+      }
+    }
+  }
+`
+
+export const MY_OPEN_PLANNING_PERIODS_SUMMARY_QUERY = gql`
+  query MyOpenPlanningPeriodsSummary {
+    myOpenPlanningPeriods {
+      id
+      dateFrom
+      dateTo
+      deadline
+      status
+      myDefaultAvailability
+      schedule {
+        id
+        name
+      }
+      shifts {
+        id
+        myInterest {
+          interestType
+          source
+        }
+      }
     }
   }
 `
@@ -234,6 +330,193 @@ export const ALL_SHIFTS = gql`
   query AllShifts($date: Date!) {
     allShifts(date: $date) {
       ...DayShiftFields
+    }
+  }
+`
+
+export const TEMPLATE_GENERATION_PREVIEW_QUERY = gql`
+  query TemplateGenerationPreview(
+    $scheduleTemplateId: ID!
+    $startDate: Date!
+    $numberOfWeeks: Int!
+  ) {
+    templateGenerationPreview(
+      scheduleTemplateId: $scheduleTemplateId
+      startDate: $startDate
+      numberOfWeeks: $numberOfWeeks
+    ) {
+      firstDay
+      lastDay
+      shiftsToCreate
+      shiftsToDelete
+      filledSlotsToDelete
+      answersToDelete
+      draftsToDelete
+      needsConfirmation
+    }
+  }
+`
+
+// === PLANNING ===
+
+export const SCHEDULE_PLANNING_QUERY = gql`
+  query SchedulePlanning($id: ID!) {
+    schedule(id: $id) {
+      id
+      name
+      canManage
+      planningPeriods {
+        id
+        dateFrom
+        dateTo
+        deadline
+        status
+        publishedAt
+        reminderSentAt
+        responseStats {
+          rosterCount
+          optInCount
+          usersWithAnswers
+          optInWithInterest
+          interested
+          available
+          unavailable
+          unavailablePrefilled
+          withNote
+        }
+        slotCoverage {
+          shift {
+            id
+            name
+            datetimeStart
+          }
+          role
+          candidateBreakdown {
+            membershipType
+            candidateCount
+            interestedCount
+          }
+          slotCount
+          openSlotCount
+          candidateCount
+          interestedCount
+          unavailableCount
+          unavailableWithNoteCount
+        }
+        # Newest first. A new run replaces the drafts of the earlier runs.
+        autofillRuns {
+          id
+          createdAt
+          createdBy {
+            id
+            getCleanFullName
+          }
+          draftCount
+          unfilled {
+            reason
+            candidateCount
+            shiftSlot {
+              id
+              role
+              user {
+                id
+              }
+              draft {
+                id
+              }
+              shift {
+                id
+                name
+                datetimeStart
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+// === ROSTER ===
+
+export const SCHEDULE_ROSTER_QUERY = gql`
+  query ScheduleRoster($id: ID!) {
+    schedule(id: $id) {
+      id
+      name
+      canManage
+      roster {
+        id
+        user {
+          id
+          fullName
+          initials
+          profileImage
+        }
+        autofillAs
+        defaultAvailability
+        shiftCap
+        manuallyEdited
+        addedManually
+        countFrom
+        membershipType
+        shiftsDone
+        shiftsPlanned
+        lastShift
+      }
+    }
+  }
+`
+
+export const SCHEDULE_ROSTER_RULES_QUERY = gql`
+  query ScheduleRosterRules($id: ID!) {
+    schedule(id: $id) {
+      id
+      name
+      canManage
+      internalGroup {
+        id
+        name
+        positions {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
+      }
+      rosterGroupings {
+        id
+        internalGroupPosition {
+          id
+          name
+        }
+        positionType
+        role
+        defaultAvailability
+        shiftCap
+      }
+    }
+  }
+`
+
+// Only for managers: the backend refuses rosterSyncPreview for other users
+export const ROSTER_SYNC_PREVIEW_QUERY = gql`
+  query RosterSyncPreview($id: ID!) {
+    schedule(id: $id) {
+      id
+      rosterSyncPreview {
+        kind
+        user {
+          id
+          fullName
+        }
+        autofillAs
+        defaultAvailability
+        shiftCap
+        message
+      }
     }
   }
 `
