@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@apollo/client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   ActionIcon,
+  Alert,
   Badge,
   Button,
   Card,
@@ -15,7 +16,13 @@ import {
 import { DatePickerInput, DateTimePicker } from '@mantine/dates'
 import { modals } from '@mantine/modals'
 import { showNotification } from '@mantine/notifications'
-import { IconEdit, IconMail, IconPlus, IconTrash } from '@tabler/icons-react'
+import {
+  IconEdit,
+  IconInfoCircle,
+  IconMail,
+  IconPlus,
+  IconTrash,
+} from '@tabler/icons-react'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
@@ -119,6 +126,13 @@ const SchedulePlanning: React.FC = () => {
   return (
     <Stack gap="md" maw={1100}>
       <SchedulePageHeader schedule={schedule} page="Planlegging" />
+      <Alert
+        color="yellow"
+        icon={<IconInfoCircle size={18} />}
+        title="Under utvikling"
+      >
+        Denne funksjonen er under utvikling og er ikke klar til bruk ennå.
+      </Alert>
       <Group justify="space-between" align="center">
         <Text c="dimmed" size="sm">
           Åpne en periode før medlemmene skal oppgi tilgjengelighet.
