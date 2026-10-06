@@ -73,6 +73,7 @@ import { PERMISSIONS } from 'util/permissions'
 import PublicRoutes from './PublicRoutes'
 import { RestrictedRoute } from './RestrictedRoute'
 import { KnightHoodDashboard } from 'modules/knighthood/KnightHoodDashBoard'
+import { TruthOrDrinkRoute } from 'modules/tod/views'
 
 const MainContent = React.lazy(() => import('routes/MainContent'))
 
@@ -182,6 +183,9 @@ export const AppRoutes: React.FC = () => {
 
   return (
     <SentryRoutes>
+      {/* ==== TRUTH OR DRINK: full screen, outside the main layout ==== */}
+      <Route path="tod" element={<TruthOrDrinkRoute />} />
+
       <Route path="/" element={<MainContent />}>
         <Route index element={<Navigate to="/dashboard" replace />} />
 

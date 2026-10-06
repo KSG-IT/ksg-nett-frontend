@@ -1,0 +1,13 @@
+.root {
+  composes: palette from '../palette.module.css';
+
+  position: fixed;
+  inset: 0;
+  overflow: auto;
+  background: radial-gradient(90% 70% at 15% 0%, #3a1418 0%, var(--tod-bg) 55%);
+  color: var(--tod-text);
+  /* One base size that grows with the screen. All parts use em. */
+  font-size: clamp(14px, 0.9vw + 0.6vh, 30px);
+  line-height: 1.4;
+  color-scheme: dark;
+}

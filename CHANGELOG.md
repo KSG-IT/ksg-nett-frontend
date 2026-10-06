@@ -5,6 +5,7 @@
 ### Added
 
 - Vakter: filter by gjeng, by Dag/Kveld/Natt, and "Jobber samtidig som meg" for the shifts at the same time as yours
+- Truth or Drink: a hidden party game at `/tod`, for a laptop on a TV or a phone in landscape. A search for "tod" in the header shows it. Needs the `truth_or_drink` feature flag. The game state stays in the browser
 
 ### Changed
 
