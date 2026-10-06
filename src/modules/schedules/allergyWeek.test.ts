@@ -1,4 +1,11 @@
-import { allergyView, AllergyWeek } from './allergyWeek'
+import {
+  allergyTimeVariables,
+  allergyView,
+  AllergySelection,
+  AllergyWeek,
+  selectAllergyDay,
+  toggleSoupTime,
+} from './allergyWeek'
 
 const week: AllergyWeek = {
   allergies: ['Gluten', 'Laktose'],
@@ -50,6 +57,46 @@ describe('allergyView', () => {
       users: [],
       counts: [],
       peopleAtWork: 0,
+    })
+  })
+})
+
+describe('allergy selection', () => {
+  it('keeps the selected day when suppetime is toggled or data refetches', () => {
+    const selected: AllergySelection = selectAllergyDay(
+      { day: null, soupTime: false },
+      '2026-09-09'
+    )
+    const filtered = toggleSoupTime(selected, true)
+
+    expect(filtered).toEqual({ day: '2026-09-09', soupTime: true })
+    expect(allergyTimeVariables(filtered)).toEqual({
+      timeFrom: '14:00:00',
+      timeTo: '16:00:00',
+    })
+    // A query response/refetch does not derive selection from returned days.
+    expect(toggleSoupTime(filtered, false)).toEqual({
+      day: '2026-09-09',
+      soupTime: false,
+    })
+  })
+
+  it('turns suppetime off for Hele uka and keeps it off on later day selection', () => {
+    const filtered = { day: '2026-09-09', soupTime: true }
+    const week = selectAllergyDay(filtered, 'week')
+
+    expect(week).toEqual({ day: null, soupTime: false })
+    expect(selectAllergyDay(week, '2026-09-13')).toEqual({
+      day: '2026-09-13',
+      soupTime: false,
+    })
+    expect(allergyTimeVariables(week)).toEqual({})
+  })
+
+  it('cannot enable suppetime without a specific day', () => {
+    expect(toggleSoupTime({ day: null, soupTime: false }, true)).toEqual({
+      day: null,
+      soupTime: false,
     })
   })
 })

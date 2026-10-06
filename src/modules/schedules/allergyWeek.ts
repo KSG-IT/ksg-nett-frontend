@@ -22,6 +22,40 @@ export interface AllergyView {
   peopleAtWork: number
 }
 
+export const SOUP_TIME = { timeFrom: '14:00:00', timeTo: '16:00:00' }
+
+export interface AllergySelection {
+  day: string | null
+  soupTime: boolean
+}
+
+export function selectAllergyDay(
+  selection: AllergySelection,
+  value: string
+): AllergySelection {
+  return value === 'week'
+    ? { day: null, soupTime: false }
+    : { ...selection, day: value }
+}
+
+export function toggleSoupTime(
+  selection: AllergySelection,
+  enabled: boolean
+): AllergySelection {
+  return selection.day === null
+    ? { ...selection, soupTime: false }
+    : { ...selection, soupTime: enabled }
+}
+
+export function allergyTimeVariables(selection: AllergySelection): {
+  timeFrom?: string
+  timeTo?: string
+} {
+  return selection.day !== null && selection.soupTime
+    ? SOUP_TIME
+    : {}
+}
+
 // day: a YYYY-MM-DD date, or null for the whole week. For one day, only the
 // allergies of the people at work that day are columns.
 export function allergyView(
