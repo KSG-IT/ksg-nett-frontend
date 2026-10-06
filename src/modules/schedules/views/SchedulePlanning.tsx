@@ -37,6 +37,7 @@ import {
   planningPeriodFormSchema,
   planningPeriodLabel,
   planningStatusLabel,
+  schedulePlanningQueryOptions,
   spareCandidates,
   toGraphqlDateTime,
 } from '../planning'
@@ -69,7 +70,10 @@ const SchedulePlanning: React.FC = () => {
   const { data, loading, error } = useQuery<
     SchedulePlanningReturns,
     ScheduleIdVariables
-  >(SCHEDULE_PLANNING_QUERY, { variables: { id } })
+  >(SCHEDULE_PLANNING_QUERY, {
+    variables: { id },
+    ...schedulePlanningQueryOptions,
+  })
   const [remove] = useMutation<DeletePlanningPeriodReturns, { id: string }>(
     DELETE_PLANNING_PERIOD_MUTATION,
     { refetchQueries: [SCHEDULE_PLANNING_QUERY] }
