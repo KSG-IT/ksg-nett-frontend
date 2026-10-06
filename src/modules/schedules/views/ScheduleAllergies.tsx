@@ -4,6 +4,7 @@ import {
   Group,
   SegmentedControl,
   Stack,
+  Switch,
   Table,
   Text,
   Title,
@@ -38,8 +39,16 @@ const breadcrumbItems = [
 ]
 
 const SCHEDULE_ALLERGIES_V2_QUERY = gql`
-  query ScheduleAllergiesV2($shiftsFrom: Date!) {
-    scheduleAllergiesV2(shiftsFrom: $shiftsFrom) {
+  query ScheduleAllergiesV2(
+    $shiftsFrom: Date!
+    $timeFrom: Time
+    $timeTo: Time
+  ) {
+    scheduleAllergiesV2(
+      shiftsFrom: $shiftsFrom
+      timeFrom: $timeFrom
+      timeTo: $timeTo
+    ) {
       allergies
       users {
         userId
@@ -63,18 +72,24 @@ interface ScheduleAllergiesV2Returns {
 
 interface ScheduleAllergiesV2Variables {
   shiftsFrom: string
+  timeFrom?: string
+  timeTo?: string
 }
 
 const ScheduleAllergies: React.FC = () => {
   const [shiftsFrom, setShiftsFrom] = useState<Date>(new Date())
   // null: the whole week
   const [day, setDay] = useState<string | null>(null)
+  const [soupTime, setSoupTime] = useState(false)
 
   const { data, error, loading, refetch } = useQuery<
     ScheduleAllergiesV2Returns,
     ScheduleAllergiesV2Variables
   >(SCHEDULE_ALLERGIES_V2_QUERY, {
-    variables: { shiftsFrom: format(shiftsFrom, 'yyyy-MM-dd') },
+    variables: {
+      shiftsFrom: format(shiftsFrom, 'yyyy-MM-dd'),
+      ...(soupTime ? { timeFrom: '14:00:00', timeTo: '16:00:00' } : {}),
+    },
   })
 
   function changeWeek(weeks: number) {
@@ -123,13 +138,23 @@ const ScheduleAllergies: React.FC = () => {
           previousWeekCallback={() => changeWeek(-1)}
           nextWeekCallback={() => changeWeek(1)}
         />
-        {week && week.days.length > 0 && (
-          <SegmentedControl
-            data={dayOptions}
-            value={day ?? 'week'}
-            onChange={value => setDay(value === 'week' ? null : value)}
+        <Group>
+          <Switch
+            label="suppetime"
+            checked={soupTime}
+            onChange={event => {
+              setSoupTime(event.currentTarget.checked)
+              setDay(null)
+            }}
           />
-        )}
+          {week && week.days.length > 0 && (
+            <SegmentedControl
+              data={dayOptions}
+              value={day ?? 'week'}
+              onChange={value => setDay(value === 'week' ? null : value)}
+            />
+          )}
+        </Group>
       </Group>
 
       {error ? (
