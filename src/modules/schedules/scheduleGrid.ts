@@ -9,7 +9,7 @@ import {
   startOfISOWeek,
 } from 'date-fns'
 import { DayShift, DayShiftSlot, sortShifts } from './allShifts'
-import { LocationValues } from './consts'
+import { LocationValues, RoleValues, shiftLeaderRoles } from './consts'
 
 type Mode = 'SINGLE_LOCATION' | 'MULTIPLE_LOCATIONS'
 
@@ -215,5 +215,19 @@ export function phoneDays(weeks: GridWeek[]): PhoneDay[] {
         }))
         .filter(group => group.shifts.length > 0),
     }))
+  )
+}
+
+export function isShiftLeader(role: RoleValues) {
+  return shiftLeaderRoles.includes(role)
+}
+
+// The shift leaders first, then the workers. The order inside each group
+// does not change.
+export function leadersFirst<T extends Pick<DayShiftSlot, 'role'>>(
+  slots: T[]
+): T[] {
+  return [...slots].sort(
+    (a, b) => Number(isShiftLeader(b.role)) - Number(isShiftLeader(a.role))
   )
 }

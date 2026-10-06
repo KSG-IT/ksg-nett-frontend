@@ -21,7 +21,7 @@ import {
   DELETE_SHIFT_SLOT_MUTATION,
   UPDATE_SHIFT_DETAILS_MUTATION,
 } from '../../mutations'
-import { compactTime } from '../../scheduleGrid'
+import { compactTime, leadersFirst } from '../../scheduleGrid'
 import {
   clockTime,
   roleCounts,
@@ -29,7 +29,7 @@ import {
   ShiftFormValues,
   toUpdateInput,
 } from '../../shiftForm'
-import { parseShiftRole } from '../../util'
+import { RoleLabel } from './RoleLabel'
 import { LocationBadge } from '../LocationBadge'
 import classes from './ScheduleGrid.module.css'
 import { ShiftDetailsFields } from './ShiftFormFields'
@@ -175,9 +175,10 @@ interface SlotListProps {
   slots: DayShiftSlot[]
 }
 
-// Grouped by role, in the order of the first slot of each role.
+// Grouped by role: the shift leaders first, then the other roles in the order
+// of the first slot of each role.
 const SlotList: React.FC<SlotListProps> = ({ slots }) => {
-  const order = roleCounts(slots).map(count => count.role)
+  const order = roleCounts(leadersFirst(slots)).map(count => count.role)
   const sorted = [...slots].sort(
     (a, b) => order.indexOf(a.role) - order.indexOf(b.role)
   )
@@ -214,9 +215,7 @@ const SlotRow: React.FC<SlotRowProps> = ({ slot }) => {
 
   return (
     <div className={classes.slotRow}>
-      <Text size="xs" c="dimmed" fw={600}>
-        {parseShiftRole(slot.role)}
-      </Text>
+      <RoleLabel role={slot.role} size="xs" c="dimmed" fw={600} />
       {slot.user ? (
         <Text size="sm" truncate>
           {slot.user.getFullWithNickName}

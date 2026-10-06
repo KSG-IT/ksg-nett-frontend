@@ -3,7 +3,12 @@ import { IconPlus } from '@tabler/icons-react'
 import { format } from 'util/date-fns'
 import { DayShift, slotCounts } from '../../allShifts'
 import { LocationValues } from '../../consts'
-import { compactTime, PhoneDay, PhoneDayGroup } from '../../scheduleGrid'
+import {
+  compactTime,
+  leadersFirst,
+  PhoneDay,
+  PhoneDayGroup,
+} from '../../scheduleGrid'
 import { locationColors, parseLocation } from '../../util'
 import classes from './ScheduleDayList.module.css'
 import { SlotChip, SlotSelection } from './ScheduleGrid'
@@ -131,7 +136,7 @@ const PhoneShift: React.FC<PhoneShiftProps> = ({ shift, ...selection }) => {
         </span>
       </button>
       <div className={classes.chips}>
-        {shift.slots.map(slot => (
+        {leadersFirst(shift.slots).map(slot => (
           <SlotChip key={slot.id} shift={shift} slot={slot} {...selection} />
         ))}
       </div>

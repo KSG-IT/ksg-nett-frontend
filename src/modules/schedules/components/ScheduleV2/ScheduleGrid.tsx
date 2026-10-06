@@ -1,7 +1,14 @@
 import { Text, Tooltip } from '@mantine/core'
 import { format } from 'util/date-fns'
 import { DayShift, DayShiftSlot, slotCounts } from '../../allShifts'
-import { compactTime, GridDay, GridRow, GridWeek } from '../../scheduleGrid'
+import {
+  compactTime,
+  GridDay,
+  GridRow,
+  GridWeek,
+  isShiftLeader,
+  leadersFirst,
+} from '../../scheduleGrid'
 import { locationColors, parseLocation, parseShiftRole } from '../../util'
 import classes from './ScheduleGrid.module.css'
 import { LocationValues } from '../../consts'
@@ -231,7 +238,7 @@ const ShiftBlock: React.FC<ShiftBlockProps> = ({ shift, ...selection }) => {
         <span className={classes.time}>{compactTime(shift)}</span>
       </button>
       <div className={classes.chips}>
-        {shift.slots.map(slot => (
+        {leadersFirst(shift.slots).map(slot => (
           <SlotChip key={slot.id} shift={shift} slot={slot} {...selection} />
         ))}
       </div>
@@ -265,6 +272,7 @@ export const SlotChip: React.FC<SlotChipProps> = ({
       type="button"
       className={classes.chip}
       data-open={!slot.user || undefined}
+      data-leader={isShiftLeader(slot.role) || undefined}
       data-active={isActive || undefined}
       data-highlighted={
         (slot.user && slot.user.id === highlightedUserId) || undefined

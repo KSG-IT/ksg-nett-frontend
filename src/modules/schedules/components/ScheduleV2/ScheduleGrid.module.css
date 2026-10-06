@@ -204,6 +204,13 @@
   cursor: pointer;
 }
 
+/* A shift leader gets a square chip with a dark border. The shape still
+   shows when the slot is open or highlighted. */
+.chip[data-leader] {
+  border-radius: 4px;
+  border: 1.5px solid var(--mantine-color-dark-6);
+}
+
 .chip:hover {
   border-color: var(--mantine-color-dark-3);
 }

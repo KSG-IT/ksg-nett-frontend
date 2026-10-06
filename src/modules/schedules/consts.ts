@@ -38,6 +38,18 @@ export enum RoleValues {
   SOCIVAKT = 'SOCIVAKT',
 }
 
+// Most shifts have one shift leader and 3 to 4 workers. The schedule view
+// marks the leader roles, so a manager sees them at once.
+export const shiftLeaderRoles = [
+  RoleValues.BARSJEF,
+  RoleValues.SPRITBARSJEF,
+  RoleValues.HOVMESTER,
+  RoleValues.SOUSCHEF,
+  RoleValues.KAFEANSVARLIG,
+  RoleValues.ARRANGEMENTANSVARLIG,
+  RoleValues.UGLE,
+]
+
 export enum DayValues {
   MONDAY = 'MONDAY',
   TUESDAY = 'TUESDAY',
@@ -61,9 +73,9 @@ export const locationOptions = [
   { value: LocationValues.LYCHE_KJOKKEN, label: 'Lyche kjøkken' },
   { value: LocationValues.STROSSA, label: 'Strossa' },
   { value: LocationValues.SELSKAPSSIDEN, label: 'Selskapssiden' },
-  { value: LocationValues.SERVERING_C, label: 'Servering C' },
-  { value: LocationValues.SERVERING_D, label: 'Servering D' },
-  { value: LocationValues.SERVERING_K, label: 'Servering K' },
+  { value: LocationValues.SERVERING_C, label: 'Siri' },
+  { value: LocationValues.SERVERING_D, label: 'Vollan' },
+  { value: LocationValues.SERVERING_K, label: 'Skala' },
   { value: LocationValues.STORSALEN, label: 'Storsalen' },
   { value: LocationValues.KLUBBEN, label: 'Klubben' },
   { value: LocationValues.RUNDHALLEN, label: 'Rundhallen' },
