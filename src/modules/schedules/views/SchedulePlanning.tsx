@@ -31,6 +31,7 @@ import { useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { format } from 'util/date-fns'
+import { PeriodPlan } from '../components/PlanningAutofill'
 import { ManagersOnly, SchedulePageHeader } from '../components/ScheduleTabs'
 import { PlanningPeriodStatusValues } from '../consts'
 import { membershipTypeLabel } from '../roster'
@@ -153,6 +154,7 @@ const SchedulePlanning: React.FC = () => {
         schedule.planningPeriods.map(period => (
           <PlanningPeriodCard
             key={period.id}
+            scheduleId={schedule.id}
             period={period}
             onEdit={() => setEditing(period)}
             onDelete={() => deletePeriod(period)}
@@ -176,10 +178,11 @@ const SchedulePlanning: React.FC = () => {
 }
 
 const PlanningPeriodCard: React.FC<{
+  scheduleId: string
   period: PlanningPeriodNode
   onEdit: () => void
   onDelete: () => void
-}> = ({ period, onEdit, onDelete }) => {
+}> = ({ scheduleId, period, onEdit, onDelete }) => {
   const [sendReminder, { loading }] = useMutation<
     SendPlanningPeriodReminderReturns,
     SendPlanningPeriodReminderVariables
@@ -280,6 +283,7 @@ const PlanningPeriodCard: React.FC<{
             </Button>
           )}
         </Group>
+        <PeriodPlan scheduleId={scheduleId} period={period} />
       </Stack>
     </Card>
   )
