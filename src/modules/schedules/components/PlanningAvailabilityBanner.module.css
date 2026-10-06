@@ -1,0 +1,23 @@
+.banner {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-md) 20px;
+  border: 1px solid var(--mantine-color-gray-3);
+  border-radius: 12px;
+  background: var(--mantine-color-white);
+}
+.urgent {
+  border-color: var(--mantine-color-orange-3);
+  background: var(--mantine-color-orange-0);
+}
+.text {
+  flex: 1;
+  min-width: 0;
+}
+.urgentBody {
+  color: var(--mantine-color-orange-9);
+}
+.urgentAction {
+  background: var(--mantine-color-white);
+}

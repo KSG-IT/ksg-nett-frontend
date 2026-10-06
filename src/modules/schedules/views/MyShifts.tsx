@@ -12,6 +12,7 @@ import {
   MyShiftList,
   NextShiftCard,
 } from '../components/MyShifts'
+import { PlanningAvailabilityBanner } from '../components/PlanningAvailabilityBanner'
 import {
   groupByMonth,
   groupByWeek,
@@ -55,6 +56,7 @@ export const MyShifts: React.FC = () => {
   return (
     <Stack gap="md" maw={900}>
       <Breadcrumbs items={breadcrumbsItems} />
+      <PlanningAvailabilityBanner />
       <Group justify="space-between" wrap="wrap" gap="sm">
         <Title order={1}>Mine vakter</Title>
         <Group gap="xs">

@@ -38,6 +38,13 @@ export type ShiftNode = {
   datetimeStart: string
   datetimeEnd: string
   location: LocationValues | null
+  myInterest: ShiftInterestNode | null
+}
+
+export type ShiftInterestNode = {
+  interestType: 'INTERESTED' | 'AVAILABLE' | 'UNAVAILABLE'
+  note: string
+  source: string
 }
 
 export type ScheduleNode = {
@@ -192,6 +199,29 @@ export interface PlanningPeriodNode {
   reminderSentAt: string | null
   responseStats: PlanningResponseStats | null
   slotCoverage: SlotCoverageNode[]
+  myDefaultAvailability: DefaultAvailabilityValues | null
+  schedule: {
+    id: string
+    name: string
+  }
+  shifts: ShiftNode[]
+}
+
+export interface MyOpenPlanningPeriodsReturns {
+  myOpenPlanningPeriods: PlanningPeriodNode[]
+}
+
+export interface MyOpenPlanningPeriodsSummaryReturns {
+  myOpenPlanningPeriods: {
+    id: string
+    dateFrom: string
+    dateTo: string
+    deadline: string
+    status: PlanningPeriodStatusValues
+    myDefaultAvailability: DefaultAvailabilityValues | null
+    schedule: { id: string; name: string }
+    shifts: { id: string; myInterest: { source: string } | null }[]
+  }[]
 }
 
 export interface SchedulePlanningReturns {

@@ -125,6 +125,58 @@ export const SCHEDULE_QUERY = gql`
   }
 `
 
+export const MY_OPEN_PLANNING_PERIODS_QUERY = gql`
+  query MyOpenPlanningPeriods {
+    myOpenPlanningPeriods {
+      id
+      dateFrom
+      dateTo
+      deadline
+      status
+      myDefaultAvailability
+      schedule {
+        id
+        name
+      }
+      shifts {
+        id
+        name
+        location
+        datetimeStart
+        datetimeEnd
+        myInterest {
+          interestType
+          note
+          source
+        }
+      }
+    }
+  }
+`
+
+export const MY_OPEN_PLANNING_PERIODS_SUMMARY_QUERY = gql`
+  query MyOpenPlanningPeriodsSummary {
+    myOpenPlanningPeriods {
+      id
+      dateFrom
+      dateTo
+      deadline
+      status
+      myDefaultAvailability
+      schedule {
+        id
+        name
+      }
+      shifts {
+        id
+        myInterest {
+          source
+        }
+      }
+    }
+  }
+`
+
 export const ALL_SCHEDULE_TEMPLATES = gql`
   query AllScheduleTemplates {
     allScheduleTemplates {
