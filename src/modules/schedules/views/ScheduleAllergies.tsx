@@ -25,8 +25,8 @@ import {
   allergyView,
   AllergySelection,
   AllergyWeek,
+  handleSoupTimeChange,
   selectAllergyDay,
-  toggleSoupTime,
 } from '../allergyWeek'
 import { WeekController } from '../components/ScheduleDetails'
 
@@ -163,9 +163,7 @@ const ScheduleAllergies: React.FC = () => {
             disabled={selection.day === null}
             checked={selection.soupTime}
             onChange={event => {
-              setSelection(current =>
-                toggleSoupTime(current, event.currentTarget.checked)
-              )
+              handleSoupTimeChange(event, setSelection)
             }}
           />
           {week && (
