@@ -20,14 +20,7 @@ import { add } from 'date-fns'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { format } from 'util/date-fns'
-import {
-  allergyTimeVariables,
-  allergyView,
-  AllergySelection,
-  AllergyWeek,
-  handleSoupTimeChange,
-  selectAllergyDay,
-} from '../allergyWeek'
+import { allergyView, AllergyWeek, SOUP_TIME, weekDays } from '../allergyWeek'
 import { WeekController } from '../components/ScheduleDetails'
 
 const breadcrumbItems = [
@@ -85,10 +78,11 @@ interface ScheduleAllergiesV2Variables {
 
 const ScheduleAllergies: React.FC = () => {
   const [shiftsFrom, setShiftsFrom] = useState<Date>(new Date())
-  const [selection, setSelection] = useState<AllergySelection>({
-    day: null,
-    soupTime: false,
-  })
+  // null: the whole week
+  const [day, setDay] = useState<string | null>(null)
+  const [soupTime, setSoupTime] = useState(false)
+  // Soup time is a time of one day, so it does not apply to the whole week
+  const soupTimeOn = day !== null && soupTime
 
   const { data, error, loading, refetch } = useQuery<
     ScheduleAllergiesV2Returns,
@@ -96,13 +90,13 @@ const ScheduleAllergies: React.FC = () => {
   >(SCHEDULE_ALLERGIES_V2_QUERY, {
     variables: {
       shiftsFrom: format(shiftsFrom, 'yyyy-MM-dd'),
-      ...allergyTimeVariables(selection),
+      ...(soupTimeOn ? SOUP_TIME : {}),
     },
   })
 
   function changeWeek(weeks: number) {
     setShiftsFrom(date => add(date, { weeks }))
-    setSelection({ day: null, soupTime: false })
+    setDay(null)
   }
 
   function handleRefetch() {
@@ -115,23 +109,12 @@ const ScheduleAllergies: React.FC = () => {
   }
 
   const week = data?.scheduleAllergiesV2
-  const view = week ? allergyView(week, selection.day) : null
-  const days = week?.days ?? []
-  const selectedDayIsMissing =
-    selection.day !== null && !days.some(workDay => workDay.date === selection.day)
+  const view = week ? allergyView(week, day) : null
   const dayOptions = [
     { value: 'week', label: 'Hele uka' },
-    ...(selectedDayIsMissing
-      ? [
-          {
-            value: selection.day!,
-            label: format(new Date(`${selection.day!}T12:00`), 'EEE d.'),
-          },
-        ]
-      : []),
-    ...days.map(workDay => ({
-      value: workDay.date,
-      label: format(new Date(`${workDay.date}T12:00`), 'EEE d.'),
+    ...weekDays(shiftsFrom).map(date => ({
+      value: date,
+      label: format(new Date(`${date}T12:00`), 'EEE d.'),
     })),
   ]
 
@@ -160,21 +143,15 @@ const ScheduleAllergies: React.FC = () => {
         <Group>
           <Switch
             label="suppetime"
-            disabled={selection.day === null}
-            checked={selection.soupTime}
-            onChange={event => {
-              handleSoupTimeChange(event, setSelection)
-            }}
+            disabled={day === null}
+            checked={soupTimeOn}
+            onChange={event => setSoupTime(event.currentTarget.checked)}
           />
-          {week && (
-            <SegmentedControl
-              data={dayOptions}
-              value={selection.day ?? 'week'}
-              onChange={value =>
-                setSelection(current => selectAllergyDay(current, value))
-              }
-            />
-          )}
+          <SegmentedControl
+            data={dayOptions}
+            value={day ?? 'week'}
+            onChange={value => setDay(value === 'week' ? null : value)}
+          />
         </Group>
       </Group>
 
