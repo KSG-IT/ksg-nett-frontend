@@ -1,5 +1,6 @@
 // Drafts of slot changes (ShiftSlotNode.draft). A draft is not visible to the
 // members until a manager locks it. Only managers get drafts from the API.
+import { addDays, format } from 'date-fns'
 import type { DayShift, DayShiftSlot } from './allShifts'
 
 type SlotUser = DayShiftSlot['user']
@@ -40,6 +41,21 @@ export function applyDrafts(shifts: DayShift[]): DayShift[] {
 // this person removes the draft.
 export function lockedPerson(slot: DayShiftSlot): SlotUser {
   return slot.draft ? slot.lockedUser ?? null : slot.user
+}
+
+export interface DraftRange {
+  dateFrom: string
+  dateTo: string
+}
+
+// The dates of the visible weeks, as the backend reads them: local dates, both
+// included. `monday` is the first day of the first week.
+export function draftRange(monday: Date, weeks: number): DraftRange {
+  const last = addDays(monday, weeks * 7 - 1)
+  return {
+    dateFrom: format(monday, 'yyyy-MM-dd'),
+    dateTo: format(last, 'yyyy-MM-dd'),
+  }
 }
 
 export function draftCount(shifts: DayShift[]) {

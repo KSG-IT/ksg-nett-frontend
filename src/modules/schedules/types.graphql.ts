@@ -150,8 +150,25 @@ export interface ScheduleV2Returns {
     displayMode: ScheduleDisplayModeValues
     defaultRole: RoleValues | null
     recentLocations: LocationValues[]
+    // All drafts of the schedule. Null for a user who does not manage it.
+    draftCount: number | null
     shiftsFromRange: DayShift[]
   } | null
+}
+
+export interface DraftRangeVariables {
+  scheduleId: string
+  // Without dates, the mutation takes every draft of the schedule
+  dateFrom?: string
+  dateTo?: string
+}
+
+export interface LockDraftReturns {
+  lockDraft: { changedSlots: number; notifiedUsers: number }
+}
+
+export interface DiscardDraftReturns {
+  discardDraft: { discarded: number }
 }
 
 export interface ScheduleV2Variables {

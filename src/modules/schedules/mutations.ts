@@ -226,7 +226,39 @@ export const DRAFT_SLOT_V2_MUTATION = gql`
       shiftSlot {
         id
         ...SlotDraftFields
+        # The count of the schedule is cached, so a draft must update it. The
+        # lock buttons show only when it is above 0.
+        shift {
+          id
+          schedule {
+            id
+            draftCount
+          }
+        }
       }
+    }
+  }
+`
+
+// The dates are optional. Without them, the mutation takes every draft of the
+// schedule. A lock sends one email per member with the notification setting.
+export const LOCK_DRAFT_MUTATION = gql`
+  mutation LockDraft($scheduleId: ID!, $dateFrom: Date, $dateTo: Date) {
+    lockDraft(scheduleId: $scheduleId, dateFrom: $dateFrom, dateTo: $dateTo) {
+      changedSlots
+      notifiedUsers
+    }
+  }
+`
+
+export const DISCARD_DRAFT_MUTATION = gql`
+  mutation DiscardDraft($scheduleId: ID!, $dateFrom: Date, $dateTo: Date) {
+    discardDraft(
+      scheduleId: $scheduleId
+      dateFrom: $dateFrom
+      dateTo: $dateTo
+    ) {
+      discarded
     }
   }
 `

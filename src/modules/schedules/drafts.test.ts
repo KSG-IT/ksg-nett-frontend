@@ -5,6 +5,7 @@ import {
   draftCount,
   draftKind,
   draftLabel,
+  draftRange,
   lockedPerson,
   SlotDraft,
 } from './drafts'
@@ -167,5 +168,23 @@ describe('lockedPerson', () => {
       '1',
       null,
     ])
+  })
+})
+
+describe('draftRange', () => {
+  it('gives the first and the last day of the visible weeks', () => {
+    expect(draftRange(new Date(2026, 9, 12), 1)).toEqual({
+      dateFrom: '2026-10-12',
+      dateTo: '2026-10-18',
+    })
+    expect(draftRange(new Date(2026, 9, 12), 3)).toEqual({
+      dateFrom: '2026-10-12',
+      dateTo: '2026-11-01',
+    })
+  })
+
+  it('counts local days over the end of daylight saving time', () => {
+    // Europe/Oslo changes the clock on 2026-10-25
+    expect(draftRange(new Date(2026, 9, 19), 2).dateTo).toBe('2026-11-01')
   })
 })
