@@ -6,6 +6,7 @@ import { UnfilledReasonValues } from './consts'
 import type {
   AutofillRunNode,
   PlanningPeriodNode,
+  SlotCoverageNode,
   UnfilledSlotNode,
 } from './types.graphql'
 
@@ -49,6 +50,15 @@ export function openUnfilled(run: AutofillRunNode): OpenUnfilledSlot[] {
         parseISO(a.shiftSlot.shift.datetimeStart).getTime() -
         parseISO(b.shiftSlot.shift.datetimeStart).getTime()
     )
+}
+
+// The empty slots of the period in the plan with drafts, from the coverage
+// rows (one per shift and role). It counts also when no run exists, and slots
+// that autofill did not look at.
+export function openSlotTotal(
+  coverage: Pick<SlotCoverageNode, 'openSlotCount'>[]
+): number {
+  return coverage.reduce((sum, row) => sum + row.openSlotCount, 0)
 }
 
 // Before the deadline, members can still change their answers. A run or a

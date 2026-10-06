@@ -1,7 +1,7 @@
 import { Divider, Stack, Text } from '@mantine/core'
 import { parseISO } from 'date-fns'
 import { format } from 'util/date-fns'
-import { latestRun, openUnfilled } from '../../autofill'
+import { latestRun, openSlotTotal } from '../../autofill'
 import type { PlanningPeriodNode } from '../../types.graphql'
 import { AutofillRunPanel } from './AutofillRunPanel'
 import { PeriodPlanActions } from './PeriodPlanActions'
@@ -18,7 +18,6 @@ export const PeriodPlan: React.FC<PeriodPlanProps> = ({
   period,
 }) => {
   const run = latestRun(period.autofillRuns)
-  const openSlots = run ? openUnfilled(run).length : 0
   return (
     <Stack gap="sm">
       <Divider />
@@ -31,7 +30,7 @@ export const PeriodPlan: React.FC<PeriodPlanProps> = ({
       <PeriodPlanActions
         scheduleId={scheduleId}
         period={period}
-        openSlots={openSlots}
+        openSlots={openSlotTotal(period.slotCoverage)}
       />
     </Stack>
   )

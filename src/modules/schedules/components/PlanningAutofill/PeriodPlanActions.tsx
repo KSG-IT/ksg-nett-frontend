@@ -11,7 +11,7 @@ import type { PlanningPeriodNode } from '../../types.graphql'
 interface PeriodPlanActionsProps {
   scheduleId: string
   period: PlanningPeriodNode
-  // Slots of the newest run that are still empty
+  // Empty slots in the plan with drafts, from the slot coverage
   openSlots: number
 }
 

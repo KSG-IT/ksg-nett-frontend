@@ -3,6 +3,7 @@ import {
   canRunAutofill,
   countLabel,
   latestRun,
+  openSlotTotal,
   openUnfilled,
   unfilledReasonLabel,
 } from './autofill'
@@ -137,5 +138,21 @@ describe('countLabel', () => {
     expect(countLabel(1, 'plass', 'plasser')).toBe('1 plass')
     expect(countLabel(0, 'plass', 'plasser')).toBe('0 plasser')
     expect(countLabel(2, 'plass', 'plasser')).toBe('2 plasser')
+  })
+})
+
+describe('openSlotTotal', () => {
+  it('adds the open slots of all shifts and roles', () => {
+    expect(
+      openSlotTotal([
+        { openSlotCount: 2 },
+        { openSlotCount: 0 },
+        { openSlotCount: 3 },
+      ])
+    ).toBe(5)
+  })
+
+  it('is 0 without coverage rows', () => {
+    expect(openSlotTotal([])).toBe(0)
   })
 })
