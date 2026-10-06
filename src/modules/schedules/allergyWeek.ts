@@ -47,6 +47,17 @@ export function toggleSoupTime(
     : { ...selection, soupTime: enabled }
 }
 
+export function handleSoupTimeChange(
+  event: { currentTarget: { checked: boolean } },
+  setSelection: (
+    update: (current: AllergySelection) => AllergySelection
+  ) => void
+): void {
+  // Read the DOM value before React runs the deferred state updater.
+  const checked = event.currentTarget.checked
+  setSelection(current => toggleSoupTime(current, checked))
+}
+
 export function allergyTimeVariables(selection: AllergySelection): {
   timeFrom?: string
   timeTo?: string
