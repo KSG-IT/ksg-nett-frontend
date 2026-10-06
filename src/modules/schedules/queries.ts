@@ -116,6 +116,10 @@ export const SLOT_DRAFT_FIELDS = gql`
         id
         getCleanFullName
       }
+      # Null for a manual draft
+      autofillRun {
+        id
+      }
     }
   }
 `

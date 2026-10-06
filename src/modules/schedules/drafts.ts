@@ -11,6 +11,8 @@ export interface SlotDraft {
   user: SlotUser
   changedBy: { getCleanFullName: string } | null
   changedAt: string
+  // Set when autofill wrote the draft. A manual change clears it.
+  autofillRun: { id: string } | null
 }
 
 export type DraftKind = 'fill' | 'replace' | 'remove'
@@ -65,7 +67,8 @@ export function draftCount(shifts: DayShift[]) {
   )
 }
 
-// "Utkast: Ola Nordmann (endret av Kari)" for the tooltip of a chip.
+// "Utkast: Ola Nordmann (endret av Kari)" for the tooltip of a chip. An
+// autofill draft says "(autofyll)" instead of the person who ran autofill.
 export function draftLabel(slot: DayShiftSlot) {
   const kind = draftKind(slot)
   if (!kind || !slot.draft) return null
@@ -73,8 +76,11 @@ export function draftLabel(slot: DayShiftSlot) {
     kind === 'remove'
       ? `fjern ${slot.lockedUser?.getFullWithNickName ?? 'person'}`
       : slot.draft.user?.getFullWithNickName
-  const author = slot.draft.changedBy
-    ? ` (endret av ${slot.draft.changedBy.getCleanFullName})`
-    : ''
-  return `Utkast: ${person}${author}`
+  return `Utkast: ${person}${draftSource(slot.draft)}`
+}
+
+function draftSource(draft: SlotDraft) {
+  if (draft.autofillRun) return ' (autofyll)'
+  if (draft.changedBy) return ` (endret av ${draft.changedBy.getCleanFullName})`
+  return ''
 }
