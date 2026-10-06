@@ -1,0 +1,97 @@
+.panel {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 2em 1em;
+  background: rgba(10, 8, 8, 0.96);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+  width: 100%;
+  max-width: 34em;
+  padding: 2em;
+  border: 1px solid var(--tod-surface-2);
+  border-radius: 1.4em;
+  background: var(--tod-surface);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.8em;
+  font-weight: 900;
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  margin: 0;
+  padding-left: 1.2em;
+  line-height: 1.4;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.start,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 3em;
+  padding: 0 1.4em;
+  border-radius: 0.9em;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.start {
+  border: 0;
+  background: var(--tod-brand);
+  color: #fff;
+}
+
+.secondary {
+  border: 1px solid var(--tod-line);
+  background: transparent;
+  color: var(--tod-text);
+}
+
+.back {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--tod-muted);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .body {
+    padding: 1.4em;
+  }
+
+  .start,
+  .secondary {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .back {
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,18 @@
+/* The game palette. Dark and high contrast for a TV across the room.
+   Mantine renders dropdowns in a portal outside the game root, so each
+   such part composes this class to get the same variables. */
+.palette {
+  --tod-bg: #120e0f;
+  --tod-surface: #1e1819;
+  --tod-surface-2: #2a2223;
+  --tod-line: #3a3031;
+  --tod-text: #f7f1ec;
+  --tod-muted: #b8aba4;
+  --tod-brand: #e5484d;
+  --tod-brand-soft: #ffb3b5;
+  --tod-truth: #7cb4ff;
+  --tod-dare: #ff9a4d;
+  --tod-virus: #c8f04c;
+  --tod-rule: #c3a2ff;
+  --tod-mission: #ffd27a;
+}
