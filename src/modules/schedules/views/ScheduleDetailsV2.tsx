@@ -34,6 +34,7 @@ import {
   SlotTarget,
 } from '../components/ScheduleV2/SlotPicker'
 import { LocationValues, ScheduleDisplayModeValues } from '../consts'
+import { applyDrafts, draftCount } from '../drafts'
 import { SCHEDULE_V2_QUERY } from '../queries'
 import {
   mondayOf,
@@ -92,9 +93,13 @@ export const ScheduleDetailsV2: React.FC = () => {
   // A phone is for quick fixes, so it starts with one week.
   const weeks = Number(weeksParam ?? (byLocation || isMobile ? 1 : 3))
   const lastMonday = addDays(monday, (weeks - 1) * 7)
-  const shifts = schedule.shiftsFromRange.filter(
-    shift => new Date(shift.datetimeStart) < addDays(lastMonday, 7)
+  // The plan as it looks after a lock. The grid and the counts follow it.
+  const shifts = applyDrafts(
+    schedule.shiftsFromRange.filter(
+      shift => new Date(shift.datetimeStart) < addDays(lastMonday, 7)
+    )
   )
+  const drafts = draftCount(shifts)
   const grid = scheduleGrid(shifts, {
     monday,
     weeks,
@@ -222,6 +227,12 @@ export const ScheduleDetailsV2: React.FC = () => {
               · {total - filled} ledige
             </Text>
           )}
+          {drafts > 0 && (
+            <Text span inherit fw={700} c="blue.8">
+              {' '}
+              · {drafts} {drafts === 1 ? 'endring' : 'endringer'} i utkast
+            </Text>
+          )}
         </Text>
         {isMobile && (
           <Button
@@ -270,7 +281,10 @@ export const ScheduleDetailsV2: React.FC = () => {
         </div>
       )}
       <ShiftPanel
-        shift={shifts.find(shift => shift.id === openShiftId) ?? null}
+        shift={
+          schedule.shiftsFromRange.find(shift => shift.id === openShiftId) ??
+          null
+        }
         defaultRole={schedule.defaultRole}
         rolesInUse={rolesInUse(schedule.shiftsFromRange)}
         fullScreen={isMobile}

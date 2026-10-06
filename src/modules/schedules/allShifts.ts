@@ -3,11 +3,16 @@
 // everywhere else in the SPA.
 import type { UserThumbnailProps } from 'modules/users/types'
 import { LocationValues, RoleValues } from './consts'
+import type { SlotDraft } from './drafts'
 
 export interface DayShiftSlot {
   id: string
   role: RoleValues
   user: UserThumbnailProps['user'] | null
+  // Managers only, see drafts.ts. `user` is the person after the draft when
+  // applyDrafts has run, and `lockedUser` the person before it.
+  draft?: SlotDraft | null
+  lockedUser?: UserThumbnailProps['user'] | null
 }
 
 export interface DayShift {

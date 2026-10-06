@@ -221,6 +221,18 @@
   background: var(--mantine-color-orange-0);
 }
 
+/* A draft change is not visible to the members until it is locked. The
+   border colour is the location colour, set on the chip. */
+.chip[data-draft] {
+  border-style: dashed;
+  border-width: 1.5px;
+}
+
+.chip[data-draft='remove'] {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
 .chip[data-active] {
   box-shadow: 0 0 0 2px var(--mantine-color-dark-6);
 }
