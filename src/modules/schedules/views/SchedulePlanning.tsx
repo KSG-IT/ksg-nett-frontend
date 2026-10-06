@@ -37,7 +37,6 @@ import {
   planningPeriodFormSchema,
   planningPeriodLabel,
   planningStatusLabel,
-  schedulePlanningQueryOptions,
   spareCandidates,
   toGraphqlDateTime,
 } from '../planning'
@@ -72,7 +71,8 @@ const SchedulePlanning: React.FC = () => {
     ScheduleIdVariables
   >(SCHEDULE_PLANNING_QUERY, {
     variables: { id },
-    ...schedulePlanningQueryOptions,
+    // Roster changes can affect stats and coverage while this page is unmounted.
+    fetchPolicy: 'cache-and-network',
   })
   const [remove] = useMutation<DeletePlanningPeriodReturns, { id: string }>(
     DELETE_PLANNING_PERIOD_MUTATION,

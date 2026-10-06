@@ -4,12 +4,6 @@ import { z } from 'zod'
 import { PlanningPeriodStatusValues } from './consts'
 import type { SlotCoverageNode } from './types.graphql'
 
-// Planning stats and coverage can change when the roster changes on another tab.
-// Keep cached data responsive, but refresh it whenever Planlegging mounts again.
-export const schedulePlanningQueryOptions = {
-  fetchPolicy: 'cache-and-network' as const,
-}
-
 export const planningPeriodFormSchema = z
   .object({
     dateFrom: z.string().min(1, 'Velg startdato'),

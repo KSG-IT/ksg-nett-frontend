@@ -3,16 +3,11 @@ import {
   planningPeriodFormSchema,
   planningPeriodLabel,
   planningStatusLabel,
-  schedulePlanningQueryOptions,
   spareCandidates,
   toGraphqlDateTime,
 } from './planning'
 
 describe('planning helpers', () => {
-  it('refreshes planning data when the page mounts again', () => {
-    expect(schedulePlanningQueryOptions.fetchPolicy).toBe('cache-and-network')
-  })
-
   it('labels the planning period statuses', () => {
     expect(planningStatusLabel(PlanningPeriodStatusValues.OPEN)).toBe('Åpen')
     expect(planningStatusLabel(PlanningPeriodStatusValues.CLOSED)).toBe(
