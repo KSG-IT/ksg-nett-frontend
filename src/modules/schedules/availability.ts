@@ -1,5 +1,6 @@
 import {
   differenceInCalendarDays,
+  format,
   getISOWeek,
   isBefore,
   parseISO,
@@ -22,11 +23,15 @@ export function answerFor(
     : 'AVAILABLE'
 }
 
+// The interestType to send. Null deletes the row, so the default answer is
+// sent as null, except when there is a note: the row keeps the note.
 export function answerValue(
   answer: AvailabilityAnswer,
   defaultAvailability?: string | null,
-  currentAnswer?: AvailabilityAnswer | null
+  currentAnswer?: AvailabilityAnswer | null,
+  note = ''
 ) {
+  if (note.trim()) return answer
   const isDefault =
     defaultAvailability === DefaultAvailabilityValues.OPT_IN
       ? answer === 'UNAVAILABLE'
@@ -42,7 +47,9 @@ export type PlanningBannerPeriod = {
   deadline: string
   status: string
   myDefaultAvailability: string | null
-  shifts: { myInterest: { source: string } | null }[]
+  shifts: {
+    myInterest: { interestType: AvailabilityAnswer; source: string } | null
+  }[]
 }
 
 export type PlanningBanner = {
@@ -50,6 +57,8 @@ export type PlanningBanner = {
   urgent: 'TODAY' | 'TOMORROW' | null
   hasChanges: boolean
   optIn: boolean
+  // Shifts the member has not marked as unavailable, also by the pre-fill
+  openShiftCount: number
 }
 
 export function planningBanner(
@@ -67,7 +76,16 @@ export function planningBanner(
       shift => shift.myInterest?.source === InterestSourceValues.MANUAL
     ),
     optIn: period.myDefaultAvailability === DefaultAvailabilityValues.OPT_IN,
+    openShiftCount: period.shifts.filter(
+      shift => shift.myInterest?.interestType !== 'UNAVAILABLE'
+    ).length,
   }
+}
+
+// The local date of a datetime from the API, which comes in UTC. A shift at
+// 00:30 local time belongs to that day, not the day before.
+export function localDate(datetime: string) {
+  return format(parseISO(datetime), 'yyyy-MM-dd')
 }
 
 export function weekRange(dateFrom: string, dateTo: string) {

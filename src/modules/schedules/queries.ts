@@ -170,6 +170,7 @@ export const MY_OPEN_PLANNING_PERIODS_SUMMARY_QUERY = gql`
       shifts {
         id
         myInterest {
+          interestType
           source
         }
       }

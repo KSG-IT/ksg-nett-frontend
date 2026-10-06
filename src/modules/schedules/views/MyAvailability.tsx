@@ -18,22 +18,25 @@ import {
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
-import { format, formatDistanceToNowStrict, isPast, parseISO } from 'date-fns'
-import { nb } from 'date-fns/locale'
-import { useMemo, useState } from 'react'
+import { isBefore, parseISO } from 'date-fns'
+import { useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { format, formatDistanceStrict } from 'util/date-fns'
+import { useNow } from 'util/hooks'
 import { DefaultAvailabilityValues } from '../consts'
 import {
   answerFor,
   answerValue,
+  localDate,
+  weekRange,
   type AvailabilityAnswer,
 } from '../availability'
 import { SET_SHIFT_INTEREST_MUTATION } from '../mutations'
 import { MY_OPEN_PLANNING_PERIODS_QUERY } from '../queries'
 import type {
   MyOpenPlanningPeriodsReturns,
-  PlanningPeriodNode,
-  ShiftNode,
+  MyPlanningPeriodNode,
+  MyPlanningShiftNode,
 } from '../types.graphql'
 import classes from './MyAvailability.module.css'
 
@@ -56,11 +59,9 @@ export const MyAvailability: React.FC = () => {
     useQuery<MyOpenPlanningPeriodsReturns>(MY_OPEN_PLANNING_PERIODS_QUERY, {
       fetchPolicy: 'cache-and-network',
     })
-  const periods = data?.myOpenPlanningPeriods ?? []
   const selectedId = new URLSearchParams(location.search).get('period')
-  const ordered = useMemo(
-    () => [...periods].sort((a, b) => a.deadline.localeCompare(b.deadline)),
-    [periods]
+  const ordered = [...(data?.myOpenPlanningPeriods ?? [])].sort((a, b) =>
+    a.deadline.localeCompare(b.deadline)
   )
   if (error) return <FullPageError />
   if (loading && !data) return <FullContentLoader />
@@ -97,12 +98,17 @@ export const MyAvailability: React.FC = () => {
 }
 
 const PeriodCard: React.FC<{
-  period: PlanningPeriodNode
+  period: MyPlanningPeriodNode
   selected: boolean
   refetch: () => Promise<unknown>
 }> = ({ period, selected, refetch }) => {
+  // Re-render while the page is open, so the deadline passes on screen too
+  const now = useNow()
   const defaultAvailability = period.myDefaultAvailability
   const deadline = parseISO(period.deadline)
+  const closed = !isBefore(now, deadline)
+  const deadlineLabel = format(deadline, "EEEE d. MMMM 'kl.' HH:mm")
+  const remaining = formatDistanceStrict(deadline, now)
   const groups = groupByDate(period.shifts)
   const counts = period.shifts.reduce(
     (result, shift) => {
@@ -123,26 +129,33 @@ const PeriodCard: React.FC<{
           <div>
             <Group gap="xs">
               <Text fw={700} size="lg">
-                {period.schedule.name} · {periodLabel(period)}
+                {period.schedule.name} ·{' '}
+                {weekRange(period.dateFrom, period.dateTo)}
               </Text>
-              <Badge color="green">Åpen</Badge>
+              <Badge color={closed ? 'gray' : 'green'}>
+                {closed ? 'Stengt' : 'Åpen'}
+              </Badge>
             </Group>
             <Text size="sm" c="dimmed">
-              {dateRange(period)} · {period.shifts.length} vakter
+              {format(parseISO(period.dateFrom), 'd. MMM')} –{' '}
+              {format(parseISO(period.dateTo), 'd. MMM')} ·{' '}
+              {period.shifts.length} vakter
             </Text>
-            <Text size="sm" c={isPast(deadline) ? 'red' : 'orange'} fw={600}>
-              Frist{' '}
-              {format(deadline, "EEEE d. MMMM 'kl.' HH:mm", { locale: nb })} ·{' '}
-              {formatDistanceToNowStrict(deadline, { locale: nb })} igjen
+            <Text size="sm" c={closed ? 'red' : 'orange'} fw={600}>
+              {closed
+                ? `Fristen gikk ut ${deadlineLabel}. Svarene kan ikke endres.`
+                : `Frist ${deadlineLabel} · ${remaining} igjen`}
             </Text>
           </div>
-          <Badge
-            leftSection={<IconCheck size={12} />}
-            variant="light"
-            color="green"
-          >
-            Svar lagres automatisk
-          </Badge>
+          {!closed && (
+            <Badge
+              leftSection={<IconCheck size={12} />}
+              variant="light"
+              color="green"
+            >
+              Svar lagres automatisk
+            </Badge>
+          )}
         </Group>
         {!defaultAvailability ? (
           <Alert icon={<IconAlertCircle size={18} />} color="orange">
@@ -166,7 +179,7 @@ const PeriodCard: React.FC<{
             {Object.entries(groups).map(([date, shifts]) => (
               <div key={date} className={classes.dayGroup}>
                 <Text fw={700} mb="xs">
-                  {format(parseISO(date), 'EEEE d. MMMM', { locale: nb })}
+                  {format(parseISO(date), 'EEEE d. MMMM')}
                 </Text>
                 <Stack gap={0} className={classes.shiftList}>
                   {shifts.map(shift => (
@@ -174,7 +187,7 @@ const PeriodCard: React.FC<{
                       key={shift.id}
                       shift={shift}
                       defaultAvailability={defaultAvailability}
-                      disabled={isPast(deadline)}
+                      disabled={closed}
                       onStale={refetch}
                     />
                   ))}
@@ -189,41 +202,70 @@ const PeriodCard: React.FC<{
 }
 
 const ShiftAnswer: React.FC<{
-  shift: ShiftNode
+  shift: MyPlanningShiftNode
   defaultAvailability?: string | null
   disabled: boolean
   onStale: () => Promise<unknown>
 }> = ({ shift, defaultAvailability, disabled, onStale }) => {
-  const [save, { loading }] = useMutation(SET_SHIFT_INTEREST_MUTATION)
+  const [save] = useMutation(SET_SHIFT_INTEREST_MUTATION)
   const [error, setError] = useState(false)
+  // Saves for one shift go one at a time. The backend has several workers,
+  // so two saves in flight can be stored in the wrong order.
+  const queue = useRef<Promise<unknown>>(Promise.resolve())
+  const [pending, setPending] = useState(0)
+  const saved = shift.myInterest
   const [answer, setAnswer] = useState<Answer>(
-    answerFor(shift.myInterest?.interestType, defaultAvailability)
+    answerFor(saved?.interestType, defaultAvailability)
   )
-  const [note, setNote] = useState(shift.myInterest?.note ?? '')
-  const [noteOpen, setNoteOpen] = useState(Boolean(shift.myInterest?.note))
+  const [note, setNote] = useState(saved?.note ?? '')
+  const [noteOpen, setNoteOpen] = useState(Boolean(saved?.note))
+
+  // A save or a refetch changes the server answer. Show it, so the next
+  // answerValue call compares against what is on screen. Wait until no save
+  // is queued, so an earlier response does not undo a later click.
+  const savedKey = `${saved?.interestType ?? ''}|${saved?.note ?? ''}`
+  const [syncedKey, setSyncedKey] = useState(savedKey)
+  if (savedKey !== syncedKey && pending === 0) {
+    setSyncedKey(savedKey)
+    setAnswer(answerFor(saved?.interestType, defaultAvailability))
+    setNote(saved?.note ?? '')
+  }
+
   function persist(next: Answer, nextNote = note) {
     const previous = answer
     const previousNote = note
     setAnswer(next)
     setNote(nextNote)
     setError(false)
-    save({
-      variables: {
-        shiftId: shift.id,
-        interestType: answerValue(
-          next,
-          defaultAvailability,
-          shift.myInterest?.interestType
-        ),
-        note: nextNote,
-      },
-    }).catch(async () => {
-      setAnswer(previous)
-      setNote(previousNote)
-      setError(true)
-      await onStale()
-    })
+    setPending(count => count + 1)
+    const variables = {
+      shiftId: shift.id,
+      interestType: answerValue(
+        next,
+        defaultAvailability,
+        saved?.interestType,
+        nextNote
+      ),
+      note: nextNote,
+    }
+    queue.current = queue.current
+      .then(() => save({ variables }))
+      .catch(async () => {
+        setAnswer(previous)
+        setNote(previousNote)
+        setError(true)
+        await onStale()
+      })
+      .finally(() => setPending(count => count - 1))
   }
+
+  // Save the note only when it changed. A blur without a change must not
+  // send a save, because the save would race with a click on the answer.
+  function handleNoteBlur() {
+    if (note.trim() === (saved?.note ?? '').trim()) return
+    persist(answer, note)
+  }
+
   const data = [
     { value: 'INTERESTED', label: answerLabels.INTERESTED },
     { value: 'AVAILABLE', label: 'Kan' },
@@ -239,8 +281,8 @@ const ShiftAnswer: React.FC<{
     <div className={classes.shift}>
       <div className={classes.shiftMeta}>
         <Text fw={600}>
-          {format(parseISO(shift.datetimeStart), 'EEE d. MMM', { locale: nb })}{' '}
-          · {format(parseISO(shift.datetimeStart), 'HH:mm')}–
+          {format(parseISO(shift.datetimeStart), 'EEE d. MMM')} ·{' '}
+          {format(parseISO(shift.datetimeStart), 'HH:mm')}–
           {format(parseISO(shift.datetimeEnd), 'HH:mm')}
         </Text>
         <Text size="sm" c="dimmed">
@@ -251,17 +293,16 @@ const ShiftAnswer: React.FC<{
         fullWidth
         value={answer}
         data={data}
-        disabled={disabled || loading}
+        disabled={disabled}
         onChange={value => persist(value as Answer)}
         aria-label={`Svar for ${shift.name}`}
       />
       <Group gap="xs" align="center">
-        {!noteOpen && (
+        {!noteOpen && !disabled && (
           <Text
             component="button"
             className={classes.noteButton}
             onClick={() => setNoteOpen(true)}
-            disabled={disabled}
           >
             + Notat
           </Text>
@@ -270,10 +311,10 @@ const ShiftAnswer: React.FC<{
           <TextInput
             value={note}
             onChange={event => setNote(event.currentTarget.value)}
-            onBlur={() => persist(answer, note)}
+            onBlur={handleNoteBlur}
             placeholder="Kort notat til Personal"
             maxLength={255}
-            disabled={disabled || loading}
+            disabled={disabled}
             className={classes.noteInput}
           />
         )}
@@ -287,20 +328,14 @@ const ShiftAnswer: React.FC<{
   )
 }
 
-function periodLabel(period: PlanningPeriodNode) {
-  return `${format(parseISO(period.dateFrom), 'd. MMM', {
-    locale: nb,
-  })}–${format(parseISO(period.dateTo), 'd. MMM', { locale: nb })}`
-}
-function dateRange(period: PlanningPeriodNode) {
-  return `${format(parseISO(period.dateFrom), 'd. MMM', {
-    locale: nb,
-  })} – ${format(parseISO(period.dateTo), 'd. MMM', { locale: nb })}`
-}
-function groupByDate(shifts: ShiftNode[]) {
-  return shifts.reduce<Record<string, ShiftNode[]>>((groups, shift) => {
-    const date = shift.datetimeStart.slice(0, 10)
-    ;(groups[date] ??= []).push(shift)
-    return groups
-  }, {})
+function groupByDate(shifts: MyPlanningShiftNode[]) {
+  return shifts.reduce<Record<string, MyPlanningShiftNode[]>>(
+    (groups, shift) => {
+      const date = localDate(shift.datetimeStart)
+      const group = (groups[date] ??= [])
+      group.push(shift)
+      return groups
+    },
+    {}
+  )
 }

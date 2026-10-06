@@ -368,7 +368,9 @@ const CoverageTable: React.FC<{ rows: PlanningPeriodNode['slotCoverage'] }> = ({
                   : null}
               </Text>
             </Table.Td>
-            <Table.Td c={spareCandidates(row) < 0 ? 'red' : undefined}>
+            <Table.Td
+              c={index === 0 && spareCandidates(row) < 0 ? 'red' : undefined}
+            >
               {index === 0
                 ? `${row.openSlotCount} / ${row.candidateCount}`
                 : `– / ${typeRow?.candidateCount ?? 0}`}
