@@ -99,7 +99,7 @@ export const SCHEDULES_OVERVIEW_QUERY = gql`
 `
 
 // Managers get the draft of a slot. For other users it is null.
-const SLOT_DRAFT_FIELDS = gql`
+export const SLOT_DRAFT_FIELDS = gql`
   fragment SlotDraftFields on ShiftSlotNode {
     draft {
       id

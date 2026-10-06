@@ -5,6 +5,7 @@ import {
   draftCount,
   draftKind,
   draftLabel,
+  lockedPerson,
   SlotDraft,
 } from './drafts'
 import { shiftCounts } from './scheduleGrid'
@@ -143,6 +144,27 @@ describe('draftLabel', () => {
       'Utkast: Bruker 2 (endret av Kari)',
       'Utkast: fjern Bruker 1 (endret av Kari)',
       'Utkast: Bruker 3',
+      null,
+    ])
+  })
+})
+
+describe('lockedPerson', () => {
+  it('gives the person who is locked in the slot, with or without a draft', () => {
+    const [shift] = applyDrafts([
+      shiftWith([
+        slot('a', null, draft('2')),
+        slot('b', '1', draft('2')),
+        slot('c', '1', draft(null)),
+        slot('d', '1'),
+        slot('e', null),
+      ]),
+    ])
+    expect(shift.slots.map(s => lockedPerson(s)?.id ?? null)).toEqual([
+      null,
+      '1',
+      '1',
+      '1',
       null,
     ])
   })

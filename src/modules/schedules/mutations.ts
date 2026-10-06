@@ -1,4 +1,5 @@
 import { gql } from 'graphql-tag'
+import { SLOT_DRAFT_FIELDS } from './queries'
 
 // ==== SCHEDULE TEMPLATE====
 
@@ -211,6 +212,21 @@ export const ASSIGN_SLOT_V2_MUTATION = gql`
   mutation AssignSlotV2($shiftSlotId: ID!, $userId: ID!) {
     addUserToShiftSlot(shiftSlotId: $shiftSlotId, userId: $userId) {
       ${SLOT_WITH_USER}
+    }
+  }
+`
+
+// Writes a draft, not the slot. The member sees nothing until the lock.
+// Without userId the draft removes the person; a draft with the locked person
+// removes the draft (ksg-nett-backend/schedules/schemas/drafts.py).
+export const DRAFT_SLOT_V2_MUTATION = gql`
+  ${SLOT_DRAFT_FIELDS}
+  mutation DraftSlotV2($shiftSlotId: ID!, $userId: ID) {
+    draftSlot(shiftSlotId: $shiftSlotId, userId: $userId) {
+      shiftSlot {
+        id
+        ...SlotDraftFields
+      }
     }
   }
 `

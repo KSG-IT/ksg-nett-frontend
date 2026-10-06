@@ -36,6 +36,12 @@ export function applyDrafts(shifts: DayShift[]): DayShift[] {
   }))
 }
 
+// The person who is locked in the slot, with or without a draft. A draft with
+// this person removes the draft.
+export function lockedPerson(slot: DayShiftSlot): SlotUser {
+  return slot.draft ? slot.lockedUser ?? null : slot.user
+}
+
 export function draftCount(shifts: DayShift[]) {
   return shifts.reduce(
     (sum, shift) => sum + shift.slots.filter(slot => slot.draft).length,

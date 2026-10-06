@@ -15,10 +15,8 @@ import { SEARCHBAR_USERS_QUERY } from 'modules/users/queries'
 import { useState } from 'react'
 import { format } from 'util/date-fns'
 import { DayShift, DayShiftSlot } from '../../allShifts'
-import {
-  ASSIGN_SLOT_V2_MUTATION,
-  CLEAR_SLOT_V2_MUTATION,
-} from '../../mutations'
+import { draftKind, lockedPerson } from '../../drafts'
+import { DRAFT_SLOT_V2_MUTATION } from '../../mutations'
 import { busyOnDay, compactTime, shiftCounts } from '../../scheduleGrid'
 import { parseShiftRole } from '../../util'
 import classes from './ScheduleGrid.module.css'
@@ -117,8 +115,7 @@ const SlotPickerBody: React.FC<SlotPickerBodyProps> = ({
       skip: debouncedSearch === '',
     }
   )
-  const [assign, { loading: assigning }] = useMutation(ASSIGN_SLOT_V2_MUTATION)
-  const [clear, { loading: clearing }] = useMutation(CLEAR_SLOT_V2_MUTATION)
+  const [draftSlot, { loading: saving }] = useMutation(DRAFT_SLOT_V2_MUTATION)
 
   const counts = shiftCounts(shifts)
   const countOf = (userId: string) =>
@@ -172,8 +169,22 @@ const SlotPickerBody: React.FC<SlotPickerBodyProps> = ({
     }
   }
 
+  // Every change is a draft until a manager locks it. A draft with the locked
+  // person removes the draft, and a draft without a person removes the person.
+  function saveDraft(userId: string | null, message?: string) {
+    draftSlot({
+      variables: { shiftSlotId: slot.id, userId },
+      onCompleted() {
+        if (message) showNotification({ message })
+      },
+      onError({ message }) {
+        showNotification({ title: 'Noe gikk galt', message, color: 'red' })
+      },
+    })
+  }
+
   function handlePick(person: PickerPerson) {
-    assign({
+    draftSlot({
       variables: { shiftSlotId: slot.id, userId: person.id },
       onCompleted() {
         onAssigned(target)
@@ -186,16 +197,16 @@ const SlotPickerBody: React.FC<SlotPickerBodyProps> = ({
 
   function handleClear() {
     const name = slot.user?.getCleanFullName
-    clear({
-      variables: { shiftSlotId: slot.id },
-      onCompleted() {
-        showNotification({ message: `${name} er fjernet fra ${shift.name}` })
-        onClose()
-      },
-      onError({ message }) {
-        showNotification({ title: 'Noe gikk galt', message, color: 'red' })
-      },
-    })
+    saveDraft(
+      null,
+      slot.draft && !slot.lockedUser
+        ? `Utkastet for ${name} er forkastet`
+        : `${name} fjernes fra ${shift.name} når utkastet låses inn`
+    )
+  }
+
+  function handleDiscard() {
+    saveDraft(lockedPerson(slot)?.id ?? null, 'Utkastet er forkastet')
   }
 
   return (
@@ -204,22 +215,12 @@ const SlotPickerBody: React.FC<SlotPickerBodyProps> = ({
         {format(new Date(shift.datetimeStart), 'EEE d. MMM')} · {shift.name}{' '}
         {compactTime(shift)} · {parseShiftRole(slot.role)}
       </Text>
-      {slot.user && (
-        <div className={classes.current}>
-          <Text size="sm" truncate>
-            {slot.user.getFullWithNickName}
-          </Text>
-          <Button
-            size="compact-xs"
-            variant="subtle"
-            color="red"
-            loading={clearing}
-            onClick={handleClear}
-          >
-            Fjern
-          </Button>
-        </div>
-      )}
+      <CurrentPerson
+        slot={slot}
+        saving={saving}
+        onClear={handleClear}
+        onDiscard={handleDiscard}
+      />
       <TextInput
         size={touch ? 'md' : 'xs'}
         placeholder={slot.user ? 'Bytt til …' : 'Søk navn …'}
@@ -238,7 +239,7 @@ const SlotPickerBody: React.FC<SlotPickerBodyProps> = ({
       <PickerRows
         people={people}
         highlighted={highlighted}
-        disabled={assigning}
+        disabled={saving}
         touch={touch}
         countOf={countOf}
         busyOf={userId => busyOnDay(shifts, userId, shift)}
@@ -250,6 +251,68 @@ const SlotPickerBody: React.FC<SlotPickerBodyProps> = ({
         </Text>
       )}
     </Stack>
+  )
+}
+
+interface CurrentPersonProps {
+  slot: DayShiftSlot
+  saving: boolean
+  onClear: () => void
+  onDiscard: () => void
+}
+
+// The person in the slot after the drafts, with what a manager can do.
+const CurrentPerson: React.FC<CurrentPersonProps> = ({
+  slot,
+  saving,
+  onClear,
+  onDiscard,
+}) => {
+  const kind = draftKind(slot)
+  if (kind === 'remove') {
+    return (
+      <div className={classes.current}>
+        <Text size="sm" truncate td="line-through">
+          {slot.lockedUser?.getFullWithNickName}
+        </Text>
+        <Button
+          size="compact-xs"
+          variant="subtle"
+          loading={saving}
+          onClick={onDiscard}
+        >
+          Angre fjerning
+        </Button>
+      </div>
+    )
+  }
+  if (!slot.user) return null
+  return (
+    <div className={classes.current}>
+      <Text size="sm" truncate>
+        {slot.user.getFullWithNickName}
+        {kind && ' (utkast)'}
+      </Text>
+      <Button
+        size="compact-xs"
+        variant="subtle"
+        color="red"
+        loading={saving}
+        onClick={onClear}
+      >
+        Fjern
+      </Button>
+      {kind && (
+        <Button
+          size="compact-xs"
+          variant="subtle"
+          loading={saving}
+          onClick={onDiscard}
+        >
+          Forkast utkast
+        </Button>
+      )}
+    </div>
   )
 }
 
