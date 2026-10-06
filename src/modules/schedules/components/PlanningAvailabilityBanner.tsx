@@ -4,25 +4,28 @@ import { IconAlarm, IconCalendarEvent } from '@tabler/icons-react'
 import { parseISO } from 'date-fns'
 import { Link } from 'react-router-dom'
 import { format } from 'util/date-fns'
-import { planningBanner, weekRange } from '../availability'
+import { PlanningBanner, planningBanner, weekRange } from '../availability'
 import { MY_OPEN_PLANNING_PERIODS_SUMMARY_QUERY } from '../queries'
 import type { MyOpenPlanningPeriodsSummaryReturns } from '../types.graphql'
 import classes from './PlanningAvailabilityBanner.module.css'
 
-type Period = MyOpenPlanningPeriodsSummaryReturns['myOpenPlanningPeriods'][0]
+// A period opens or closes a few times a term, so a slow poll is enough.
+// Each page that shows the banner also fetches on mount.
+const POLL_INTERVAL = 5 * 60_000
 
 // Mockup 1 in the "Vaktplanlegging mockups" canvas
 export const PlanningAvailabilityBanner: React.FC = () => {
   const { data } = useQuery<MyOpenPlanningPeriodsSummaryReturns>(
     MY_OPEN_PLANNING_PERIODS_SUMMARY_QUERY,
-    { pollInterval: 30_000 }
+    { pollInterval: POLL_INTERVAL, fetchPolicy: 'cache-and-network' }
   )
-  const period = [...(data?.myOpenPlanningPeriods ?? [])]
-    .filter(period => planningBanner(period))
-    .sort((a, b) => a.deadline.localeCompare(b.deadline))[0]
-  const banner = period && planningBanner(period)
+  const next = (data?.myOpenPlanningPeriods ?? [])
+    .map(period => ({ period, banner: planningBanner(period) }))
+    .filter(item => item.banner)
+    .sort((a, b) => a.period.deadline.localeCompare(b.period.deadline))[0]
 
-  if (!period || !banner) return null
+  if (!next?.banner) return null
+  const { period, banner } = next
 
   const deadline = parseISO(period.deadline)
   const name = `${period.schedule.name}, ${weekRange(
@@ -65,7 +68,7 @@ export const PlanningAvailabilityBanner: React.FC = () => {
           Frist {banner.urgent === 'TODAY' ? 'i dag' : 'i morgen'}: {name}
         </Text>
         <Text size="sm" className={classes.urgentBody}>
-          {urgentBody(period, banner.hasChanges, banner.optIn, deadline)}
+          {urgentBody(banner, deadline)}
         </Text>
       </div>
       <Button
@@ -81,15 +84,10 @@ export const PlanningAvailabilityBanner: React.FC = () => {
   )
 }
 
-function urgentBody(
-  period: Period,
-  hasChanges: boolean,
-  optIn: boolean,
-  deadline: Date
-) {
-  if (hasChanges) {
+function urgentBody(banner: PlanningBanner, deadline: Date) {
+  if (banner.hasChanges) {
     return `Se over svarene dine før fristen kl. ${format(deadline, 'HH:mm')}.`
   }
-  if (optIn) return 'Du har ikke meldt deg på noen vakter.'
-  return `Du har ikke endret noe. Stemmer det at du kan ta alle de ${period.shifts.length} vaktene?`
+  if (banner.optIn) return 'Du har ikke meldt deg på noen vakter.'
+  return `Du har ikke endret noe. Stemmer det at du kan ta alle de ${banner.openShiftCount} vaktene?`
 }
