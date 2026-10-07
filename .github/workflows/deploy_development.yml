@@ -18,14 +18,16 @@ jobs:
     uses: ./.github/workflows/tests.yml
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [test]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
+          # Yarn comes from corepack later. No automatic cache from packageManager.
+          package-manager-cache: false
           node-version: 22.16.0
       - id: install-aws-cli
         uses: unfor19/install-aws-cli-action@v1
