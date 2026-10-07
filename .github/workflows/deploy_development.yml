@@ -2,7 +2,7 @@ name: Deploy development
 
 on:
   push:
-    branches: [develop]
+    branches: [master]
 
 env:
   AWS_DEFAULT_REGION: eu-west-3

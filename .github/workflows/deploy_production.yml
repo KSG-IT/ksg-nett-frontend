@@ -1,8 +1,10 @@
 name: Deploy production
 
+# Production deploys on a version tag, for example v2026.10.3. The tag must be
+# on master. See ksg-nett-knowledge-base/plans/single-branch-master.md.
 on:
   push:
-    branches: [master]
+    tags: ['v*']
 
 env:
   AWS_DEFAULT_REGION: eu-west-3
@@ -13,7 +15,17 @@ env:
   TAG: ${{ github.sha }}
 
 jobs:
+  check-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check that the tag is on master
+        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/master
+
   test:
+    needs: [check-tag]
     uses: ./.github/workflows/tests.yml
 
   build:
