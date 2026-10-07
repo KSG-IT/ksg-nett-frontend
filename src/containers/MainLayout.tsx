@@ -90,7 +90,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                   target="_blank"
                   href="https://github.com/KSG-IT/ksg-nett-frontend/blob/develop/CHANGELOG.md"
                 >
-                  <Badge color="gray">v{APP_VERSION}</Badge>
+                  <Badge color="gray">{APP_VERSION}</Badge>
                 </a>
               </Group>
             )}

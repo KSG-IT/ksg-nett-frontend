@@ -7,6 +7,15 @@ dotenv.config()
 // out that a new version is deployed (src/util/version.ts).
 const BUILD_ID = process.env.GITHUB_SHA || `local-${Date.now()}`
 
+// The version shown in the app. A release build takes it from the tag, for
+// example v2026.10.3. Other builds show the commit. See scripts/release.sh.
+const APP_VERSION =
+  process.env.GITHUB_REF_TYPE === 'tag'
+    ? process.env.GITHUB_REF_NAME
+    : process.env.GITHUB_SHA
+    ? `dev-${process.env.GITHUB_SHA.slice(0, 7)}`
+    : 'local'
+
 function versionFile(): Plugin {
   return {
     name: 'version-file',
@@ -31,7 +40,7 @@ export default defineConfig({
     port: Number(process.env.VITE_PORT) || 3000,
   },
   define: {
-    APP_VERSION: JSON.stringify(process.env.npm_package_version),
+    APP_VERSION: JSON.stringify(APP_VERSION),
     BUILD_ID: JSON.stringify(BUILD_ID),
   },
   build: {
