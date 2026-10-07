@@ -2,7 +2,13 @@ import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 import { createUploadLink } from 'apollo-upload-client'
-import { getLoginToken } from 'util/auth'
+import * as Sentry from '@sentry/react'
+import {
+  getLoginToken,
+  hasSavedLoginToken,
+  isNotLoggedInError,
+  removeLoginToken,
+} from 'util/auth'
 import { API_URL } from 'util/env'
 import { createQueryRetryLink } from 'util/retryLink'
 
@@ -30,6 +36,14 @@ const languageLink = setContext((_, { headers }) => {
 
 // Log any GraphQL errors or network error that occurred
 const errorLink = onError(({ graphQLErrors, networkError }) => {
+  // The token expired while the app was open. Log out and show the login page.
+  if (hasSavedLoginToken() && isNotLoggedInError(graphQLErrors)) {
+    removeLoginToken()
+    Sentry.setUser(null)
+    window.location.assign('/login')
+    return
+  }
+
   if (graphQLErrors)
     graphQLErrors.map(({ message, locations, path }) =>
       console.log(
