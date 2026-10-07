@@ -14,7 +14,7 @@
 # the current year and month, add 1 to the last number. Otherwise start the
 # current month at 1.
 #
-# With make: make release-version (preview) and make release.
+# With yarn: yarn release:next (preview) and yarn release.
 #
 # After the push, approve the run in GitHub Actions. Then CI deploys, and
 # creates the GitHub release with notes from the merged pull requests.
