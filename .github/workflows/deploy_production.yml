@@ -31,6 +31,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [test]
+    # The environment has required reviewers. The run waits here, after the
+    # tests, until a reviewer approves it in the Actions tab.
+    environment: production
 
     steps:
       - uses: actions/checkout@v4
