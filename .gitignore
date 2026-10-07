@@ -25,6 +25,9 @@ yarn-error.log*
 
 dist
 
+# Vite dependency cache
+.vite
+
 # IDEs and editors
 .idea
 
