@@ -64,7 +64,7 @@
     "push:development": "./deploy.sh development",
     "build:production": "vite build --mode production",
     "release": "scripts/release.sh release",
-    "release:next": "scripts/release.sh next",
+    "release:preview": "scripts/release.sh preview",
     "deploy:production": "npm run build:production && npm run push:production",
     "push:production": "./deploy.sh production",
     "test": "jest src"
