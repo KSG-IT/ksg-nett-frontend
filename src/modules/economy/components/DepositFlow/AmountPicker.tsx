@@ -1,6 +1,8 @@
-import { Group, NumberFormatter, NumberInput, Stack, Text } from '@mantine/core'
+import { Stack, Text } from '@mantine/core'
 import { DEPOSIT_PRESETS } from 'modules/economy/deposit'
 import { useState } from 'react'
+import { AmountDisplay } from './AmountDisplay'
+import { AmountInput } from './AmountInput'
 import { AmountOptions } from './AmountOptions'
 
 interface AmountPickerProps {
@@ -12,8 +14,7 @@ interface AmountPickerProps {
 
 /**
  * The amount is one of the presets, or a free amount after "Annet". "Annet"
- * keeps the amount so far, ready to edit. An empty field is NaN, not
- * undefined: react-hook-form puts the default value back for undefined.
+ * keeps the amount so far, ready to edit.
  */
 export const AmountPicker: React.FC<AmountPickerProps> = ({
   value,
@@ -33,47 +34,9 @@ export const AmountPicker: React.FC<AmountPickerProps> = ({
         Hvor mye vil du fylle på?
       </Text>
       {custom ? (
-        <NumberInput
-          autoFocus
-          hideControls
-          allowDecimal={false}
-          allowNegative={false}
-          thousandSeparator=" "
-          size="xl"
-          placeholder="0"
-          aria-label="Eget beløp i kroner"
-          rightSection={
-            <Text fz={24} fw={700} c="dimmed">
-              kr
-            </Text>
-          }
-          rightSectionWidth={56}
-          inputWrapperOrder={['label', 'input', 'description', 'error']}
-          styles={{
-            input: {
-              fontSize: 48,
-              fontWeight: 800,
-              height: 80,
-              // Red is for errors only
-              '--input-bd-focus': 'var(--mantine-color-dark-3)',
-            },
-          }}
-          value={Number.isNaN(value) ? '' : value}
-          onChange={amount =>
-            onChange(typeof amount === 'number' ? amount : NaN)
-          }
-          error={error}
-          description="Fra 1 til 30 000 kr."
-        />
+        <AmountInput value={value} onChange={onChange} error={error} />
       ) : (
-        <Group justify="center" align="baseline" gap="xs" h={80}>
-          <Text fz={56} fw={800} lh={1} style={{ letterSpacing: '-0.03em' }}>
-            <NumberFormatter value={value} thousandSeparator=" " />
-          </Text>
-          <Text fz={28} fw={700} c="dimmed">
-            kr
-          </Text>
-        </Group>
+        <AmountDisplay value={value} />
       )}
       <AmountOptions
         selected={custom ? 'custom' : value}
