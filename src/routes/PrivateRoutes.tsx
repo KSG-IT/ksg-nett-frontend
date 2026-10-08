@@ -98,6 +98,9 @@ const SocinomicsControlPanel = React.lazy(
 )
 
 const SociRanked = React.lazy(() => import('modules/economy/views/SociRanked'))
+const DepositStatus = React.lazy(
+  () => import('modules/economy/views/DepositStatus')
+)
 const SociStatistics = React.lazy(
   () => import('modules/economy/views/SociStatistics')
 )
@@ -488,6 +491,7 @@ export const AppRoutes: React.FC = () => {
               }
             />
             <Route path="create" element={<CreateDeposit />} />
+            <Route path=":depositId/status" element={<DepositStatus />} />
           </Route>
           <Route path="me" element={<MyEconomy />} />
           <Route path="soci-products" element={<h2>Suh duh</h2>} />

@@ -1,5 +1,6 @@
 import { UserNode, UserThumbnailProps } from 'modules/users/types'
 import { RelayEdges, RelayEdgesWithPageInfo } from 'types/graphql'
+import { StripeDepositFee } from './deposit'
 import {
   DepositMethodValues,
   SociOrderSessionStatusValues,
@@ -248,7 +249,7 @@ export interface CreateDepositMutationVariables {
 }
 
 export interface CreateDepositMutationReturns {
-  deposit: DepositNode
+  createDeposit: { deposit: Pick<DepositNode, 'id'> }
 }
 
 type SociBankAccountInput = {
@@ -447,4 +448,53 @@ export interface MyPurchasesByPeriodVariables {
   dateFrom: string | null
   dateTo: string
   granularity: 'DAY' | 'WEEK' | 'MONTH' | 'SEMESTER'
+}
+
+// Deposit page
+export type OngoingDeposit = Pick<
+  DepositNode,
+  'id' | 'amount' | 'resolvedAmount' | 'createdAt'
+>
+
+export interface OngoingDepositIntentReturns {
+  ongoingDepositIntent: OngoingDeposit | null
+}
+
+export interface StripeDepositFeeReturns {
+  stripeDepositFee: StripeDepositFee
+}
+
+export interface DepositClientSecretReturns {
+  getClientSecretFromDepositId: string | null
+}
+
+export interface DepositClientSecretVariables {
+  depositId: string
+}
+
+export type DepositStatusNode = Pick<
+  DepositNode,
+  | 'id'
+  | 'amount'
+  | 'resolvedAmount'
+  | 'depositMethod'
+  | 'description'
+  | 'approved'
+  | 'approvedAt'
+>
+
+export interface DepositStatusReturns {
+  deposit: DepositStatusNode | null
+  me: Pick<UserNode, 'id' | 'balance'>
+}
+
+export interface DepositStatusVariables {
+  id: string
+}
+
+export interface MyEmailNotificationsReturns {
+  me: Pick<
+    UserNode,
+    'id' | 'notifyOnDeposit' | 'notifyOnQuote' | 'notifyOnShift'
+  >
 }

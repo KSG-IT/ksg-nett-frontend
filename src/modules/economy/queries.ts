@@ -372,3 +372,58 @@ export const MY_PURCHASES_BY_PERIOD_QUERY = gql`
     }
   }
 `
+
+export const ONGOING_DEPOSIT_INTENT_QUERY = gql`
+  query OngoingDepositIntent {
+    ongoingDepositIntent {
+      id
+      amount
+      resolvedAmount
+      createdAt
+    }
+  }
+`
+
+export const STRIPE_DEPOSIT_FEE_QUERY = gql`
+  query StripeDepositFee {
+    stripeDepositFee {
+      flatFee
+      percentageFee
+    }
+  }
+`
+
+export const DEPOSIT_CLIENT_SECRET_QUERY = gql`
+  query DepositClientSecret($depositId: ID!) {
+    getClientSecretFromDepositId(depositId: $depositId)
+  }
+`
+
+export const DEPOSIT_STATUS_QUERY = gql`
+  query DepositStatus($id: ID!) {
+    deposit(id: $id) {
+      id
+      amount
+      resolvedAmount
+      depositMethod
+      description
+      approved
+      approvedAt
+    }
+    me {
+      id
+      balance
+    }
+  }
+`
+
+export const MY_EMAIL_NOTIFICATIONS_QUERY = gql`
+  query MyEmailNotifications {
+    me {
+      id
+      notifyOnDeposit
+      notifyOnQuote
+      notifyOnShift
+    }
+  }
+`

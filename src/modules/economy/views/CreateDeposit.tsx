@@ -1,68 +1,51 @@
-import { gql, useQuery } from '@apollo/client'
-import { Card, Container, Title } from '@mantine/core'
+import {
+  Container,
+  Group,
+  NumberFormatter,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
-import { FullPageError } from 'components/FullPageComponents'
-import { FullContentLoader } from 'components/Loading'
-import { useMediaQuery } from 'util/hooks'
-import { CreateDepositForm, CreateDepositInfoBox } from '../components'
-import { createStyles } from '@mantine/emotion'
+import { useSearchParams } from 'react-router-dom'
+import { useMe } from 'util/hooks'
+import { DepositFlow } from '../components/DepositFlow'
+import { DepositMethodValues } from '../enums'
 
-const breadCrumbItems = [
+const breadcrumbItems = [
   { label: 'Hjem', path: '/dashboard' },
   { label: 'Min økonomi', path: '/economy/me' },
   { label: 'Innskudd', path: '/economy/deposits/create' },
 ]
 
-interface DepositProps {}
-
-export const ONGOING_DEPOSIT_INTENT_QUERY = gql`
-  query OngoingDepositIntent {
-    ongoingDepositIntent {
-      id
-      amount
-      resolvedAmount
-      stripePaymentId
-    }
-  }
-`
-
-export const CreateDeposit: React.FC<DepositProps> = () => {
-  const { classes } = useStyles()
-  const mobileSize = useMediaQuery('(max-width: 600px)')
-
-  const { data, loading, error } = useQuery(ONGOING_DEPOSIT_INTENT_QUERY)
-
-  if (error) return <FullPageError />
-
-  if (loading || !data) return <FullContentLoader />
-
-  const onGoingIntent = data?.ongoingDepositIntent ?? null
+export const CreateDeposit: React.FC = () => {
+  const me = useMe()
+  const [searchParams] = useSearchParams()
+  // The failed card payment page links here with ?method=bank
+  const initialMethod =
+    searchParams.get('method') === 'bank'
+      ? DepositMethodValues.BANK_TRANSFER
+      : DepositMethodValues.STRIPE
 
   return (
-    <Container size={'sm'} p={mobileSize ? 0 : 'xl'}>
-      <Breadcrumbs items={breadCrumbItems} />
-      <Title my={'xs'} className={classes.title} order={3}>
-        LEGG TIL INNSKUDD
-      </Title>
-      <CreateDepositInfoBox />
-
-      <Card radius={'md'} withBorder className={classes.card}>
-        <CreateDepositForm
-          onCompletedCallback={() => {}}
-          onGoingIntent={onGoingIntent}
-        />
-      </Card>
+    <Container size={480} py="md">
+      <Breadcrumbs items={breadcrumbItems} />
+      <Stack gap="md" mt="sm">
+        <Title order={2}>Fyll på konto</Title>
+        <Group justify="space-between" px={4}>
+          <Text size="sm" c="dimmed">
+            Saldo nå
+          </Text>
+          <Text fw={600}>
+            <NumberFormatter
+              value={me.balance}
+              suffix=" kr"
+              thousandSeparator=" "
+            />
+          </Text>
+        </Group>
+        <DepositFlow initialMethod={initialMethod} />
+      </Stack>
     </Container>
   )
 }
-
-const useStyles = createStyles({
-  title: {
-    color: 'var(--mantine-color-gray-6)',
-    fontWeight: 'bold',
-  },
-  card: {
-    borderTop: '5px solid var(--mantine-color-samfundet-red-7)',
-    margin: `var(--mantine-spacing-sm) 0`,
-  },
-})

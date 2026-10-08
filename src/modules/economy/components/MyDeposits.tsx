@@ -12,7 +12,7 @@ import { IconClock, IconPigMoney, IconTrash } from '@tabler/icons-react'
 import { Badge } from 'components/Badge'
 import { Link } from 'react-router-dom'
 import { useDepositMutations } from '../mutations.hooks'
-import { MY_BANK_ACCOUNT_QUERY } from '../queries'
+import { MY_BANK_ACCOUNT_QUERY, ONGOING_DEPOSIT_INTENT_QUERY } from '../queries'
 import {
   activityTime,
   depositAmounts,
@@ -77,7 +77,7 @@ const DepositRow: React.FC<DepositRowProps> = ({ deposit, now }) => {
     if (!confirm('Er du sikker på at du vil slette dette innskuddet?')) return
     deleteDeposit({
       variables: { id: deposit.id },
-      refetchQueries: [MY_BANK_ACCOUNT_QUERY],
+      refetchQueries: [MY_BANK_ACCOUNT_QUERY, ONGOING_DEPOSIT_INTENT_QUERY],
       onCompleted() {
         showNotification({
           title: 'Suksess',
