@@ -399,6 +399,12 @@ export const DEPOSIT_CLIENT_SECRET_QUERY = gql`
   }
 `
 
+export const STRIPE_CUSTOMER_SESSION_QUERY = gql`
+  query StripeCustomerSession {
+    stripeCustomerSessionClientSecret
+  }
+`
+
 export const DEPOSIT_STATUS_QUERY = gql`
   query DepositStatus($id: ID!) {
     deposit(id: $id) {
