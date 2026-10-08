@@ -1,0 +1,13 @@
+/* Mantine's Text class has the same specificity; the doubled class wins */
+.amount.amount {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.amountUnit.amountUnit {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--mantine-color-dimmed);
+}

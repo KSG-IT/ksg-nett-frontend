@@ -1,0 +1,24 @@
+/*
+ * Mantine sets the input size with a class of the same specificity, and its
+ * CSS can load after this file. The doubled class wins in either order.
+ */
+.input.input {
+  height: 80px;
+  font-size: 48px;
+  font-weight: 800;
+}
+
+/* Red is for errors only */
+.input.input:focus {
+  border-color: var(--mantine-color-dark-3);
+}
+
+.unit {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--mantine-color-dimmed);
+}
+
+.input.input[data-error]:focus {
+  border-color: var(--mantine-color-error);
+}

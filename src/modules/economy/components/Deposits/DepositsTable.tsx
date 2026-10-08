@@ -10,7 +10,6 @@ import {
 import { CardTable } from 'components/CardTable'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
-import { DepositMethodValues } from 'modules/economy/enums'
 import { useDepositMutations } from 'modules/economy/mutations.hooks'
 import { ALL_DEPOSITS } from 'modules/economy/queries'
 import { DepositNode } from 'modules/economy/types.graphql'
@@ -146,11 +145,6 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
         </Link>
       </Table.Td>
       <Table.Td>{deposit.amount}</Table.Td>
-      <Table.Td>
-        {deposit.depositMethod === DepositMethodValues.BANK_TRANSFER
-          ? 'Bankoverføring'
-          : 'Stripe'}
-      </Table.Td>
       <Table.Td>{deposit.description}</Table.Td>
       <Table.Td>
         {deposit.approvedBy ? (
@@ -212,7 +206,6 @@ export const DepositsTable: React.FC<DepositsTableProps> = ({
           <Table.Th>Tidsstempel</Table.Th>
           <Table.Th>Navn</Table.Th>
           <Table.Th>Sum</Table.Th>
-          <Table.Th>Betalingsmetode</Table.Th>
           <Table.Th>Kommentar</Table.Th>
           <Table.Th>Godkjent av</Table.Th>
           <Table.Th></Table.Th>
