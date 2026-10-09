@@ -524,7 +524,8 @@
       'turn right'
       'strip strip';
     gap: 0.5em 0.8em;
-    padding: 0.5em max(1em, env(safe-area-inset-right))
+    padding: max(0.5em, env(safe-area-inset-top))
+      max(1em, env(safe-area-inset-right))
       max(0.5em, env(safe-area-inset-bottom))
       max(1em, env(safe-area-inset-left));
   }

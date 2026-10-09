@@ -464,7 +464,8 @@
   .lobby {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.5em;
-    padding: 1.2em max(1em, env(safe-area-inset-right)) 1.2em
+    padding: max(1.2em, env(safe-area-inset-top))
+      max(1em, env(safe-area-inset-right)) 1.2em
       max(1em, env(safe-area-inset-left));
   }
 
