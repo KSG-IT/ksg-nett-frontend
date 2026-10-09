@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { GameScreen } from '../components/Game'
 import { Lobby } from '../components/Lobby'
 import { PortraitHint } from '../components/PortraitHint'
+import { useFullBleed } from '../useFullBleed'
 import { useFullscreen } from '../useFullscreen'
 import { useGameKeys } from '../useGameKeys'
 import { useTodGame } from '../useTodGame'
@@ -21,6 +22,7 @@ const TruthOrDrink: React.FC = () => {
     !editingPlayers && !confirmingEnd
   )
   useWakeLock(playing)
+  useFullBleed()
 
   return (
     <div className={classes.root}>

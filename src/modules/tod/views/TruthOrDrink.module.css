@@ -3,7 +3,11 @@
 
   position: fixed;
   inset: 0;
+  /* iOS Safari keeps a stale height after a rotation. dvh follows the real one. */
+  height: 100dvh;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
   background: radial-gradient(90% 70% at 15% 0%, #3a1418 0%, var(--tod-bg) 55%);
   color: var(--tod-text);
   /* One base size that grows with the screen. All parts use em. */
