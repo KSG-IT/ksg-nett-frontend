@@ -472,6 +472,10 @@ export interface DepositClientSecretVariables {
   depositId: string
 }
 
+export interface StripeCustomerSessionReturns {
+  stripeCustomerSessionClientSecret: string | null
+}
+
 export type DepositStatusNode = Pick<
   DepositNode,
   | 'id'

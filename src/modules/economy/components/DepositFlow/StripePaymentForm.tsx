@@ -62,6 +62,8 @@ export const StripePaymentForm: React.FC<StripePaymentFormProps> = ({
         )}
         <Text size="sm" c="dimmed" px={4}>
           Banken din kan be deg bekrefte betalingen i BankID eller bankappen.
+          Lagrer du kortet, lagres det hos Stripe, ikke hos KSG. Det brukes bare
+          når du selv fyller på, og du kan fjerne det her.
         </Text>
         <Stack gap={4}>
           <Button
