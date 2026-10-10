@@ -14,6 +14,17 @@ env:
   PROJECT_NAME: ksg-nett
 
 jobs:
+  changes:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Show the changes in this deploy
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: .github/scripts/release-diff.sh "$BEFORE" "$GITHUB_SHA"
+
   test:
     uses: ./.github/workflows/tests.yml
 
