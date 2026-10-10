@@ -23,6 +23,11 @@ jobs:
           fetch-depth: 0
       - name: Check that the tag is on master
         run: git merge-base --is-ancestor "$GITHUB_SHA" origin/master
+      # The summary is ready before the reviewer approves the build job.
+      - name: Show the changes since the previous release
+        run: |
+          previous="$(git describe --tags --abbrev=0 --match 'v*' "${GITHUB_SHA}^" 2>/dev/null || true)"
+          .github/scripts/release-diff.sh "$previous" "$GITHUB_SHA"
 
   test:
     needs: [check-tag]
