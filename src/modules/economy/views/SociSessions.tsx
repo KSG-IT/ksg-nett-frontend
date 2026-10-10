@@ -1,12 +1,14 @@
 import { useQuery } from '@apollo/client'
-import { Button, Group, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { IconChartArea, IconGlass, IconPlus } from '@tabler/icons-react'
 import { Breadcrumbs } from 'components/Breadcrumbs'
+import { LastUpdated } from 'components/LastUpdated'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { PermissionGate } from 'components/PermissionGate'
 import { useState } from 'react'
 import { DEFAULT_PAGINATION_SIZE } from 'util/consts'
+import { useLastUpdated, useVisiblePolling } from 'util/hooks'
 import { PERMISSIONS } from 'util/permissions'
 import {
   CreateSociSessionModal,
@@ -20,6 +22,9 @@ import {
 import { MessageBox } from 'components/MessageBox'
 import { createStyles } from '@mantine/emotion'
 
+// Only a visible tab polls, see useVisiblePolling.
+const SESSIONS_POLL_MS = 10_000
+
 const breadcrumbsItems = [
   { label: 'Hjem', path: '/dashboard' },
   { label: 'Økonomi', path: '/economy' },
@@ -30,17 +35,29 @@ export const SosiSessions: React.FC = () => {
   const { classes } = useSociSessionsStyles()
   const [createModalOpen, setCreateModalOpen] = useState(false)
 
-  const { data, loading, error, fetchMore } = useQuery<
-    AllSociSessionsReturns,
-    AllSociSessionsVariables
-  >(ALL_SOCI_SESSIONS, {
-    variables: { first: DEFAULT_PAGINATION_SIZE },
-    pollInterval: 10_000,
-  })
+  // notifyOnNetworkStatusChange makes every poll re-render, so "Sist oppdatert"
+  // moves. `loading` is true during a poll, so only the first load shows the loader.
+  const {
+    data,
+    error,
+    fetchMore,
+    networkStatus,
+    startPolling,
+    stopPolling,
+    refetch,
+  } = useQuery<AllSociSessionsReturns, AllSociSessionsVariables>(
+    ALL_SOCI_SESSIONS,
+    {
+      variables: { first: DEFAULT_PAGINATION_SIZE },
+      notifyOnNetworkStatusChange: true,
+    }
+  )
+  useVisiblePolling({ startPolling, stopPolling, refetch }, SESSIONS_POLL_MS)
+  const updatedAt = useLastUpdated(networkStatus)
 
   if (error) return <FullPageError />
 
-  if (loading || !data) return <FullContentLoader />
+  if (!data) return <FullContentLoader />
 
   const sociSessions = data?.allSociSessions.edges.map(edge => edge.node) ?? []
 
@@ -82,7 +99,10 @@ export const SosiSessions: React.FC = () => {
     <div className={classes.wrapper}>
       <Breadcrumbs items={breadcrumbsItems} />
       <Group justify="space-between">
-        <Title>Innkryssinger</Title>
+        <Stack gap={0}>
+          <Title>Innkryssinger</Title>
+          <LastUpdated updatedAt={updatedAt} />
+        </Stack>
         <Group>
           <PermissionGate permissions={PERMISSIONS.economy.add.sociSession}>
             <Button
