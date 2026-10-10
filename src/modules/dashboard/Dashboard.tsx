@@ -4,7 +4,7 @@ import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useStore } from 'store'
-import { useMediaQuery } from 'util/hooks'
+import { useMediaQuery, useVisiblePolling } from 'util/hooks'
 import { FutureShifts } from './components/FutureShifts'
 import { RecentQuotes } from './components/RecentQuotes'
 import { ShortcutCards } from './components/ShortcutCards'
@@ -15,6 +15,9 @@ import { DashboardDataQueryReturns } from './types.graphql'
 import { createStyles } from '@mantine/emotion'
 import { PlanningAvailabilityBanner } from 'modules/schedules/components/PlanningAvailabilityBanner'
 
+// The dashboard shows live data, so it polls often. Only a visible tab polls.
+const DASHBOARD_POLL_MS = 10_000
+
 const breadCrumbItems = [{ label: 'Hjem', path: '/dashboard' }]
 
 export const Dashboard = () => {
@@ -22,12 +25,9 @@ export const Dashboard = () => {
   const mediaQuery = useMediaQuery('(min-width: 1708px)')
   const user = useStore(state => state.user)!
 
-  const { data, loading, error } = useQuery<DashboardDataQueryReturns>(
-    DASHBOARD_DATA_QUERY,
-    {
-      pollInterval: 10_000,
-    }
-  )
+  const { data, loading, error, startPolling, stopPolling, refetch } =
+    useQuery<DashboardDataQueryReturns>(DASHBOARD_DATA_QUERY)
+  useVisiblePolling({ startPolling, stopPolling, refetch }, DASHBOARD_POLL_MS)
 
   if (error) return <FullPageError />
 
