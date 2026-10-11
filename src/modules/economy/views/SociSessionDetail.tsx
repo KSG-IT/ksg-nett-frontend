@@ -11,6 +11,7 @@ import { DetailQueryVariables } from 'types/graphql'
 import { PERMISSIONS } from 'util/permissions'
 import {
   PlaceProductOrder,
+  PlaceProductOrderButton,
   ProductOrderTable,
 } from '../components/SociSessions'
 import { MetaDataDisplay } from '../components/SociSessions/MetaDataDisplay'
@@ -112,9 +113,12 @@ export const SociSessionDetail: React.FC = () => {
 
       {closable && (
         <>
-          <Title order={2}>Legg til kryss</Title>
+          <Stack visibleFrom="sm">
+            <Title order={2}>Legg til kryss</Title>
 
-          <PlaceProductOrder sociSessionId={sociSession.id} />
+            <PlaceProductOrder sociSessionId={sociSession.id} />
+          </Stack>
+          <PlaceProductOrderButton sociSessionId={sociSession.id} />
         </>
       )}
     </Stack>
