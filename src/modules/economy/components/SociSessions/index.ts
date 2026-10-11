@@ -1,4 +1,5 @@
 export * from './SociSessionsTable'
 export * from './ProductOrderTable'
 export * from './PlaceProductOrder'
+export * from './PlaceProductOrderButton'
 export * from './CreateSociSessionModal'
