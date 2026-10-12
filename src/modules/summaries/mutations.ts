@@ -25,6 +25,51 @@ export const CREATE_SUMMARY_MUTATION = gql`
   }
 `
 
+export const OPEN_SUMMARY_MUTATION = gql`
+  mutation OpenSummary($summaryId: ID!) {
+    openSummary(summaryId: $summaryId) {
+      summary {
+        id
+        openedCount
+        readCount
+        openedByMe
+        readByMe
+      }
+    }
+  }
+`
+
+export const READ_SUMMARY_MUTATION = gql`
+  mutation ReadSummary($summaryId: ID!) {
+    readSummary(summaryId: $summaryId) {
+      summary {
+        id
+        openedCount
+        readCount
+        openedByMe
+        readByMe
+      }
+    }
+  }
+`
+
+export interface SummaryReceiptVariables {
+  summaryId: string
+}
+
+export interface OpenSummaryReturns {
+  openSummary: {
+    summary: Pick<
+      SummaryNode,
+      'id' | 'openedCount' | 'readCount' | 'openedByMe' | 'readByMe'
+    >
+  }
+}
+
+export interface ReadSummaryReturns {
+  readSummary: OpenSummaryReturns['openSummary']
+}
+
 export interface PatchSummaryReturns {
   patchSummary: { summary: Pick<SummaryNode, 'id'> }
 }

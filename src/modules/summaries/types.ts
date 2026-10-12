@@ -28,6 +28,10 @@ export interface SummaryNode {
   internalGroup: Pick<InternalGroupNode, 'id' | 'name'>
   title: string
   displayName: string
+  openedCount: number
+  readCount: number
+  openedByMe: boolean
+  readByMe: boolean
 }
 
 export type SummaryNodeShallow = Omit<SummaryNode, 'contents'>
