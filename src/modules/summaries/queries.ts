@@ -17,6 +17,10 @@ export const SUMMARY_QUERY = gql`
         name
       }
       displayName
+      openedCount
+      readCount
+      openedByMe
+      readByMe
       date
       updatedAt
       reporter {
@@ -56,6 +60,10 @@ export const ALL_SUMMARIES = gql`
           }
           date
           updatedAt
+          openedCount
+          readCount
+          openedByMe
+          readByMe
         }
       }
     }

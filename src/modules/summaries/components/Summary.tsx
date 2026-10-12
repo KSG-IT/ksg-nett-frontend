@@ -1,6 +1,7 @@
 import { Avatar, Divider, Group, Title } from '@mantine/core'
 import { Badge } from 'components/Badge'
 import { RichTextContent } from 'components/RichTextEditor'
+import { ReceiptStats } from './ReceiptStats'
 import { UserThumbnail } from '../../users/components'
 import { SummaryNode } from '../types'
 
@@ -35,6 +36,7 @@ export const Summary: React.FC<SummaryProps> = ({ summary }: SummaryProps) => {
           </Avatar.Group>
         </Group>
       </Group>
+      <ReceiptStats summary={summary} />
       <Divider size={1} />
       <RichTextContent html={summary.contents} />
     </>

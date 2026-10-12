@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import {
   Avatar,
+  Box,
   Button,
   Group,
   Stack,
@@ -61,6 +62,17 @@ export const Summaries: React.FC = () => {
       onClick={() => navigate(`/summaries/${summary.id}`)}
       key={summary.id}
     >
+      <Table.Td w={24}>
+        {!summary.openedByMe && (
+          <Box
+            title="Ikke åpnet av deg"
+            w={10}
+            h={10}
+            bg="samfundet-red"
+            style={{ borderRadius: '50%' }}
+          />
+        )}
+      </Table.Td>
       <Table.Td>
         <Text c={'dimmed'} fw={700}>
           {format(new Date(summary.date), 'dd.MM.yy')}
@@ -81,6 +93,8 @@ export const Summaries: React.FC = () => {
       <Table.Td>
         <UserThumbnail user={summary.reporter} />
       </Table.Td>
+      <Table.Td ta="right">{summary.openedCount}</Table.Td>
+      <Table.Td ta="right">{summary.readCount}</Table.Td>
     </Table.Tr>
   ))
 
@@ -144,10 +158,13 @@ export const Summaries: React.FC = () => {
       <CardTable className={classes.card} highlightOnHover>
         <Table.Thead>
           <Table.Tr>
+            <Table.Th />
             <Table.Th>Dato</Table.Th>
             <Table.Th>Type</Table.Th>
             <Table.Th>Deltakere</Table.Th>
             <Table.Th>Referent</Table.Th>
+            <Table.Th ta="right">Åpnet av</Table.Th>
+            <Table.Th ta="right">Lest av</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

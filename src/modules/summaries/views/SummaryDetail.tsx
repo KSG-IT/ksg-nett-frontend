@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { useParams } from 'react-router'
 import { PERMISSIONS } from 'util/permissions'
 import { Breadcrumbs } from '../../../components/Breadcrumbs'
+import { EndOfSummary } from '../components/EndOfSummary'
 import { Summary } from '../components/Summary'
 import { SummaryForm } from '../components/SummaryForm'
 import {
@@ -16,6 +17,7 @@ import {
   SummaryDetailsQueryReturns,
 } from '../index'
 import { SUMMARY_QUERY } from '../queries'
+import { useSummaryReceipts } from '../useSummaryReceipts'
 
 interface SummaryDetailParams {
   summaryId: string
@@ -37,6 +39,12 @@ export const SummaryDetail = () => {
   >(SUMMARY_QUERY, {
     variables: { id: params.summaryId },
     pollInterval: 30_000,
+  })
+
+  const { markRead } = useSummaryReceipts({
+    summaryId: params.summaryId,
+    enabled: !editMode && !!data?.summary,
+    readByMe: data?.summary?.readByMe ?? false,
   })
 
   if (error) return <FullPageError />
@@ -71,7 +79,10 @@ export const SummaryDetail = () => {
           onCompletedCallback={() => setEditMode(false)}
         />
       ) : (
-        <Summary summary={summary} />
+        <>
+          <Summary summary={summary} />
+          <EndOfSummary onReached={markRead} />
+        </>
       )}
     </Stack>
   )
