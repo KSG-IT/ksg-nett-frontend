@@ -1,0 +1,8 @@
+/* The placeholder extension marks the first paragraph of an empty editor. */
+.content :global(p.is-editor-empty:first-child::before) {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: var(--mantine-color-dimmed);
+  pointer-events: none;
+}

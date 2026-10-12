@@ -28,6 +28,7 @@
     "@testing-library/user-event": "^12.1.10",
     "@tiptap/core": "^3.31.4",
     "@tiptap/extension-link": "^3.31.4",
+    "@tiptap/extensions": "^3.31.4",
     "@tiptap/pm": "^3.31.4",
     "@tiptap/react": "^3.31.4",
     "@tiptap/starter-kit": "^3.31.4",

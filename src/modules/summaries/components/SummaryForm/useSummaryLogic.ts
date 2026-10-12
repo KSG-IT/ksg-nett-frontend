@@ -33,7 +33,10 @@ interface SummaryLogicInput {
 export function useSummaryLogic(input: SummaryLogicInput) {
   const { defaultValues, onSubmit } = input
 
-  const editor = useRichTextEditor(defaultValues.contents)
+  const editor = useRichTextEditor(
+    defaultValues.contents,
+    'Skriv referatet her. Bruk overskrifter for sakene på sakslisten.'
+  )
 
   const form = useForm<SummaryFormData, unknown, SummaryCleanedData>({
     mode: 'onSubmit',

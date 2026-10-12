@@ -70,7 +70,7 @@ export const InternalGroupEditForm: React.FC<InternalGroupEditFormProps> = ({
         onChange={e => setName(e.currentTarget.value)}
       />
       <label htmlFor="description">Beskrivelse av gjengen</label>
-      <RichTextEditor editor={editor} />
+      <RichTextEditor editor={editor} id="description" />
 
       <FileInput
         value={image}
