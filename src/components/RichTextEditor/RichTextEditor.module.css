@@ -6,3 +6,21 @@
   color: var(--mantine-color-dimmed);
   pointer-events: none;
 }
+
+/*
+ * A minimum height on the editable area, so an empty editor is a place to write
+ * and a click anywhere in it focuses the text. Documents get more room than notes.
+ */
+.root[data-variant='full'] .content :global(.ProseMirror) {
+  min-height: 280px;
+}
+
+.root[data-variant='compact'] .content :global(.ProseMirror) {
+  min-height: 120px;
+}
+
+@media (max-width: 48em) {
+  .root[data-variant='full'] .content :global(.ProseMirror) {
+    min-height: 220px;
+  }
+}
