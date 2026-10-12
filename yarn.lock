@@ -1858,7 +1858,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extensions@npm:3.31.4":
+"@tiptap/extensions@npm:3.31.4, @tiptap/extensions@npm:^3.31.4":
   version: 3.31.4
   resolution: "@tiptap/extensions@npm:3.31.4"
   peerDependencies:
@@ -4754,6 +4754,7 @@ __metadata:
     "@testing-library/user-event": "npm:^12.1.10"
     "@tiptap/core": "npm:^3.31.4"
     "@tiptap/extension-link": "npm:^3.31.4"
+    "@tiptap/extensions": "npm:^3.31.4"
     "@tiptap/pm": "npm:^3.31.4"
     "@tiptap/react": "npm:^3.31.4"
     "@tiptap/starter-kit": "npm:^3.31.4"

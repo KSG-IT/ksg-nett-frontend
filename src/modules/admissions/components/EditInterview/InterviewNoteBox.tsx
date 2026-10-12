@@ -51,5 +51,5 @@ export const InterviewNoteBox: React.FC<InterviewNoteBoxProps> = ({
     })
   }, [debouncedValue])
 
-  return <RichTextEditor editor={editor} />
+  return <RichTextEditor editor={editor} variant="compact" />
 }
