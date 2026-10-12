@@ -19,7 +19,8 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     <BaseEditor
       editor={editor}
       id={id}
-      classNames={{ content: classes.content }}
+      classNames={{ root: classes.root, content: classes.content }}
+      data-variant={variant}
       style={{ backgroundColor: 'white' }}
     >
       <BaseEditor.Toolbar sticky stickyOffset={60}>
