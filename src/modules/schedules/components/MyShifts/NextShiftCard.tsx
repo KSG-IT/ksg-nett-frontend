@@ -1,8 +1,8 @@
-import { Group, Paper, Stack, Text } from '@mantine/core'
+import { Divider, Group, Paper, Stack, Text } from '@mantine/core'
 import { DayShift } from '../../allShifts'
 import { coworkerShift, daysUntil, mySlot, relativeDay } from '../../myShifts'
 import { parseShiftRole } from '../../util'
-import { ShiftAvatars } from '../AllShifts/ShiftAvatars'
+import { ShiftDetails } from '../AllShifts/ShiftDetails'
 import { shiftTime } from '../AllShifts/shiftDisplay'
 import { LocationBadge } from '../LocationBadge'
 import { DateBlock } from './DateBlock'
@@ -45,25 +45,24 @@ export const NextShiftCard: React.FC<NextShiftCardProps> = ({
               </Text>
             )}
           </Group>
-          <Group gap="xs" wrap="wrap">
-            <Text
-              size="sm"
-              fw={600}
-              style={{ fontVariantNumeric: 'tabular-nums' }}
-            >
-              {shiftTime(shift)}
-            </Text>
-            {coworkers.slots.length > 0 && (
-              <>
-                <Text size="sm" c="dimmed">
-                  med
-                </Text>
-                <ShiftAvatars shift={coworkers} size={24} />
-              </>
-            )}
-          </Group>
+          <Text
+            size="sm"
+            fw={600}
+            style={{ fontVariantNumeric: 'tabular-nums' }}
+          >
+            {shiftTime(shift)}
+          </Text>
         </Stack>
       </Group>
+      {coworkers.slots.length > 0 && (
+        <>
+          <Divider my="sm" />
+          <Text size="xs" fw={700} c="dimmed" tt="uppercase" mb="xs">
+            Du jobber med
+          </Text>
+          <ShiftDetails shift={coworkers} />
+        </>
+      )}
     </Paper>
   )
 }
