@@ -23,6 +23,7 @@ import {
   BarTabDashboard,
   PreviousBarTabs,
 } from 'modules/barTab/views'
+import { Chat } from 'modules/chat'
 import { Dashboard } from 'modules/dashboard/Dashboard'
 import {
   CreateDeposit,
@@ -224,6 +225,12 @@ export const AppRoutes: React.FC = () => {
               </RestrictedRoute>
             }
           />
+        </Route>
+
+        {/* ==== CHAT MODULE ==== */}
+        <Route path="chat">
+          <Route index element={<Chat />} />
+          <Route path=":chatId" element={<Chat />} />
         </Route>
 
         {/* ==== SUMMARY MODULE ==== */}

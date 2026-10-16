@@ -1,0 +1,47 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+  max-width: 1180px;
+}
+
+/* One white card: the list on the left, the open chat on the right */
+.inbox {
+  display: flex;
+  height: calc(100dvh - 240px);
+  min-height: 480px;
+  background: var(--mantine-color-white);
+  border-radius: var(--mantine-radius-lg);
+  overflow: hidden;
+}
+
+.list {
+  flex: 0 0 340px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs);
+  border-right: 1px solid var(--mantine-color-gray-2);
+  overflow-y: auto;
+}
+
+.window {
+  flex: 1;
+  min-width: 0;
+}
+
+/* A phone shows the list or the chat, not both */
+@media (max-width: 48em) {
+  .list {
+    flex-basis: 100%;
+    border-right: 0;
+  }
+
+  .inbox[data-has-chat] .list {
+    display: none;
+  }
+
+  .inbox:not([data-has-chat]) .window {
+    display: none;
+  }
+}

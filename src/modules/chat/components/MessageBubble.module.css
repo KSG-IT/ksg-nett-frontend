@@ -1,0 +1,48 @@
+.row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.row[data-mine] {
+  align-items: flex-end;
+}
+
+.bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: min(70%, 520px);
+  padding: 10px 14px;
+  border-radius: var(--mantine-radius-lg);
+  background: var(--mantine-color-gray-0);
+}
+
+.row[data-mine] .bubble {
+  background: var(--mantine-color-samfundet-red-0);
+}
+
+.bubble[data-hidden] {
+  font-style: italic;
+  color: var(--mantine-color-dimmed);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.body {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+@media (max-width: 48em) {
+  .bubble {
+    max-width: 85%;
+  }
+}

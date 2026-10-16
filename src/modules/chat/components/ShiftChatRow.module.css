@@ -1,0 +1,26 @@
+.row {
+  display: flex;
+  background: var(--mantine-color-white);
+  border: 1px solid var(--mantine-color-gray-3);
+  border-radius: var(--mantine-radius-md);
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  min-height: 48px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs)
+    var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+/* A phone shows only the number of people */
+@media (max-width: 48em) {
+  .time {
+    display: none;
+  }
+}
