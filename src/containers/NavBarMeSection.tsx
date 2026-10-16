@@ -6,6 +6,7 @@ import {
   IconLogout,
   IconSettings,
 } from '@tabler/icons-react'
+import { ChatNavItem } from 'modules/chat'
 import { UserThumbnail } from 'modules/users/components'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from 'store'
@@ -87,6 +88,7 @@ export const NavBarMeSection: React.FC<NavBarMeSectionProps> = ({
         </div>
       </UnstyledButton>
       <MeItems activeLink={activeLink} />
+      <ChatNavItem />
       <NavItem
         label="Logg ut"
         link="#"

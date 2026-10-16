@@ -13,6 +13,7 @@ import { WantedList } from './components/WantedList'
 import { DASHBOARD_DATA_QUERY } from './queries'
 import { DashboardDataQueryReturns } from './types.graphql'
 import { createStyles } from '@mantine/emotion'
+import { JoinableShiftChats } from 'modules/chat'
 import { PlanningAvailabilityBanner } from 'modules/schedules/components/PlanningAvailabilityBanner'
 
 // The dashboard shows live data, so it polls often. Only a visible tab polls.
@@ -47,6 +48,7 @@ export const Dashboard = () => {
     <Stack gap="md" justify={'flex-start'} className={classes.wrapper}>
       <Breadcrumbs items={breadCrumbItems} />
       <PlanningAvailabilityBanner />
+      <JoinableShiftChats maxRows={2} />
       <ShortcutCards
         sociOrderSession={!!sociOrderSession}
         showNewbies={showNewbies}

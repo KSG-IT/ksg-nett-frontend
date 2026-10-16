@@ -1,0 +1,21 @@
+.wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.list {
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md);
+}
+
+.jump {
+  position: absolute;
+  left: 50%;
+  bottom: var(--mantine-spacing-xs);
+  transform: translateX(-50%);
+}

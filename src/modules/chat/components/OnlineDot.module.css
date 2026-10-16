@@ -1,0 +1,22 @@
+.dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid var(--mantine-color-gray-5);
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.dot[data-online] {
+  border-color: var(--mantine-color-green-8);
+  background: var(--mantine-color-green-8);
+}
+
+.label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}

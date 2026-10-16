@@ -1,4 +1,9 @@
-import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client'
+import {
+  ApolloClient,
+  ApolloLink,
+  InMemoryCache,
+  Reference,
+} from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 import { createUploadLink } from 'apollo-upload-client'
@@ -68,7 +73,30 @@ const client = new ApolloClient({
     //@ts-ignore
     uploadLink,
   ]),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          // A load without afterId is the newest window and replaces the list,
+          // so there is no gap after an absence and hidden messages update.
+          // A poll (afterId) adds the messages after the newest one.
+          chatMessages: {
+            keyArgs: ['chatId'],
+            merge(
+              existing: readonly Reference[] = [],
+              incoming: readonly Reference[],
+              { args, readField }
+            ) {
+              if (!args?.afterId) return incoming
+              const known = new Set(existing.map(m => readField('id', m)))
+              const added = incoming.filter(m => !known.has(readField('id', m)))
+              return [...existing, ...added]
+            },
+          },
+        },
+      },
+    },
+  }),
 })
 
 export default client

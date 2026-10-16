@@ -4,6 +4,7 @@ import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { MessageBox } from 'components/MessageBox'
+import { JoinableShiftChats } from 'modules/chat'
 import { useMatch, useNavigate } from 'react-router-dom'
 import { useIsMobile, useMe } from 'util/hooks'
 import { DayShift } from '../allShifts'
@@ -77,6 +78,7 @@ export const MyShifts: React.FC = () => {
           />
         </Group>
       </Group>
+      {!showPast && <JoinableShiftChats />}
       {showPast ? (
         <PastShifts
           shifts={past.data?.allMyShifts}

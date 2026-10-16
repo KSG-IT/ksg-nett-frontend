@@ -11,6 +11,7 @@ import { Badge } from 'components/Badge'
 import { createStyles } from '@mantine/emotion'
 import { FullContentLoader } from 'components/Loading'
 import { WhatsNewNotification } from 'components/WhatsNewNotification'
+import { ChatHeaderButton } from 'modules/chat'
 import { UserSearch } from 'modules/header/UserSearch'
 import React, { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -94,7 +95,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 </a>
               </Group>
             )}
-            <UserSearch />
+            <Group
+              gap="xs"
+              wrap="nowrap"
+              style={isMobile ? { flex: 1 } : undefined}
+            >
+              <UserSearch />
+              {isMobile && <ChatHeaderButton />}
+            </Group>
           </Group>
         </div>
       </AppShell.Header>
