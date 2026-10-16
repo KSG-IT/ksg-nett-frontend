@@ -6,7 +6,7 @@ import {
   IconLogout,
   IconSettings,
 } from '@tabler/icons-react'
-import { ChatNavItem } from 'modules/chat'
+import { ChatNavItem } from 'modules/chat/components/ChatNavItem'
 import { UserThumbnail } from 'modules/users/components'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from 'store'
