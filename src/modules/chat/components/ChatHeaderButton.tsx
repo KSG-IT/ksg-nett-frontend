@@ -7,7 +7,7 @@ import { useUnreadChatCount } from '../hooks/useUnreadChatCount'
 // On a phone the sidebar is collapsed, so the chat gets a button in the top bar
 // next to the search field, at the right edge.
 export const ChatHeaderButton: React.FC = () => {
-  const enabled = useChatEnabled()
+  const { enabled } = useChatEnabled()
   if (!enabled) return null
   return <ChatHeaderLink />
 }

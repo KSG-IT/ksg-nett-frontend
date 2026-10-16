@@ -20,7 +20,7 @@ interface JoinableShiftChatsProps {
 export const JoinableShiftChats: React.FC<JoinableShiftChatsProps> = ({
   maxRows,
 }) => {
-  const enabled = useChatEnabled()
+  const { enabled } = useChatEnabled()
   if (!enabled) return null
   return <JoinableShiftChatRows maxRows={maxRows} />
 }

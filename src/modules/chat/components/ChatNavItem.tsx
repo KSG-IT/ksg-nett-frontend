@@ -9,7 +9,7 @@ import { UnreadBadge } from './UnreadBadge'
 
 // The "Chat" row in the "me" section of the sidebar, with the unread count.
 export const ChatNavItem: React.FC = () => {
-  const enabled = useChatEnabled()
+  const { enabled } = useChatEnabled()
   if (!enabled) return null
   return <ChatNavLink />
 }

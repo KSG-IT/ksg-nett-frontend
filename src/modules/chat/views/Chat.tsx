@@ -1,6 +1,7 @@
 import { SegmentedControl, Text, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404 } from 'components/FullPageComponents'
+import { FullContentLoader } from 'components/Loading'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useMe } from 'util/hooks'
@@ -14,9 +15,10 @@ import classes from './Chat.module.css'
 export const Chat: React.FC = () => {
   const { chatId } = useParams()
   const me = useMe()
-  const enabled = useChatEnabled()
+  const { enabled, loading: flagLoading } = useChatEnabled()
   const [showAll, setShowAll] = useState(false)
 
+  if (flagLoading) return <FullContentLoader />
   if (!enabled) return <FullPage404 />
 
   // With a chat open, "Chat" links back to the list. This is the way back on a phone.
