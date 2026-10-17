@@ -175,6 +175,12 @@ export const PERMISSIONS = {
     },
   },
 
+  // ===== CHAT ======
+  chat: {
+    createMegaChat: 'chat.create_mega_chat',
+    addToMegaChat: 'chat.add_to_mega_chat',
+  },
+
   // ===== SCHEDULES ======
   schedules: {
     add: {

@@ -1,12 +1,21 @@
-import { RemoveScroll, SegmentedControl, Text, Title } from '@mantine/core'
+import {
+  Group,
+  RemoveScroll,
+  SegmentedControl,
+  Text,
+  Title,
+} from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404 } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { PermissionGate } from 'components/PermissionGate'
 import { useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useIsMobile, useMe } from 'util/hooks'
+import { PERMISSIONS } from 'util/permissions'
 import { ChatList } from '../components/ChatList'
 import { ChatWindow } from '../components/ChatWindow'
+import { NewMegaChatButton } from '../components/NewMegaChatButton'
 import { useChatEnabled } from '../hooks/useChatEnabled'
 import { useVisualViewport } from '../hooks/useVisualViewport'
 import classes from './Chat.module.css'
@@ -42,7 +51,12 @@ export const Chat: React.FC = () => {
     >
       <div className={classes.heading}>
         <Breadcrumbs items={breadcrumbsItems} />
-        <Title order={1}>Chat</Title>
+        <Group justify="space-between">
+          <Title order={1}>Chat</Title>
+          <PermissionGate permissions={PERMISSIONS.chat.createMegaChat}>
+            <NewMegaChatButton />
+          </PermissionGate>
+        </Group>
       </div>
       <RemoveScroll enabled={fullScreen} forwardProps>
         <div className={classes.inbox}>

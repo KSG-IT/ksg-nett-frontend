@@ -11,6 +11,7 @@ import { IconChevronLeft } from '@tabler/icons-react'
 import { Link } from 'react-router-dom'
 import { format } from 'util/date-fns'
 import { ChatDetail, ChatMember } from '../types.graphql'
+import { AddChatMembersButton } from './AddChatMembersButton'
 import { ChatMembersDrawer } from './ChatMembersDrawer'
 import { OnlineDot } from './OnlineDot'
 import classes from './ChatHeader.module.css'
@@ -52,6 +53,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ chat }) => (
     <Group gap={6} wrap="nowrap" visibleFrom="sm">
       <MemberAvatars members={chat.members} shown={5} />
     </Group>
+    <AddChatMembersButton chat={chat} />
     <ChatMembersDrawer members={chat.members} />
   </Group>
 )

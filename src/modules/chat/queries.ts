@@ -107,3 +107,22 @@ export const JOINABLE_SHIFT_CHATS_QUERY = gql`
     }
   }
 `
+
+export const MEGA_CHAT_PREVIEW_QUERY = gql`
+  query MegaChatPreview {
+    megaChatPreview {
+      open
+      userCount
+      shifts {
+        userCount
+        shift {
+          id
+          name
+          datetimeStart
+          datetimeEnd
+          locationDisplay
+        }
+      }
+    }
+  }
+`

@@ -1,3 +1,4 @@
+import { UserOption } from 'util/user'
 import { ChatMember, ChatMessage } from './types.graphql'
 
 // Relay ids are base64("ChatMessageNode:<number>"). The numbers grow with
@@ -31,4 +32,31 @@ export function readersLabel(readers: ChatMember[], shown = 2): string {
 
 export function lastMessageOf(messages: ChatMessage[], userId: string) {
   return [...messages].reverse().find(message => message.sender.id === userId)
+}
+
+interface MemberOption extends UserOption {
+  disabled: boolean
+}
+
+// The user picker of a mega chat. Members stay in the list, so a search for
+// them finds them, but they cannot be picked again.
+export function memberAwareOptions(
+  users: UserOption[],
+  members: ChatMember[]
+): MemberOption[] {
+  const memberIds = new Set(members.map(member => member.user.id))
+  return users.map(user =>
+    memberIds.has(user.value)
+      ? { ...user, label: `${user.label} (allerede medlem)`, disabled: true }
+      : { ...user, disabled: false }
+  )
+}
+
+// The picked users first, then the search results that are not picked.
+export function withPicked(
+  picked: UserOption[],
+  results: UserOption[]
+): UserOption[] {
+  const pickedIds = new Set(picked.map(user => user.value))
+  return [...picked, ...results.filter(user => !pickedIds.has(user.value))]
 }
