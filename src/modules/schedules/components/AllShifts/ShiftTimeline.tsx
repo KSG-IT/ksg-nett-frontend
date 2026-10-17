@@ -1,11 +1,13 @@
 import { Group, Paper, Stack, Text, Title, VisuallyHidden } from '@mantine/core'
 import { CSSProperties, useState } from 'react'
 import { format } from 'util/date-fns'
+import { useNow } from 'util/hooks/useNow'
 import {
   DayShift,
   isMine,
   Lane,
   laneLayout,
+  nowPosition,
   slotCounts,
   timelineHours,
   TimelineRange,
@@ -52,6 +54,7 @@ export const ShiftTimeline: React.FC<ShiftTimelineProps> = ({
             selectedId={selectedId}
             onSelect={toggle}
           />
+          <NowLine range={range} />
         </div>
       </Paper>
       {selected && <SelectedShift shift={selected} />}
@@ -84,6 +87,28 @@ const TimelineTicks: React.FC<TimelineTicksProps> = ({ range }) => {
         </span>
       ))}
     </div>
+  )
+}
+
+// The line moves once a minute
+const NOW_INTERVAL_MS = 60_000
+
+interface NowLineProps {
+  range: TimelineRange
+}
+
+// A red line at the current time through all lanes, on today only.
+const NowLine: React.FC<NowLineProps> = ({ range }) => {
+  const now = useNow(NOW_INTERVAL_MS)
+  const position = nowPosition(now, range)
+  if (position === null) return null
+
+  return (
+    <div
+      className={classes.now}
+      style={{ '--now': position / 100 } as CSSProperties}
+      aria-hidden
+    />
   )
 }
 

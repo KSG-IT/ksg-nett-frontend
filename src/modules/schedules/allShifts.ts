@@ -163,6 +163,16 @@ export function timelinePosition(shift: DayShift, range: TimelineRange) {
   }
 }
 
+// Where the current time is, in percent of the range. Null when the range is
+// another day, so the line only shows on today.
+export function nowPosition(now: Date, range: TimelineRange): number | null {
+  const time = now.getTime()
+  const startTime = range.start.getTime()
+  const endTime = range.end.getTime()
+  if (time < startTime || time > endTime) return null
+  return ((time - startTime) / (endTime - startTime)) * 100
+}
+
 export interface Lane<T extends DayShift> {
   location: LocationValues | null
   // Shifts on one row do not overlap.

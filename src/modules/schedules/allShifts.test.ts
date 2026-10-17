@@ -7,6 +7,7 @@ import {
   parseDayPart,
   ShiftFilter,
   laneLayout,
+  nowPosition,
   slotCounts,
   sortShifts,
   timelinePosition,
@@ -209,6 +210,22 @@ describe('timelinePosition', () => {
     expect(position.left).toBeCloseTo((2 / 24) * 100)
     expect(position.width).toBeCloseTo((8 / 24) * 100)
     expect(timelinePosition(bar, range).left).toBeCloseTo((14 / 24) * 100)
+  })
+})
+
+describe('nowPosition', () => {
+  const range = {
+    start: new Date('2026-10-09T06:00:00'),
+    end: new Date('2026-10-10T06:00:00'),
+  }
+
+  it('places the current time as a share of the range', () => {
+    expect(nowPosition(new Date('2026-10-09T18:00:00'), range)).toBeCloseTo(50)
+  })
+
+  it('is null before or after the range', () => {
+    expect(nowPosition(new Date('2026-10-09T05:59:00'), range)).toBeNull()
+    expect(nowPosition(new Date('2026-10-10T06:01:00'), range)).toBeNull()
   })
 })
 
