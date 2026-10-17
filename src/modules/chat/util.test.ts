@@ -1,5 +1,10 @@
 import { ChatMember, ChatMessage } from './types.graphql'
-import { messageNumber, readersLabel, readersOf } from './util'
+import {
+  memberAwareOptions,
+  messageNumber,
+  readersLabel,
+  readersOf,
+} from './util'
 
 const id = (n: number) => btoa(`ChatMessageNode:${n}`)
 
@@ -39,5 +44,19 @@ describe('readersLabel', () => {
     const readers = ['A', 'B', 'C', 'D'].map(name => member(name, name, 1))
     expect(readersLabel(readers)).toBe('A, B +2')
     expect(readersLabel(readers.slice(0, 2))).toBe('A, B')
+  })
+})
+
+describe('memberAwareOptions', () => {
+  it('keeps members in the list but disables them', () => {
+    const users = [
+      { value: 'a', label: 'Anna Lund' },
+      { value: 'b', label: 'Per Moe' },
+    ]
+
+    expect(memberAwareOptions(users, [member('a', 'Anna', null)])).toEqual([
+      { value: 'a', label: 'Anna Lund (allerede medlem)', disabled: true },
+      { value: 'b', label: 'Per Moe', disabled: false },
+    ])
   })
 })

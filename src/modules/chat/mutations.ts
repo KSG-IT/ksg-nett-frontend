@@ -36,3 +36,21 @@ export const PING_CHAT_MUTATION = gql`
     }
   }
 `
+
+export const CREATE_MEGA_CHAT_MUTATION = gql`
+  mutation CreateMegaChat($name: String!) {
+    createMegaChat(name: $name) {
+      chat {
+        id
+      }
+    }
+  }
+`
+
+export const ADD_CHAT_MEMBERS_MUTATION = gql`
+  mutation AddChatMembers($chatId: ID!, $userIds: [ID!]!) {
+    addChatMembers(chatId: $chatId, userIds: $userIds) {
+      addedCount
+    }
+  }
+`

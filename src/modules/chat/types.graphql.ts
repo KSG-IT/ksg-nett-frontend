@@ -70,18 +70,33 @@ export interface ChatMessagesVariables {
 
 export interface JoinableShiftChat {
   userCount: number
-  shift: {
-    id: string
-    name: string
-    datetimeStart: string
-    datetimeEnd: string
-    locationDisplay: string | null
-  }
+  shift: ChatShift
   chat: { id: string; unreadCount: number } | null
 }
 
 export interface JoinableShiftChatsReturns {
   joinableShiftChats: JoinableShiftChat[]
+}
+
+export interface ChatShift {
+  id: string
+  name: string
+  datetimeStart: string
+  datetimeEnd: string
+  locationDisplay: string | null
+}
+
+export interface MegaChatShift {
+  userCount: number
+  shift: ChatShift
+}
+
+export interface MegaChatPreviewReturns {
+  megaChatPreview: {
+    open: boolean
+    userCount: number
+    shifts: MegaChatShift[]
+  }
 }
 
 /* ==== MUTATION TYPING === */
@@ -117,4 +132,21 @@ export interface PingChatVariables {
 
 export interface PingChatReturns {
   pingChat: { recorded: boolean }
+}
+
+export interface CreateMegaChatVariables {
+  name: string
+}
+
+export interface CreateMegaChatReturns {
+  createMegaChat: { chat: { id: string } }
+}
+
+export interface AddChatMembersVariables {
+  chatId: string
+  userIds: string[]
+}
+
+export interface AddChatMembersReturns {
+  addChatMembers: { addedCount: number }
 }
