@@ -1,6 +1,9 @@
 .timeline {
+  --lane-width: 140px;
+  --track-start: calc(var(--lane-width) + var(--mantine-spacing-sm));
+  position: relative;
   display: grid;
-  grid-template-columns: 140px minmax(0, 1fr);
+  grid-template-columns: var(--lane-width) minmax(0, 1fr);
   row-gap: 6px;
   column-gap: var(--mantine-spacing-sm);
   align-items: center;
@@ -92,4 +95,28 @@
 
 .open {
   color: var(--mantine-color-orange-7);
+}
+
+/* Over the track column only, from the hour labels to the last lane. */
+.now {
+  position: absolute;
+  top: 18px;
+  bottom: 0;
+  left: calc(var(--track-start) + (100% - var(--track-start)) * var(--now));
+  width: 2px;
+  margin-left: -1px;
+  background: var(--mantine-color-red-6);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.now::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mantine-color-red-6);
 }
