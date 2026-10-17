@@ -4,6 +4,7 @@ import {
   messageNumber,
   readersLabel,
   readersOf,
+  withPicked,
 } from './util'
 
 const id = (n: number) => btoa(`ChatMessageNode:${n}`)
@@ -58,5 +59,14 @@ describe('memberAwareOptions', () => {
       { value: 'a', label: 'Anna Lund (allerede medlem)', disabled: true },
       { value: 'b', label: 'Per Moe', disabled: false },
     ])
+  })
+})
+
+describe('withPicked', () => {
+  it('keeps picked users and adds results without duplicates', () => {
+    const anna = { value: 'a', label: 'Anna Lund' }
+    const per = { value: 'b', label: 'Per Moe' }
+
+    expect(withPicked([anna], [per, anna])).toEqual([anna, per])
   })
 })

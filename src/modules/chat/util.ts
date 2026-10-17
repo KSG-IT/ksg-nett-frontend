@@ -51,3 +51,12 @@ export function memberAwareOptions(
       : { ...user, disabled: false }
   )
 }
+
+// The picked users first, then the search results that are not picked.
+export function withPicked(
+  picked: UserOption[],
+  results: UserOption[]
+): UserOption[] {
+  const pickedIds = new Set(picked.map(user => user.value))
+  return [...picked, ...results.filter(user => !pickedIds.has(user.value))]
+}

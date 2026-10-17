@@ -1,18 +1,11 @@
-import { useQuery } from '@apollo/client'
-import { Button, Group, Modal, MultiSelect, Stack, Text } from '@mantine/core'
+import { Button, Group, Modal, Stack, Text } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { IconSearch } from '@tabler/icons-react'
-import { ALL_ACTIVE_USERS_LIST_QUERY } from 'modules/users/queries'
-import {
-  AllUsersShallowQueryReturns,
-  AllUsersShallowQueryVariables,
-} from 'modules/users/types'
 import { useState } from 'react'
-import { usersToSelectOption } from 'util/user'
+import { UserOption } from 'util/user'
 import { useChatMutations } from '../mutations.hooks'
 import { CHAT_QUERY } from '../queries'
 import { ChatDetail } from '../types.graphql'
-import { memberAwareOptions } from '../util'
+import { ChatUserPicker } from './ChatUserPicker'
 
 interface AddChatMembersModalProps {
   opened: boolean
@@ -25,26 +18,17 @@ export const AddChatMembersModal: React.FC<AddChatMembersModalProps> = ({
   onClose,
   chat,
 }) => {
-  const [userIds, setUserIds] = useState<string[]>([])
+  const [picked, setPicked] = useState<UserOption[]>([])
   const { addChatMembers, addChatMembersLoading } = useChatMutations()
-  const { data } = useQuery<
-    AllUsersShallowQueryReturns,
-    AllUsersShallowQueryVariables
-  >(ALL_ACTIVE_USERS_LIST_QUERY, { variables: { q: '' }, skip: !opened })
-
-  const options = memberAwareOptions(
-    usersToSelectOption(data?.allActiveUsersList),
-    chat.members
-  )
 
   function handleClose() {
-    setUserIds([])
+    setPicked([])
     onClose()
   }
 
   function handleAdd() {
     addChatMembers({
-      variables: { chatId: chat.id, userIds },
+      variables: { chatId: chat.id, userIds: picked.map(user => user.value) },
       refetchQueries: [{ query: CHAT_QUERY, variables: { chatId: chat.id } }],
       onCompleted({ addChatMembers }) {
         showNotification({
@@ -76,23 +60,14 @@ export const AddChatMembersModal: React.FC<AddChatMembersModalProps> = ({
       }
     >
       <Stack gap="lg">
-        <MultiSelect
-          data-autofocus
-          aria-label="Søk etter bruker"
-          placeholder="Søk etter bruker"
-          leftSection={<IconSearch size={18} />}
-          data={options}
-          value={userIds}
-          onChange={setUserIds}
-          searchable
-          clearable
-          limit={30}
-          nothingFoundMessage="Ingen brukere funnet"
-          comboboxProps={{ withinPortal: true }}
+        <ChatUserPicker
+          picked={picked}
+          onChange={setPicked}
+          members={chat.members}
         />
         <Group justify="space-between">
           <Text size="sm" c="dimmed">
-            {userIds.length} valgt
+            {picked.length} valgt
           </Text>
           <Group>
             <Button variant="default" onClick={handleClose}>
@@ -101,7 +76,7 @@ export const AddChatMembersModal: React.FC<AddChatMembersModalProps> = ({
             <Button
               onClick={handleAdd}
               loading={addChatMembersLoading}
-              disabled={userIds.length === 0}
+              disabled={picked.length === 0}
             >
               Legg til
             </Button>
