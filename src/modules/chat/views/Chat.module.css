@@ -5,6 +5,12 @@
   max-width: 1180px;
 }
 
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+}
+
 /* One white card: the list on the left, the open chat on the right */
 .inbox {
   display: flex;
@@ -37,11 +43,27 @@
     border-right: 0;
   }
 
-  .inbox[data-has-chat] .list {
+  .page[data-has-chat] .list {
     display: none;
   }
 
-  .inbox:not([data-has-chat]) .window {
+  .page:not([data-has-chat]) .window {
     display: none;
+  }
+
+  /* An open chat fills the screen above the keyboard. The chat header has
+     the way back, so the breadcrumbs and the title go. */
+  .page[data-has-chat] .heading {
+    display: none;
+  }
+
+  .page[data-has-chat] .inbox {
+    position: fixed;
+    inset: 0;
+    top: var(--chat-viewport-top, 0);
+    height: var(--chat-viewport-height, 100dvh);
+    min-height: 0;
+    border-radius: 0;
+    z-index: 1;
   }
 }

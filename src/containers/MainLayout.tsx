@@ -15,7 +15,7 @@ import { ChatHeaderButton } from 'modules/chat'
 import { UserSearch } from 'modules/header/UserSearch'
 import React, { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { Link } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 import { useIsMobile, useSidebar } from 'util/hooks'
 import logoUrl from '../assets/images/548spaghetti_100786.png'
 import { AppNavbar } from './Navbar'
@@ -45,10 +45,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const isMobile = useIsMobile()
   const { sidebarOpen, toggleSidebar } = useSidebar()
   const { classes } = useStyles()
+  // An open chat on a phone is full screen, with its own header and way back.
+  const chatOpen = useMatch('/chat/:chatId') !== null
 
   return (
     <AppShell
-      header={{ height: 60 }}
+      header={{ height: 60, collapsed: isMobile && chatOpen }}
       navbar={{
         width: { sm: 200, lg: 250 },
         breakpoint: 'sm',
