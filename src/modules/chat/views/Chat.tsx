@@ -1,10 +1,10 @@
-import { SegmentedControl, Text, Title } from '@mantine/core'
+import { RemoveScroll, SegmentedControl, Text, Title } from '@mantine/core'
 import { Breadcrumbs } from 'components/Breadcrumbs'
 import { FullPage404 } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
 import { useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useMe } from 'util/hooks'
+import { useIsMobile, useMe } from 'util/hooks'
 import { ChatList } from '../components/ChatList'
 import { ChatWindow } from '../components/ChatWindow'
 import { useChatEnabled } from '../hooks/useChatEnabled'
@@ -20,6 +20,10 @@ export const Chat: React.FC = () => {
   const [showAll, setShowAll] = useState(false)
   const pageRef = useRef<HTMLDivElement>(null)
   useVisualViewport(pageRef, enabled && !flagLoading)
+  // The full-screen chat locks the page behind it. Otherwise a swipe that the
+  // message list cannot take scrolls the page, the visual viewport moves, and
+  // the chat moves the other way.
+  const fullScreen = useIsMobile() && chatId !== undefined
 
   if (flagLoading) return <FullContentLoader />
   if (!enabled) return <FullPage404 />
@@ -40,34 +44,36 @@ export const Chat: React.FC = () => {
         <Breadcrumbs items={breadcrumbsItems} />
         <Title order={1}>Chat</Title>
       </div>
-      <div className={classes.inbox}>
-        <section className={classes.list} aria-label="Dine chatter">
-          {me.isSuperuser && (
-            <SegmentedControl
-              fullWidth
-              value={showAll ? 'all' : 'mine'}
-              onChange={value => setShowAll(value === 'all')}
-              data={[
-                { label: 'Mine chatter', value: 'mine' },
-                { label: 'Alle chatter', value: 'all' },
-              ]}
-            />
-          )}
-          <Text size="sm" c="dimmed" px="sm">
-            Sortert etter siste melding
-          </Text>
-          <ChatList activeChatId={chatId} showAll={showAll} />
-        </section>
-        <section className={classes.window} aria-label="Valgt chat">
-          {chatId ? (
-            <ChatWindow key={chatId} chatId={chatId} />
-          ) : (
-            <Text c="dimmed" p="xl" ta="center">
-              Velg en chat i listen.
+      <RemoveScroll enabled={fullScreen} forwardProps>
+        <div className={classes.inbox}>
+          <section className={classes.list} aria-label="Dine chatter">
+            {me.isSuperuser && (
+              <SegmentedControl
+                fullWidth
+                value={showAll ? 'all' : 'mine'}
+                onChange={value => setShowAll(value === 'all')}
+                data={[
+                  { label: 'Mine chatter', value: 'mine' },
+                  { label: 'Alle chatter', value: 'all' },
+                ]}
+              />
+            )}
+            <Text size="sm" c="dimmed" px="sm">
+              Sortert etter siste melding
             </Text>
-          )}
-        </section>
-      </div>
+            <ChatList activeChatId={chatId} showAll={showAll} />
+          </section>
+          <section className={classes.window} aria-label="Valgt chat">
+            {chatId ? (
+              <ChatWindow key={chatId} chatId={chatId} />
+            ) : (
+              <Text c="dimmed" p="xl" ta="center">
+                Velg en chat i listen.
+              </Text>
+            )}
+          </section>
+        </div>
+      </RemoveScroll>
     </div>
   )
 }
