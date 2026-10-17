@@ -10,8 +10,8 @@ import { NewMegaChatModal } from './NewMegaChatModal'
 // The window opens at 18:00, so a page left open in the afternoon picks it up.
 const PREVIEW_POLL_MS = 60_000
 
-// An Ugle starts a mega chat on Friday and Saturday evenings. The server says
-// when the window is open; the button is hidden the rest of the week.
+// A mega chat starts on Friday and Saturday evenings. The server says when
+// the window is open; the button is hidden the rest of the week.
 // Wrap it in a PermissionGate for chat.create_mega_chat.
 export const NewMegaChatButton: React.FC = () => {
   const [opened, { open, close }] = useDisclosure(false)
