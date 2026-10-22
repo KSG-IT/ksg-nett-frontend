@@ -328,10 +328,7 @@ const CoverageTable: React.FC<{ rows: PlanningPeriodNode['slotCoverage'] }> = ({
   rows,
 }) => (
   <Table withTableBorder withColumnBorders highlightOnHover fz="sm">
-    <Table.Caption>
-      Vakter med færrest tilgjengelige
-      {rows.length > 5 && ` (viser 5 av ${rows.length})`}
-    </Table.Caption>
+    <Table.Caption>Vakter med færrest tilgjengelige først</Table.Caption>
     <Table.Thead>
       <Table.Tr>
         <Table.Th>Vakt</Table.Th>
@@ -341,7 +338,7 @@ const CoverageTable: React.FC<{ rows: PlanningPeriodNode['slotCoverage'] }> = ({
       </Table.Tr>
     </Table.Thead>
     <Table.Tbody>
-      {rows.slice(0, 5).flatMap(row => {
+      {rows.flatMap(row => {
         const breakdown = row.candidateBreakdown
         const groupKey = `${row.shift.id}-${row.role}`
         const typeRows = breakdown.length > 0 ? [null, ...breakdown] : [null]
