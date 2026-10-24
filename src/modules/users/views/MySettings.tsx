@@ -4,6 +4,7 @@ import { Breadcrumbs } from 'components/Breadcrumbs'
 
 import { FullPageError } from 'components/FullPageComponents'
 import { FullContentLoader } from 'components/Loading'
+import { PushSettings, usePushEnabled } from 'modules/push'
 import {
   AllergyTransferList,
   EditAboutMe,
@@ -17,6 +18,7 @@ import { MyAddressSettings } from '../components/MyAddressSettings'
 const MySettings: React.FC = () => {
   const { data, loading, error } =
     useQuery<MySettingsQueryReturns>(MY_SETTINGS_QUERY)
+  const { enabled: pushEnabled } = usePushEnabled()
 
   if (error) return <FullPageError />
 
@@ -47,6 +49,14 @@ const MySettings: React.FC = () => {
           <MyEmailSettings user={me} />
         </SettingsSection>
       </SimpleGrid>
+      {pushEnabled && (
+        <SettingsSection
+          title="Push-varsler"
+          description="Varsler på telefonen eller i nettleseren, også når KSG-nett er lukket."
+        >
+          <PushSettings user={me} />
+        </SettingsSection>
+      )}
       <SettingsSection
         title="Allergier"
         description="Marker allergiene som gjelder deg og flytt dem over. De som setter opp vaktlister ser allergiene dine."

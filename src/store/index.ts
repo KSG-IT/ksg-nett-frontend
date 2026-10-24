@@ -44,6 +44,8 @@ export const UserPlaceholder: UserNode = {
   notifyOnQuote: false,
   notifyOnShift: false,
   notifyOnDeposit: false,
+  notifyOnChatMessage: true,
+  notifyOnChatAdded: true,
   canRewriteAboutMe: false,
   legacyWorkHistory: [],
   homeTown: '',
