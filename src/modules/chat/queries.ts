@@ -31,6 +31,7 @@ const CHAT_SUMMARY_FIELDS = `
   closesAt
   unreadCount
   onlineCount
+  muted
   lastMessage {
     id
     body

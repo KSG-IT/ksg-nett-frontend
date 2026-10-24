@@ -7,6 +7,7 @@ import {
   IconSettings,
 } from '@tabler/icons-react'
 import { ChatNavItem } from 'modules/chat/components/ChatNavItem'
+import { useForgetPushDevice } from 'modules/push'
 import { UserThumbnail } from 'modules/users/components'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from 'store'
@@ -55,9 +56,12 @@ export const NavBarMeSection: React.FC<NavBarMeSectionProps> = ({
   const { formatCurrency } = useCurrencyFormatter()
   const { toggleSidebar } = useSidebar()
   const navigate = useNavigate()
+  const forgetPushDevice = useForgetPushDevice()
 
-  function handleLogoutAlert() {
+  async function handleLogoutAlert() {
     if (confirm('Er du sikker på at du vil logge ut?')) {
+      // Before the token goes: the backend call needs it
+      await forgetPushDevice()
       removeLoginToken()
       Sentry.setUser(null)
       window.location.reload()

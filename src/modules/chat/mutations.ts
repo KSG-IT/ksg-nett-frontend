@@ -54,3 +54,14 @@ export const ADD_CHAT_MEMBERS_MUTATION = gql`
     }
   }
 `
+
+export const SET_CHAT_MUTED_MUTATION = gql`
+  mutation SetChatMuted($chatId: ID!, $muted: Boolean!) {
+    setChatMuted(chatId: $chatId, muted: $muted) {
+      chat {
+        id
+        muted
+      }
+    }
+  }
+`

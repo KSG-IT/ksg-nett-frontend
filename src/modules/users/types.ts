@@ -51,6 +51,8 @@ export type UserNode = {
   allergies: AllergyNode[]
   notifyOnQuote: boolean
   notifyOnShift: boolean
+  notifyOnChatMessage: boolean
+  notifyOnChatAdded: boolean
   notifyOnDeposit: boolean
   canRewriteAboutMe: boolean
   bankAccount: {
@@ -160,6 +162,8 @@ export interface MySettingsQueryReturns {
     | 'notifyOnQuote'
     | 'notifyOnDeposit'
     | 'notifyOnShift'
+    | 'notifyOnChatMessage'
+    | 'notifyOnChatAdded'
     | 'canRewriteAboutMe'
   >
   allAllergies: AllergyNode[]

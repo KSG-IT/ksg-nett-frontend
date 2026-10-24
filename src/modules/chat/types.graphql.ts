@@ -26,6 +26,8 @@ export interface ChatSummary {
   closesAt: string
   unreadCount: number
   onlineCount: number
+  // The viewer gets no message pushes for this chat
+  muted: boolean
   lastMessage: ChatMessage | null
 }
 
@@ -149,4 +151,16 @@ export interface AddChatMembersVariables {
 
 export interface AddChatMembersReturns {
   addChatMembers: { addedCount: number }
+}
+
+export interface SetChatMutedVariables {
+  chatId: string
+  muted: boolean
+}
+
+export interface SetChatMutedReturns {
+  // __typename lets the optimistic response update the cached chat
+  setChatMuted: {
+    chat: { __typename?: 'ChatNode'; id: string; muted: boolean }
+  }
 }

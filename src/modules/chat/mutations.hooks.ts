@@ -6,6 +6,7 @@ import {
   MARK_CHAT_READ_MUTATION,
   PING_CHAT_MUTATION,
   SEND_CHAT_MESSAGE_MUTATION,
+  SET_CHAT_MUTED_MUTATION,
 } from './mutations'
 import {
   AddChatMembersReturns,
@@ -20,6 +21,8 @@ import {
   PingChatVariables,
   SendChatMessageReturns,
   SendChatMessageVariables,
+  SetChatMutedReturns,
+  SetChatMutedVariables,
 } from './types.graphql'
 
 export function useChatMutations() {
@@ -52,6 +55,11 @@ export function useChatMutations() {
     AddChatMembersVariables
   >(ADD_CHAT_MEMBERS_MUTATION)
 
+  const [setChatMuted] = useMutation<
+    SetChatMutedReturns,
+    SetChatMutedVariables
+  >(SET_CHAT_MUTED_MUTATION)
+
   return {
     joinShiftChat,
     joinShiftChatLoading,
@@ -63,5 +71,6 @@ export function useChatMutations() {
     createMegaChatLoading,
     addChatMembers,
     addChatMembersLoading,
+    setChatMuted,
   }
 }
