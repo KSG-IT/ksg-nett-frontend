@@ -32,3 +32,11 @@
 .time {
   flex-shrink: 0;
 }
+
+/* Keeps the time at the right edge */
+.muted {
+  flex-shrink: 0;
+  align-self: center;
+  margin-right: auto;
+  color: var(--mantine-color-dimmed);
+}

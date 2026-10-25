@@ -43,6 +43,12 @@ Sentry.init({
     import.meta.env.VITE_APP_NODE_ENV === 'development',
 })
 
+// The worker shows push notifications. It has no fetch handler, so it does not
+// cache or change any request. Registered for everyone, also with push off.
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+}
+
 const container = document.getElementById('root')
 const root = createRoot(container!) // createRoot(container!) if you use TypeScript
 
