@@ -4,6 +4,8 @@ import {
   messageNumber,
   readersLabel,
   readersOf,
+  pendingAsMessage,
+  withMessage,
   withPicked,
 } from './util'
 
@@ -68,5 +70,52 @@ describe('withPicked', () => {
     const per = { value: 'b', label: 'Per Moe' }
 
     expect(withPicked([anna], [per, anna])).toEqual([anna, per])
+  })
+})
+
+describe('withMessage', () => {
+  const message = (n: number) => ({ id: id(n) } as ChatMessage)
+
+  it('puts the saved message at the end', () => {
+    expect(withMessage([message(1), message(2)], message(3))).toEqual([
+      message(1),
+      message(2),
+      message(3),
+    ])
+  })
+
+  it('keeps the order when a later message was saved first', () => {
+    expect(withMessage([message(1), message(3)], message(2))).toEqual([
+      message(1),
+      message(2),
+      message(3),
+    ])
+  })
+
+  it('does not add it twice when a poll brought it first', () => {
+    expect(withMessage([message(1), message(2)], message(2))).toEqual([
+      message(1),
+      message(2),
+    ])
+  })
+})
+
+describe('pendingAsMessage', () => {
+  it("shows the text and time as the viewer's own message", () => {
+    const pending = {
+      key: 'pending-1',
+      chatId: 'chat',
+      body: 'Hei',
+      createdAt: '2026-10-26T20:00:00.000Z',
+    }
+
+    expect(pendingAsMessage(pending, 'me')).toEqual({
+      id: 'pending-1',
+      body: 'Hei',
+      role: null,
+      hidden: false,
+      createdAt: '2026-10-26T20:00:00.000Z',
+      sender: { id: 'me' },
+    })
   })
 })

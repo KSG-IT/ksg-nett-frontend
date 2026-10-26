@@ -10,14 +10,22 @@ interface MessageBubbleProps {
   mine: boolean
   // "Lest av Kari, Per +4". Only under the last message of the viewer.
   readLabel?: string
+  // Sent, but the server has not saved it yet
+  pending?: boolean
 }
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({
   message,
   mine,
   readLabel,
+  pending = false,
 }) => (
-  <div className={classes.row} data-mine={mine || undefined}>
+  <div
+    className={classes.row}
+    data-mine={mine || undefined}
+    data-pending={pending || undefined}
+    aria-busy={pending || undefined}
+  >
     <div className={classes.bubble} data-hidden={message.hidden || undefined}>
       <div className={classes.meta}>
         {!mine && (

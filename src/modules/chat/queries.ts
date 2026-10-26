@@ -75,17 +75,23 @@ export const CHAT_QUERY = gql`
   }
 `
 
+// The send mutation returns the same fields, so its message can go straight
+// into the cached list
+export const CHAT_MESSAGE_FIELDS = `
+  id
+  body
+  role
+  hidden
+  createdAt
+  sender {
+    ${CHAT_USER_FIELDS}
+  }
+`
+
 export const CHAT_MESSAGES_QUERY = gql`
   query ChatMessages($chatId: ID!, $afterId: ID) {
     chatMessages(chatId: $chatId, afterId: $afterId) {
-      id
-      body
-      role
-      hidden
-      createdAt
-      sender {
-        ${CHAT_USER_FIELDS}
-      }
+      ${CHAT_MESSAGE_FIELDS}
     }
   }
 `

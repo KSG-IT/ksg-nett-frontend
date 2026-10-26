@@ -1,5 +1,5 @@
 import { UserOption } from 'util/user'
-import { ChatMember, ChatMessage } from './types.graphql'
+import { ChatMember, ChatMessage, ChatUser } from './types.graphql'
 
 // Relay ids are base64("ChatMessageNode:<number>"). The numbers grow with
 // time, so they tell which message is newer.
@@ -59,4 +59,43 @@ export function withPicked(
 ): UserOption[] {
   const pickedIds = new Set(picked.map(user => user.value))
   return [...picked, ...results.filter(user => !pickedIds.has(user.value))]
+}
+
+// A message the viewer sent that the server has not saved yet. It is not in
+// the Apollo cache: its key is not a message id, and the read marker, the poll
+// and "Lest av" must see real ids only.
+export interface PendingMessage {
+  key: string
+  chatId: string
+  body: string
+  createdAt: string
+}
+
+// The list with the saved message in it, once and in order. A poll can bring
+// it first, and two quick sends can come back in the other order.
+export function withMessage(
+  messages: readonly ChatMessage[],
+  message: ChatMessage
+): ChatMessage[] {
+  if (messages.some(existing => existing.id === message.id))
+    return [...messages]
+  return [...messages, message].sort(
+    (a, b) => messageNumber(a.id) - messageNumber(b.id)
+  )
+}
+
+// A pending message in the shape of a bubble. The viewer's own bubbles do not
+// show the sender, so the id is enough.
+export function pendingAsMessage(
+  pending: PendingMessage,
+  meId: string
+): ChatMessage {
+  return {
+    id: pending.key,
+    body: pending.body,
+    role: null,
+    hidden: false,
+    createdAt: pending.createdAt,
+    sender: { id: meId } as ChatUser,
+  }
 }
