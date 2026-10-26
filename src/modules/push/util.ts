@@ -87,3 +87,14 @@ export async function currentSubscription() {
   const registration = await navigator.serviceWorker.getRegistration()
   return (await registration?.pushManager.getSubscription()) ?? null
 }
+
+// The number on the app icon: iOS 16.4+ Home Screen apps and some desktop
+// browsers. 0 removes it. It never throws: the user can turn badges off.
+export function setAppBadge(
+  count: number,
+  nav: Pick<Navigator, 'setAppBadge' | 'clearAppBadge'> = navigator
+) {
+  if (!('setAppBadge' in nav)) return Promise.resolve()
+  const result = count > 0 ? nav.setAppBadge(count) : nav.clearAppBadge()
+  return result.catch(() => undefined)
+}

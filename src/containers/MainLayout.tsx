@@ -11,7 +11,7 @@ import { Badge } from 'components/Badge'
 import { createStyles } from '@mantine/emotion'
 import { FullContentLoader } from 'components/Loading'
 import { WhatsNewNotification } from 'components/WhatsNewNotification'
-import { ChatHeaderButton } from 'modules/chat'
+import { ChatAppBadge, ChatHeaderButton } from 'modules/chat'
 import { UserSearch } from 'modules/header/UserSearch'
 import { PushRefresh } from 'modules/push'
 import React, { Suspense } from 'react'
@@ -111,6 +111,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </AppShell.Header>
       <AppNavbar opened={sidebarOpen} />
       <PushRefresh />
+      <ChatAppBadge />
       <AppShell.Main>
         {/* Main content being rendered */}
         <ErrorBoundary FallbackComponent={ErrorFallback}>

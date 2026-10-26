@@ -1,3 +1,4 @@
+export * from './components/ChatAppBadge'
 export * from './components/ChatHeaderButton'
 export * from './components/JoinableShiftChats'
 export * from './views'
