@@ -1,5 +1,6 @@
 import {
   isIos,
+  setAppBadge,
   isStandalone,
   pushStatus,
   subscriptionVariables,
@@ -124,5 +125,40 @@ describe('subscriptionVariables', () => {
       auth: 'secret',
       userAgent: 'Firefox',
     })
+  })
+})
+
+describe('setAppBadge', () => {
+  function fakeNavigator(fail = false) {
+    const result = () =>
+      fail ? Promise.reject(new Error('off')) : Promise.resolve()
+    return {
+      setAppBadge: jest.fn(result),
+      clearAppBadge: jest.fn(result),
+    }
+  }
+
+  it('shows the count', async () => {
+    const nav = fakeNavigator()
+    await setAppBadge(3, nav)
+    expect(nav.setAppBadge).toHaveBeenCalledWith(3)
+    expect(nav.clearAppBadge).not.toHaveBeenCalled()
+  })
+
+  it('clears the badge at 0', async () => {
+    const nav = fakeNavigator()
+    await setAppBadge(0, nav)
+    expect(nav.clearAppBadge).toHaveBeenCalled()
+    expect(nav.setAppBadge).not.toHaveBeenCalled()
+  })
+
+  it('does nothing in a browser without badges', async () => {
+    await expect(
+      setAppBadge(3, {} as Pick<Navigator, 'setAppBadge' | 'clearAppBadge'>)
+    ).resolves.toBeUndefined()
+  })
+
+  it('ignores a refusal, for example badges turned off', async () => {
+    await expect(setAppBadge(3, fakeNavigator(true))).resolves.toBeUndefined()
   })
 })

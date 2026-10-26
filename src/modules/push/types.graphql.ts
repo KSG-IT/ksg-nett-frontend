@@ -11,6 +11,10 @@ export interface PushEnabledReturns {
   getFeatureFlagByKey: { id: string; enabled: boolean } | null
 }
 
+export interface BadgeCountReturns {
+  badgeCount: number
+}
+
 export interface PushConfigReturns {
   pushConfig: { vapidPublicKey: string | null }
 }

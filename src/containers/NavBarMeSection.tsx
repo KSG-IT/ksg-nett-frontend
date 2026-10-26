@@ -7,7 +7,7 @@ import {
   IconSettings,
 } from '@tabler/icons-react'
 import { ChatNavItem } from 'modules/chat/components/ChatNavItem'
-import { useForgetPushDevice } from 'modules/push'
+import { setAppBadge, useForgetPushDevice } from 'modules/push'
 import { UserThumbnail } from 'modules/users/components'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from 'store'
@@ -62,6 +62,8 @@ export const NavBarMeSection: React.FC<NavBarMeSectionProps> = ({
     if (confirm('Er du sikker på at du vil logge ut?')) {
       // Before the token goes: the backend call needs it
       await forgetPushDevice()
+      // The next user on this device must not see this user's count
+      await setAppBadge(0)
       removeLoginToken()
       Sentry.setUser(null)
       window.location.reload()

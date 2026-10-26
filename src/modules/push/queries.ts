@@ -17,3 +17,9 @@ export const PUSH_CONFIG_QUERY = gql`
     }
   }
 `
+
+export const BADGE_COUNT_QUERY = gql`
+  query BadgeCount {
+    badgeCount
+  }
+`

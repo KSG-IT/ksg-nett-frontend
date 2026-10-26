@@ -1,4 +1,6 @@
+export * from './components/AppBadge'
 export * from './components/PushRefresh'
 export * from './components/PushSettings'
 export * from './hooks/useForgetPushDevice'
 export * from './hooks/usePushEnabled'
+export { setAppBadge } from './util'
