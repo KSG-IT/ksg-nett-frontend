@@ -23,6 +23,10 @@
   background: var(--mantine-color-samfundet-red-0);
 }
 
+.row[data-pending] .bubble {
+  opacity: 0.6;
+}
+
 .bubble[data-hidden] {
   font-style: italic;
   color: var(--mantine-color-dimmed);

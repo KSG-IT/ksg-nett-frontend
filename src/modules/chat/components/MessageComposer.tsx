@@ -3,7 +3,6 @@ import { Button, Group, Textarea } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { useChatMutations } from '../mutations.hooks'
 
 const MAX_LENGTH = 2000
 
@@ -13,26 +12,24 @@ const messageSchema = z.object({
 type MessageForm = z.infer<typeof messageSchema>
 
 interface MessageComposerProps {
-  chatId: string
-  onSent: () => void
+  onSend: (body: string) => Promise<void>
 }
 
-export const MessageComposer: React.FC<MessageComposerProps> = ({
-  chatId,
-  onSent,
-}) => {
-  const { sendChatMessage, sendChatMessageLoading } = useChatMutations()
-  const { register, handleSubmit, reset, formState } = useForm<MessageForm>({
-    resolver: zodResolver(messageSchema),
-    defaultValues: { body: '' },
-  })
+// The field clears at once, and the message shows as pending. More messages
+// can follow before the first is saved. A failed send puts the text back.
+export const MessageComposer: React.FC<MessageComposerProps> = ({ onSend }) => {
+  const { register, handleSubmit, reset, setValue, formState } =
+    useForm<MessageForm>({
+      resolver: zodResolver(messageSchema),
+      defaultValues: { body: '' },
+    })
 
   async function handleSend({ body }: MessageForm) {
+    reset()
     try {
-      await sendChatMessage({ variables: { chatId, body } })
-      reset()
-      onSent()
+      await onSend(body)
     } catch (error) {
+      setValue('body', body, { shouldValidate: true })
       showNotification({
         title: 'Kunne ikke sende meldingen',
         message: error instanceof Error ? error.message : '',
@@ -47,7 +44,6 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
     if (event.key !== 'Enter' || event.shiftKey) return
     if (event.nativeEvent.isComposing) return
     event.preventDefault()
-    if (sendChatMessageLoading) return
     handleSubmit(handleSend)()
   }
 
@@ -67,7 +63,6 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
         <Button
           type="submit"
           color="samfundet-red"
-          loading={sendChatMessageLoading}
           disabled={!formState.isValid}
         >
           Send

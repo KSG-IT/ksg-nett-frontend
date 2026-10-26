@@ -7,6 +7,7 @@ import { useMe } from 'util/hooks'
 import { useVisiblePolling } from 'util/hooks/useVisiblePolling'
 import { useChatMessages } from '../hooks/useChatMessages'
 import { useChatPresence } from '../hooks/useChatPresence'
+import { useSendChatMessage } from '../hooks/useSendChatMessage'
 import { CHAT_QUERY } from '../queries'
 import { ChatReturns, ChatVariables } from '../types.graphql'
 import classes from './ChatWindow.module.css'
@@ -26,7 +27,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
     variables: { chatId },
   })
   useVisiblePolling(chatQuery, CHAT_POLL_MS)
-  const { messages, loading, error, pollNow } = useChatMessages(chatId)
+  const { messages, loading, error } = useChatMessages(chatId)
+  const { pending, send } = useSendChatMessage(chatId)
 
   const chat = chatQuery.data?.chat
   const isMember =
@@ -45,31 +47,33 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
           leser.
         </MessageBox>
       )}
-      <MessageList messages={messages} members={chat.members} meId={me.id} />
+      <MessageList
+        messages={messages}
+        pending={pending}
+        members={chat.members}
+        meId={me.id}
+      />
       <ChatFooter
-        chatId={chatId}
         canWrite={isMember && !chat.closed}
         closed={chat.closed}
-        onSent={pollNow}
+        onSend={send}
       />
     </div>
   )
 }
 
 interface ChatFooterProps {
-  chatId: string
   canWrite: boolean
   closed: boolean
-  onSent: () => void
+  onSend: (body: string) => Promise<void>
 }
 
 const ChatFooter: React.FC<ChatFooterProps> = ({
-  chatId,
   canWrite,
   closed,
-  onSent,
+  onSend,
 }) => {
-  if (canWrite) return <MessageComposer chatId={chatId} onSent={onSent} />
+  if (canWrite) return <MessageComposer onSend={onSend} />
   return (
     <Text c="dimmed" p="md" className={classes.footer}>
       {closed ? 'Chatten er stengt.' : 'Bare medlemmer kan skrive i chatten.'}

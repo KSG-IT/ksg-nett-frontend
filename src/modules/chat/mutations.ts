@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+import { CHAT_MESSAGE_FIELDS } from './queries'
 
 export const JOIN_SHIFT_CHAT_MUTATION = gql`
   mutation JoinShiftChat($shiftId: ID!) {
@@ -15,7 +16,7 @@ export const SEND_CHAT_MESSAGE_MUTATION = gql`
   mutation SendChatMessage($chatId: ID!, $body: String!) {
     sendChatMessage(chatId: $chatId, body: $body) {
       message {
-        id
+        ${CHAT_MESSAGE_FIELDS}
       }
     }
   }

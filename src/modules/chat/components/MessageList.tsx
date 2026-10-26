@@ -2,7 +2,13 @@ import { Button, Indicator } from '@mantine/core'
 import { IconArrowDown } from '@tabler/icons-react'
 import { useEffect, useRef, useState } from 'react'
 import { ChatMember, ChatMessage } from '../types.graphql'
-import { lastMessageOf, readersLabel, readersOf } from '../util'
+import {
+  lastMessageOf,
+  PendingMessage,
+  pendingAsMessage,
+  readersLabel,
+  readersOf,
+} from '../util'
 import { MessageBubble } from './MessageBubble'
 import classes from './MessageList.module.css'
 
@@ -11,12 +17,14 @@ const BOTTOM_THRESHOLD_PX = 80
 
 interface MessageListProps {
   messages: ChatMessage[]
+  pending: PendingMessage[]
   members: ChatMember[]
   meId: string
 }
 
 export const MessageList: React.FC<MessageListProps> = ({
   messages,
+  pending,
   members,
   meId,
 }) => {
@@ -49,6 +57,11 @@ export const MessageList: React.FC<MessageListProps> = ({
     else setHasNew(true)
   }, [newestId])
 
+  // A message the viewer sends shows at once, so go down with it
+  useEffect(() => {
+    if (pending.length > 0) scrollToBottom('auto')
+  }, [pending.length])
+
   const mine = lastMessageOf(messages, meId)
   const readers = mine ? readersOf(mine, members, meId) : []
 
@@ -67,6 +80,7 @@ export const MessageList: React.FC<MessageListProps> = ({
             }
           />
         ))}
+        <PendingBubbles pending={pending} meId={meId} />
       </div>
       {!atBottom && (
         <div className={classes.jump}>
@@ -97,3 +111,21 @@ export const MessageList: React.FC<MessageListProps> = ({
     </div>
   )
 }
+
+interface PendingBubblesProps {
+  pending: PendingMessage[]
+  meId: string
+}
+
+const PendingBubbles: React.FC<PendingBubblesProps> = ({ pending, meId }) => (
+  <>
+    {pending.map(message => (
+      <MessageBubble
+        key={message.key}
+        message={pendingAsMessage(message, meId)}
+        mine
+        pending
+      />
+    ))}
+  </>
+)
