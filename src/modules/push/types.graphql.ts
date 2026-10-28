@@ -1,10 +1,19 @@
-export interface ChatNotificationSettings {
+export interface PushNotificationSettings {
   // Lets the optimistic response update the cached user
   __typename?: 'UserNode'
   id: string
   notifyOnChatMessage: boolean
   notifyOnChatAdded: boolean
+  pushOnDeposit: boolean
+  pushOnQuote: boolean
+  pushOnShift: boolean
+  pushOnOrderSession: boolean
 }
+
+export type PushSettingKey = Exclude<
+  keyof PushNotificationSettings,
+  '__typename' | 'id'
+>
 
 /* ==== QUERY TYPING === */
 export interface PushEnabledReturns {
@@ -39,11 +48,16 @@ export interface RemovePushSubscriptionReturns {
   removePushSubscription: { ok: boolean }
 }
 
-export interface SetChatNotificationsVariables {
-  onMessage: boolean
-  onAdded: boolean
+// Only the given settings change
+export interface SetPushSettingsVariables {
+  onChatMessage?: boolean
+  onChatAdded?: boolean
+  onDeposit?: boolean
+  onQuote?: boolean
+  onShift?: boolean
+  onOrderSession?: boolean
 }
 
-export interface SetChatNotificationsReturns {
-  setChatNotifications: { user: ChatNotificationSettings }
+export interface SetPushSettingsReturns {
+  setPushSettings: { user: PushNotificationSettings }
 }

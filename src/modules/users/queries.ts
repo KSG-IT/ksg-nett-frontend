@@ -199,6 +199,10 @@ export const MY_SETTINGS_QUERY = gql`
       notifyOnShift
       notifyOnChatMessage
       notifyOnChatAdded
+      pushOnDeposit
+      pushOnQuote
+      pushOnShift
+      pushOnOrderSession
       canRewriteAboutMe
     }
     allAllergies {

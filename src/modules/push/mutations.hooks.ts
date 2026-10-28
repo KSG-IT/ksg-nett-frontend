@@ -2,15 +2,15 @@ import { useMutation } from '@apollo/client'
 import {
   REGISTER_PUSH_SUBSCRIPTION_MUTATION,
   REMOVE_PUSH_SUBSCRIPTION_MUTATION,
-  SET_CHAT_NOTIFICATIONS_MUTATION,
+  SET_PUSH_SETTINGS_MUTATION,
 } from './mutations'
 import {
   RegisterPushSubscriptionReturns,
   RegisterPushSubscriptionVariables,
   RemovePushSubscriptionReturns,
   RemovePushSubscriptionVariables,
-  SetChatNotificationsReturns,
-  SetChatNotificationsVariables,
+  SetPushSettingsReturns,
+  SetPushSettingsVariables,
 } from './types.graphql'
 
 export function usePushMutations() {
@@ -24,14 +24,14 @@ export function usePushMutations() {
     RemovePushSubscriptionVariables
   >(REMOVE_PUSH_SUBSCRIPTION_MUTATION)
 
-  const [setChatNotifications] = useMutation<
-    SetChatNotificationsReturns,
-    SetChatNotificationsVariables
-  >(SET_CHAT_NOTIFICATIONS_MUTATION)
+  const [setPushSettings] = useMutation<
+    SetPushSettingsReturns,
+    SetPushSettingsVariables
+  >(SET_PUSH_SETTINGS_MUTATION)
 
   return {
     registerPushSubscription,
     removePushSubscription,
-    setChatNotifications,
+    setPushSettings,
   }
 }

@@ -1,10 +1,10 @@
 import { Divider } from '@mantine/core'
-import { ChatNotificationSettings } from '../types.graphql'
-import { ChatNotificationSwitches } from './ChatNotificationSwitches'
+import { PushNotificationSettings } from '../types.graphql'
 import { PushDeviceSwitch } from './PushDeviceSwitch'
+import { PushNotificationSwitches } from './PushNotificationSwitches'
 
 interface PushSettingsProps {
-  user: ChatNotificationSettings
+  user: PushNotificationSettings
 }
 
 // The push section of "Mine innstillinger": this device first, then the
@@ -13,6 +13,6 @@ export const PushSettings: React.FC<PushSettingsProps> = ({ user }) => (
   <>
     <PushDeviceSwitch />
     <Divider />
-    <ChatNotificationSwitches user={user} />
+    <PushNotificationSwitches user={user} />
   </>
 )

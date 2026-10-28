@@ -26,13 +26,31 @@ export const REMOVE_PUSH_SUBSCRIPTION_MUTATION = gql`
   }
 `
 
-export const SET_CHAT_NOTIFICATIONS_MUTATION = gql`
-  mutation SetChatNotifications($onMessage: Boolean!, $onAdded: Boolean!) {
-    setChatNotifications(onMessage: $onMessage, onAdded: $onAdded) {
+export const SET_PUSH_SETTINGS_MUTATION = gql`
+  mutation SetPushSettings(
+    $onChatMessage: Boolean
+    $onChatAdded: Boolean
+    $onDeposit: Boolean
+    $onQuote: Boolean
+    $onShift: Boolean
+    $onOrderSession: Boolean
+  ) {
+    setPushSettings(
+      onChatMessage: $onChatMessage
+      onChatAdded: $onChatAdded
+      onDeposit: $onDeposit
+      onQuote: $onQuote
+      onShift: $onShift
+      onOrderSession: $onOrderSession
+    ) {
       user {
         id
         notifyOnChatMessage
         notifyOnChatAdded
+        pushOnDeposit
+        pushOnQuote
+        pushOnShift
+        pushOnOrderSession
       }
     }
   }
