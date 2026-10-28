@@ -1,9 +1,18 @@
-import { Button, Divider, Group, Modal, Text, Title } from '@mantine/core'
+import {
+  Anchor,
+  Button,
+  Divider,
+  Group,
+  Modal,
+  Text,
+  Title,
+} from '@mantine/core'
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 // Using a hard-coded key value so its easy to force it to unhide.
 // Increment this to force new message
-const NOTIFICATION_KEY = '2026-10-6-1'
+const NOTIFICATION_KEY = '2026-10-28-1'
 
 export const WhatsNewNotification: React.FC = () => {
   const firstRender = useRef(true)
@@ -32,7 +41,19 @@ export const WhatsNewNotification: React.FC = () => {
         👋 Hva er nytt?
       </Title>
       <Text size="sm" c="gray" mt={0}>
-        Siste oppdatering: 2026-10-06
+        Siste oppdatering: 2026-10-28
+      </Text>
+      <Divider mb="md" />
+      <Title order={4}>Nytt 28. oktober 2026</Title>
+      <Text>
+        <b>Push-varsler:</b> KSG-nett kan nå sende varsler til mobilen og PC-en
+        din, for eksempel når et innskudd er godkjent. Slå dem på for hver enhet
+        under{' '}
+        <Anchor component={Link} to="/users/me" onClick={handleClose}>
+          Mine innstillinger
+        </Anchor>
+        . På iPhone må du først legge KSG-nett til på Hjem-skjermen; der står
+        det hvordan.
       </Text>
       <Divider mb="md" />
       <Title order={4}>Nytt 6. oktober 2026</Title>
