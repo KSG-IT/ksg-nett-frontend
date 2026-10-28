@@ -8,6 +8,7 @@
 # Usage:
 #   scripts/release.sh          same as "preview"
 #   scripts/release.sh preview  print the next tag
+#   scripts/release.sh latest   print the latest tag (empty when there is none)
 #   scripts/release.sh release  show what ships, ask, then create and push the tag
 #
 # Rule for the next version: take the highest tag. If its year and month are
@@ -18,6 +19,9 @@
 #
 # After the push, approve the run in GitHub Actions. Then CI deploys, and
 # creates the GitHub release with notes from the merged pull requests.
+#
+# The Release workflow (.github/workflows/release.yml) is the same as a button
+# in GitHub Actions, and can also release a hotfix branch.
 #
 # Test options: RELEASE_TODAY=YYYY-MM-DD uses that date instead of today.
 # RELEASE_YES=1 skips the question. RELEASE_NO_PUSH=1 creates the tag only.
@@ -65,6 +69,10 @@ case "$cmd" in
     echo "v$next"
     ;;
 
+  latest)
+    if [ -n "$latest" ]; then echo "v$latest"; fi
+    ;;
+
   release)
     branch="$(git branch --show-current)"
     [ "$branch" = "master" ] || die "you are on '$branch'. Switch to master first."
@@ -102,6 +110,6 @@ case "$cmd" in
     ;;
 
   *)
-    die "unknown command '$cmd'. Use preview or release."
+    die "unknown command '$cmd'. Use preview, latest or release."
     ;;
 esac

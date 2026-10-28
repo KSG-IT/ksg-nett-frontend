@@ -2,9 +2,18 @@ name: Deploy production
 
 # Production deploys on a version tag, for example v2026.10.3. The tag must be
 # on master. See ksg-nett-knowledge-base/plans/single-branch-master.md.
+# The Release workflow starts this run on its tag with workflow_dispatch,
+# because a tag it pushes starts no workflow. A hotfix tag is not on master,
+# but must start from the latest release.
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      hotfix:
+        description: The tag is a hotfix on top of the latest release, not on master
+        type: boolean
+        default: false
 
 env:
   AWS_DEFAULT_REGION: eu-west-3
@@ -21,8 +30,21 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Check that the tag is on master
-        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/master
+      - name: Check that the tag is on master, or a hotfix on the latest release
+        env:
+          HOTFIX: ${{ inputs.hotfix }}
+        run: |
+          if [ "$GITHUB_REF_TYPE" != "tag" ]; then
+            echo "::error::Run this on a version tag, not on $GITHUB_REF_NAME."
+            exit 1
+          fi
+          if [ "$HOTFIX" = "true" ]; then
+            previous="$(git tag --list 'v*' --sort=-v:refname | grep -vx "$GITHUB_REF_NAME" | head -1)"
+            git merge-base --is-ancestor "$previous" "$GITHUB_SHA" \
+              || { echo "::error::A hotfix must start from the latest release $previous."; exit 1; }
+          else
+            git merge-base --is-ancestor "$GITHUB_SHA" origin/master
+          fi
       # The summary is ready before the reviewer approves the build job.
       - name: Show the changes since the previous release
         run: |

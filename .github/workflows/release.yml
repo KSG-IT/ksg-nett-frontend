@@ -1,0 +1,82 @@
+name: Release
+
+# The release button: Actions -> Release -> Run workflow. It creates the next
+# version tag on a commit and starts "Deploy production" on that tag, which
+# waits for approval as before. scripts/release.sh does the same from a shell.
+#
+# A normal release is master. A hotfix is a branch made from the latest
+# release tag, used when master has changes that must not ship yet. Merge the
+# hotfix back into master afterwards.
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch to release (master, or a hotfix branch from the latest release tag)
+        required: true
+        default: master
+
+# One release at a time, so two runs cannot take the same version
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write # push the tag
+      actions: write # start Deploy production
+    env:
+      # The version uses the month in Norway, not in UTC
+      TZ: Europe/Oslo
+      REF: ${{ inputs.ref }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+
+      - name: Check the commit
+        id: check
+        run: |
+          git fetch --quiet --tags origin
+          latest="$(scripts/release.sh latest 2>/dev/null)"
+          if [ -n "$latest" ] && [ "$(git rev-parse "$latest^{commit}")" = "$(git rev-parse HEAD)" ]; then
+            echo "::error::$REF is already released as $latest."
+            exit 1
+          fi
+          if git merge-base --is-ancestor HEAD origin/master; then
+            echo "hotfix=false" >> "$GITHUB_OUTPUT"
+          elif [ -n "$latest" ] && git merge-base --is-ancestor "$latest" HEAD; then
+            echo "::notice::$REF is not on master. Releasing it as a hotfix on top of $latest."
+            echo "hotfix=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::$REF is not on master and does not start from the latest release $latest."
+            exit 1
+          fi
+
+      - name: Create and push the tag
+        id: tag
+        run: |
+          tag="$(scripts/release.sh preview 2>/dev/null)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$tag" -m "Release ${tag#v}"
+          git push origin "refs/tags/$tag"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      # A tag pushed with GITHUB_TOKEN starts no workflow. A dispatch does.
+      - name: Start Deploy production
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.tag.outputs.tag }}
+          HOTFIX: ${{ steps.check.outputs.hotfix }}
+        run: |
+          gh workflow run deploy_production.yml --repo "$GITHUB_REPOSITORY" --ref "$TAG" -f hotfix="$HOTFIX"
+          {
+            echo "## Release $TAG"
+            echo
+            echo "Commit: \`$(git rev-parse --short HEAD)\` $(git log -1 --format=%s)"
+            echo
+            echo "Approve the \"Deploy production\" run for $TAG: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/workflows/deploy_production.yml"
+          } >> "$GITHUB_STEP_SUMMARY"
