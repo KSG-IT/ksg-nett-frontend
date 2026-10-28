@@ -53,6 +53,10 @@ export type UserNode = {
   notifyOnShift: boolean
   notifyOnChatMessage: boolean
   notifyOnChatAdded: boolean
+  pushOnDeposit: boolean
+  pushOnQuote: boolean
+  pushOnShift: boolean
+  pushOnOrderSession: boolean
   notifyOnDeposit: boolean
   canRewriteAboutMe: boolean
   bankAccount: {
@@ -164,6 +168,10 @@ export interface MySettingsQueryReturns {
     | 'notifyOnShift'
     | 'notifyOnChatMessage'
     | 'notifyOnChatAdded'
+    | 'pushOnDeposit'
+    | 'pushOnQuote'
+    | 'pushOnShift'
+    | 'pushOnOrderSession'
     | 'canRewriteAboutMe'
   >
   allAllergies: AllergyNode[]
