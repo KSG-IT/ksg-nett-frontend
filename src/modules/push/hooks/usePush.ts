@@ -57,6 +57,9 @@ export function usePush() {
       const result = await Notification.requestPermission()
       setPermission(result)
       if (result !== 'granted') return
+      // Rejects when the browser refuses the worker. Without it, `ready`
+      // would wait forever and the switch would stay busy.
+      await navigator.serviceWorker.register('/sw.js')
       const registration = await navigator.serviceWorker.ready
       // A subscription made with an old VAPID key cannot be reused
       await (await registration.pushManager.getSubscription())?.unsubscribe()

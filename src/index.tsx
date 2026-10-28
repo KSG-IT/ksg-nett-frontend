@@ -45,8 +45,10 @@ Sentry.init({
 
 // The worker shows push notifications. It has no fetch handler, so it does not
 // cache or change any request. Registered for everyone, also with push off.
+// Crawlers (Googlebot) and some private windows refuse it. The push switch
+// shows its own error then, so ignore it here.
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
+  navigator.serviceWorker.register('/sw.js').catch(() => undefined)
 }
 
 const container = document.getElementById('root')
